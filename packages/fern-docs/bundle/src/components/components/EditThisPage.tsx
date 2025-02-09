@@ -9,7 +9,7 @@ interface EditThisPageButton {
 }
 export function EditThisPageButton(
   props: EditThisPageButton
-): ReactElement | null {
+): ReactElement<any> | null {
   if (typeof props.editThisPageUrl !== "string") {
     return null;
   }

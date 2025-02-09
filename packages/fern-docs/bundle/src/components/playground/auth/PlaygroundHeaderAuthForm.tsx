@@ -62,7 +62,7 @@ export function PlaygroundHeaderAuthForm({
 }: {
   header: APIV1Read.HeaderAuth;
   disabled?: boolean;
-}): ReactElement {
+}): ReactElement<any> {
   const [value, setValue] = useAtom(
     useMemoOne(
       () => headerAtom(header.headerWireValue),

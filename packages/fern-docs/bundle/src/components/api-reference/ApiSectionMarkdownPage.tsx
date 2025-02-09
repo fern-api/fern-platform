@@ -43,7 +43,7 @@ interface ApiSectionMarkdownPageProps {
 }
 
 export const ApiSectionMarkdownPage = memo(
-  ({ node, mdxs, last }: ApiSectionMarkdownPageProps): ReactElement | null => {
+  ({ node, mdxs, last }: ApiSectionMarkdownPageProps): ReactElement<any> | null => {
     const mdx = mdxs[node.id];
 
     if (!mdx) {

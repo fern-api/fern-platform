@@ -1,16 +1,12 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
-import { useEffect, type ReactElement } from "react";
+import { useEffect } from "react";
 
 import { handleReindex } from "./actions/reindex";
 import { DemoInstantSearchClient } from "./search-demo";
 
-export function DesktopInstantSearchWrapper({
-  appId,
-}: {
-  appId: string;
-}): ReactElement {
+export function DesktopInstantSearchWrapper({ appId }: { appId: string }) {
   const searchParams = useSearchParams();
   const selectedDomain = searchParams.get("domain") ?? "buildwithfern.com";
 

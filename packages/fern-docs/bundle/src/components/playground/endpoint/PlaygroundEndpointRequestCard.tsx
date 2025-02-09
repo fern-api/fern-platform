@@ -27,7 +27,7 @@ interface PlaygroundEndpointRequestCardProps {
 export function PlaygroundEndpointRequestCard({
   context,
   formState,
-}: PlaygroundEndpointRequestCardProps): ReactElement | null {
+}: PlaygroundEndpointRequestCardProps): ReactElement<any> | null {
   const { isSnippetTemplatesEnabled, isFileForgeHackEnabled } = useEdgeFlags();
   const [requestType, setRequestType] = useAtom(PLAYGROUND_REQUEST_TYPE_ATOM);
   const setOAuthValue = useSetAtom(PLAYGROUND_AUTH_STATE_OAUTH_ATOM);

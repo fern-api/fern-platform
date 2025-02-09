@@ -43,7 +43,7 @@ export const PlaygroundEndpoint = ({
   context,
 }: {
   context: EndpointContext;
-}): ReactElement => {
+}): ReactElement<any> => {
   const user = useAtomValue(FERN_USER_ATOM);
   const { node, endpoint, auth } = context;
 

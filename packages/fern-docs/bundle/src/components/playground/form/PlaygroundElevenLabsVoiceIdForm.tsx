@@ -18,7 +18,7 @@ interface VoicesResponse {
 
 export function PlaygroundElevenLabsVoiceIdForm(
   props: FernInputProps
-): ReactElement {
+): ReactElement<any> {
   const [voices, setVoices] = useState<VoicesResponse>({ voices: [] });
 
   useEffect(() => {

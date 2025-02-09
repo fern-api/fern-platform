@@ -1,6 +1,6 @@
 import { Badge } from "@fern-docs/components/badges";
 import { Minus } from "lucide-react";
-import { ReactElement, cloneElement, isValidElement } from "react";
+import { cloneElement, isValidElement } from "react";
 import { FacetFilter } from "../../types";
 import { getFacetDisplay, toFilterLabel } from "../../utils/facet-display";
 import { useFacets } from "../search-client";
@@ -30,7 +30,7 @@ export function DesktopFilterDropdownMenu({
   updateFilter?: (value: string) => void;
   filters: readonly FacetFilter[];
   onCloseAutoFocus?: (event: Event) => void;
-}): ReactElement {
+}) {
   const otherFilters = filters.filter((f) => f.facet !== filter.facet);
 
   const { facets } = useFacets(otherFilters);

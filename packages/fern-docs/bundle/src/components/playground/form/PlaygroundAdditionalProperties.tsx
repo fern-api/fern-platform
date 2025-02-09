@@ -69,7 +69,7 @@ export function PlaygroundAdditionalProperties({
   // extraProperties,
   value,
   types,
-}: PlaygroundAdditionalPropertiesProps): ReactElement {
+}: PlaygroundAdditionalPropertiesProps): ReactElement<any> {
   const additionalProperties = useMemo(() => {
     // remove property keys from value
     const valueAsRecord = castToRecord(value);

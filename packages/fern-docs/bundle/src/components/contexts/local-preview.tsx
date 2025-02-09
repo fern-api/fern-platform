@@ -13,7 +13,7 @@ export const useIsLocalPreview = (): boolean => {
 
 export const LocalPreviewContextProvider = ({
   children,
-}: PropsWithChildren): ReactElement => {
+}: PropsWithChildren): ReactElement<any> => {
   return (
     <LocalPreviewContext.Provider value={true}>
       {children}

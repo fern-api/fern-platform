@@ -61,7 +61,7 @@ function HitContentWithTitle({
 }: {
   hit: AlgoliaRecordHit;
   children: ReactNode;
-}): ReactElement {
+}) {
   return (
     <div className="min-w-0 flex-1 shrink">
       <div className="flex items-baseline justify-between gap-1">
@@ -103,7 +103,11 @@ function HitContentWithTitle({
   );
 }
 
-function MarkdownHitContent({ hit }: { hit: MarkdownRecordHit }): ReactElement {
+function MarkdownHitContent({
+  hit,
+}: {
+  hit: MarkdownRecordHit;
+}): ReactElement<any> {
   return (
     <HitContentWithTitle hit={hit}>
       <Breadcrumb
@@ -121,7 +125,7 @@ function ChangelogHitContent({
   hit,
 }: {
   hit: ChangelogRecordHit;
-}): ReactElement {
+}): ReactElement<any> {
   const datestring = formatUtc(new Date(hit.date), "MMM d, yyyy");
   return (
     <HitContentWithTitle hit={hit}>
@@ -136,7 +140,7 @@ function ApiReferenceHitContent({
   hit,
 }: {
   hit: ApiReferenceRecordHit;
-}): ReactElement {
+}): ReactElement<any> {
   return (
     <HitContentWithTitle hit={hit}>
       <div className="inline-flex max-w-full items-baseline gap-1">

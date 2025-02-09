@@ -1,6 +1,6 @@
 import { RefObject, useCallback, useEffect, useState } from "react";
 
-export function useIsScrolled(ref?: RefObject<HTMLElement>): boolean {
+export function useIsScrolled(ref?: RefObject<HTMLElement | null>): boolean {
   const [isScrolled, setIsScrolled] = useState(false);
 
   const getScrollY = useCallback(() => {

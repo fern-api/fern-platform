@@ -3,10 +3,10 @@ import { ReactElement, useMemo } from "react";
 
 export declare namespace SdkCardLayout {
   export interface Props {
-    icon: ReactElement;
-    title: ReactElement | string;
-    subtitle?: ReactElement | string;
-    rightElement?: ReactElement;
+    icon: ReactElement<any>;
+    title: ReactElement<any> | string;
+    subtitle?: ReactElement<any> | string;
+    rightElement?: ReactElement<any>;
     href?: string;
   }
 }

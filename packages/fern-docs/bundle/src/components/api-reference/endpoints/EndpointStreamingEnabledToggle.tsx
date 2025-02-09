@@ -11,7 +11,7 @@ export function EndpointStreamingEnabledToggle({
 }: {
   node: FernNavigation.EndpointPairNode;
   // container: MutableRefObject<HTMLElement | null>;
-}): ReactElement {
+}): ReactElement<any> {
   const router = useRouter();
   const [isStream, setIsStream] = useAtom(FERN_STREAM_ATOM);
   return (

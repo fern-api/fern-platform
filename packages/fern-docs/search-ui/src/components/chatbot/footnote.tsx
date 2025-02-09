@@ -5,7 +5,7 @@ import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { groupBy } from "es-toolkit/array";
 import type { Element as HastElement } from "hast";
 import { useAtom, useAtomValue } from "jotai";
-import { ReactElement, useEffect } from "react";
+import { useEffect } from "react";
 import { CONTINUE, EXIT, visit } from "unist-util-visit";
 import { AlgoliaRecordHit } from "../../types";
 import { PageIcon } from "../icons/page";
@@ -18,11 +18,7 @@ import {
 } from "../ui/tooltip";
 import { useChatbotTurnContext } from "./turn-context";
 
-export function FootnoteSup({
-  node,
-}: {
-  node?: HastElement;
-}): ReactElement | null {
+export function FootnoteSup({ node }: { node?: HastElement }) {
   const { footnotesAtom } = useChatbotTurnContext();
   const footnotes = useAtomValue(footnotesAtom);
 
@@ -134,8 +130,7 @@ export function FootnotesSection({
   node: HastElement;
   searchResults: AlgoliaRecordHit[];
   className?: string;
-}): ReactElement | null {
-  const { footnotesAtom } = useChatbotTurnContext();
+}) {
   const [footnotes, setFootnotes] = useAtom(footnotesAtom);
 
   useEffect(() => {

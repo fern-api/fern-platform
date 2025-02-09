@@ -8,9 +8,7 @@ library.add(fass);
 
 export const runtime = "edge";
 
-export async function GET(
-  _req: NextRequest,
-  { params }: { params: { icon: string } }
-): Promise<NextResponse> {
+export async function GET(_req: NextRequest, props: { params: Promise<{ icon: string }> }): Promise<NextResponse> {
+  const params = await props.params;
   return svgResponse(prefix, params.icon);
 }

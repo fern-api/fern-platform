@@ -34,7 +34,7 @@ export async function POST(req: NextRequest): Promise<Response> {
   const start = Date.now();
   const domain = getDocsDomainEdge(req);
   const edgeFlags = await getEdgeFlags(domain);
-  const cookieJar = cookies();
+  const cookieJar = await cookies();
 
   if (!edgeFlags.isAskAiEnabled) {
     throw new Error(`Ask AI is not enabled for ${domain}`);

@@ -1,5 +1,4 @@
 import type { Root } from "mdast";
-import { ReactElement } from "react";
 import Markdown, { type Components } from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { visit } from "unist-util-visit";
@@ -14,7 +13,7 @@ export function MarkdownContent({
   // className?: string;
   components?: Components;
   // small?: boolean;
-}): ReactElement {
+}) {
   return (
     <Markdown
       components={components}

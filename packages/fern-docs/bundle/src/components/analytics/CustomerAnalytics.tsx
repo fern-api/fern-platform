@@ -37,7 +37,7 @@ const ANALYTICS_CONFIG_ATOM = selectAtom<DocsProps, DocsV1Read.AnalyticsConfig>(
 );
 
 export const CustomerAnalytics = memo(
-  function CustomerAnalytics(): ReactElement | null {
+  function CustomerAnalytics(): ReactElement<any> | null {
     const domain = useAtomValue(DOMAIN_ATOM);
     const analytics = useAtomValue(ANALYTICS_ATOM);
     const config = useAtomValue(ANALYTICS_CONFIG_ATOM);

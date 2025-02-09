@@ -11,7 +11,7 @@ export interface SidebarRootChildProps {
 
 export function SidebarRootChild({
   node,
-}: SidebarRootChildProps): ReactElement {
+}: SidebarRootChildProps): ReactElement<any> {
   switch (node.type) {
     case "sidebarGroup":
       return <SidebarGroupNode node={node} />;

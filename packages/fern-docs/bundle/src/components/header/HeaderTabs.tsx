@@ -8,7 +8,7 @@ import { CURRENT_TAB_INDEX_ATOM, TABS_ATOM } from "../atoms";
 import { FernLink } from "../components/FernLink";
 import { useSidebarTabHref } from "../hooks/useSidebarTabHref";
 
-export function HeaderTabs(): ReactElement {
+export function HeaderTabs(): ReactElement<any> {
   const tabs = useAtomValue(TABS_ATOM);
   return (
     <ul className="fern-header-tabs-list">
@@ -19,7 +19,7 @@ export function HeaderTabs(): ReactElement {
   );
 }
 
-export function HeaderTab({ tab }: { tab: SidebarTab }): ReactElement {
+export function HeaderTab({ tab }: { tab: SidebarTab }): ReactElement<any> {
   const currentTabIndex = useAtomValue(CURRENT_TAB_INDEX_ATOM);
   return (
     <li className="fern-header-tabs-list-item">

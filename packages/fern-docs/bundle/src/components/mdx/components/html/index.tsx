@@ -14,7 +14,7 @@ import { isImageElement, NoZoom } from "./image";
 export const HeadingRenderer = (
   level: number,
   props: ComponentProps<"h1">
-): ReactElement => {
+): ReactElement<any> => {
   return (
     <FernAnchor href={`#${props.id}`}>
       {createElement(`h${level}`, props)}

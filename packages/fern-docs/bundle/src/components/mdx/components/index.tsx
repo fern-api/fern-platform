@@ -101,7 +101,7 @@ const INTERNAL_COMPONENTS = {
   // error boundary
   FernErrorBoundary: (
     props: PropsWithChildren<Pick<FernErrorBoundaryProps, "error" | "fallback">>
-  ): ReactElement => <FernErrorBoundary {...props} />,
+  ): ReactElement<any> => <FernErrorBoundary {...props} />,
 };
 
 const HTML_COMPONENTS: MDXComponents = {
@@ -123,12 +123,12 @@ const HTML_COMPONENTS: MDXComponents = {
 const ALIASED_HTML_COMPONENTS = {
   Image,
   IFrame,
-  H1: (props: ComponentProps<"h1">): ReactElement => HeadingRenderer(1, props),
-  H2: (props: ComponentProps<"h2">): ReactElement => HeadingRenderer(2, props),
-  H3: (props: ComponentProps<"h3">): ReactElement => HeadingRenderer(3, props),
-  H4: (props: ComponentProps<"h4">): ReactElement => HeadingRenderer(4, props),
-  H5: (props: ComponentProps<"h5">): ReactElement => HeadingRenderer(5, props),
-  H6: (props: ComponentProps<"h6">): ReactElement => HeadingRenderer(6, props),
+  H1: (props: ComponentProps<"h1">): ReactElement<any> => HeadingRenderer(1, props),
+  H2: (props: ComponentProps<"h2">): ReactElement<any> => HeadingRenderer(2, props),
+  H3: (props: ComponentProps<"h3">): ReactElement<any> => HeadingRenderer(3, props),
+  H4: (props: ComponentProps<"h4">): ReactElement<any> => HeadingRenderer(4, props),
+  H5: (props: ComponentProps<"h5">): ReactElement<any> => HeadingRenderer(5, props),
+  H6: (props: ComponentProps<"h6">): ReactElement<any> => HeadingRenderer(6, props),
   Ol,
   Ul,
   Li,
@@ -147,7 +147,7 @@ export const MDX_COMPONENTS: MDXComponents = {
 export function createMdxComponents(jsxElements: string[]): MDXComponents {
   return {
     // spread in jsx elements that may be unsupported
-    ...jsxElements.reduce<Record<string, () => ReactElement>>(
+    ...jsxElements.reduce<Record<string, () => ReactElement<any>>>(
       (acc, jsxElement) => {
         acc[jsxElement] = () => (
           <FernErrorTag

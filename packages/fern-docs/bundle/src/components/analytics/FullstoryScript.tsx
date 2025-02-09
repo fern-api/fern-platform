@@ -4,7 +4,7 @@ import { ReactElement } from "react";
 
 export function FullstoryScript(props: {
   config?: DocsV1Read.FullStoryAnalyticsConfig;
-}): ReactElement {
+}): ReactElement<any> {
   if (!props.config) {
     return <></>;
   }

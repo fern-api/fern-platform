@@ -9,7 +9,7 @@ import {
 } from "../atoms";
 import { FernLinkButton } from "../components/FernLinkButton";
 
-export function MobileSidebarHeaderLinks(): ReactElement | null {
+export function MobileSidebarHeaderLinks(): ReactElement<any> | null {
   const layout = useAtomValue(DOCS_LAYOUT_ATOM);
   const navbarLinks = useAtomValue(NAVBAR_LINKS_ATOM);
   const isMobileSidebarEnabled = useAtomValue(MOBILE_SIDEBAR_ENABLED_ATOM);

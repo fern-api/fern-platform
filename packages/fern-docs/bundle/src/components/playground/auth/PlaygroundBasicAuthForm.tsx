@@ -18,7 +18,7 @@ export function PlaygroundBasicAuthForm({
 }: {
   basicAuth: APIV1Read.BasicAuth;
   disabled?: boolean;
-}): ReactElement {
+}): ReactElement<any> {
   const [username, setUsername] = useAtom(
     PLAYGROUND_AUTH_STATE_BASIC_AUTH_USERNAME_ATOM
   );

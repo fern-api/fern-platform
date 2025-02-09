@@ -11,7 +11,7 @@ interface HeaderContainerProps {
 
 export const HeaderContainer = memo(function HeaderContainer({
   className,
-}: HeaderContainerProps): ReactElement {
+}: HeaderContainerProps): ReactElement<any> {
   const showHeaderTabs = useAtomValue(HAS_HORIZONTAL_TABS);
   const showSearchBar =
     useAtomValue(SEARCHBAR_PLACEMENT_ATOM) === "HEADER_TABS";

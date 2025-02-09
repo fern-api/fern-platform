@@ -118,7 +118,7 @@ const MemoizedApiReferenceContent = memo(
 
 export function ApiReferenceContent(
   props: ApiReferenceContentProps
-): ReactElement {
+): ReactElement<any> {
   const isLocalPreview = useIsLocalPreview();
   // do not memoize when in local preview mode to ensure that the page is re-rendered on every change
   const Component = isLocalPreview

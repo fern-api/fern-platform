@@ -9,7 +9,7 @@ export const Sidebar = memo(function Sidebar({
   className,
 }: {
   className?: string;
-}): ReactElement | null {
+}): ReactElement<any> | null {
   const showDismissableSidebar = useAtomValue(SIDEBAR_DISMISSABLE_ATOM);
   const disableSidebar = useAtomValue(DISABLE_SIDEBAR_ATOM);
 

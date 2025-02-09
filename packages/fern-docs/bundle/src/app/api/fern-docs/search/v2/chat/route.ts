@@ -67,7 +67,7 @@ export async function POST(req: NextRequest) {
     throw new Error(`Ask AI is not enabled for ${domain}`);
   }
 
-  const fern_token = cookies().get(COOKIE_FERN_TOKEN)?.value;
+  const fern_token = (await cookies()).get(COOKIE_FERN_TOKEN)?.value;
   const user = await safeVerifyFernJWTConfig(fern_token, authEdgeConfig);
 
   const lastUserMessage: string | undefined = messages.findLast(

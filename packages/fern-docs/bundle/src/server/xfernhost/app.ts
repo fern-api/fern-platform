@@ -1,12 +1,12 @@
 import { HEADER_X_FERN_HOST } from "@fern-docs/utils";
-import { cookies, headers } from "next/headers";
+import { cookies, headers, type UnsafeUnwrappedCookies, type UnsafeUnwrappedHeaders } from "next/headers";
 import { getNextPublicDocsDomain } from "./dev";
 import { getHostNodeStatic } from "./node";
 import { cleanHost } from "./util";
 
 export function getDocsDomainApp(): string {
-  const cookiesList = cookies();
-  const headersList = headers();
+  const cookiesList = (cookies() as unknown as UnsafeUnwrappedCookies);
+  const headersList = (headers() as unknown as UnsafeUnwrappedHeaders);
   const hosts = [
     getNextPublicDocsDomain(),
     headersList.get(HEADER_X_FERN_HOST),
@@ -28,7 +28,7 @@ export function getDocsDomainApp(): string {
 
 // use this for testing auth-based redirects on development and preview environments
 export function getHostApp(): string | undefined {
-  const headersList = headers();
+  const headersList = (headers() as unknown as UnsafeUnwrappedHeaders);
   // if x-fern-host is set, assume it's proxied:
   return (
     headersList.get(HEADER_X_FERN_HOST) ??

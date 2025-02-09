@@ -1,7 +1,7 @@
 import { ReactElement } from "react";
 import { PlaygroundCardSkeleton } from "./PlaygroundCardSkeleton";
 
-export function PlaygroundEndpointFormSectionSkeleton(): ReactElement {
+export function PlaygroundEndpointFormSectionSkeleton(): ReactElement<any> {
   return (
     <section>
       <PlaygroundCardSkeleton className="mb-4 w-fit">

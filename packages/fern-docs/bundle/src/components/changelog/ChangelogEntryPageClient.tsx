@@ -12,7 +12,7 @@ export default function ChangelogEntryPageClient({
   content,
 }: {
   content: DocsContent.ChangelogEntryPage;
-}): ReactElement {
+}): ReactElement<any> {
   const page = content.page;
   const title = typeof page !== "string" ? page?.frontmatter.title : undefined;
   const excerpt =

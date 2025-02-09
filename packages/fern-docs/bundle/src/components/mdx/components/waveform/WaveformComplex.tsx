@@ -82,7 +82,7 @@ export default function WaveformComplex({
 }
 
 const Camera = ({ zoom }: { zoom: number }): React.JSX.Element => {
-  const cameraRef = useRef() as any;
+  const cameraRef = useRef(undefined) as any;
   const { viewport } = useThree();
   const zoomSpring = useSpring(INITIAL_ZOOM, springSettings);
 
@@ -119,7 +119,7 @@ function Scene({
   speed: number;
 }): React.JSX.Element {
   const { gl } = useThree();
-  const planeRef = useRef() as any;
+  const planeRef = useRef(undefined) as any;
   const targetColorsRef = useRef(colors);
 
   useEffect(() => {

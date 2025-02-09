@@ -31,7 +31,7 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
     });
   }
 
-  const fern_token = cookies().get(COOKIE_FERN_TOKEN)?.value;
+  const fern_token = (await cookies()).get(COOKIE_FERN_TOKEN)?.value;
   const user = await safeVerifyFernJWTConfig(
     fern_token,
     await getAuthEdgeConfig(domain)

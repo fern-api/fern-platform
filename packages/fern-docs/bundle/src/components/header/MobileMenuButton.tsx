@@ -7,7 +7,7 @@ import {
   useOpenMobileSidebar,
 } from "../atoms";
 
-export function MobileMenuButton(): ReactElement {
+export function MobileMenuButton(): ReactElement<any> {
   const isMobileSidebarOpen = useIsMobileSidebarOpen();
   const closeMobileSidebar = useCloseMobileSidebar();
   const openMobileSidebar = useOpenMobileSidebar();

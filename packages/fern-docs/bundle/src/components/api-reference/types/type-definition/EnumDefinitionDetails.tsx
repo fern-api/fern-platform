@@ -2,15 +2,15 @@ import { Empty } from "@fern-docs/components";
 import { ReactElement, useEffect, useState } from "react";
 
 export interface EnumDefinitionDetailsProps {
-  elements: ReactElement[];
+  elements: ReactElement<any>[];
   searchInput: string;
 }
 
 export const EnumDefinitionDetails = ({
   elements,
   searchInput,
-}: EnumDefinitionDetailsProps): ReactElement => {
-  const [filteredElements, setFilteredElements] = useState<ReactElement[]>([]);
+}: EnumDefinitionDetailsProps): ReactElement<any> => {
+  const [filteredElements, setFilteredElements] = useState<ReactElement<any>[]>([]);
 
   useEffect(() => {
     const temp = elements.filter(

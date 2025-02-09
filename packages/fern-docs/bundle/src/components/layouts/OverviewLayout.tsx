@@ -17,7 +17,7 @@ export function OverviewLayout({
   children,
   editThisPageUrl,
   hideFeedback,
-}: OverviewLayoutProps): ReactElement {
+}: OverviewLayoutProps): ReactElement<any> {
   return (
     <main className="fern-overview-layout">
       <TableOfContents />

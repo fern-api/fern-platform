@@ -1,7 +1,7 @@
 import { ReactElement, useEffect, useRef, useState } from "react";
 import { useTheme } from "../../../atoms";
 
-export function Mermaid({ children }: { children: string }): ReactElement {
+export function Mermaid({ children }: { children: string }): ReactElement<any> {
   if (typeof window === "undefined" || typeof children !== "string") {
     return <div />;
   }
@@ -9,7 +9,7 @@ export function Mermaid({ children }: { children: string }): ReactElement {
   return <MermaidInternal code={children} />;
 }
 
-function MermaidInternal({ code }: { code: string }): ReactElement {
+function MermaidInternal({ code }: { code: string }): ReactElement<any> {
   const ref = useRef<HTMLDivElement>(null);
   const [svg, setSvg] = useState<string>();
   const theme = useTheme();

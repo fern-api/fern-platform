@@ -14,7 +14,7 @@ export function FernAnchor({
   href,
   sideOffset = 12,
   children,
-}: PropsWithChildren<FernAnchorProps>): ReactElement {
+}: PropsWithChildren<FernAnchorProps>): ReactElement<any> {
   const { copyToClipboard, wasJustCopied } = useCopyToClipboard(() =>
     new URL(href, window.location.href).toString()
   );

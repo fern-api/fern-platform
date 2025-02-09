@@ -5,7 +5,7 @@ interface CustomLayoutProps {
   children: ReactNode;
 }
 
-export function CustomLayout({ children }: CustomLayoutProps): ReactElement {
+export function CustomLayout({ children }: CustomLayoutProps): ReactElement<any> {
   return (
     <main>
       {children}

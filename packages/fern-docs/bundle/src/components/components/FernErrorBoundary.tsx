@@ -42,7 +42,7 @@ export function FernErrorTag({
   reset?: () => void;
   resetErrorBoundary?: () => void;
   fallback?: ReactNode;
-}): ReactElement | null {
+}): ReactElement<any> | null {
   const isLocalPreview = useIsLocalPreview();
   useEffect(() => {
     if (error) {
@@ -147,7 +147,7 @@ export function FernErrorBoundary({
   ...props
 }: PropsWithChildren<
   Omit<FernErrorBoundaryProps, keyof FallbackProps>
->): ReactElement {
+>): ReactElement<any> {
   return (
     <ErrorBoundary FallbackComponent={getFallbackComponent(props)}>
       {children}

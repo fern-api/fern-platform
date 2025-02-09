@@ -17,7 +17,7 @@ export function Step({
   id,
   index,
   ...props
-}: StepProps): ReactElement {
+}: StepProps): ReactElement<any> {
   const href = `#${id}`;
   const { copyToClipboard, wasJustCopied } = useCopyToClipboard(() =>
     new URL(href, window.location.href).toString()

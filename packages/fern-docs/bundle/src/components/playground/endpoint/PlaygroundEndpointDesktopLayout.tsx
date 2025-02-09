@@ -16,7 +16,7 @@ export function PlaygroundEndpointDesktopLayout({
   requestCard,
   responseCard,
   endpointId,
-}: PlaygroundEndpointDesktopLayoutProps): ReactElement {
+}: PlaygroundEndpointDesktopLayoutProps): ReactElement<any> {
   const { grpcEndpoints } = useEdgeFlags();
 
   return (

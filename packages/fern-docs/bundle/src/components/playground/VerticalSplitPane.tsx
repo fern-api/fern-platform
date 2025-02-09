@@ -23,7 +23,7 @@ export function VerticalSplitPane({
   belowClassName,
   children,
   ...props
-}: PropsWithChildren<VerticalSplitPaneProps>): ReactElement | null {
+}: PropsWithChildren<VerticalSplitPaneProps>): ReactElement<any> | null {
   const [aboveHeightPercent, setAboveHeightPercent] = useState(0.5);
 
   const ref = useRef<HTMLDivElement>(null);
@@ -100,7 +100,7 @@ export function HorizontalSplitPane({
   mode = "percent",
   initialLeftWidth = mode === "percent" ? 0.5 : 300,
   ...props
-}: PropsWithChildren<HorizontalSplitPaneProps>): ReactElement | null {
+}: PropsWithChildren<HorizontalSplitPaneProps>): ReactElement<any> | null {
   const [leftWidth, setLeftWidth] = useState(initialLeftWidth);
 
   const ref = useRef<HTMLDivElement>(null);

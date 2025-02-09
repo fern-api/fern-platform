@@ -11,7 +11,7 @@ interface TableOfContentsLayoutProps {
 export function TableOfContentsLayout({
   tableOfContents,
   hideTableOfContents,
-}: TableOfContentsLayoutProps): ReactElement {
+}: TableOfContentsLayoutProps): ReactElement<any> {
   return (
     <aside className="fern-layout-toc">
       {tableOfContents != null &&

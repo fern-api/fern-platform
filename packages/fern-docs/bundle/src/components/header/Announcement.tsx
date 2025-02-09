@@ -68,7 +68,7 @@ export function Announcement({
   className,
 }: {
   className?: string;
-}): ReactElement | null {
+}): ReactElement<any> | null {
   const announcement = useAtomValue(ANNOUNCEMENT_CONFIG_ATOM);
   const [isDismissed, setIsDismissed] = useAtom(ANNOUNCEMENT_DISMISSED_ATOM);
   const setIsDismissing = useSetAtom(ANNOUNCEMENT_IS_DISMISSING_ATOM);

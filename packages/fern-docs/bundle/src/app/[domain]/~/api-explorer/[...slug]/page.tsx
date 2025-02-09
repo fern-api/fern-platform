@@ -11,17 +11,18 @@ import { conformTrailingSlash, COOKIE_FERN_TOKEN } from "@fern-docs/utils";
 import { cookies, headers } from "next/headers";
 import { notFound, redirect } from "next/navigation";
 
-export default async function Page({
-  params,
-}: {
-  params: { slug: string[]; domain: string };
-}) {
+export default async function Page(
+  props: {
+    params: Promise<{ slug: string[]; domain: string }>;
+  }
+) {
+  const params = await props.params;
   console.debug(`[${params.domain}] Loading API Explorer page`);
   const slug = FernNavigation.slugjoin(
-    headers().get("x-basepath"),
+    (await headers()).get("x-basepath"),
     params.slug
   );
-  const fern_token = cookies().get(COOKIE_FERN_TOKEN)?.value;
+  const fern_token = (await cookies()).get(COOKIE_FERN_TOKEN)?.value;
   const loader = await createCachedDocsLoader(params.domain, fern_token);
   console.debug(`[${loader.domain}] Loading API Explorer for slug: ${slug}`);
   const root = await loader.getRoot();

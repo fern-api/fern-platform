@@ -2,8 +2,8 @@ import { ReactElement } from "react";
 
 export declare namespace SeparatedElements {
   export interface Props {
-    separator: ReactElement;
-    children: (ReactElement | null)[];
+    separator: ReactElement<any>;
+    children: (ReactElement<any> | null)[];
   }
 }
 

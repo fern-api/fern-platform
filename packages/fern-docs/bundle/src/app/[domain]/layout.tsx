@@ -16,13 +16,18 @@ import tinycolor from "tinycolor2";
 import { GlobalStyles } from "../global-styles";
 import { toImageDescriptor } from "../seo";
 
-export default async function Layout({
-  children,
-  params,
-}: {
-  children: React.ReactNode;
-  params: { domain: string };
-}) {
+export default async function Layout(
+  props: {
+    children: React.ReactNode;
+    params: Promise<{ domain: string }>;
+  }
+) {
+  const params = await props.params;
+
+  const {
+    children
+  } = props;
+
   const domain = params.domain;
   const docsLoader = await createCachedDocsLoader(domain);
   const [config, edgeFlags, files, colors] = await Promise.all([
@@ -59,11 +64,12 @@ export default async function Layout({
   );
 }
 
-export async function generateViewport({
-  params,
-}: {
-  params: { domain: string };
-}): Promise<Viewport> {
+export async function generateViewport(
+  props: {
+    params: Promise<{ domain: string }>;
+  }
+): Promise<Viewport> {
+  const params = await props.params;
   const domain = params.domain;
   const docsLoader = await createCachedDocsLoader(domain);
   const colors = await docsLoader.getColors();
@@ -90,11 +96,12 @@ function maybeToHex(color: RgbaColor | undefined): string | undefined {
   return tinycolor(color).toHexString();
 }
 
-export async function generateMetadata({
-  params,
-}: {
-  params: { domain: string };
-}): Promise<Metadata> {
+export async function generateMetadata(
+  props: {
+    params: Promise<{ domain: string }>;
+  }
+): Promise<Metadata> {
+  const params = await props.params;
   const domain = params.domain;
   const docsLoader = await createCachedDocsLoader(domain);
   const [files, config, baseUrl, seoDisabled] = await Promise.all([

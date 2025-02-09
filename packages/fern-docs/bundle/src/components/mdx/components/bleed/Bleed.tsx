@@ -8,7 +8,7 @@ interface BleedProps {
 export function Bleed({
   full = false,
   children,
-}: PropsWithChildren<BleedProps>): ReactElement {
+}: PropsWithChildren<BleedProps>): ReactElement<any> {
   return (
     <div
       className={cn(

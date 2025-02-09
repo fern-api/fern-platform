@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { ThemeProvider } from "next-themes";
-import { ReactElement } from "react";
 
 import "./globals.scss";
 
@@ -12,7 +11,7 @@ export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
-}>): ReactElement {
+}>) {
   return (
     <html lang="en">
       <body className="antialiased">

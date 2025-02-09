@@ -73,7 +73,7 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
           allowedDestinations: getAllowedRedirectUrls(config),
         })
       : NextResponse.next();
-    cookies().set(
+    (await cookies()).set(
       "access_token",
       accessToken,
       withSecureCookie(withDefaultProtocol(host))

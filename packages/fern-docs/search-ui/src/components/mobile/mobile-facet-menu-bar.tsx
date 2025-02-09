@@ -13,7 +13,6 @@ import { Check, ChevronDown, Minus } from "lucide-react";
 import {
   ComponentPropsWithoutRef,
   Fragment,
-  ReactElement,
   ReactNode,
   forwardRef,
 } from "react";
@@ -78,7 +77,7 @@ function MobileFacetMenu({
   filters: readonly FacetFilter[];
   removeFilter?: () => void;
   updateFilter?: (value: string) => void;
-}): ReactElement {
+}) {
   const otherFilters = filters.filter((f) => f.facet !== facet);
 
   const { facets, isLoading } = useFacets(otherFilters);

@@ -24,7 +24,7 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
   const domain = getDocsDomainEdge(req);
   const host = getHostEdge(req);
   const config = await getAuthEdgeConfig(domain);
-  const cookieJar = cookies();
+  const cookieJar = await cookies();
 
   const code = req.nextUrl.searchParams.get("code");
   const return_to = req.nextUrl.searchParams.get(getReturnToQueryParam(config));

@@ -14,7 +14,6 @@ import {
   Dispatch,
   KeyboardEventHandler,
   PropsWithChildren,
-  ReactElement,
   ReactNode,
   SetStateAction,
   createContext,
@@ -299,7 +298,7 @@ function InstantSearchWrapper({
 }: PropsWithChildren<{
   authenticatedUserToken?: string;
   analyticsTags?: string[];
-}>): ReactElement {
+}>) {
   const { searchClient, indexName } = useSearchClient();
   const { filters } = useFacetFilters();
 

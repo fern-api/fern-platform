@@ -4,7 +4,7 @@ import { DOCS_ATOM, LOGO_ATOM, LOGO_TEXT_ATOM, VERSIONS_ATOM } from "../atoms";
 import { Logo } from "../logo";
 import { VersionDropdown } from "./VersionDropdown";
 
-export function HeaderLogoSection(): ReactElement {
+export function HeaderLogoSection(): ReactElement<any> {
   const title = useAtomValue(DOCS_ATOM).title ?? "Logo";
   const { light, dark, height, href } = useAtomValue(LOGO_ATOM);
   const versions = useAtomValue(VERSIONS_ATOM);

@@ -26,7 +26,7 @@ interface PlaygroundResponseCard {
 export function PlaygroundResponseCard({
   response,
   sendRequest,
-}: PlaygroundResponseCard): ReactElement {
+}: PlaygroundResponseCard): ReactElement<any> {
   const { isBinaryOctetStreamAudioPlayer } = useEdgeFlags();
   return (
     <FernCard className="flex min-w-0 flex-1 shrink flex-col overflow-hidden rounded-xl shadow-sm">

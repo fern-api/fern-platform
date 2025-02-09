@@ -138,7 +138,7 @@ export const Callout: FC<PropsWithChildren<Callout.Props>> = ({
 export function InfoCallout({
   children,
   ...props
-}: PropsWithChildren<Omit<Callout.Props, "intent">>): ReactElement {
+}: PropsWithChildren<Omit<Callout.Props, "intent">>): ReactElement<any> {
   return (
     <Callout intent="info" {...props}>
       {children}
@@ -149,7 +149,7 @@ export function InfoCallout({
 export function WarningCallout({
   children,
   ...props
-}: PropsWithChildren<Omit<Callout.Props, "intent">>): ReactElement {
+}: PropsWithChildren<Omit<Callout.Props, "intent">>): ReactElement<any> {
   return (
     <Callout intent="warning" {...props}>
       {children}
@@ -160,7 +160,7 @@ export function WarningCallout({
 export function SuccessCallout({
   children,
   ...props
-}: PropsWithChildren<Omit<Callout.Props, "intent">>): ReactElement {
+}: PropsWithChildren<Omit<Callout.Props, "intent">>): ReactElement<any> {
   return (
     <Callout intent="success" {...props}>
       {children}
@@ -171,7 +171,7 @@ export function SuccessCallout({
 export function ErrorCallout({
   children,
   ...props
-}: PropsWithChildren<Omit<Callout.Props, "intent">>): ReactElement {
+}: PropsWithChildren<Omit<Callout.Props, "intent">>): ReactElement<any> {
   return (
     <Callout intent="error" {...props}>
       {children}
@@ -182,7 +182,7 @@ export function ErrorCallout({
 export function NoteCallout({
   children,
   ...props
-}: PropsWithChildren<Omit<Callout.Props, "intent">>): ReactElement {
+}: PropsWithChildren<Omit<Callout.Props, "intent">>): ReactElement<any> {
   return (
     <Callout intent="note" {...props}>
       {children}
@@ -193,7 +193,7 @@ export function NoteCallout({
 export function LaunchNoteCallout({
   children,
   ...props
-}: PropsWithChildren<Omit<Callout.Props, "intent">>): ReactElement {
+}: PropsWithChildren<Omit<Callout.Props, "intent">>): ReactElement<any> {
   return (
     <Callout intent="launch" {...props}>
       {children}
@@ -204,7 +204,7 @@ export function LaunchNoteCallout({
 export function TipCallout({
   children,
   ...props
-}: PropsWithChildren<Omit<Callout.Props, "intent">>): ReactElement {
+}: PropsWithChildren<Omit<Callout.Props, "intent">>): ReactElement<any> {
   return (
     <Callout intent="tip" {...props}>
       {children}
@@ -215,7 +215,7 @@ export function TipCallout({
 export function CheckCallout({
   children,
   ...props
-}: PropsWithChildren<Omit<Callout.Props, "intent">>): ReactElement {
+}: PropsWithChildren<Omit<Callout.Props, "intent">>): ReactElement<any> {
   return (
     <Callout intent="check" {...props}>
       {children}

@@ -55,16 +55,16 @@ export function ThemeScript({
     dark?: ColorsThemeConfig;
     light?: ColorsThemeConfig;
   };
-}): ReactElement {
+}): ReactElement<any> {
   const args = getAvailableThemes(colors);
   return (
     // eslint-disable-next-line @next/next/no-before-interactive-script-outside-document
-    <Script
+    (<Script
       id="theme-script"
       dangerouslySetInnerHTML={{
         __html: `(${script.toString()})(${JSON.stringify(args)})`,
       }}
       strategy="beforeInteractive"
-    />
+    />)
   );
 }

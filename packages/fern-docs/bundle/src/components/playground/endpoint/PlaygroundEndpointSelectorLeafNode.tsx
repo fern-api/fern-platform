@@ -111,7 +111,7 @@ PlaygroundEndpointSelectorLeafNode.displayName =
 function renderTextWithHighlight(
   text: string,
   highlight: string
-): ReactElement[] {
+): ReactElement<any>[] {
   highlight = highlight.trim();
   if (highlight === "") {
     return [<span key={0}>{text}</span>];

@@ -20,7 +20,7 @@ interface HeaderContainerProps {
 
 export function HeaderContainer({
   className,
-}: HeaderContainerProps): ReactElement {
+}: HeaderContainerProps): ReactElement<any> {
   const colors = useColors();
   const showHeaderTabs = useAtomValue(HAS_HORIZONTAL_TABS);
   const isScrolled = useIsScrolled();

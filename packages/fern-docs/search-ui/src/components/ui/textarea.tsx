@@ -54,7 +54,7 @@ TextArea.displayName = "TextArea";
 
 // Updates the height of a <textarea> when the value changes.
 function useAutosizeTextArea(
-  textAreaRef: RefObject<HTMLTextAreaElement>,
+  textAreaRef: RefObject<HTMLTextAreaElement | null>,
   minLines: number = 1,
   lineHeight: number = 20,
   padding: number = 0

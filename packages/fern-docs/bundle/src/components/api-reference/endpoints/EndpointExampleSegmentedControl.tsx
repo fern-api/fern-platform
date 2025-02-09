@@ -13,7 +13,7 @@ export function EndpointExampleSegmentedControl({
   }[];
   selectedExample: CodeExample | undefined;
   onSelectExample: (exampleKey: string) => void;
-}): ReactElement {
+}): ReactElement<any> {
   // TODO: Replace this with a proper segmented control component
   return (
     <FernButtonGroup className="min-w-0 shrink">

@@ -20,7 +20,7 @@ export function PlaygroundEndpointContentLayout({
   requestCard,
   responseCard,
   endpointId,
-}: PlaygroundEndpointContentLayoutProps): ReactElement {
+}: PlaygroundEndpointContentLayoutProps): ReactElement<any> {
   const isMobileScreen = useAtomValue(IS_MOBILE_SCREEN_ATOM);
 
   const scrollAreaRef = useRef<HTMLDivElement>(null);

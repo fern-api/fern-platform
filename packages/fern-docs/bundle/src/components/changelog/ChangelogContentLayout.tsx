@@ -12,7 +12,7 @@ export function ChangelogContentLayout({
   children,
   stickyContent,
   ...props
-}: ChangelogContentLayoutProps): ReactElement {
+}: ChangelogContentLayoutProps): ReactElement<any> {
   const asideContent = stickyContent != null && (
     <div className="fern-changelog-date">{stickyContent}</div>
   );

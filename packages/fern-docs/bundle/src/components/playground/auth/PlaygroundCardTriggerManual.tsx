@@ -20,7 +20,7 @@ export function PlaygroundCardTriggerManual({
   disabled,
   toggleOpen,
   isOpen,
-}: PlaygroundCardTriggerManualProps): ReactElement | false {
+}: PlaygroundCardTriggerManualProps): ReactElement<any> | false {
   const authState = useAtomValue(PLAYGROUND_AUTH_STATE_ATOM);
 
   const authButtonCopy = visitDiscriminatedUnion(auth)._visit({

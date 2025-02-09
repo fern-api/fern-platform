@@ -5,20 +5,22 @@ import Page, { generateMetadata as _generateMetadata } from "../../_page";
 
 export const dynamic = "force-dynamic";
 
-export default async function StaticPage({
-  params,
-}: {
-  params: { slug?: string[]; domain: string };
-}) {
-  const fern_token = cookies().get(COOKIE_FERN_TOKEN)?.value;
+export default async function StaticPage(
+  props: {
+    params: Promise<{ slug?: string[]; domain: string }>;
+  }
+) {
+  const params = await props.params;
+  const fern_token = (await cookies()).get(COOKIE_FERN_TOKEN)?.value;
   return <Page params={params} fern_token={fern_token} />;
 }
 
-export async function generateMetadata({
-  params,
-}: {
-  params: { slug?: string[]; domain: string };
-}): Promise<Metadata> {
-  const fern_token = cookies().get(COOKIE_FERN_TOKEN)?.value;
+export async function generateMetadata(
+  props: {
+    params: Promise<{ slug?: string[]; domain: string }>;
+  }
+): Promise<Metadata> {
+  const params = await props.params;
+  const fern_token = (await cookies()).get(COOKIE_FERN_TOKEN)?.value;
   return _generateMetadata({ params, fern_token });
 }

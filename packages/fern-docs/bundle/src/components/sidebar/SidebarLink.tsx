@@ -32,7 +32,7 @@ import { scrollToCenter } from "../util/scrollToCenter";
 
 interface SidebarSlugLinkProps {
   nodeId: FernNavigation.NodeId;
-  icon?: ReactElement | string;
+  icon?: ReactElement<any> | string;
   slug?: FernNavigation.Slug;
   onClick?: React.MouseEventHandler<HTMLAnchorElement | HTMLButtonElement>;
   onClickIndicator?: React.MouseEventHandler<HTMLSpanElement>;
@@ -97,7 +97,7 @@ const SidebarLinkInternal = forwardRef<HTMLDivElement, SidebarLinkProps>(
       return null;
     }
 
-    const renderLink = (child: ReactElement) => {
+    const renderLink = (child: ReactElement<any>) => {
       const linkClassName = cn(linkClassNameProp, "fern-sidebar-link", {
         "opacity-50": hidden,
       });

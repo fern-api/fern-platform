@@ -16,7 +16,7 @@ export function PageLayout({
   children,
   editThisPageUrl,
   hideFeedback,
-}: PageLayoutProps): ReactElement {
+}: PageLayoutProps): ReactElement<any> {
   return (
     <main className="fern-page-layout">
       <PageHeader />

@@ -34,8 +34,8 @@
     "test:update": "vitest --run src/** --globals -u"
   },
   "dependencies": {
-    "@aws-sdk/client-s3": "^3.685.0",
-    "@aws-sdk/s3-request-presigner": "^3.685.0",
+    "@aws-sdk/client-s3": "^3.744.0",
+    "@aws-sdk/s3-request-presigner": "^3.744.0",
     "@fern-api/fdr-sdk": "workspace:*",
     "@fern-api/github": "workspace:*",
     "@fern-api/template-resolver": "workspace:*",

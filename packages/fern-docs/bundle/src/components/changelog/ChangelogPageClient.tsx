@@ -39,7 +39,7 @@ export default function ChangelogPageClient({
   anchorIds: Record<string, FernNavigation.PageId>;
   overview: React.ReactNode;
   entries: Record<string, React.ReactNode>;
-}): ReactElement {
+}): ReactElement<any> {
   const flattenedEntries = useMemo(() => flattenChangelogEntries(node), [node]);
   const chunkedEntries = useMemo(
     () => chunk(flattenedEntries, CHANGELOG_PAGE_SIZE),

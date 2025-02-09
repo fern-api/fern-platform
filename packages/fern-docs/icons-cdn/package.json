@@ -11,7 +11,7 @@
   "scripts": {
     "build": "next build",
     "depcheck": "depcheck",
-    "dev": "next dev",
+    "dev": "next dev --turbopack",
     "format": "prettier --write --ignore-unknown \"**\"",
     "format:check": "prettier --check --ignore-unknown \"**\"",
     "lint": "next lint",
@@ -34,26 +34,20 @@
     "@fortawesome/sharp-regular-svg-icons": "^6.7.2",
     "@fortawesome/sharp-solid-svg-icons": "^6.7.2",
     "@fortawesome/sharp-thin-svg-icons": "^6.7.2",
-    "react": "^18",
-    "react-dom": "^18"
+    "react": "19.0.0",
+    "react-dom": "19.0.0"
   },
   "devDependencies": {
     "@fern-platform/configs": "workspace:*",
-    "@next/bundle-analyzer": "14.2.23",
+    "@next/bundle-analyzer": "15.1.6",
     "@types/node": "^18.7.18",
-    "@types/react": "^18",
+    "@types/react": "19.0.8",
     "depcheck": "^1.4.7",
     "eslint": "^9",
-    "next": "14.2.23",
+    "next": "15.1.6",
     "prettier": "^3.4.2",
     "stylelint": "^16.1.0",
     "typescript": "^5",
     "vitest": "^2.1.4"
-  },
-  "optionalDependencies": {
-    "@next/swc-darwin-arm64": "14.2.23",
-    "@next/swc-darwin-x64": "14.2.23",
-    "@next/swc-linux-x64-gnu": "14.2.23",
-    "@next/swc-win32-x64-msvc": "14.2.23"
   }
 }

@@ -14,7 +14,7 @@ export function PlaygroundBearerAuthForm({
 }: {
   bearerAuth: APIV1Read.BearerAuth;
   disabled?: boolean;
-}): ReactElement {
+}): ReactElement<any> {
   const [value, setValue] = useAtom(PLAYGROUND_AUTH_STATE_BEARER_TOKEN_ATOM);
   const isBearerTokenResettable = useAtomValue(
     PLAYGROUND_AUTH_STATE_BEARER_TOKEN_IS_RESETTABLE_ATOM

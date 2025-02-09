@@ -14,7 +14,7 @@ export declare namespace TitledExample {
   export interface Props {
     title: ReactNode;
     intent?: SemanticColor;
-    actions?: ReactElement;
+    actions?: ReactElement<any>;
     className?: string;
     copyToClipboardText?: () => string; // use provider to lazily compute clipboard text
     onClick?: MouseEventHandler<HTMLDivElement>;

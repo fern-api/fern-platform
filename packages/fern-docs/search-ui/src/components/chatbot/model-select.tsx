@@ -1,6 +1,5 @@
 import {
   ComponentPropsWithoutRef,
-  ReactElement,
   ReactNode,
   createContext,
   forwardRef,
@@ -66,7 +65,7 @@ export function ChatbotModelProvider({
 }: {
   children: ReactNode;
   models: ChatbotModel[];
-}): ReactElement {
+}) {
   return (
     <ChatbotModelContext.Provider value={models}>
       {children}

@@ -39,7 +39,7 @@ export function useIntercomInitializer(
 
 export function IntercomScript(props: {
   config?: DocsV1Read.IntercomConfig;
-}): ReactElement {
+}): ReactElement<any> {
   useIntercomInitializer(props.config);
 
   if (!props.config) {

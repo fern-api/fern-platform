@@ -21,7 +21,7 @@ export function EndpointPair({
   apiDefinition,
   breadcrumb,
   last,
-}: EndpointPairProps): ReactElement {
+}: EndpointPairProps): ReactElement<any> {
   const isStream = useAtomValue(FERN_STREAM_ATOM);
 
   useAtomEffect(

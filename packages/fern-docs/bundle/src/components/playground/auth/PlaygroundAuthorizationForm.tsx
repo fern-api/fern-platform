@@ -16,8 +16,8 @@ export const PlaygroundAuthorizationForm: FC<
   PlaygroundAuthorizationFormProps
 > = ({ auth, closeContainer, disabled }) => {
   return (
-    <ul className="list-none px-4">
-      {visitDiscriminatedUnion(auth, "type")._visit<ReactElement | false>({
+    (<ul className="list-none px-4">
+      {visitDiscriminatedUnion(auth, "type")._visit<ReactElement<any> | false>({
         bearerAuth: (bearerAuth) => (
           <PlaygroundBearerAuthForm
             bearerAuth={bearerAuth}
@@ -39,6 +39,6 @@ export const PlaygroundAuthorizationForm: FC<
         ),
         _other: () => false,
       })}
-    </ul>
+    </ul>)
   );
 };

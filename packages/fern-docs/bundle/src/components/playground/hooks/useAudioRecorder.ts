@@ -24,7 +24,7 @@ export function useAudioRecorder(
     null
   );
   const analyserRef = useRef<AnalyserNode | null>(null);
-  const animationFrameRef = useRef<number>();
+  const animationFrameRef = useRef<number>(undefined);
   const chunksRef = useRef<Blob[]>([]);
   const [audioUrl, setAudioUrl] = useState<string | null>(null);
   const mimeType = "audio/webm;codecs=opus";

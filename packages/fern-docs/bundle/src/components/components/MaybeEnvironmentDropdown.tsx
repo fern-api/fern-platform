@@ -29,7 +29,7 @@ export function MaybeEnvironmentDropdown({
   options,
   editable,
   isEditingEnvironment,
-}: MaybeEnvironmentDropdownProps): ReactElement | null {
+}: MaybeEnvironmentDropdownProps): ReactElement<any> | null {
   // const [allEnvironmentIds] = useAtom(ALL_ENVIRONMENTS_ATOM);
   const [selectedEnvironmentId, setSelectedEnvironmentId] = useAtom(
     SELECTED_ENVIRONMENT_ATOM

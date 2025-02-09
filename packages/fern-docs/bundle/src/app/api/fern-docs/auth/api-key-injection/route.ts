@@ -21,7 +21,7 @@ export async function GET(
 ): Promise<NextResponse<APIKeyInjectionConfig>> {
   const domain = getDocsDomainEdge(req);
   const host = getHostEdge(req);
-  const cookieJar = cookies();
+  const cookieJar = await cookies();
 
   const edgeConfig = await getAuthEdgeConfig(domain);
 

@@ -5,10 +5,10 @@ import { Primitive } from "@radix-ui/react-primitive";
 import {
   ComponentPropsWithoutRef,
   KeyboardEvent,
-  LegacyRef,
   MutableRefObject,
   ReactElement,
   ReactNode,
+  Ref,
   RefCallback,
   RefObject,
   cloneElement,
@@ -1258,7 +1258,7 @@ function useLazyRef<T>(fn: () => T) {
 // https://github.com/gregberge/react-merge-refs
 // Copyright (c) 2020 Greg Bergé
 function mergeRefs<T = any>(
-  refs: (MutableRefObject<T> | LegacyRef<T>)[]
+  refs: (MutableRefObject<T> | Ref<T>)[]
 ): RefCallback<T> {
   return (value) => {
     refs.forEach((ref) => {
@@ -1280,8 +1280,8 @@ function useCmdk<T = any>(selector: (state: State) => T): T {
 
 function useValue(
   id: string,
-  ref: RefObject<HTMLElement>,
-  deps: (string | ReactNode | RefObject<HTMLElement>)[],
+  ref: RefObject<HTMLElement | null>,
+  deps: (string | ReactNode | RefObject<HTMLElement | null>)[],
   aliases: string[] = []
 ) {
   const valueRef = useRef<string>();
@@ -1330,7 +1330,7 @@ const useScheduleLayoutEffect = () => {
   };
 };
 
-function renderChildren(children: ReactElement) {
+function renderChildren(children: ReactElement<any>) {
   const childrenType = children.type as any;
   // The children is a component
   if (typeof childrenType === "function") {
@@ -1348,7 +1348,7 @@ function renderChildren(children: ReactElement) {
 
 function SlottableWithNestedChildren(
   { asChild, children }: { asChild?: boolean; children?: ReactNode },
-  render: (child: ReactNode) => ReactElement
+  render: (child: ReactNode) => ReactElement<any>
 ) {
   if (asChild && isValidElement(children)) {
     return cloneElement(

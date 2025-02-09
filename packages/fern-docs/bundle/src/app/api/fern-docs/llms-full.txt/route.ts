@@ -15,7 +15,7 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
   const path = addLeadingSlash(req.nextUrl.searchParams.get("slug") ?? "");
   const domain = getDocsDomainEdge(req);
   const host = getHostEdge(req);
-  const fern_token = cookies().get(COOKIE_FERN_TOKEN)?.value;
+  const fern_token = (await cookies()).get(COOKIE_FERN_TOKEN)?.value;
   const edgeFlags = await getEdgeFlags(domain);
   const loader = DocsLoader.for(domain, host, fern_token).withEdgeFlags(
     edgeFlags

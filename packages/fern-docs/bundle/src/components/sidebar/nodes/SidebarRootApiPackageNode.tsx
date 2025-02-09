@@ -15,7 +15,7 @@ export interface SidebarRootApiPackageNodeProps {
 export function SidebarRootApiPackageNode({
   node,
   className,
-}: SidebarRootApiPackageNodeProps): ReactElement | null {
+}: SidebarRootApiPackageNodeProps): ReactElement<any> | null {
   const childSelected = useIsChildSelected(node.id);
   const shallow = useIsApiReferenceShallowLink(node);
 

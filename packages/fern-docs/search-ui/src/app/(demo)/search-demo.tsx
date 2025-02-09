@@ -1,7 +1,7 @@
 "use client";
 
 import { useTheme } from "next-themes";
-import { ReactElement, useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import useSWR from "swr";
 import { z } from "zod";
 
@@ -42,7 +42,7 @@ export function DemoInstantSearchClient({
 }: {
   appId: string;
   domain: string;
-}): ReactElement | false {
+}) {
   const [initialInput, setInitialInput] = useState("");
   const [askAi, setAskAi] = useState(false);
   const [open, setOpen] = useState(false);

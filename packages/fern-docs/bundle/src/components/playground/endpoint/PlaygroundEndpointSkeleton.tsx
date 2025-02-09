@@ -28,7 +28,7 @@ function PlaygroundEndpointPath() {
   );
 }
 
-export function PlaygroundEndpointSkeleton(): ReactElement {
+export function PlaygroundEndpointSkeleton(): ReactElement<any> {
   const form = (
     <div className="mx-auto w-full max-w-5xl space-y-6 pt-6 max-sm:pt-0 sm:pb-20">
       <div className="col-span-2 space-y-8">

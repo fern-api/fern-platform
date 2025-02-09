@@ -12,7 +12,7 @@ export interface FernBreadcrumbsProps {
 
 export function FernBreadcrumbs({
   breadcrumb,
-}: FernBreadcrumbsProps): ReactElement | null {
+}: FernBreadcrumbsProps): ReactElement<any> | null {
   const toHref = useToHref();
   const filteredBreadcrumbs = breadcrumb.filter(
     (item) => item.title.trim().length > 0

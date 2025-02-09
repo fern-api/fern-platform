@@ -4,7 +4,7 @@ import { TypeComponentSeparator } from "../TypeComponentSeparator";
 
 export declare namespace TypeDefinitionDetails {
   export interface Props {
-    elements: ReactElement[];
+    elements: ReactElement<any>[];
     separatorText: string | undefined;
   }
 }

@@ -68,7 +68,7 @@ export const BuiltWithFern: React.FC<{ className?: string }> = ({
 function BuiltWithFernWatcher({
   component,
 }: {
-  component: React.RefObject<HTMLAnchorElement>;
+  component: React.RefObject<HTMLAnchorElement | null>;
 }) {
   useEffect(() => {
     const checkVisibility = () => {

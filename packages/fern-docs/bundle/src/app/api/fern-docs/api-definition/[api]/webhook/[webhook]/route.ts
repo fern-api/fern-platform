@@ -7,8 +7,9 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: { api: string; webhook: string } }
+  props: { params: Promise<{ api: string; webhook: string }> }
 ): Promise<NextResponse> {
+  const params = await props.params;
   const { api, webhook } = params;
 
   const { getAuthState, domain } = await createGetAuthStateEdge(req);

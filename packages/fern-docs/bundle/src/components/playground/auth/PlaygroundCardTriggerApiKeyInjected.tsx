@@ -28,7 +28,7 @@ export function PlaygroundCardTriggerApiKeyInjected({
   disabled,
   toggleOpen,
   onClose,
-}: PlaygroundCardTriggerApiKeyInjectedProps): ReactElement | false {
+}: PlaygroundCardTriggerApiKeyInjectedProps): ReactElement<any> | false {
   const searchParams = useSearchParams();
   const error = searchParams.get("error");
   const errorDescription = searchParams.get("error_description");

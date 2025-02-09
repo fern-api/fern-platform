@@ -36,7 +36,7 @@ function FoundOAuthReferencedEndpointForm({
   referencedEndpoint: APIV1Read.OAuthClientCredentials.ReferencedEndpoint;
   closeContainer: () => void;
   disabled?: boolean;
-}): ReactElement {
+}): ReactElement<any> {
   const [value, setValue] = useAtom(PLAYGROUND_AUTH_STATE_OAUTH_ATOM);
   const [formState, setFormState] = usePlaygroundEndpointFormState(context);
   const [baseUrl] = usePlaygroundBaseUrl(context.endpoint);
@@ -223,11 +223,11 @@ export function PlaygroundOAuthForm({
   oAuth: APIV1Read.ApiAuth.OAuth;
   closeContainer: () => void;
   disabled?: boolean;
-}): ReactElement | false {
+}): ReactElement<any> | false {
   return visitDiscriminatedUnion(oAuth.value, "type")._visit({
     clientCredentials: (clientCredentials) => {
       return visitDiscriminatedUnion(clientCredentials.value, "type")._visit<
-        ReactElement | false
+        ReactElement<any> | false
       >({
         referencedEndpoint: (referencedEndpoint) => (
           <OAuthReferencedEndpointForm

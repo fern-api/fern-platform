@@ -55,7 +55,7 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
       })
     : NextResponse.next();
 
-  const cookieJar = cookies();
+  const cookieJar = await cookies();
   cookieJar.set(
     COOKIE_FERN_TOKEN,
     token,

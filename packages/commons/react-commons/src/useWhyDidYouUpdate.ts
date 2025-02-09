@@ -6,7 +6,7 @@ export function useWhyDidYouUpdate(
 ): void {
   // Get a mutable ref object where we can store props ...
   // ... for comparison next time this hook runs.
-  const previousProps = useRef<Record<string, unknown>>();
+  const previousProps = useRef<Record<string, unknown>>(null);
 
   useEffect(() => {
     const prev = previousProps.current;

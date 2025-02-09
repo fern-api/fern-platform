@@ -19,7 +19,7 @@ interface PlaygroundAuthorizationFormCardProps {
 export function PlaygroundAuthorizationFormCard({
   auth,
   disabled,
-}: PlaygroundAuthorizationFormCardProps): ReactElement | null {
+}: PlaygroundAuthorizationFormCardProps): ReactElement<any> | null {
   const setBearerAuth = useSetAtom(PLAYGROUND_AUTH_STATE_BEARER_TOKEN_ATOM);
   const setOAuth = useSetAtom(PLAYGROUND_AUTH_STATE_OAUTH_ATOM);
   const isOpen = useBooleanState(false);

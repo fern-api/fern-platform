@@ -2,7 +2,6 @@ import { useEventCallback } from "@fern-ui/react-commons";
 import { useControllableState } from "@radix-ui/react-use-controllable-state";
 import {
   Dispatch,
-  ReactElement,
   SetStateAction,
   createContext,
   useContext,
@@ -28,7 +27,7 @@ function CommandUxProvider(props: {
   // focus: (opts?: { scrollToTop?: boolean }) => void;
   setInputRef: (ref: HTMLInputElement | HTMLTextAreaElement | null) => void;
   children: React.ReactNode;
-}): ReactElement {
+}) {
   const [inputError, setInputError] = useControllableState<string | null>({
     prop: props.inputError,
     defaultProp: null,

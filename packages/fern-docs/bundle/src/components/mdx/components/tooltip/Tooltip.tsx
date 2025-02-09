@@ -12,7 +12,7 @@ export function Tooltip({
   tip,
   side = "top",
   sideOffset = 6,
-}: PropsWithChildren<TooltipProps>): ReactElement {
+}: PropsWithChildren<TooltipProps>): ReactElement<any> {
   return (
     <FernTooltipProvider delayDuration={0}>
       <FernTooltip content={tip} side={side} sideOffset={sideOffset}>

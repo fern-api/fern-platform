@@ -20,7 +20,7 @@ export function GuideLayout({
   editThisPageUrl,
   hideFeedback,
   hideNavLinks,
-}: GuideLayoutProps): ReactElement {
+}: GuideLayoutProps): ReactElement<any> {
   return (
     <main className="fern-guide-layout">
       <TableOfContents />

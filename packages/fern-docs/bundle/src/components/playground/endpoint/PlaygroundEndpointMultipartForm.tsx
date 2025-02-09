@@ -41,7 +41,7 @@ export function PlaygroundEndpointMultipartForm({
   formData,
   types,
   setBody,
-}: PlaygroundEndpointMultipartFormProps): ReactElement {
+}: PlaygroundEndpointMultipartFormProps): ReactElement<any> {
   const formDataFormValue =
     formState?.body?.type === "form-data" ? formState?.body.value : {};
 

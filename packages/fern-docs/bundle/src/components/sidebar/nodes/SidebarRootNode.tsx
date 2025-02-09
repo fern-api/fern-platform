@@ -8,7 +8,7 @@ interface SidebarRootNodeProps {
 
 export const SidebarRootNode = memo(function SidebarRootNode({
   node,
-}: SidebarRootNodeProps): ReactElement | null {
+}: SidebarRootNodeProps): ReactElement<any> | null {
   if (!node) {
     return null;
   }

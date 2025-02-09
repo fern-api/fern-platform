@@ -1,11 +1,5 @@
 import { PrimitiveAtom, atom } from "jotai";
-import {
-  ReactElement,
-  ReactNode,
-  createContext,
-  useContext,
-  useRef,
-} from "react";
+import { ReactNode, createContext, useContext, useRef } from "react";
 
 export interface Footnote {
   ids: string[];
@@ -24,7 +18,7 @@ export function ChatbotTurnContextProvider({
   children,
 }: {
   children: ReactNode;
-}): ReactElement {
+}) {
   const footnotes = useRef(atom<Footnote[]>([]));
 
   return (

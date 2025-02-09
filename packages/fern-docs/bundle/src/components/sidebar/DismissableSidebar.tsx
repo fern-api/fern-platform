@@ -20,7 +20,7 @@ export function DismissableSidebar({
   className,
 }: {
   className?: string;
-}): ReactElement {
+}): ReactElement<any> {
   const handleDismissSidebar = useDismissSidebar();
   const showSidebar = useAtomValue(DISMISSABLE_SIDEBAR_OPEN_ATOM);
   const sidebarRef = useRef<HTMLElement>(null);

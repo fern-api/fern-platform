@@ -24,7 +24,7 @@ export function PlaygroundObjectForm({
   value,
   types,
   defaultValue,
-}: PlaygroundObjectFormProps): ReactElement {
+}: PlaygroundObjectFormProps): ReactElement<any> {
   const { properties, extraProperties } = useMemo(
     () => unwrapObjectType(shape, types),
     [shape, types]

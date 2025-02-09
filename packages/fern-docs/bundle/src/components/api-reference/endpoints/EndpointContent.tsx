@@ -23,7 +23,7 @@ export async function EndpointContent({
   context: EndpointContext;
   // hideBottomSeparator?: boolean;
   breadcrumb: readonly FernNavigation.BreadcrumbItem[];
-  streamToggle?: React.ReactElement;
+  streamToggle?: React.ReactElement<any>;
   // last?: boolean;
   rootslug: FernNavigation.Slug;
 }) {

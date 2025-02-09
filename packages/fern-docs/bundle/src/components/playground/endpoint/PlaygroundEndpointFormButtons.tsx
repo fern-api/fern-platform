@@ -19,7 +19,7 @@ export function PlaygroundEndpointFormButtons({
   node,
   resetWithExample,
   resetWithoutExample,
-}: PlaygroundEndpointFormButtonsProps): ReactElement {
+}: PlaygroundEndpointFormButtonsProps): ReactElement<any> {
   const activeNavigatable = useAtomValue(CURRENT_NODE_ATOM);
   const apiReferenceId =
     FernNavigation.utils.getApiReferenceId(activeNavigatable);

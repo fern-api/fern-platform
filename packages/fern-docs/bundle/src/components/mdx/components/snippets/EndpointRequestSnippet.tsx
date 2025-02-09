@@ -51,7 +51,7 @@ export function EndpointRequestSnippetInternal({
 }: {
   endpoint: ApiDefinition.EndpointDefinition;
   example: string | undefined;
-}): ReactElement | null {
+}): ReactElement<any> | null {
   const slug = useAtomValue(ENDPOINT_ID_TO_SLUG_ATOM)[endpoint.id];
   const {
     selectedExample,

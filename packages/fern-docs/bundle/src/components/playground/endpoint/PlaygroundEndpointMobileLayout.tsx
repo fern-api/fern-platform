@@ -16,7 +16,7 @@ export function PlaygroundEndpointMobileLayout({
   requestCard,
   responseCard,
   sendButton,
-}: PlaygroundEndpointMobileLayoutProps): ReactElement {
+}: PlaygroundEndpointMobileLayoutProps): ReactElement<any> {
   const [tabValue, setTabValue] = useState<string>("0");
   const { grpcEndpoints } = useEdgeFlags();
   return (

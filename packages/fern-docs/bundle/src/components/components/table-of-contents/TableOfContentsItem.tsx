@@ -11,7 +11,7 @@ export interface TableOfContentsItemProps {
 }
 
 export const TableOfContentsItem = memo<TableOfContentsItemProps>(
-  (props): ReactElement => {
+  (props): ReactElement<any> => {
     const { text, anchorString, active, setActiveRef, depth = 0 } = props;
     const ref = useRef<HTMLLIElement>(null);
 

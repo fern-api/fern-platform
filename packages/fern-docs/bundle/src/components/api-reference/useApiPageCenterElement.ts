@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { RefObject, useEffect } from "react";
 
 export function useApiPageCenterElement(
-  ref: RefObject<HTMLDivElement>,
+  ref: RefObject<HTMLDivElement | null>,
   slug: FernNavigation.Slug,
   skip = false
 ): void {

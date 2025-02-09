@@ -332,135 +332,132 @@ const DesktopAskAIChat = ({
 
   const messages = useDeferredValue(chat.messages);
 
-  return (
-    <>
-      <Command.List
-        onWheel={(e) => {
-          if (e.deltaY > 0) {
-            setUserScrolled(true);
-          }
-        }}
-        onTouchMove={(e) => {
-          if (
-            e.touches[0]?.clientY !== e.touches[e.touches.length - 1]?.clientY
-          ) {
-            setUserScrolled(true);
-          }
-        }}
-        onScroll={(e) => {
-          if (e.currentTarget.scrollTop > 5) {
-            setIsScrolled(true);
-          } else {
-            setIsScrolled(false);
-          }
-        }}
-        tabIndex={-1}
-        className={cn(isScrolled && "mask-grad-top-3")}
-        data-disable-animation={chat.isLoading ? "" : undefined}
-      >
-        <headerActions.In>
-          {chat.messages.length > 0 && (
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Button
-                    size="iconXs"
-                    variant="outline"
-                    onClick={() => {
-                      chat.setMessages([]);
-                      setInitialConversation([]);
-                    }}
-                  >
-                    <SquarePen />
-                  </Button>
-                </TooltipTrigger>
-                <TooltipPortal>
-                  <TooltipContent>
-                    <p>New chat</p>
-                  </TooltipContent>
-                </TooltipPortal>
-              </Tooltip>
-            </TooltipProvider>
-          )}
-        </headerActions.In>
-
-        <AskAICommandItems
-          messages={messages}
-          onSelectHit={onSelectHit}
-          prefetch={prefetch}
-          components={useMemo(
-            () => ({
-              pre(props) {
-                if (
-                  isValidElement(props.children) &&
-                  props.children.type === "code"
-                ) {
-                  const { children, className } = props.children.props as {
-                    children: string;
-                    className: string;
-                  };
-                  if (typeof children === "string") {
-                    const match =
-                      /language-(\w+)/.exec(className || "")?.[1] ??
-                      "plaintext";
-                    return (
-                      <CodeBlock
-                        code={children}
-                        language={match}
-                        fontSize="sm"
-                      />
-                    );
-                  }
-                }
-                return <pre {...props} />;
-              },
-
-              a: ({ children, node, ...props }) => (
-                <a
-                  {...props}
-                  className="font-semibold decoration-[var(--accent-a10)] hover:text-[var(--accent-a10)] hover:decoration-2"
-                  target="_blank"
-                  rel="noreferrer"
+  return (<>
+    <Command.List
+      onWheel={(e) => {
+        if (e.deltaY > 0) {
+          setUserScrolled(true);
+        }
+      }}
+      onTouchMove={(e) => {
+        if (
+          e.touches[0]?.clientY !== e.touches[e.touches.length - 1]?.clientY
+        ) {
+          setUserScrolled(true);
+        }
+      }}
+      onScroll={(e) => {
+        if (e.currentTarget.scrollTop > 5) {
+          setIsScrolled(true);
+        } else {
+          setIsScrolled(false);
+        }
+      }}
+      tabIndex={-1}
+      className={cn(isScrolled && "mask-grad-top-3")}
+      data-disable-animation={chat.isLoading ? "" : undefined}
+    >
+      <headerActions.In>
+        {chat.messages.length > 0 && (
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  size="iconXs"
+                  variant="outline"
+                  onClick={() => {
+                    chat.setMessages([]);
+                    setInitialConversation([]);
+                  }}
                 >
-                  {children}
-                </a>
-              ),
-            }),
-            []
-          )}
-          isLoading={chat.isLoading}
-          userScrolled={userScrolled}
-          domain={domain}
-          renderActions={renderActions}
-        >
-          {suggestionsApi && (
-            <Suggestions
-              api={suggestionsApi}
-              body={body}
-              headers={headers}
-              askAI={askAI}
-            />
-          )}
-        </AskAICommandItems>
-      </Command.List>
+                  <SquarePen />
+                </Button>
+              </TooltipTrigger>
+              <TooltipPortal>
+                <TooltipContent>
+                  <p>New chat</p>
+                </TooltipContent>
+              </TooltipPortal>
+            </Tooltip>
+          </TooltipProvider>
+        )}
+      </headerActions.In>
 
-      <AskAIComposer
-        ref={inputRef}
-        value={chat.input}
-        onValueChange={chat.setInput}
+      <AskAICommandItems
+        messages={messages}
+        onSelectHit={onSelectHit}
+        prefetch={prefetch}
+        components={useMemo(
+          () => ({
+            pre(props) {
+              if (
+                isValidElement(props.children) &&
+                props.children.type === "code"
+              ) {
+                const { children, className } = props.children.props as {
+                  children: string;
+                  className: string;
+                };
+                if (typeof children === "string") {
+                  const match =
+                    /language-(\w+)/.exec(className || "")?.[1] ??
+                    "plaintext";
+                  return (
+                    <CodeBlock
+                      code={children}
+                      language={match}
+                      fontSize="sm"
+                    />
+                  );
+                }
+              }
+              return <pre {...props} />;
+            },
+
+            a: ({ children, node, ...props }) => (
+              <a
+                {...props}
+                className="font-semibold decoration-[var(--accent-a10)] hover:text-[var(--accent-a10)] hover:decoration-2"
+                target="_blank"
+                rel="noreferrer"
+              >
+                {children}
+              </a>
+            ),
+          }),
+          []
+        )}
         isLoading={chat.isLoading}
-        stop={chat.stop}
-        onSend={askAI}
-        onKeyDown={useEventCallback((e) => {
-          if (e.key === "ArrowUp" || e.key === "ArrowDown") {
-            setUserScrolled(true);
-          }
-        })}
-        onPopState={onReturnToSearch}
-        actions={composerActions}
-      />
-    </>
-  );
+        userScrolled={userScrolled}
+        domain={domain}
+        renderActions={renderActions}
+      >
+        {suggestionsApi && (
+          <Suggestions
+            api={suggestionsApi}
+            body={body}
+            headers={headers}
+            askAI={askAI}
+          />
+        )}
+      </AskAICommandItems>
+    </Command.List>
+    <AskAIComposer
+      ref={inputRef}
+      value={chat.input}
+      onValueChange={chat.setInput}
+      isLoading={chat.isLoading}
+      stop={chat.stop}
+      onSend={askAI}
+      onKeyDown={useEventCallback((e) => {
+        if (e.key === "ArrowUp" || e.key === "ArrowDown") {
+          setUserScrolled(true);
+        }
+      })}
+      onPopState={onReturnToSearch}
+      actions={composerActions}
+    />
+  </>);
 };
 
 const AskAIComposer = forwardRef<
@@ -579,7 +576,7 @@ const AskAICommandItems = memo<{
     prefetch,
     domain,
     renderActions,
-  }): ReactElement => {
+  }): ReactElement<any> => {
     const squeezedMessages = squeezeMessages(messages);
 
     const lastConversationRef = useRef<Element | null>(null);

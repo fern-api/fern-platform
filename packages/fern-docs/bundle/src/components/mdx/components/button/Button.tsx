@@ -31,7 +31,7 @@ export function Button({
   href,
   className,
   ...props
-}: Button.Props): ReactElement {
+}: Button.Props): ReactElement<any> {
   const variant = outlined ? "outlined" : minimal ? "minimal" : "filled";
   const size = small ? "small" : large ? "large" : "normal";
   if (href != null) {

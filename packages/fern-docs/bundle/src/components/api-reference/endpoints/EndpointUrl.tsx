@@ -55,7 +55,7 @@ export const EndpointUrl = React.forwardRef<
   const isEditingEnvironment = useBooleanState(false);
 
   const pathParts = useMemo(() => {
-    const elements: (ReactElement | null)[] = [];
+    const elements: (ReactElement<any> | null)[] = [];
     path.forEach((part, i) => {
       visitDiscriminatedUnion(part)._visit({
         literal: (literal) => {

@@ -13,7 +13,7 @@ export declare namespace Endpoint {
     node: FernNavigation.EndpointNode;
     apiDefinition: ApiDefinition;
     breadcrumb: readonly FernNavigation.BreadcrumbItem[];
-    streamToggle?: React.ReactElement;
+    streamToggle?: React.ReactElement<any>;
     last?: boolean;
   }
 }

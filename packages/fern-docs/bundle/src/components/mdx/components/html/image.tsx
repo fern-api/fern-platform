@@ -91,7 +91,7 @@ Image.displayName = "Image";
  * @returns true if the element is an `Image` component
  */
 export function isImageElement(
-  element: ReactElement
+  element: ReactElement<any>
 ): element is ReactElement<ComponentProps<typeof Image>> {
   return element.type === Image;
 }

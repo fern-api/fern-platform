@@ -13,7 +13,7 @@ export interface PlaygroundMicrophoneFormProps extends FernInputProps {
 export function PlaygroundMicrophoneForm({
   onAudioData,
   ...props
-}: PlaygroundMicrophoneFormProps): ReactElement {
+}: PlaygroundMicrophoneFormProps): ReactElement<any> {
   const [
     { isRecording, elapsedTime, volume, audioUrl },
     { startRecording, stopRecording },

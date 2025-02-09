@@ -6,15 +6,20 @@ import { COOKIE_FERN_TOKEN } from "@fern-docs/utils";
 import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 
-export default async function Layout({
-  children,
-  params,
-}: {
-  children: React.ReactNode;
-  params: { domain: string };
-}) {
+export default async function Layout(
+  props: {
+    children: React.ReactNode;
+    params: Promise<{ domain: string }>;
+  }
+) {
+  const params = await props.params;
+
+  const {
+    children
+  } = props;
+
   console.debug(`[${params.domain}] Loading API Explorer layout`);
-  const fern_token = cookies().get(COOKIE_FERN_TOKEN)?.value;
+  const fern_token = (await cookies()).get(COOKIE_FERN_TOKEN)?.value;
   const loader = await createCachedDocsLoader(params.domain, fern_token);
   const root = await loader.getRoot();
   if (!root) {

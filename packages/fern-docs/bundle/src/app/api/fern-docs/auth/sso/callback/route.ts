@@ -102,7 +102,7 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
 
     // TODO: check if we need to run `getAllowedRedirectUrls(config)` because we don't have the edge config imported here
     const res = FernNextResponse.redirect(req, { destination: url });
-    const cookieJar = cookies();
+    const cookieJar = await cookies();
     cookieJar.set(COOKIE_FERN_TOKEN, session, withSecureCookie(url.origin));
 
     return res;

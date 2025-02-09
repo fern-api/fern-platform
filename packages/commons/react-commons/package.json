@@ -33,13 +33,13 @@
     "es-toolkit": "^1.27.0",
     "fastdom": "^1.0.12",
     "immer": "^9.0.15",
-    "react": "^18",
+    "react": "19.0.0",
     "ts-essentials": "^10.0.1"
   },
   "devDependencies": {
     "@fern-platform/configs": "workspace:*",
     "@types/node": "^18.7.18",
-    "@types/react": "^18",
+    "@types/react": "19.0.8",
     "depcheck": "^1.4.7",
     "eslint": "^9",
     "prettier": "^3.4.2",

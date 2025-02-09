@@ -34,7 +34,7 @@ export function PlaygroundEndpointContent({
   resetWithoutExample,
   response,
   sendRequest,
-}: PlaygroundEndpointContentProps): ReactElement {
+}: PlaygroundEndpointContentProps): ReactElement<any> {
   const deferredFormState = useDeferredValue(formState);
 
   const form = (

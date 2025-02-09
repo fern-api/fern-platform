@@ -31,7 +31,7 @@ export function LayoutEvaluatorContent({
   tableOfContents,
   children,
   hasAside,
-}: LayoutEvaluatorProps): ReactElement {
+}: LayoutEvaluatorProps): ReactElement<any> {
   const layout = frontmatter.layout ?? "guide";
 
   const PageHeaderComponent = () => {

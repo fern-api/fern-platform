@@ -3,7 +3,7 @@ import { ReactElement } from "react";
 import { useIsLocalPreview } from "../contexts/local-preview";
 import { useApiRoute } from "../hooks/useApiRoute";
 
-export function LinkPreload({ href }: { href: string }): ReactElement {
+export function LinkPreload({ href }: { href: string }): ReactElement<any> {
   return (
     <Head>
       <link
@@ -22,7 +22,7 @@ export function LinkPreloadApiRoute({
   href,
 }: {
   href: FernDocsApiRoute;
-}): ReactElement | null {
+}): ReactElement<any> | null {
   const isLocalPreview = useIsLocalPreview();
   const key = useApiRoute(href);
   if (isLocalPreview) {

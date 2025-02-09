@@ -14,7 +14,7 @@ export function SidebarRootHeading({
   node,
   className,
   shallow,
-}: SidebarRootHeadingProps): ReactElement {
+}: SidebarRootHeadingProps): ReactElement<any> {
   if (FernNavigation.hasMarkdown(node)) {
     return (
       <SidebarPageNode

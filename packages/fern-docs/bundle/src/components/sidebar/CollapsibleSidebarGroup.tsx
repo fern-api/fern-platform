@@ -5,8 +5,8 @@ import type { ReactElement } from "react";
 interface FernSidebarGroupProps<T> {
   nodes: T[];
   open: boolean;
-  renderNode: (node: T) => ReactElement;
-  children: ReactElement;
+  renderNode: (node: T) => ReactElement<any>;
+  children: ReactElement<any>;
 }
 
 export function CollapsibleSidebarGroup<
@@ -16,7 +16,7 @@ export function CollapsibleSidebarGroup<
   open,
   renderNode,
   children,
-}: FernSidebarGroupProps<T>): ReactElement | null {
+}: FernSidebarGroupProps<T>): ReactElement<any> | null {
   return (
     <Collapsible.Root open={open}>
       <Collapsible.Trigger asChild>{children}</Collapsible.Trigger>

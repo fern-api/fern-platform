@@ -22,7 +22,7 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
 
   const domain = getDocsDomainEdge(req);
   const host = getHostEdge(req);
-  const fernToken = cookies().get(COOKIE_FERN_TOKEN)?.value;
+  const fernToken = (await cookies()).get(COOKIE_FERN_TOKEN)?.value;
   const loader = DocsLoader.for(domain, host, fernToken);
 
   const root = await loader.root();

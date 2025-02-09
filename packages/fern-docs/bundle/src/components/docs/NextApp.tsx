@@ -12,7 +12,7 @@ export function NextApp({
 }: {
   children: ReactNode;
   pageProps: DocsProps | undefined;
-}): ReactElement {
+}): ReactElement<any> {
   return (
     <HydrateAtoms pageProps={pageProps}>
       <FeatureFlagProvider featureFlagsConfig={pageProps?.featureFlagsConfig}>

@@ -15,7 +15,7 @@ export function DocsPage({
   children,
 }: {
   children: React.ReactNode;
-}): ReactElement | null {
+}): ReactElement<any> | null {
   useConsoleMessage();
   useMessageHandler();
 

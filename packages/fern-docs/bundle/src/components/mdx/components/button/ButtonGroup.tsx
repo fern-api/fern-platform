@@ -4,7 +4,7 @@ import { ComponentProps, ReactElement } from "react";
 
 export function ButtonGroup(
   props: ComponentProps<typeof FernButtonGroup>
-): ReactElement {
+): ReactElement<any> {
   return (
     <FernButtonGroup
       {...props}

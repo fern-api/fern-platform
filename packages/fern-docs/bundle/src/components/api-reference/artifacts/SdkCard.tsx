@@ -11,7 +11,7 @@ export declare namespace SdkCard {
 }
 
 interface SdkRenderInfo {
-  icon: ReactElement;
+  icon: ReactElement<any>;
   title: string;
   githubRepo: DocsV1Read.GitHubRepo;
   packageName: string;

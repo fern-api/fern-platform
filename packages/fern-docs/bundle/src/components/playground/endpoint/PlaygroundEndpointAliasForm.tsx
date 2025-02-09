@@ -19,7 +19,7 @@ export function PlaygroundEndpointAliasForm({
   ignoreHeaders,
   setBodyJson,
   value,
-}: PlaygroundEndpointAliasFormProps): ReactElement {
+}: PlaygroundEndpointAliasFormProps): ReactElement<any> {
   const { shape, isOptional } = useMemo(
     () => unwrapReference(alias.value, types),
     [alias.value, types]

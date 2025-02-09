@@ -15,7 +15,7 @@ import { EnumDefinitionDetails } from "./EnumDefinitionDetails";
 import { FernCollapseWithButton } from "./FernCollapseWithButton";
 
 type EnumTypeDefinitionProps = {
-  elements: ReactElement[];
+  elements: ReactElement<any>[];
   isCollapsed: boolean;
   toggleIsCollapsed: () => void;
   collapsibleContentContextValue: () => TypeDefinitionContextValue;
@@ -30,7 +30,7 @@ export const EnumTypeDefinition = ({
   toggleIsCollapsed,
   collapsibleContentContextValue,
   showText,
-}: EnumTypeDefinitionProps): ReactElement => {
+}: EnumTypeDefinitionProps): ReactElement<any> => {
   const autofocus = useBooleanState(false);
   const [searchInput, setSearchInput] = useState("");
   const hideText = (

@@ -14,7 +14,7 @@ export const Chip = ({
   name,
   description = undefined,
   small,
-}: ChipProps): ReactElement => {
+}: ChipProps): ReactElement<any> => {
   const { copyToClipboard, wasJustCopied } = useCopyToClipboard(name);
   return (
     <FernTooltip

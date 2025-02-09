@@ -10,7 +10,7 @@ export function PlaygroundEndpointFormSection({
   title,
   ignoreHeaders,
   children,
-}: PropsWithChildren<PlaygroundEndpointFormSection>): ReactElement | null {
+}: PropsWithChildren<PlaygroundEndpointFormSection>): ReactElement<any> | null {
   if (children == null) {
     return null;
   }

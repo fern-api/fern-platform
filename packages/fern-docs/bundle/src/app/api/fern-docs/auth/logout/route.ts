@@ -19,7 +19,7 @@ export const runtime = "edge";
 
 export async function GET(req: NextRequest): Promise<NextResponse> {
   const domain = getDocsDomainEdge(req);
-  const cookieJar = cookies();
+  const cookieJar = await cookies();
 
   const authConfig = await getAuthEdgeConfig(domain);
 

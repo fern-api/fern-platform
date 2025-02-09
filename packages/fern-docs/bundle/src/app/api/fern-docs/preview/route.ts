@@ -22,7 +22,7 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
   const host = req.nextUrl.searchParams.get("host");
   const site = req.nextUrl.searchParams.get("site");
   const clear = req.nextUrl.searchParams.get("clear");
-  const cookieStore = cookies();
+  const cookieStore = await cookies();
   if (typeof host === "string") {
     cookieStore.set(
       COOKIE_FERN_DOCS_PREVIEW,

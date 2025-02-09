@@ -38,7 +38,7 @@ interface PlaygroundWebSocketProps {
 
 export const PlaygroundWebSocket: FC<PlaygroundWebSocketProps> = ({
   context,
-}): ReactElement => {
+}): ReactElement<any> => {
   const [formState, setFormState] = usePlaygroundWebsocketFormState(context);
   const websocketMessageLimit = usePlaygroundSettings(context.node.id)?.[
     "limit-websocket-messages-per-connection"

@@ -57,7 +57,7 @@ function getIconInfoForTypeReference(
 function getIconForTypeReference(
   typeRef: ApiDefinition.TypeShapeOrReference,
   types: Record<ApiDefinition.TypeId, ApiDefinition.TypeDefinition>
-): ReactElement | null {
+): ReactElement<any> | null {
   const info = getIconInfoForTypeReference(typeRef, types);
   if (info == null) {
     return null;

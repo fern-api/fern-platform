@@ -30,7 +30,7 @@ export const IFrame = forwardRef<HTMLIFrameElement, IFrame.Props>(
       ...props
     },
     ref
-  ): ReactElement => {
+  ): ReactElement<any> => {
     const iframeRef = useRef<HTMLIFrameElement>(null);
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     useImperativeHandle(ref, () => iframeRef.current!);
@@ -73,7 +73,7 @@ IFrame.displayName = "IFrame";
 
 interface ExperimentalIFrameWithFullscreenProps {
   onFullscreenChange?: (isFullscreen: boolean) => void;
-  iframeRef: RefObject<HTMLIFrameElement>;
+  iframeRef: RefObject<HTMLIFrameElement | null>;
   children: ReactElement<ComponentProps<"iframe">>;
 }
 
