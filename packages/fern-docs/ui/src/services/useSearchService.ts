@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import type { SearchConfig } from "@fern-docs/search-utils";
+import { useEdgeFlags } from "../atoms";
 import { useIsLocalPreview } from "../contexts/local-preview";
 import { useApiRouteSWR } from "../hooks/useApiRouteSWR";
 
@@ -24,8 +25,9 @@ export type SearchService = SearchService.Available | SearchService.Unavailable;
 
 export function useSearchConfig(): SearchConfig {
   const isLocalPreview = useIsLocalPreview();
+  const { isSearchDisabled } = useEdgeFlags();
 
-  if (isLocalPreview) {
+  if (isLocalPreview || isSearchDisabled) {
     return { isAvailable: false };
   }
 
