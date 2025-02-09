@@ -12,7 +12,6 @@ import {
   type ExampleEndpointCall,
   type PruningNodeType,
 } from "@fern-api/fdr-sdk/api-definition";
-import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 import type { EdgeFlags } from "@fern-docs/utils";
 import { DEFAULT_EDGE_FLAGS } from "@fern-docs/utils";
 import { HTTPSnippet, type TargetId } from "httpsnippet-lite";
@@ -334,11 +333,10 @@ export class ApiDefinitionLoader {
     return { ...example, snippets };
   };
 
-  #serializeMdx = async (mdx: string): Promise<string | FernDocs.ResolvedMdx> =>
-    Promise.resolve(mdx);
+  #serializeMdx = async (mdx: string): Promise<string> => Promise.resolve(mdx);
   #engine = "raw";
   public withMdxBundler = (
-    fn: (mdx: string) => Promise<string | FernDocs.ResolvedMdx>,
+    fn: (mdx: string) => Promise<string>,
     engine: string
   ): this => {
     this.#serializeMdx = fn;
@@ -349,17 +347,18 @@ export class ApiDefinitionLoader {
   private resolveDescriptions = async (
     apiDefinition: ApiDefinition
   ): Promise<ApiDefinition> => {
-    const descriptions = this.#collectDescriptions(apiDefinition);
-    const resolvedDescriptions = await this.cache.batchResolveDescriptions(
-      descriptions,
-      this.#serializeMdx
-    );
-    const transformed = this.#transformDescriptions(
-      apiDefinition,
-      resolvedDescriptions
-    );
+    // const descriptions = this.#collectDescriptions(apiDefinition);
+    // const resolvedDescriptions = await this.cache.batchResolveDescriptions(
+    //   descriptions,
+    //   this.#serializeMdx
+    // );
+    // const transformed = this.#transformDescriptions(
+    //   apiDefinition,
+    //   resolvedDescriptions
+    // );
 
-    return transformed;
+    // return transformed;
+    return apiDefinition;
   };
 
   /**
@@ -370,12 +369,9 @@ export class ApiDefinitionLoader {
    */
   #collectDescriptions = (
     apiDefinition: ApiDefinition
-  ): Record<string, string | FernDocs.ResolvedMdx> => {
-    const descriptions: Record<string, string | FernDocs.ResolvedMdx> = {};
-    const descriptionCollector = (
-      description: string | FernDocs.ResolvedMdx,
-      key: string
-    ) => {
+  ): Record<string, string> => {
+    const descriptions: Record<string, string> = {};
+    const descriptionCollector = (description: string, key: string) => {
       if (descriptions[`${this.#engine}/${key}`] != null) {
         console.error(`Duplicate description key: ${key}!`);
         return description;
@@ -389,12 +385,9 @@ export class ApiDefinitionLoader {
 
   #transformDescriptions = (
     apiDefinition: ApiDefinition,
-    descriptions: Record<string, string | FernDocs.ResolvedMdx>
+    descriptions: Record<string, string>
   ): ApiDefinition => {
-    const transformer = (
-      description: string | FernDocs.ResolvedMdx,
-      key: string
-    ) => {
+    const transformer = (description: string, key: string) => {
       return descriptions[`${this.#engine}/${key}`] ?? description;
     };
 
