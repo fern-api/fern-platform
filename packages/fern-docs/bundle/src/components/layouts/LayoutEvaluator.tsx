@@ -2,7 +2,6 @@ import { createCachedDocsLoader } from "@/server/docs-loader";
 import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 import { EMPTY_FRONTMATTER } from "@fern-api/fdr-sdk/docs";
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
-import { notFound } from "next/navigation";
 import { asToc, getMDXExport } from "../mdx/get-mdx-export";
 import { MdxContent } from "../mdx/MdxContent";
 import { LayoutEvaluatorContent } from "./LayoutEvaluatorContent";
@@ -25,12 +24,19 @@ export async function LayoutEvaluator({
   const docsLoader = await createCachedDocsLoader(domain);
   const mdx = await docsLoader.getSerializedPage(pageId);
   if (mdx == null) {
-    notFound();
+    throw new Error(`[${domain}] Could not serialize page: ${pageId}`);
   }
   const exports = getMDXExport(mdx);
   const toc = asToc(exports?.toc);
   const frontmatter: FernDocs.Frontmatter =
     typeof mdx === "string" ? EMPTY_FRONTMATTER : mdx.frontmatter;
+
+  // if the page contains an <Aside> tag, and the layout is not a page or custom layout, set the layout to reference
+  if (typeof mdx !== "string" && mdx.code.includes("(ReferenceLayoutAside,")) {
+    if (frontmatter.layout !== "page" && frontmatter.layout !== "custom") {
+      frontmatter.layout = "reference";
+    }
+  }
 
   const [title, subtitle] = await Promise.all([
     docsLoader.serializeMdx(frontmatter.title),

@@ -1,18 +1,19 @@
+"use client";
+
 import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import { EndpointContext } from "@fern-api/fdr-sdk/api-definition";
 import { visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
 import { sortBy } from "es-toolkit/array";
-import { camelCase, upperFirst } from "es-toolkit/string";
 import { memo, useEffect, useRef } from "react";
 import { useEdgeFlags } from "../../atoms";
-import { Markdown } from "../../mdx/Markdown";
-import { JsonPropertyPath } from "../examples/JsonPropertyPath";
 import { TypeComponentSeparator } from "../types/TypeComponentSeparator";
+import { useEndpointContext } from "./EndpointContext";
 import { EndpointError } from "./EndpointError";
 import { EndpointParameter } from "./EndpointParameter";
 import { EndpointRequestSection } from "./EndpointRequestSection";
 import { EndpointResponseSection } from "./EndpointResponseSection";
 import { EndpointSection } from "./EndpointSection";
+import { convertNameToAnchorPart } from "./utils";
 
 export interface HoveringProps {
   isHovering: boolean;
@@ -21,20 +22,7 @@ export interface HoveringProps {
 export declare namespace EndpointContentLeft {
   export interface Props {
     context: EndpointContext;
-    example: ApiDefinition.ExampleEndpointCall | undefined;
     showErrors: boolean;
-    onHoverRequestProperty: (
-      jsonPropertyPath: JsonPropertyPath,
-      hovering: HoveringProps
-    ) => void;
-    onHoverResponseProperty: (
-      jsonPropertyPath: JsonPropertyPath,
-      hovering: HoveringProps
-    ) => void;
-    selectedError: ApiDefinition.ErrorResponse | undefined;
-    setSelectedError: (idx: ApiDefinition.ErrorResponse | undefined) => void;
-    // contentType: string | undefined;
-    // setContentType: (contentType: string) => void;
   }
 }
 
@@ -49,17 +37,14 @@ const RESPONSE_ERROR = ["response", "error"];
 
 const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
   context: { node, endpoint, types, auth, globalHeaders },
-  example,
   showErrors,
-  onHoverRequestProperty,
-  onHoverResponseProperty,
-  selectedError,
-  setSelectedError,
-  // contentType,
-  // setContentType,
 }) => {
   // if the user clicks outside of the error, clear the selected error
   const errorRef = useRef<HTMLDivElement>(null);
+
+  const { selectedError, setSelectedError, selectedExample } =
+    useEndpointContext();
+
   useEffect(() => {
     if (selectedError == null || errorRef.current == null) {
       return;
@@ -181,7 +166,6 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
 
   return (
     <div className="flex max-w-full flex-1 flex-col gap-12">
-      <Markdown className="text-base leading-6" mdx={endpoint.description} />
       {endpoint.pathParameters && endpoint.pathParameters.length > 0 && (
         <EndpointSection
           title="Path parameters"
@@ -284,52 +268,6 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
           </div>
         </EndpointSection>
       )}
-      {/* {endpoint.requestBody.length > 1 && (
-                <Tabs.Root asChild={true} value={contentType} onValueChange={setContentType}>
-                    <FernCard className="-mx-4 rounded-xl shadow-sm">
-                        <div className="rounded-t-[inherit] bg-tag-default-soft">
-                            <div className="mx-px flex min-h-10 items-center justify-between shadow-[inset_0_-1px_0_0] shadow-border-default">
-                                <Tabs.List className="flex min-h-10 overflow-x-auto px-4 font-mono">
-                                    <div className="mr-2 flex items-center">
-                                        <span className="t-muted text-xs font-semibold">Content-Type:</span>
-                                    </div>
-                                    {endpoint.requestBody.map((requestBody) => (
-                                        <Tabs.Trigger
-                                            key={requestBody.contentType}
-                                            value={requestBody.contentType}
-                                            className="group flex min-h-10 cursor-default items-center px-0 py-2 data-[state=active]:shadow-[inset_0_-2px_0_0_rgba(0,0,0,0.1)] data-[state=active]:shadow-accent"
-                                        >
-                                            <span className="t-muted rounded px-2 py-1 text-xs group-data-[state=active]:t-default group-hover:bg-tag-default group-data-[state=active]:font-semibold">
-                                                {requestBody.contentType}
-                                            </span>
-                                        </Tabs.Trigger>
-                                    ))}
-                                </Tabs.List>
-                            </div>
-                        </div>
-                        <div className="p-4">
-                            {endpoint.requestBody.map((requestBody) => (
-                                <Tabs.Content key={requestBody.contentType} value={requestBody.contentType}>
-                                    <EndpointSection
-                                        key={requestBody.contentType}
-                                        title="Request"
-                                        anchorIdParts={REQUEST}
-                                        slug={endpoint.slug}
-                                    >
-                                        <EndpointRequestSection
-                                            requestBody={requestBody}
-                                            onHoverProperty={onHoverRequestProperty}
-                                            anchorIdParts={REQUEST_BODY}
-                                            slug={endpoint.slug}
-                                            types={types}
-                                        />
-                                    </EndpointSection>
-                                </Tabs.Content>
-                            ))}
-                        </div>
-                    </FernCard>
-                </Tabs.Root>
-            )} */}
       {endpoint.requests?.[0] != null && (
         <EndpointSection
           key={endpoint.requests[0].contentType}
@@ -339,7 +277,6 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
         >
           <EndpointRequestSection
             request={endpoint.requests[0]}
-            onHoverProperty={onHoverRequestProperty}
             anchorIdParts={REQUEST_BODY}
             slug={node.slug}
             types={types}
@@ -354,8 +291,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
         >
           <EndpointResponseSection
             response={endpoint.responses[0]}
-            exampleResponseBody={example?.responseBody}
-            onHoverProperty={onHoverResponseProperty}
+            exampleResponseBody={selectedExample?.exampleCall.responseBody}
             anchorIdParts={RESPONSE_BODY}
             slug={node.slug}
             types={types}
@@ -388,7 +324,6 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                       event.stopPropagation();
                       setSelectedError(error);
                     }}
-                    onHoverProperty={onHoverResponseProperty}
                     anchorIdParts={[
                       ...RESPONSE_ERROR,
                       `${convertNameToAnchorPart(error.name) ?? error.statusCode}`,
@@ -419,13 +354,4 @@ function isErrorEqual(
       ? a.name === b.name
       : a.name == null && b.name == null)
   );
-}
-
-export function convertNameToAnchorPart(
-  name: string | null | undefined
-): string | undefined {
-  if (name == null) {
-    return undefined;
-  }
-  return upperFirst(camelCase(name));
 }

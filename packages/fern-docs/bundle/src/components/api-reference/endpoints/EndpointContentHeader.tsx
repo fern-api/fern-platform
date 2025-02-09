@@ -1,3 +1,5 @@
+"use client";
+
 import { EndpointContext } from "@fern-api/fdr-sdk/api-definition";
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { AvailabilityBadge } from "@fern-docs/components/badges";
@@ -17,7 +19,7 @@ export const EndpointContentHeader = memo<EndpointContentHeaderProps>(
     const { endpoint, node } = context;
     const [baseUrl, environmentId] = usePlaygroundBaseUrl(endpoint);
     return (
-      <header className="space-y-1 pb-2 pt-8">
+      <header className="my-8 space-y-1">
         <FernBreadcrumbs breadcrumb={breadcrumb} />
         <div className="flex items-center justify-between">
           <span>

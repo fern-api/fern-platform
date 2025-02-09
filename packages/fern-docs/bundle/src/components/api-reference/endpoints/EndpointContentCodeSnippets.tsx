@@ -1,26 +1,17 @@
+"use client";
+
+import { WebSocketMessages } from "@/components/api-reference/websockets/WebSocketMessages";
 import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
+import { EMPTY_OBJECT, visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
 import {
-  EMPTY_ARRAY,
-  EMPTY_OBJECT,
-  visitDiscriminatedUnion,
-} from "@fern-api/ui-core-utils";
-import {
+  cn,
   FernScrollArea,
   StatusCodeBadge,
   statusCodeToIntent,
 } from "@fern-docs/components";
-import { useResizeObserver } from "@fern-ui/react-commons";
 import { sortBy } from "es-toolkit/array";
-import { RESET } from "jotai/utils";
-import {
-  ReactNode,
-  SetStateAction,
-  memo,
-  useCallback,
-  useMemo,
-  useRef,
-} from "react";
+import { memo, ReactNode, useCallback, useMemo } from "react";
 import { FernErrorTag } from "../../components/FernErrorBoundary";
 import { PlaygroundButton } from "../../playground/PlaygroundButton";
 import { usePlaygroundBaseUrl } from "../../playground/utils/select-environment";
@@ -29,18 +20,12 @@ import {
   CodeSnippetExample,
   JsonCodeSnippetExample,
 } from "../examples/CodeSnippetExample";
-import { JsonPropertyPath } from "../examples/JsonPropertyPath";
 import { TitledExample } from "../examples/TitledExample";
 import type { CodeExample } from "../examples/code-example";
 import { lineNumberOf } from "../examples/utils";
-import {
-  ExamplesByKeyAndStatusCode,
-  ExamplesByStatusCode,
-  SelectedExampleKey,
-  StatusCode,
-} from "../types/EndpointContent";
-import { WebSocketMessages } from "../web-socket/WebSocketMessages";
+import { StatusCode } from "../types/EndpointContent";
 import { CodeExampleClientDropdown } from "./CodeExampleClientDropdown";
+import { useEndpointContext } from "./EndpointContext";
 import { EndpointExampleSegmentedControl } from "./EndpointExampleSegmentedControl";
 import { EndpointUrlWithOverflow } from "./EndpointUrlWithOverflow";
 import { ErrorExampleSelect } from "./ErrorExampleSelect";
@@ -50,51 +35,22 @@ export declare namespace EndpointContentCodeSnippets {
     node: FernNavigation.EndpointNode;
     endpoint: ApiDefinition.EndpointDefinition;
     rootslug: FernNavigation.Slug;
-    languages: string[];
-    examplesByKeyAndStatusCode: ExamplesByKeyAndStatusCode;
-    examplesByStatusCode: ExamplesByStatusCode;
-    selectedExample: CodeExample | undefined;
-    selectedLanguage: string;
-    setSelectedExampleKey: (
-      exampleKey: SetStateAction<SelectedExampleKey> | typeof RESET
-    ) => void;
-    requestCodeSnippet: string;
-    requestCurlJson: unknown;
-    hoveredRequestPropertyPath: JsonPropertyPath | undefined;
-    hoveredResponsePropertyPath: JsonPropertyPath | undefined;
     showErrors: boolean;
-    errors: ApiDefinition.ErrorResponse[] | undefined;
-    selectedError: ApiDefinition.ErrorResponse | undefined;
-    measureHeight: (height: number) => void;
+    className?: string;
   }
 }
 
 const UnmemoizedEndpointContentCodeSnippets: React.FC<
   EndpointContentCodeSnippets.Props
-> = ({
-  node,
-  endpoint,
-  rootslug,
-  examplesByKeyAndStatusCode,
-  examplesByStatusCode,
-  selectedExample,
-  selectedLanguage,
-  setSelectedExampleKey,
-  languages,
-  requestCodeSnippet,
-  requestCurlJson,
-  hoveredRequestPropertyPath = EMPTY_ARRAY,
-  hoveredResponsePropertyPath = EMPTY_ARRAY,
-  showErrors,
-  measureHeight,
-}) => {
-  const ref = useRef<HTMLDivElement>(null);
-
-  useResizeObserver(ref, ([entry]) => {
-    if (entry != null) {
-      measureHeight(entry.contentRect.height);
-    }
-  });
+> = ({ node, endpoint, rootslug, showErrors, className }) => {
+  const {
+    selectedExample,
+    examplesByStatusCode,
+    examplesByKeyAndStatusCode,
+    selectedExampleKey,
+    availableLanguages: languages,
+    setSelectedExampleKey,
+  } = useEndpointContext();
 
   const handleSelectExample = useCallback(
     (statusCode: StatusCode, responseIndex: number) => {
@@ -172,10 +128,18 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<
       );
   }, [examplesByKeyAndStatusCode]);
 
-  // note: .fern-endpoint-code-snippets is used to detect clicks outside of the code snippets
-  // this is used to clear the selected error when the user clicks outside of the error
   return (
-    <div className="fern-endpoint-code-snippets" ref={ref}>
+    <div
+      className={cn(
+        // note: .fern-endpoint-code-snippets class is used to detect clicks outside of the code snippets
+        // this is used to clear the selected error when the user clicks outside of the error
+        "fern-endpoint-code-snippets",
+        // this is used to ensure that two long code snippets will take up the same height,
+        // but if one is shorter the other snippet will take up the remaining space
+        "grid grid-rows-[repeat(auto-fit,minmax(0,min-content))] gap-6",
+        className
+      )}
+    >
       {segmentedControlExamples.length > 1 && (
         <EndpointExampleSegmentedControl
           segmentedControlExamples={segmentedControlExamples}
@@ -214,7 +178,7 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<
             {languages.length > 1 && (
               <CodeExampleClientDropdown
                 languages={languages}
-                value={selectedLanguage}
+                value={selectedExampleKey.language}
                 onValueChange={(language) => {
                   setSelectedExampleKey((prev) => ({
                     ...prev,
@@ -227,17 +191,14 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<
         }
         code={resolveEnvironmentUrlInCodeSnippet(
           endpoint,
-          requestCodeSnippet,
+          selectedExample?.code ?? "",
           baseUrl
         )}
-        language={selectedLanguage}
-        hoveredPropertyPath={
-          selectedLanguage === "curl" ? hoveredRequestPropertyPath : undefined
-        }
-        json={requestCurlJson}
+        language={selectedExampleKey.language}
+        json={selectedExample?.code ?? ""}
         jsonStartLine={
-          selectedLanguage === "curl"
-            ? lineNumberOf(requestCodeSnippet, "-d '{")
+          selectedExampleKey.language === "curl"
+            ? lineNumberOf(selectedExample?.code ?? "", "-d '{")
             : undefined
         }
       />
@@ -248,7 +209,6 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<
             onClick={(e) => {
               e.stopPropagation();
             }}
-            hoveredPropertyPath={hoveredResponsePropertyPath}
             json={
               selectedExample?.exampleCall.responseBody?.value ?? EMPTY_OBJECT
             }
@@ -269,7 +229,6 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<
               onClick={(e) => {
                 e.stopPropagation();
               }}
-              hoveredPropertyPath={hoveredResponsePropertyPath}
               json={value.value}
             />
           ),

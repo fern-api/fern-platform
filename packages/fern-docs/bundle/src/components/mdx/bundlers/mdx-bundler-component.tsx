@@ -7,7 +7,7 @@ import { createMdxComponents } from "../components";
 export const MdxBundlerComponent = ({
   code,
   jsxRefs,
-}: Exclude<FernDocs.MarkdownText, string>): ReactElement => {
+}: Exclude<string | FernDocs.ResolvedMdx, string>): ReactElement => {
   const Component = useMemo(
     () =>
       getMDXComponent(code, {

@@ -8,7 +8,7 @@ import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { ApiDefinitionLoader, MarkdownLoader } from "@fern-docs/cache";
 import type { EdgeFlags } from "@fern-docs/utils";
 import { mapValues } from "es-toolkit/object";
-import type { MDX_SERIALIZER } from "../mdx/bundler";
+import { serializeMdx } from "../mdx/bundlers/mdx-bundler";
 import type { FernSerializeMdxOptions } from "../mdx/types";
 import type { DocsContent } from "./DocsContent";
 import { resolveApiEndpointPage } from "./resolveApiEndpointPage";
@@ -35,7 +35,6 @@ interface ResolveDocsContentArgs {
   pages: Record<string, DocsV1Read.PageContent>;
   mdxOptions?: FernSerializeMdxOptions;
   edgeFlags: EdgeFlags;
-  serializeMdx: MDX_SERIALIZER;
   engine: string;
 }
 
@@ -53,10 +52,9 @@ export async function resolveDocsContent({
   pages,
   mdxOptions,
   edgeFlags,
-  serializeMdx,
   engine,
 }: ResolveDocsContentArgs): Promise<DocsContent | undefined> {
-  const neighbors = await getNeighbors({ prev, next }, pages, serializeMdx);
+  const neighbors = await getNeighbors({ prev, next }, pages);
 
   const markdownLoader = MarkdownLoader.create(domain)
     .withPages(pages)
@@ -99,7 +97,6 @@ export async function resolveDocsContent({
       breadcrumb,
       pages,
       mdxOptions,
-      serializeMdx,
     });
   } else if (node.type === "changelogEntry") {
     result = await resolveChangelogEntryPage({
@@ -107,7 +104,6 @@ export async function resolveDocsContent({
       parents,
       breadcrumb,
       pages,
-      serializeMdx,
       mdxOptions,
       neighbors,
     });
@@ -164,13 +160,12 @@ export async function resolveDocsContent({
 
 async function getNeighbor(
   node: FernNavigation.NavigationNodeNeighbor | undefined,
-  pages: Record<string, DocsV1Read.PageContent>,
-  serializeMdx: MDX_SERIALIZER
+  pages: Record<string, DocsV1Read.PageContent>
 ): Promise<DocsContent.Neighbor | null> {
   if (node == null) {
     return null;
   }
-  const excerpt = await resolveSubtitle(node, pages, serializeMdx);
+  const excerpt = await resolveSubtitle(node, pages);
   return {
     slug: node.slug,
     title: node.title,
@@ -183,12 +178,11 @@ async function getNeighbors(
     prev: FernNavigation.NavigationNodeNeighbor | undefined;
     next: FernNavigation.NavigationNodeNeighbor | undefined;
   },
-  pages: Record<string, DocsV1Read.PageContent>,
-  serializeMdx: MDX_SERIALIZER
+  pages: Record<string, DocsV1Read.PageContent>
 ): Promise<DocsContent.Neighbors> {
   const [prev, next] = await Promise.all([
-    getNeighbor(neighbors.prev, pages, serializeMdx),
-    getNeighbor(neighbors.next, pages, serializeMdx),
+    getNeighbor(neighbors.prev, pages),
+    getNeighbor(neighbors.next, pages),
   ]);
   return { prev, next };
 }

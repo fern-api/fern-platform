@@ -50,9 +50,9 @@ const UnmemoizedSidebarContainer = forwardRef<
       />
       <FernScrollArea
         rootClassName="flex-1"
-        className={clsx("group/sidebar fern-sidebar-content", {
-          "overscroll-contain": layout?.disableHeader === true,
-        })}
+        className={clsx(
+          "group/sidebar fern-sidebar-content overscroll-contain"
+        )}
         scrollbars="vertical"
         ref={setScrollRef}
       >

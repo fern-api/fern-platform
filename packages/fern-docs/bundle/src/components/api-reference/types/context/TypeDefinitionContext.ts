@@ -10,9 +10,6 @@ export const TypeDefinitionContext = createContext<
 export interface TypeDefinitionContextValue {
   isRootTypeDefinition: boolean;
   jsonPropertyPath: JsonPropertyPath;
-  onHoverProperty:
-    | ((path: JsonPropertyPath, opts: { isHovering: boolean }) => void)
-    | undefined;
   isResponse: boolean | undefined;
 }
 

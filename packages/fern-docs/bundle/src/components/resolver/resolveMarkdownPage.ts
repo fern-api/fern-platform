@@ -16,7 +16,7 @@ interface ResolveMarkdownPageOptions {
 }
 
 // TODO: this should be more robust
-function shouldFetchApiRef(markdown: FernDocs.MarkdownText): boolean {
+function shouldFetchApiRef(markdown: string | FernDocs.ResolvedMdx): boolean {
   if (typeof markdown === "string") {
     return (
       markdown.includes("EndpointRequestSnippet") ||

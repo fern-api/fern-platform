@@ -1,5 +1,6 @@
 "use client";
 
+import { BuiltWithFern, HideBuiltWithFern } from "@/components/built-with-fern";
 import type { FernNavigation } from "@fern-api/fdr-sdk";
 import { EMPTY_ARRAY } from "@fern-api/ui-core-utils";
 import { addLeadingSlash } from "@fern-docs/utils";
@@ -16,10 +17,6 @@ import {
 } from "../atoms";
 import { BottomNavigationButtons } from "../components/BottomNavigationButtons";
 import { FernLink } from "../components/FernLink";
-import {
-  BuiltWithFern,
-  HideBuiltWithFernContext,
-} from "../sidebar/BuiltWithFern";
 import { ChangelogContentLayout } from "./ChangelogContentLayout";
 
 function flattenChangelogEntries(
@@ -144,7 +141,7 @@ export default function ChangelogPageClient({
       })}
     >
       <main>
-        <HideBuiltWithFernContext.Provider value={true}>
+        <HideBuiltWithFern>
           <ChangelogContentLayout as="section" className="pb-8">
             {overview}
           </ChangelogContentLayout>
@@ -173,7 +170,7 @@ export default function ChangelogPageClient({
               <BottomNavigationButtons prev={prev} next={next} alwaysShowGrid />
             </ChangelogContentLayout>
           )}
-        </HideBuiltWithFernContext.Provider>
+        </HideBuiltWithFern>
 
         <div className="h-48" />
         <BuiltWithFern className="mx-auto my-8 w-fit" />

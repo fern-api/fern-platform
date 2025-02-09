@@ -1,4 +1,3 @@
-import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 import identity from "@fern-api/ui-core-utils/identity";
 import visitDiscriminatedUnion from "@fern-api/ui-core-utils/visitDiscriminatedUnion";
 import * as Latest from "./latest";
@@ -107,10 +106,7 @@ export class Transformer {
   }
 
   public static descriptions(
-    transformer: (
-      description: FernDocs.MarkdownText,
-      key: string
-    ) => FernDocs.MarkdownText
+    transformer: (description: string, key: string) => string
   ): Transformer {
     function internalTransformer<T extends Latest.WithDescription>(
       withDescription: T,

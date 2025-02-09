@@ -1,14 +1,9 @@
-"use client";
-
+import { BuiltWithFern, HideBuiltWithFern } from "@/components/built-with-fern";
 import { ReactNode } from "react";
 import { BottomNavigationNeighbors } from "../components/BottomNavigationNeighbors";
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
-import {
-  BuiltWithFern,
-  HideBuiltWithFernContext,
-} from "../sidebar/BuiltWithFern";
 
-export default function ApiEndpointLayout({
+export function ApiPageLayout({
   children,
 }: {
   children: ReactNode;
@@ -16,9 +11,7 @@ export default function ApiEndpointLayout({
   return (
     <>
       <FernErrorBoundary component="ApiEndpointPage">
-        <HideBuiltWithFernContext.Provider value={true}>
-          {children}
-        </HideBuiltWithFernContext.Provider>
+        <HideBuiltWithFern>{children}</HideBuiltWithFern>
       </FernErrorBoundary>
       <div className="px-4 md:px-6 lg:hidden lg:px-8">
         <BottomNavigationNeighbors />

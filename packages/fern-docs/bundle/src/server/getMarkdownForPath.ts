@@ -4,10 +4,9 @@ import {
   TypeDefinition,
   TypeShape,
 } from "@fern-api/fdr-sdk/api-definition";
-import { MarkdownText } from "@fern-api/fdr-sdk/docs";
 import { isNonNullish } from "@fern-api/ui-core-utils";
 import { EdgeFlags, removeLeadingSlash } from "@fern-docs/utils";
-import { isString } from "es-toolkit/predicate";
+import { compact } from "es-toolkit/array";
 import { DocsLoader } from "./DocsLoader";
 import { pascalCaseHeaderKey } from "./headerKeyCase";
 import { convertToLlmTxtMarkdown } from "./llm-txt-md";
@@ -210,12 +209,10 @@ export function endpointDefinitionToMarkdown(
 function getShorthand(
   shape: TypeShape,
   types: Record<FernNavigation.TypeId, TypeDefinition>,
-  shapeDescription: MarkdownText | undefined
+  shapeDescription: string | undefined
 ): string | undefined {
   const unwrapped = ApiDefinition.unwrapReference(shape, types);
-  const description = [shapeDescription, ...unwrapped.descriptions].filter(
-    isString
-  )[0];
+  const description = compact([shapeDescription, ...unwrapped.descriptions])[0];
   if (unwrapped.isOptional) {
     return description ? ` (optional): ${description}` : " (optional)";
   }

@@ -346,14 +346,6 @@ export const WebSocketContent: FC<WebSocketContentProps> = ({
                   slug={node.slug}
                   headerType="h2"
                 >
-                  {/* <Markdown
-                                        size="sm"
-                                        className="t-muted border-default border-b leading-6"
-                                        mdx={websocket.subscribe.description}
-                                        fallback={`This channel emits ${renderDeprecatedTypeShorthand(websocket.subscribe.shape, {
-                                            withArticle: true,
-                                        })}.`}
-                                    /> */}
                   <TypeReferenceDefinitions
                     shape={subscribeMessageShape}
                     isCollapsible={false}

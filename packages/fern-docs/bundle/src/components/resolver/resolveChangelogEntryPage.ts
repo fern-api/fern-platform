@@ -1,7 +1,7 @@
 import type { DocsV1Read } from "@fern-api/fdr-sdk";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { getFrontmatter } from "@fern-docs/mdx";
-import type { MDX_SERIALIZER } from "../mdx/bundler";
+import { serializeMdx } from "../mdx/bundlers/mdx-bundler";
 import type { FernSerializeMdxOptions } from "../mdx/types";
 import type { DocsContent } from "./DocsContent";
 
@@ -10,7 +10,6 @@ interface ResolveChangelogEntryPageOptions {
   parents: readonly FernNavigation.NavigationNodeParent[];
   breadcrumb: readonly FernNavigation.BreadcrumbItem[];
   pages: Record<string, DocsV1Read.PageContent>;
-  serializeMdx: MDX_SERIALIZER;
   mdxOptions: FernSerializeMdxOptions | undefined;
   neighbors: DocsContent.Neighbors;
 }
@@ -20,7 +19,6 @@ export async function resolveChangelogEntryPage({
   parents,
   breadcrumb,
   pages,
-  serializeMdx,
   mdxOptions,
   neighbors,
 }: ResolveChangelogEntryPageOptions): Promise<

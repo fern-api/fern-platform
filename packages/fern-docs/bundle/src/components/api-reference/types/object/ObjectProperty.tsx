@@ -109,26 +109,6 @@ const UnmemoizedObjectPropertyInternal = forwardRef<
     [contextValue, jsonPropertyPath]
   );
 
-  const onMouseEnterPropertyName = useMemo(() => {
-    if (contextValue.onHoverProperty == null) {
-      return undefined;
-    }
-    const { onHoverProperty } = contextValue;
-    return () => {
-      onHoverProperty(jsonPropertyPath, { isHovering: true });
-    };
-  }, [contextValue, jsonPropertyPath]);
-
-  const onMouseOutPropertyName = useMemo(() => {
-    if (contextValue.onHoverProperty == null) {
-      return undefined;
-    }
-    const { onHoverProperty } = contextValue;
-    return () => {
-      onHoverProperty(jsonPropertyPath, { isHovering: false });
-    };
-  }, [contextValue, jsonPropertyPath]);
-
   const href = useHref(slug, anchorId);
 
   const descriptions = useMemo(() => {
@@ -163,8 +143,20 @@ const UnmemoizedObjectPropertyInternal = forwardRef<
         <FernAnchor href={href} sideOffset={6}>
           <span
             className="fern-api-property-key"
-            onMouseEnter={onMouseEnterPropertyName}
-            onMouseOut={onMouseOutPropertyName}
+            onPointerEnter={() => {
+              window.dispatchEvent(
+                new CustomEvent(`property-hover-on:${slug}`, {
+                  detail: jsonPropertyPath,
+                })
+              );
+            }}
+            onPointerOut={() => {
+              window.dispatchEvent(
+                new CustomEvent(`property-hover-off:${slug}`, {
+                  detail: jsonPropertyPath,
+                })
+              );
+            }}
           >
             {property.key}
           </span>

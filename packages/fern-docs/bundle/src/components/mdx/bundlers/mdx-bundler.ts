@@ -38,11 +38,11 @@ import type { FernSerializeMdxOptions } from "../types";
 async function serializeMdxImpl(
   content: string,
   options?: FernSerializeMdxOptions
-): Promise<FernDocs.MarkdownText>;
+): Promise<string | FernDocs.ResolvedMdx>;
 async function serializeMdxImpl(
   content: string | undefined,
   options?: FernSerializeMdxOptions
-): Promise<FernDocs.MarkdownText | undefined>;
+): Promise<string | FernDocs.ResolvedMdx | undefined>;
 async function serializeMdxImpl(
   content: string | undefined,
   {
@@ -53,7 +53,7 @@ async function serializeMdxImpl(
     replaceSrc,
     toc = false,
   }: FernSerializeMdxOptions = {}
-): Promise<FernDocs.MarkdownText | undefined> {
+): Promise<string | FernDocs.ResolvedMdx | undefined> {
   if (content == null) {
     return undefined;
   }
@@ -191,7 +191,6 @@ async function serializeMdxImpl(
   // TODO: this is doing duplicate work; figure out how to combine it with the compiler above.
   const { jsxElements } = toTree(content, { sanitize: false });
   return {
-    engine: "mdx-bundler",
     code: bundled.code,
     frontmatter: bundled.frontmatter,
     scope: {},
@@ -202,15 +201,15 @@ async function serializeMdxImpl(
 export async function serializeMdx(
   content: string,
   options?: FernSerializeMdxOptions
-): Promise<FernDocs.MarkdownText>;
+): Promise<string | FernDocs.ResolvedMdx>;
 export async function serializeMdx(
   content: string | undefined,
   options?: FernSerializeMdxOptions
-): Promise<FernDocs.MarkdownText | undefined>;
+): Promise<string | FernDocs.ResolvedMdx | undefined>;
 export async function serializeMdx(
   content: string | undefined,
   options?: FernSerializeMdxOptions
-): Promise<FernDocs.MarkdownText | undefined> {
+): Promise<string | FernDocs.ResolvedMdx | undefined> {
   let attempts = 0;
   while (attempts < 3) {
     try {

@@ -1,5 +1,4 @@
 import type * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
-import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { EMPTY_ARRAY } from "@fern-api/ui-core-utils";
 import { AvailabilityBadge } from "@fern-docs/components/badges";
@@ -26,8 +25,8 @@ import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceD
 export declare namespace EndpointParameter {
   export interface Props {
     name: string;
-    description: FernDocs.MarkdownText | undefined;
-    additionalDescriptions: FernDocs.MarkdownText[] | undefined;
+    description: string | undefined;
+    additionalDescriptions: string[] | undefined;
     anchorIdParts: readonly string[];
     slug: FernNavigation.Slug;
     availability: ApiDefinition.Availability | null | undefined;
@@ -37,8 +36,8 @@ export declare namespace EndpointParameter {
 
   export interface ContentProps {
     name: string;
-    description: FernDocs.MarkdownText | undefined;
-    additionalDescriptions: FernDocs.MarkdownText[] | undefined;
+    description: string | undefined;
+    additionalDescriptions: string[] | undefined;
     typeShorthand: ReactNode;
     anchorIdParts: readonly string[];
     slug: FernNavigation.Slug;
@@ -69,7 +68,6 @@ export const EndpointParameter = memo<EndpointParameter.Props>(
       <TypeReferenceDefinitions
         shape={shape}
         isCollapsible={true}
-        // onHoverProperty={onHoverProperty}
         anchorIdParts={anchorIdParts}
         slug={slug}
         applyErrorStyles={false}

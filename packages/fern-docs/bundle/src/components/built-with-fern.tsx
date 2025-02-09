@@ -1,7 +1,11 @@
+"use client";
+
 import { BuiltWithFern as BuiltWithFernComponent } from "@fern-docs/components";
 import { createContext, useContext, useEffect, useRef } from "react";
-import { trackInternal } from "../analytics";
-import { useDomain, useEdgeFlag } from "../atoms";
+import { trackInternal } from "./analytics";
+import { useDomain, useEdgeFlag } from "./atoms";
+
+const HideBuiltWithFernContext = createContext(false);
 
 export const BuiltWithFern: React.FC<{ className?: string }> = ({
   className,
@@ -95,4 +99,10 @@ function BuiltWithFernWatcher({
   return false;
 }
 
-export const HideBuiltWithFernContext = createContext(false);
+export function HideBuiltWithFern({ children }: { children: React.ReactNode }) {
+  return (
+    <HideBuiltWithFernContext.Provider value={true}>
+      {children}
+    </HideBuiltWithFernContext.Provider>
+  );
+}

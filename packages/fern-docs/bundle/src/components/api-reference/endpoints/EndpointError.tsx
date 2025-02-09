@@ -8,7 +8,6 @@ import cn from "clsx";
 import { MouseEventHandler, memo } from "react";
 import { MdxContent } from "../../mdx/MdxContent";
 import { renderTypeShorthand } from "../../type-shorthand";
-import { type JsonPropertyPath } from "../examples/JsonPropertyPath";
 import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";
 
 export declare namespace EndpointError {
@@ -18,10 +17,6 @@ export declare namespace EndpointError {
     isLast: boolean;
     isSelected: boolean;
     onClick: MouseEventHandler<HTMLButtonElement>;
-    onHoverProperty?: (
-      path: JsonPropertyPath,
-      opts: { isHovering: boolean }
-    ) => void;
     anchorIdParts: readonly string[];
     slug: FernNavigation.Slug;
     availability: APIV1Read.Availability | null | undefined;
@@ -35,7 +30,6 @@ export const EndpointError = memo<EndpointError.Props>(
     isFirst,
     isLast,
     isSelected,
-    onHoverProperty,
     onClick,
     anchorIdParts,
     slug,
@@ -84,7 +78,6 @@ export const EndpointError = memo<EndpointError.Props>(
                     isCollapsible
                     applyErrorStyles
                     shape={error.shape}
-                    onHoverProperty={onHoverProperty}
                     anchorIdParts={anchorIdParts}
                     slug={slug}
                     types={types}

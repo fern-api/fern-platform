@@ -37,7 +37,7 @@ function toTitle(last: ApiDefinition.KeyPathItem): string {
 }
 
 export function toDescription(
-  descriptions: (FernDocs.MarkdownText | undefined)[]
+  descriptions: (string | FernDocs.ResolvedMdx | undefined)[]
 ): string | undefined {
   descriptions = descriptions.filter(isNonNullish);
   const stringDescriptions = descriptions.filter(

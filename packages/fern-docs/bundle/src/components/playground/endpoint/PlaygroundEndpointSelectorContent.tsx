@@ -1,5 +1,6 @@
 "use client";
 
+import { BuiltWithFern } from "@/components/built-with-fern";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { isNonNullish } from "@fern-api/ui-core-utils";
 import {
@@ -13,7 +14,6 @@ import cn, { clsx } from "clsx";
 import { Search, Slash, Xmark } from "iconoir-react";
 import { usePathname } from "next/navigation";
 import { Fragment, forwardRef, useEffect, useRef, useState } from "react";
-import { BuiltWithFern } from "../../sidebar/BuiltWithFern";
 import { conformExplorerRoute } from "../utils/explorer-route";
 import { ApiGroup } from "../utils/flatten-apis";
 import { PlaygroundEndpointSelectorLeafNode } from "./PlaygroundEndpointSelectorLeafNode";

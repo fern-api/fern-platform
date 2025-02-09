@@ -6,7 +6,7 @@ import {
 } from "mdx-bundler/client";
 
 export function getMDXExport(
-  mdx: FernDocs.MarkdownText | undefined,
+  mdx: string | FernDocs.ResolvedMdx | undefined,
   useMDXComponents: () => unknown = () => ({})
 ):
   | {

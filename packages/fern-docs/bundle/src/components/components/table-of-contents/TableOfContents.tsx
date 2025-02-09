@@ -1,3 +1,5 @@
+"use client";
+
 import type { TableOfContentsItem as TableOfContentsItemType } from "@fern-docs/mdx";
 import { clsx } from "clsx";
 import fastdom from "fastdom";

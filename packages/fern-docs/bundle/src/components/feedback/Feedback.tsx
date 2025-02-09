@@ -1,3 +1,5 @@
+"use client";
+
 import { FernButton, FernButtonGroup, toast } from "@fern-docs/components";
 import { useKeyboardPress } from "@fern-ui/react-commons";
 import clsx from "clsx";

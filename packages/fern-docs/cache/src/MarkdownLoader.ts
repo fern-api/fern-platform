@@ -31,13 +31,13 @@ export class MarkdownLoader {
   #serializeMdx = async (
     mdx: string,
     _pageId: FernNavigation.PageId | undefined
-  ): Promise<FernDocs.MarkdownText> => Promise.resolve(mdx);
+  ): Promise<string | FernDocs.ResolvedMdx> => Promise.resolve(mdx);
   #engine = "raw";
   public withMdxBundler = (
     fn: (
       mdx: string,
       pageId: FernNavigation.PageId | undefined
-    ) => Promise<FernDocs.MarkdownText>,
+    ) => Promise<string | FernDocs.ResolvedMdx>,
     engine: string
   ): this => {
     this.#serializeMdx = fn;
@@ -49,7 +49,7 @@ export class MarkdownLoader {
     mdx: string,
     pageId: FernNavigation.PageId | undefined,
     key: string
-  ): Promise<FernDocs.MarkdownText> {
+  ): Promise<string | FernDocs.ResolvedMdx> {
     const cacheKey = `${this.instanceId}:${this.#engine}:${pageId}:${key}`;
 
     if (this.instanceId) {

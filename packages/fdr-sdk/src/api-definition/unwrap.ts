@@ -1,7 +1,6 @@
 import { isPlainObject } from "@fern-api/ui-core-utils";
 import visitDiscriminatedUnion from "@fern-api/ui-core-utils/visitDiscriminatedUnion";
 import { compact, sortBy } from "es-toolkit/array";
-import * as FernDocs from "../docs";
 import { AvailabilityOrder, coalesceAvailability } from "./availability";
 import { LOOP_TOLERANCE } from "./const";
 import * as Latest from "./latest";
@@ -13,7 +12,7 @@ import type {
 export type UnwrappedReference = {
   shape: DereferencedNonOptionalTypeShapeOrReference;
   availability: Latest.Availability | undefined;
-  descriptions: FernDocs.MarkdownText[];
+  descriptions: string[];
   visitedTypeIds: Set<Latest.TypeId>;
   isOptional: boolean;
   isNullable: boolean;
@@ -23,7 +22,7 @@ export type UnwrappedReference = {
 export type UnwrappedObjectType = {
   properties: Latest.ObjectProperty[];
   extraProperties: Latest.TypeReference | undefined;
-  descriptions: FernDocs.MarkdownText[];
+  descriptions: string[];
   visitedTypeIds: Set<Latest.TypeId>;
 };
 
@@ -77,7 +76,7 @@ export function unwrapReference(
   let isOptional = false;
   let isNullable = false;
   const defaults: InternalDefaultValue[] = [];
-  const descriptions: FernDocs.MarkdownText[] = [];
+  const descriptions: string[] = [];
   const availabilities: Latest.Availability[] = [];
 
   const visitedTypeIds = new Set<Latest.TypeId>();
@@ -234,7 +233,7 @@ export function unwrapObjectType(
 
   const directProperties = object.properties;
   const extraProperties = object.extraProperties;
-  const descriptions: FernDocs.MarkdownText[] = [];
+  const descriptions: string[] = [];
   const visitedTypeIds = new Set<Latest.TypeId>();
   const extendedProperties = object.extends.flatMap(
     (typeId): Latest.ObjectProperty[] => {

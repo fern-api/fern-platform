@@ -6,7 +6,6 @@ import {
   TypeReference,
   TypeShape,
 } from "@fern-api/fdr-sdk/api-definition";
-import { MarkdownText } from "@fern-api/fdr-sdk/docs";
 import { visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
 import { convertMarkdownToText } from "./utils";
 
@@ -169,6 +168,6 @@ export function generateEndpointContent(
   return contents.join("\n");
 }
 
-export function generatePageContent(rawMarkdown: MarkdownText): string {
+export function generatePageContent(rawMarkdown: string): string {
   return convertMarkdownToText(rawMarkdown);
 }

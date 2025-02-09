@@ -1,6 +1,5 @@
 import { ColorsThemeConfig, FileData } from "@/server/types";
 import type { DocsV1Read, DocsV2Read } from "@fern-api/fdr-sdk/client/types";
-import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import type { FernUser } from "@fern-docs/auth";
 import type { EdgeFlags } from "@fern-docs/utils";
@@ -20,7 +19,7 @@ export interface NavigationProps {
 
 export interface AnnouncementConfig {
   text: string;
-  mdx: FernDocs.MarkdownText;
+  mdx: string;
 }
 
 export interface DefaultNavbarLink {

@@ -6,16 +6,16 @@ import { FernErrorBoundary } from "../components/FernErrorBoundary";
 import { FrontmatterContextProvider } from "../contexts/frontmatter";
 import { MdxBundlerComponent } from "./bundlers/mdx-bundler-component";
 
+type MarkdownText = string | FernDocs.ResolvedMdx;
+
 export declare namespace MdxContent {
   export interface Props {
-    mdx: FernDocs.MarkdownText | FernDocs.MarkdownText[] | undefined;
+    mdx: MarkdownText | MarkdownText[] | undefined;
     fallback?: React.ReactNode;
   }
 }
 
-function isMdxEmpty(
-  mdx: FernDocs.MarkdownText | FernDocs.MarkdownText[] | undefined
-): boolean {
+function isMdxEmpty(mdx: MarkdownText | MarkdownText[] | undefined): boolean {
   if (!mdx) {
     return true;
   }

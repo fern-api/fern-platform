@@ -20,8 +20,8 @@ export type SerializeMdxFunc =
   | ((
       content: string,
       options?: FernSerializeMdxOptions
-    ) => Promise<FernDocs.MarkdownText>)
+    ) => Promise<string | FernDocs.ResolvedMdx>)
   | ((
       content: string | undefined,
       options?: FernSerializeMdxOptions
-    ) => Promise<FernDocs.MarkdownText | undefined>);
+    ) => Promise<string | FernDocs.ResolvedMdx | undefined>);

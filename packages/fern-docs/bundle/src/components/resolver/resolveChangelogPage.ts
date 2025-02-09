@@ -1,7 +1,7 @@
 import type { DocsV1Read } from "@fern-api/fdr-sdk";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { isNonNullish } from "@fern-api/ui-core-utils";
-import type { MDX_SERIALIZER } from "../mdx/bundler";
+import { serializeMdx } from "../mdx/bundlers/mdx-bundler";
 import type { FernSerializeMdxOptions } from "../mdx/types";
 import type { DocsContent } from "./DocsContent";
 import { parseMarkdownPageToAnchorTag } from "./parseMarkdownPageToAnchorTag";
@@ -10,7 +10,6 @@ interface ResolveChangelogPageOptions {
   node: FernNavigation.ChangelogNode;
   breadcrumb: readonly FernNavigation.BreadcrumbItem[];
   pages: Record<string, DocsV1Read.PageContent>;
-  serializeMdx: MDX_SERIALIZER;
   mdxOptions: FernSerializeMdxOptions | undefined;
 }
 
@@ -18,7 +17,6 @@ export async function resolveChangelogPage({
   node,
   breadcrumb,
   pages,
-  serializeMdx,
   mdxOptions,
 }: ResolveChangelogPageOptions): Promise<DocsContent.ChangelogPage> {
   const pageIds = new Set<FernNavigation.PageId>();

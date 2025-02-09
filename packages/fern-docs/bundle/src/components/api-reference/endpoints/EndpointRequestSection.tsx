@@ -5,7 +5,6 @@ import cn from "clsx";
 import { Fragment, ReactNode } from "react";
 import { Markdown } from "../../mdx/Markdown";
 import { renderTypeShorthand } from "../../type-shorthand";
-import { JsonPropertyPath } from "../examples/JsonPropertyPath";
 import { TypeComponentSeparator } from "../types/TypeComponentSeparator";
 import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";
 import {
@@ -16,10 +15,6 @@ import {
 export declare namespace EndpointRequestSection {
   export interface Props {
     request: ApiDefinition.HttpRequest;
-    onHoverProperty?: (
-      path: JsonPropertyPath,
-      opts: { isHovering: boolean }
-    ) => void;
     anchorIdParts: readonly string[];
     slug: FernNavigation.Slug;
     types: Record<ApiDefinition.TypeId, ApiDefinition.TypeDefinition>;
@@ -28,7 +23,6 @@ export declare namespace EndpointRequestSection {
 
 export const EndpointRequestSection: React.FC<EndpointRequestSection.Props> = ({
   request,
-  onHoverProperty,
   anchorIdParts,
   slug,
   types,
@@ -113,7 +107,6 @@ export const EndpointRequestSection: React.FC<EndpointRequestSection.Props> = ({
           <TypeReferenceDefinitions
             shape={obj}
             isCollapsible={false}
-            onHoverProperty={onHoverProperty}
             anchorIdParts={anchorIdParts}
             slug={slug}
             applyErrorStyles={false}
@@ -124,7 +117,6 @@ export const EndpointRequestSection: React.FC<EndpointRequestSection.Props> = ({
           <TypeReferenceDefinitions
             shape={alias}
             isCollapsible={false}
-            onHoverProperty={onHoverProperty}
             anchorIdParts={anchorIdParts}
             slug={slug}
             applyErrorStyles={false}

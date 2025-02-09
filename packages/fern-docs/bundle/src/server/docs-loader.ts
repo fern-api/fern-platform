@@ -84,12 +84,12 @@ export interface DocsLoader {
     pageId: string,
     options?: Omit<FernSerializeMdxOptions, "files" | "replaceSrc">,
     revalidate?: number | false
-  ) => Promise<FernDocs.MarkdownText | undefined>;
+  ) => Promise<string | FernDocs.ResolvedMdx | undefined>;
 
   serializeMdx: (
     content: string | undefined,
     options?: Omit<FernSerializeMdxOptions, "files" | "replaceSrc">
-  ) => Promise<FernDocs.MarkdownText | undefined>;
+  ) => Promise<string | FernDocs.ResolvedMdx | undefined>;
 
   getColors: () => Promise<{
     light?: ColorsThemeConfig;

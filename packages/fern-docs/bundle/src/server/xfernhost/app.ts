@@ -1,4 +1,4 @@
-import { COOKIE_FERN_DOCS_PREVIEW, HEADER_X_FERN_HOST } from "@fern-docs/utils";
+import { HEADER_X_FERN_HOST } from "@fern-docs/utils";
 import { cookies, headers } from "next/headers";
 import { getNextPublicDocsDomain } from "./dev";
 import { getHostNodeStatic } from "./node";
@@ -9,7 +9,6 @@ export function getDocsDomainApp(): string {
   const headersList = headers();
   const hosts = [
     getNextPublicDocsDomain(),
-    cookiesList.get(COOKIE_FERN_DOCS_PREVIEW)?.value,
     headersList.get(HEADER_X_FERN_HOST),
     headersList.get("host"),
   ];

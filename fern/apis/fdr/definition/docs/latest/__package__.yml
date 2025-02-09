@@ -4,28 +4,12 @@ imports:
   frontmatter: ./frontmatter.yml
 
 types:
-  MdxEngine:
-    docs: Engine used to render MDX content
-    enum:
-      - name: next_mdx_remote
-        value: next-mdx-remote
-        docs: https://github.com/hashicorp/next-mdx-remote
-      - name: mdx_bundler
-        value: mdx-bundler
-        docs: https://github.com/kentcdodds/mdx-bundler
 
   # note: ResolvedMDX should not be published from the CLI... this should only be set by getStaticProps or getServerSideProps in Next.JS
   # so that the server can sanitize the code. TODO: mark this as under an internal audience.
   ResolvedMDX:
     properties:
-      engine: MdxEngine
       code: string
       frontmatter: frontmatter.Frontmatter
       scope: map<string, unknown>
       jsxRefs: optional<list<string>>
-
-  MarkdownText:
-    discriminated: false
-    union:
-      - string
-      - ResolvedMDX

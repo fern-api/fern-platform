@@ -25,3 +25,4 @@ export * from "./split-into-sections";
 export * from "./strip-util";
 export * from "./toc";
 export * from "./types";
+export * from "./unified";

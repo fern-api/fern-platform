@@ -35,7 +35,3 @@ export const PageHeader = ({
     </header>
   );
 };
-
-// function isResolvedMdx(node: FernDocs.MarkdownText | ReactNode): node is FernDocs.MarkdownText {
-//     return typeof node === "string" || (isPlainObject(node) && typeof node.compiledSource === "string");
-// }

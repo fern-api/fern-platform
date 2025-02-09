@@ -1,5 +1,5 @@
+import { BuiltWithFern } from "@/components/built-with-fern";
 import { ReactElement, ReactNode } from "react";
-import { BuiltWithFern } from "../sidebar/BuiltWithFern";
 
 interface CustomLayoutProps {
   children: ReactNode;

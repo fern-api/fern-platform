@@ -1,8 +1,8 @@
+import { BuiltWithFern } from "@/components/built-with-fern";
 import type { FC, ReactElement, ReactNode } from "react";
 import { BottomNavigationNeighbors } from "../components/BottomNavigationNeighbors";
 import { EditThisPageButton } from "../components/EditThisPage";
 import { Feedback } from "../feedback/Feedback";
-import { BuiltWithFern } from "../sidebar/BuiltWithFern";
 
 interface GuideLayoutProps {
   PageHeader: FC;

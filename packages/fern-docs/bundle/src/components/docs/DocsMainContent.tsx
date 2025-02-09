@@ -79,5 +79,6 @@ export async function DocsMainContent({
     );
   }
 
+  console.error(`[${domain}] Unknown node type: ${node.type}`);
   notFound();
 }

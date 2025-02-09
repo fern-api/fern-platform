@@ -1,58 +1,107 @@
-import { FC, type ReactElement, type ReactNode } from "react";
-import { EditThisPageButton } from "../components/EditThisPage";
-import { WithAside } from "../contexts/api-page";
-import { Feedback } from "../feedback/Feedback";
-import { BuiltWithFern } from "../sidebar/BuiltWithFern";
+"use client";
+
+import { BuiltWithFern } from "@/components/built-with-fern";
+import { cn } from "@fern-docs/components";
+import React, { ComponentPropsWithoutRef } from "react";
 
 interface ReferenceLayoutProps {
-  PageHeader: FC;
-  children: ReactNode;
-  editThisPageUrl: string | undefined;
-  hideFeedback: boolean | undefined;
-
-  /**
-   * hasAside is true if the page has an <Aside> tag, which changes how the layout is rendered:
-   *  - the content is rendered in a 2-column layout on desktop, while the aside is rendered above the main content on mobile
-   *  - the content and aside are rendered by the ReferenceLayoutMain and ReferenceLayoutAside components, respectively
-   *  - those components are created using the rehypeExtractAsides plugin, and is responsible for `prose` classes
-   */
-  hasAside: boolean;
+  header: React.ReactNode;
+  aside?: React.ReactNode;
+  children: React.ReactNode;
+  reference?: React.ReactNode;
+  footer?: React.ReactNode;
 }
 
-export function ReferenceLayout({
-  PageHeader,
-  children,
-  editThisPageUrl,
-  hideFeedback,
-  hasAside,
-}: ReferenceLayoutProps): ReactElement {
+export const ReferenceLayout = React.forwardRef<
+  HTMLDivElement,
+  ComponentPropsWithoutRef<"article"> & ReferenceLayoutProps
+>(({ header, aside, children, footer, reference, ...props }, ref) => {
   return (
-    <main className="fern-reference-layout">
-      <div className="z-10 w-full min-w-0 pt-8">
-        <article className="max-w-content-width md:max-w-endpoint-width mx-auto w-full pb-20 lg:ml-0 xl:mx-auto">
-          <PageHeader />
-          {hasAside ? (
-            <WithAside.Provider value={true}>
-              <div className="grid max-w-full gap-8 md:grid-cols-2 lg:gap-12">
-                {children}
-              </div>
-            </WithAside.Provider>
-          ) : (
-            <div className="prose dark:prose-invert prose-h1:mt-[1.5em] first:prose-h1:mt-0 max-w-full break-words">
-              {children}
-            </div>
-          )}
-          {(!hideFeedback || editThisPageUrl != null) && (
-            <footer className="mt-12">
-              <div className="flex gap-4 max-sm:flex-col sm:justify-between">
-                <div>{!hideFeedback && <Feedback />}</div>
-                <EditThisPageButton editThisPageUrl={editThisPageUrl} />
-              </div>
-            </footer>
-          )}
-          <BuiltWithFern className="mx-auto my-8 w-fit" />
-        </article>
-      </div>
-    </main>
+    <div className="px-4 md:px-6 lg:px-8">
+      <article
+        {...props}
+        className={cn(
+          "max-w-content-width md:max-w-endpoint-width mx-auto w-full lg:ml-0 xl:mx-auto",
+          props.className
+        )}
+        ref={ref}
+      >
+        {header}
+        <div className="layout">
+          <section>{children}</section>
+          <aside>{aside}</aside>
+          <section>
+            {reference}
+            {footer}
+          </section>
+        </div>
+        <BuiltWithFern className="mx-auto my-8 w-fit" />
+        <style jsx>
+          {`
+            article > .layout {
+              margin: 3rem 0;
+              gap: 3rem;
+              display: grid;
+              position: relative;
+              grid-template-areas:
+                "content"
+                "aside"
+                "footer";
+            }
+
+            article > .layout > section:first-child {
+              grid-area: content;
+            }
+
+            article > .layout > aside {
+              grid-area: aside;
+              display: flex;
+            }
+
+            article > .layout > section:last-child {
+              grid-area: footer;
+            }
+
+            article > .layout > section:empty {
+              display: none;
+            }
+
+            article > .layout:has(> section:first-child:empty) {
+              grid-template-areas: "aside" "footer";
+            }
+
+            @media (min-width: 768px) {
+              article > .layout {
+                margin: 2rem 0;
+                gap: 2rem;
+                grid-template-columns: 1fr 1fr;
+                grid-template-areas:
+                  "content aside"
+                  "footer aside";
+                grid-template-rows: fit-content(100%) fit-content(100%);
+              }
+
+              article > .layout:has(> section:first-child:empty) {
+                grid-template-areas: "footer aside";
+              }
+
+              article > .layout > aside {
+                max-height: calc(100vh - var(--header-height) - 3rem);
+                height: fit-content;
+                position: sticky;
+                top: calc(var(--header-height) + 1.5rem);
+              }
+            }
+
+            @media (min-width: 1024px) {
+              article > .layout {
+                margin: 3rem 0;
+                gap: 3rem;
+              }
+            }
+          `}
+        </style>
+      </article>
+    </div>
   );
-}
+});

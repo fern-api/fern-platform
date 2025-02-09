@@ -1,6 +1,7 @@
+import { DEFAULT_HEADER_HEIGHT } from "@fern-docs/utils";
 import { clsx } from "clsx";
 import { useAtomValue } from "jotai";
-import { ReactElement } from "react";
+import { ReactElement, useEffect, useRef, useState } from "react";
 import {
   HAS_HORIZONTAL_TABS,
   MOBILE_SIDEBAR_ENABLED_ATOM,
@@ -26,8 +27,36 @@ export function HeaderContainer({
   const isMobileSidebarEnabled = useAtomValue(MOBILE_SIDEBAR_ENABLED_ATOM);
   const isMobileSidebarOpen = useIsMobileSidebarOpen();
 
+  const ref = useRef<HTMLDivElement>(null);
+
+  const [headerHeight, setHeaderHeight] = useState<number>(
+    DEFAULT_HEADER_HEIGHT
+  );
+  useEffect(() => {
+    if (!ref.current) return;
+
+    const resizeObserver = new ResizeObserver((entries) => {
+      const headerHeight = entries[0]?.contentRect.height;
+      if (headerHeight) {
+        setHeaderHeight(headerHeight);
+      }
+    });
+
+    resizeObserver.observe(ref.current);
+    return () => {
+      resizeObserver.disconnect();
+    };
+  }, []);
+
   return (
-    <header id="fern-header" className={className} role="banner">
+    <header ref={ref} id="fern-header" className={className} role="banner">
+      <style jsx>
+        {`
+          :global(:root) {
+            --header-height: ${headerHeight}px;
+          }
+        `}
+      </style>
       <Announcement />
       <div
         className={clsx("fern-header-container width-before-scroll-bar", {

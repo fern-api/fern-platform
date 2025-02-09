@@ -16,8 +16,13 @@ type BuiltWithFernProps = Omit<ComponentPropsWithoutRef<"a">, "href"> & {
 
 export const BuiltWithFern = forwardRef<HTMLAnchorElement, BuiltWithFernProps>(
   ({ utmCampaign, utmMedium, utmSource, ...props }, ref) => {
-    const { isHovering, onMouseEnter, onMouseLeave, onMouseMove, onMouseOver } =
-      useIsHovering();
+    const {
+      isHovering,
+      onPointerEnter,
+      onPointerLeave,
+      onPointerMove,
+      onPointerOver,
+    } = useIsHovering();
 
     const url = new URL("https://buildwithfern.com");
     if (utmCampaign) {
@@ -41,16 +46,22 @@ export const BuiltWithFern = forwardRef<HTMLAnchorElement, BuiltWithFernProps>(
               "mx-auto flex items-baseline gap-1",
               props.className
             )}
-            onMouseOver={composeEventHandlers(props.onMouseOver, onMouseOver)}
-            onMouseLeave={composeEventHandlers(
-              props.onMouseLeave,
-              onMouseLeave
+            onPointerOver={composeEventHandlers(
+              props.onPointerOver,
+              onPointerOver
             )}
-            onMouseEnter={composeEventHandlers(
-              props.onMouseEnter,
-              onMouseEnter
+            onPointerLeave={composeEventHandlers(
+              props.onPointerLeave,
+              onPointerLeave
             )}
-            onMouseMove={composeEventHandlers(props.onMouseMove, onMouseMove)}
+            onPointerEnter={composeEventHandlers(
+              props.onPointerEnter,
+              onPointerEnter
+            )}
+            onPointerMove={composeEventHandlers(
+              props.onPointerMove,
+              onPointerMove
+            )}
           >
             <span className="t-muted whitespace-nowrap text-xs">
               Built with

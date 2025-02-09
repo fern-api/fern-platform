@@ -1,4 +1,3 @@
-import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import dynamic from "next/dynamic";
 import { ReactNode, createElement, useRef } from "react";
@@ -9,16 +8,14 @@ import { getAnchorId } from "../../util/anchor";
 
 const Markdown = dynamic(
   () => import("../../mdx/Markdown").then(({ Markdown }) => Markdown),
-  {
-    ssr: true,
-  }
+  { ssr: true }
 );
 
 export declare namespace EndpointSection {
   export type Props = React.PropsWithChildren<{
     headerType?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
     title: ReactNode;
-    description?: FernDocs.MarkdownText | undefined;
+    description?: string | undefined;
     anchorIdParts: readonly string[];
     slug: FernNavigation.Slug;
   }>;

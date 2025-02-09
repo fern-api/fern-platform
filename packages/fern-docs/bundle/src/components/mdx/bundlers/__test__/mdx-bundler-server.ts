@@ -76,7 +76,7 @@ export async function teardownTestServer({
 
 export async function invokeTestServer(
   body: z.infer<typeof bodySchema>
-): Promise<FernDocs.MarkdownText> {
+): Promise<string | FernDocs.ResolvedMdx> {
   const response = await fetch(`http://localhost:3000`, {
     method: "POST",
     body: JSON.stringify(body),

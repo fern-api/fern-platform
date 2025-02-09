@@ -4,19 +4,16 @@ import { WithAside } from "@/components/contexts/api-page";
 import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import cn from "clsx";
-import { memo, useCallback, useRef } from "react";
+import { memo, useRef } from "react";
 import { FernBreadcrumbs } from "../../components/FernBreadcrumbs";
 import { useHref } from "../../hooks/useHref";
 import { Markdown } from "../../mdx/Markdown";
 import { EndpointParameter } from "../endpoints/EndpointParameter";
 import { EndpointSection } from "../endpoints/EndpointSection";
-import { JsonPropertyPath } from "../examples/JsonPropertyPath";
 import { TypeComponentSeparator } from "../types/TypeComponentSeparator";
 import { useApiPageCenterElement } from "../useApiPageCenterElement";
 import { WebhookPayloadSection } from "./WebhookPayloadSection";
 import { WebhookResponseSection } from "./WebhookResponseSection";
-import { WebhookContextProvider } from "./webhook-context/WebhookContextProvider";
-import { useWebhookContext } from "./webhook-context/useWebhookContext";
 import { WebhookExample } from "./webhook-examples/WebhookExample";
 
 export declare namespace WebhookContent {
@@ -33,17 +30,6 @@ export const WebhookContent = memo<WebhookContent.Props>((props) => {
 
   const ref = useRef<HTMLDivElement>(null);
   useApiPageCenterElement(ref, node.slug);
-
-  const { setHoveredPayloadPropertyPath } = useWebhookContext();
-  const onHoverPayloadProperty = useCallback(
-    (
-      jsonPropertyPath: JsonPropertyPath,
-      { isHovering }: { isHovering: boolean }
-    ) => {
-      setHoveredPayloadPropertyPath(isHovering ? jsonPropertyPath : undefined);
-    },
-    [setHoveredPayloadPropertyPath]
-  );
 
   const example = webhook.examples?.[0]; // TODO: Need a way to show all the examples
 
@@ -112,7 +98,6 @@ export const WebhookContent = memo<WebhookContent.Props>((props) => {
                 >
                   <WebhookPayloadSection
                     payload={webhook.payloads?.[0]}
-                    onHoverProperty={onHoverPayloadProperty}
                     anchorIdParts={["payload", "body"]}
                     slug={node.slug}
                     types={types}
@@ -156,11 +141,7 @@ export const WebhookContent = memo<WebhookContent.Props>((props) => {
     </div>
   );
 
-  return (
-    <WithAside.Provider value={true}>
-      <WebhookContextProvider>{article}</WebhookContextProvider>
-    </WithAside.Provider>
-  );
+  return <WithAside.Provider value={true}>{article}</WithAside.Provider>;
 });
 
 WebhookContent.displayName = "WebhookContent";

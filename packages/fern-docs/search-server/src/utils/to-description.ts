@@ -4,8 +4,9 @@ import { isString } from "es-toolkit/predicate";
 
 export function toDescription(
   descriptions:
-    | FernDocs.MarkdownText
-    | (FernDocs.MarkdownText | undefined)[]
+    | string
+    | FernDocs.ResolvedMdx
+    | (string | FernDocs.ResolvedMdx | undefined)[]
     | undefined
 ): string | undefined {
   if (descriptions == null) {

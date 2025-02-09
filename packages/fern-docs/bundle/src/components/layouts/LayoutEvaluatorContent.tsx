@@ -1,5 +1,3 @@
-"use client";
-
 import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import type { TableOfContentsItem } from "@fern-docs/mdx";
@@ -89,10 +87,11 @@ export function LayoutEvaluatorContent({
     case "reference":
       return (
         <ReferenceLayout
-          PageHeader={PageHeaderComponent}
-          editThisPageUrl={frontmatter["edit-this-page-url"]}
-          hideFeedback={frontmatter["hide-feedback"]}
-          hasAside={hasAside}
+          header={<PageHeaderComponent />}
+          // PageHeader={PageHeaderComponent}
+          // editThisPageUrl={frontmatter["edit-this-page-url"]}
+          // hideFeedback={frontmatter["hide-feedback"]}
+          // hasAside={hasAside}
         >
           {children}
         </ReferenceLayout>

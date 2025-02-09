@@ -64,27 +64,27 @@ export class ApiDefinitionKVCache {
 
   private async getResolvedDescription(
     key: string
-  ): Promise<FernDocs.MarkdownText | null> {
+  ): Promise<string | FernDocs.ResolvedMdx | null> {
     return this.markdownCache.getMarkdownText(`${this.api}:${key}`);
   }
 
   private async mgetResolvedDescriptions(
     keys: string[]
-  ): Promise<Record<string, FernDocs.MarkdownText>> {
+  ): Promise<Record<string, string | FernDocs.ResolvedMdx>> {
     return this.markdownCache.mgetMarkdownText(
       keys.map((key) => `${this.api}:${key}`)
     );
   }
 
   private async setResolvedDescription(
-    description: FernDocs.MarkdownText,
+    description: string | FernDocs.ResolvedMdx,
     key: string
   ): Promise<void> {
     await this.markdownCache.setMarkdownText(`${this.api}:${key}`, description);
   }
 
   private async msetResolvedDescriptions(
-    records: Record<string, FernDocs.MarkdownText>
+    records: Record<string, string | FernDocs.ResolvedMdx>
   ): Promise<void> {
     await this.markdownCache.msetMarkdownText(
       Object.fromEntries(
@@ -97,10 +97,10 @@ export class ApiDefinitionKVCache {
   }
 
   public async resolveDescription(
-    description: FernDocs.MarkdownText,
+    description: string | FernDocs.ResolvedMdx,
     key: string,
-    resolver: (description: string) => Promise<FernDocs.MarkdownText>
-  ): Promise<FernDocs.MarkdownText> {
+    resolver: (description: string) => Promise<string | FernDocs.ResolvedMdx>
+  ): Promise<string | FernDocs.ResolvedMdx> {
     if (typeof description !== "string") {
       // description is already ResolvedMdx.
       return description;
@@ -117,9 +117,9 @@ export class ApiDefinitionKVCache {
   }
 
   public async batchResolveDescriptions(
-    records: Record<string, FernDocs.MarkdownText>,
-    resolver: (description: string) => Promise<FernDocs.MarkdownText>
-  ): Promise<Record<string, FernDocs.MarkdownText>> {
+    records: Record<string, string | FernDocs.ResolvedMdx>,
+    resolver: (description: string) => Promise<string | FernDocs.ResolvedMdx>
+  ): Promise<Record<string, string | FernDocs.ResolvedMdx>> {
     const hits = await this.mgetResolvedDescriptions(Object.keys(records));
 
     const misses = Object.entries(records).filter(([key]) => !(key in hits));

@@ -1,5 +1,4 @@
 import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
-import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import titleCase from "@fern-api/ui-core-utils/titleCase";
 import { AvailabilityBadge } from "@fern-docs/components/badges";
@@ -54,7 +53,7 @@ export const DiscriminatedUnionVariant: React.FC<
 
   const [shape, additionalDescriptions] = useMemo((): [
     ApiDefinition.TypeShape.Object_,
-    FernDocs.MarkdownText[],
+    string[],
   ] => {
     const unwrapped = ApiDefinition.unwrapDiscriminatedUnionVariant(
       { discriminant },

@@ -1,5 +1,6 @@
 "use client";
 
+import { BuiltWithFern, HideBuiltWithFern } from "@/components/built-with-fern";
 import { ReactNode } from "react";
 import {
   useIsReady,
@@ -7,10 +8,6 @@ import {
   useWriteApiDefinitionAtom,
 } from "../atoms";
 import { DocsContent } from "../resolver/DocsContent";
-import {
-  BuiltWithFern,
-  HideBuiltWithFernContext,
-} from "../sidebar/BuiltWithFern";
 import { ApiReferenceContent } from "./ApiReferenceContent";
 
 export default function ApiReferencePage({
@@ -33,7 +30,7 @@ export default function ApiReferencePage({
 
   return (
     <>
-      <HideBuiltWithFernContext.Provider value={true}>
+      <HideBuiltWithFern>
         <ApiReferenceContent
           apiDefinition={content.apiDefinition}
           showErrors={node.showErrors ?? false}
@@ -42,7 +39,7 @@ export default function ApiReferencePage({
           mdxs={content.mdxs}
           slug={content.slug}
         />
-      </HideBuiltWithFernContext.Provider>
+      </HideBuiltWithFern>
 
       {/* anchor links should get additional padding to scroll to on initial load */}
       {!hydrated && <div className="h-full" />}

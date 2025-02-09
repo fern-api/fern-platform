@@ -1,4 +1,3 @@
-import { serializeMdx } from "@/components/mdx/bundlers/mdx-bundler";
 import type { DocsContent } from "@/components/resolver/DocsContent";
 import { resolveDocsContent } from "@/components/resolver/resolveDocsContent";
 import type { FileData } from "@/server/types";
@@ -77,7 +76,6 @@ export async function withResolvedDocsContent({
       // inject the file url and dimensions for images and other embeddable files
       replaceSrc,
     },
-    serializeMdx,
     domain,
     engine: "mdx-bundler",
   });
@@ -109,7 +107,7 @@ export function extractFrontmatterFromDocsContent(
 }
 
 function getFrontmatterFromMarkdownText(
-  markdownText: FernDocs.MarkdownText
+  markdownText: string | FernDocs.ResolvedMdx
 ): FernDocs.Frontmatter | undefined {
   if (typeof markdownText === "string") {
     return getFrontmatter(markdownText).data;

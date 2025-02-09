@@ -25,7 +25,7 @@ export class MarkdownKVCache {
 
   public async getMarkdownText(
     key: string
-  ): Promise<FernDocs.MarkdownText | null> {
+  ): Promise<string | FernDocs.ResolvedMdx | null> {
     try {
       return await kv.get<string>(this.createKey(key));
     } catch (e) {
@@ -36,8 +36,8 @@ export class MarkdownKVCache {
 
   public async mgetMarkdownText(
     keys: string[]
-  ): Promise<Record<string, FernDocs.MarkdownText>> {
-    const toRet: Record<string, FernDocs.MarkdownText> = {};
+  ): Promise<Record<string, string | FernDocs.ResolvedMdx>> {
+    const toRet: Record<string, string | FernDocs.ResolvedMdx> = {};
     try {
       const batchSize = 100; // Adjust this value based on Vercel Upstash limits
       const batches = [];
@@ -47,7 +47,9 @@ export class MarkdownKVCache {
 
       const batchPromises = batches.map(async (batch) => {
         const batchKeys = batch.map((key) => this.createKey(key));
-        return await kv.mget<(FernDocs.MarkdownText | null)[]>(batchKeys);
+        return await kv.mget<(string | FernDocs.ResolvedMdx | null)[]>(
+          batchKeys
+        );
       });
 
       const responses = await Promise.all(batchPromises);
@@ -69,7 +71,7 @@ export class MarkdownKVCache {
 
   public async setMarkdownText(
     key: string,
-    markdownText: FernDocs.MarkdownText
+    markdownText: string | FernDocs.ResolvedMdx
   ): Promise<void> {
     try {
       await kv.set(this.createKey(key), markdownText);
@@ -80,7 +82,7 @@ export class MarkdownKVCache {
 
   // TODO: validate that mset records is <1MB or else this will throw!
   public async msetMarkdownText(
-    records: Record<string, FernDocs.MarkdownText>,
+    records: Record<string, string | FernDocs.ResolvedMdx>,
     batchSize = 100
   ): Promise<void> {
     try {

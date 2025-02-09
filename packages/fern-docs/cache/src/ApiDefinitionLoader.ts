@@ -334,11 +334,11 @@ export class ApiDefinitionLoader {
     return { ...example, snippets };
   };
 
-  #serializeMdx = async (mdx: string): Promise<FernDocs.MarkdownText> =>
+  #serializeMdx = async (mdx: string): Promise<string | FernDocs.ResolvedMdx> =>
     Promise.resolve(mdx);
   #engine = "raw";
   public withMdxBundler = (
-    fn: (mdx: string) => Promise<FernDocs.MarkdownText>,
+    fn: (mdx: string) => Promise<string | FernDocs.ResolvedMdx>,
     engine: string
   ): this => {
     this.#serializeMdx = fn;
@@ -370,10 +370,10 @@ export class ApiDefinitionLoader {
    */
   #collectDescriptions = (
     apiDefinition: ApiDefinition
-  ): Record<string, FernDocs.MarkdownText> => {
-    const descriptions: Record<string, FernDocs.MarkdownText> = {};
+  ): Record<string, string | FernDocs.ResolvedMdx> => {
+    const descriptions: Record<string, string | FernDocs.ResolvedMdx> = {};
     const descriptionCollector = (
-      description: FernDocs.MarkdownText,
+      description: string | FernDocs.ResolvedMdx,
       key: string
     ) => {
       if (descriptions[`${this.#engine}/${key}`] != null) {
@@ -389,9 +389,12 @@ export class ApiDefinitionLoader {
 
   #transformDescriptions = (
     apiDefinition: ApiDefinition,
-    descriptions: Record<string, FernDocs.MarkdownText>
+    descriptions: Record<string, string | FernDocs.ResolvedMdx>
   ): ApiDefinition => {
-    const transformer = (description: FernDocs.MarkdownText, key: string) => {
+    const transformer = (
+      description: string | FernDocs.ResolvedMdx,
+      key: string
+    ) => {
       return descriptions[`${this.#engine}/${key}`] ?? description;
     };
 

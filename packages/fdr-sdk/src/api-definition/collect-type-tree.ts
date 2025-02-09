@@ -1,4 +1,3 @@
-import type { MarkdownText } from "../docs";
 import type { Availability, TypeId } from "../navigation";
 import { coalesceAvailability } from "./availability";
 import { LARGE_LOOP_TOLERANCE } from "./const";
@@ -39,7 +38,7 @@ export interface TypeDefinitionTreeItem {
    * The path to the type definition
    */
   path: KeyPathItem[];
-  descriptions: MarkdownText[];
+  descriptions: string[];
   availability: Availability | undefined;
 }
 
@@ -67,7 +66,7 @@ export function collectTypeDefinitionTree(
   const stack: {
     type: TypeShapeOrReference;
     path: KeyPathItem[];
-    descriptions: MarkdownText[];
+    descriptions: string[];
     availability: Availability | undefined;
     visitedTypeIds: Set<TypeId>;
   }[] = [

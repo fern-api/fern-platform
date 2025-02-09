@@ -1,4 +1,3 @@
-import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 import { FernTooltip } from "@fern-docs/components";
 import { useCopyToClipboard } from "@fern-ui/react-commons";
 import cn from "clsx";
@@ -7,7 +6,7 @@ import { Markdown } from "../mdx/Markdown";
 
 type ChipProps = {
   name: string;
-  description?: FernDocs.MarkdownText | undefined;
+  description?: string | undefined;
   small?: boolean;
 };
 

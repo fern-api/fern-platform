@@ -3,7 +3,6 @@ import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { useMemo } from "react";
 import { WithAside } from "../../contexts/api-page";
 import { WebhookContent } from "./WebhookContent";
-import { WebhookContextProvider } from "./webhook-context/WebhookContextProvider";
 
 export declare namespace Webhook {
   export interface Props {
@@ -32,9 +31,7 @@ export const Webhook: React.FC<Webhook.Props> = ({
 
   return (
     <WithAside.Provider value={true}>
-      <WebhookContextProvider>
-        <WebhookContent breadcrumb={breadcrumb} context={context} last={last} />
-      </WebhookContextProvider>
+      <WebhookContent breadcrumb={breadcrumb} context={context} last={last} />
     </WithAside.Provider>
   );
 };

@@ -3,17 +3,12 @@ import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { useEdgeFlags } from "../../atoms";
 import { Markdown } from "../../mdx/Markdown";
 import { renderTypeShorthand } from "../../type-shorthand";
-import { JsonPropertyPath } from "../examples/JsonPropertyPath";
 import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";
 
 export declare namespace EndpointResponseSection {
   export interface Props {
     response: ApiDefinition.HttpResponse;
     exampleResponseBody: ApiDefinition.ExampleEndpointResponse | undefined;
-    onHoverProperty?: (
-      path: JsonPropertyPath,
-      opts: { isHovering: boolean }
-    ) => void;
     anchorIdParts: readonly string[];
     slug: FernNavigation.Slug;
     types: Record<ApiDefinition.TypeId, ApiDefinition.TypeDefinition>;
@@ -22,14 +17,7 @@ export declare namespace EndpointResponseSection {
 
 export const EndpointResponseSection: React.FC<
   EndpointResponseSection.Props
-> = ({
-  response,
-  exampleResponseBody,
-  onHoverProperty,
-  anchorIdParts,
-  slug,
-  types,
-}) => {
+> = ({ response, exampleResponseBody, anchorIdParts, slug, types }) => {
   const { isAudioFileDownloadSpanSummary } = useEdgeFlags();
 
   return (
@@ -47,7 +35,6 @@ export const EndpointResponseSection: React.FC<
       />
       <EndpointResponseSectionContent
         body={response.body}
-        onHoverProperty={onHoverProperty}
         anchorIdParts={anchorIdParts}
         slug={slug}
         types={types}
@@ -58,9 +45,6 @@ export const EndpointResponseSection: React.FC<
 
 interface EndpointResponseSectionContentProps {
   body: ApiDefinition.HttpResponseBodyShape;
-  onHoverProperty:
-    | ((path: JsonPropertyPath, opts: { isHovering: boolean }) => void)
-    | undefined;
   anchorIdParts: readonly string[];
   slug: FernNavigation.Slug;
   types: Record<ApiDefinition.TypeId, ApiDefinition.TypeDefinition>;
@@ -68,7 +52,6 @@ interface EndpointResponseSectionContentProps {
 
 function EndpointResponseSectionContent({
   body,
-  onHoverProperty,
   anchorIdParts,
   slug,
   types,
@@ -83,7 +66,6 @@ function EndpointResponseSectionContent({
         <TypeReferenceDefinitions
           shape={body.shape}
           isCollapsible={false}
-          onHoverProperty={onHoverProperty}
           anchorIdParts={anchorIdParts}
           slug={slug}
           applyErrorStyles={false}
@@ -96,7 +78,6 @@ function EndpointResponseSectionContent({
         <TypeReferenceDefinitions
           shape={body}
           isCollapsible={false}
-          onHoverProperty={onHoverProperty}
           anchorIdParts={anchorIdParts}
           slug={slug}
           applyErrorStyles={false}

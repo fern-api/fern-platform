@@ -4,10 +4,10 @@ import { useCallback, useReducer } from "react";
 export declare namespace useIsHovering {
   export interface Return {
     isHovering: boolean;
-    onMouseOver: () => void;
-    onMouseLeave: () => void;
-    onMouseMove: () => void;
-    onMouseEnter: () => void;
+    onPointerOver: () => void;
+    onPointerLeave: () => void;
+    onPointerMove: () => void;
+    onPointerEnter: () => void;
   }
 }
 
@@ -15,16 +15,16 @@ export function useIsHovering(): useIsHovering.Return {
   const [state, dispatch] = useReducer(
     (
       previousState: "inside" | "outside" | "hovering",
-      action: "mouseover" | "mouseleave" | "mousemove" | "mouseenter"
+      action: "pointerover" | "pointerleave" | "pointermove" | "pointerenter"
     ) => {
       switch (action) {
-        case "mouseover":
+        case "pointerover":
           return previousState === "hovering" ? "hovering" : "inside";
-        case "mouseleave":
+        case "pointerleave":
           return "outside";
-        case "mousemove":
+        case "pointermove":
           return previousState === "inside" ? "hovering" : previousState;
-        case "mouseenter":
+        case "pointerenter":
           return "hovering";
         default:
           assertNever(action);
@@ -35,9 +35,9 @@ export function useIsHovering(): useIsHovering.Return {
 
   return {
     isHovering: state === "hovering",
-    onMouseOver: useCallback(() => dispatch("mouseover"), []),
-    onMouseLeave: useCallback(() => dispatch("mouseleave"), []),
-    onMouseMove: useCallback(() => dispatch("mousemove"), []),
-    onMouseEnter: useCallback(() => dispatch("mouseenter"), []),
+    onPointerOver: useCallback(() => dispatch("pointerover"), []),
+    onPointerLeave: useCallback(() => dispatch("pointerleave"), []),
+    onPointerMove: useCallback(() => dispatch("pointermove"), []),
+    onPointerEnter: useCallback(() => dispatch("pointerenter"), []),
   };
 }

@@ -7,7 +7,7 @@ export declare namespace DocsContent {
   export interface Neighbor {
     slug: FernNavigation.Slug;
     title: string;
-    excerpt: FernDocs.MarkdownText | undefined;
+    excerpt: string | FernDocs.ResolvedMdx | undefined;
   }
 
   export interface Neighbors {
@@ -18,7 +18,7 @@ export declare namespace DocsContent {
   interface ChangelogPage {
     type: "changelog";
     title: string;
-    pages: Record<FernNavigation.PageId, FernDocs.MarkdownText>;
+    pages: Record<FernNavigation.PageId, string | FernDocs.ResolvedMdx>;
     node: FernNavigation.ChangelogNode;
     breadcrumb: readonly FernNavigation.BreadcrumbItem[];
     slug: FernNavigation.Slug;
@@ -29,7 +29,7 @@ export declare namespace DocsContent {
   interface ChangelogEntryPage
     extends Omit<FernNavigation.ChangelogEntryNode, "type"> {
     type: "changelog-entry";
-    page: FernDocs.MarkdownText;
+    page: string | FernDocs.ResolvedMdx;
     breadcrumb: readonly FernNavigation.BreadcrumbItem[];
     neighbors: Neighbors;
     changelogTitle: string;
@@ -39,9 +39,9 @@ export declare namespace DocsContent {
   interface MarkdownPage {
     type: "markdown-page";
     slug: FernNavigation.Slug;
-    title: FernDocs.MarkdownText;
-    subtitle: FernDocs.MarkdownText | undefined;
-    content: FernDocs.MarkdownText;
+    title: string | FernDocs.ResolvedMdx;
+    subtitle: string | FernDocs.ResolvedMdx | undefined;
+    content: string | FernDocs.ResolvedMdx;
     breadcrumb: readonly FernNavigation.BreadcrumbItem[];
     tableOfContents: TableOfContentsItem[];
     neighbors: Neighbors;

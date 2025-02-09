@@ -1,7 +1,7 @@
+import { BuiltWithFern } from "@/components/built-with-fern";
 import { FC, ReactElement, ReactNode } from "react";
 import { EditThisPageButton } from "../components/EditThisPage";
 import { Feedback } from "../feedback/Feedback";
-import { BuiltWithFern } from "../sidebar/BuiltWithFern";
 
 interface PageLayoutProps {
   PageHeader: FC;

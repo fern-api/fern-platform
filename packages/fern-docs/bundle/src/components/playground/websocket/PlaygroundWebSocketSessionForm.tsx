@@ -1,10 +1,10 @@
+import { WebSocketMessagesVirtualized } from "@/components/api-reference/websockets/WebSocketMessagesVirtualized";
 import type * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import type { WebSocketContext } from "@fern-api/fdr-sdk/api-definition";
 import titleCase from "@fern-api/ui-core-utils/titleCase";
 import { FernButton, FernCard, FernScrollArea } from "@fern-docs/components";
 import cn from "clsx";
 import { Dispatch, FC, SetStateAction, useCallback } from "react";
-import { WebSocketMessagesVirtualized } from "../../api-reference/web-socket/WebSocketMessagesVirtualized";
 import { HorizontalSplitPane } from "../VerticalSplitPane";
 import { PlaygroundTypeReferenceForm } from "../form/PlaygroundTypeReferenceForm";
 import { useWebsocketMessages } from "../hooks/useWebsocketMessages";
@@ -15,8 +15,6 @@ interface PlaygroundWebSocketSessionFormProps {
   context: WebSocketContext;
   formState: PlaygroundWebSocketRequestFormState;
   setFormState: Dispatch<SetStateAction<PlaygroundWebSocketRequestFormState>>;
-  // response: Loadable<ResponsePayload>;
-  // sendRequest: () => void;
   scrollAreaHeight: number;
   sendMessage: (message: ApiDefinition.WebSocketMessage, data: unknown) => void;
   clearMessages: () => void;
