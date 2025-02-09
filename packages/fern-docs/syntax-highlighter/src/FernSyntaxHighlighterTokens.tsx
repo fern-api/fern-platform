@@ -27,7 +27,7 @@ export interface FernSyntaxHighlighterTokensProps {
 
   className?: string;
   style?: React.CSSProperties;
-  viewportRef?: React.RefObject<ScrollToHandle>;
+  viewportRef?: React.RefObject<ScrollToHandle | null>;
   maxLines?: number;
   wordWrap?: boolean;
 }

@@ -20,7 +20,7 @@ export interface FernSyntaxHighlighterProps {
   fontSize?: "sm" | "base" | "lg";
   highlightLines?: HighlightLine[];
   highlightStyle?: "highlight" | "focus";
-  viewportRef?: React.RefObject<ScrollToHandle>;
+  viewportRef?: React.RefObject<ScrollToHandle | null>;
   maxLines?: number;
   wordWrap?: boolean;
 }
@@ -40,7 +40,7 @@ export const FernSyntaxHighlighter = forwardRef<
       return highlightTokens(highlighter, code, language);
     } catch (e) {
       // TODO: sentry
-      // eslint-disable-next-line no-console
+
       console.error("Error occurred while highlighting tokens", e);
       return createRawTokens(code, language);
     }

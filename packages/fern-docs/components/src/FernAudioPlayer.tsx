@@ -148,7 +148,7 @@ function FernAudioProgress({
   audioRef,
 }: {
   duration: number;
-  audioRef: React.RefObject<HTMLAudioElement>;
+  audioRef: React.RefObject<HTMLAudioElement | null>;
 }) {
   const [currentTime, setCurrentTime] = useState<number>(0);
 

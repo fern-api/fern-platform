@@ -244,7 +244,7 @@ function FernDropdownItemValue({
               ref: option.value === value ? activeRef : undefined,
               href: option.href,
               className: cn("fern-dropdown-item", option.className),
-            },
+            } as any,
             renderButtonContent()
           )
         ) : (

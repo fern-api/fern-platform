@@ -141,7 +141,7 @@ export function ButtonContent({
   className,
 }: PropsWithChildren<
   FernButtonSharedProps & {
-    buttonTextRef?: React.RefObject<HTMLSpanElement>;
+    buttonTextRef?: React.RefObject<HTMLSpanElement | null>;
   }
 >): ReactElement {
   children = children ?? text;
