@@ -7,7 +7,7 @@ import { addLeadingSlash, conformTrailingSlash } from "@fern-docs/utils";
 import { Undo2 } from "lucide-react";
 
 export default async function NotFound() {
-  const loader = await createCachedDocsLoader(getDocsDomainApp());
+  const loader = await createCachedDocsLoader(await getDocsDomainApp());
   const [baseUrl, colors, config] = await Promise.all([
     loader.getBaseUrl(),
     loader.getColors(),

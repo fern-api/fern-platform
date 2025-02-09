@@ -9,8 +9,8 @@ export const dynamic = "force-dynamic";
 export const runtime = "edge";
 
 export default async function robots(): Promise<MetadataRoute.Robots> {
-  const domain = getDocsDomainApp();
-  const host = getHostApp() ?? domain;
+  const domain = await getDocsDomainApp();
+  const host = (await getHostApp()) ?? domain;
   const basepath = (await headers()).get("x-fern-basepath") ?? "";
   const sitemap = urlJoin(withDefaultProtocol(host), basepath, "/sitemap.xml");
 

@@ -5,7 +5,7 @@ import { addLeadingSlash } from "@fern-docs/utils";
 import type { MetadataRoute } from "next";
 
 export default async function manifest(): Promise<MetadataRoute.Manifest> {
-  const domain = getDocsDomainApp();
+  const domain = await getDocsDomainApp();
   const loader = await createCachedDocsLoader(domain);
 
   const baseUrl = await loader.getBaseUrl();

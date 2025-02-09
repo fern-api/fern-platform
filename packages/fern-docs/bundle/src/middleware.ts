@@ -12,18 +12,21 @@ export const middleware: NextMiddleware = async (request) => {
   const withDomain = createWithDomain(domain);
   let pathname = request.nextUrl.pathname;
 
+  const headers = new Headers(request.headers);
+  headers.set("x-fern-host", domain);
+
   /**
    * Rewrite /.../_next/*
    */
   if (pathname.includes("/_next/")) {
     const index = pathname.indexOf("/_next/");
     pathname = pathname.slice(index);
-    return NextResponse.rewrite(withPathname(request, pathname));
+    return NextResponse.rewrite(withPathname(request, pathname), {
+      request: { headers },
+    });
   }
 
-  const headers = new Headers(request.headers);
   headers.set("x-pathname", pathname);
-  headers.set("x-fern-host", domain);
 
   /**
    * Rewrite robots.txt

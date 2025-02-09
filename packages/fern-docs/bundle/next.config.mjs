@@ -78,7 +78,6 @@ const nextConfig = {
   ],
   experimental: {
     scrollRestoration: true,
-    instrumentationHook: true,
     optimizePackageImports: [
       "@fern-api/fdr-sdk",
       "@fern-docs/mdx",
@@ -87,16 +86,6 @@ const nextConfig = {
       "es-toolkit",
       "ts-essentials",
     ],
-
-    /**
-     * If the rewrite comes from another nextjs middleware,
-     * x-nextjs-rewrite gets set to the external URL, and then nextjs will try to redirect to that URL.
-     *
-     * This flag will prevent nextjs from redirecting to the external URL.
-     *
-     * NOTE: @fern-api/next uses this flag to prevent the client from throwing an error.
-     */
-    externalMiddlewareRewritesResolve: true,
   },
 
   skipMiddlewareUrlNormalize: true,
