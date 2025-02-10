@@ -95,14 +95,35 @@ export class ExampleObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
   }
 
   parse(): void {
-    this.resolvedRequestInput = resolveExampleReference(
-      this.input?.requestExample,
-      this.context.document
-    );
-    this.resolvedResponseInput = resolveExampleReference(
-      this.input?.responseExample,
-      this.context.document
-    );
+    console.log(this.input);
+    const fallbackRequestExample = this.shapes.requestBody?.schema?.example({
+      includeOptionals: false,
+      override: undefined,
+    });
+    this.resolvedRequestInput =
+      resolveExampleReference(
+        this.input?.requestExample,
+        this.context.document
+      ) ??
+      (fallbackRequestExample != null
+        ? {
+            value: fallbackRequestExample,
+          }
+        : undefined);
+    const fallbackResponseExample = this.shapes.responseBody?.schema?.example({
+      includeOptionals: false,
+      override: undefined,
+    });
+    this.resolvedResponseInput =
+      resolveExampleReference(
+        this.input?.responseExample,
+        this.context.document
+      ) ??
+      (fallbackResponseExample != null
+        ? {
+            value: fallbackResponseExample,
+          }
+        : undefined);
 
     // TODO: align on terse examples
     // if (!new Ajv().validate(this.requestBody.resolvedSchema, this.input.value)) {
@@ -339,6 +360,7 @@ export class ExampleObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
   convert(): FernRegistry.api.latest.ExampleEndpointCall | undefined {
     let requestBody: FernRegistry.api.latest.ExampleEndpointRequest | undefined;
     if (this.shapes.requestBody != null && this.resolvedRequestInput != null) {
+      console.log(this.shapes.requestBody, this.resolvedRequestInput);
       switch (this.shapes.requestBody.contentType) {
         case "form-data":
           requestBody = this.convertFormDataExampleRequest();
@@ -414,41 +436,48 @@ export class ExampleObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
     }
 
     const pathParameters = Object.fromEntries(
-      Object.entries(this.shapes.pathParameters ?? {}).map(([key, value]) => {
-        return [
-          key,
-          value.example({
-            includeOptionals: false,
-            override: key,
-          }),
-        ];
-      })
+      Object.entries(this.shapes.pathParameters ?? {}).map(([key, value]) => [
+        key,
+        value.example({
+          includeOptionals: false,
+          override: key,
+        }),
+      ])
     );
 
     const queryParameters = Object.fromEntries(
-      Object.entries(this.shapes.queryParameters ?? {}).map(([key, value]) => {
-        return [
-          key,
-          value.example({
-            includeOptionals: false,
-            override: key,
-          }),
-        ];
-      })
+      Object.entries(this.shapes.queryParameters ?? {})
+        .map(([key, value]) =>
+          value.required
+            ? [
+                key,
+                value.example({
+                  includeOptionals: false,
+                  override: key,
+                }),
+              ]
+            : undefined
+        )
+        .filter(isNonNullish)
     );
 
     const requestHeaders = Object.fromEntries(
-      Object.entries(this.shapes.requestHeaders ?? {}).map(([key, value]) => {
-        return [
-          key,
-          value.example({
-            includeOptionals: false,
-            override: key,
-          }),
-        ];
-      })
+      Object.entries(this.shapes.requestHeaders ?? {})
+        .map(([key, value]) =>
+          value.required
+            ? [
+                key,
+                value.example({
+                  includeOptionals: false,
+                  override: key,
+                }),
+              ]
+            : undefined
+        )
+        .filter(isNonNullish)
     );
 
+    console.log(this.resolvedRequestInput, this.resolvedRequestInput);
     return {
       path: replacePathParameters(
         this.path,

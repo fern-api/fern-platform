@@ -32,6 +32,36 @@
   {
     "message": "Expected format to be one of decimal, decimal128, double-int, double, float, sf-decimal. Received uint",
     "path": [
+      "paths",
+      "/get",
+      "get",
+      "responses",
+      "content",
+      "application/json",
+      "type",
+      "Response",
+      "properties",
+      "id",
+    ],
+  },
+  {
+    "message": "Expected format to be one of decimal, decimal128, double-int, double, float, sf-decimal. Received uint64",
+    "path": [
+      "paths",
+      "/get",
+      "get",
+      "responses",
+      "content",
+      "application/json",
+      "type",
+      "Response",
+      "properties",
+      "value",
+    ],
+  },
+  {
+    "message": "Expected format to be one of decimal, decimal128, double-int, double, float, sf-decimal. Received uint",
+    "path": [
       "components",
       "Request",
       "properties",

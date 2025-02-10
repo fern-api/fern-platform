@@ -220,6 +220,7 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
                     pathId: "examples",
                   },
                   this.path,
+                  // Since there is no response, we can use any status code
                   0,
                   getExampleName(requestExampleName, undefined),
                   {

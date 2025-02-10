@@ -152,6 +152,121 @@
       "protocol": {
         "type": "rest"
       }
+    },
+    "endpoint_password.postApiV1AccountsPasswordChangeRequest": {
+      "id": "endpoint_password.postApiV1AccountsPasswordChangeRequest",
+      "description": "Requests password change for current user",
+      "namespace": [
+        "password"
+      ],
+      "displayName": "Requests password change",
+      "method": "POST",
+      "path": [
+        {
+          "type": "literal",
+          "value": "/"
+        },
+        {
+          "type": "literal",
+          "value": "api"
+        },
+        {
+          "type": "literal",
+          "value": "/"
+        },
+        {
+          "type": "literal",
+          "value": "v1"
+        },
+        {
+          "type": "literal",
+          "value": "/"
+        },
+        {
+          "type": "literal",
+          "value": "accounts"
+        },
+        {
+          "type": "literal",
+          "value": "/"
+        },
+        {
+          "type": "literal",
+          "value": "password"
+        },
+        {
+          "type": "literal",
+          "value": "/"
+        },
+        {
+          "type": "literal",
+          "value": "change"
+        },
+        {
+          "type": "literal",
+          "value": "/"
+        },
+        {
+          "type": "literal",
+          "value": "request"
+        }
+      ],
+      "environments": [],
+      "requests": [
+        {
+          "contentType": "application/json",
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "PasswordChangeRequest"
+            }
+          }
+        }
+      ],
+      "responses": [
+        {
+          "statusCode": 200,
+          "body": {
+            "type": "empty"
+          },
+          "description": "OK"
+        }
+      ],
+      "errors": [
+        {
+          "statusCode": 401,
+          "shape": {
+            "type": "object",
+            "extends": [
+              "ApiError"
+            ],
+            "properties": []
+          },
+          "description": "A valid authentication token is required",
+          "name": "Unauthorized",
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "errorCode": "AuthUnauthorized",
+                  "message": "A valid authentication token is required"
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "examples": [
+        {
+          "path": "/api/v1/accounts/password/change/request",
+          "responseStatusCode": 200
+        }
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     }
   },
   "websockets": {},
@@ -229,6 +344,11 @@
       "id": "user",
       "name": "user",
       "displayName": "user"
+    },
+    "password": {
+      "id": "password",
+      "name": "password",
+      "displayName": "password"
     }
   },
   "auths": {},

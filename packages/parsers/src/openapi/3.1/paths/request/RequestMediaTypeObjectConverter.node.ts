@@ -64,33 +64,11 @@ export class RequestMediaTypeObjectConverterNode extends BaseOpenApiV3_1Converte
   }
 
   parse(contentType: string | undefined): void {
-    // This sets examples derived from OpenAPI examples.
-    // this.input.example is typed as any
-    // this.input.examples is typed as Record<string, OpenAPIV3_1.ReferenceObject | OpenAPIV3.ExampleObject> | undefined
-    // In order to create a consistent shape, we add a default string key for an example, which should be treated as a global example
-    // If there is no global example, we try to generate an example from underlying schemas, which may have examples, or defaults or fallback values
-    this.examples = {
-      ...(this.input.example != null ||
-      this.schema?.example({
-        includeOptionals: true,
-        override: undefined,
-      }) != null
-        ? {
-            [GLOBAL_EXAMPLE_NAME]: {
-              value:
-                this.input.example ??
-                this.schema?.example({
-                  includeOptionals: true,
-                  override: undefined,
-                }),
-            },
-          }
-        : {}),
-      ...this.input.examples,
-    };
-
     if (this.input.schema != null) {
       if (isReferenceObject(this.input.schema)) {
+        this.contentType = MediaType.parse(contentType)?.containsJSON()
+          ? "json"
+          : undefined;
         this.resolvedSchema = resolveReference(
           this.input.schema,
           this.context.document,
@@ -171,6 +149,34 @@ export class RequestMediaTypeObjectConverterNode extends BaseOpenApiV3_1Converte
         message: "Expected media type schema or reference.",
         path: this.accessPath,
       });
+    }
+
+    // This sets examples derived from OpenAPI examples.
+    // this.input.example is typed as any
+    // this.input.examples is typed as Record<string, OpenAPIV3_1.ReferenceObject | OpenAPIV3.ExampleObject> | undefined
+    // In order to create a consistent shape, we add a default string key for an example, which should be treated as a global example
+    // If there is no global example, we try to generate an example from underlying schemas, which may have examples, or defaults or fallback values
+    const generatedExample = this.schema?.example({
+      includeOptionals: true,
+      override: undefined,
+    });
+    this.examples = {
+      ...(this.input.example != null
+        ? {
+            [GLOBAL_EXAMPLE_NAME]: {
+              value: this.input.example,
+            },
+          }
+        : {}),
+      ...this.input.examples,
+    };
+
+    if (generatedExample != null && Object.keys(this.examples).length === 0) {
+      this.examples = {
+        [GLOBAL_EXAMPLE_NAME]: {
+          value: generatedExample,
+        },
+      };
     }
   }
 

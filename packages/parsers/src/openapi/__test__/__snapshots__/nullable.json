@@ -232,8 +232,7 @@
             "userId": "userId"
           },
           "queryParameters": {
-            "activated": "activated",
-            "email": "email"
+            "activated": "activated"
           },
           "responseBody": {
             "type": "json",

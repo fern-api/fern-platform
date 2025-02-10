@@ -118,10 +118,6 @@
         {
           "path": "/v2/chats",
           "responseStatusCode": 200,
-          "headers": {
-            "Request-Timeout": 0,
-            "Request-Timeout-Millis": 0
-          },
           "responseBody": {
             "type": "json",
             "value": {
@@ -134,10 +130,6 @@
         {
           "path": "/v2/chats",
           "responseStatusCode": 200,
-          "headers": {
-            "Request-Timeout": 0,
-            "Request-Timeout-Millis": 0
-          },
           "responseBody": {
             "type": "json",
             "value": {
@@ -148,10 +140,6 @@
         {
           "path": "/v2/chats",
           "responseStatusCode": 200,
-          "headers": {
-            "Request-Timeout": 0,
-            "Request-Timeout-Millis": 0
-          },
           "responseBody": {
             "type": "json",
             "value": {
@@ -164,10 +152,6 @@
         {
           "path": "/v2/chats",
           "responseStatusCode": 200,
-          "headers": {
-            "Request-Timeout": 0,
-            "Request-Timeout-Millis": 0
-          },
           "responseBody": {
             "type": "json",
             "value": {

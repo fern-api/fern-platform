@@ -71,7 +71,7 @@ export class ResponseMediaTypeObjectConverterNode extends BaseOpenApiV3_1Convert
     >,
     matchedExampleNames: Set<string>
   ) {
-    for (const request of this.requests) {
+    for (const request of requests) {
       for (const [requestExampleName, requestExample] of Object.entries(
         request?.examples ?? {}
       )) {
@@ -438,7 +438,11 @@ export class ResponseMediaTypeObjectConverterNode extends BaseOpenApiV3_1Convert
     for (const request of this.requests) {
       filteredRequestExamples.push(
         ...Object.entries(request.examples ?? {})
-          .filter(([exampleName]) => !matchedExampleNames.has(exampleName))
+          .filter(
+            ([exampleName]) =>
+              !matchedExampleNames.has(exampleName) &&
+              exampleName !== GLOBAL_EXAMPLE_NAME
+          )
           .map<
             [
               RequestMediaTypeObjectConverterNode,
@@ -451,7 +455,9 @@ export class ResponseMediaTypeObjectConverterNode extends BaseOpenApiV3_1Convert
 
     const filteredResponseExamples = Object.entries(responseExamples).filter(
       ([exampleName, examples]) =>
-        !matchedExampleNames.has(exampleName) && isNonNullish(examples)
+        !matchedExampleNames.has(exampleName) &&
+        isNonNullish(examples) &&
+        exampleName !== GLOBAL_EXAMPLE_NAME
     );
 
     // Match based on index, saturating examples at the end of lists if mismatched
@@ -459,7 +465,12 @@ export class ResponseMediaTypeObjectConverterNode extends BaseOpenApiV3_1Convert
       filteredRequestExamples,
       filteredResponseExamples
     );
-    if (!matchedExampleNames.has(GLOBAL_EXAMPLE_NAME)) {
+
+    // Fallback to a generated example if no examples were matched
+    if (
+      !matchedExampleNames.has(GLOBAL_EXAMPLE_NAME) &&
+      this.examples.length === 0
+    ) {
       this.addGlobalFallbackExample(this.requests, responseExamples);
     }
 

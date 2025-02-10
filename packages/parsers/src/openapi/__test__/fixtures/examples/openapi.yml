@@ -234,3 +234,60 @@ paths:
                     type: string
               example: 
                 message: date received 1
+    
+  /request-body-reference:
+    post:
+      parameters:
+        - required: true
+          schema:
+            type: string
+            format: date
+          example: '2024-05-25'
+          name: version
+          in: header
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SampleSchema'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Sample200Response'
+
+
+components:
+  schemas:
+    SampleSchema:
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        another_string:
+          type: string
+          format: uuid
+        nested_object:
+          $ref: '#/components/schemas/NestedSchema'
+      additionalProperties: false
+      type: object
+      required:
+        - id
+        - name
+        - nested_object
+
+    NestedSchema:
+      type: string
+      enum:
+        - var1
+        - var2
+
+    Sample200Response:
+      properties:
+        message:
+          type: string

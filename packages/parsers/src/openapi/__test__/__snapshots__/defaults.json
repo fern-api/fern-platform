@@ -219,15 +219,6 @@
         {
           "path": "/test",
           "responseStatusCode": 200,
-          "queryParameters": {
-            "boolParam1": true,
-            "boolParam2": "true",
-            "boolParam3": false,
-            "boolParam4": "false",
-            "stringParam": "defaultString",
-            "numberParam": 42,
-            "integerParam": 100
-          },
           "responseBody": {
             "type": "json",
             "value": {

@@ -547,11 +547,190 @@
       "protocol": {
         "type": "rest"
       }
+    },
+    "endpoint_.postRequestBodyReference": {
+      "id": "endpoint_.postRequestBodyReference",
+      "method": "POST",
+      "path": [
+        {
+          "type": "literal",
+          "value": "/"
+        },
+        {
+          "type": "literal",
+          "value": "request-body-reference"
+        }
+      ],
+      "environments": [],
+      "requestHeaders": [
+        {
+          "key": "version",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "date"
+              }
+            }
+          }
+        }
+      ],
+      "requests": [
+        {
+          "contentType": "application/json",
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "SampleSchema"
+            }
+          }
+        }
+      ],
+      "responses": [
+        {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "Sample200Response"
+            }
+          },
+          "description": "Successful Response"
+        }
+      ],
+      "errors": [],
+      "examples": [
+        {
+          "path": "/request-body-reference",
+          "responseStatusCode": 200,
+          "headers": {
+            "version": "2024-05-25"
+          },
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "id": "id",
+              "name": "name",
+              "another_string": "another_string",
+              "nested_object": "var1"
+            }
+          },
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "message": "message"
+            }
+          }
+        }
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     }
   },
   "websockets": {},
   "webhooks": {},
-  "types": {},
+  "types": {
+    "SampleSchema": {
+      "name": "SampleSchema",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "id",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "uuid"
+                }
+              }
+            }
+          },
+          {
+            "key": "name",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "another_string",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "uuid"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          {
+            "key": "nested_object",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "NestedSchema"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "NestedSchema": {
+      "name": "NestedSchema",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "var1"
+          },
+          {
+            "value": "var2"
+          }
+        ]
+      }
+    },
+    "Sample200Response": {
+      "name": "Sample200Response",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "message",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
   "subpackages": {},
   "auths": {}
 }
