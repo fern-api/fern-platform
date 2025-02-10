@@ -65,6 +65,15 @@
         {
           "path": "/v1/text-to-speech",
           "responseStatusCode": 200,
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "text": "text",
+              "voice": "voice",
+              "language_code": "language_code",
+              "seed": null
+            }
+          },
           "responseBody": {
             "type": "json",
             "value": {
@@ -149,6 +158,15 @@
         {
           "path": "/v1/text-to-speech/from-prompt",
           "responseStatusCode": 200,
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "text": "text",
+              "prompt_audio": "prompt_audio",
+              "language_code": "language_code",
+              "seed": null
+            }
+          },
           "responseBody": {
             "type": "json",
             "value": {
@@ -294,6 +312,23 @@
         {
           "path": "/v1/voices",
           "responseStatusCode": 200,
+          "requestBody": {
+            "type": "form",
+            "value": {
+              "name": {
+                "type": "json",
+                "value": "name"
+              },
+              "file": {
+                "type": "filename",
+                "value": "file"
+              },
+              "description": {
+                "type": "json",
+                "value": "description"
+              }
+            }
+          },
           "responseBody": {
             "type": "json",
             "value": {
@@ -491,6 +526,23 @@
           "responseStatusCode": 200,
           "pathParameters": {
             "voice_id": "voice_id"
+          },
+          "requestBody": {
+            "type": "form",
+            "value": {
+              "name": {
+                "type": "json",
+                "value": "name"
+              },
+              "file": {
+                "type": "filename",
+                "value": "file"
+              },
+              "description": {
+                "type": "json",
+                "value": "description"
+              }
+            }
           },
           "responseBody": {
             "type": "json",

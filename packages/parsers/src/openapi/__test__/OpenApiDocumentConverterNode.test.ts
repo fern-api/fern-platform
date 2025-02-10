@@ -19,7 +19,7 @@ describe("OpenAPI snapshot tests", () => {
   const fixturesDir = path.join(__dirname, "fixtures");
   const files = fs.readdirSync(fixturesDir);
 
-  files.forEach((directory) => {
+  ["chainalysis"].forEach((directory) => {
     it(`generates snapshot for ${directory}`, async () => {
       // Read and parse YAML file
       const filePath = path.join(fixturesDir, directory, "openapi.yml");

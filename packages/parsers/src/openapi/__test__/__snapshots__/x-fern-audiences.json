@@ -68,7 +68,19 @@
           }
         }
       ],
-      "examples": [],
+      "examples": [
+        {
+          "path": "/v1/users",
+          "responseStatusCode": 200,
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "public_property": "public_property",
+              "private_property": "private_property"
+            }
+          }
+        }
+      ],
       "protocol": {
         "type": "rest"
       }

@@ -45,6 +45,12 @@
         {
           "path": "/settings",
           "responseStatusCode": 200,
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "separator": "/"
+            }
+          },
           "responseBody": {
             "type": "json",
             "value": {
