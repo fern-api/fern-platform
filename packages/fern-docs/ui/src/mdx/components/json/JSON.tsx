@@ -1,6 +1,10 @@
-import ReactJsonView from "@microlink/react-json-view";
+import dynamic from "next/dynamic";
 import React from "react";
 import { useTheme } from "../../../atoms";
+
+const JsonView = dynamic(() => import("@microlink/react-json-view"), {
+  ssr: false,
+});
 
 export interface JSONProps {
   json: unknown;
@@ -10,7 +14,7 @@ export const Json: React.FC<JSONProps> = ({ json }) => {
   const theme = useTheme();
 
   return (
-    <ReactJsonView
+    <JsonView
       src={json as object}
       name={false}
       theme={theme === "dark" ? "ashes" : "rjv-default"}
