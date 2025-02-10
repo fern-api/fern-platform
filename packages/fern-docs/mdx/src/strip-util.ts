@@ -1,4 +1,5 @@
 import { visit } from "unist-util-visit";
+
 import { hastToString } from "./hast-utils/hast-to-string.js";
 import { isMdxJsxElementHast } from "./mdx-utils/is-mdx-element.js";
 import { toTree } from "./parse.js";

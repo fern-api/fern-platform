@@ -1,4 +1,5 @@
 import { UnreachableCaseError } from "ts-essentials";
+
 import { NavigationNode } from "./NavigationNode";
 import { isLeaf } from "./NavigationNodeLeaf";
 

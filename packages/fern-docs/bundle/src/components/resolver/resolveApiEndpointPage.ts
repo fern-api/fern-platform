@@ -1,5 +1,6 @@
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import type { ApiDefinitionLoader } from "@fern-docs/cache";
+
 import type { DocsContent } from "./DocsContent";
 
 interface ResolveApiEndpointPageOpts {

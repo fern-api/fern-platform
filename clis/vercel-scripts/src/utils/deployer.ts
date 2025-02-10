@@ -2,6 +2,7 @@ import { Vercel, VercelClient } from "@fern-fern/vercel";
 import { readFileSync } from "fs";
 import { join } from "path";
 import { UnreachableCaseError } from "ts-essentials";
+
 import { cleanDeploymentId } from "./clean-id.js";
 import { loggingExeca } from "./loggingExeca.js";
 import { requestPromote } from "./promoter.js";

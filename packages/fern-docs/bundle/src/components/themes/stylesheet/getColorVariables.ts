@@ -1,6 +1,8 @@
-import type { ColorsThemeConfig } from "@/server/types";
 import type { DocsV1Read } from "@fern-api/fdr-sdk/client/types";
 import tinycolor from "tinycolor2";
+
+import type { ColorsThemeConfig } from "@/server/types";
+
 import {
   darkGrayColors,
   generateRadixColors,

@@ -1,6 +1,7 @@
+import { FC } from "react";
+
 import * as Popover from "@radix-ui/react-popover";
 import clsx from "clsx";
-import { FC } from "react";
 
 export interface FeedbackFormDialogProps extends Popover.PopoverProps {
   trigger: React.ReactNode;

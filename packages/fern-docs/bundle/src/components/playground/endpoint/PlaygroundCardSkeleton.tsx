@@ -1,5 +1,6 @@
-import clsx from "clsx";
 import { PropsWithChildren, ReactElement } from "react";
+
+import clsx from "clsx";
 
 export function PlaygroundCardSkeleton({
   className,

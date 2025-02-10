@@ -3,9 +3,10 @@ import yaml from "js-yaml";
 import { OpenAPIV3_1 } from "openapi-types";
 import * as path from "path";
 import { describe, expect, it } from "vitest";
-import { ApiDefinitionId } from "../../client/generated/api";
-import { ErrorCollector } from "../../ErrorCollector";
+
 import { OpenApiDocumentConverterNode } from "../3.1/OpenApiDocumentConverter.node";
+import { ErrorCollector } from "../../ErrorCollector";
+import { ApiDefinitionId } from "../../client/generated/api";
 import { BaseOpenApiV3_1ConverterNodeContext } from "../BaseOpenApiV3_1Converter.node";
 
 function replaceEndpointUUIDs(json: string): string | undefined {

@@ -1,7 +1,9 @@
-import { algoliaAppId } from "@/server/env-variables";
+import { NextRequest, NextResponse } from "next/server";
+
 import { fetchFacetValues } from "@fern-docs/search-server/algolia";
 import { algoliasearch } from "algoliasearch";
-import { NextRequest, NextResponse } from "next/server";
+
+import { algoliaAppId } from "@/server/env-variables";
 
 export async function GET(request: NextRequest): Promise<NextResponse> {
   const filters = request.nextUrl.searchParams.getAll("filters");

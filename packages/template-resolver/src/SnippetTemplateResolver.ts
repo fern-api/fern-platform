@@ -1,4 +1,5 @@
 import { FernRegistry } from "@fern-fern/fdr-cjs-sdk";
+
 import { ObjectFlattener } from "./ResolutionUtilities";
 import { UnionMatcher } from "./UnionResolver";
 import { accessByPathNonNull } from "./accessByPath";

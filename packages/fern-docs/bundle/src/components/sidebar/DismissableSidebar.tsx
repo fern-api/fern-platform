@@ -1,8 +1,10 @@
+import { ReactElement, useRef } from "react";
+
 import clsx from "clsx";
 import { useAtomValue } from "jotai";
 import { AnimatePresence, motion } from "motion/react";
-import { ReactElement, useRef } from "react";
 import { useCallbackOne } from "use-memo-one";
+
 import {
   DESKTOP_SIDEBAR_OPEN_ATOM,
   DISMISSABLE_SIDEBAR_OPEN_ATOM,

@@ -1,7 +1,7 @@
 import { ComponentProps, forwardRef } from "react";
-import * as Command from "../cmdk";
 
 import { useSearchHits } from "../../hooks/use-search-hits";
+import * as Command from "../cmdk";
 
 export const CommandEmpty = forwardRef<
   HTMLDivElement,

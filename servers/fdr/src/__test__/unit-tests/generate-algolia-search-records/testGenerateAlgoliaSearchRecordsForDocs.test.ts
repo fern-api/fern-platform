@@ -8,6 +8,7 @@ import {
   visitDbNavigationConfig,
 } from "@fern-api/fdr-sdk";
 import { resolve } from "path";
+
 import type { AlgoliaSearchRecord } from "../../../services/algolia";
 import { AlgoliaIndexSegmentManagerServiceImpl } from "../../../services/algolia-index-segment-manager";
 import { AlgoliaSearchRecordGeneratorV2 } from "../../../services/algolia/AlgoliaSearchRecordGeneratorV2";

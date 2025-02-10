@@ -1,6 +1,7 @@
 import { cloneRepository } from "@fern-api/github";
 import { camelCase, upperFirst } from "es-toolkit/string";
 import fs from "fs";
+
 import { FernGeneratorCli } from "../configuration/generated";
 import { ReadmeFeature } from "../configuration/generated/api";
 import { StreamWriter, StringWriter, Writer } from "../utils/Writer";

@@ -1,7 +1,9 @@
 "use client";
 
-import { BuiltWithFern, HideBuiltWithFern } from "@/components/built-with-fern";
 import { ReactNode } from "react";
+
+import { BuiltWithFern, HideBuiltWithFern } from "@/components/built-with-fern";
+
 import {
   useIsReady,
   useNavigationNodes,

@@ -1,4 +1,5 @@
 import { FacetFilters } from "algoliasearch/lite";
+
 import { FacetFilter } from "../types";
 
 export function toAlgoliaFacetFilters(

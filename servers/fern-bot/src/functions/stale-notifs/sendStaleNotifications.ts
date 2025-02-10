@@ -1,5 +1,6 @@
 import { evaluateEnv } from "@libs/env";
 import { handlerWrapper } from "@libs/handler-wrapper";
+
 import { sendStaleNotificationsInternal } from "./actions/sendStaleNotifications";
 
 const sendStaleNotifications = async (event: unknown) => {

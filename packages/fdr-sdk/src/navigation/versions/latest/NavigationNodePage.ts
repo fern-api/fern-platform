@@ -1,9 +1,9 @@
 import type { ChangelogNode } from ".";
 import type { NavigationNode } from "./NavigationNode";
-import { isApiLeaf, type NavigationNodeApiLeaf } from "./NavigationNodeApiLeaf";
+import { type NavigationNodeApiLeaf, isApiLeaf } from "./NavigationNodeApiLeaf";
 import {
-  hasMarkdown,
   type NavigationNodeWithMarkdown,
+  hasMarkdown,
 } from "./NavigationNodeMarkdown";
 
 /**

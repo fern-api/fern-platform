@@ -1,7 +1,6 @@
 /**
  * In order to prevent open-redirection, we need to curate a list of allowed domains where the server can redirect to.
  */
-
 import { AuthEdgeConfig, OAuth2, SSOWorkOS } from "@fern-docs/auth";
 import { PreviewUrlAuth } from "@fern-docs/edge-config";
 import { compact } from "es-toolkit/array";

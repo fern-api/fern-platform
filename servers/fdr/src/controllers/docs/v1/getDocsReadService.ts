@@ -14,6 +14,7 @@ import {
 import { AuthType, type IndexSegment } from "@prisma/client";
 import { keyBy } from "es-toolkit/array";
 import { mapValues } from "es-toolkit/object";
+
 import { DocsV1ReadService } from "../../../api";
 import { UnauthorizedError } from "../../../api/generated/api";
 import { DomainNotRegisteredError } from "../../../api/generated/api/resources/docs/resources/v1/resources/read";

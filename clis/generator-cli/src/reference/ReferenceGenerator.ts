@@ -1,4 +1,5 @@
 import fs from "fs";
+
 import { FernGeneratorCli } from "../configuration/generated";
 import {
   EndpointReference,

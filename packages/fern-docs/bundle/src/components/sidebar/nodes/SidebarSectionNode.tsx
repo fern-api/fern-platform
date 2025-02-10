@@ -1,5 +1,7 @@
-import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { ReactNode, useCallback } from "react";
+
+import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
+
 import {
   useIsChildSelected,
   useIsExpandedSidebarNode,

@@ -1,27 +1,7 @@
-import { toImageDescriptor } from "@/app/seo";
-import { withCustomJavascript } from "@/components/atoms/docs";
-import type { DocsProps, NavbarLink } from "@/components/atoms/types";
-import { DocsMainContent } from "@/components/docs/DocsMainContent";
-import { DocsPage } from "@/components/docs/DocsPage";
-import { NextApp } from "@/components/docs/NextApp";
-import FeedbackPopover from "@/components/feedback/FeedbackPopover";
-import { serializeMdx } from "@/components/mdx/bundlers/mdx-bundler";
-import { DocsContent } from "@/components/resolver/DocsContent";
-import { ThemedDocs } from "@/components/themes/ThemedDocs";
-import { getApiRouteSupplier } from "@/components/util/getApiRouteSupplier";
-import { getGitHubInfo, getGitHubRepo } from "@/components/util/github";
-import { preferPreview } from "@/server/auth/origin";
-import { getReturnToQueryParam } from "@/server/auth/return-to";
-import { createCachedDocsLoader, DocsLoader } from "@/server/docs-loader";
-import { createFileResolver } from "@/server/file-resolver";
-import { createFindNode } from "@/server/find-node";
-import { withLaunchDarkly } from "@/server/ld-adapter";
-import { withLogo } from "@/server/withLogo";
-import {
-  pruneNavigationPredicate,
-  withPrunedNavigation,
-} from "@/server/withPrunedNavigation";
-import { withVersionSwitcherInfo } from "@/server/withVersionSwitcherInfo";
+import { notFound, permanentRedirect, redirect } from "next/navigation";
+import { Metadata } from "next/types";
+import React from "react";
+
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { withDefaultProtocol } from "@fern-api/ui-core-utils";
 import visitDiscriminatedUnion from "@fern-api/ui-core-utils/visitDiscriminatedUnion";
@@ -38,10 +18,32 @@ import {
   isTrailingSlashEnabled,
 } from "@fern-docs/utils";
 import { SidebarTab } from "@fern-platform/fdr-utils";
-import { notFound, permanentRedirect, redirect } from "next/navigation";
-import { Metadata } from "next/types";
-import React from "react";
 import urlJoin from "url-join";
+
+import { toImageDescriptor } from "@/app/seo";
+import { withCustomJavascript } from "@/components/atoms/docs";
+import type { DocsProps, NavbarLink } from "@/components/atoms/types";
+import { DocsMainContent } from "@/components/docs/DocsMainContent";
+import { DocsPage } from "@/components/docs/DocsPage";
+import { NextApp } from "@/components/docs/NextApp";
+import FeedbackPopover from "@/components/feedback/FeedbackPopover";
+import { serializeMdx } from "@/components/mdx/bundlers/mdx-bundler";
+import { DocsContent } from "@/components/resolver/DocsContent";
+import { ThemedDocs } from "@/components/themes/ThemedDocs";
+import { getApiRouteSupplier } from "@/components/util/getApiRouteSupplier";
+import { getGitHubInfo, getGitHubRepo } from "@/components/util/github";
+import { preferPreview } from "@/server/auth/origin";
+import { getReturnToQueryParam } from "@/server/auth/return-to";
+import { DocsLoader, createCachedDocsLoader } from "@/server/docs-loader";
+import { createFileResolver } from "@/server/file-resolver";
+import { createFindNode } from "@/server/find-node";
+import { withLaunchDarkly } from "@/server/ld-adapter";
+import { withLogo } from "@/server/withLogo";
+import {
+  pruneNavigationPredicate,
+  withPrunedNavigation,
+} from "@/server/withPrunedNavigation";
+import { withVersionSwitcherInfo } from "@/server/withVersionSwitcherInfo";
 
 export default async function Page({
   params,

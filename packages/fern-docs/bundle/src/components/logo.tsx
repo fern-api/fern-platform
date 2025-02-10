@@ -1,10 +1,13 @@
 "use client";
 
-import { LogoConfiguration } from "@/components/atoms";
+import React from "react";
+
 import { cn } from "@fern-docs/components";
 import { DEFAULT_LOGO_HEIGHT } from "@fern-docs/utils";
 import { isEqual } from "es-toolkit/predicate";
-import React from "react";
+
+import { LogoConfiguration } from "@/components/atoms";
+
 import { FernImage } from "./components/FernImage";
 import { MaybeFernLink } from "./components/FernLink";
 

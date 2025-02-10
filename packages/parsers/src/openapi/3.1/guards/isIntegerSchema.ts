@@ -1,4 +1,5 @@
 import { OpenAPIV3_1 } from "openapi-types";
+
 import { IntegerConverterNode } from "../schemas/primitives/IntegerConverter.node";
 
 export function isIntegerSchema(

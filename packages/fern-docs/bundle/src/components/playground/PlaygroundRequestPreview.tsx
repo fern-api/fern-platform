@@ -1,7 +1,9 @@
+import { FC, useMemo } from "react";
+
 import type { EndpointContext } from "@fern-api/fdr-sdk/api-definition";
 import { FernSyntaxHighlighter } from "@fern-docs/syntax-highlighter";
 import { useAtom, useAtomValue } from "jotai";
-import { FC, useMemo } from "react";
+
 import {
   PLAYGROUND_AUTH_STATE_ATOM,
   PLAYGROUND_AUTH_STATE_OAUTH_ATOM,

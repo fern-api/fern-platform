@@ -1,3 +1,6 @@
+import dynamic from "next/dynamic";
+import { memo, useCallback, useMemo } from "react";
+
 import {
   DiscriminatedUnionType,
   TypeDefinition,
@@ -10,8 +13,7 @@ import {
   FernSegmentedControl,
 } from "@fern-docs/components";
 import { NavArrowDown } from "iconoir-react";
-import dynamic from "next/dynamic";
-import { memo, useCallback, useMemo } from "react";
+
 import { castToRecord, getEmptyValueForObjectProperties } from "../utils";
 import { PlaygroundObjectPropertiesForm } from "./PlaygroundObjectPropertyForm";
 

@@ -1,10 +1,11 @@
+import { Badge } from "@fern-docs/components";
+import { addLeadingSlash, conformTrailingSlash } from "@fern-docs/utils";
+import { Undo2 } from "lucide-react";
+
 import { FernLinkButton } from "@/components/components/FernLinkButton";
 import { Logo } from "@/components/logo";
 import { createCachedDocsLoader } from "@/server/docs-loader";
 import { getDocsDomainApp } from "@/server/xfernhost/app";
-import { Badge } from "@fern-docs/components";
-import { addLeadingSlash, conformTrailingSlash } from "@fern-docs/utils";
-import { Undo2 } from "lucide-react";
 
 export default async function NotFound() {
   const loader = await createCachedDocsLoader(await getDocsDomainApp());

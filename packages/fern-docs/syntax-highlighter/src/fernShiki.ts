@@ -1,15 +1,17 @@
+import { useCallback, useEffect, useState } from "react";
+
 import { memoize } from "es-toolkit/function";
 import type { Root } from "hast";
 import { h } from "hastscript";
-import { useCallback, useEffect, useState } from "react";
 import {
-  bundledLanguages,
-  getSingletonHighlighter,
   type BundledLanguage,
   type BundledTheme,
   type Highlighter,
   type SpecialLanguage,
+  bundledLanguages,
+  getSingletonHighlighter,
 } from "shiki";
+
 import { additionalLanguages } from "./syntaxes";
 
 let highlighter: Highlighter;

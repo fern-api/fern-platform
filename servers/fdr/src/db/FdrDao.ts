@@ -1,9 +1,10 @@
 import { PrismaClient } from "@prisma/client";
+
 import { APIDefinitionDao, APIDefinitionDaoImpl } from "./api/APIDefinitionDao";
 import { DocsV2Dao, DocsV2DaoImpl } from "./docs/DocsV2Dao";
 import {
-  IndexSegmentDaoImpl,
   type IndexSegmentDao,
+  IndexSegmentDaoImpl,
 } from "./docs/IndexSegmentDao";
 import { CliVersionsDaoImpl } from "./generators/CliVersionsDao";
 import { GeneratorsDaoImpl } from "./generators/GeneratorDao";
@@ -12,14 +13,14 @@ import { GitDaoImpl } from "./git/GitDao";
 import { DocsRegistrationDao } from "./registrations/DocsRegistrationDao";
 import { SdkDao, SdkDaoImpl } from "./sdk/SdkDao";
 import {
-  SnippetAPIsDaoImpl,
   type SnippetAPIsDao,
+  SnippetAPIsDaoImpl,
 } from "./snippetApis/SnippetAPIsDao";
 import {
   SnippetTemplateDao,
   SnippetTemplateDaoImpl,
 } from "./snippets/SnippetTemplate";
-import { SnippetsDaoImpl, type SnippetsDao } from "./snippets/SnippetsDao";
+import { type SnippetsDao, SnippetsDaoImpl } from "./snippets/SnippetsDao";
 
 export class FdrDao {
   private docsV2Dao;

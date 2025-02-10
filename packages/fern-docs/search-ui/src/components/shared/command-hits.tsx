@@ -1,6 +1,7 @@
-import { TooltipPortal } from "@radix-ui/react-tooltip";
 import { PropsWithChildren, ReactNode, memo, useEffect } from "react";
 import { Snippet } from "react-instantsearch";
+
+import { TooltipPortal } from "@radix-ui/react-tooltip";
 
 import { useSearchHits } from "../../hooks/use-search-hits";
 import { AlgoliaRecordHit } from "../../types";

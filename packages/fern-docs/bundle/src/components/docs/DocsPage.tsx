@@ -2,6 +2,7 @@
 
 import { usePathname } from "next/navigation";
 import { ReactElement, useEffect } from "react";
+
 import { useMessageHandler, useSetJustNavigated } from "../atoms";
 import { BgImageGradient } from "../components/BgImageGradient";
 import { FernErrorBoundary } from "../components/FernErrorBoundary";

@@ -1,4 +1,5 @@
 import test, { expect } from "@playwright/test";
+
 import { runFixture } from "../utils/test-runner";
 
 const port = "6983";

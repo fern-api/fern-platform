@@ -6,6 +6,7 @@ import type {
   MdxJsxAttributeValueExpression,
   MdxJsxExpressionAttribute,
 } from "mdast-util-mdx";
+
 import type { MdxJsxElementHast } from "../declarations";
 
 interface MdxJsxElementHastAttributes {

@@ -3,6 +3,7 @@ import {
   OpenrpcDocument,
   ReferenceObject,
 } from "@open-rpc/meta-schema";
+
 import { isReferenceObject } from "./isReferenceObject";
 import { resolveReference } from "./resolveReference";
 

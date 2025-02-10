@@ -4,6 +4,7 @@ import {
   convertDocsDefinitionToDb,
 } from "@fern-api/fdr-sdk";
 import { v4 as uuidv4 } from "uuid";
+
 import { DocsV1WriteService } from "../../../api";
 import { DocsRegistrationIdNotFound } from "../../../api/generated/api/resources/docs/resources/v1/resources/write/errors";
 import type { FdrApplication } from "../../../app";

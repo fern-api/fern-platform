@@ -1,9 +1,11 @@
+import { memo, useCallback, useMemo } from "react";
+
 import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { FernTooltipProvider } from "@fern-docs/components";
 import { useBooleanState, useIsHovering } from "@fern-ui/react-commons";
 import cn from "clsx";
-import { memo, useCallback, useMemo } from "react";
+
 import { useRouteListener } from "../../../atoms";
 import { FernErrorBoundary } from "../../../components/FernErrorBoundary";
 import { getAnchorId } from "../../../util/anchor";

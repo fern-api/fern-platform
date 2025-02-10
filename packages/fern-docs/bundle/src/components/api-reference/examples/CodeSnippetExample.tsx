@@ -1,10 +1,12 @@
+import { FC, createRef, useCallback, useEffect, useMemo } from "react";
+
 import {
   FernSyntaxHighlighter,
   type ScrollToHandle,
 } from "@fern-docs/syntax-highlighter";
 import { useResizeObserver } from "@fern-ui/react-commons";
 import clsx from "clsx";
-import { FC, createRef, useCallback, useEffect, useMemo } from "react";
+
 import { useEdgeFlags } from "../../atoms";
 import { FernErrorBoundary } from "../../components/FernErrorBoundary";
 import { JsonPropertyPath } from "./JsonPropertyPath";

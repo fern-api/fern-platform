@@ -1,3 +1,11 @@
+import React, {
+  PropsWithChildren,
+  ReactElement,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
+
 import { APIV1Read } from "@fern-api/fdr-sdk";
 import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import visitDiscriminatedUnion from "@fern-api/ui-core-utils/visitDiscriminatedUnion";
@@ -6,14 +14,8 @@ import { HttpMethodBadge } from "@fern-docs/components/badges";
 import { useBooleanState } from "@fern-ui/react-commons";
 import { composeRefs } from "@radix-ui/react-compose-refs";
 import cn from "clsx";
-import React, {
-  PropsWithChildren,
-  ReactElement,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
 import { noop } from "ts-essentials";
+
 import { MaybeEnvironmentDropdown } from "../../components/MaybeEnvironmentDropdown";
 
 export declare namespace EndpointUrl {

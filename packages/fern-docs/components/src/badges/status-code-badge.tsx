@@ -1,4 +1,5 @@
 import { forwardRef } from "react";
+
 import { SemanticColor } from "../colors";
 import { SemanticBadge, SemanticBadgeProps } from "./semantic-badge";
 

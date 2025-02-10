@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+
 import { FernNextResponse } from "./FernNextResponse";
 
 export function redirectWithLoginError(

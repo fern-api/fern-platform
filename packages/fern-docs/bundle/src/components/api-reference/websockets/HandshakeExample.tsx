@@ -1,11 +1,12 @@
 "use client";
 
-import { usePlaygroundBaseUrl } from "@/components/playground/utils/select-environment";
 import {
   ExampleWebSocketSession,
-  toColonEndpointPathLiteral,
   WebSocketChannel,
+  toColonEndpointPathLiteral,
 } from "@fern-api/fdr-sdk/api-definition";
+
+import { usePlaygroundBaseUrl } from "@/components/playground/utils/select-environment";
 
 export function HandshakeExample({
   channel,

@@ -1,3 +1,6 @@
+import dynamic from "next/dynamic";
+import { FC, memo, useCallback, useEffect, useMemo, useState } from "react";
+
 import {
   ObjectProperty,
   TypeDefinition,
@@ -10,8 +13,7 @@ import { FernButton, FernDropdown } from "@fern-docs/components";
 import { useBooleanState } from "@fern-ui/react-commons";
 import cn from "clsx";
 import { PlusCircle } from "iconoir-react";
-import dynamic from "next/dynamic";
-import { FC, memo, useCallback, useEffect, useMemo, useState } from "react";
+
 import { renderTypeShorthandRoot } from "../../type-shorthand";
 import { castToRecord, getEmptyValueForType, isExpandable } from "../utils";
 import { PlaygroundAdditionalProperties } from "./PlaygroundAdditionalProperties";

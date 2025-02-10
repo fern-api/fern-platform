@@ -2,6 +2,7 @@ import visitDiscriminatedUnion from "@fern-api/ui-core-utils/visitDiscriminatedU
 import { compact } from "es-toolkit/array";
 import { noop } from "ts-essentials";
 import urljoin from "url-join";
+
 import type * as Latest from "../latest";
 
 interface SnippetHttpRequestBodyJson {

@@ -1,7 +1,9 @@
 "use client";
 
-import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 import React, { memo } from "react";
+
+import type * as FernDocs from "@fern-api/fdr-sdk/docs";
+
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
 import { FrontmatterContextProvider } from "../contexts/frontmatter";
 import { MdxBundlerComponent } from "./bundlers/mdx-bundler-component";

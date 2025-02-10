@@ -1,5 +1,6 @@
 import type { Root } from "hast";
 import { visit } from "unist-util-visit";
+
 import { unknownToMdxJsxAttribute } from "../mdx-utils/unknown-to-mdx-jsx-attr";
 
 interface AcornErrorBoundaryOptions {

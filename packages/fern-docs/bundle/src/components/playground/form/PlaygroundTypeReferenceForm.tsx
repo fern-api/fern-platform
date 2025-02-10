@@ -1,3 +1,5 @@
+import { ReactElement, memo, useCallback } from "react";
+
 import {
   ObjectProperty,
   TypeDefinition,
@@ -12,7 +14,7 @@ import {
   FernSwitch,
   FernTextarea,
 } from "@fern-docs/components";
-import { ReactElement, memo, useCallback } from "react";
+
 import { useEdgeFlags } from "../../atoms";
 import { WithLabel } from "../WithLabel";
 import { PlaygroundDiscriminatedUnionForm } from "./PlaygroundDescriminatedUnionForm";
@@ -147,13 +149,13 @@ export const PlaygroundTypeReferenceForm =
             >
               {hasVoiceIdPlaygroundForm && property?.key === "voice_id" ? (
                 // TODO: delete this:
-                (<PlaygroundElevenLabsVoiceIdForm
+                <PlaygroundElevenLabsVoiceIdForm
                   id={id}
                   className="w-full"
                   value={typeof value === "string" ? value : ""}
                   onValueChange={onChange}
                   disabled={disabled}
-                />)
+                />
               ) : property?.key === "user_audio_chunk" || // TODO(naman): remove hardcoding for ElevenLabs once the backend mimeType is plumbed through
                 (primitive.value.type === "base64" &&
                   primitive.value.mimeType?.includes("audio/webm") &&

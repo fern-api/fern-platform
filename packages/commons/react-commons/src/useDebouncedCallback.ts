@@ -1,5 +1,7 @@
+import { type DependencyList, useCallback, useEffect, useRef } from "react";
+
 import { debounce } from "es-toolkit/function";
-import { useCallback, useEffect, useRef, type DependencyList } from "react";
+
 import useWillUnmount from "./useWillUnmount";
 
 interface DebounceOptions {

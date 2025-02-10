@@ -1,4 +1,5 @@
 import { DocsV2Read } from "@fern-api/fdr-sdk";
+
 import { getRedirectForPath } from "../getRedirectForPath";
 
 const MOCK_BASE_URL_0 = {

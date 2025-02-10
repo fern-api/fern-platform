@@ -1,9 +1,10 @@
+import { FC } from "react";
+
 import {
   CodeBlockWithClipboardButton,
   FernSyntaxHighlighter,
   type FernSyntaxHighlighterProps,
 } from "@fern-docs/syntax-highlighter";
-import { FC } from "react";
 
 export const CodeBlock: FC<FernSyntaxHighlighterProps> = (props) => (
   <CodeBlockWithClipboardButton code={props.code}>

@@ -1,4 +1,5 @@
 import { describe } from "vitest";
+
 import { FernNavigation } from "..";
 import { FernNavigationV1ToLatest } from "../navigation/migrators/v1ToV2";
 import { readFixture } from "./readFixtures";

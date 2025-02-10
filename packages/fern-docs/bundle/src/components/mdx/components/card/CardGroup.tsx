@@ -1,5 +1,6 @@
-import cn from "clsx";
 import { FC, type PropsWithChildren } from "react";
+
+import cn from "clsx";
 
 export declare namespace CardGroup {
   export interface Props {

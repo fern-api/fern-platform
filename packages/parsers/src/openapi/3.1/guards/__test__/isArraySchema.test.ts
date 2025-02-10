@@ -1,4 +1,5 @@
 import { OpenAPIV3_1 } from "openapi-types";
+
 import { isArraySchema } from "../isArraySchema";
 
 describe("isArraySchema", () => {

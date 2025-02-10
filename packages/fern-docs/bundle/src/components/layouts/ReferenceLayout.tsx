@@ -1,8 +1,10 @@
 "use client";
 
-import { BuiltWithFern } from "@/components/built-with-fern";
-import { cn } from "@fern-docs/components";
 import React, { ComponentPropsWithoutRef } from "react";
+
+import { cn } from "@fern-docs/components";
+
+import { BuiltWithFern } from "@/components/built-with-fern";
 
 interface ReferenceLayoutProps {
   header: React.ReactNode;

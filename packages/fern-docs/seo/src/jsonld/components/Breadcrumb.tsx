@@ -1,6 +1,7 @@
-import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 import Head from "next/head";
 import { ReactElement, memo } from "react";
+
+import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 
 export const Breadcrumb = memo(
   ({

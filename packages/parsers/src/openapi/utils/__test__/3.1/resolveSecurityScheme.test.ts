@@ -1,4 +1,5 @@
 import { OpenAPIV3_1 } from "openapi-types";
+
 import { resolveSecurityScheme } from "../../3.1/resolveSecurityScheme";
 
 describe("resolveSecurityScheme", () => {

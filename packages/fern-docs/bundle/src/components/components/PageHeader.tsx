@@ -1,8 +1,10 @@
+import React from "react";
+
+import type { FernNavigation } from "@fern-api/fdr-sdk";
 import "server-only";
 
 import { createCachedDocsLoader } from "@/server/docs-loader";
-import type { FernNavigation } from "@fern-api/fdr-sdk";
-import React from "react";
+
 import { MdxContent } from "../mdx/MdxContent";
 import { FernBreadcrumbs } from "./FernBreadcrumbs";
 

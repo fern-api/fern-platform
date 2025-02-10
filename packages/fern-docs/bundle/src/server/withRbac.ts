@@ -1,15 +1,16 @@
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import {
+  type NavigationNode,
   NavigationNodeParent,
   Pruner,
-  hasMetadata,
-  type NavigationNode,
   type RootNode,
+  hasMetadata,
 } from "@fern-api/fdr-sdk/navigation";
 import { EMPTY_ARRAY } from "@fern-api/ui-core-utils";
 import type { PathnameViewerRules } from "@fern-docs/auth";
 import { EVERYONE_ROLE } from "@fern-docs/search-server";
 import { addLeadingSlash, matchPath } from "@fern-docs/utils";
+
 import type { AuthState } from "./auth/getAuthState";
 
 export enum Gate {

@@ -1,10 +1,10 @@
 import type { APIV1Read } from "@fern-api/fdr-sdk";
 import {
-  buildEndpointUrl,
   type AuthSchemeId,
   type EndpointDefinition,
   type ExampleEndpointCall,
   type ExampleEndpointRequest,
+  buildEndpointUrl,
 } from "@fern-api/fdr-sdk/api-definition";
 import {
   unknownToString,

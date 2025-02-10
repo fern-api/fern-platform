@@ -2,6 +2,7 @@ import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import { EndpointContext } from "@fern-api/fdr-sdk/api-definition";
 import { visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
 import { getEdgeFlags } from "@fern-docs/edge-config";
+
 import { TypeComponentSeparator } from "../types/TypeComponentSeparator";
 import { EndpointErrorGroup } from "./EndpointErrorGroup";
 import { EndpointParameter } from "./EndpointParameter";

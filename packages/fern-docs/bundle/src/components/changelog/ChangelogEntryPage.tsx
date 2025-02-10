@@ -1,6 +1,9 @@
-import { createCachedDocsLoader } from "@/server/docs-loader";
-import type { FernNavigation } from "@fern-api/fdr-sdk";
 import { notFound } from "next/navigation";
+
+import type { FernNavigation } from "@fern-api/fdr-sdk";
+
+import { createCachedDocsLoader } from "@/server/docs-loader";
+
 import type { FernSerializeMdxOptions } from "../mdx/types";
 import type { DocsContent } from "../resolver/DocsContent";
 import ChangelogEntryPageClient from "./ChangelogEntryPageClient";

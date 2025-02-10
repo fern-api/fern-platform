@@ -1,6 +1,7 @@
 import { Env } from "@libs/env";
 import { setupGithubApp } from "@libs/github/octokit";
 import { App } from "octokit";
+
 import { updateVersionInternal } from "../shared/updateGeneratorInternal";
 
 export async function updateGeneratorVersionsInternal(env: Env): Promise<void> {

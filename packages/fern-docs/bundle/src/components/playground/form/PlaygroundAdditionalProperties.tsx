@@ -1,8 +1,10 @@
 // import { Property, TypeIdKey, TypeId } from "@fern-api/fdr-sdk/navigation";
+import { ReactElement, useCallback, useMemo } from "react";
+
 import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import clsx from "clsx";
-import { ReactElement, useCallback, useMemo } from "react";
 import { noop } from "ts-essentials";
+
 import { WithLabel } from "../WithLabel";
 import { castToRecord } from "../utils";
 import { PlaygroundMapForm } from "./PlaygroundMapForm";

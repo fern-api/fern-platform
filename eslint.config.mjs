@@ -1,5 +1,4 @@
 // @ts-check
-
 import { FlatCompat } from "@eslint/eslintrc";
 import eslint from "@eslint/js";
 import vitest from "eslint-plugin-vitest";

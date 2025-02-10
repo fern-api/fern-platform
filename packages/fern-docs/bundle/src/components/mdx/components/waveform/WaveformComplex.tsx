@@ -1,9 +1,3 @@
-import type { GradientStop, WaveformColor } from "./types";
-import { gradientColors } from "./types";
-
-import { OrthographicCamera } from "@react-three/drei";
-import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import cn from "clsx";
 import {
   ReactNode,
   useEffect,
@@ -12,11 +6,17 @@ import {
   useRef,
   useState,
 } from "react";
+
+import { OrthographicCamera } from "@react-three/drei";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
+import cn from "clsx";
+import { motion, useMotionValueEvent, useSpring } from "motion/react";
 import * as THREE from "three";
 
-import { motion, useMotionValueEvent, useSpring } from "motion/react";
 import fragmentShader from "./WaveformComplexShader.frag";
 import vertexShader from "./WaveformComplexShader.vert";
+import type { GradientStop, WaveformColor } from "./types";
+import { gradientColors } from "./types";
 
 const DEFAULT_SPEED = 1;
 const INITIAL_ZOOM = 95;

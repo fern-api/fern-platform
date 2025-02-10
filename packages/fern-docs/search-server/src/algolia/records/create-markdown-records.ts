@@ -12,6 +12,7 @@ import {
 } from "@fern-docs/mdx";
 import { compact, flatten } from "es-toolkit/array";
 import { decode } from "html-entities";
+
 import { maybePrepareMdxContent } from "../../utils/prepare-mdx-content";
 import { BaseRecord, Hierarchy, MarkdownRecord } from "../types";
 

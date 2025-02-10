@@ -1,5 +1,6 @@
 import { FernDocsClient } from "@fern-fern/fern-docs-sdk";
 import { Vercel, VercelClient } from "@fern-fern/vercel";
+
 import { logCommand } from "./loggingExeca.js";
 
 const BANNED_DOMAINS = ["vercel.app", "buildwithfern.com", "ferndocs.com"];

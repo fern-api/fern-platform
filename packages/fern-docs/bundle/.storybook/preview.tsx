@@ -1,6 +1,7 @@
 import { FernTooltipProvider, Toaster } from "@fern-docs/components";
 import { withThemeByClassName } from "@storybook/addon-themes";
 import type { Decorator, Preview } from "@storybook/react";
+
 import "../src/css/globals.scss";
 import "./variables.css";
 

@@ -1,4 +1,5 @@
 import visitDiscriminatedUnion from "@fern-api/ui-core-utils/visitDiscriminatedUnion";
+
 import type { NavigationNodePage, PageId } from ".";
 
 const RETURN_PAGEID = (node: { pageId: PageId }) => node.pageId;

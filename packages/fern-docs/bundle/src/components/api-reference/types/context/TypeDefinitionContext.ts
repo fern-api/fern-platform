@@ -1,4 +1,5 @@
 import { createContext, useContext } from "react";
+
 import { JsonPropertyPath } from "../../examples/JsonPropertyPath";
 
 export const TypeDefinitionContext = createContext<

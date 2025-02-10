@@ -1,6 +1,8 @@
+import React from "react";
+
 import { withThemeByClassName } from "@storybook/addon-themes";
 import type { Preview } from "@storybook/react";
-import React from "react";
+
 import { Toaster } from "../src/FernToast";
 import { FernTooltipProvider } from "../src/FernTooltip";
 import "./styles.scss";

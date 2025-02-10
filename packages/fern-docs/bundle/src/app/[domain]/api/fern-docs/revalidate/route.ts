@@ -1,13 +1,15 @@
-import { createCachedDocsLoader } from "@/server/docs-loader";
-import { FernNavigation } from "@fern-api/fdr-sdk";
-import {
-  addLeadingSlash,
-  conformTrailingSlash,
-  HEADER_X_FERN_HOST,
-} from "@fern-docs/utils";
 import { revalidateTag } from "next/cache";
 import { notFound } from "next/navigation";
 import { NextRequest, NextResponse } from "next/server";
+
+import { FernNavigation } from "@fern-api/fdr-sdk";
+import {
+  HEADER_X_FERN_HOST,
+  addLeadingSlash,
+  conformTrailingSlash,
+} from "@fern-docs/utils";
+
+import { createCachedDocsLoader } from "@/server/docs-loader";
 
 export async function GET(
   req: NextRequest,

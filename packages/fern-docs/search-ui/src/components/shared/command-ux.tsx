@@ -1,5 +1,3 @@
-import { useEventCallback } from "@fern-ui/react-commons";
-import { useControllableState } from "@radix-ui/react-use-controllable-state";
 import {
   Dispatch,
   SetStateAction,
@@ -7,6 +5,9 @@ import {
   useContext,
   useMemo,
 } from "react";
+
+import { useEventCallback } from "@fern-ui/react-commons";
+import { useControllableState } from "@radix-ui/react-use-controllable-state";
 import { noop } from "ts-essentials";
 
 const CommandUxContext = createContext<{

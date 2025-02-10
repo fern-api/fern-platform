@@ -1,13 +1,14 @@
+import { ReactNode } from "react";
+
 import {
   AvailabilityBadge,
   HttpMethodBadge,
 } from "@fern-docs/components/badges";
 import type { FacetsResponse } from "@fern-docs/search-server/algolia";
 import {
-  SEARCHABLE_FACET_ATTRIBUTES,
   type FacetName,
+  SEARCHABLE_FACET_ATTRIBUTES,
 } from "@fern-docs/search-server/algolia/types";
-import { ReactNode } from "react";
 
 import { FilterOption } from "../types";
 

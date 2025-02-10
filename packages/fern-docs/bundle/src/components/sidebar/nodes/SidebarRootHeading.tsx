@@ -1,7 +1,9 @@
+import { ReactElement } from "react";
+
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { FaIcon } from "@fern-docs/components";
 import clsx from "clsx";
-import { ReactElement } from "react";
+
 import { SidebarPageNode } from "./SidebarPageNode";
 
 interface SidebarRootHeadingProps {

@@ -1,5 +1,6 @@
-import * as Collapsible from "@radix-ui/react-collapsible";
 import { FC, PropsWithChildren, ReactNode } from "react";
+
+import * as Collapsible from "@radix-ui/react-collapsible";
 
 interface FernCollapseProps extends Collapsible.CollapsibleProps {
   open?: boolean;

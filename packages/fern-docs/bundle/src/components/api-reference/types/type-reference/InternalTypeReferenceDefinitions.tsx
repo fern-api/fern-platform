@@ -1,8 +1,10 @@
+import React from "react";
+
 import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
-import React from "react";
 import { UnreachableCaseError } from "ts-essentials";
+
 import { InternalTypeDefinition } from "../type-definition/InternalTypeDefinition";
 import { ListTypeContextProvider } from "./ListTypeContextProvider";
 import { MapTypeContextProvider } from "./MapTypeContextProvider";

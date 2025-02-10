@@ -1,6 +1,8 @@
+import { PropsWithChildren, ReactNode } from "react";
+
 import { FernUser } from "@fern-docs/auth";
 import { Atom } from "jotai";
-import { PropsWithChildren, ReactNode } from "react";
+
 import { useFernUser } from "../../../atoms";
 
 export interface IfProps {

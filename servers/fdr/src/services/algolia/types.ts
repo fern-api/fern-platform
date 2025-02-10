@@ -1,4 +1,5 @@
 import { APIV1Read, Algolia, DocsV1Db, FdrAPI } from "@fern-api/fdr-sdk";
+
 import type { DocsVersion } from "../../types";
 
 export type IndexSegment =

@@ -3,6 +3,7 @@ import { SidebarTab, VersionSwitcherInfo } from "@fern-platform/fdr-utils";
 import { isEqual } from "es-toolkit/predicate";
 import { atom, useAtomValue } from "jotai";
 import { selectAtom } from "jotai/utils";
+
 import { DOCS_ATOM } from "./docs";
 import { SLUG_ATOM } from "./location";
 import { NavbarLink } from "./types";

@@ -1,4 +1,5 @@
-import test, { expect, Request } from "@playwright/test";
+import test, { Request, expect } from "@playwright/test";
+
 import { getPreviewDeploymentUrl } from "../utils/utils";
 
 const origin = getPreviewDeploymentUrl();

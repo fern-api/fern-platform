@@ -1,11 +1,12 @@
 "use client";
 
+import { ComponentProps, useState } from "react";
+
 import { FernButton, FernScrollArea } from "@fern-docs/components";
 import * as Dialog from "@radix-ui/react-dialog";
 import * as Tooltip from "@radix-ui/react-tooltip";
 import clsx from "clsx";
 import { Expand } from "iconoir-react";
-import { ComponentProps, useState } from "react";
 
 export function Table({ className, ...rest }: ComponentProps<"table">) {
   const [isFullScreen, setIsFullScreen] = useState(false);

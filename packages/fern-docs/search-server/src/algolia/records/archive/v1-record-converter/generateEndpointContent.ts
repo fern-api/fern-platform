@@ -1,5 +1,4 @@
 // DELETE ME AFTER MIGRATION
-
 import {
   EndpointDefinition,
   TypeDefinition,
@@ -7,6 +6,7 @@ import {
   TypeShape,
 } from "@fern-api/fdr-sdk/api-definition";
 import { visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
+
 import { convertMarkdownToText } from "./utils";
 
 function stringifyTypeShape(

@@ -1,8 +1,10 @@
 "use client";
 
-import { useAtomValue } from "jotai";
 import Script from "next/script";
 import { memo } from "react";
+
+import { useAtomValue } from "jotai";
+
 import { JS_ATOM } from "../atoms";
 
 export const JavascriptProvider = memo(() => {

@@ -1,9 +1,10 @@
 import { isPlainObject } from "@fern-api/ui-core-utils";
 import type { Expression, ExpressionStatement } from "estree";
 import {
-  valueToEstree,
   type Options as ValueToEstreeOptions,
+  valueToEstree,
 } from "estree-util-value-to-estree";
+
 import { isMdxJsxAttributeValueExpression } from "./is-mdx-jsx-attr";
 
 export function unknownToEstreeExpression(

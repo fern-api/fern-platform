@@ -1,9 +1,11 @@
+import { ReactElement } from "react";
+
 import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
 import { visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
 import { FernButton } from "@fern-docs/components";
 import { Key } from "iconoir-react";
 import { useAtomValue } from "jotai";
-import { ReactElement } from "react";
+
 import { PLAYGROUND_AUTH_STATE_ATOM } from "../../atoms";
 import { PlaygroundAuthState } from "../types";
 import { pascalCaseHeaderKey } from "../utils/header-key-case";

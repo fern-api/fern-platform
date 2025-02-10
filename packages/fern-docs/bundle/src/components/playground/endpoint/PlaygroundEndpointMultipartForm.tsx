@@ -1,3 +1,5 @@
+import { ReactElement, useCallback } from "react";
+
 import {
   EndpointDefinition,
   HttpRequestBodyShape,
@@ -6,7 +8,7 @@ import {
 import visitDiscriminatedUnion from "@fern-api/ui-core-utils/visitDiscriminatedUnion";
 import { FernButton, FernDropdown } from "@fern-docs/components";
 import { PlusCircle } from "lucide-react";
-import { ReactElement, useCallback } from "react";
+
 import { Markdown } from "../../mdx/Markdown";
 import { renderTypeShorthandRoot } from "../../type-shorthand";
 import { PlaygroundFileUploadForm } from "../form/PlaygroundFileUploadForm";

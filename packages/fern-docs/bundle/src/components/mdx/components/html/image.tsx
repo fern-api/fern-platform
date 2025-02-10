@@ -1,12 +1,13 @@
 import {
   ComponentProps,
-  createContext,
-  forwardRef,
   ReactElement,
   ReactNode,
+  createContext,
+  forwardRef,
   useContext,
 } from "react";
 import Zoom from "react-medium-image-zoom";
+
 import { useEdgeFlags } from "../../../atoms";
 import { FernImage } from "../../../components/FernImage";
 import { useFrontmatter } from "../../../contexts/frontmatter";

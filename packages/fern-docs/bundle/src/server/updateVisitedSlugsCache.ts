@@ -1,8 +1,10 @@
 // add or remove the slug from the cache based on the props
+import { GetStaticPropsResult } from "next";
+
+import { FernNavigation } from "@fern-api/fdr-sdk";
 
 import { DocsProps } from "@/components/atoms/types";
-import { FernNavigation } from "@fern-api/fdr-sdk";
-import { GetStaticPropsResult } from "next";
+
 import { DocsKVCache } from "./DocsCache";
 
 // this will ensure that `revalidate-all` will invalidate the page if the page no longer exists between revalidations

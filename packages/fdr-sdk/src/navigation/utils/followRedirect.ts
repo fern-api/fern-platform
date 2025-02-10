@@ -1,4 +1,5 @@
 import { UnreachableCaseError } from "ts-essentials";
+
 import { FernNavigation } from "../..";
 
 export function followRedirect(

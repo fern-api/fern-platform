@@ -1,6 +1,7 @@
 import { ApiDefinition } from "@fern-api/fdr-sdk";
 import { atom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
+
 import { DOCS_ATOM } from "./docs";
 
 const INTERNAL_FERN_LANGUAGE_ATOM = atomWithStorage<string | undefined>(

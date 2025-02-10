@@ -1,4 +1,5 @@
 import { Octokit } from "octokit";
+
 import { parseRepository } from "./parseRepository";
 
 /**

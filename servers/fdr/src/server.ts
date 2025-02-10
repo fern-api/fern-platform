@@ -4,6 +4,7 @@ import compression from "compression";
 import cors from "cors";
 import express from "express";
 import { Agent, setGlobalDispatcher } from "undici";
+
 import { register } from "./api";
 import { FdrApplication, getConfig } from "./app";
 import { registerBackgroundTasks } from "./background";

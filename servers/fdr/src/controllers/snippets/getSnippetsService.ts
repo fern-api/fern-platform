@@ -1,5 +1,6 @@
 import { FdrAPI } from "@fern-api/fdr-sdk";
 import { SnippetTemplateResolver } from "@fern-api/template-resolver";
+
 import { SnippetsService } from "../../api";
 import {
   InvalidPageError,

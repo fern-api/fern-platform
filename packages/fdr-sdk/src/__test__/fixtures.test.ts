@@ -1,6 +1,7 @@
 import isPlainObject from "@fern-api/ui-core-utils/isPlainObject";
 import fs from "fs";
 import path from "path";
+
 import { FernNavigation } from "..";
 import * as ApiDefinition from "../api-definition";
 import { ApiDefinitionV1ToLatest } from "../api-definition/migrators/v1ToV2";

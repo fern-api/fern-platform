@@ -1,8 +1,11 @@
-import { SearchV2Trigger } from "@/components/search";
-import { FaIcon } from "@fern-docs/components";
-import type { MDXComponents } from "@fern-docs/mdx";
 import dynamic from "next/dynamic";
 import React, { ComponentProps, PropsWithChildren, ReactElement } from "react";
+
+import { FaIcon } from "@fern-docs/components";
+import type { MDXComponents } from "@fern-docs/mdx";
+
+import { SearchV2Trigger } from "@/components/search";
+
 import {
   FernErrorBoundary,
   FernErrorBoundaryProps,

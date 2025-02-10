@@ -1,3 +1,5 @@
+import { FC, Fragment, PropsWithChildren, ReactNode, forwardRef } from "react";
+
 import {
   FernButton,
   SemanticColor,
@@ -6,7 +8,7 @@ import {
 import * as Select from "@radix-ui/react-select";
 import clsx from "clsx";
 import { NavArrowDown, NavArrowUp } from "iconoir-react";
-import { FC, Fragment, PropsWithChildren, ReactNode, forwardRef } from "react";
+
 import { CodeExample } from "../examples/code-example";
 import { ExamplesByStatusCode, StatusCode } from "../types/EndpointContent";
 

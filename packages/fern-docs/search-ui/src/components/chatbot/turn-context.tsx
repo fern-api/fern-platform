@@ -1,5 +1,6 @@
-import { PrimitiveAtom, atom } from "jotai";
 import { ReactNode, createContext, useContext, useRef } from "react";
+
+import { PrimitiveAtom, atom } from "jotai";
 
 export interface Footnote {
   ids: string[];

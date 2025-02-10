@@ -1,6 +1,6 @@
 // This is not a real OAS type, it is used to encapsulate a large amount of logic
-
 import { OpenAPIV3_1 } from "openapi-types";
+
 import { BaseOpenApiV3_1ConverterNodeWithTrackingConstructorArgs } from "../../../BaseOpenApiV3_1Converter.node";
 import {
   ConstArrayToType,

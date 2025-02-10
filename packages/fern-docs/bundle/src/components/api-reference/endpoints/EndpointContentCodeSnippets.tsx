@@ -1,17 +1,20 @@
 "use client";
 
-import { WebSocketMessages } from "@/components/api-reference/websockets/WebSocketMessages";
+import { ReactNode, memo, useCallback, useMemo } from "react";
+
 import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { EMPTY_OBJECT, visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
 import {
-  cn,
   FernScrollArea,
   StatusCodeBadge,
+  cn,
   statusCodeToIntent,
 } from "@fern-docs/components";
 import { sortBy } from "es-toolkit/array";
-import { memo, ReactNode, useCallback, useMemo } from "react";
+
+import { WebSocketMessages } from "@/components/api-reference/websockets/WebSocketMessages";
+
 import { FernErrorTag } from "../../components/FernErrorBoundary";
 import { PlaygroundButton } from "../../playground/PlaygroundButton";
 import { usePlaygroundBaseUrl } from "../../playground/utils/select-environment";

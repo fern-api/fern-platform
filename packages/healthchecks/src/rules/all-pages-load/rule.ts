@@ -1,4 +1,5 @@
 import { FdrAPI, FernNavigation } from "@fern-api/fdr-sdk";
+
 import { Rule, RuleArgs, RuleResult } from "../runRules";
 
 export class AllPagesLoadRule implements Rule {

@@ -1,19 +1,3 @@
-import { Badge } from "@fern-docs/components/badges";
-import { Button } from "@fern-docs/components/button";
-import { useDebouncedCallback, useEventCallback } from "@fern-ui/react-commons";
-import { composeEventHandlers } from "@radix-ui/primitive";
-import { composeRefs } from "@radix-ui/react-compose-refs";
-import { TooltipPortal, TooltipProvider } from "@radix-ui/react-tooltip";
-import { useControllableState } from "@radix-ui/react-use-controllable-state";
-import { Message, useChat } from "ai/react";
-import { atom, useAtom, useAtomValue } from "jotai";
-import {
-  ArrowLeft,
-  ArrowUp,
-  Sparkles,
-  SquarePen,
-  StopCircle,
-} from "lucide-react";
 import {
   ComponentPropsWithoutRef,
   KeyboardEventHandler,
@@ -30,6 +14,23 @@ import {
   useState,
 } from "react";
 import { Components } from "react-markdown";
+
+import { Badge } from "@fern-docs/components/badges";
+import { Button } from "@fern-docs/components/button";
+import { useDebouncedCallback, useEventCallback } from "@fern-ui/react-commons";
+import { composeEventHandlers } from "@radix-ui/primitive";
+import { composeRefs } from "@radix-ui/react-compose-refs";
+import { TooltipPortal, TooltipProvider } from "@radix-ui/react-tooltip";
+import { useControllableState } from "@radix-ui/react-use-controllable-state";
+import { Message, useChat } from "ai/react";
+import { atom, useAtom, useAtomValue } from "jotai";
+import {
+  ArrowLeft,
+  ArrowUp,
+  Sparkles,
+  SquarePen,
+  StopCircle,
+} from "lucide-react";
 import { useIsomorphicLayoutEffect } from "swr/_internal";
 
 import { FootnoteSup, FootnotesSection } from "../chatbot/footnote";
@@ -332,132 +333,134 @@ const DesktopAskAIChat = ({
 
   const messages = useDeferredValue(chat.messages);
 
-  return (<>
-    <Command.List
-      onWheel={(e) => {
-        if (e.deltaY > 0) {
-          setUserScrolled(true);
-        }
-      }}
-      onTouchMove={(e) => {
-        if (
-          e.touches[0]?.clientY !== e.touches[e.touches.length - 1]?.clientY
-        ) {
-          setUserScrolled(true);
-        }
-      }}
-      onScroll={(e) => {
-        if (e.currentTarget.scrollTop > 5) {
-          setIsScrolled(true);
-        } else {
-          setIsScrolled(false);
-        }
-      }}
-      tabIndex={-1}
-      className={cn(isScrolled && "mask-grad-top-3")}
-      data-disable-animation={chat.isLoading ? "" : undefined}
-    >
-      <headerActions.In>
-        {chat.messages.length > 0 && (
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Button
-                  size="iconXs"
-                  variant="outline"
-                  onClick={() => {
-                    chat.setMessages([]);
-                    setInitialConversation([]);
-                  }}
-                >
-                  <SquarePen />
-                </Button>
-              </TooltipTrigger>
-              <TooltipPortal>
-                <TooltipContent>
-                  <p>New chat</p>
-                </TooltipContent>
-              </TooltipPortal>
-            </Tooltip>
-          </TooltipProvider>
-        )}
-      </headerActions.In>
-
-      <AskAICommandItems
-        messages={messages}
-        onSelectHit={onSelectHit}
-        prefetch={prefetch}
-        components={useMemo(
-          () => ({
-            pre(props) {
-              if (
-                isValidElement(props.children) &&
-                props.children.type === "code"
-              ) {
-                const { children, className } = props.children.props as {
-                  children: string;
-                  className: string;
-                };
-                if (typeof children === "string") {
-                  const match =
-                    /language-(\w+)/.exec(className || "")?.[1] ??
-                    "plaintext";
-                  return (
-                    <CodeBlock
-                      code={children}
-                      language={match}
-                      fontSize="sm"
-                    />
-                  );
-                }
-              }
-              return <pre {...props} />;
-            },
-
-            a: ({ children, node, ...props }) => (
-              <a
-                {...props}
-                className="font-semibold decoration-[var(--accent-a10)] hover:text-[var(--accent-a10)] hover:decoration-2"
-                target="_blank"
-                rel="noreferrer"
-              >
-                {children}
-              </a>
-            ),
-          }),
-          []
-        )}
-        isLoading={chat.isLoading}
-        userScrolled={userScrolled}
-        domain={domain}
-        renderActions={renderActions}
+  return (
+    <>
+      <Command.List
+        onWheel={(e) => {
+          if (e.deltaY > 0) {
+            setUserScrolled(true);
+          }
+        }}
+        onTouchMove={(e) => {
+          if (
+            e.touches[0]?.clientY !== e.touches[e.touches.length - 1]?.clientY
+          ) {
+            setUserScrolled(true);
+          }
+        }}
+        onScroll={(e) => {
+          if (e.currentTarget.scrollTop > 5) {
+            setIsScrolled(true);
+          } else {
+            setIsScrolled(false);
+          }
+        }}
+        tabIndex={-1}
+        className={cn(isScrolled && "mask-grad-top-3")}
+        data-disable-animation={chat.isLoading ? "" : undefined}
       >
-        {suggestionsApi && (
-          <Suggestions
-            api={suggestionsApi}
-            body={body}
-            headers={headers}
-            askAI={askAI}
-          />
-        )}
-      </AskAICommandItems>
-    </Command.List>
-    <AskAIComposer
-      ref={inputRef}
-      value={chat.input}
-      onValueChange={chat.setInput}
-      isLoading={chat.isLoading}
-      stop={chat.stop}
-      onSend={askAI}
-      onKeyDown={useEventCallback((e) => {
-        if (e.key === "ArrowUp" || e.key === "ArrowDown") {
-          setUserScrolled(true);
-        }
-      })}
-      onPopState={onReturnToSearch}
-      actions={composerActions}
-    />
-  </>);
+        <headerActions.In>
+          {chat.messages.length > 0 && (
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    size="iconXs"
+                    variant="outline"
+                    onClick={() => {
+                      chat.setMessages([]);
+                      setInitialConversation([]);
+                    }}
+                  >
+                    <SquarePen />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipPortal>
+                  <TooltipContent>
+                    <p>New chat</p>
+                  </TooltipContent>
+                </TooltipPortal>
+              </Tooltip>
+            </TooltipProvider>
+          )}
+        </headerActions.In>
+
+        <AskAICommandItems
+          messages={messages}
+          onSelectHit={onSelectHit}
+          prefetch={prefetch}
+          components={useMemo(
+            () => ({
+              pre(props) {
+                if (
+                  isValidElement(props.children) &&
+                  props.children.type === "code"
+                ) {
+                  const { children, className } = props.children.props as {
+                    children: string;
+                    className: string;
+                  };
+                  if (typeof children === "string") {
+                    const match =
+                      /language-(\w+)/.exec(className || "")?.[1] ??
+                      "plaintext";
+                    return (
+                      <CodeBlock
+                        code={children}
+                        language={match}
+                        fontSize="sm"
+                      />
+                    );
+                  }
+                }
+                return <pre {...props} />;
+              },
+
+              a: ({ children, node, ...props }) => (
+                <a
+                  {...props}
+                  className="font-semibold decoration-[var(--accent-a10)] hover:text-[var(--accent-a10)] hover:decoration-2"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  {children}
+                </a>
+              ),
+            }),
+            []
+          )}
+          isLoading={chat.isLoading}
+          userScrolled={userScrolled}
+          domain={domain}
+          renderActions={renderActions}
+        >
+          {suggestionsApi && (
+            <Suggestions
+              api={suggestionsApi}
+              body={body}
+              headers={headers}
+              askAI={askAI}
+            />
+          )}
+        </AskAICommandItems>
+      </Command.List>
+      <AskAIComposer
+        ref={inputRef}
+        value={chat.input}
+        onValueChange={chat.setInput}
+        isLoading={chat.isLoading}
+        stop={chat.stop}
+        onSend={askAI}
+        onKeyDown={useEventCallback((e) => {
+          if (e.key === "ArrowUp" || e.key === "ArrowDown") {
+            setUserScrolled(true);
+          }
+        })}
+        onPopState={onReturnToSearch}
+        actions={composerActions}
+      />
+    </>
+  );
 };
 
 const AskAIComposer = forwardRef<

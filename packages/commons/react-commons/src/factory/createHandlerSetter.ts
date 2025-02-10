@@ -1,4 +1,4 @@
-import { useRef, type RefObject } from "react";
+import { type RefObject, useRef } from "react";
 
 type SomeCallback<TArgs, TResult = void> = (...args: TArgs[]) => TResult;
 export type CallbackSetter<TArgs> = (nextCallback: SomeCallback<TArgs>) => void;

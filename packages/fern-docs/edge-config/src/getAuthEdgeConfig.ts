@@ -1,4 +1,4 @@
-import { AuthEdgeConfigSchema, type AuthEdgeConfig } from "@fern-docs/auth";
+import { type AuthEdgeConfig, AuthEdgeConfigSchema } from "@fern-docs/auth";
 import { withoutStaging } from "@fern-docs/utils";
 import { get } from "@vercel/edge-config";
 

@@ -1,18 +1,20 @@
 "use cache";
 
-import { DocsLoader } from "@/server/DocsLoader";
-import { getMarkdownForPath } from "@/server/getMarkdownForPath";
-import { getSectionRoot } from "@/server/getSectionRoot";
-import { getHostEdge } from "@/server/xfernhost/edge";
+import { cacheTag } from "next/dist/server/use-cache/cache-tag";
+import { cookies } from "next/headers";
+import { NextRequest, NextResponse } from "next/server";
+
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { CONTINUE, SKIP } from "@fern-api/fdr-sdk/traversers";
 import { isNonNullish } from "@fern-api/ui-core-utils";
 import { getEdgeFlags } from "@fern-docs/edge-config";
-import { addLeadingSlash, COOKIE_FERN_TOKEN } from "@fern-docs/utils";
+import { COOKIE_FERN_TOKEN, addLeadingSlash } from "@fern-docs/utils";
 import { uniqBy } from "es-toolkit/array";
-import { cacheTag } from "next/dist/server/use-cache/cache-tag";
-import { cookies } from "next/headers";
-import { NextRequest, NextResponse } from "next/server";
+
+import { DocsLoader } from "@/server/DocsLoader";
+import { getMarkdownForPath } from "@/server/getMarkdownForPath";
+import { getSectionRoot } from "@/server/getSectionRoot";
+import { getHostEdge } from "@/server/xfernhost/edge";
 
 export async function GET(
   req: NextRequest,

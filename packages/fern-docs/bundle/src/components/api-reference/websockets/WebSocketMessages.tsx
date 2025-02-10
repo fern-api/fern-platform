@@ -1,9 +1,11 @@
 "use client";
 
-import { APIV1Read } from "@fern-api/fdr-sdk/client/types";
-import * as Accordion from "@radix-ui/react-accordion";
 import { FC } from "react";
 import { Virtuoso } from "react-virtuoso";
+
+import { APIV1Read } from "@fern-api/fdr-sdk/client/types";
+import * as Accordion from "@radix-ui/react-accordion";
+
 import { WebsocketMessageAccordionItem } from "./WebSocketMessageAccordionItem";
 
 export interface WebSocketMessage {

@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 
 import { algoliaAppId } from "@/server/env-variables";
+
 import { DesktopInstantSearchWrapper } from "./wrapper";
 
 export default async function Home() {

@@ -1,10 +1,10 @@
 "use client";
 
 import {
-  createContext,
-  useContext,
   type PropsWithChildren,
   type ReactNode,
+  createContext,
+  useContext,
 } from "react";
 
 export const SyntaxHighlighterEdgeFlags = createContext({

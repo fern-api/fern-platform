@@ -1,6 +1,7 @@
 import { isNonNullish } from "@fern-api/ui-core-utils";
 import { OpenAPIV3_1 } from "openapi-types";
 import { UnreachableCaseError } from "ts-essentials";
+
 import { FernRegistry } from "../../../client/generated";
 import {
   BaseOpenApiV3_1ConverterExampleArgs,
@@ -17,8 +18,8 @@ import { isBooleanSchema } from "../guards/isBooleanSchema";
 import { isIntegerSchema } from "../guards/isIntegerSchema";
 import { isMixedSchema } from "../guards/isMixedSchema";
 import { isNonArraySchema } from "../guards/isNonArraySchema";
-import { isNullableSchema } from "../guards/isNullableSchema";
 import { isNullSchema } from "../guards/isNullSchema";
+import { isNullableSchema } from "../guards/isNullableSchema";
 import { isNumberSchema } from "../guards/isNumberSchema";
 import { isObjectSchema } from "../guards/isObjectSchema";
 import { isReferenceObject } from "../guards/isReferenceObject";
@@ -28,6 +29,7 @@ import { ConstConverterNode } from "./ConstConverter.node";
 import { MixedSchemaConverterNode } from "./MixedSchemaConverter.node";
 import { ObjectConverterNode } from "./ObjectConverter.node";
 import { OneOfConverterNode } from "./OneOfConverter.node";
+import { ReferenceConverterNode } from "./ReferenceConverter.node";
 import { BooleanConverterNode } from "./primitives/BooleanConverter.node";
 import { EnumConverterNode } from "./primitives/EnumConverter.node";
 import { IntegerConverterNode } from "./primitives/IntegerConverter.node";
@@ -35,7 +37,6 @@ import { NullConverterNode } from "./primitives/NullConverter.node";
 import { NumberConverterNode } from "./primitives/NumberConverter.node";
 import { StringConverterNode } from "./primitives/StringConverter.node";
 import { UnknownConverterNode } from "./primitives/UnknownConverter.node";
-import { ReferenceConverterNode } from "./ReferenceConverter.node";
 
 export type PrimitiveType =
   | NumberConverterNode.Input

@@ -1,3 +1,5 @@
+import { ReactElement } from "react";
+
 import {
   TypeDefinition,
   TypeId,
@@ -6,7 +8,7 @@ import {
   unwrapReference,
 } from "@fern-api/fdr-sdk/api-definition";
 import { Slug } from "@fern-api/fdr-sdk/navigation";
-import { ReactElement } from "react";
+
 import { Chip } from "../../../components/Chip";
 import { DiscriminatedUnionVariant } from "../discriminated-union/DiscriminatedUnionVariant";
 import { ObjectProperty } from "../object/ObjectProperty";
@@ -49,11 +51,11 @@ export function createCollapsibleContent(
     case "enum": {
       return {
         elements: unwrapped.shape.values.map((enumValue) => (
-          (<Chip
+          <Chip
             key={enumValue.value}
             name={enumValue.value}
             description={enumValue.description}
-          />)
+          />
           // <EnumValue key={enumValue.value} enumValue={enumValue} />
         )),
         elementNameSingular: "enum value",

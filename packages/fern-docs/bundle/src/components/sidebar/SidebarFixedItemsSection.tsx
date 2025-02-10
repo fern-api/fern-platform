@@ -1,7 +1,10 @@
-import { SearchV2Trigger } from "@/components/search";
+import { useMemo } from "react";
+
 import cn from "clsx";
 import { useAtomValue } from "jotai";
-import { useMemo } from "react";
+
+import { SearchV2Trigger } from "@/components/search";
+
 import {
   DOCS_LAYOUT_ATOM,
   SEARCHBAR_PLACEMENT_ATOM,

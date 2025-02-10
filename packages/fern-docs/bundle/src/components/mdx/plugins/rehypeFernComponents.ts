@@ -1,16 +1,17 @@
 import {
+  type BuildVisitor,
   CONTINUE,
   Hast,
+  type VisitorResult,
   hastMdxJsxElementHastToProps,
   hastToString,
   isMdxJsxAttribute,
   isMdxJsxElementHast,
   unknownToMdxJsxAttribute,
   visit,
-  type BuildVisitor,
-  type VisitorResult,
 } from "@fern-docs/mdx";
 import GithubSlugger from "github-slugger";
+
 import { getLanguageDisplayName } from "../../api-reference/examples/code-example";
 
 // TODO: combine this with rehype-slug so that we don't have to maintain two slugger instances

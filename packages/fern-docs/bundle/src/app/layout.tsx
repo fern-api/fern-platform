@@ -1,6 +1,8 @@
+import { Metadata, Viewport } from "next/types";
+
 import { FernTooltipProvider, Toaster } from "@fern-docs/components";
 import { Provider as JotaiProvider } from "jotai/react";
-import { Metadata, Viewport } from "next/types";
+
 import "./globals.scss";
 import StyledJsxRegistry from "./registry";
 

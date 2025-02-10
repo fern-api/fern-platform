@@ -1,5 +1,7 @@
-import { COOKIE_FERN_TOKEN } from "@fern-docs/utils";
 import { NextRequest } from "next/server";
+
+import { COOKIE_FERN_TOKEN } from "@fern-docs/utils";
+
 import { getDocsDomainEdge } from "../xfernhost/edge";
 import { createGetAuthState } from "./getAuthState";
 

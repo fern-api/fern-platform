@@ -1,5 +1,7 @@
-import { HEADER_X_MATCHED_PATH } from "@fern-docs/utils";
 import { NextRequest, NextResponse } from "next/server";
+
+import { HEADER_X_MATCHED_PATH } from "@fern-docs/utils";
+
 import { extractBuildId } from "./extractNextDataPathname";
 import { getNextDataPageRoute, getPageRoute } from "./pageRoutes";
 import { withPathname } from "./withPathname";

@@ -1,7 +1,9 @@
+import { NextRequest, NextResponse } from "next/server";
+
 import { withDefaultProtocol } from "@fern-api/ui-core-utils";
 import { FernUser } from "@fern-docs/auth";
 import { COOKIE_FERN_TOKEN } from "@fern-docs/utils";
-import { NextRequest, NextResponse } from "next/server";
+
 import { FernNextResponse } from "./FernNextResponse";
 import { createGetAuthStateEdge } from "./auth/getAuthStateEdge";
 import { withSecureCookie } from "./auth/with-secure-cookie";

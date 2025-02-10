@@ -1,4 +1,5 @@
 import dynamic from "next/dynamic";
+
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
 import type { FeatureProps } from "./types";
 

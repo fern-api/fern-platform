@@ -1,6 +1,8 @@
-import { ColorsThemeConfig } from "@/server/types";
 import type { DocsV1Read } from "@fern-api/fdr-sdk/client/types";
 import tinycolor from "tinycolor2";
+
+import { ColorsThemeConfig } from "@/server/types";
+
 import { CSS_VARIABLES, getColorVariables } from "./getColorVariables";
 import { getFontVariables } from "./getFontVariables";
 import { getLayoutVariables } from "./getLayoutVariables";

@@ -1,4 +1,5 @@
 import { visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
+
 import { buildPath, indentAfter } from "./common";
 import { PlaygroundCodeSnippetBuilder } from "./types";
 

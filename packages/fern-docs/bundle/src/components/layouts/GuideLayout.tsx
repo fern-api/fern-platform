@@ -1,5 +1,7 @@
-import { BuiltWithFern } from "@/components/built-with-fern";
 import type { FC, ReactElement, ReactNode } from "react";
+
+import { BuiltWithFern } from "@/components/built-with-fern";
+
 import { BottomNavigationNeighbors } from "../components/BottomNavigationNeighbors";
 import { EditThisPageButton } from "../components/EditThisPage";
 import { Feedback } from "../feedback/Feedback";

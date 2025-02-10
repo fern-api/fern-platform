@@ -1,4 +1,5 @@
 import structuredClone from "@ungap/structured-clone";
+
 import { FernNavigation } from "../..";
 import { prunetree } from "../../utils/traversers/prunetree";
 import { mutableDeleteChild } from "./deleteChild";

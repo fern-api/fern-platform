@@ -1,4 +1,5 @@
 import { z } from "zod";
+
 import { AvailabilitySchema } from "../shared/types";
 
 export const TurbopufferAttributeDataSchema = z.union([

@@ -1,7 +1,8 @@
 import { OpenAPIV3_1 } from "openapi-types";
+
+import { coalesceServers } from "../../3.1/coalesceServers";
 import { ServerObjectConverterNode } from "../../../3.1/paths/ServerObjectConverter.node";
 import { createMockContext } from "../../../__test__/createMockContext.util";
-import { coalesceServers } from "../../3.1/coalesceServers";
 
 describe("coalesceServers", () => {
   const mockContext = createMockContext();

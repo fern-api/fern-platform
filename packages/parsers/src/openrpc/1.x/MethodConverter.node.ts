@@ -1,6 +1,7 @@
 import { isNonNullish } from "@fern-api/ui-core-utils";
 import { MethodObject } from "@open-rpc/meta-schema";
 import { UnreachableCaseError } from "ts-essentials";
+
 import { FernRegistry } from "../../client/generated";
 import { generateExampleForJsonSchema } from "../../examples/generateExampleForJsonSchema";
 import { SchemaConverterNode, ServerObjectConverterNode } from "../../openapi";

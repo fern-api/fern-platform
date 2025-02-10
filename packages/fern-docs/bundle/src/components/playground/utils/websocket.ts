@@ -6,6 +6,7 @@ import { EMPTY_OBJECT } from "@fern-api/ui-core-utils";
 import { FernUser } from "@fern-docs/auth";
 import { compact } from "es-toolkit/array";
 import { pick } from "es-toolkit/object";
+
 import { PlaygroundWebSocketRequestFormState } from "../types";
 import {
   getEmptyValueForObjectProperties,

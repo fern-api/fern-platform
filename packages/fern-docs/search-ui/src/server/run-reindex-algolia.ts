@@ -4,6 +4,7 @@ import {
   algoliaIndexSettingsTask,
   algoliaIndexerTask,
 } from "@fern-docs/search-server/algolia";
+
 import {
   algoliaAppId,
   algoliaWriteApiKey,

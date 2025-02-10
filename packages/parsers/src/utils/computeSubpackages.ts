@@ -1,4 +1,5 @@
 import { camelCase } from "es-toolkit";
+
 import { FernRegistry } from "../client/generated";
 
 export declare namespace ComputeSubpackages {

@@ -1,10 +1,12 @@
 import { OpenAPIV3_1 } from "openapi-types";
+
 import {
   BaseOpenApiV3_1ConverterNode,
   BaseOpenApiV3_1ConverterNodeConstructorArgs,
 } from "../../BaseOpenApiV3_1Converter.node";
 import { extendType } from "../../utils/extendType";
 import { X_FERN_BASE_PATH } from "./fernExtension.consts";
+
 export declare namespace XFernBasePathConverterNode {
   export interface Input {
     [X_FERN_BASE_PATH]?: string;

@@ -1,6 +1,5 @@
 "use client";
 
-import cn, { clsx } from "clsx";
 import {
   Children,
   ComponentProps,
@@ -10,6 +9,9 @@ import {
   useRef,
   useState,
 } from "react";
+
+import cn, { clsx } from "clsx";
+
 import { useResizeX, useResizeY } from "./useSplitPlane";
 
 interface VerticalSplitPaneProps extends ComponentProps<"div"> {

@@ -1,6 +1,8 @@
+import { ReactNode } from "react";
+
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import clsx from "clsx";
-import { ReactNode } from "react";
+
 import { useIsChildSelected } from "../../atoms";
 import { WithFeatureFlags } from "../../feature-flags/WithFeatureFlags";
 import { SidebarNavigationChild } from "./SidebarNavigationChild";

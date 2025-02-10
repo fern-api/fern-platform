@@ -1,11 +1,14 @@
-import { SearchV2Trigger } from "@/components/search";
+import { CSSProperties, PropsWithChildren, forwardRef, memo } from "react";
+
 import type { DocsV1Read } from "@fern-api/fdr-sdk/client/types";
 import { FernButton, FernButtonGroup } from "@fern-docs/components";
 import cn, { clsx } from "clsx";
 import { isEqual } from "es-toolkit/predicate";
 import { ArrowRight, Search } from "iconoir-react";
 import { useAtomValue } from "jotai";
-import { CSSProperties, PropsWithChildren, forwardRef, memo } from "react";
+
+import { SearchV2Trigger } from "@/components/search";
+
 import {
   NAVBAR_LINKS_ATOM,
   SEARCHBAR_PLACEMENT_ATOM,

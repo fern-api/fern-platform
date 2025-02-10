@@ -1,7 +1,5 @@
 "use client";
 
-import { CopyToClipboardButton, SemanticColor } from "@fern-docs/components";
-import cn from "clsx";
 import {
   MouseEventHandler,
   PropsWithChildren,
@@ -9,6 +7,9 @@ import {
   ReactNode,
   forwardRef,
 } from "react";
+
+import { CopyToClipboardButton, SemanticColor } from "@fern-docs/components";
+import cn from "clsx";
 
 export declare namespace TitledExample {
   export interface Props {

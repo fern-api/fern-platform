@@ -1,15 +1,17 @@
+import { forwardRef, memo, useImperativeHandle, useMemo, useRef } from "react";
+
 import { FernScrollArea } from "@fern-docs/components";
 import { parseStringStyle, visit } from "@fern-docs/mdx";
 import cn from "clsx";
 import { isEqual } from "es-toolkit/predicate";
 import type { Element } from "hast";
-import { forwardRef, memo, useImperativeHandle, useMemo, useRef } from "react";
+
 import { HastToJSX } from "./HastToJsx";
 import { HighlightedTokens } from "./fernShiki";
 import {
+  type HighlightLine,
   flattenHighlightLines,
   getMaxHeight,
-  type HighlightLine,
 } from "./utils";
 
 export interface ScrollToHandle {

@@ -1,5 +1,7 @@
-import { FernButton, FernButtonGroup } from "@fern-docs/components";
 import { ReactElement } from "react";
+
+import { FernButton, FernButtonGroup } from "@fern-docs/components";
+
 import { CodeExample } from "../examples/code-example";
 
 export function EndpointExampleSegmentedControl({

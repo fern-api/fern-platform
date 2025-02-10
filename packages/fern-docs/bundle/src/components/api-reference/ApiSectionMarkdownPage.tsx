@@ -1,6 +1,8 @@
+import { ReactElement, memo, useRef } from "react";
+
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import clsx from "clsx";
-import { ReactElement, memo, useRef } from "react";
+
 import { useHref } from "../hooks/useHref";
 import { LayoutEvaluator } from "../layouts/LayoutEvaluator";
 import { DocsContent } from "../resolver/DocsContent";
@@ -43,7 +45,11 @@ interface ApiSectionMarkdownPageProps {
 }
 
 export const ApiSectionMarkdownPage = memo(
-  ({ node, mdxs, last }: ApiSectionMarkdownPageProps): ReactElement<any> | null => {
+  ({
+    node,
+    mdxs,
+    last,
+  }: ApiSectionMarkdownPageProps): ReactElement<any> | null => {
     const mdx = mdxs[node.id];
 
     if (!mdx) {

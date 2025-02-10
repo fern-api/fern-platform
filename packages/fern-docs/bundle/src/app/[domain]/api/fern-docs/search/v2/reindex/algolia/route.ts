@@ -1,3 +1,13 @@
+import { NextRequest, NextResponse } from "next/server";
+
+import { getAuthEdgeConfig, getEdgeFlags } from "@fern-docs/edge-config";
+import {
+  SEARCH_INDEX,
+  algoliaIndexSettingsTask,
+  algoliaIndexerTask,
+} from "@fern-docs/search-server/algolia";
+import { addLeadingSlash, withoutStaging } from "@fern-docs/utils";
+
 import { track } from "@/server/analytics/posthog";
 import { getOrgMetadataForDomain } from "@/server/auth/metadata-for-url";
 import {
@@ -8,14 +18,6 @@ import {
 } from "@/server/env-variables";
 import { Gate, withBasicTokenAnonymous } from "@/server/withRbac";
 import { getDocsDomainEdge } from "@/server/xfernhost/edge";
-import { getAuthEdgeConfig, getEdgeFlags } from "@fern-docs/edge-config";
-import {
-  SEARCH_INDEX,
-  algoliaIndexSettingsTask,
-  algoliaIndexerTask,
-} from "@fern-docs/search-server/algolia";
-import { addLeadingSlash, withoutStaging } from "@fern-docs/utils";
-import { NextRequest, NextResponse } from "next/server";
 
 export const maxDuration = 800; // 13 minutes
 

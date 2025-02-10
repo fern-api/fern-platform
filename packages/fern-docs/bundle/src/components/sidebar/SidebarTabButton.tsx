@@ -1,7 +1,9 @@
+import { memo } from "react";
+
 import { FaIcon } from "@fern-docs/components";
 import { SidebarTab } from "@fern-platform/fdr-utils";
 import cn, { clsx } from "clsx";
-import { memo } from "react";
+
 import { FernLink } from "../components/FernLink";
 import { useSidebarTabHref } from "../hooks/useSidebarTabHref";
 

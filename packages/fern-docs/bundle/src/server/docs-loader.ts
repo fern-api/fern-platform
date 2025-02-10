@@ -1,5 +1,6 @@
-import { serializeMdx as uncachedSerializeMdx } from "@/components/mdx/bundlers/mdx-bundler";
-import { FernSerializeMdxOptions } from "@/components/mdx/types";
+import { cacheLife } from "next/dist/server/use-cache/cache-life";
+import { cacheTag } from "next/dist/server/use-cache/cache-tag";
+
 import {
   ApiDefinition,
   DocsV1Read,
@@ -15,9 +16,11 @@ import { AuthEdgeConfig } from "@fern-docs/auth";
 import { getAuthEdgeConfig, getEdgeFlags } from "@fern-docs/edge-config";
 import { DEFAULT_LOGO_HEIGHT } from "@fern-docs/utils";
 import { mapValues } from "es-toolkit/object";
-import { cacheLife } from "next/dist/server/use-cache/cache-life";
-import { cacheTag } from "next/dist/server/use-cache/cache-tag";
 import { UnreachableCaseError } from "ts-essentials";
+
+import { serializeMdx as uncachedSerializeMdx } from "@/components/mdx/bundlers/mdx-bundler";
+import { FernSerializeMdxOptions } from "@/components/mdx/types";
+
 import { AuthState, createGetAuthState } from "./auth/getAuthState";
 import { createFileResolver } from "./file-resolver";
 import { loadWithUrl } from "./loadWithUrl";
@@ -223,8 +226,6 @@ export const createCachedDocsLoader = async (
   };
 
   const getRoot = async () => {
-    "use cache";
-
     cacheTag(domain);
 
     let root = await unsafe_getFullRoot();

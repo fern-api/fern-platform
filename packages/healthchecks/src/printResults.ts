@@ -1,5 +1,6 @@
 import { printTable } from "console-table-printer";
 import * as emoji from "node-emoji";
+
 import { RuleResult } from "./rules/runRules";
 
 export function printResults(

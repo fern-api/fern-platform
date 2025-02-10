@@ -1,11 +1,13 @@
-import type { DocsContent } from "@/components/resolver/DocsContent";
-import { resolveDocsContent } from "@/components/resolver/resolveDocsContent";
-import type { FileData } from "@/server/types";
 import { DocsV1Read } from "@fern-api/fdr-sdk";
 import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { getFrontmatter } from "@fern-docs/mdx";
 import { EdgeFlags } from "@fern-docs/utils";
+
+import type { DocsContent } from "@/components/resolver/DocsContent";
+import { resolveDocsContent } from "@/components/resolver/resolveDocsContent";
+import type { FileData } from "@/server/types";
+
 import { AuthState } from "./auth/getAuthState";
 import { withPrunedNavigation } from "./withPrunedNavigation";
 

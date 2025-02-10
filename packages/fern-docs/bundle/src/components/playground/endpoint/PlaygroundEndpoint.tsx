@@ -1,5 +1,7 @@
 "use client";
 
+import { ReactElement, useCallback, useState } from "react";
+
 import type { EndpointContext } from "@fern-api/fdr-sdk/api-definition";
 import { buildEndpointUrl } from "@fern-api/fdr-sdk/api-definition";
 import { unknownToString } from "@fern-api/ui-core-utils";
@@ -15,7 +17,7 @@ import { useEventCallback } from "@fern-ui/react-commons";
 import { mapValues } from "es-toolkit/object";
 import { SendSolid } from "iconoir-react";
 import { useAtomValue, useSetAtom } from "jotai";
-import { ReactElement, useCallback, useState } from "react";
+
 import { track } from "../../analytics";
 import {
   FERN_USER_ATOM,

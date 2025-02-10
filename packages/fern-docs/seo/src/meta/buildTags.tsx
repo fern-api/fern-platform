@@ -1,4 +1,5 @@
 import { ReactNode } from "react";
+
 import { NextSeoProps, OpenGraphMedia } from "../types";
 
 const buildOpenGraphMediaTags = (

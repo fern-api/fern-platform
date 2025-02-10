@@ -1,3 +1,5 @@
+import { useEffect, useRef, useState } from "react";
+
 import { ApiDefinition } from "@fern-api/fdr-sdk";
 import { CopyToClipboardButton } from "@fern-docs/components";
 import {
@@ -7,7 +9,7 @@ import {
 import * as Tabs from "@radix-ui/react-tabs";
 import clsx from "clsx";
 import { useAtom } from "jotai";
-import { useEffect, useRef, useState } from "react";
+
 import { getLanguageDisplayName } from "../../../api-reference/examples/code-example";
 import { FERN_LANGUAGE_ATOM, useEdgeFlags } from "../../../atoms";
 import { HorizontalOverflowMask } from "../../../components/HorizontalOverflowMask";

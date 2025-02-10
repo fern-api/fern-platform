@@ -1,3 +1,5 @@
+import { ReactElement, useState } from "react";
+
 import { EndpointContext } from "@fern-api/fdr-sdk/api-definition";
 import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
 import { visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
@@ -10,7 +12,7 @@ import {
 } from "@fern-docs/components";
 import { HelpCircle, Key, User } from "iconoir-react";
 import { useAtom } from "jotai";
-import { ReactElement, useState } from "react";
+
 import {
   PLAYGROUND_AUTH_STATE_OAUTH_ATOM,
   usePlaygroundEndpointFormState,

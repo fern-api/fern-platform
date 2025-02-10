@@ -1,7 +1,9 @@
+import { ReactNode } from "react";
+
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import clsx from "clsx";
-import { ReactNode } from "react";
 import { UnreachableCaseError } from "ts-essentials";
+
 import { SidebarApiPackageNode } from "./SidebarApiPackageNode";
 import { SidebarChangelogNode } from "./SidebarChangelogNode";
 import { SidebarLinkNode } from "./SidebarLinkNode";

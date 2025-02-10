@@ -1,10 +1,6 @@
-import { getAllowedRedirectUrls } from "@/server/auth/allowed-redirects";
-import { getReturnToQueryParam } from "@/server/auth/return-to";
-import { withDeleteCookie } from "@/server/auth/with-secure-cookie";
-import { revokeSessionForToken } from "@/server/auth/workos-session";
-import { FernNextResponse } from "@/server/FernNextResponse";
-import { safeUrl } from "@/server/safeUrl";
-import { getDocsDomainEdge, getHostEdge } from "@/server/xfernhost/edge";
+import { cookies } from "next/headers";
+import { NextRequest, NextResponse } from "next/server";
+
 import { withDefaultProtocol } from "@fern-api/ui-core-utils";
 import { getAuthEdgeConfig } from "@fern-docs/edge-config";
 import {
@@ -12,8 +8,14 @@ import {
   COOKIE_FERN_TOKEN,
   COOKIE_REFRESH_TOKEN,
 } from "@fern-docs/utils";
-import { cookies } from "next/headers";
-import { NextRequest, NextResponse } from "next/server";
+
+import { FernNextResponse } from "@/server/FernNextResponse";
+import { getAllowedRedirectUrls } from "@/server/auth/allowed-redirects";
+import { getReturnToQueryParam } from "@/server/auth/return-to";
+import { withDeleteCookie } from "@/server/auth/with-secure-cookie";
+import { revokeSessionForToken } from "@/server/auth/workos-session";
+import { safeUrl } from "@/server/safeUrl";
+import { getDocsDomainEdge, getHostEdge } from "@/server/xfernhost/edge";
 
 export const runtime = "edge";
 

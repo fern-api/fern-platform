@@ -1,4 +1,5 @@
 import urljoin from "url-join";
+
 import { Slug } from ".";
 
 // normalizes slug parts and joins them with a single slash

@@ -1,6 +1,7 @@
+import { NextRequest, NextResponse } from "next/server";
+
 import { getOrgMetadataForDomain } from "@/server/auth/metadata-for-url";
 import { getDocsDomainEdge } from "@/server/xfernhost/edge";
-import { NextRequest, NextResponse } from "next/server";
 
 export const runtime = "edge";
 

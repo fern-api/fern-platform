@@ -1,5 +1,6 @@
 import { ApiDefinition } from "@fern-api/fdr-sdk";
 import { measureBytes, truncateToBytes } from "@fern-api/ui-core-utils";
+
 import { maybePrepareMdxContent } from "../../utils/prepare-mdx-content";
 import { toDescription } from "../../utils/to-description";
 import { ApiReferenceRecord, EndpointBaseRecord } from "../types";

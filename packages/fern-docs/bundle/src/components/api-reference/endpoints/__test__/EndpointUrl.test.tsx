@@ -1,10 +1,10 @@
 /**
  * @vitest-environment jsdom
  */
-
 import { PathPart } from "@fern-api/fdr-sdk/api-definition";
 import { EnvironmentId, PropertyKey } from "@fern-api/fdr-sdk/navigation";
 import { render, screen } from "@testing-library/react";
+
 import { EndpointUrl } from "../EndpointUrl";
 
 function lit(value: string): PathPart.Literal {

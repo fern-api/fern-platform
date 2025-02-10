@@ -1,4 +1,5 @@
 import { Algolia } from "@fern-api/fdr-sdk";
+
 import type { IndexSegment } from "./types";
 
 export class NavigationContext {

@@ -1,4 +1,5 @@
 import { ReactElement, useEffect, useRef, useState } from "react";
+
 import { useTheme } from "../../../atoms";
 
 export function Mermaid({ children }: { children: string }): ReactElement<any> {

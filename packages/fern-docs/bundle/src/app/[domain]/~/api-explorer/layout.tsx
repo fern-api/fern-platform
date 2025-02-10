@@ -1,22 +1,20 @@
-import { PlaygroundEndpointSelectorContent } from "@/components/playground/endpoint/PlaygroundEndpointSelectorContent";
-import { flattenApiSection } from "@/components/playground/utils/flatten-apis";
-import { HorizontalSplitPane } from "@/components/playground/VerticalSplitPane";
-import { createCachedDocsLoader } from "@/server/docs-loader";
-import { COOKIE_FERN_TOKEN } from "@fern-docs/utils";
 import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 
-export default async function Layout(
-  props: {
-    children: React.ReactNode;
-    params: Promise<{ domain: string }>;
-  }
-) {
+import { COOKIE_FERN_TOKEN } from "@fern-docs/utils";
+
+import { HorizontalSplitPane } from "@/components/playground/VerticalSplitPane";
+import { PlaygroundEndpointSelectorContent } from "@/components/playground/endpoint/PlaygroundEndpointSelectorContent";
+import { flattenApiSection } from "@/components/playground/utils/flatten-apis";
+import { createCachedDocsLoader } from "@/server/docs-loader";
+
+export default async function Layout(props: {
+  children: React.ReactNode;
+  params: Promise<{ domain: string }>;
+}) {
   const params = await props.params;
 
-  const {
-    children
-  } = props;
+  const { children } = props;
 
   console.debug(`[${params.domain}] Loading API Explorer layout`);
   const fern_token = (await cookies()).get(COOKIE_FERN_TOKEN)?.value;

@@ -1,5 +1,6 @@
 import { APIV1Write, FdrAPI } from "@fern-api/fdr-sdk";
 import { inject } from "vitest";
+
 import { createApiDefinition, getAPIResponse, getClient } from "../util";
 
 export const EMPTY_REGISTER_API_DEFINITION: APIV1Write.ApiDefinition = {

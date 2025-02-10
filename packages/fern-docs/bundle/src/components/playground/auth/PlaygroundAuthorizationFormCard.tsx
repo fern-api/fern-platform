@@ -1,8 +1,10 @@
+import { ReactElement } from "react";
+
 import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
 import { FernButton, FernCollapse } from "@fern-docs/components";
 import { useBooleanState } from "@fern-ui/react-commons";
 import { useSetAtom } from "jotai/react";
-import { ReactElement } from "react";
+
 import {
   PLAYGROUND_AUTH_STATE_BEARER_TOKEN_ATOM,
   PLAYGROUND_AUTH_STATE_OAUTH_ATOM,

@@ -1,5 +1,7 @@
-import { useAtomValue } from "jotai";
 import { ReactElement } from "react";
+
+import { useAtomValue } from "jotai";
+
 import { DOCS_ATOM, LOGO_ATOM, LOGO_TEXT_ATOM, VERSIONS_ATOM } from "../atoms";
 import { Logo } from "../logo";
 import { VersionDropdown } from "./VersionDropdown";

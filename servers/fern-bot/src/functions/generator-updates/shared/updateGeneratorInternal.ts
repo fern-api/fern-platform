@@ -9,9 +9,9 @@ import {
 } from "@libs/fern";
 import {
   DEFAULT_REMOTE_NAME,
+  type Repository,
   cloneRepo,
   configureGit,
-  type Repository,
 } from "@libs/github/utilities";
 import {
   GeneratorMessageMetadata,

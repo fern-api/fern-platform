@@ -1,7 +1,8 @@
+import { useMemo } from "react";
+
 import fastdom from "fastdom";
 import { atom, useAtomValue } from "jotai";
 import { atomWithDefault } from "jotai/utils";
-import { useMemo } from "react";
 import { noop } from "ts-essentials";
 
 export const IS_READY_ATOM = atom(false);

@@ -1,8 +1,10 @@
-import { createCachedDocsLoader } from "@/server/docs-loader";
-import { getDocsDomainApp } from "@/server/xfernhost/app";
+import type { MetadataRoute } from "next";
+
 import { isNonNullish } from "@fern-api/ui-core-utils";
 import { addLeadingSlash } from "@fern-docs/utils";
-import type { MetadataRoute } from "next";
+
+import { createCachedDocsLoader } from "@/server/docs-loader";
+import { getDocsDomainApp } from "@/server/xfernhost/app";
 
 export default async function manifest(): Promise<MetadataRoute.Manifest> {
   const domain = await getDocsDomainApp();

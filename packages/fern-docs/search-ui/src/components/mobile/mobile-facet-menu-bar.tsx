@@ -1,3 +1,10 @@
+import {
+  ComponentPropsWithoutRef,
+  Fragment,
+  ReactNode,
+  forwardRef,
+} from "react";
+
 import { EMPTY_ARRAY } from "@fern-api/ui-core-utils";
 import {
   AvailabilityBadge,
@@ -10,12 +17,6 @@ import {
 import { FacetName } from "@fern-docs/search-server/algolia/types";
 import * as Menubar from "@radix-ui/react-menubar";
 import { Check, ChevronDown, Minus } from "lucide-react";
-import {
-  ComponentPropsWithoutRef,
-  Fragment,
-  ReactNode,
-  forwardRef,
-} from "react";
 
 import { FacetFilter } from "../../types";
 import { getFacetDisplay, toFilterLabel } from "../../utils/facet-display";

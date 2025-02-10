@@ -1,15 +1,3 @@
-import { EMPTY_OBJECT, getDevice, getPlatform } from "@fern-api/ui-core-utils";
-import type {
-  FacetName,
-  FacetsResponse,
-} from "@fern-docs/search-server/algolia";
-import {
-  useDeepCompareEffectNoCheck,
-  useEventCallback,
-} from "@fern-ui/react-commons";
-import { LiteClient, liteClient } from "algoliasearch/lite";
-import { useAtom, useSetAtom } from "jotai";
-import { RESET, atomWithDefault } from "jotai/utils";
 import {
   Dispatch,
   KeyboardEventHandler,
@@ -25,10 +13,23 @@ import {
 } from "react";
 import { Configure } from "react-instantsearch";
 import { InstantSearchNext } from "react-instantsearch-nextjs";
+
+import { EMPTY_OBJECT, getDevice, getPlatform } from "@fern-api/ui-core-utils";
+import type {
+  FacetName,
+  FacetsResponse,
+} from "@fern-docs/search-server/algolia";
+import {
+  useDeepCompareEffectNoCheck,
+  useEventCallback,
+} from "@fern-ui/react-commons";
+import { LiteClient, liteClient } from "algoliasearch/lite";
+import { uniq } from "es-toolkit/array";
+import { useAtom, useSetAtom } from "jotai";
+import { RESET, atomWithDefault } from "jotai/utils";
 import { preload } from "swr";
 import useSWRImmutable from "swr/immutable";
 
-import { uniq } from "es-toolkit/array";
 import { FacetFilter, isFacetName } from "../types";
 import { toAlgoliaFacetFilters } from "../utils/facet-filters";
 

@@ -1,6 +1,3 @@
-import { Client } from "@upstash/qstash";
-
-import { qstashToken } from "@/server/env-variables";
 import {
   HEADER_X_FERN_HOST,
   HEADER_X_VERCEL_PROTECTION_BYPASS,
@@ -8,6 +5,9 @@ import {
   conformTrailingSlash,
   removeTrailingSlash,
 } from "@fern-docs/utils";
+import { Client } from "@upstash/qstash";
+
+import { qstashToken } from "@/server/env-variables";
 
 const q = new Client({ token: qstashToken() });
 

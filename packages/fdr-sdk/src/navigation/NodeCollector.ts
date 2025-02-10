@@ -1,5 +1,6 @@
 import { EMPTY_ARRAY } from "@fern-api/ui-core-utils";
 import { once } from "es-toolkit/function";
+
 import { FernNavigation } from "./..";
 import { pruneVersionNode } from "./utils/pruneVersionNode";
 import { NavigationNodeWithMetadata } from "./versions";

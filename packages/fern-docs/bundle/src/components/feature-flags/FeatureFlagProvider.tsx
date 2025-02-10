@@ -1,5 +1,6 @@
 import dynamic from "next/dynamic";
 import { FC, ReactNode } from "react";
+
 import { FeatureFlagsConfig } from "../atoms";
 
 const LDFeatureFlagProvider = dynamic(

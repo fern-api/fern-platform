@@ -1,6 +1,8 @@
+import { ComponentProps, FC } from "react";
+
 import { FernSdk } from "@fern-docs/components";
 import { useAtom, useAtomValue } from "jotai";
-import { ComponentProps, FC } from "react";
+
 import { DEFAULT_LANGUAGE_ATOM, FERN_LANGUAGE_ATOM } from "../../../atoms";
 
 export const ClientLibraries: FC<

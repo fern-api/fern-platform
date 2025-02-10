@@ -1,5 +1,6 @@
-import { createServer, Server } from "http";
 import next from "next";
+
+import { Server, createServer } from "http";
 import { parse } from "url";
 
 export async function startNextServer(port: number): Promise<Server> {

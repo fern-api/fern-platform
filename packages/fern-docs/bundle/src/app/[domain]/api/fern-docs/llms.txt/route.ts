@@ -1,18 +1,20 @@
 "use cache";
 
-import { DocsLoader } from "@/server/DocsLoader";
-import { getMarkdownForPath } from "@/server/getMarkdownForPath";
-import { getSectionRoot } from "@/server/getSectionRoot";
-import { getLlmTxtMetadata } from "@/server/llm-txt-md";
-import { getHostEdge } from "@/server/xfernhost/edge";
+import { cacheTag } from "next/dist/server/use-cache/cache-tag";
+import { cookies } from "next/headers";
+import { NextRequest, NextResponse } from "next/server";
+
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { CONTINUE, SKIP } from "@fern-api/fdr-sdk/traversers";
 import { isNonNullish, withDefaultProtocol } from "@fern-api/ui-core-utils";
 import { getEdgeFlags } from "@fern-docs/edge-config";
 import { COOKIE_FERN_TOKEN, addLeadingSlash } from "@fern-docs/utils";
-import { cacheTag } from "next/dist/server/use-cache/cache-tag";
-import { cookies } from "next/headers";
-import { NextRequest, NextResponse } from "next/server";
+
+import { DocsLoader } from "@/server/DocsLoader";
+import { getMarkdownForPath } from "@/server/getMarkdownForPath";
+import { getSectionRoot } from "@/server/getSectionRoot";
+import { getLlmTxtMetadata } from "@/server/llm-txt-md";
+import { getHostEdge } from "@/server/xfernhost/edge";
 
 /**
  * This endpoint follows the https://llmstxt.org/ specification for a LLM-friendly markdown-esque page listing all the pages in the docs.

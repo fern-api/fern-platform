@@ -1,5 +1,7 @@
-import { FernAudioPlayer } from "@fern-docs/components";
 import { FC } from "react";
+
+import { FernAudioPlayer } from "@fern-docs/components";
+
 import { useEdgeFlags } from "../../atoms";
 import { FernErrorBoundary } from "../../components/FernErrorBoundary";
 import { TitledExample } from "./TitledExample";

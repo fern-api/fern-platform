@@ -1,4 +1,5 @@
 import { OpenAPIV3_1 } from "openapi-types";
+
 import { isIntegerSchema } from "../isIntegerSchema";
 
 describe("isIntegerSchema", () => {

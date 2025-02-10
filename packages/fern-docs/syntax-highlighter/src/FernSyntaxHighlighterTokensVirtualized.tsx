@@ -1,7 +1,3 @@
-import { FernScrollArea } from "@fern-docs/components";
-import { parseStringStyle, visit } from "@fern-docs/mdx";
-import cn from "clsx";
-import type { Element } from "hast";
 import {
   forwardRef,
   memo,
@@ -12,6 +8,12 @@ import {
   useState,
 } from "react";
 import { ItemProps, TableVirtuoso, TableVirtuosoHandle } from "react-virtuoso";
+
+import { FernScrollArea } from "@fern-docs/components";
+import { parseStringStyle, visit } from "@fern-docs/mdx";
+import cn from "clsx";
+import type { Element } from "hast";
+
 import {
   FernSyntaxHighlighterTokensProps,
   ScrollToHandle,

@@ -1,10 +1,5 @@
 "use client";
 
-import {
-  ButtonContent,
-  FernButtonSharedProps,
-  getButtonClassName,
-} from "@fern-docs/components";
 import Link from "next/link";
 import {
   ComponentProps,
@@ -12,6 +7,13 @@ import {
   createElement,
   forwardRef,
 } from "react";
+
+import {
+  ButtonContent,
+  FernButtonSharedProps,
+  getButtonClassName,
+} from "@fern-docs/components";
+
 import { FernLink } from "./FernLink";
 
 interface FernLinkButtonProps

@@ -1,11 +1,12 @@
 import assertNever from "@fern-api/ui-core-utils/assertNever";
+
 import { APIV1Write } from "../../../client";
 import {
+  ResolveTypeById,
   generateExampleFromTypeReference,
   generateExampleFromTypeShape,
   generateHttpRequestBodyExample,
   generateHttpResponseBodyExample,
-  ResolveTypeById,
 } from "./generateHttpBodyExample";
 
 const MAX_OPTIONAL_EXAMPLES_FOR_QUERY_PARAMS = 2;

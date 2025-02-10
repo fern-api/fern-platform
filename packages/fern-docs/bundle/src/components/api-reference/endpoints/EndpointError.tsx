@@ -1,3 +1,5 @@
+import { MouseEventHandler, memo } from "react";
+
 import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
@@ -5,7 +7,7 @@ import { visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
 import { FernCollapse } from "@fern-docs/components";
 import { AvailabilityBadge } from "@fern-docs/components/badges";
 import cn from "clsx";
-import { MouseEventHandler, memo } from "react";
+
 import { MdxContent } from "../../mdx/MdxContent";
 import { renderTypeShorthand } from "../../type-shorthand";
 import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";

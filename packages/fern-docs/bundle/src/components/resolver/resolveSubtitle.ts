@@ -1,6 +1,7 @@
 import type { DocsV1Read, FernDocs } from "@fern-api/fdr-sdk";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { getFrontmatter } from "@fern-docs/mdx";
+
 import { serializeMdx } from "../mdx/bundlers/mdx-bundler";
 
 export async function resolveSubtitle(

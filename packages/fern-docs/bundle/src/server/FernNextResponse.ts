@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+
 import { getHostEdge } from "./xfernhost/edge";
 
 export class FernNextResponse {

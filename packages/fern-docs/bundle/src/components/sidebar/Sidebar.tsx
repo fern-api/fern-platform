@@ -1,6 +1,8 @@
+import { ReactElement, memo } from "react";
+
 import clsx from "clsx";
 import { useAtomValue } from "jotai";
-import { ReactElement, memo } from "react";
+
 import { DISABLE_SIDEBAR_ATOM, SIDEBAR_DISMISSABLE_ATOM } from "../atoms";
 import { DismissableSidebar } from "./DismissableSidebar";
 import { SidebarContainer } from "./SidebarContainer";

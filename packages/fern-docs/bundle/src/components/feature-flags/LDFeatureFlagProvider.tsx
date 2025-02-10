@@ -1,11 +1,13 @@
+import { FC, PropsWithChildren, ReactNode, useEffect } from "react";
+
 import { useAtomValue } from "jotai";
 import {
   LDContext,
   LDProvider,
   useLDClient,
 } from "launchdarkly-react-client-sdk";
-import { FC, PropsWithChildren, ReactNode, useEffect } from "react";
 import useSWR from "swr";
+
 import { CURRENT_VERSION_ID_ATOM, useFernUser } from "../atoms";
 
 interface Props extends PropsWithChildren {

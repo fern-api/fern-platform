@@ -1,5 +1,6 @@
 import { algoliasearch } from "algoliasearch";
 import { assert } from "ts-essentials";
+
 import { setIndexSettings } from "../set-index-settings";
 
 interface AlgoliaIndexSettingsTaskOptions {

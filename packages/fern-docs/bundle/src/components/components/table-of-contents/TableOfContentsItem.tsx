@@ -1,5 +1,7 @@
+import { ReactElement, memo, useEffect, useRef } from "react";
+
 import clsx from "clsx";
-import { memo, ReactElement, useEffect, useRef } from "react";
+
 import { FernLink } from "../FernLink";
 
 export interface TableOfContentsItemProps {

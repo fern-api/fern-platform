@@ -1,7 +1,9 @@
+import { NextRequest, NextResponse } from "next/server";
+
+import { randomUUID } from "crypto";
+
 import { algoliaSearchApikey } from "@/server/env-variables";
 import { withSearchApiKey } from "@/server/with-search-api-key";
-import { randomUUID } from "crypto";
-import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest): Promise<NextResponse> {
   const domain = request.nextUrl.searchParams.get("domain");

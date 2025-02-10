@@ -1,4 +1,5 @@
 import { OpenAPIV3_1 } from "openapi-types";
+
 import { BooleanConverterNode } from "../schemas/primitives/BooleanConverter.node";
 
 export function isBooleanSchema(

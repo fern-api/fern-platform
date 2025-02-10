@@ -1,5 +1,6 @@
 import simpleGit from "simple-git";
 import tmp from "tmp-promise";
+
 import { ClonedRepository } from "./ClonedRepository";
 import { parseRepository } from "./parseRepository";
 

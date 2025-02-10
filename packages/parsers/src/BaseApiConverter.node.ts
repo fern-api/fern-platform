@@ -1,5 +1,7 @@
 import type { Logger } from "@fern-api/logger";
+
 import { ErrorCollector } from "./ErrorCollector";
+
 /**
  * Base context class for API converter nodes.
  * Provides logging and error collection capabilities.

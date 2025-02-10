@@ -1,32 +1,31 @@
-import { CustomerAnalytics } from "@/components/analytics/CustomerAnalytics";
-import { JavascriptProvider } from "@/components/components/JavascriptProvider";
-import Preload, { PreloadHref } from "@/components/preload";
-import { SearchV2 } from "@/components/search";
-import { renderThemeStylesheet } from "@/components/themes/stylesheet/renderThemeStylesheet";
-import { ThemeScript } from "@/components/themes/ThemeScript";
-import { createCachedDocsLoader } from "@/server/docs-loader";
-import { RgbaColor } from "@/server/types";
+import { Metadata, Viewport } from "next/types";
+
 import { DocsV2Read } from "@fern-api/fdr-sdk/client/types";
 import { withDefaultProtocol } from "@fern-api/ui-core-utils";
 import { getEdgeFlags, getSeoDisabled } from "@fern-docs/edge-config";
 import { EdgeFlags } from "@fern-docs/utils";
 import { compact, uniqBy } from "es-toolkit/array";
-import { Metadata, Viewport } from "next/types";
 import tinycolor from "tinycolor2";
+
+import { CustomerAnalytics } from "@/components/analytics/CustomerAnalytics";
+import { JavascriptProvider } from "@/components/components/JavascriptProvider";
+import Preload, { PreloadHref } from "@/components/preload";
+import { SearchV2 } from "@/components/search";
+import { ThemeScript } from "@/components/themes/ThemeScript";
+import { renderThemeStylesheet } from "@/components/themes/stylesheet/renderThemeStylesheet";
+import { createCachedDocsLoader } from "@/server/docs-loader";
+import { RgbaColor } from "@/server/types";
+
 import { GlobalStyles } from "../global-styles";
 import { toImageDescriptor } from "../seo";
 
-export default async function Layout(
-  props: {
-    children: React.ReactNode;
-    params: Promise<{ domain: string }>;
-  }
-) {
+export default async function Layout(props: {
+  children: React.ReactNode;
+  params: Promise<{ domain: string }>;
+}) {
   const params = await props.params;
 
-  const {
-    children
-  } = props;
+  const { children } = props;
 
   const domain = params.domain;
   const docsLoader = await createCachedDocsLoader(domain);
@@ -64,11 +63,9 @@ export default async function Layout(
   );
 }
 
-export async function generateViewport(
-  props: {
-    params: Promise<{ domain: string }>;
-  }
-): Promise<Viewport> {
+export async function generateViewport(props: {
+  params: Promise<{ domain: string }>;
+}): Promise<Viewport> {
   const params = await props.params;
   const domain = params.domain;
   const docsLoader = await createCachedDocsLoader(domain);
@@ -96,11 +93,9 @@ function maybeToHex(color: RgbaColor | undefined): string | undefined {
   return tinycolor(color).toHexString();
 }
 
-export async function generateMetadata(
-  props: {
-    params: Promise<{ domain: string }>;
-  }
-): Promise<Metadata> {
+export async function generateMetadata(props: {
+  params: Promise<{ domain: string }>;
+}): Promise<Metadata> {
   const params = await props.params;
   const domain = params.domain;
   const docsLoader = await createCachedDocsLoader(domain);

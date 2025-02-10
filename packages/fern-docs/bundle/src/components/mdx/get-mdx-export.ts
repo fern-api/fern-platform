@@ -1,8 +1,8 @@
 import { FernDocs } from "@fern-api/fdr-sdk";
-import { isToc, TableOfContentsItem } from "@fern-docs/mdx";
+import { TableOfContentsItem, isToc } from "@fern-docs/mdx";
 import {
-  getMDXExport as getMDXExportOriginal,
   MDXContentProps,
+  getMDXExport as getMDXExportOriginal,
 } from "mdx-bundler/client";
 
 export function getMDXExport(

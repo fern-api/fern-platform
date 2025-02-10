@@ -1,6 +1,3 @@
-import { withDefaultProtocol } from "@fern-api/ui-core-utils";
-import { composeRefs } from "@radix-ui/react-compose-refs";
-import { Slot } from "@radix-ui/react-slot";
 import {
   ComponentPropsWithoutRef,
   forwardRef,
@@ -8,6 +5,11 @@ import {
   useEffect,
   useRef,
 } from "react";
+
+import { withDefaultProtocol } from "@fern-api/ui-core-utils";
+import { composeRefs } from "@radix-ui/react-compose-refs";
+import { Slot } from "@radix-ui/react-slot";
+
 import * as Command from "../cmdk";
 
 export const CommandLink = forwardRef<

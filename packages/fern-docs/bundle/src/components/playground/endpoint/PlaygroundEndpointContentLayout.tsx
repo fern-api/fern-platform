@@ -1,6 +1,8 @@
+import { ReactElement, ReactNode, useRef, useState } from "react";
+
 import { useResizeObserver } from "@fern-ui/react-commons";
 import { useAtomValue } from "jotai";
-import { ReactElement, ReactNode, useRef, useState } from "react";
+
 import { IS_MOBILE_SCREEN_ATOM } from "../../atoms";
 import { PlaygroundSendRequestButton } from "../PlaygroundSendRequestButton";
 import { PlaygroundEndpointDesktopLayout } from "./PlaygroundEndpointDesktopLayout";

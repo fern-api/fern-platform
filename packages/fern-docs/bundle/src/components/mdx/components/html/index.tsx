@@ -1,8 +1,10 @@
-import cn from "clsx";
 import React from "react";
+
+import cn from "clsx";
+
 import { FernAnchor } from "../../../components/FernAnchor";
 import { FernLink } from "../../../components/FernLink";
-import { isImageElement, NoZoom } from "./image";
+import { NoZoom, isImageElement } from "./image";
 
 export const HeadingRenderer = (
   level: number,

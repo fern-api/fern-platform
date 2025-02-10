@@ -1,5 +1,6 @@
-import type { AlgoliaRecord } from "@fern-docs/search-server/algolia/types";
 import { useHits } from "react-instantsearch";
+
+import type { AlgoliaRecord } from "@fern-docs/search-server/algolia/types";
 
 import { AlgoliaRecordHit } from "../types";
 

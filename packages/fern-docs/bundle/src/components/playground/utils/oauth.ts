@@ -1,7 +1,7 @@
 import type { APIV1Read } from "@fern-api/fdr-sdk";
 import {
-  buildEndpointUrl,
   type EndpointDefinition,
+  buildEndpointUrl,
 } from "@fern-api/fdr-sdk/api-definition";
 import {
   unknownToString,
@@ -9,6 +9,7 @@ import {
 } from "@fern-api/ui-core-utils";
 import { mapValues } from "es-toolkit/object";
 import { JSONPath } from "jsonpath-plus";
+
 import { executeProxyRest } from "../fetch-utils/executeProxyRest";
 import { PlaygroundEndpointRequestFormState, ProxyRequest } from "../types";
 import { serializeFormStateBody } from "./serialize";

@@ -4,6 +4,7 @@ import {
   QueryResults,
   Turbopuffer,
 } from "@turbopuffer/turbopuffer";
+
 import { createRoleFacet } from "../shared/roles/create-role-facet";
 import { createPermutations } from "../shared/roles/role-utils";
 import { EVERYONE_ROLE } from "../utils/constants";

@@ -1,8 +1,10 @@
 "use client";
 
+import { Fragment, ReactElement } from "react";
+
 import type { FernNavigation } from "@fern-api/fdr-sdk";
 import { NavArrowRight } from "iconoir-react";
-import { Fragment, ReactElement } from "react";
+
 import { useToHref } from "../hooks/useHref";
 import { FernLink } from "./FernLink";
 

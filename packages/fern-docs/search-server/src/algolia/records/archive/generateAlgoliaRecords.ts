@@ -1,5 +1,6 @@
 import { Algolia, ApiDefinition, FernNavigation } from "@fern-api/fdr-sdk";
 import { isNonNullish } from "@fern-api/ui-core-utils";
+
 import {
   generateEndpointFieldRecords,
   generateEndpointRecord,

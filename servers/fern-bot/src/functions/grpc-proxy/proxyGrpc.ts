@@ -1,5 +1,6 @@
 import { GrpcProxyRequest } from "@generated/api";
 import { handlerWrapper } from "@libs/handler-wrapper";
+
 import { proxyGrpcInternal } from "./actions/proxyGrpc";
 
 // The relevant lambda request properties, referenced from

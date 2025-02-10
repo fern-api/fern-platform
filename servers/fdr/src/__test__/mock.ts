@@ -1,10 +1,11 @@
 import { APIV1Db, DocsV1Db } from "@fern-api/fdr-sdk";
+
 import { FdrApplication, type FdrConfig } from "../app";
 import { type FdrServices } from "../app/FdrApplication";
 import {
-  ConfigSegmentTuple,
   type AlgoliaSearchRecord,
   type AlgoliaService,
+  ConfigSegmentTuple,
 } from "../services/algolia";
 import { type AuthService } from "../services/auth";
 import { OrgIdsResponse } from "../services/auth/AuthService";

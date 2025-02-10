@@ -2,6 +2,7 @@ import { isNonNullish } from "@fern-api/ui-core-utils";
 import { camelCase } from "es-toolkit";
 import { OpenAPIV3_1 } from "openapi-types";
 import { UnreachableCaseError } from "ts-essentials";
+
 import { FernRegistry } from "../../../../client/generated";
 import { HttpMethod } from "../../../../client/generated/api";
 import {
@@ -13,9 +14,9 @@ import {
   SUPPORTED_REQUEST_CONTENT_TYPES,
 } from "../../../types/format.types";
 import { resolveReference } from "../../../utils/3.1/resolveReference";
+import { MediaType } from "../../../utils/MediaType";
 import { createTypeDefinition } from "../../../utils/createTypeDefinition";
 import { maybeSingleValueToArray } from "../../../utils/maybeSingleValueToArray";
-import { MediaType } from "../../../utils/MediaType";
 import { AvailabilityConverterNode } from "../../extensions/AvailabilityConverter.node";
 import { isReferenceObject } from "../../guards/isReferenceObject";
 import { SchemaConverterNode } from "../../schemas";

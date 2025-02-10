@@ -1,5 +1,6 @@
 import { DocsV1Write, FdrAPI } from "@fern-api/fdr-sdk";
 import { inject } from "vitest";
+
 import { getAPIResponse, getClient } from "../util";
 
 export const WRITE_DOCS_REGISTER_DEFINITION: DocsV1Write.DocsDefinition = {

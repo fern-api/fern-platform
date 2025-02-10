@@ -1,6 +1,6 @@
+import { FernNavigation } from "@fern-api/fdr-sdk";
 import "server-only";
 
-import { FernNavigation } from "@fern-api/fdr-sdk";
 import { DocsLoader } from "./docs-loader";
 
 export function createFindNode(docsLoader: DocsLoader) {

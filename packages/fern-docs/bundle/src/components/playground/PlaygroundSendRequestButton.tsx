@@ -1,6 +1,7 @@
+import { FC, ReactNode } from "react";
+
 import { FernButton } from "@fern-docs/components";
 import clsx from "clsx";
-import { FC, ReactNode } from "react";
 
 interface PlaygroundSendRequestButtonProps {
   sendRequest?: () => void;

@@ -1,4 +1,5 @@
 import title from "title";
+
 import { SPECIAL_TOKENS } from "./specialTokens";
 
 export function titleCase(name: string): string {

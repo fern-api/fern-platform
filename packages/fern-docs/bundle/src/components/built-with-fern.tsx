@@ -1,7 +1,9 @@
 "use client";
 
-import { BuiltWithFern as BuiltWithFernComponent } from "@fern-docs/components";
 import { createContext, useContext, useEffect, useRef } from "react";
+
+import { BuiltWithFern as BuiltWithFernComponent } from "@fern-docs/components";
+
 import { trackInternal } from "./analytics";
 import { useDomain, useEdgeFlag } from "./atoms";
 

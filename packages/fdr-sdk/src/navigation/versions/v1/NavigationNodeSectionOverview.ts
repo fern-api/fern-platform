@@ -1,6 +1,6 @@
 import type { PageId, WithOverviewPage } from ".";
 import type { NavigationNode } from "./NavigationNode";
-import { isSection, type NavigationNodeSection } from "./NavigationNodeSection";
+import { type NavigationNodeSection, isSection } from "./NavigationNodeSection";
 
 type WithRequiredOverviewPage<T extends WithOverviewPage> = T & {
   overviewPageId: PageId;

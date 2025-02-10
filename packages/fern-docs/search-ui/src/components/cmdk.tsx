@@ -1,7 +1,3 @@
-import { useDebouncedCallback } from "@fern-ui/react-commons";
-import * as RadixDialog from "@radix-ui/react-dialog";
-import { useId } from "@radix-ui/react-id";
-import { Primitive } from "@radix-ui/react-primitive";
 import {
   ComponentPropsWithoutRef,
   KeyboardEvent,
@@ -22,9 +18,15 @@ import {
   useState,
   useSyncExternalStore,
 } from "react";
+
+import { useDebouncedCallback } from "@fern-ui/react-commons";
+import * as RadixDialog from "@radix-ui/react-dialog";
+import { useId } from "@radix-ui/react-id";
+import { Primitive } from "@radix-ui/react-primitive";
 import { useIsomorphicLayoutEffect } from "swr/_internal";
 import { noop } from "ts-essentials";
 import { z } from "zod";
+
 import { commandScore } from "./command-score";
 
 type Children = { children?: ReactNode };

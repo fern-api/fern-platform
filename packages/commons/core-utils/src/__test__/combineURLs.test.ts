@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+
 import { combineURLs } from "../combineURLs";
 
 // Test cases from [Axios](https://github.com/axios/axios/blob/fe7d09bb08fa1c0e414956b7fc760c80459b0a43/test/specs/helpers/combineURLs.spec.js)

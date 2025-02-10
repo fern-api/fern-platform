@@ -1,4 +1,5 @@
 import assertNever from "@fern-api/ui-core-utils/assertNever";
+
 import { APIV1Write } from "../../../client";
 
 export type ResolveTypeById = (

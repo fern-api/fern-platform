@@ -1,9 +1,11 @@
 "use client";
 
-import type { APIV1Read } from "@fern-api/fdr-sdk";
-import { EMPTY_ARRAY } from "@fern-api/ui-core-utils";
 import dynamic from "next/dynamic";
 import { useMemo } from "react";
+
+import type { APIV1Read } from "@fern-api/fdr-sdk";
+import { EMPTY_ARRAY } from "@fern-api/ui-core-utils";
+
 import { useWebhookContext } from "../webhook-context/useWebhookContext";
 
 const CodeSnippetExample = dynamic(

@@ -1,8 +1,10 @@
 "use client";
 
-import { SyntaxHighlighterEdgeFlagsProvider } from "@fern-docs/syntax-highlighter";
 import { ReactElement, ReactNode } from "react";
+
+import { SyntaxHighlighterEdgeFlagsProvider } from "@fern-docs/syntax-highlighter";
 import { SWRConfig } from "swr";
+
 import { DocsProps, HydrateAtoms } from "../atoms";
 import { FeatureFlagProvider } from "../feature-flags/FeatureFlagProvider";
 

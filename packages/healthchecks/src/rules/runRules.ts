@@ -1,4 +1,5 @@
 import { FdrClient } from "@fern-api/fdr-sdk";
+
 import { AllPagesLoadRule } from "./all-pages-load";
 import { SearchSlugsCorrectRule } from "./search-slugs-correct";
 

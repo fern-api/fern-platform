@@ -1,6 +1,7 @@
+import { FC, PropsWithChildren, useCallback } from "react";
+
 import { FernDropdown, FernSegmentedControl } from "@fern-docs/components";
 import { AntennaSignal, AppleShortcuts } from "iconoir-react";
-import { FC, PropsWithChildren, useCallback } from "react";
 
 export declare namespace StreamingEnabledToggle {
   export interface Props {

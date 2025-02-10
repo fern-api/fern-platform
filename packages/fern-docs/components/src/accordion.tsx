@@ -1,5 +1,7 @@
-import { ChevronRight } from "lucide-react";
 import * as React from "react";
+
+import { ChevronRight } from "lucide-react";
+
 import * as AccordionPrimitive from "./accordion-primitive";
 import { cn } from "./cn";
 

@@ -1,3 +1,5 @@
+import { FC, PropsWithChildren, ReactElement, isValidElement } from "react";
+
 import { visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
 import { FaIcon } from "@fern-docs/components";
 import cn from "clsx";
@@ -11,7 +13,6 @@ import {
   Star,
   WarningTriangle,
 } from "iconoir-react";
-import { FC, PropsWithChildren, ReactElement, isValidElement } from "react";
 
 type Intent =
   | "info"

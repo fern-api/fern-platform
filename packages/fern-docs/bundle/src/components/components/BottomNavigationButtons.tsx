@@ -1,5 +1,7 @@
-import clsx from "clsx";
 import { FC } from "react";
+
+import clsx from "clsx";
+
 import { BottomNavigationButton } from "./BottomNavigationButton";
 
 interface BottomNavigationButtonsProps {

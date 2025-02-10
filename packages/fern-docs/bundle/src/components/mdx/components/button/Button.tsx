@@ -1,6 +1,8 @@
+import { ReactElement, ReactNode } from "react";
+
 import { FernButton } from "@fern-docs/components";
 import clsx from "clsx";
-import { ReactElement, ReactNode } from "react";
+
 import { FernLinkButton } from "../../../components/FernLinkButton";
 
 export declare namespace Button {

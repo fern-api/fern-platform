@@ -1,5 +1,6 @@
 import Head from "next/head";
 import { ReactNode, useEffect } from "react";
+
 import { useSafeListenTrackEvents } from "./use-track";
 
 declare global {

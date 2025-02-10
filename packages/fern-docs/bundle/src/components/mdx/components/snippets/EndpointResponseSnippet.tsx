@@ -2,6 +2,7 @@ import {
   EndpointDefinition,
   HttpMethod,
 } from "@fern-api/fdr-sdk/api-definition";
+
 import { useExampleSelection } from "../../../api-reference/endpoints/useExampleSelection";
 import { CodeSnippetExample } from "../../../api-reference/examples/CodeSnippetExample";
 import { RequestSnippet } from "./types";

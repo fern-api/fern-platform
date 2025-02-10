@@ -1,5 +1,6 @@
 import dynamic from "next/dynamic";
 import React from "react";
+
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
 import { WithFeatureFlagsProps } from "./types";
 

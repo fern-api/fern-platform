@@ -1,7 +1,9 @@
+import { ReactElement } from "react";
+
 import { FernTooltip } from "@fern-docs/components";
 import { useCopyToClipboard } from "@fern-ui/react-commons";
 import cn from "clsx";
-import { ReactElement } from "react";
+
 import { Markdown } from "../mdx/Markdown";
 
 type ChipProps = {

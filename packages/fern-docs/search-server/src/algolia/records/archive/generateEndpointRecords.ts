@@ -1,5 +1,6 @@
 import { Algolia, ApiDefinition, FernNavigation } from "@fern-api/fdr-sdk";
 import { truncateToBytes } from "@fern-api/ui-core-utils";
+
 import { convertNameToAnchorPart, toBreadcrumbs, toDescription } from "./utils";
 
 interface GenerateEndpointRecordsOptions {

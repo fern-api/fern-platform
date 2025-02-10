@@ -7,6 +7,7 @@ import {
   hasMarkdown,
 } from "@fern-api/fdr-sdk/navigation";
 import { flatten } from "es-toolkit/array";
+
 import { FernTurbopufferRecordWithoutVector } from "../types";
 import { createBaseRecord } from "./create-base-record";
 import { createMarkdownRecords } from "./create-markdown-records";

@@ -2,6 +2,10 @@
 
 import { useTheme } from "next-themes";
 import { useCallback, useEffect, useState } from "react";
+
+import { FacetsResponse, SEARCH_INDEX } from "@fern-docs/search-server/algolia";
+import { useAtom } from "jotai";
+import { atomWithStorage } from "jotai/utils";
 import useSWR from "swr";
 import { z } from "zod";
 
@@ -22,9 +26,6 @@ import { ChatbotModelSelect } from "@/components/chatbot/model-select";
 import { DesktopCommandWithAskAI } from "@/components/desktop/desktop-ask-ai";
 import { DialogTrigger } from "@/components/ui/dialog";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { FacetsResponse, SEARCH_INDEX } from "@fern-docs/search-server/algolia";
-import { useAtom } from "jotai";
-import { atomWithStorage } from "jotai/utils";
 
 const USER_TOKEN_KEY = "user-token";
 

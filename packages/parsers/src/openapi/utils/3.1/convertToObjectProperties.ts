@@ -1,9 +1,10 @@
 import { isNonNullish } from "@fern-api/ui-core-utils";
-import { FernRegistry } from "../../../client/generated";
+
 import {
   ParameterBaseObjectConverterNode,
   SchemaConverterNode,
 } from "../../3.1";
+import { FernRegistry } from "../../../client/generated";
 import { maybeSingleValueToArray } from "../maybeSingleValueToArray";
 import { wrapOptional } from "../wrapOptional";
 

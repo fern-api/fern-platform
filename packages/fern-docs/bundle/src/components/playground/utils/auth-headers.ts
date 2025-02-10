@@ -2,6 +2,7 @@ import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import visitDiscriminatedUnion from "@fern-api/ui-core-utils/visitDiscriminatedUnion";
 import { decodeJwt } from "jose";
 import { noop } from "ts-essentials";
+
 import { PlaygroundAuthState } from "../types";
 import { pascalCaseHeaderKey } from "./header-key-case";
 import {

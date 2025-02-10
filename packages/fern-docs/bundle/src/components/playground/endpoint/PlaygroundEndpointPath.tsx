@@ -1,4 +1,6 @@
-import { FernLinkButton } from "@/components/components/FernLinkButton";
+import { usePathname } from "next/navigation";
+import { FC, Fragment, ReactNode } from "react";
+
 import type {
   Environment,
   EnvironmentId,
@@ -21,8 +23,9 @@ import cn from "clsx";
 import { omitBy } from "es-toolkit/object";
 import { isUndefined } from "es-toolkit/predicate";
 import { X } from "lucide-react";
-import { usePathname } from "next/navigation";
-import { FC, Fragment, ReactNode } from "react";
+
+import { FernLinkButton } from "@/components/components/FernLinkButton";
+
 import { useAllEnvironmentIds } from "../../atoms/environment";
 import { MaybeEnvironmentDropdown } from "../../components/MaybeEnvironmentDropdown";
 import { PlaygroundSendRequestButton } from "../PlaygroundSendRequestButton";

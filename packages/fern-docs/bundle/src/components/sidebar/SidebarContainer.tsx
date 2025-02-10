@@ -1,7 +1,9 @@
+import { ComponentPropsWithoutRef, forwardRef, memo } from "react";
+
 import { FernScrollArea, FernTooltipProvider } from "@fern-docs/components";
 import clsx from "clsx";
 import { useAtom, useAtomValue } from "jotai";
-import { ComponentPropsWithoutRef, forwardRef, memo } from "react";
+
 import {
   CURRENT_TAB_INDEX_ATOM,
   DOCS_LAYOUT_ATOM,

@@ -1,7 +1,8 @@
+import { FC, forwardRef } from "react";
+
 import * as Select from "@radix-ui/react-select";
 import classnames from "clsx";
 import { Check, NavArrowDown, NavArrowUp } from "iconoir-react";
-import { FC, forwardRef } from "react";
 
 export const FernSelect: FC<Select.SelectProps> = () => (
   <Select.Root>

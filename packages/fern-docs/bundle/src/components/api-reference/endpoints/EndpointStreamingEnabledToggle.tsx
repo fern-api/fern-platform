@@ -1,8 +1,10 @@
+import { useRouter } from "next/navigation";
+import { ReactElement } from "react";
+
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { addLeadingSlash } from "@fern-docs/utils";
 import { useAtom } from "jotai";
-import { useRouter } from "next/navigation";
-import { ReactElement } from "react";
+
 import { FERN_STREAM_ATOM } from "../../atoms";
 import { StreamingEnabledToggle } from "./StreamingEnabledToggle";
 

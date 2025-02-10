@@ -1,6 +1,7 @@
 import type { Doctype, Element, ElementContent, Root } from "hast";
 import { MdxjsEsmHast } from "mdast-util-mdxjs-esm";
 import { visit } from "unist-util-visit";
+
 import { isMdxJsxElementHast } from "../mdx-utils/is-mdx-element";
 
 function isParagraphElement(

@@ -1,5 +1,6 @@
 import test, { expect } from "@playwright/test";
 import { Server } from "http";
+
 import { getNextServerUrl, startNextServer } from "./nextjs-proxy/start";
 
 let server: Server;

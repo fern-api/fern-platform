@@ -1,6 +1,8 @@
-import { provideRegistryService } from "@/server/registry";
 import { APIResponse, FdrAPI } from "@fern-api/fdr-sdk/client/types";
 import { withoutStaging } from "@fern-docs/utils";
+
+import { provideRegistryService } from "@/server/registry";
+
 import { loadDocsDefinitionFromS3 } from "./loadDocsDefinitionFromS3";
 
 export type LoadWithUrlResponse = APIResponse<

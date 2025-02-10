@@ -1,6 +1,7 @@
 import type { DocsV1Read, DocsV2Read } from "@fern-api/fdr-sdk/client/types";
 import { compile, match } from "path-to-regexp";
 import urljoin from "url-join";
+
 import { removeTrailingSlash } from "./trailing-slash";
 
 /**

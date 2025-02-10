@@ -1,5 +1,6 @@
-import { isEqual } from "es-toolkit/predicate";
 import React from "react";
+
+import { isEqual } from "es-toolkit/predicate";
 import useSWRImmutable from "swr/immutable";
 
 export const FaIcon = React.memo(

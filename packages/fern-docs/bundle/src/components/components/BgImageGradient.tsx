@@ -1,5 +1,7 @@
-import cn from "clsx";
 import { FC } from "react";
+
+import cn from "clsx";
+
 import { useColors } from "../atoms";
 
 export declare namespace BgImageGradient {

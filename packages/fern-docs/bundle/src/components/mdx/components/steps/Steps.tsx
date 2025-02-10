@@ -1,5 +1,6 @@
-import cn from "clsx";
 import { ComponentProps, ReactElement } from "react";
+
+import cn from "clsx";
 
 export function StepGroup({
   children,

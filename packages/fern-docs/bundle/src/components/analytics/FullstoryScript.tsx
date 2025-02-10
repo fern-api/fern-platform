@@ -1,6 +1,7 @@
-import { DocsV1Read } from "@fern-api/fdr-sdk";
 import Script from "next/script";
 import { ReactElement } from "react";
+
+import { DocsV1Read } from "@fern-api/fdr-sdk";
 
 export function FullstoryScript(props: {
   config?: DocsV1Read.FullStoryAnalyticsConfig;

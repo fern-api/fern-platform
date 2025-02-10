@@ -1,6 +1,9 @@
-import { SearchV2Trigger } from "@/components/search";
-import { useAtomValue } from "jotai";
 import { ReactElement, memo } from "react";
+
+import { useAtomValue } from "jotai";
+
+import { SearchV2Trigger } from "@/components/search";
+
 import { HAS_HORIZONTAL_TABS, SEARCHBAR_PLACEMENT_ATOM } from "../../atoms";
 import { Header } from "../../header/Header";
 import { HeaderTabs } from "../../header/HeaderTabs";

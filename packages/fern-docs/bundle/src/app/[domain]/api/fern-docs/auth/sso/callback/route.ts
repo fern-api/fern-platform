@@ -1,15 +1,17 @@
+import { cookies } from "next/headers";
+import { NextRequest, NextResponse } from "next/server";
+
+import { withDefaultProtocol } from "@fern-api/ui-core-utils";
+import { getAuthEdgeConfig } from "@fern-docs/edge-config";
+import { COOKIE_FERN_TOKEN } from "@fern-docs/utils";
+
+import { FernNextResponse } from "@/server/FernNextResponse";
 import { getReturnToQueryParam } from "@/server/auth/return-to";
 import { withSecureCookie } from "@/server/auth/with-secure-cookie";
 import { getWorkOSClientId, workos } from "@/server/auth/workos";
 import { encryptSession } from "@/server/auth/workos-session";
-import { FernNextResponse } from "@/server/FernNextResponse";
 import { safeUrl } from "@/server/safeUrl";
 import { getDocsDomainEdge } from "@/server/xfernhost/edge";
-import { withDefaultProtocol } from "@fern-api/ui-core-utils";
-import { getAuthEdgeConfig } from "@fern-docs/edge-config";
-import { COOKIE_FERN_TOKEN } from "@fern-docs/utils";
-import { cookies } from "next/headers";
-import { NextRequest, NextResponse } from "next/server";
 
 export const runtime = "edge";
 

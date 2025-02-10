@@ -1,11 +1,11 @@
 import type { NavigationNode } from "./NavigationNode";
 import {
-  isMarkdownLeaf,
   type NavigationNodeMarkdownLeaf,
+  isMarkdownLeaf,
 } from "./NavigationNodePageLeaf";
 import {
-  isSectionOverview,
   type NavigationNodeSectionOverview,
+  isSectionOverview,
 } from "./NavigationNodeSectionOverview";
 
 /**

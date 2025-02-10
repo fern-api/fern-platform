@@ -6,6 +6,7 @@ import {
   SearchResponse,
   algoliasearch,
 } from "algoliasearch";
+
 import { Rule, RuleArgs, RuleResult } from "../runRules";
 
 export class SearchSlugsCorrectRule implements Rule {

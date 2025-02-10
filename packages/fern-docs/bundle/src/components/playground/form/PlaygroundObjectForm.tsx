@@ -1,9 +1,11 @@
+import { ReactElement, useMemo } from "react";
+
 import {
   TypeDefinition,
   TypeShape,
   unwrapObjectType,
 } from "@fern-api/fdr-sdk/api-definition";
-import { ReactElement, useMemo } from "react";
+
 import { PlaygroundObjectPropertiesForm } from "./PlaygroundObjectPropertyForm";
 
 interface PlaygroundObjectFormProps {

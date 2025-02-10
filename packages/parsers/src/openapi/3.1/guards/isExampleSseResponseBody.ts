@@ -1,4 +1,5 @@
 import { FernDefinition } from "@fern-fern/docs-parsers-fern-definition";
+
 import { isExampleSseEvent } from "./isExampleSseEvent";
 
 export function isExampleSseResponseBody(

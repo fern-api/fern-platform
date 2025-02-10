@@ -1,4 +1,5 @@
 import { Cluster, Redis } from "ioredis";
+
 import { LOGGER } from "../../app/FdrApplication";
 import { CachedDocsResponse } from "./DocsDefinitionCache";
 

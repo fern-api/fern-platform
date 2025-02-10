@@ -1,9 +1,8 @@
 import { cleanStdout } from "@functions/generator-updates/shared/updateGeneratorInternal";
-import { execFernCli } from "@libs/fern";
-import { cloneRepo, configureGit, DEFAULT_REMOTE_NAME } from "@libs/github";
-
 import { updateGeneratorVersions } from "@functions/generator-updates/updateGeneratorVersions";
 import { evaluateEnv } from "@libs/env";
+import { execFernCli } from "@libs/fern";
+import { DEFAULT_REMOTE_NAME, cloneRepo, configureGit } from "@libs/github";
 import { setupGithubApp } from "@libs/github/octokit";
 import { App } from "octokit";
 import { SimpleGit } from "simple-git";

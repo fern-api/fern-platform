@@ -1,9 +1,5 @@
 "use client";
 
-import { FernButton } from "@fern-docs/components";
-import clsx from "clsx";
-import { memoize } from "es-toolkit/function";
-import { RefreshDouble, WarningTriangle } from "iconoir-react";
 import { usePathname } from "next/navigation";
 import React, {
   PropsWithChildren,
@@ -12,6 +8,12 @@ import React, {
   useEffect,
 } from "react";
 import { ErrorBoundary, FallbackProps } from "react-error-boundary";
+
+import { FernButton } from "@fern-docs/components";
+import clsx from "clsx";
+import { memoize } from "es-toolkit/function";
+import { RefreshDouble, WarningTriangle } from "iconoir-react";
+
 import { useIsLocalPreview } from "../contexts/local-preview";
 
 export declare interface FernErrorBoundaryProps {

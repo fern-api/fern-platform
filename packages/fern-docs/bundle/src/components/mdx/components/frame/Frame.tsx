@@ -1,5 +1,6 @@
-import clsx from "clsx";
 import { FC, PropsWithChildren } from "react";
+
+import clsx from "clsx";
 
 export declare namespace Frame {
   export interface Props {

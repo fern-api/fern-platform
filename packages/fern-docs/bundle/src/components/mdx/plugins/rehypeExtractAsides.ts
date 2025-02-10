@@ -1,6 +1,6 @@
 import {
-  extractElementsFromRootContentHast,
   type Hast,
+  extractElementsFromRootContentHast,
   visit,
 } from "@fern-docs/mdx";
 

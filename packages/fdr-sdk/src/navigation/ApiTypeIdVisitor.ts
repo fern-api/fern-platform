@@ -1,5 +1,6 @@
 import visitDiscriminatedUnion from "@fern-api/ui-core-utils/visitDiscriminatedUnion";
 import { noop } from "ts-essentials";
+
 import type { APIV1Read } from "../client/types";
 
 export class ApiTypeIdVisitor {

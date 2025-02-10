@@ -1,7 +1,9 @@
+import React from "react";
+
 import clsx from "clsx";
 import { GitFork, GithubCircle, Star } from "iconoir-react";
-import React from "react";
 import useSWR from "swr";
+
 import { FernLinkButton } from "../components/FernLinkButton";
 import { GitHubInfo, getGitHubInfo } from "../util/github";
 

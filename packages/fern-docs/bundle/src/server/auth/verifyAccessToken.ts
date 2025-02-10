@@ -1,8 +1,8 @@
 import {
+  type JWTPayload,
   createRemoteJWKSet,
   decodeJwt,
   jwtVerify,
-  type JWTPayload,
 } from "jose";
 
 export async function decodeAccessToken(

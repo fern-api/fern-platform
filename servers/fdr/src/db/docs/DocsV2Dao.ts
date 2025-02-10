@@ -9,6 +9,7 @@ import {
 import { AuthType, PrismaClient } from "@prisma/client";
 import urljoin from "url-join";
 import { v4 as uuidv4 } from "uuid";
+
 import { DocsRegistrationInfo } from "../../controllers/docs/v2/getDocsWriteV2Service";
 import type { IndexSegment } from "../../services/algolia";
 import { WithoutQuestionMarks, readBuffer, writeBuffer } from "../../util";

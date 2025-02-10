@@ -1,5 +1,7 @@
-import { COOKIE_FERN_DOCS_PREVIEW, HEADER_X_FERN_HOST } from "@fern-docs/utils";
 import type { NextRequest } from "next/server";
+
+import { COOKIE_FERN_DOCS_PREVIEW, HEADER_X_FERN_HOST } from "@fern-docs/utils";
+
 import { getNextPublicDocsDomain } from "./dev";
 import { cleanHost } from "./util";
 

@@ -1,8 +1,10 @@
+import { ComponentProps, ReactElement, useState } from "react";
+
 import { useCopyToClipboard } from "@fern-ui/react-commons";
 import cn from "clsx";
 import { Check, Link } from "iconoir-react";
 import { AnimatePresence, motion } from "motion/react";
-import { ComponentProps, ReactElement, useState } from "react";
+
 import { FernLink } from "../../../components/FernLink";
 
 interface StepProps extends ComponentProps<"div"> {

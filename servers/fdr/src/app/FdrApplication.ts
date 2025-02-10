@@ -1,17 +1,18 @@
 import { PrismaClient } from "@prisma/client";
 import winston from "winston";
+
 import { FdrDao } from "../db";
-import { AlgoliaServiceImpl, type AlgoliaService } from "../services/algolia";
+import { type AlgoliaService, AlgoliaServiceImpl } from "../services/algolia";
 import {
-  AlgoliaIndexSegmentDeleterServiceImpl,
   type AlgoliaIndexSegmentDeleterService,
+  AlgoliaIndexSegmentDeleterServiceImpl,
 } from "../services/algolia-index-segment-deleter";
 import {
-  AlgoliaIndexSegmentManagerServiceImpl,
   type AlgoliaIndexSegmentManagerService,
+  AlgoliaIndexSegmentManagerServiceImpl,
 } from "../services/algolia-index-segment-manager";
-import { AuthServiceImpl, type AuthService } from "../services/auth";
-import { DatabaseServiceImpl, type DatabaseService } from "../services/db";
+import { type AuthService, AuthServiceImpl } from "../services/auth";
+import { type DatabaseService, DatabaseServiceImpl } from "../services/db";
 import {
   DocsDefinitionCache,
   DocsDefinitionCacheImpl,
@@ -22,7 +23,7 @@ import {
   RevalidatorService,
   RevalidatorServiceImpl,
 } from "../services/revalidator/RevalidatorService";
-import { S3ServiceImpl, type S3Service } from "../services/s3";
+import { type S3Service, S3ServiceImpl } from "../services/s3";
 import { SlackService, SlackServiceImpl } from "../services/slack/SlackService";
 import { type FdrConfig } from "./FdrConfig";
 

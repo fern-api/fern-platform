@@ -1,5 +1,6 @@
-import type { Root } from "mdast";
 import Markdown, { type Components } from "react-markdown";
+
+import type { Root } from "mdast";
 import remarkGfm from "remark-gfm";
 import { visit } from "unist-util-visit";
 

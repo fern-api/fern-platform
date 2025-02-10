@@ -1,5 +1,5 @@
 import { FernDocs } from "@fern-api/fdr-sdk";
-import { mdastToString, type Mdast } from "@fern-docs/mdx";
+import { type Mdast, mdastToString } from "@fern-docs/mdx";
 
 interface Options {
   frontmatter: FernDocs.Frontmatter;

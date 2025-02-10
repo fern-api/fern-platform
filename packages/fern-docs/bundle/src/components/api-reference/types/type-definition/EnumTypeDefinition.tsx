@@ -1,3 +1,5 @@
+import React, { ReactElement, useState } from "react";
+
 import {
   FernButton,
   FernInput,
@@ -6,7 +8,7 @@ import {
 import { useBooleanState } from "@fern-ui/react-commons";
 import cn from "clsx";
 import { Search, Xmark } from "iconoir-react";
-import React, { ReactElement, useState } from "react";
+
 import {
   TypeDefinitionContext,
   TypeDefinitionContextValue,

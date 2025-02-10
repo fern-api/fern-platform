@@ -1,5 +1,7 @@
-import { BuiltWithFern } from "@/components/built-with-fern";
 import { FC, ReactElement, ReactNode } from "react";
+
+import { BuiltWithFern } from "@/components/built-with-fern";
+
 import { EditThisPageButton } from "../components/EditThisPage";
 import { Feedback } from "../feedback/Feedback";
 

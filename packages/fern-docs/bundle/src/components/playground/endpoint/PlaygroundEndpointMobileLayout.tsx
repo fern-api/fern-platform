@@ -1,5 +1,7 @@
-import { FernTabs } from "@fern-docs/components";
 import { ReactElement, ReactNode, useState } from "react";
+
+import { FernTabs } from "@fern-docs/components";
+
 import { useEdgeFlags } from "../../atoms";
 
 interface PlaygroundEndpointMobileLayoutProps {

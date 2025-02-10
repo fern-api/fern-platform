@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+
 import { useEdgeFlags } from "../atoms";
 
 let hasBeenCalled = false;

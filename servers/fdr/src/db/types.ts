@@ -1,5 +1,4 @@
 // Types that are stored in the DB
-
 import { PrismaClient } from "@prisma/client";
 
 export type ReferencedAPIDefinitionIds = string[];

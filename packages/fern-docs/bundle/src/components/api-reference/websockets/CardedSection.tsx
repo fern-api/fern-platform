@@ -1,9 +1,12 @@
 "use client";
 
+import React from "react";
+
+import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
+
 import { useHref } from "@/components/hooks/useHref";
 import { getSlugFromChildren } from "@/components/util/getSlugFromText";
-import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
-import React from "react";
+
 import { FernAnchor } from "../../components/FernAnchor";
 
 export function CardedSection({

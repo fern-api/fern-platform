@@ -3,6 +3,7 @@ import { isEqual } from "es-toolkit/predicate";
 import { atom, useAtomValue } from "jotai";
 import { selectAtom } from "jotai/utils";
 import { useMemoOne } from "use-memo-one";
+
 import { DOCS_ATOM } from "./docs";
 
 export const EDGE_FLAGS_ATOM = selectAtom(

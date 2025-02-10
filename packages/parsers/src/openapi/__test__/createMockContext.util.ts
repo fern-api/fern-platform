@@ -1,5 +1,6 @@
 import { OpenAPIV3_1 } from "openapi-types";
 import { vi } from "vitest";
+
 import { BaseOpenApiV3_1ConverterNodeContext } from "../BaseOpenApiV3_1Converter.node";
 
 export function createMockContext(

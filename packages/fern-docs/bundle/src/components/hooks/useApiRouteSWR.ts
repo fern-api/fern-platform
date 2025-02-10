@@ -1,6 +1,7 @@
 import useSWR, { Fetcher, SWRConfiguration, SWRResponse } from "swr";
 import useSWRImmutable from "swr/immutable";
 import { z } from "zod";
+
 import { withSkewProtection } from "../util/withSkewProtection";
 import { FernDocsApiRoute, useApiRoute } from "./useApiRoute";
 

@@ -1,13 +1,15 @@
+import { cookies } from "next/headers";
+import { notFound } from "next/navigation";
+import { NextRequest, NextResponse } from "next/server";
+
+import { COOKIE_FERN_DOCS_PREVIEW } from "@fern-docs/utils";
+import { getEnv } from "@vercel/functions";
+
 import {
   withDeleteCookie,
   withSecureCookie,
 } from "@/server/auth/with-secure-cookie";
 import { redirectResponse } from "@/server/serverResponse";
-import { COOKIE_FERN_DOCS_PREVIEW } from "@fern-docs/utils";
-import { getEnv } from "@vercel/functions";
-import { cookies } from "next/headers";
-import { notFound } from "next/navigation";
-import { NextRequest, NextResponse } from "next/server";
 
 export const runtime = "edge";
 

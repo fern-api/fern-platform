@@ -1,11 +1,5 @@
 "use client";
 
-import type * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
-import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
-import { EMPTY_ARRAY } from "@fern-api/ui-core-utils";
-import { AvailabilityBadge } from "@fern-docs/components/badges";
-import cn from "clsx";
-import { compact } from "es-toolkit/array";
 import {
   FC,
   PropsWithChildren,
@@ -15,6 +9,14 @@ import {
   useRef,
   useState,
 } from "react";
+
+import type * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
+import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
+import { EMPTY_ARRAY } from "@fern-api/ui-core-utils";
+import { AvailabilityBadge } from "@fern-docs/components/badges";
+import cn from "clsx";
+import { compact } from "es-toolkit/array";
+
 import { trackInternal } from "../../analytics";
 import { useIsApiReferencePaginated, useRouteListener } from "../../atoms";
 import { FernAnchor } from "../../components/FernAnchor";

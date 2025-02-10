@@ -1,7 +1,7 @@
-import { createMockContext } from "../../../__test__/createMockContext.util";
 import { BaseOpenApiV3_1ConverterNodeConstructorArgs } from "../../../BaseOpenApiV3_1Converter.node";
-import { X_FERN_SERVER_NAME } from "../fernExtension.consts";
+import { createMockContext } from "../../../__test__/createMockContext.util";
 import { XFernServerNameConverterNode } from "../XFernServerNameConverter.node";
+import { X_FERN_SERVER_NAME } from "../fernExtension.consts";
 
 describe("XFernServerNameConverterNode", () => {
   const mockContext = createMockContext();

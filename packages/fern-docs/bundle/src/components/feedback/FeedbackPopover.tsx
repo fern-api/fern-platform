@@ -1,11 +1,13 @@
 "use client";
 
+import { forwardRef, useCallback, useMemo, useState } from "react";
+
 import { FernButton, FernButtonGroup } from "@fern-docs/components";
 import clsx from "clsx";
 import { Check, ThumbsDown, ThumbsUp } from "iconoir-react";
 import { motion } from "motion/react";
-import { forwardRef, useCallback, useMemo, useState } from "react";
 import * as Selection from "selection-popover";
+
 import { track } from "../analytics";
 import { useSelection } from "../hooks/useSelection";
 import { FeedbackForm } from "./FeedbackForm";

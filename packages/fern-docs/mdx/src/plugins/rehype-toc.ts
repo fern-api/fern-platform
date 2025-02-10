@@ -5,10 +5,10 @@
  *
  * Inspired by https://github.com/remcohaszing/remark-mdx-frontmatter/blob/main/src/remark-mdx-frontmatter.ts
  */
-
 import { valueToEstree } from "estree-util-value-to-estree";
 import { type Root } from "hast";
 import { type Plugin } from "unified";
+
 import { makeToc } from "../toc";
 
 export const rehypeToc: Plugin<[], Root> = () => {

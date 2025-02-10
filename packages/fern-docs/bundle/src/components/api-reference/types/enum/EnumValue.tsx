@@ -1,5 +1,6 @@
 import type * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import cn from "clsx";
+
 import { MonospaceText } from "../../../components/MonospaceText";
 import { Markdown } from "../../../mdx/Markdown";
 import { useTypeDefinitionContext } from "../context/TypeDefinitionContext";

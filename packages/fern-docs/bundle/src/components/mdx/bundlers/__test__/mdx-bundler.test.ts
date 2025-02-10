@@ -1,9 +1,10 @@
 // @vitest-environment node
-
-import { render, RenderResult } from "@testing-library/react";
-import { Server } from "http";
 import { createElement } from "react";
+
+import { RenderResult, render } from "@testing-library/react";
+import { Server } from "http";
 import { ViteDevServer } from "vite";
+
 import { MdxBundlerComponent } from "../mdx-bundler-component";
 import {
   invokeTestServer,

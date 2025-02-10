@@ -1,5 +1,7 @@
-import { Edit } from "iconoir-react";
 import { ReactElement } from "react";
+
+import { Edit } from "iconoir-react";
+
 import { FernLinkButton } from "../components/FernLinkButton";
 
 const EDIT_THIS_PAGE_TEXT = "Edit this page";

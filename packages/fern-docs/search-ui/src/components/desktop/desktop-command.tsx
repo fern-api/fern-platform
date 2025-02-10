@@ -1,10 +1,3 @@
-import { Button } from "@fern-docs/components/button";
-import { Kbd } from "@fern-docs/components/kbd";
-import { usePlatformKbdShortcut } from "@fern-ui/react-commons";
-import { composeEventHandlers } from "@radix-ui/primitive";
-import { composeRefs } from "@radix-ui/react-compose-refs";
-import { TooltipPortal } from "@radix-ui/react-tooltip";
-import { ArrowLeft } from "lucide-react";
 import {
   ComponentPropsWithoutRef,
   KeyboardEvent,
@@ -15,6 +8,14 @@ import {
   useRef,
 } from "react";
 import { useSearchBox } from "react-instantsearch";
+
+import { Button } from "@fern-docs/components/button";
+import { Kbd } from "@fern-docs/components/kbd";
+import { usePlatformKbdShortcut } from "@fern-ui/react-commons";
+import { composeEventHandlers } from "@radix-ui/primitive";
+import { composeRefs } from "@radix-ui/react-compose-refs";
+import { TooltipPortal } from "@radix-ui/react-tooltip";
+import { ArrowLeft } from "lucide-react";
 
 import * as Command from "../cmdk";
 import { useFacetFilters } from "../search-client";

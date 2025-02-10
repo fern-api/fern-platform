@@ -1,11 +1,13 @@
 "use cache";
 
-import { createGetAuthStateEdge } from "@/server/auth/getAuthStateEdge";
+import { cacheTag } from "next/dist/server/use-cache/cache-tag";
+import { NextRequest, NextResponse } from "next/server";
+
 import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import { ApiDefinitionLoader } from "@fern-docs/cache";
 import { getEdgeFlags } from "@fern-docs/edge-config";
-import { cacheTag } from "next/dist/server/use-cache/cache-tag";
-import { NextRequest, NextResponse } from "next/server";
+
+import { createGetAuthStateEdge } from "@/server/auth/getAuthStateEdge";
 
 export async function GET(
   req: NextRequest,

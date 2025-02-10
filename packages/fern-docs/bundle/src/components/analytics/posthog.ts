@@ -1,7 +1,9 @@
-import type { DocsV1Read } from "@fern-api/fdr-sdk";
 import { usePathname } from "next/navigation";
-import type { PostHog } from "posthog-js";
 import { useEffect } from "react";
+
+import type { DocsV1Read } from "@fern-api/fdr-sdk";
+import type { PostHog } from "posthog-js";
+
 import { useApiRoute } from "../hooks/useApiRoute";
 
 export function safeCall(action: () => void): void {

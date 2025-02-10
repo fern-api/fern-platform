@@ -1,5 +1,7 @@
-import { FernNavigation } from "@fern-api/fdr-sdk";
 import { notFound } from "next/navigation";
+
+import { FernNavigation } from "@fern-api/fdr-sdk";
+
 import ApiEndpointPage from "../api-reference/ApiEndpointPage";
 import ChangelogEntryPage from "../changelog/ChangelogEntryPage";
 import ChangelogPage from "../changelog/ChangelogPage";

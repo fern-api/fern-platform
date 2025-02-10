@@ -1,5 +1,6 @@
-import { type Digit, type UppercaseLetter } from "@fern-api/ui-core-utils";
 import { useEffect } from "react";
+
+import { type Digit, type UppercaseLetter } from "@fern-api/ui-core-utils";
 
 type Arrow = "Up" | "Down" | "Right" | "Left";
 

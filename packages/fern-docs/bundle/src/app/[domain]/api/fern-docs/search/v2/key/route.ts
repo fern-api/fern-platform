@@ -1,8 +1,6 @@
-import { safeVerifyFernJWTConfig } from "@/server/auth/FernJWT";
-import { getOrgMetadataForDomain } from "@/server/auth/metadata-for-url";
-import { algoliaAppId, algoliaSearchApikey } from "@/server/env-variables";
-import { selectFirst } from "@/server/utils/selectFirst";
-import { getDocsDomainEdge } from "@/server/xfernhost/edge";
+import { cookies } from "next/headers";
+import { NextRequest, NextResponse } from "next/server";
+
 import { getAuthEdgeConfig } from "@fern-docs/edge-config";
 import {
   DEFAULT_SEARCH_API_KEY_EXPIRATION_SECONDS,
@@ -10,8 +8,12 @@ import {
   getSearchApiKey,
 } from "@fern-docs/search-server/algolia/edge";
 import { COOKIE_FERN_TOKEN, withoutStaging } from "@fern-docs/utils";
-import { cookies } from "next/headers";
-import { NextRequest, NextResponse } from "next/server";
+
+import { safeVerifyFernJWTConfig } from "@/server/auth/FernJWT";
+import { getOrgMetadataForDomain } from "@/server/auth/metadata-for-url";
+import { algoliaAppId, algoliaSearchApikey } from "@/server/env-variables";
+import { selectFirst } from "@/server/utils/selectFirst";
+import { getDocsDomainEdge } from "@/server/xfernhost/edge";
 
 export const runtime = "edge";
 export const maxDuration = 10;

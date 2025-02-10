@@ -1,4 +1,5 @@
 import urljoin from "url-join";
+
 import { FernNavigation } from "..";
 import { NodeCollector } from "../navigation/NodeCollector";
 

@@ -1,4 +1,5 @@
 import { OpenrpcDocument, ReferenceObject } from "@open-rpc/meta-schema";
+
 import { isReferenceObject } from "./isReferenceObject";
 
 export function resolveReference<Output>(

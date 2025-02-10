@@ -1,6 +1,7 @@
 import React, { ReactNode } from "react";
+
 import { useIsomorphicLayoutEffect } from "swr/_internal";
-import { create, StoreApi } from "zustand";
+import { StoreApi, create } from "zustand";
 
 type Props = {
   children: React.ReactNode;

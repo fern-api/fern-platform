@@ -2,6 +2,7 @@ import type { DocsV1Read } from "@fern-api/fdr-sdk/client/types";
 import { isEqual } from "es-toolkit/predicate";
 import { atom } from "jotai";
 import { selectAtom } from "jotai/utils";
+
 import { ANNOUNCEMENT_HEIGHT_ATOM } from "./announcement";
 import { DOCS_ATOM } from "./docs";
 import { TABS_ATOM } from "./navigation";

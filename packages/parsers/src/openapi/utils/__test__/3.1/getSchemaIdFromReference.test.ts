@@ -1,5 +1,6 @@
 import { OpenAPIV3_1 } from "openapi-types";
 import { describe, expect, it } from "vitest";
+
 import { getSchemaIdFromReference } from "../../3.1/getSchemaIdFromReference";
 
 describe("getSchemaIdFromReference", () => {

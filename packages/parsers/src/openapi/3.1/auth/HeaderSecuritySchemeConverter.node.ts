@@ -1,6 +1,6 @@
 // This is not a real OAS type, but is used in multiple places, so it is abstracted
-
 import { OpenAPIV3_1 } from "openapi-types";
+
 import { FernRegistry } from "../../../client/generated";
 import {
   BaseOpenApiV3_1ConverterNode,

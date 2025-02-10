@@ -1,4 +1,5 @@
 import type { MdxJsxAttribute } from "mdast-util-mdx";
+
 import { isMdxJsxAttributeValueExpression } from "../mdx-utils/is-mdx-jsx-attr";
 
 /**

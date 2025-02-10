@@ -1,4 +1,5 @@
 import { uniqBy, zipWith } from "es-toolkit/array";
+
 import { FernTurbopufferRecord } from "./types";
 
 export function toDocuments(results: FernTurbopufferRecord[]): string[] {

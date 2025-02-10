@@ -1,8 +1,10 @@
 "use client";
 
+import { memo } from "react";
+
 import type * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
-import { memo } from "react";
+
 import { FernErrorBoundary } from "../../../components/FernErrorBoundary";
 import { TypeDefinitionContextProvider } from "../context/TypeDefinitionContextProvider";
 import { InternalTypeReferenceDefinitions } from "./InternalTypeReferenceDefinitions";

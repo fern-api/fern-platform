@@ -1,5 +1,7 @@
-import { FernDropdown } from "@fern-docs/components";
 import { PropsWithChildren, ReactElement } from "react";
+
+import { FernDropdown } from "@fern-docs/components";
+
 import { FernLink } from "./FernLink";
 
 export function FernLinkDropdown(

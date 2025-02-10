@@ -1,9 +1,11 @@
-import { createCachedDocsLoader } from "@/server/docs-loader";
 import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 import { EMPTY_FRONTMATTER } from "@fern-api/fdr-sdk/docs";
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
-import { asToc, getMDXExport } from "../mdx/get-mdx-export";
+
+import { createCachedDocsLoader } from "@/server/docs-loader";
+
 import { MdxContent } from "../mdx/MdxContent";
+import { asToc, getMDXExport } from "../mdx/get-mdx-export";
 import { LayoutEvaluatorContent } from "./LayoutEvaluatorContent";
 
 export interface LayoutEvaluatorProps {

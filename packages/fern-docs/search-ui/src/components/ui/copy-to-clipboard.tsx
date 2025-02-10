@@ -1,7 +1,3 @@
-import { composeEventHandlers } from "@radix-ui/primitive";
-import { Slot } from "@radix-ui/react-slot";
-import { TooltipPortal } from "@radix-ui/react-tooltip";
-import { Copy } from "lucide-react";
 import {
   ComponentPropsWithoutRef,
   forwardRef,
@@ -9,6 +5,11 @@ import {
   useRef,
   useState,
 } from "react";
+
+import { composeEventHandlers } from "@radix-ui/primitive";
+import { Slot } from "@radix-ui/react-slot";
+import { TooltipPortal } from "@radix-ui/react-tooltip";
+import { Copy } from "lucide-react";
 
 import {
   Tooltip,

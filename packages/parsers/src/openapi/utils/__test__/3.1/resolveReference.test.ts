@@ -1,4 +1,5 @@
 import { OpenAPIV3_1 } from "openapi-types";
+
 import { resolveReference } from "../../3.1/resolveReference";
 
 const defaultOutput = ["out"];

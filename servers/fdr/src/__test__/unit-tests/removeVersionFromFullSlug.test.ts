@@ -1,4 +1,5 @@
 import { FdrAPI } from "@fern-api/fdr-sdk";
+
 import { NavigationContext } from "../../services/algolia/NavigationContext";
 
 describe("removeVersionFromFullSlug", () => {

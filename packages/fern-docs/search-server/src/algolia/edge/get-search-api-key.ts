@@ -1,4 +1,5 @@
 import type { GenerateSecuredApiKeyOptions } from "algoliasearch";
+
 import { createSearchFilters } from "../create-search-filters";
 import { generateHmacAndEncode } from "./hmac";
 

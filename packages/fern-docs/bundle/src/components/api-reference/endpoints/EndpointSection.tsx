@@ -1,8 +1,11 @@
 "use client";
 
-import { Markdown } from "@/components/mdx/Markdown";
-import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { ReactNode, createElement, useRef } from "react";
+
+import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
+
+import { Markdown } from "@/components/mdx/Markdown";
+
 import { FernAnchor } from "../../components/FernAnchor";
 import { FernErrorBoundary } from "../../components/FernErrorBoundary";
 import { useHref } from "../../hooks/useHref";

@@ -1,7 +1,7 @@
 import {
-  OAuthTokenResponseSchema,
   type OAuth2Ory,
   type OAuthTokenResponse,
+  OAuthTokenResponseSchema,
 } from "@fern-docs/auth";
 import { JWTPayload, createRemoteJWKSet, decodeJwt, jwtVerify } from "jose";
 import urlJoin from "url-join";

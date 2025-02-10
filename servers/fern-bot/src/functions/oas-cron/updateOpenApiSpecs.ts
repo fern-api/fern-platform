@@ -1,5 +1,6 @@
 import { evaluateEnv } from "@libs/env";
 import { handlerWrapper } from "@libs/handler-wrapper";
+
 import { updateOpenApiSpecsInternal } from "./actions/updateOpenApiSpecs";
 
 const updateOpenApiSpec = async (_event: unknown) => {

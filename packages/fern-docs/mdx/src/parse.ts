@@ -2,6 +2,7 @@ import type { Root as HastRoot } from "hast";
 import type { Root as MdastRoot } from "mdast";
 import { toHast } from "mdast-util-to-hast";
 import rehypeSlug from "rehype-slug";
+
 import { customHeadingHandler } from "./handlers/custom-headings";
 import { mdastFromMarkdown } from "./mdast-utils/mdast-from-markdown";
 import { extractJsx } from "./mdx-utils/extract-jsx";

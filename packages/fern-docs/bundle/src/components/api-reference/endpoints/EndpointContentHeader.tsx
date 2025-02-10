@@ -1,8 +1,11 @@
-import { PageHeader } from "@/components/components/PageHeader";
+import { type ReactNode, memo } from "react";
+
 import { EndpointContext } from "@fern-api/fdr-sdk/api-definition";
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { AvailabilityBadge } from "@fern-docs/components/badges";
-import { memo, type ReactNode } from "react";
+
+import { PageHeader } from "@/components/components/PageHeader";
+
 import { EndpointUrlWithPlaygroundBaseUrl } from "./EndpointUrlWithPlaygroundBaseUrl";
 
 interface EndpointContentHeaderProps {

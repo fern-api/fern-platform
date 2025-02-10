@@ -1,4 +1,5 @@
 import type { MdxJsxAttribute } from "mdast-util-mdx";
+
 import { isMdxJsxAttributeValueExpression } from "./is-mdx-jsx-attr";
 import { unknownToEstreeExpression } from "./unknown-to-estree-expression";
 

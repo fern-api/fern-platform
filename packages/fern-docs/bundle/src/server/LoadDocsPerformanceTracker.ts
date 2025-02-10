@@ -1,9 +1,12 @@
-import type { DocsPage } from "@/components/docs/DocsPage";
-import { track } from "@/server/analytics/posthog";
-import { FernNavigation } from "@fern-api/fdr-sdk";
-import { TRACK_LOAD_DOCS_PERFORMANCE } from "@fern-docs/utils";
 import { GetServerSidePropsResult } from "next/types";
 import { ComponentProps } from "react";
+
+import { FernNavigation } from "@fern-api/fdr-sdk";
+import { TRACK_LOAD_DOCS_PERFORMANCE } from "@fern-docs/utils";
+
+import type { DocsPage } from "@/components/docs/DocsPage";
+import { track } from "@/server/analytics/posthog";
+
 import type { LoadWithUrlResponse } from "./loadWithUrl";
 
 export class LoadDocsPerformanceTracker {

@@ -1,7 +1,9 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import { withDefaultProtocol } from "@fern-api/ui-core-utils";
 import { usePathname, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
+
+import { withDefaultProtocol } from "@fern-api/ui-core-utils";
+
 import { useDomain } from "../atoms";
 
 function useServerSideLocationHref() {

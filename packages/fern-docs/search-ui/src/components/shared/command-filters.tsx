@@ -1,7 +1,8 @@
-import { Badge } from "@fern-docs/components/badges";
-import { ListFilter } from "lucide-react";
 import { ComponentPropsWithoutRef, forwardRef } from "react";
 import { useSearchBox } from "react-instantsearch";
+
+import { Badge } from "@fern-docs/components/badges";
+import { ListFilter } from "lucide-react";
 
 import {
   FACET_DISPLAY_NAME_MAP,

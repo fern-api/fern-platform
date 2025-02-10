@@ -1,17 +1,19 @@
 "use cache";
 
+import { cacheTag } from "next/dist/server/use-cache/cache-tag";
+import { cookies } from "next/headers";
+import { notFound } from "next/navigation";
+import { NextRequest, NextResponse } from "next/server";
+
+import { getEdgeFlags } from "@fern-docs/edge-config";
+import { COOKIE_FERN_TOKEN, addLeadingSlash } from "@fern-docs/utils";
+
 import { DocsLoader } from "@/server/DocsLoader";
 import {
   getMarkdownForPath,
   getPageNodeForPath,
 } from "@/server/getMarkdownForPath";
 import { getHostEdge } from "@/server/xfernhost/edge";
-import { getEdgeFlags } from "@fern-docs/edge-config";
-import { addLeadingSlash, COOKIE_FERN_TOKEN } from "@fern-docs/utils";
-import { cacheTag } from "next/dist/server/use-cache/cache-tag";
-import { cookies } from "next/headers";
-import { notFound } from "next/navigation";
-import { NextRequest, NextResponse } from "next/server";
 
 /**
  * This endpoint returns the markdown content of any page in the docs by adding `.md` or `.mdx` to the end of any docs page.

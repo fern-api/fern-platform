@@ -6,8 +6,10 @@ import {
   getPreviewUrlAuthConfig,
 } from "@fern-docs/edge-config";
 import { removeTrailingSlash, withoutStaging } from "@fern-docs/utils";
+import "server-only";
 import { AsyncOrSync } from "ts-essentials";
 import urlJoin from "url-join";
+
 import { safeVerifyFernJWTConfig } from "./FernJWT";
 import { getAllowedRedirectUrls } from "./allowed-redirects";
 import { getOrgMetadataForDomain } from "./metadata-for-url";

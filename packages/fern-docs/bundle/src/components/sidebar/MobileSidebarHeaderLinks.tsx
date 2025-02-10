@@ -1,7 +1,9 @@
+import { ReactElement } from "react";
+
 import cn from "clsx";
 import { ArrowRight } from "iconoir-react";
 import { useAtomValue } from "jotai";
-import { ReactElement } from "react";
+
 import {
   DOCS_LAYOUT_ATOM,
   MOBILE_SIDEBAR_ENABLED_ATOM,

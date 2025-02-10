@@ -1,4 +1,5 @@
 import type { Hast } from "@fern-docs/mdx";
+
 import { parseBlockMetaString } from "../plugins/rehypeFernCode";
 
 describe("parseBlockMetaString", () => {

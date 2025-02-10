@@ -1,5 +1,5 @@
-import { createMockContext } from "../../../../__test__/createMockContext.util";
 import { BaseOpenApiV3_1ConverterNodeConstructorArgs } from "../../../../BaseOpenApiV3_1Converter.node";
+import { createMockContext } from "../../../../__test__/createMockContext.util";
 import { RedocExampleConverterNode } from "../../examples/RedocExampleConverter.node";
 import {
   REDOC_CODE_SAMPLES_CAMEL,

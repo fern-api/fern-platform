@@ -1,7 +1,8 @@
+import { FC, ReactNode } from "react";
+
 import * as Checkbox from "@radix-ui/react-checkbox";
 import cn from "clsx";
 import { Check } from "iconoir-react";
-import { FC, ReactNode } from "react";
 
 interface FernCheckboxProps extends Checkbox.CheckboxProps {
   labelClassName?: string;

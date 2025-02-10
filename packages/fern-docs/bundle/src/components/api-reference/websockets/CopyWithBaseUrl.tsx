@@ -1,11 +1,12 @@
 "use client";
 
-import { usePlaygroundBaseUrl } from "@/components/playground/utils/select-environment";
 import {
-  toColonEndpointPathLiteral,
   WebSocketChannel,
+  toColonEndpointPathLiteral,
 } from "@fern-api/fdr-sdk/api-definition";
 import { CopyToClipboardButton } from "@fern-docs/components";
+
+import { usePlaygroundBaseUrl } from "@/components/playground/utils/select-environment";
 
 export function CopyWithBaseUrl({ channel }: { channel: WebSocketChannel }) {
   const [baseUrl] = usePlaygroundBaseUrl(channel);

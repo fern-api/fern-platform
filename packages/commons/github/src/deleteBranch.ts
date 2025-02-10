@@ -1,4 +1,5 @@
 import { SimpleGit } from "simple-git";
+
 import { DEFAULT_REMOTE_NAME } from "./constants";
 
 export async function deleteBranch(

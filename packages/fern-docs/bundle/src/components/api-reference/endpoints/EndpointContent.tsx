@@ -1,9 +1,11 @@
-import { PageHeader } from "@/components/components/PageHeader";
-import { ReferenceLayout } from "@/components/layouts/ReferenceLayout";
-import { Markdown } from "@/components/mdx/Markdown";
 import { EndpointContext } from "@fern-api/fdr-sdk/api-definition";
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { AvailabilityBadge } from "@fern-docs/components/badges";
+
+import { PageHeader } from "@/components/components/PageHeader";
+import { ReferenceLayout } from "@/components/layouts/ReferenceLayout";
+import { Markdown } from "@/components/mdx/Markdown";
+
 import { ApiPageCenter } from "../api-page-center";
 import { EndpointContentCodeSnippets } from "./EndpointContentCodeSnippets";
 import { EndpointContentLeft } from "./EndpointContentLeft";

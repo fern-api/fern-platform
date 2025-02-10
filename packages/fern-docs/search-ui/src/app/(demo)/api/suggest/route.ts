@@ -1,14 +1,15 @@
-import { algoliaAppId } from "@/server/env-variables";
-import { models } from "@/server/models";
 import { searchClient } from "@algolia/client-search";
 import { SuggestionsSchema } from "@fern-docs/search-server";
 import {
-  SEARCH_INDEX,
   type AlgoliaRecord,
+  SEARCH_INDEX,
 } from "@fern-docs/search-server/algolia";
 import { kv } from "@vercel/kv";
 import { streamObject } from "ai";
 import { z } from "zod";
+
+import { algoliaAppId } from "@/server/env-variables";
+import { models } from "@/server/models";
 
 // Allow streaming responses up to 30 seconds
 export const maxDuration = 30;

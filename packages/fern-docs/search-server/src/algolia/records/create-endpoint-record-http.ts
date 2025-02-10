@@ -5,6 +5,7 @@ import {
   withDefaultProtocol,
 } from "@fern-api/ui-core-utils";
 import { compact, flatten } from "es-toolkit/array";
+
 import { maybePrepareMdxContent } from "../../utils/prepare-mdx-content";
 import { toDescription } from "../../utils/to-description";
 import { BaseRecord, EndpointBaseRecord } from "../types";

@@ -1,6 +1,8 @@
+import { isValidElement } from "react";
+
 import { FaIcon, FernCard } from "@fern-docs/components";
 import cn from "clsx";
-import { isValidElement } from "react";
+
 import { FernLinkCard } from "../../../components/FernLinkCard";
 import { Badge } from "../badge";
 import { NoZoom } from "../html/image";

@@ -1,7 +1,9 @@
+import { ReactElement, memo, useEffect, useMemo } from "react";
+
 import type { ApiDefinition } from "@fern-api/fdr-sdk/api-definition";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { dfs } from "@fern-api/fdr-sdk/traversers";
-import { ReactElement, memo, useEffect, useMemo } from "react";
+
 import { useIsReady } from "../atoms";
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
 import { useIsLocalPreview } from "../contexts/local-preview";

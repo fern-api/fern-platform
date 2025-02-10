@@ -1,6 +1,9 @@
-import { rewritePosthog } from "@/server/analytics/rewritePosthog";
+import { type NextMiddleware, NextResponse } from "next/server";
+
 import { COOKIE_FERN_TOKEN, removeLeadingSlash } from "@fern-docs/utils";
-import { NextResponse, type NextMiddleware } from "next/server";
+
+import { rewritePosthog } from "@/server/analytics/rewritePosthog";
+
 import { MARKDOWN_PATTERN, RSS_PATTERN } from "./server/patterns";
 import { withPathname } from "./server/withPathname";
 import { getDocsDomainEdge } from "./server/xfernhost/edge";

@@ -1,8 +1,10 @@
 "use client";
 
+import { memo } from "react";
+
 import clsx from "clsx";
 import { useAtomValue } from "jotai";
-import { memo } from "react";
+
 import {
   CONTENT_HEIGHT_ATOM,
   DOCS_LAYOUT_ATOM,

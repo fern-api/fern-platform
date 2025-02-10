@@ -1,21 +1,21 @@
-import { PlaygroundEndpoint } from "@/components/playground/endpoint/PlaygroundEndpoint";
-import { conformExplorerRoute } from "@/components/playground/utils/explorer-route";
-import { PlaygroundWebSocket } from "@/components/playground/websocket/PlaygroundWebSocket";
-import { createCachedDocsLoader } from "@/server/docs-loader";
+import { cookies, headers } from "next/headers";
+import { notFound, redirect } from "next/navigation";
+
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import {
   createEndpointContext,
   createWebSocketContext,
 } from "@fern-api/fdr-sdk/api-definition";
-import { conformTrailingSlash, COOKIE_FERN_TOKEN } from "@fern-docs/utils";
-import { cookies, headers } from "next/headers";
-import { notFound, redirect } from "next/navigation";
+import { COOKIE_FERN_TOKEN, conformTrailingSlash } from "@fern-docs/utils";
 
-export default async function Page(
-  props: {
-    params: Promise<{ slug: string[]; domain: string }>;
-  }
-) {
+import { PlaygroundEndpoint } from "@/components/playground/endpoint/PlaygroundEndpoint";
+import { conformExplorerRoute } from "@/components/playground/utils/explorer-route";
+import { PlaygroundWebSocket } from "@/components/playground/websocket/PlaygroundWebSocket";
+import { createCachedDocsLoader } from "@/server/docs-loader";
+
+export default async function Page(props: {
+  params: Promise<{ slug: string[]; domain: string }>;
+}) {
   const params = await props.params;
   console.debug(`[${params.domain}] Loading API Explorer page`);
   const slug = FernNavigation.slugjoin(

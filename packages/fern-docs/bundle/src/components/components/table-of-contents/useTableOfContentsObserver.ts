@@ -1,7 +1,9 @@
+import { useEffect, useRef } from "react";
+
 import fastdom from "fastdom";
 import { useAtomValue } from "jotai";
-import { useEffect, useRef } from "react";
 import { useCallbackOne } from "use-memo-one";
+
 import { SCROLL_BODY_ATOM } from "../../atoms";
 
 function toIdQuerySelector(id: string): string {

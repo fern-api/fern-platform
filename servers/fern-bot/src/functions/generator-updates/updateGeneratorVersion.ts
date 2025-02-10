@@ -1,6 +1,7 @@
 import { evaluateEnv } from "@libs/env";
 import { handlerWrapper } from "@libs/handler-wrapper";
 import { RepoData } from "@libs/schemas";
+
 import { updateGeneratorVersionInternal } from "./actions/updateGeneratorVersion";
 
 const updateGeneratorVersion = async (event: unknown) => {

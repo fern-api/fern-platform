@@ -9,6 +9,7 @@ import { mkdir, readFile } from "fs/promises";
 import path from "path";
 import { hideBin } from "yargs/helpers";
 import yargs from "yargs/yargs";
+
 import { loadReadmeConfig } from "./configuration/loadReadmeConfig";
 import { loadReferenceConfig } from "./configuration/loadReferenceConfig";
 import { ReadmeGenerator } from "./readme/ReadmeGenerator";

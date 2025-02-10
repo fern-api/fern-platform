@@ -1,5 +1,7 @@
-import { DocsV1Read } from "@fern-api/fdr-sdk";
 import { ReactElement } from "react";
+
+import { DocsV1Read } from "@fern-api/fdr-sdk";
+
 import {
   capturePosthogEventCustomer,
   capturePosthogEventInternal,

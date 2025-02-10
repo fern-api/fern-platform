@@ -1,16 +1,18 @@
-import { getAllowedRedirectUrls } from "@/server/auth/allowed-redirects";
-import { safeVerifyFernJWTConfig } from "@/server/auth/FernJWT";
-import { getReturnToQueryParam } from "@/server/auth/return-to";
-import { withSecureCookie } from "@/server/auth/with-secure-cookie";
-import { FernNextResponse } from "@/server/FernNextResponse";
-import { redirectWithLoginError } from "@/server/redirectWithLoginError";
-import { safeUrl } from "@/server/safeUrl";
-import { getDocsDomainEdge, getHostEdge } from "@/server/xfernhost/edge";
+import { cookies } from "next/headers";
+import { NextRequest, NextResponse } from "next/server";
+
 import { withDefaultProtocol } from "@fern-api/ui-core-utils";
 import { getAuthEdgeConfig } from "@fern-docs/edge-config";
 import { COOKIE_FERN_TOKEN } from "@fern-docs/utils";
-import { cookies } from "next/headers";
-import { NextRequest, NextResponse } from "next/server";
+
+import { FernNextResponse } from "@/server/FernNextResponse";
+import { safeVerifyFernJWTConfig } from "@/server/auth/FernJWT";
+import { getAllowedRedirectUrls } from "@/server/auth/allowed-redirects";
+import { getReturnToQueryParam } from "@/server/auth/return-to";
+import { withSecureCookie } from "@/server/auth/with-secure-cookie";
+import { redirectWithLoginError } from "@/server/redirectWithLoginError";
+import { safeUrl } from "@/server/safeUrl";
+import { getDocsDomainEdge, getHostEdge } from "@/server/xfernhost/edge";
 
 export const runtime = "edge";
 

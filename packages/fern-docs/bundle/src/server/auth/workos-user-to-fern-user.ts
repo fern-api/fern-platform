@@ -1,5 +1,6 @@
 import { FernUser } from "@fern-docs/auth";
 import { compact } from "es-toolkit/array";
+
 import { NoWorkOSUserInfo, WorkOSUserInfo } from "./interfaces";
 
 export function toFernUser(

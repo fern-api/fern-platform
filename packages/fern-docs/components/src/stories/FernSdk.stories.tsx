@@ -1,5 +1,6 @@
 import { useArgs } from "@storybook/client-api";
 import type { Meta, StoryObj } from "@storybook/react";
+
 import { FernSdk } from "../FernSdk";
 
 const meta: Meta<typeof FernSdk> = {

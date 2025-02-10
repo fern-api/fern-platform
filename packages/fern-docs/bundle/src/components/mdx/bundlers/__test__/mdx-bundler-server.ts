@@ -2,8 +2,9 @@ import { FernDocs } from "@fern-api/fdr-sdk";
 import express from "express";
 import { Server } from "http";
 import { fileURLToPath } from "url";
-import { createServer, ViteDevServer } from "vite";
+import { ViteDevServer, createServer } from "vite";
 import { z } from "zod";
+
 import { serializeMdx } from "../mdx-bundler";
 
 const __dirname = fileURLToPath(new URL(".", import.meta.url));

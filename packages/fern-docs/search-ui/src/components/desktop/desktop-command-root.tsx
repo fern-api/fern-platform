@@ -1,5 +1,3 @@
-import { composeEventHandlers } from "@radix-ui/primitive";
-import { composeRefs } from "@radix-ui/react-compose-refs";
 import {
   ComponentPropsWithoutRef,
   KeyboardEventHandler,
@@ -8,6 +6,9 @@ import {
   useRef,
   useState,
 } from "react";
+
+import { composeEventHandlers } from "@radix-ui/primitive";
+import { composeRefs } from "@radix-ui/react-compose-refs";
 
 import * as Command from "../cmdk";
 import { CommandUxProvider } from "../shared/command-ux";

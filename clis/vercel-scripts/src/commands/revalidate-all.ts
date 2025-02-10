@@ -1,5 +1,6 @@
 import { VercelClient } from "@fern-fern/vercel";
 import { GetDeploymentResponse } from "@fern-fern/vercel/api/index.js";
+
 import { cleanDeploymentId } from "../utils/clean-id.js";
 import { FernDocsRevalidator } from "../utils/revalidator.js";
 

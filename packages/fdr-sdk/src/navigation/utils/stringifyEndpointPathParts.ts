@@ -1,4 +1,5 @@
 import urljoin from "url-join";
+
 import type { APIV1Read } from "../../client/types";
 
 export function stringifyEndpointPathParts(

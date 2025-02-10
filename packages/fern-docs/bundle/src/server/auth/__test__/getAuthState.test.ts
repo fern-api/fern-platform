@@ -1,4 +1,5 @@
 import { SignJWT } from "jose";
+
 import { signFernJWT } from "../FernJWT";
 import { getAuthStateInternal } from "../getAuthState";
 import * as session from "../workos-session";

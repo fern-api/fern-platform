@@ -1,7 +1,8 @@
+import React, { PropsWithChildren, useEffect, useRef, useState } from "react";
+
 import { composeRefs } from "@radix-ui/react-compose-refs";
 import cn from "clsx";
 import fastdom from "fastdom";
-import React, { PropsWithChildren, useEffect, useRef, useState } from "react";
 import { noop } from "ts-essentials";
 
 export const HorizontalOverflowMask = React.forwardRef<

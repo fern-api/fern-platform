@@ -1,6 +1,7 @@
 import type { Logger } from "@fern-api/logger";
 import { OpenrpcDocument } from "@open-rpc/meta-schema";
 import { OpenAPIV3_1 } from "openapi-types";
+
 import { TypeDefinition } from "../client/generated/api/resources/api/resources/latest";
 import { BaseOpenApiV3_1ConverterNodeContext } from "../openapi";
 

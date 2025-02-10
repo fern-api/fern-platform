@@ -3,6 +3,7 @@ import { PrismaClient } from "@prisma/client";
 import { execa } from "execa";
 import express from "express";
 import http from "http";
+
 import { register } from "../../api";
 import { FdrApplication, FdrConfig } from "../../app";
 import { getApiLatestService } from "../../controllers/api/getApiLatestService";

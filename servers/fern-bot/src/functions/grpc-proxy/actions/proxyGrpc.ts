@@ -8,6 +8,7 @@ import { fetchAndUnzip } from "@utils/fetchAndUnzip";
 import { mkdir } from "fs/promises";
 import path from "path";
 import tmp from "tmp-promise";
+
 import { DEFAULT_PROTO_DIRECTORY, DEFAULT_PROTO_SOURCE_URL } from "./constants";
 
 interface Options {

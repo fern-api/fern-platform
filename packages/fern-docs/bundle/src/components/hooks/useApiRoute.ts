@@ -1,4 +1,5 @@
 import { Getter, useAtomValue } from "jotai";
+
 import { BASEPATH_ATOM, TRAILING_SLASH_ATOM } from "../atoms";
 import { getApiRouteSupplier } from "../util/getApiRouteSupplier";
 

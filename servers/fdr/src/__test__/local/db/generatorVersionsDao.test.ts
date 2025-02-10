@@ -1,4 +1,5 @@
 import { FdrAPI } from "@fern-api/fdr-sdk";
+
 import { InvalidVersionError } from "../../../api/generated/api/resources/generators";
 import { createMockFdrApplication } from "../../mock";
 

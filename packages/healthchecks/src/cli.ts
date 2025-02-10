@@ -1,5 +1,6 @@
 import { hideBin } from "yargs/helpers";
 import yargs from "yargs/yargs";
+
 import { getAllFernDocsWebsites } from "./getDocsURLs";
 import { printResults } from "./printResults";
 import { RuleResult, runRules } from "./rules/runRules";

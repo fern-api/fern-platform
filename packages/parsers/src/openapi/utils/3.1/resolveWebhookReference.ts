@@ -1,4 +1,5 @@
 import { OpenAPIV3_1 } from "openapi-types";
+
 import { isReferenceObject } from "../../3.1/guards/isReferenceObject";
 import { resolveReference } from "./resolveReference";
 

@@ -1,4 +1,5 @@
 import { noop } from "ts-essentials";
+
 import {
   BaseOpenApiV3_1ConverterNode,
   BaseOpenApiV3_1ConverterNodeConstructorArgs,

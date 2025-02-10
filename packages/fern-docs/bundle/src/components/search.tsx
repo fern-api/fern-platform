@@ -1,5 +1,15 @@
 "use client";
 
+import { useRouter } from "next/navigation";
+import React, {
+  Dispatch,
+  SetStateAction,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
+
 import {
   CommandActions,
   CommandEmpty,
@@ -18,23 +28,15 @@ import {
 } from "@fern-docs/search-ui";
 import { useEventCallback } from "@fern-ui/react-commons";
 import { atom, useAtom, useAtomValue, useSetAtom } from "jotai";
-import React, {
-  Dispatch,
-  SetStateAction,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
 import { z } from "zod";
 
 import {
-  atomWithStorageString,
   CURRENT_VERSION_ATOM,
   DOMAIN_ATOM,
   HAS_API_PLAYGROUND,
   SEARCH_DIALOG_OPEN_ATOM,
   THEME_SWITCH_ENABLED_ATOM,
+  atomWithStorageString,
   useClosePlayground,
   useEdgeFlags,
   useFernUser,
@@ -45,7 +47,6 @@ import {
 import { Feedback } from "@/components/feedback/Feedback";
 import { useApiRoute } from "@/components/hooks/useApiRoute";
 import { useApiRouteSWRImmutable } from "@/components/hooks/useApiRouteSWR";
-import { useRouter } from "next/navigation";
 
 const ALGOLIA_USER_TOKEN_KEY = "algolia-user-token";
 

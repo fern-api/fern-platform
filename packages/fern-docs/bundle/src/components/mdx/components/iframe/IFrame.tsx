@@ -1,8 +1,3 @@
-import { FernButton } from "@fern-docs/components";
-import { usePrevious } from "@fern-ui/react-commons";
-import { composeRefs } from "@radix-ui/react-compose-refs";
-import * as Tooltip from "@radix-ui/react-tooltip";
-import { Expand } from "iconoir-react";
 import {
   ComponentProps,
   ReactElement,
@@ -12,6 +7,12 @@ import {
   useRef,
   useState,
 } from "react";
+
+import { FernButton } from "@fern-docs/components";
+import { usePrevious } from "@fern-ui/react-commons";
+import { composeRefs } from "@radix-ui/react-compose-refs";
+import * as Tooltip from "@radix-ui/react-tooltip";
+import { Expand } from "iconoir-react";
 
 export declare namespace IFrame {
   export interface Props extends ComponentProps<"iframe"> {

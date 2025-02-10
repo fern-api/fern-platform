@@ -1,12 +1,12 @@
 import {
   APIV1Db,
-  convertDbAPIDefinitionToRead,
-  convertDocsDefinitionToDb,
-  convertDocsDefinitionToRead,
   DocsV1Db,
   DocsV1Write,
   FdrAPI,
   FernNavigation,
+  convertDbAPIDefinitionToRead,
+  convertDocsDefinitionToDb,
+  convertDocsDefinitionToRead,
 } from "@fern-api/fdr-sdk";
 import { isNonNullish } from "@fern-api/ui-core-utils";
 import { generateAlgoliaRecords } from "@fern-docs/search-server/archive";
@@ -14,6 +14,7 @@ import { AuthType } from "@prisma/client";
 import { mapValues } from "es-toolkit/object";
 import urlJoin from "url-join";
 import { v4 as uuidv4 } from "uuid";
+
 import { DocsV2WriteService } from "../../../api";
 import { FernRegistry } from "../../../api/generated";
 import { OrgId } from "../../../api/generated/api";

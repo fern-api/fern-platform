@@ -2,6 +2,7 @@ import { isNonNullish } from "@fern-api/ui-core-utils";
 import { camelCase, mapValues } from "es-toolkit";
 import { OpenAPIV3_1 } from "openapi-types";
 import { UnreachableCaseError } from "ts-essentials";
+
 import { FernRegistry } from "../../../../client/generated";
 import {
   BaseOpenApiV3_1ConverterNode,
@@ -18,11 +19,11 @@ import {
   SUPPORTED_STREAMING_FORMATS,
 } from "../../../types/format.types";
 import { resolveSchemaReference } from "../../../utils/3.1/resolveSchemaReference";
+import { MediaType } from "../../../utils/MediaType";
 import { createTypeDefinition } from "../../../utils/createTypeDefinition";
 import { getExampleName } from "../../../utils/getExampleName";
 import { matchExampleName } from "../../../utils/matchExampleNames";
 import { maybeSingleValueToArray } from "../../../utils/maybeSingleValueToArray";
-import { MediaType } from "../../../utils/MediaType";
 import { SchemaConverterNode } from "../../schemas/SchemaConverter.node";
 import {
   ExampleObjectConverterNode,

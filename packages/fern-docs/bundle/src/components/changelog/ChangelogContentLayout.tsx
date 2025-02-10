@@ -1,5 +1,6 @@
-import clsx from "clsx";
 import { ComponentPropsWithoutRef, ReactElement, ReactNode } from "react";
+
+import clsx from "clsx";
 
 interface ChangelogContentLayoutProps extends ComponentPropsWithoutRef<"div"> {
   as: "div" | "section" | "article";

@@ -1,6 +1,8 @@
-import { runSemanticSearchTurbopuffer } from "@/server/run-reindex-turbopuffer";
 import { NextRequest, NextResponse } from "next/server";
+
 import { z } from "zod";
+
+import { runSemanticSearchTurbopuffer } from "@/server/run-reindex-turbopuffer";
 
 const BodySchema = z.object({
   domain: z.string(),

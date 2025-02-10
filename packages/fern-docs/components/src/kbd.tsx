@@ -1,9 +1,10 @@
 import {
-  forwardRef,
   type ComponentProps,
   type ForwardRefExoticComponent,
   type RefAttributes,
+  forwardRef,
 } from "react";
+
 import { cn } from "./cn";
 
 type KbdProps = ComponentProps<"kbd">;

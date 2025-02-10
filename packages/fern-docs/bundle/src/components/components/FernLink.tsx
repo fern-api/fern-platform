@@ -1,10 +1,12 @@
 "use client";
 
-import { OpenNewWindow } from "iconoir-react";
 import Link, { LinkProps } from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
-import { format, parse, resolve, type UrlObject } from "url";
+
+import { OpenNewWindow } from "iconoir-react";
+import { type UrlObject, format, parse, resolve } from "url";
+
 import { useDomain } from "../atoms";
 
 export const FernLink = React.forwardRef<

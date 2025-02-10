@@ -1,5 +1,6 @@
+import { Children, ReactNode, isValidElement } from "react";
+
 import { slug } from "github-slugger";
-import { Children, isValidElement, ReactNode } from "react";
 
 export function getSlugFromChildren(children: ReactNode): string {
   const text = Children.toArray(children).reduce(flatten, "");

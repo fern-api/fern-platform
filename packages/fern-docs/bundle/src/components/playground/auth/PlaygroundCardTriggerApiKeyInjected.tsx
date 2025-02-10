@@ -1,11 +1,13 @@
+import { useSearchParams } from "next/navigation";
+import { ReactElement, useEffect } from "react";
+
 import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
 import { APIKeyInjectionConfigEnabled } from "@fern-docs/auth";
 import { FernButton, FernCard } from "@fern-docs/components";
 import { Key, User } from "iconoir-react";
 import { useAtomValue, useSetAtom } from "jotai";
-import { useSearchParams } from "next/navigation";
-import { ReactElement, useEffect } from "react";
 import urlJoin from "url-join";
+
 import {
   PLAYGROUND_AUTH_STATE_ATOM,
   PLAYGROUND_AUTH_STATE_BEARER_TOKEN_ATOM,

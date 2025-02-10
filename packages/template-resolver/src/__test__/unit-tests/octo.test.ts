@@ -1,4 +1,5 @@
 import { FernRegistry } from "@fern-fern/fdr-cjs-sdk";
+
 import { SnippetTemplateResolver } from "../../SnippetTemplateResolver";
 import { CHAT_COMPLETION_PAYLOAD, CHAT_COMPLETION_SNIPPET } from "../octo";
 

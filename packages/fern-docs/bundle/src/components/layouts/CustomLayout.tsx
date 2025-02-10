@@ -1,11 +1,14 @@
-import { BuiltWithFern } from "@/components/built-with-fern";
 import { ReactElement, ReactNode } from "react";
+
+import { BuiltWithFern } from "@/components/built-with-fern";
 
 interface CustomLayoutProps {
   children: ReactNode;
 }
 
-export function CustomLayout({ children }: CustomLayoutProps): ReactElement<any> {
+export function CustomLayout({
+  children,
+}: CustomLayoutProps): ReactElement<any> {
   return (
     <main>
       {children}

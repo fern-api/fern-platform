@@ -1,11 +1,13 @@
 "use client";
 
+import { usePathname } from "next/navigation";
+import React, { memo, useEffect, useRef } from "react";
+
 import { FernScrollArea } from "@fern-docs/components";
 import { useResizeObserver } from "@fern-ui/react-commons";
 import clsx from "clsx";
 import { useAtomValue, useSetAtom } from "jotai";
-import { usePathname } from "next/navigation";
-import React, { memo, useEffect, useRef } from "react";
+
 import {
   ANNOUNCEMENT_HEIGHT_ATOM,
   CONTENT_HEIGHT_ATOM,

@@ -1,9 +1,11 @@
+import type { PropsWithChildren, ReactNode } from "react";
+
 import { DocsV1Read } from "@fern-api/fdr-sdk";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { DEFAULT_EDGE_FLAGS } from "@fern-docs/utils";
 import { isEqual } from "es-toolkit/predicate";
 import { atomWithReducer, selectAtom, useHydrateAtoms } from "jotai/utils";
-import type { PropsWithChildren, ReactNode } from "react";
+
 import type { DocsProps, JsConfig } from "./types";
 
 export const EMPTY_ANALYTICS_CONFIG: DocsV1Read.AnalyticsConfig = {

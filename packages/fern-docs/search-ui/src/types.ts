@@ -1,10 +1,10 @@
 import {
-  SEARCHABLE_FACET_ATTRIBUTES,
   type AlgoliaRecord,
   type ApiReferenceRecord,
   type ChangelogRecord,
   type FacetName,
   type MarkdownRecord,
+  SEARCHABLE_FACET_ATTRIBUTES,
 } from "@fern-docs/search-server/algolia/types";
 import type { BaseHit, Hit } from "instantsearch.js";
 import { MarkRequired } from "ts-essentials";

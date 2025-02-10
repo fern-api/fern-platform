@@ -1,5 +1,6 @@
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { readFile } from "fs/promises";
+
 import { FernGeneratorCli } from "./generated";
 
 export async function loadReadmeConfig({

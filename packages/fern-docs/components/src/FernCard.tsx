@@ -1,5 +1,6 @@
-import cn from "clsx";
 import { ComponentProps, forwardRef } from "react";
+
+import cn from "clsx";
 
 export interface FernCardProps {
   className?: string;

@@ -1,15 +1,16 @@
 import { unknownToString } from "@fern-api/ui-core-utils";
 import type { Hast } from "@fern-docs/mdx";
 import {
+  type MdxJsxElementHast,
   isHastElement,
   isHastText,
   isMdxJsxElementHast,
   unknownToMdxJsxAttribute,
   visit,
-  type MdxJsxElementHast,
 } from "@fern-docs/mdx";
 import type { FernSyntaxHighlighterProps } from "@fern-docs/syntax-highlighter";
 import rangeParser from "parse-numeric-range";
+
 import type { CodeGroup } from "../components/code";
 
 export function rehypeFernCode(): (tree: Hast.Root) => void {

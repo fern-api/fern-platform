@@ -1,7 +1,9 @@
-import { Badge } from "@fern-docs/components/badges";
-import { Sparkles } from "lucide-react";
 import { ComponentPropsWithoutRef, forwardRef } from "react";
 import { useSearchBox } from "react-instantsearch";
+
+import { Badge } from "@fern-docs/components/badges";
+import { Sparkles } from "lucide-react";
+
 import * as Command from "../cmdk";
 
 export const CommandAskAIGroup = forwardRef<

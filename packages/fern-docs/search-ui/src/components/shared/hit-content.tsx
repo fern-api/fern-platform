@@ -1,3 +1,6 @@
+import { Fragment, ReactElement, ReactNode } from "react";
+import { Highlight, Snippet } from "react-instantsearch";
+
 import { formatUtc } from "@fern-api/ui-core-utils";
 import {
   AvailabilityBadge,
@@ -6,9 +9,8 @@ import {
 import clsx from "clsx";
 import { uniq } from "es-toolkit/array";
 import { ChevronRight } from "lucide-react";
-import { Fragment, ReactElement, ReactNode } from "react";
-import { Highlight, Snippet } from "react-instantsearch";
 import { MarkRequired, UnreachableCaseError } from "ts-essentials";
+
 import {
   AlgoliaRecordHit,
   ApiReferenceRecordHit,

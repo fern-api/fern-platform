@@ -1,6 +1,7 @@
 import { isEqual } from "es-toolkit/predicate";
 import { camelCase } from "es-toolkit/string";
 import { LDFlagSet, useFlags } from "launchdarkly-react-client-sdk";
+
 import { FeatureProps, WithFeatureFlagsProps } from "./types";
 
 const ldFlagPredicate = <T,>(

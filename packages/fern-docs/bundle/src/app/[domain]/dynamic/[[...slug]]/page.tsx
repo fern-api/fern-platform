@@ -1,6 +1,8 @@
-import { COOKIE_FERN_TOKEN } from "@fern-docs/utils";
 import { cookies } from "next/headers";
 import { Metadata } from "next/types";
+
+import { COOKIE_FERN_TOKEN } from "@fern-docs/utils";
+
 import Page, { generateMetadata as _generateMetadata } from "../../_page";
 
 export default async function StaticPage(props: {

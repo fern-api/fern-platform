@@ -1,5 +1,6 @@
 import { atom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
+
 import { DOCS_ATOM } from "./docs";
 import { IS_READY_ATOM } from "./viewport";
 

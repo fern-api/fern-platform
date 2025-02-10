@@ -1,5 +1,7 @@
-import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { ReactElement, memo } from "react";
+
+import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
+
 import { SidebarRootChild, SidebarRootChildProps } from "./SidebarRootChild";
 
 interface SidebarRootNodeProps {

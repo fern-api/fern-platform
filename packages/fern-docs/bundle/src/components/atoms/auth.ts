@@ -2,6 +2,7 @@ import type { FernUser } from "@fern-docs/auth";
 import { isEqual } from "es-toolkit/predicate";
 import { Atom, useAtomValue } from "jotai";
 import { selectAtom } from "jotai/utils";
+
 import { DOCS_ATOM } from "./docs";
 
 export const FERN_USER_ATOM = selectAtom(

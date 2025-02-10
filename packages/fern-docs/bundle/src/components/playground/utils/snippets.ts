@@ -1,4 +1,5 @@
 import type { Snippets } from "@fern-api/fdr-sdk";
+
 import {
   PlaygroundAuthState,
   PlaygroundEndpointRequestFormState,

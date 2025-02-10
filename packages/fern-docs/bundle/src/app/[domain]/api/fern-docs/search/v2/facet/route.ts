@@ -1,9 +1,11 @@
+import { NextRequest, NextResponse } from "next/server";
+
+import { fetchFacetValues } from "@fern-docs/search-server/algolia";
+import { algoliasearch } from "algoliasearch";
+
 import { algoliaAppId } from "@/server/env-variables";
 import { selectFirst } from "@/server/utils/selectFirst";
 import { toArray } from "@/server/utils/toArray";
-import { fetchFacetValues } from "@fern-docs/search-server/algolia";
-import { algoliasearch } from "algoliasearch";
-import { NextRequest, NextResponse } from "next/server";
 
 export const maxDuration = 10;
 

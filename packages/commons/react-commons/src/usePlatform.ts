@@ -1,5 +1,6 @@
-import { getPlatform, type Platform } from "@fern-api/ui-core-utils";
 import { useEffect, useState } from "react";
+
+import { type Platform, getPlatform } from "@fern-api/ui-core-utils";
 
 // this is updated by the browser
 let globalPlatform: Platform | undefined;

@@ -1,6 +1,7 @@
 import { ApiDefinition, FernNavigation } from "@fern-api/fdr-sdk";
 import { measureBytes, truncateToBytes } from "@fern-api/ui-core-utils";
 import { compact, flatten } from "es-toolkit/array";
+
 import { maybePrepareMdxContent } from "../../utils/prepare-mdx-content";
 import { toDescription } from "../../utils/to-description";
 import { BaseRecord, EndpointBaseRecord } from "../types";

@@ -1,9 +1,10 @@
-import { models } from "@/server/models";
-import { runSemanticSearchTurbopuffer } from "@/server/run-reindex-turbopuffer";
 import { createDefaultSystemPrompt } from "@fern-docs/search-server";
 import { toDocuments } from "@fern-docs/search-server/turbopuffer";
 import { streamText, tool } from "ai";
 import { z } from "zod";
+
+import { models } from "@/server/models";
+import { runSemanticSearchTurbopuffer } from "@/server/run-reindex-turbopuffer";
 
 // Allow streaming responses up to 30 seconds
 export const maxDuration = 30;

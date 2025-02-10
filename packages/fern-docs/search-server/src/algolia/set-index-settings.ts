@@ -1,4 +1,5 @@
 import { Algoliasearch } from "algoliasearch";
+
 import {
   FILTERABLE_FACET_ATTRIBUTES,
   SEARCHABLE_ATTRIBUTES,

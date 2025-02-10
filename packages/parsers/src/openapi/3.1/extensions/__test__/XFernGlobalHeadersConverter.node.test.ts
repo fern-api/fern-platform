@@ -1,6 +1,6 @@
 import { createMockContext } from "../../../__test__/createMockContext.util";
-import { X_FERN_GLOBAL_HEADERS } from "../fernExtension.consts";
 import { XFernGlobalHeadersConverterNode } from "../XFernGlobalHeadersConverter.node";
+import { X_FERN_GLOBAL_HEADERS } from "../fernExtension.consts";
 
 describe("XFernGlobalHeadersConverterNode", () => {
   const mockContext = createMockContext();

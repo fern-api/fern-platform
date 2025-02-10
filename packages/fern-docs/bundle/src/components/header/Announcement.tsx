@@ -1,3 +1,5 @@
+import { ReactElement, forwardRef, useRef } from "react";
+
 import { FernButton } from "@fern-docs/components";
 import { useResizeObserver } from "@fern-ui/react-commons";
 import { composeRefs } from "@radix-ui/react-compose-refs";
@@ -5,7 +7,7 @@ import clsx from "clsx";
 import { Xmark } from "iconoir-react";
 import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import { AnimatePresence, motion } from "motion/react";
-import { ReactElement, forwardRef, useRef } from "react";
+
 import {
   ANNOUNCEMENT_CONFIG_ATOM,
   ANNOUNCEMENT_DISMISSED_ATOM,

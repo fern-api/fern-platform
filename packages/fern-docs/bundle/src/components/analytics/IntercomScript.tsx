@@ -1,6 +1,7 @@
-import type { DocsV1Read } from "@fern-api/fdr-sdk";
 import Script from "next/script";
 import { ReactElement, useEffect } from "react";
+
+import type { DocsV1Read } from "@fern-api/fdr-sdk";
 
 // Should mirror or be a subset of InitType from @intercom/messenger-js-sdk
 type IntercomInitType = { app_id?: string; api_base?: string };

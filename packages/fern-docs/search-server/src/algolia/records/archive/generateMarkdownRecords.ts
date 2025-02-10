@@ -6,6 +6,7 @@ import {
   splitMarkdownIntoSections,
   stripUtil,
 } from "@fern-docs/mdx";
+
 import { convertPageV4ToV3 } from "./v1-record-converter/convertRecords";
 
 interface GenerateMarkdownRecordsOptions {

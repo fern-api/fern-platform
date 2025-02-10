@@ -1,9 +1,10 @@
+import { NextRequest, NextResponse } from "next/server";
+
 import { createOpenAI } from "@ai-sdk/openai";
 import { getAuthEdgeConfig, getEdgeFlags } from "@fern-docs/edge-config";
 import { turbopufferUpsertTask } from "@fern-docs/search-server/turbopuffer";
 import { addLeadingSlash, withoutStaging } from "@fern-docs/utils";
 import { embedMany } from "ai";
-import { NextRequest, NextResponse } from "next/server";
 
 import { track } from "@/server/analytics/posthog";
 import { getOrgMetadataForDomain } from "@/server/auth/metadata-for-url";

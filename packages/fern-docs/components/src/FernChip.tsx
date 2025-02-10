@@ -1,5 +1,6 @@
-import { clsx } from "clsx";
 import { PropsWithChildren, forwardRef } from "react";
+
+import { clsx } from "clsx";
 
 import { ColorScheme, Size } from "./util/shared-component-types";
 

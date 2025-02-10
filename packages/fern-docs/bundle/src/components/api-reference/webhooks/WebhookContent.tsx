@@ -1,7 +1,9 @@
-import { PageHeader } from "@/components/components/PageHeader";
-import { ReferenceLayout } from "@/components/layouts/ReferenceLayout";
 import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
+
+import { PageHeader } from "@/components/components/PageHeader";
+import { ReferenceLayout } from "@/components/layouts/ReferenceLayout";
+
 import { Markdown } from "../../mdx/Markdown";
 import { ApiPageCenter } from "../api-page-center";
 import { EndpointParameter } from "../endpoints/EndpointParameter";

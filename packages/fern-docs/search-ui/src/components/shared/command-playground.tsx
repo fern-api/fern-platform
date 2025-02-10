@@ -1,6 +1,8 @@
+import { ComponentPropsWithoutRef, forwardRef } from "react";
+
 import { Kbd } from "@fern-docs/components";
 import { Play } from "lucide-react";
-import { ComponentPropsWithoutRef, forwardRef } from "react";
+
 import * as Command from "../cmdk";
 
 export const CommandGroupPlayground = forwardRef<

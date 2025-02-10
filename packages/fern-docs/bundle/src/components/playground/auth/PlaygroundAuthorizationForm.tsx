@@ -1,6 +1,8 @@
+import { FC, ReactElement } from "react";
+
 import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
 import { visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
-import { FC, ReactElement } from "react";
+
 import { PlaygroundBasicAuthForm } from "./PlaygroundBasicAuthForm";
 import { PlaygroundBearerAuthForm } from "./PlaygroundBearerAuthForm";
 import { PlaygroundHeaderAuthForm } from "./PlaygroundHeaderAuthForm";
@@ -16,7 +18,7 @@ export const PlaygroundAuthorizationForm: FC<
   PlaygroundAuthorizationFormProps
 > = ({ auth, closeContainer, disabled }) => {
   return (
-    (<ul className="list-none px-4">
+    <ul className="list-none px-4">
       {visitDiscriminatedUnion(auth, "type")._visit<ReactElement<any> | false>({
         bearerAuth: (bearerAuth) => (
           <PlaygroundBearerAuthForm
@@ -39,6 +41,6 @@ export const PlaygroundAuthorizationForm: FC<
         ),
         _other: () => false,
       })}
-    </ul>)
+    </ul>
   );
 };

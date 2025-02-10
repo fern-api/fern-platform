@@ -1,8 +1,9 @@
 import * as fs from "fs";
 import yaml from "js-yaml";
 import { OpenAPIV3_1 } from "openapi-types";
-import { ErrorCollector } from "../../ErrorCollector";
+
 import { OpenApiDocumentConverterNode } from "../3.1/OpenApiDocumentConverter.node";
+import { ErrorCollector } from "../../ErrorCollector";
 import { BaseOpenApiV3_1ConverterNodeContext } from "../BaseOpenApiV3_1Converter.node";
 
 const fileContents = fs.readFileSync(

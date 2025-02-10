@@ -8,6 +8,7 @@ import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { ApiDefinitionLoader, MarkdownLoader } from "@fern-docs/cache";
 import type { EdgeFlags } from "@fern-docs/utils";
 import { mapValues } from "es-toolkit/object";
+
 import { serializeMdx } from "../mdx/bundlers/mdx-bundler";
 import type { FernSerializeMdxOptions } from "../mdx/types";
 import type { DocsContent } from "./DocsContent";

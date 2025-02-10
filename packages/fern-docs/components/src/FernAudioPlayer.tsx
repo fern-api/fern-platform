@@ -1,3 +1,5 @@
+import { ReactElement, createRef, useEffect, useState } from "react";
+
 import clsx from "clsx";
 import {
   Forward,
@@ -9,7 +11,7 @@ import {
   SoundOff,
 } from "iconoir-react";
 import moment from "moment";
-import { ReactElement, createRef, useEffect, useState } from "react";
+
 import { FernButton, FernButtonGroup } from "./FernButton";
 
 export interface FernAudioPlayerProps {

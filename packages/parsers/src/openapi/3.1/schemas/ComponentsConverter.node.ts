@@ -1,6 +1,7 @@
 import { isNonNullish } from "@fern-api/ui-core-utils";
 import { Components } from "@open-rpc/meta-schema";
 import { OpenAPIV3_1 } from "openapi-types";
+
 import { FernRegistry } from "../../../client/generated";
 import {
   BaseOpenApiV3_1ConverterNode,

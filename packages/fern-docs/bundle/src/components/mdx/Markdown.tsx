@@ -1,8 +1,10 @@
 "use client";
 
+import { type ReactNode, memo } from "react";
+
 import { ResolvedMdx } from "@fern-api/fdr-sdk/docs";
 import clsx from "clsx";
-import { memo, type ReactNode } from "react";
+
 import { MdxContent } from "./MdxContent";
 
 export declare namespace Markdown {

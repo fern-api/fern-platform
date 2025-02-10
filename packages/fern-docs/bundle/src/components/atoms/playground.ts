@@ -1,3 +1,5 @@
+import { Dispatch, SetStateAction, useEffect } from "react";
+
 import {
   EndpointContext,
   WebSocketContext,
@@ -13,20 +15,20 @@ import {
   atomWithStorage,
   useAtomCallback,
 } from "jotai/utils";
-import { Dispatch, SetStateAction, useEffect } from "react";
 import { useCallbackOne } from "use-memo-one";
+
 import { selectHref } from "../hooks/useHref";
 import {
   PLAYGROUND_AUTH_STATE_BASIC_AUTH_INITIAL,
   PLAYGROUND_AUTH_STATE_BEARER_TOKEN_INITIAL,
   PLAYGROUND_AUTH_STATE_HEADER_INITIAL,
   PLAYGROUND_AUTH_STATE_OAUTH_INITIAL,
+  type PlaygroundAuthState,
   PlaygroundAuthStateBasicAuth,
   PlaygroundAuthStateBearerToken,
   PlaygroundAuthStateHeader,
   PlaygroundAuthStateOAuth,
   PlaygroundAuthStateSchema,
-  type PlaygroundAuthState,
   type PlaygroundEndpointRequestFormState,
   type PlaygroundRequestFormState,
   type PlaygroundWebSocketRequestFormState,

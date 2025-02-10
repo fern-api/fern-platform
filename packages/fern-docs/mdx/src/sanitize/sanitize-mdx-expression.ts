@@ -1,4 +1,5 @@
 import { VFileMessage } from "vfile-message";
+
 import { mdastFromMarkdown } from "../mdast-utils/mdast-from-markdown";
 import { getStart, isPoint } from "../position";
 

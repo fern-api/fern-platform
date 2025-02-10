@@ -1,7 +1,9 @@
+import { ComponentPropsWithoutRef, forwardRef, memo } from "react";
+
 import { Kbd } from "@fern-docs/components";
 import { VariantProps, cva } from "class-variance-authority";
 import { SearchIcon } from "lucide-react";
-import { ComponentPropsWithoutRef, forwardRef, memo } from "react";
+
 import { cn } from "../ui/cn";
 
 const buttonVariants = cva(

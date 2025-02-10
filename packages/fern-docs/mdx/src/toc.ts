@@ -1,7 +1,8 @@
 import { slug } from "github-slugger";
 import type { Doctype, ElementContent, Root } from "hast";
 import { headingRank } from "hast-util-heading-rank";
-import { SKIP, visit, type BuildVisitor } from "unist-util-visit";
+import { type BuildVisitor, SKIP, visit } from "unist-util-visit";
+
 import { hastToString } from "./hast-utils";
 import { hastGetBooleanValue } from "./hast-utils/hast-get-boolean-value";
 import { isHastElement } from "./hast-utils/is-hast-element";

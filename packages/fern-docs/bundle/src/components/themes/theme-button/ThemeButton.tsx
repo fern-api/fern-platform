@@ -1,9 +1,11 @@
+import { memo, useState } from "react";
+import { Monitor, Moon, Sun } from "react-feather";
+
 import { FernButton, FernButtonProps } from "@fern-docs/components";
 import { useMounted } from "@fern-ui/react-commons";
 import * as Popover from "@radix-ui/react-popover";
 import cn from "clsx";
-import { memo, useState } from "react";
-import { Monitor, Moon, Sun } from "react-feather";
+
 import { useSetSystemTheme, useTheme, useToggleTheme } from "../../atoms";
 
 export declare namespace ThemeButton {

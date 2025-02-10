@@ -1,5 +1,6 @@
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { DefinitionObjectFactory } from "@fern-platform/fdr-utils";
+
 import { withSeo } from "../with-seo";
 
 describe("getSeoProps", () => {

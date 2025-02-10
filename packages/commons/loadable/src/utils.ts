@@ -1,13 +1,14 @@
 import { keys } from "@fern-api/ui-core-utils";
+
 import {
+  Loadable,
+  Loading,
+  NotFailed,
   failed,
   isFailed,
   isLoaded,
-  Loadable,
   loaded,
-  Loading,
   loading,
-  NotFailed,
 } from "./Loadable";
 import { visitLoadable } from "./visitor";
 
