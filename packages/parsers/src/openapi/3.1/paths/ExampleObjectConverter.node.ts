@@ -95,14 +95,34 @@ export class ExampleObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
   }
 
   parse(): void {
-    this.resolvedRequestInput = resolveExampleReference(
-      this.input?.requestExample,
-      this.context.document
-    );
-    this.resolvedResponseInput = resolveExampleReference(
-      this.input?.responseExample,
-      this.context.document
-    );
+    const fallbackRequestExample = this.shapes.requestBody?.schema?.example({
+      includeOptionals: false,
+      override: undefined,
+    });
+    this.resolvedRequestInput =
+      resolveExampleReference(
+        this.input?.requestExample,
+        this.context.document
+      ) ??
+      (fallbackRequestExample != null
+        ? {
+            value: fallbackRequestExample,
+          }
+        : undefined);
+    const fallbackResponseExample = this.shapes.responseBody?.schema?.example({
+      includeOptionals: false,
+      override: undefined,
+    });
+    this.resolvedResponseInput =
+      resolveExampleReference(
+        this.input?.responseExample,
+        this.context.document
+      ) ??
+      (fallbackResponseExample != null
+        ? {
+            value: fallbackResponseExample,
+          }
+        : undefined);
 
     // TODO: align on terse examples
     // if (!new Ajv().validate(this.requestBody.resolvedSchema, this.input.value)) {
@@ -413,47 +433,68 @@ export class ExampleObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
       }
     }
 
-    const pathParameters = Object.fromEntries(
-      Object.entries(this.shapes.pathParameters ?? {}).map(([key, value]) => {
-        return [
+    let pathParameters: Record<string, unknown> | undefined =
+      Object.fromEntries(
+        Object.entries(this.shapes.pathParameters ?? {}).map(([key, value]) => [
           key,
           value.example({
             includeOptionals: false,
             override: key,
           }),
-        ];
-      })
-    );
+        ])
+      );
+    pathParameters =
+      Object.keys(pathParameters).length > 0 ? pathParameters : undefined;
 
-    const queryParameters = Object.fromEntries(
-      Object.entries(this.shapes.queryParameters ?? {}).map(([key, value]) => {
-        return [
-          key,
-          value.example({
-            includeOptionals: false,
-            override: key,
-          }),
-        ];
-      })
+    let queryParameters = Object.fromEntries(
+      Object.entries(this.shapes.queryParameters ?? {})
+        .map(([key, value]) =>
+          value.required
+            ? [
+                key,
+                value.example({
+                  includeOptionals: false,
+                  override: key,
+                }),
+              ]
+            : undefined
+        )
+        .filter(isNonNullish)
     );
+    queryParameters =
+      Object.keys(queryParameters).length > 0 ? queryParameters : undefined;
 
-    const requestHeaders = Object.fromEntries(
-      Object.entries(this.shapes.requestHeaders ?? {}).map(([key, value]) => {
-        return [
-          key,
-          value.example({
-            includeOptionals: false,
-            override: key,
-          }),
-        ];
-      })
+    let requestHeaders = Object.fromEntries(
+      Object.entries(this.shapes.requestHeaders ?? {})
+        .map(([key, value]) =>
+          value.required
+            ? [
+                key,
+                value.example({
+                  includeOptionals: false,
+                  override: key,
+                }),
+              ]
+            : undefined
+        )
+        .filter(isNonNullish)
     );
+    requestHeaders =
+      Object.keys(requestHeaders).length > 0 ? requestHeaders : undefined;
+
+    if (
+      this.path == null &&
+      requestBody == null &&
+      responseBody == null &&
+      requestHeaders == null &&
+      queryParameters == null &&
+      pathParameters == null
+    ) {
+      return undefined;
+    }
 
     return {
-      path: replacePathParameters(
-        this.path,
-        pathParameters as Record<string, string>
-      ),
+      path: replacePathParameters(this.path, pathParameters ?? {}),
       responseStatusCode: this.responseStatusCode,
       name:
         this.name != null
@@ -462,12 +503,9 @@ export class ExampleObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
             ? titleCase(this.summary)
             : undefined,
       description: this.convertDescription(),
-      pathParameters:
-        Object.keys(pathParameters).length > 0 ? pathParameters : undefined,
-      queryParameters:
-        Object.keys(queryParameters).length > 0 ? queryParameters : undefined,
-      headers:
-        Object.keys(requestHeaders).length > 0 ? requestHeaders : undefined,
+      pathParameters,
+      queryParameters,
+      headers: requestHeaders,
       requestBody,
       responseBody,
       snippets: undefined,
