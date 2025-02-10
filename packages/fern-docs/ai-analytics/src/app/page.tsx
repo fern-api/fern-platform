@@ -85,49 +85,52 @@ export default async function Home() {
   });
 
   const jsonData = await response.json();
-  const data = jsonData.data;
+  console.log(jsonData);
+  // // const data = jsonData.data;
 
-  const processedData: DomainMessages[] = [];
+  // // const processedData: DomainMessages[] = [];
 
-  for (const convo of data) {
-    if (convo.input !== null && convo.output !== null) {
-      let domain = "";
-      convo.input.forEach((msg: Message) => {
-        if (msg.role === "system") {
-          if (msg.content && msg.content.includes("elevenlabs.io")) {
-            domain = "elevenlabs.io";
-          } else {
-            domain = "buildwithfern.com";
-          }
-        }
-      });
+  // // // for (const convo of data) {
+  // // //   if (convo.input !== null && convo.output !== null) {
+  // // //     let domain = "";
+  // // //     convo.input.forEach((msg: APIMessage) => {
+  // // //       if (msg.role === "system") {
+  // // //         if (typeof msg.content === "string") {
+  // // //           if (msg.content && msg.content.includes("elevenlabs.io")) {
+  // // //             domain = "elevenlabs.io";
+  // // //           } else {
+  // // //             domain = "buildwithfern.com";
+  // // //           }
+  // // //         }
+  // // //       }
+  // // //     });
 
-      const cleanedInput = convo.input
-        .map((msg: APIMessage) => {
-          if (msg.role === "user") {
-            if (typeof msg.content === "string") {
-              return {
-                role: "user",
-                content: msg.content,
-              };
-            }
-            return {
-              role: "user",
-              content: msg.content[0].text,
-            };
-          } else {
-            return msg;
-          }
-        })
-        .filter((msg: Message) => msg.role !== "system" && msg.role !== "tool");
-      cleanedInput.push(convo.output.message);
-      processedData.push({ domain, content: cleanedInput });
-    }
-  }
+  // // //     const cleanedInput = convo.input
+  // // //       .map((msg: APIMessage) => {
+  // // //         if (msg.role === "user") {
+  // // //           if (typeof msg.content === "string") {
+  // // //             return {
+  // // //               role: "user",
+  // // //               content: msg.content,
+  // // //             };
+  // // //           }
+  // // //           return {
+  // // //             role: "user",
+  // // //             content: msg.content[0].text,
+  // // //           };
+  // // //         } else {
+  // // //           return msg;
+  // // //         }
+  // // //       })
+  // // //       .filter((msg: Message) => msg.role !== "system" && msg.role !== "tool");
+  // // //     cleanedInput.push(convo.output.message);
+  // // //     processedData.push({ domain, content: cleanedInput });
+  // // //   }
+  // // // }
 
   return (
     <div className="grid min-h-screen grid-rows-[20px_1fr_20px] items-center justify-items-center gap-16 p-8 pb-20 font-[family-name:var(--font-geist-sans)] sm:p-20">
-      <MessageTable data={processedData} />
+      {/* <MessageTable data={processedData} /> */}
     </div>
   );
 }
