@@ -124,8 +124,6 @@ export default async function Home() {
       processedData.push({ domain, content: cleanedInput });
     }
   }
-  console.log(processedData);
-  console.log(processedData[0].content[0]);
 
   return (
     <div className="grid min-h-screen grid-rows-[20px_1fr_20px] items-center justify-items-center gap-16 p-8 pb-20 font-[family-name:var(--font-geist-sans)] sm:p-20">
