@@ -28,6 +28,7 @@ import {
   convertOperationObjectProperties,
 } from "./parameters/ParameterBaseObjectConverter.node";
 import { RequestBodyObjectConverterNode } from "./request/RequestBodyObjectConverter.node";
+import { RequestMediaTypeObjectConverterNode } from "./request/RequestMediaTypeObjectConverter.node";
 import { ResponsesObjectConverterNode } from "./response/ResponsesObjectConverter.node";
 
 export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
@@ -62,6 +63,40 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
   ) {
     super(args);
     this.safeParse();
+  }
+
+  pushEmptyResponseExample(
+    requestExample:
+      | OpenAPIV3_1.ReferenceObject
+      | OpenAPIV3_1.ExampleObject
+      | undefined,
+    requestBody: RequestMediaTypeObjectConverterNode | undefined,
+    requestExampleName: string | undefined
+  ) {
+    this.emptyResponseExamples ??= [];
+    this.emptyResponseExamples.push(
+      new ExampleObjectConverterNode(
+        {
+          input: {
+            requestExample: requestExample,
+            responseExample: undefined,
+          },
+          context: this.context,
+          accessPath: this.accessPath,
+          pathId: "examples",
+        },
+        this.path,
+        // Since there is no response, we can use any status code, so we use 200
+        200,
+        getExampleName(requestExampleName, undefined),
+        {
+          requestBody,
+          pathParameters: this.pathParameters,
+          queryParameters: this.queryParameters,
+          requestHeaders: this.requestHeaders,
+        }
+      )
+    );
   }
 
   parse(): void {
@@ -203,36 +238,38 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
 
     if (this.responses == null) {
       const requestBodiesByContent = this.requests?.requestBodiesByContentType;
-      if (requestBodiesByContent != null) {
+      if (
+        requestBodiesByContent == null ||
+        Object.keys(requestBodiesByContent).length === 0
+      ) {
+        // Push an example
+        this.pushEmptyResponseExample(undefined, undefined, undefined);
+      } else {
         Object.values(requestBodiesByContent).forEach((requestBody) => {
-          Object.entries(requestBody.examples ?? {}).forEach(
-            ([requestExampleName, requestExample]) => {
-              this.emptyResponseExamples ??= [];
-              this.emptyResponseExamples.push(
-                new ExampleObjectConverterNode(
-                  {
-                    input: {
-                      requestExample: requestExample,
-                      responseExample: undefined,
-                    },
-                    context: this.context,
-                    accessPath: this.accessPath,
-                    pathId: "examples",
-                  },
-                  this.path,
-                  // Since there is no response, we can use any status code
-                  0,
-                  getExampleName(requestExampleName, undefined),
-                  {
-                    requestBody: requestBody,
-                    pathParameters: this.pathParameters,
-                    queryParameters: this.queryParameters,
-                    requestHeaders: this.requestHeaders,
-                  }
-                )
+          if (Object.keys(requestBody.examples ?? {}).length === 0) {
+            const example = requestBody.schema?.example({
+              includeOptionals: false,
+              override: undefined,
+            });
+
+            if (example != null) {
+              this.pushEmptyResponseExample(
+                { value: example },
+                requestBody,
+                undefined
               );
             }
-          );
+          } else {
+            Object.entries(requestBody.examples ?? {}).forEach(
+              ([requestExampleName, requestExample]) => {
+                this.pushEmptyResponseExample(
+                  requestExample,
+                  requestBody,
+                  requestExampleName
+                );
+              }
+            );
+          }
         });
       }
     }

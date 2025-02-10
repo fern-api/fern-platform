@@ -46,6 +46,12 @@
         {
           "path": "/get",
           "responseStatusCode": 200,
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "id": 0
+            }
+          },
           "responseBody": {
             "type": "json",
             "value": {

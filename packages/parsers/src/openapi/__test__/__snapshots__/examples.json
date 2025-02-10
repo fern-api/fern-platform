@@ -450,7 +450,7 @@
       "examples": [
         {
           "path": "/post-empty-response",
-          "responseStatusCode": 0,
+          "responseStatusCode": 200,
           "name": "Date1req",
           "requestBody": {
             "type": "json",

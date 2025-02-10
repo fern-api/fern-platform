@@ -73,32 +73,6 @@ paths:
             application/json:
               schema:
                 type: string
-  /api/v1/accounts/password/change/request:
-    post:
-      summary: Requests password change
-      description: Requests password change for current user
-      tags:
-      - password
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/PasswordChangeRequest"
-        required: true
-      responses:
-        "200":
-          description: OK
-        "401":
-          content:
-            application/json:
-              schema:
-                type: object
-                allOf:
-                - $ref: "#/components/schemas/ApiError"
-              example:
-                errorCode: AuthUnauthorized
-                message: A valid authentication token is required
-          description: A valid authentication token is required
 components:
   schemas:
     User:

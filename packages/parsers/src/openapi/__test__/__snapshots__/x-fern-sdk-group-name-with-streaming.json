@@ -87,6 +87,12 @@
           "pathParameters": {
             "userId": "userId"
           },
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "stream": false
+            }
+          },
           "responseBody": {
             "type": "json",
             "value": "string"

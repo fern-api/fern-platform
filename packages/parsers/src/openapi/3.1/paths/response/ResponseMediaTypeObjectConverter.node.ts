@@ -257,6 +257,52 @@ export class ResponseMediaTypeObjectConverterNode extends BaseOpenApiV3_1Convert
     }
   }
 
+  pushResponseExample(
+    responseExamples: Record<
+      string,
+      (OpenAPIV3_1.ReferenceObject | OpenAPIV3_1.ExampleObject | undefined)[]
+    >,
+    request: RequestMediaTypeObjectConverterNode | undefined,
+    requestExampleName: string | undefined,
+    requestExample:
+      | OpenAPIV3_1.ReferenceObject
+      | OpenAPIV3_1.ExampleObject
+      | undefined
+  ) {
+    const resExamples = responseExamples[GLOBAL_EXAMPLE_NAME];
+    if (resExamples == null) {
+      return;
+    }
+    for (const responseExample of resExamples) {
+      this.examples?.push(
+        new ExampleObjectConverterNode(
+          {
+            input: {
+              requestExample,
+              responseExample,
+            },
+            context: this.context,
+            accessPath: this.accessPath,
+            pathId:
+              requestExampleName != null && requestExampleName !== ""
+                ? ["examples", requestExampleName]
+                : "examples",
+          },
+          this.path,
+          this.statusCode,
+          getExampleName(requestExampleName, undefined),
+          {
+            requestBody: request,
+            responseBody: this,
+            pathParameters: this.shapes.pathParameters,
+            queryParameters: this.shapes.queryParameters,
+            requestHeaders: this.shapes.requestHeaders,
+          }
+        )
+      );
+    }
+  }
+
   addGlobalFallbackExample(
     requests: RequestMediaTypeObjectConverterNode[],
     responseExamples: Record<
@@ -264,41 +310,33 @@ export class ResponseMediaTypeObjectConverterNode extends BaseOpenApiV3_1Convert
       (OpenAPIV3_1.ReferenceObject | OpenAPIV3_1.ExampleObject | undefined)[]
     >
   ) {
-    for (const request of requests) {
-      for (const [requestExampleName, requestExample] of Object.entries(
-        request?.examples ?? {}
-      )) {
-        const resExamples = responseExamples[GLOBAL_EXAMPLE_NAME];
-        if (resExamples == null) {
-          break;
-        }
-        for (const responseExample of resExamples) {
-          this.examples?.push(
-            new ExampleObjectConverterNode(
-              {
-                input: {
-                  requestExample,
-                  responseExample,
-                },
-                context: this.context,
-                accessPath: this.accessPath,
-                pathId:
-                  requestExampleName != null && requestExampleName !== ""
-                    ? ["examples", requestExampleName]
-                    : "examples",
-              },
-              this.path,
-              this.statusCode,
-              getExampleName(requestExampleName, undefined),
-              {
-                requestBody: request,
-                responseBody: this,
-                pathParameters: this.shapes.pathParameters,
-                queryParameters: this.shapes.queryParameters,
-                requestHeaders: this.shapes.requestHeaders,
-              }
-            )
+    if (requests == null || requests.length === 0) {
+      this.pushResponseExample(
+        responseExamples,
+        undefined,
+        undefined,
+        undefined
+      );
+    } else {
+      for (const request of requests) {
+        if (Object.keys(request.examples ?? {}).length === 0) {
+          this.pushResponseExample(
+            responseExamples,
+            request,
+            undefined,
+            undefined
           );
+        } else {
+          for (const [requestExampleName, requestExample] of Object.entries(
+            request.examples ?? {}
+          )) {
+            this.pushResponseExample(
+              responseExamples,
+              request,
+              requestExampleName,
+              requestExample
+            );
+          }
         }
       }
     }

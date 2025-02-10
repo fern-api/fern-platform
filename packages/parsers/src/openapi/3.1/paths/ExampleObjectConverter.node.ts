@@ -95,7 +95,6 @@ export class ExampleObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
   }
 
   parse(): void {
-    console.log(this.input);
     const fallbackRequestExample = this.shapes.requestBody?.schema?.example({
       includeOptionals: false,
       override: undefined,
@@ -360,7 +359,6 @@ export class ExampleObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
   convert(): FernRegistry.api.latest.ExampleEndpointCall | undefined {
     let requestBody: FernRegistry.api.latest.ExampleEndpointRequest | undefined;
     if (this.shapes.requestBody != null && this.resolvedRequestInput != null) {
-      console.log(this.shapes.requestBody, this.resolvedRequestInput);
       switch (this.shapes.requestBody.contentType) {
         case "form-data":
           requestBody = this.convertFormDataExampleRequest();
@@ -435,17 +433,20 @@ export class ExampleObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
       }
     }
 
-    const pathParameters = Object.fromEntries(
-      Object.entries(this.shapes.pathParameters ?? {}).map(([key, value]) => [
-        key,
-        value.example({
-          includeOptionals: false,
-          override: key,
-        }),
-      ])
-    );
+    let pathParameters: Record<string, unknown> | undefined =
+      Object.fromEntries(
+        Object.entries(this.shapes.pathParameters ?? {}).map(([key, value]) => [
+          key,
+          value.example({
+            includeOptionals: false,
+            override: key,
+          }),
+        ])
+      );
+    pathParameters =
+      Object.keys(pathParameters).length > 0 ? pathParameters : undefined;
 
-    const queryParameters = Object.fromEntries(
+    let queryParameters = Object.fromEntries(
       Object.entries(this.shapes.queryParameters ?? {})
         .map(([key, value]) =>
           value.required
@@ -460,8 +461,10 @@ export class ExampleObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
         )
         .filter(isNonNullish)
     );
+    queryParameters =
+      Object.keys(queryParameters).length > 0 ? queryParameters : undefined;
 
-    const requestHeaders = Object.fromEntries(
+    let requestHeaders = Object.fromEntries(
       Object.entries(this.shapes.requestHeaders ?? {})
         .map(([key, value]) =>
           value.required
@@ -476,13 +479,22 @@ export class ExampleObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
         )
         .filter(isNonNullish)
     );
+    requestHeaders =
+      Object.keys(requestHeaders).length > 0 ? requestHeaders : undefined;
 
-    console.log(this.resolvedRequestInput, this.resolvedRequestInput);
+    if (
+      this.path == null &&
+      requestBody == null &&
+      responseBody == null &&
+      requestHeaders == null &&
+      queryParameters == null &&
+      pathParameters == null
+    ) {
+      return undefined;
+    }
+
     return {
-      path: replacePathParameters(
-        this.path,
-        pathParameters as Record<string, string>
-      ),
+      path: replacePathParameters(this.path, pathParameters ?? {}),
       responseStatusCode: this.responseStatusCode,
       name:
         this.name != null
@@ -491,12 +503,9 @@ export class ExampleObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
             ? titleCase(this.summary)
             : undefined,
       description: this.convertDescription(),
-      pathParameters:
-        Object.keys(pathParameters).length > 0 ? pathParameters : undefined,
-      queryParameters:
-        Object.keys(queryParameters).length > 0 ? queryParameters : undefined,
-      headers:
-        Object.keys(requestHeaders).length > 0 ? requestHeaders : undefined,
+      pathParameters,
+      queryParameters,
+      headers: requestHeaders,
       requestBody,
       responseBody,
       snippets: undefined,

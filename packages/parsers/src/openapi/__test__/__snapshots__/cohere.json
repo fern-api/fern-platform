@@ -13424,6 +13424,19 @@
         {
           "path": "/v1/embed-jobs",
           "responseStatusCode": 200,
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "model": "model",
+              "dataset_id": "dataset_id",
+              "input_type": "search_document",
+              "name": "name",
+              "embedding_types": [
+                "float"
+              ],
+              "truncate": "END"
+            }
+          },
           "responseBody": {
             "type": "json",
             "value": {
@@ -23395,6 +23408,30 @@
         {
           "path": "/v1/connectors",
           "responseStatusCode": 200,
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "name": "name",
+              "description": "description",
+              "url": "url",
+              "excludes": [
+                "excludes"
+              ],
+              "oauth": {
+                "client_id": "client_id",
+                "client_secret": "client_secret",
+                "authorize_url": "authorize_url",
+                "token_url": "token_url",
+                "scope": "scope"
+              },
+              "active": true,
+              "continue_on_failure": false,
+              "service_auth": {
+                "type": "noscheme",
+                "token": "token"
+              }
+            }
+          },
           "responseBody": {
             "type": "json",
             "value": {
@@ -24544,6 +24581,29 @@
           "responseStatusCode": 200,
           "pathParameters": {
             "id": "id"
+          },
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "name": "name",
+              "url": "url",
+              "excludes": [
+                "excludes"
+              ],
+              "oauth": {
+                "client_id": "client_id",
+                "client_secret": "client_secret",
+                "authorize_url": "authorize_url",
+                "token_url": "token_url",
+                "scope": "scope"
+              },
+              "active": true,
+              "continue_on_failure": false,
+              "service_auth": {
+                "type": "noscheme",
+                "token": "token"
+              }
+            }
           },
           "responseBody": {
             "type": "json",
@@ -28002,6 +28062,18 @@
         {
           "path": "/v1/finetuning/finetuned-models",
           "responseStatusCode": 200,
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "name": "api-test",
+              "settings": {
+                "base_model": {
+                  "base_type": "BASE_TYPE_CHAT"
+                },
+                "dataset_id": "my-dataset-id"
+              }
+            }
+          },
           "responseBody": {
             "type": "json",
             "value": {
@@ -28837,7 +28909,42 @@
             "id": "id"
           },
           "requestBody": {
-            "type": "json"
+            "type": "json",
+            "value": {
+              "name": "name",
+              "creator_id": "creator_id",
+              "organization_id": "organization_id",
+              "settings": {
+                "base_model": {
+                  "name": "name",
+                  "version": "version",
+                  "base_type": "BASE_TYPE_UNSPECIFIED",
+                  "strategy": "STRATEGY_UNSPECIFIED"
+                },
+                "dataset_id": "dataset_id",
+                "hyperparameters": {
+                  "early_stopping_patience": 0,
+                  "early_stopping_threshold": 0,
+                  "train_batch_size": 0,
+                  "train_epochs": 0,
+                  "learning_rate": 0,
+                  "lora_alpha": 0,
+                  "lora_rank": 0,
+                  "lora_target_modules": "LORA_TARGET_MODULES_UNSPECIFIED"
+                },
+                "multi_label": false,
+                "wandb": {
+                  "project": "project",
+                  "api_key": "api_key",
+                  "entity": "entity"
+                }
+              },
+              "status": "STATUS_UNSPECIFIED",
+              "created_at": "created_at",
+              "updated_at": "updated_at",
+              "completed_at": "completed_at",
+              "last_used": "last_used"
+            }
           },
           "responseBody": {
             "type": "json",
