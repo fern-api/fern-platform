@@ -18,6 +18,7 @@ import {
 import type { Options } from "@mdx-js/esbuild";
 import { mapKeys } from "es-toolkit/object";
 import { bundleMDX } from "mdx-bundler";
+import { cacheLife } from "next/dist/server/use-cache/cache-life";
 import path, { dirname } from "path";
 import rehypeKatex from "rehype-katex";
 import rehypeSlug from "rehype-slug";
@@ -211,6 +212,8 @@ export async function serializeMdx(
   content: string | undefined,
   options?: FernSerializeMdxOptions
 ): Promise<string | FernDocs.ResolvedMdx | undefined> {
+  "use cache";
+
   let attempts = 0;
   while (attempts < 3) {
     try {
@@ -223,5 +226,12 @@ export async function serializeMdx(
     // exponential backoff
     await new Promise((resolve) => setTimeout(resolve, 1000 * attempts));
   }
+
+  // if we're returning the fallback string, this means validation failed
+  cacheLife({
+    stale: 0,
+    revalidate: 0,
+  });
+
   return content;
 }

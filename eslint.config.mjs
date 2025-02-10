@@ -118,6 +118,7 @@ export default tseslint.config(
       ],
       "tailwindcss/no-custom-classname": "off",
       "tailwindcss/classnames-order": "off",
+      "@typescript-eslint/no-floating-promises": "error",
     },
   },
 

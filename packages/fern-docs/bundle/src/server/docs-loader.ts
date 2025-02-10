@@ -155,67 +155,57 @@ class CachedDocsLoaderImpl implements DocsLoader {
     return this._fern_token;
   }
 
-  public getBaseUrl = unstable_cache(
-    async (): Promise<DocsV2Read.BaseUrl> => {
-      const response = await cachedLoadWithUrl(this.domain);
-      if (!response.ok) {
-        return { domain: this.domain, basePath: undefined };
-      }
-      return response.body.baseUrl;
-    },
-    ["docs-loader:base-url", this.domain],
-    { tags: [this.domain, "base-url"], revalidate: false }
-  );
+  public getBaseUrl = async (): Promise<DocsV2Read.BaseUrl> => {
+    const response = await cachedLoadWithUrl(this.domain);
+    if (!response.ok) {
+      return { domain: this.domain, basePath: undefined };
+    }
+    return response.body.baseUrl;
+  };
 
-  public getFiles = unstable_cache(
-    async (): Promise<Record<string, FileData>> => {
-      const response = await cachedLoadWithUrl(this.domain);
-      if (!response.ok) {
-        return {};
+  public getFiles = async (): Promise<Record<string, FileData>> => {
+    const response = await cachedLoadWithUrl(this.domain);
+    if (!response.ok) {
+      return {};
+    }
+    return mapValues(response.body.definition.filesV2, (file) => {
+      if (file.type === "url") {
+        return {
+          src: file.url,
+        };
+      } else if (file.type === "image") {
+        return {
+          src: file.url,
+          width: file.width,
+          height: file.height,
+          blurDataURL: file.blurDataUrl,
+          alt: file.alt,
+        };
       }
-      return mapValues(response.body.definition.filesV2, (file) => {
-        if (file.type === "url") {
-          return {
-            src: file.url,
-          };
-        } else if (file.type === "image") {
-          return {
-            src: file.url,
-            width: file.width,
-            height: file.height,
-            blurDataURL: file.blurDataUrl,
-            alt: file.alt,
-          };
-        }
-        throw new UnreachableCaseError(file);
-      });
-    },
-    ["docs-loader:files", this.domain],
-    { tags: [this.domain, "files"], revalidate: false }
-  );
+      throw new UnreachableCaseError(file);
+    });
+  };
 
-  public getApi = unstable_cache(
-    async (id: string): Promise<ApiDefinition.ApiDefinition | undefined> => {
-      const response = await cachedLoadWithUrl(this.domain);
-      if (!response.ok) {
-        return undefined;
-      }
-      const latest = response.body.definition.apisV2[ApiDefinitionId(id)];
-      if (latest != null) {
-        return latest;
-      }
-      const v1 = response.body.definition.apis[ApiDefinitionId(id)];
-      if (v1 == null) {
-        return undefined;
-      }
-      return ApiDefinitionV1ToLatest.from(
-        v1,
-        await getEdgeFlags(this.domain)
-      ).migrate();
-    },
-    ["docs-loader:api", this.domain],
-    { tags: [this.domain, "api"], revalidate: false }
-  );
+  public getApi = async (
+    id: string
+  ): Promise<ApiDefinition.ApiDefinition | undefined> => {
+    const response = await cachedLoadWithUrl(this.domain);
+    if (!response.ok) {
+      return undefined;
+    }
+    const latest = response.body.definition.apisV2[ApiDefinitionId(id)];
+    if (latest != null) {
+      return latest;
+    }
+    const v1 = response.body.definition.apis[ApiDefinitionId(id)];
+    if (v1 == null) {
+      return undefined;
+    }
+    return ApiDefinitionV1ToLatest.from(
+      v1,
+      await getEdgeFlags(this.domain)
+    ).migrate();
+  };
 
   public getRoot = async () => {
     let root = await this.unsafe_getFullRoot();
@@ -243,88 +233,72 @@ class CachedDocsLoaderImpl implements DocsLoader {
    * beware: this returns the full tree, and ignores authentication.
    * do not use this except for revalidation.
    */
-  public unsafe_getFullRoot = unstable_cache(
-    async () => {
-      const response = await cachedLoadWithUrl(this.domain);
-      if (!response.ok) {
-        return undefined;
-      }
-      const v1 = response.body.definition.config.root;
+  public unsafe_getFullRoot = async () => {
+    const response = await cachedLoadWithUrl(this.domain);
+    if (!response.ok) {
+      return undefined;
+    }
+    const v1 = response.body.definition.config.root;
 
-      if (!v1) {
-        return undefined;
-      }
+    if (!v1) {
+      return undefined;
+    }
 
-      const root =
-        FernNavigation.migrate.FernNavigationV1ToLatest.create().root(v1);
+    const root =
+      FernNavigation.migrate.FernNavigationV1ToLatest.create().root(v1);
 
-      if ((await getEdgeFlags(this.domain)).isApiScrollingDisabled) {
-        FernNavigation.traverseBF(root, (node) => {
-          if (node.type === "apiReference") {
-            node.paginated = true;
-            return CONTINUE;
-          }
-          return SKIP;
-        });
-      }
-
-      return root;
-    },
-    ["docs-loader:full-root", this.domain],
-    { tags: [this.domain, "root"], revalidate: false }
-  );
-
-  public getConfig = unstable_cache(
-    async () => {
-      const response = await cachedLoadWithUrl(this.domain);
-      if (!response.ok) {
-        return undefined;
-      }
-      const { navigation, root, ...config } = response.body.definition.config;
-      return config;
-    },
-    ["docs-loader:config", this.domain],
-    { tags: [this.domain, "config"], revalidate: false }
-  );
-
-  public getPage = unstable_cache(
-    async (pageId: string) => {
-      const response = await cachedLoadWithUrl(this.domain);
-      if (!response.ok) {
-        return undefined;
-      }
-      return response.body.definition.pages[pageId as PageId];
-    },
-    ["docs-loader:page", this.domain],
-    { tags: [this.domain, "page"], revalidate: false }
-  );
-
-  public serializeMdx = unstable_cache(
-    async (
-      content: string | undefined,
-      options?: Omit<FernSerializeMdxOptions, "files" | "replaceSrc">
-    ) => {
-      if (content == null) {
-        return undefined;
-      }
-      const [files, mdxBundlerFiles] = await Promise.all([
-        this.getFiles(),
-        this.getMdxBundlerFiles(),
-      ]);
-      return serializeMdx(content, {
-        ...options,
-        files: mdxBundlerFiles,
-        replaceSrc: createFileResolver(files),
+    if ((await getEdgeFlags(this.domain)).isApiScrollingDisabled) {
+      FernNavigation.traverseBF(root, (node) => {
+        if (node.type === "apiReference") {
+          node.paginated = true;
+          return CONTINUE;
+        }
+        return SKIP;
       });
-    },
-    ["docs-loader:serialize-mdx", this.domain],
-    { tags: [this.domain, "serialize-mdx"], revalidate: false }
-  );
+    }
+
+    return root;
+  };
+
+  public getConfig = async () => {
+    const response = await cachedLoadWithUrl(this.domain);
+    if (!response.ok) {
+      return undefined;
+    }
+    const { navigation, root, ...config } = response.body.definition.config;
+    return config;
+  };
+
+  public getPage = async (pageId: string) => {
+    const response = await cachedLoadWithUrl(this.domain);
+    if (!response.ok) {
+      return undefined;
+    }
+    return response.body.definition.pages[pageId as PageId];
+  };
+
+  public serializeMdx = async (
+    content: string | undefined,
+    options?: Omit<FernSerializeMdxOptions, "files" | "replaceSrc">
+  ) => {
+    if (content == null) {
+      return undefined;
+    }
+    const [files, mdxBundlerFiles] = await Promise.all([
+      this.getFiles(),
+      this.getMdxBundlerFiles(),
+    ]);
+    return serializeMdx(content, {
+      ...options,
+      files: mdxBundlerFiles,
+      replaceSrc: createFileResolver(files),
+    });
+  };
 
   public getSerializedPage = async (
     pageId: string,
-    options?: Omit<FernSerializeMdxOptions, "files" | "replaceSrc">,
-    revalidate?: number | false
+    options?: Omit<FernSerializeMdxOptions, "files" | "replaceSrc">
+    // revalidate?: number | false
   ) => {
     const [page, files, mdxBundlerFiles] = await Promise.all([
       this.getPage(pageId),
@@ -334,26 +308,12 @@ class CachedDocsLoaderImpl implements DocsLoader {
     if (!page) {
       return undefined;
     }
-    const cachedSerializeMdx = unstable_cache(
-      async () => {
-        const serialized = await serializeMdx(page.markdown, {
-          ...options,
-          filename: pageId,
-          files: mdxBundlerFiles,
-          replaceSrc: createFileResolver(files),
-        });
-        return serialized;
-      },
-      [
-        "docs-loader:serialized-page",
-        pageId,
-        JSON.stringify(options?.scope),
-        String(options?.showError),
-        String(options?.toc),
-      ],
-      { tags: [this.domain, "serialized-page"], revalidate }
-    );
-    return cachedSerializeMdx();
+    return await serializeMdx(page.markdown, {
+      ...options,
+      filename: pageId,
+      files: mdxBundlerFiles,
+      replaceSrc: createFileResolver(files),
+    });
   };
 
   public getMdxBundlerFiles = unstable_cache(

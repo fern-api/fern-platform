@@ -1,6 +1,6 @@
 import clsx from "clsx";
-import { AnimatePresence, motion } from "framer-motion";
 import { useAtomValue } from "jotai";
+import { AnimatePresence, motion } from "motion/react";
 import { ReactElement, useRef } from "react";
 import { useCallbackOne } from "use-memo-one";
 import {

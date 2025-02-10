@@ -24,7 +24,7 @@ export function WebhookContent({
   domain,
   context,
   breadcrumb,
-  last = false,
+  // last = false,
 }: WebhookContent.Props) {
   const { node, webhook, types } = context;
 

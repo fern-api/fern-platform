@@ -8,9 +8,9 @@ import {
 } from "@fern-docs/components";
 import { useKeyboardPress } from "@fern-ui/react-commons";
 import clsx from "clsx";
-import { motion } from "framer-motion";
 import { useAtom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
+import { motion } from "motion/react";
 import { FC, FormEvent, useCallback, useMemo, useRef, useState } from "react";
 
 const MotionFernRadioGroup = motion(FernRadioGroup);

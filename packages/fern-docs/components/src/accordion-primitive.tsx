@@ -238,7 +238,7 @@ type AccordionImplContextValue = {
 const [AccordionImplProvider, useAccordionContext] =
   createAccordionContext<AccordionImplContextValue>(ACCORDION_NAME);
 
-type AccordionImplElement = React.ElementRef<typeof Primitive.div>;
+type AccordionImplElement = React.ComponentRef<typeof Primitive.div>;
 type PrimitiveDivProps = React.ComponentPropsWithoutRef<typeof Primitive.div>;
 interface AccordionImplProps extends PrimitiveDivProps {
   /**
@@ -387,7 +387,9 @@ type AccordionItemContextValue = {
 const [AccordionItemProvider, useAccordionItemContext] =
   createAccordionContext<AccordionItemContextValue>(ITEM_NAME);
 
-type AccordionItemElement = React.ElementRef<typeof CollapsiblePrimitive.Root>;
+type AccordionItemElement = React.ComponentRef<
+  typeof CollapsiblePrimitive.Root
+>;
 type CollapsibleProps = React.ComponentPropsWithoutRef<
   typeof CollapsiblePrimitive.Root
 >;
@@ -468,7 +470,7 @@ AccordionItem.displayName = ITEM_NAME;
 
 const HEADER_NAME = "AccordionHeader";
 
-type AccordionHeaderElement = React.ElementRef<typeof Primitive.h3>;
+type AccordionHeaderElement = React.ComponentRef<typeof Primitive.h3>;
 type PrimitiveHeading3Props = React.ComponentPropsWithoutRef<
   typeof Primitive.h3
 >;
@@ -507,7 +509,7 @@ AccordionHeader.displayName = HEADER_NAME;
 
 const TRIGGER_NAME = "AccordionTrigger";
 
-type AccordionTriggerElement = React.ElementRef<
+type AccordionTriggerElement = React.ComponentRef<
   typeof CollapsiblePrimitive.Trigger
 >;
 type CollapsibleTriggerProps = React.ComponentPropsWithoutRef<
@@ -562,7 +564,7 @@ AccordionTrigger.displayName = TRIGGER_NAME;
 
 const CONTENT_NAME = "AccordionContent";
 
-type AccordionContentElement = React.ElementRef<
+type AccordionContentElement = React.ComponentRef<
   typeof CollapsiblePrimitive.Content
 >;
 type CollapsibleContentProps = React.ComponentPropsWithoutRef<

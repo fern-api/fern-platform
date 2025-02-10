@@ -1,16 +1,16 @@
 import { FernTooltipProvider, Toaster } from "@fern-docs/components";
 import { withThemeByClassName } from "@storybook/addon-themes";
-import type { Preview } from "@storybook/react";
+import type { Decorator, Preview } from "@storybook/react";
 import "../src/css/globals.scss";
 import "./variables.css";
 
-const globalDecorator = (Story) => (
+const globalDecorator = (Story: any) => (
   <FernTooltipProvider>
     <Story />
     <Toaster />
   </FernTooltipProvider>
 );
-export const decorators = [
+export const decorators: Decorator[] = [
   globalDecorator,
   withThemeByClassName({
     themes: {

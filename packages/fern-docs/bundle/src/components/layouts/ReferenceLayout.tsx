@@ -15,7 +15,10 @@ interface ReferenceLayoutProps {
 export const ReferenceLayout = React.forwardRef<
   HTMLDivElement,
   ComponentPropsWithoutRef<"article"> & ReferenceLayoutProps
->(({ header, aside, children, footer, reference, ...props }, ref) => {
+>(function ReferenceLayout(
+  { header, aside, children, footer, reference, ...props },
+  ref
+) {
   return (
     <div className="px-4 md:px-6 lg:px-8">
       <article

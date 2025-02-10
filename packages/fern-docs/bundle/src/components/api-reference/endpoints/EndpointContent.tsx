@@ -16,14 +16,14 @@ export async function EndpointContent({
   context,
   breadcrumb,
   rootslug,
-  streamToggle,
+  // streamToggle,
 }: {
   domain: string;
   showErrors: boolean;
   context: EndpointContext;
   // hideBottomSeparator?: boolean;
   breadcrumb: readonly FernNavigation.BreadcrumbItem[];
-  streamToggle?: React.ReactElement<any>;
+  streamToggle?: React.ReactElement;
   // last?: boolean;
   rootslug: FernNavigation.Slug;
 }) {

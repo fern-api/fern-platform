@@ -86,6 +86,7 @@ const nextConfig = {
       "es-toolkit",
       "ts-essentials",
     ],
+    dynamicIO: true,
   },
 
   skipMiddlewareUrlNormalize: true,

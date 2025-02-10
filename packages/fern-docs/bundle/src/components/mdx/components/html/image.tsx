@@ -1,6 +1,5 @@
 import {
   ComponentProps,
-  ComponentPropsWithoutRef,
   createContext,
   forwardRef,
   ReactElement,
@@ -23,7 +22,7 @@ export function NoZoom({ children }: { children: ReactNode }) {
 
 export const Image = forwardRef<
   HTMLImageElement,
-  ComponentPropsWithoutRef<"img"> & {
+  React.ComponentPropsWithoutRef<"img"> & {
     /**
      * @default false
      */

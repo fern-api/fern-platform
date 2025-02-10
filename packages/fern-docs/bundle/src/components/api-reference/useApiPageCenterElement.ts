@@ -1,6 +1,6 @@
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { addLeadingSlash } from "@fern-docs/utils";
-import { useInView } from "framer-motion";
+import { useInView } from "motion/react";
 import { useRouter } from "next/navigation";
 import { RefObject, useEffect } from "react";
 

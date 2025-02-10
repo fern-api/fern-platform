@@ -1,5 +1,6 @@
 import { FernButton } from "@fern-docs/components";
 import { usePrevious } from "@fern-ui/react-commons";
+import { composeRefs } from "@radix-ui/react-compose-refs";
 import * as Tooltip from "@radix-ui/react-tooltip";
 import { Expand } from "iconoir-react";
 import {
@@ -8,7 +9,6 @@ import {
   RefObject,
   forwardRef,
   useEffect,
-  useImperativeHandle,
   useRef,
   useState,
 } from "react";
@@ -29,11 +29,9 @@ export const IFrame = forwardRef<HTMLIFrameElement, IFrame.Props>(
       experimental_onReceiveMessage,
       ...props
     },
-    ref
+    forwardedRef
   ): ReactElement<any> => {
     const iframeRef = useRef<HTMLIFrameElement>(null);
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    useImperativeHandle(ref, () => iframeRef.current!);
 
     useEffect(() => {
       const contentWindow = iframeRef.current?.contentWindow;
@@ -59,13 +57,19 @@ export const IFrame = forwardRef<HTMLIFrameElement, IFrame.Props>(
           iframeRef={iframeRef}
           onFullscreenChange={experimental_onFullscreenChange}
         >
-          <iframe ref={iframeRef} {...props} />
+          <iframe ref={composeRefs(iframeRef, forwardedRef)} {...props} />
         </ExperimentalIFrameWithFullscreen>
       );
     }
 
     // prevent hydration mismatch by setting data-state to closed
-    return <iframe data-state="closed" ref={ref} {...props} />;
+    return (
+      <iframe
+        data-state="closed"
+        ref={composeRefs(iframeRef, forwardedRef)}
+        {...props}
+      />
+    );
   }
 );
 

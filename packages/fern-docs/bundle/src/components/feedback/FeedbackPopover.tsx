@@ -2,8 +2,8 @@
 
 import { FernButton, FernButtonGroup } from "@fern-docs/components";
 import clsx from "clsx";
-import { motion } from "framer-motion";
 import { Check, ThumbsDown, ThumbsUp } from "iconoir-react";
+import { motion } from "motion/react";
 import { forwardRef, useCallback, useMemo, useState } from "react";
 import * as Selection from "selection-popover";
 import { track } from "../analytics";
@@ -14,7 +14,7 @@ const MotionFernButton = motion(FernButton);
 const MotionFernButtonGroup = motion(FernButtonGroup);
 const MotionSelectionContent = motion(Selection.Content);
 
-type SelectionTextToolbarElement = React.ElementRef<typeof Selection.Trigger>;
+type SelectionTextToolbarElement = React.ComponentRef<typeof Selection.Trigger>;
 type SelectionTextToolbarProps = {
   children: React.ReactNode;
 };

@@ -8,7 +8,7 @@
     "strictNullChecks": true
   },
   "exclude": ["node_modules"],
-  "include": ["src/**/*", ".next/types/**/*.ts", ".storybook/**/*"],
+  "include": ["src/**/*", ".next/types/**/*.ts", ".storybook/**/*.{ts,tsx}"],
   "references": [
     {
       "path": "../../commons/core-utils"

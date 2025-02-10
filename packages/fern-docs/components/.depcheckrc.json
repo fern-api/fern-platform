@@ -22,7 +22,6 @@
     "@storybook/addon-onboarding",
     "@storybook/blocks",
     "@storybook/test",
-    "@emotion/is-prop-valid",
     "sass",
     "copyfiles"
   ],

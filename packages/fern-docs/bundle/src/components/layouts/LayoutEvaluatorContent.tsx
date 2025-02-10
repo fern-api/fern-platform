@@ -30,7 +30,7 @@ export function LayoutEvaluatorContent({
   breadcrumb,
   tableOfContents,
   children,
-  hasAside,
+  // hasAside,
 }: LayoutEvaluatorProps): ReactElement<any> {
   const layout = frontmatter.layout ?? "guide";
 

@@ -1,11 +1,6 @@
+import { composeRefs } from "@radix-ui/react-compose-refs";
 import cn from "clsx";
-import {
-  ComponentProps,
-  forwardRef,
-  useEffect,
-  useImperativeHandle,
-  useRef,
-} from "react";
+import { ComponentProps, forwardRef, useEffect, useRef } from "react";
 
 interface FernTextareaProps extends ComponentProps<"textarea"> {
   onValueChange?: (value: string) => void;
@@ -15,12 +10,10 @@ interface FernTextareaProps extends ComponentProps<"textarea"> {
 export const FernTextarea = forwardRef<HTMLTextAreaElement, FernTextareaProps>(
   function FernTextarea(
     { className, onValueChange, minLines = 2, ...props },
-    ref
+    forwardedRef
   ) {
     const inputRef = useRef<HTMLTextAreaElement>(null);
 
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    useImperativeHandle(ref, () => inputRef.current!);
     const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
       onValueChange?.(e.target.value);
       props.onChange?.(e);
@@ -30,7 +23,7 @@ export const FernTextarea = forwardRef<HTMLTextAreaElement, FernTextareaProps>(
       <div className={cn("fern-textarea-group", className)}>
         <textarea
           {...props}
-          ref={inputRef}
+          ref={composeRefs(inputRef, forwardedRef)}
           className="fern-textarea"
           onChange={handleChange}
         />

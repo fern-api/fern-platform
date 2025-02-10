@@ -14,7 +14,7 @@ import {
 } from "react";
 import * as THREE from "three";
 
-import { motion, useMotionValueEvent, useSpring } from "framer-motion";
+import { motion, useMotionValueEvent, useSpring } from "motion/react";
 import fragmentShader from "./WaveformComplexShader.frag";
 import vertexShader from "./WaveformComplexShader.vert";
 
@@ -64,7 +64,7 @@ export default function WaveformComplex({
 
   return (
     <motion.div
-      className={cn("h-400 relative w-full", className)}
+      className={cn("relative h-[400px] w-full", className)}
       ref={canvasWrapper}
       animate={{
         filter: `blur(${blur}px)`,

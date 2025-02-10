@@ -1,3 +1,14 @@
+import type { JSX as Jsx } from "react/jsx-runtime";
+
+// mdx compatibility with react 19 https://github.com/mdx-js/mdx/issues/2487#issuecomment-2407661869
+declare global {
+  namespace JSX {
+    type ElementClass = Jsx.ElementClass;
+    type Element = Jsx.Element;
+    type IntrinsicElements = Jsx.IntrinsicElements;
+  }
+}
+
 // CSS modules
 type CSSModuleClasses = Readonly<Record<string, string>>;
 

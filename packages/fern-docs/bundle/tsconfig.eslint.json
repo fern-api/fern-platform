@@ -6,6 +6,8 @@
     "postcss.config.js",
     "tailwind.config.js",
     "vitest.config.ts",
-    "next-env.d.ts"
+    "next-env.d.ts",
+    ".next/types/**/*.ts",
+    ".storybook/**/*.{ts,tsx}"
   ]
 }

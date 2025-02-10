@@ -1,10 +1,11 @@
 import { FernButton } from "@fern-docs/components";
 import { useResizeObserver } from "@fern-ui/react-commons";
+import { composeRefs } from "@radix-ui/react-compose-refs";
 import clsx from "clsx";
-import { AnimatePresence, motion } from "framer-motion";
 import { Xmark } from "iconoir-react";
 import { useAtom, useAtomValue, useSetAtom } from "jotai";
-import { ReactElement, forwardRef, useImperativeHandle, useRef } from "react";
+import { AnimatePresence, motion } from "motion/react";
+import { ReactElement, forwardRef, useRef } from "react";
 import {
   ANNOUNCEMENT_CONFIG_ATOM,
   ANNOUNCEMENT_DISMISSED_ATOM,
@@ -32,12 +33,9 @@ const AnnouncementInternal = forwardRef<
     }
   });
 
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  useImperativeHandle(forwardedRef, () => ref.current!);
-
   return (
     <motion.div
-      ref={ref}
+      ref={composeRefs(ref, forwardedRef)}
       {...props}
       className={clsx("fern-announcement", className)}
     >

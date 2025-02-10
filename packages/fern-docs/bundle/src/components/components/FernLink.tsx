@@ -12,7 +12,7 @@ export const FernLink = React.forwardRef<
   React.ComponentProps<typeof Link> & {
     showExternalLinkIcon?: boolean;
   }
->(({ showExternalLinkIcon = false, ...props }, ref) => {
+>(function FernLink({ showExternalLinkIcon = false, ...props }, ref) {
   const url = toUrlObject(props.href);
   const isExternalUrl = checkIsExternalUrl(url);
 
@@ -171,7 +171,7 @@ type MaybeFernLinkProps = Omit<
 export const MaybeFernLink = React.forwardRef<
   HTMLAnchorElement,
   MaybeFernLinkProps
->(({ href, ...props }, ref) => {
+>(function MaybeFernLink({ href, ...props }, ref) {
   if (href == null) {
     return <span ref={ref} {...stripNextLinkProps(props)} />;
   }

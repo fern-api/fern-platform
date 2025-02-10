@@ -13,7 +13,7 @@ export const ApiPageCenter = React.forwardRef<
     slug: Slug;
     asChild?: boolean;
   }
->(({ children, asChild, slug, ...props }, forwardedRef) => {
+>(function ApiPageCenter({ children, asChild, slug, ...props }, forwardedRef) {
   const Comp = asChild ? Slot : "div";
 
   const ref = React.useRef<HTMLDivElement>(null);

@@ -1,21 +1,14 @@
+import { composeRefs } from "@radix-ui/react-compose-refs";
 import cn from "clsx";
 import fastdom from "fastdom";
-import React, {
-  PropsWithChildren,
-  useEffect,
-  useImperativeHandle,
-  useRef,
-  useState,
-} from "react";
+import React, { PropsWithChildren, useEffect, useRef, useState } from "react";
 import { noop } from "ts-essentials";
 
 export const HorizontalOverflowMask = React.forwardRef<
   HTMLDivElement,
   PropsWithChildren<{ className?: string }>
->(function HorizontalOverflowMask({ children, className }, parentRef) {
+>(function HorizontalOverflowMask({ children, className }, forwardedRef) {
   const ref = useRef<HTMLDivElement>(null);
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  useImperativeHandle(parentRef, () => ref.current!);
 
   const [showLeftMask, setShowLeftMask] = useState(false);
   const [hideRightMask, setHideRightMask] = useState(false);
@@ -55,7 +48,7 @@ export const HorizontalOverflowMask = React.forwardRef<
 
   return (
     <div
-      ref={ref}
+      ref={composeRefs(ref, forwardedRef)}
       className={cn(
         "fern-x-overflow",
         {

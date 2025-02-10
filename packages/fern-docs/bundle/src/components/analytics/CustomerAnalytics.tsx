@@ -42,6 +42,10 @@ export const CustomerAnalytics = memo(
     const analytics = useAtomValue(ANALYTICS_ATOM);
     const config = useAtomValue(ANALYTICS_CONFIG_ATOM);
 
+    if ((process.env.VERCEL_ENV || process.env.NODE_ENV) === "development") {
+      return null;
+    }
+
     // Prefer values from customer config (if supplied) over legacy Vercel edge config
     const ga4 = config.ga4 != null ? config.ga4 : analytics.ga4;
     const gtm =

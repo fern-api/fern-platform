@@ -6,6 +6,7 @@ import {
   ErrorResponse,
 } from "@fern-api/fdr-sdk/api-definition";
 import React from "react";
+import { noop } from "ts-essentials";
 import { useCallbackOne } from "use-memo-one";
 import { useExampleSelection } from "./useExampleSelection";
 import { convertNameToAnchorPart } from "./utils";
@@ -17,7 +18,7 @@ export const EndpointContext = React.createContext<
   } & Omit<ReturnType<typeof useExampleSelection>, "defaultLanguage">
 >({
   selectedError: undefined,
-  setSelectedError: () => {},
+  setSelectedError: noop,
   selectedExample: undefined,
   examplesByStatusCode: {},
   examplesByKeyAndStatusCode: {},
@@ -28,7 +29,7 @@ export const EndpointContext = React.createContext<
     exampleKey: undefined,
   },
   availableLanguages: [],
-  setSelectedExampleKey: () => {},
+  setSelectedExampleKey: noop,
 });
 
 export function EndpointContextProvider({

@@ -67,7 +67,7 @@ function useAlgoliaUserToken() {
 
 const askAiAtom = atom(false);
 
-export const SearchV2 = React.memo(() => {
+export const SearchV2 = React.memo(function SearchV2() {
   const version = useAtomValue(CURRENT_VERSION_ATOM);
   const { isAskAiEnabled } = useEdgeFlags();
 
@@ -201,7 +201,7 @@ export const SearchV2 = React.memo(() => {
   );
 });
 
-export const SearchV2Trigger = React.memo(() => {
+export const SearchV2Trigger = React.memo(function SearchV2Trigger() {
   const setOpen = useSetAtom(SEARCH_DIALOG_OPEN_ATOM);
   return <DesktopSearchButton onClick={() => setOpen(true)} />;
 });

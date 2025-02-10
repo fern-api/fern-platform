@@ -84,7 +84,9 @@
         "TRAILING_SLASH",
         "TURBOPUFFER_API_KEY",
         "WORKOS_CLIENT_ID",
-        "HIGHLIGHT_PROJECT_ID_FERN_APP"
+        "WORKOS_API_KEY",
+        "HIGHLIGHT_PROJECT_ID_FERN_APP",
+        "NEXT_PUBLIC_FONTAWESOME_CDN_HOST"
       ],
       "passThroughEnv": [
         "ESBUILD_BINARY_PATH",
@@ -92,7 +94,8 @@
         "VERCEL_AUTOMATION_BYPASS_SECRET",
         "VERCEL_DEPLOYMENT_ID",
         "VERCEL_ENV",
-        "VERCEL_URL"
+        "VERCEL_URL",
+        "NEXT_DEPLOYMENT_ID"
       ]
     }
   },
