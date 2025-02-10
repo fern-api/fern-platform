@@ -21,6 +21,7 @@ export interface FernSyntaxHighlighterProps {
   viewportRef?: React.RefObject<ScrollToHandle>;
   maxLines?: number;
   wordWrap?: boolean;
+  matchLanguage?: string;
 }
 
 export const FernSyntaxHighlighter = forwardRef<
@@ -38,7 +39,7 @@ export const FernSyntaxHighlighter = forwardRef<
       return highlightTokens(highlighter, code, language);
     } catch (e) {
       // TODO: sentry
-      // eslint-disable-next-line no-console
+
       console.error("Error occurred while highlighting tokens", e);
       return createRawTokens(code, language);
     }

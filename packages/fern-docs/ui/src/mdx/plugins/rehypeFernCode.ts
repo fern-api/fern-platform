@@ -95,6 +95,7 @@ export function rehypeFernCode(): (tree: Hast.Root) => void {
             highlightStyle: meta.focused ? "focus" : "highlight",
             maxLines: meta.maxLines,
             wordWrap: meta.wordWrap,
+            matchLanguage: meta.matchLanguage,
           };
           if (meta.title == null) {
             parent?.children.splice(index, 1, {
@@ -133,6 +134,7 @@ interface CodeBlockItem {
   maxLines: number | undefined;
   title: string | undefined;
   wordWrap: boolean | undefined;
+  matchLanguage: string | undefined;
 }
 
 function visitCodeBlockNodes(nodeToVisit: MdxJsxElementHast) {
@@ -163,6 +165,7 @@ function visitCodeBlockNodes(nodeToVisit: MdxJsxElementHast) {
                     ? title.value.value
                     : undefined),
               wordWrap: meta.wordWrap,
+              matchLanguage: meta.matchLanguage,
             });
           }
         }
@@ -187,6 +190,7 @@ function visitCodeBlockNodes(nodeToVisit: MdxJsxElementHast) {
           maxLines: meta.maxLines,
           title: meta.title,
           wordWrap: meta.wordWrap,
+          matchLanguage: meta.matchLanguage,
         });
       }
     }
@@ -221,6 +225,7 @@ interface FernCodeMeta {
   focused?: boolean;
   wordWrap?: boolean;
   highlights: number[];
+  matchLanguage: string | undefined;
 }
 
 function maybeParseInt(str: string | null | undefined): number | undefined {
@@ -279,6 +284,12 @@ export function parseBlockMetaString(
     meta = meta.replace(wordWrap[0], "");
   }
 
+  const matchLanguage = meta.match(
+    /matchLanguage=(?:"((?:[^"\\]|\\.)*?)"|'((?:[^'\\]|\\.)*?)')/
+  );
+  const match = matchLanguage?.[1] ?? matchLanguage?.[2];
+  meta = meta.replace(matchLanguage?.[0] ?? "", "");
+
   const [highlights, strippedMeta] = parseHighlightedLineNumbers(meta);
   meta = strippedMeta;
 
@@ -306,6 +317,7 @@ export function parseBlockMetaString(
     focused: focused != null,
     wordWrap: wordWrap != null,
     highlights,
+    matchLanguage: match,
   };
 }
 

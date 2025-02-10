@@ -15,6 +15,7 @@ import { HorizontalOverflowMask } from "../../../components/HorizontalOverflowMa
 export declare namespace CodeGroup {
   export interface Item extends FernSyntaxHighlighterProps {
     title?: string;
+    matchLanguage?: string;
   }
 
   export interface Props {
@@ -34,19 +35,31 @@ export const CodeGroup: React.FC<React.PropsWithChildren<CodeGroup.Props>> = ({
   useEffect(() => {
     if (selectedLanguage) {
       const matchingTab = itemsRef.current.find((item) => {
-        const normalizedLanguage = ApiDefinition.cleanLanguage(item.language);
-        return item.language && normalizedLanguage === selectedLanguage;
+        if (item.matchLanguage) {
+          return (
+            ApiDefinition.cleanLanguage(item.matchLanguage) === selectedLanguage
+          );
+        }
+        return (
+          item.language &&
+          ApiDefinition.cleanLanguage(item.language) === selectedLanguage
+        );
       });
 
       if (matchingTab) {
         const newIndex = itemsRef.current.indexOf(matchingTab);
         setSelectedTabIndex((prevIndex) => {
           const prevTab = itemsRef.current[prevIndex];
-          if (
-            prevTab?.language &&
-            ApiDefinition.cleanLanguage(prevTab.language) === selectedLanguage
-          ) {
-            return prevIndex;
+          if (prevTab) {
+            const currentMatch = prevTab.matchLanguage
+              ? ApiDefinition.cleanLanguage(prevTab.matchLanguage) ===
+                selectedLanguage
+              : prevTab.language &&
+                ApiDefinition.cleanLanguage(prevTab.language) ===
+                  selectedLanguage;
+            if (currentMatch) {
+              return prevIndex;
+            }
           }
           return newIndex;
         });
@@ -59,9 +72,11 @@ export const CodeGroup: React.FC<React.PropsWithChildren<CodeGroup.Props>> = ({
     setSelectedTabIndex(newIndex);
 
     const tab = itemsRef.current[newIndex];
-    const normalizedLanguage = tab?.language
-      ? ApiDefinition.cleanLanguage(tab.language)
-      : undefined;
+    const normalizedLanguage = tab?.matchLanguage
+      ? ApiDefinition.cleanLanguage(tab.matchLanguage)
+      : tab?.language
+        ? ApiDefinition.cleanLanguage(tab.language)
+        : undefined;
 
     if (normalizedLanguage && normalizedLanguage !== selectedLanguage) {
       setSelectedLanguage(normalizedLanguage);
