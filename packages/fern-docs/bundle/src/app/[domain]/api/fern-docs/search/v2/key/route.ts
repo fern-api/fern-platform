@@ -15,7 +15,6 @@ import { NextRequest, NextResponse } from "next/server";
 
 export const runtime = "edge";
 export const maxDuration = 10;
-export const dynamic = "force-dynamic";
 
 export async function GET(req: NextRequest): Promise<NextResponse> {
   const domain = getDocsDomainEdge(req);

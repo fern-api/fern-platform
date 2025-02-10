@@ -1,5 +1,6 @@
 "use client";
 
+import { ResolvedMdx } from "@fern-api/fdr-sdk/docs";
 import clsx from "clsx";
 import { memo, type ReactNode } from "react";
 import { MdxContent } from "./MdxContent";
@@ -9,7 +10,7 @@ export declare namespace Markdown {
     title?: ReactNode;
 
     // mdx: string | FernDocs.ResolvedMdx | string | FernDocs.ResolvedMdx[] | undefined;
-    mdx: string | undefined;
+    mdx: string | ResolvedMdx | (string | ResolvedMdx)[] | undefined;
     className?: string;
     size?: "xs" | "sm" | "lg";
 
@@ -23,7 +24,10 @@ export declare namespace Markdown {
 export const Markdown = memo<Markdown.Props>(
   ({ title, mdx, className, size, fallback }) => {
     // If the MDX is empty, return null
-    if (!fallback && (mdx == null || mdx.trim().length === 0)) {
+    if (
+      !fallback &&
+      (mdx == null || (typeof mdx === "string" && mdx.trimStart().length === 0))
+    ) {
       return null;
     }
 

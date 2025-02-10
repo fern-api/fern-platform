@@ -17,7 +17,6 @@ import { Gate, withBasicTokenAnonymous } from "@/server/withRbac";
 import { getDocsDomainEdge } from "@/server/xfernhost/edge";
 
 export const maxDuration = 800; // 13 minutes
-export const dynamic = "force-dynamic";
 
 export async function GET(req: NextRequest): Promise<NextResponse> {
   const openai = createOpenAI({ apiKey: openaiApiKey() });

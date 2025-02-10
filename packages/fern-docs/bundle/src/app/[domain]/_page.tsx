@@ -323,10 +323,9 @@ export default async function Page({
     js: withCustomJavascript(config?.js, fileResolver),
     navbarLinks,
     logo: withLogo(config, found, frontmatter, fileResolver),
-    announcement:
-      announcmentMdx && announcementText
-        ? { mdx: announcmentMdx, text: announcementText }
-        : undefined,
+    announcement: announcementText
+      ? { mdx: announcmentMdx, text: announcementText }
+      : undefined,
     navigation: {
       currentTabIndex,
       tabs,

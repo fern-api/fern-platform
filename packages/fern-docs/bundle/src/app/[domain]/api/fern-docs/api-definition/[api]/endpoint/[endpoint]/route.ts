@@ -1,4 +1,3 @@
-import { serializeMdx } from "@/components/mdx/bundlers/mdx-bundler";
 import { createGetAuthStateEdge } from "@/server/auth/getAuthStateEdge";
 import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import { ApiDefinitionLoader } from "@fern-docs/cache";
@@ -7,12 +6,12 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(
   req: NextRequest,
-  props: { params: Promise<{ api: string; endpoint: string }> }
+  props: { params: Promise<{ domain: string; api: string; endpoint: string }> }
 ): Promise<NextResponse> {
   const params = await props.params;
-  const { api, endpoint } = params;
+  const { domain, api, endpoint } = params;
 
-  const { getAuthState, domain } = await createGetAuthStateEdge(req);
+  const { getAuthState } = await createGetAuthStateEdge(req);
   const [authState, flags] = await Promise.all([
     getAuthState(),
     getEdgeFlags(domain),
@@ -30,7 +29,7 @@ export async function GET(
     ApiDefinition.ApiDefinitionId(api)
   )
     .withEdgeFlags(flags)
-    .withMdxBundler(serializeMdx, "mdx-bundler")
+    // .withMdxBundler(serializeMdx, "mdx-bundler")
     .withPrune({
       type: "endpoint",
       endpointId: ApiDefinition.EndpointId(endpoint),

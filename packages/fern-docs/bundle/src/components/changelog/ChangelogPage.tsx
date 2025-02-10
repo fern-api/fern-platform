@@ -108,16 +108,12 @@ async function ChangelogPageOverview({
     (typeof mdx !== "string" ? mdx?.frontmatter : undefined) ??
     EMPTY_FRONTMATTER;
 
-  const [title, subtitle] = await Promise.all([
-    docsLoader.serializeMdx(frontmatter.title),
-    docsLoader.serializeMdx(frontmatter.subtitle),
-  ]);
-
   return (
     <>
       <PageHeader
-        title={<MdxContent mdx={title} fallback={node.title} />}
-        subtitle={<MdxContent mdx={subtitle} />}
+        domain={domain}
+        title={frontmatter.title ?? node.title}
+        subtitle={frontmatter.subtitle ?? frontmatter.excerpt}
         breadcrumb={breadcrumb}
       />
       <Markdown mdx={mdx} />

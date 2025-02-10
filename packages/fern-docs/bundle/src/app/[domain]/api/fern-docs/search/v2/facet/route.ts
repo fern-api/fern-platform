@@ -6,7 +6,6 @@ import { algoliasearch } from "algoliasearch";
 import { NextRequest, NextResponse } from "next/server";
 
 export const maxDuration = 10;
-export const dynamic = "force-dynamic";
 
 export async function GET(req: NextRequest): Promise<NextResponse> {
   const filters = toArray(req.nextUrl.searchParams.getAll("filters"));

@@ -7,8 +7,6 @@ import { conformTrailingSlash } from "@fern-docs/utils";
 import type { MetadataRoute } from "next";
 import urljoin from "url-join";
 
-export const dynamic = "force-dynamic";
-
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const domain = await getDocsDomainApp();
   const host = (await getHostApp()) ?? domain;

@@ -70,22 +70,26 @@ export async function resolveDocsContent({
   // TODO: remove legacy when done
   const apiLoaders = {
     ...mapValues(apis, (api) => {
-      return ApiDefinitionLoader.create(domain, api.id)
-        .withMdxBundler(serializeMdx, engine)
-        .withEdgeFlags(edgeFlags)
-        .withApiDefinition(
-          ApiDefinitionV1ToLatest.from(api, edgeFlags).migrate()
-        )
-        .withEnvironment(process.env.NEXT_PUBLIC_FDR_ORIGIN)
-        .withResolveDescriptions();
+      return (
+        ApiDefinitionLoader.create(domain, api.id)
+          // .withMdxBundler(serializeMdx, engine)
+          .withEdgeFlags(edgeFlags)
+          .withApiDefinition(
+            ApiDefinitionV1ToLatest.from(api, edgeFlags).migrate()
+          )
+          .withEnvironment(process.env.NEXT_PUBLIC_FDR_ORIGIN)
+          .withResolveDescriptions()
+      );
     }),
     ...mapValues(apisV2 ?? {}, (api) => {
-      return ApiDefinitionLoader.create(domain, api.id)
-        .withMdxBundler(serializeMdx, engine)
-        .withEdgeFlags(edgeFlags)
-        .withApiDefinition(api)
-        .withEnvironment(process.env.NEXT_PUBLIC_FDR_ORIGIN)
-        .withResolveDescriptions();
+      return (
+        ApiDefinitionLoader.create(domain, api.id)
+          // .withMdxBundler(serializeMdx, engine)
+          .withEdgeFlags(edgeFlags)
+          .withApiDefinition(api)
+          .withEnvironment(process.env.NEXT_PUBLIC_FDR_ORIGIN)
+          .withResolveDescriptions()
+      );
     }),
   };
 

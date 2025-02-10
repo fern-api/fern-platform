@@ -1,4 +1,4 @@
-import { serializeMdx } from "@/components/mdx/bundlers/mdx-bundler";
+import { serializeMdx as uncachedSerializeMdx } from "@/components/mdx/bundlers/mdx-bundler";
 import { FernSerializeMdxOptions } from "@/components/mdx/types";
 import {
   ApiDefinition,
@@ -15,9 +15,9 @@ import { AuthEdgeConfig } from "@fern-docs/auth";
 import { getAuthEdgeConfig, getEdgeFlags } from "@fern-docs/edge-config";
 import { DEFAULT_LOGO_HEIGHT } from "@fern-docs/utils";
 import { mapValues } from "es-toolkit/object";
-import { unstable_cache } from "next/cache";
-import { cache } from "react";
-import { AsyncOrSync, UnreachableCaseError } from "ts-essentials";
+import { cacheLife } from "next/dist/server/use-cache/cache-life";
+import { cacheTag } from "next/dist/server/use-cache/cache-tag";
+import { UnreachableCaseError } from "ts-essentials";
 import { AuthState, createGetAuthState } from "./auth/getAuthState";
 import { createFileResolver } from "./file-resolver";
 import { loadWithUrl } from "./loadWithUrl";
@@ -108,63 +108,43 @@ export interface DocsLoader {
   getAuthState: (pathname?: string) => Promise<AuthState>;
 }
 
-const cachedGetAuthEdgeConfig = cache(getAuthEdgeConfig);
-const cachedGetAuthState = cache(createGetAuthState);
-const cachedLoadWithUrl = cache(loadWithUrl);
-
 /**
- * Force cache the loadWithUrl call, so that `JSON.parse()` is called only once.
- */
-export const createCachedDocsLoader = cache(
-  async (domain: string, fern_token?: string): Promise<DocsLoader> => {
-    const authConfig = await cachedGetAuthEdgeConfig(domain);
-    const { getAuthState } = await cachedGetAuthState(
-      domain,
-      fern_token,
-      authConfig
-    );
-    return new CachedDocsLoaderImpl(
-      domain,
-      fern_token,
-      authConfig,
-      getAuthState
-    );
-  }
-);
-
-/**
- * This class implements the DocsLoader interface using loadWithUrl + unstable_cache.
- * The unstable_cache helps us speed up rendering specific parts of the page that are static.
+ * The "use cache" tags help us speed up rendering specific parts of the page that are static.
  * It has a hard-limit of 2MB which is why we cannot use it to cache the entire response.
  * The expectation is that moving forward, we'll update the underlying API to be more cache-friendly
  * in a piece-meal fashion, and eventually remove all use of loadWithUrl.
  */
-class CachedDocsLoaderImpl implements DocsLoader {
-  constructor(
-    private _domain: string,
-    private _fern_token: string | undefined,
-    private _authConfig: AuthEdgeConfig | undefined,
-    private _getAuthState: (pathname?: string) => AsyncOrSync<AuthState>
-  ) {}
+export const createCachedDocsLoader = async (
+  domain: string,
+  fern_token?: string
+  // authConfig?: AuthEdgeConfig,
+  // getAuthState: (pathname?: string) => AsyncOrSync<AuthState>
+): Promise<DocsLoader> => {
+  const authConfig = await getAuthEdgeConfig(domain);
+  const { getAuthState } = await createGetAuthState(
+    domain,
+    fern_token,
+    authConfig
+  );
 
-  public get domain() {
-    return this._domain;
-  }
+  const getBaseUrl = async (): Promise<DocsV2Read.BaseUrl> => {
+    "use cache";
 
-  public get fern_token() {
-    return this._fern_token;
-  }
+    cacheTag(domain);
 
-  public getBaseUrl = async (): Promise<DocsV2Read.BaseUrl> => {
-    const response = await cachedLoadWithUrl(this.domain);
+    const response = await loadWithUrl(domain);
     if (!response.ok) {
-      return { domain: this.domain, basePath: undefined };
+      return { domain, basePath: undefined };
     }
     return response.body.baseUrl;
   };
 
-  public getFiles = async (): Promise<Record<string, FileData>> => {
-    const response = await cachedLoadWithUrl(this.domain);
+  const getFiles = async (): Promise<Record<string, FileData>> => {
+    "use cache";
+
+    cacheTag(domain);
+
+    const response = await loadWithUrl(domain);
     if (!response.ok) {
       return {};
     }
@@ -186,10 +166,14 @@ class CachedDocsLoaderImpl implements DocsLoader {
     });
   };
 
-  public getApi = async (
+  const getApi = async (
     id: string
   ): Promise<ApiDefinition.ApiDefinition | undefined> => {
-    const response = await cachedLoadWithUrl(this.domain);
+    "use cache";
+
+    cacheTag(domain);
+
+    const response = await loadWithUrl(domain);
     if (!response.ok) {
       return undefined;
     }
@@ -203,38 +187,16 @@ class CachedDocsLoaderImpl implements DocsLoader {
     }
     return ApiDefinitionV1ToLatest.from(
       v1,
-      await getEdgeFlags(this.domain)
+      await getEdgeFlags(domain)
     ).migrate();
   };
 
-  public getRoot = async () => {
-    let root = await this.unsafe_getFullRoot();
+  const unsafe_getFullRoot = async () => {
+    "use cache";
 
-    if (!root) {
-      return undefined;
-    }
+    cacheTag(domain);
 
-    if (this.authConfig) {
-      root = pruneWithAuthState(
-        await this.getAuthState(),
-        this.authConfig,
-        root
-      );
-    }
-
-    if (root) {
-      FernNavigation.utils.mutableUpdatePointsTo(root);
-    }
-
-    return root;
-  };
-
-  /**
-   * beware: this returns the full tree, and ignores authentication.
-   * do not use this except for revalidation.
-   */
-  public unsafe_getFullRoot = async () => {
-    const response = await cachedLoadWithUrl(this.domain);
+    const response = await loadWithUrl(domain);
     if (!response.ok) {
       return undefined;
     }
@@ -247,7 +209,7 @@ class CachedDocsLoaderImpl implements DocsLoader {
     const root =
       FernNavigation.migrate.FernNavigationV1ToLatest.create().root(v1);
 
-    if ((await getEdgeFlags(this.domain)).isApiScrollingDisabled) {
+    if ((await getEdgeFlags(domain)).isApiScrollingDisabled) {
       FernNavigation.traverseBF(root, (node) => {
         if (node.type === "apiReference") {
           node.paginated = true;
@@ -260,8 +222,34 @@ class CachedDocsLoaderImpl implements DocsLoader {
     return root;
   };
 
-  public getConfig = async () => {
-    const response = await cachedLoadWithUrl(this.domain);
+  const getRoot = async () => {
+    "use cache";
+
+    cacheTag(domain);
+
+    let root = await unsafe_getFullRoot();
+
+    if (!root) {
+      return undefined;
+    }
+
+    if (authConfig) {
+      root = pruneWithAuthState(await getAuthState(), authConfig, root);
+    }
+
+    if (root) {
+      FernNavigation.utils.mutableUpdatePointsTo(root);
+    }
+
+    return root;
+  };
+
+  const getConfig = async () => {
+    "use cache";
+
+    cacheTag(domain);
+
+    const response = await loadWithUrl(domain);
     if (!response.ok) {
       return undefined;
     }
@@ -269,70 +257,103 @@ class CachedDocsLoaderImpl implements DocsLoader {
     return config;
   };
 
-  public getPage = async (pageId: string) => {
-    const response = await cachedLoadWithUrl(this.domain);
+  const getPage = async (pageId: string) => {
+    "use cache";
+
+    cacheTag(domain);
+
+    const response = await loadWithUrl(domain);
     if (!response.ok) {
       return undefined;
     }
     return response.body.definition.pages[pageId as PageId];
   };
 
-  public serializeMdx = async (
+  const serializeMdx = async (
     content: string | undefined,
     options?: Omit<FernSerializeMdxOptions, "files" | "replaceSrc">
   ) => {
+    "use cache";
+
+    cacheTag(domain);
+
     if (content == null) {
       return undefined;
     }
     const [files, mdxBundlerFiles] = await Promise.all([
-      this.getFiles(),
-      this.getMdxBundlerFiles(),
+      getFiles(),
+      getMdxBundlerFiles(),
     ]);
-    return serializeMdx(content, {
+
+    const mdx = await uncachedSerializeMdx(content, {
       ...options,
       files: mdxBundlerFiles,
       replaceSrc: createFileResolver(files),
     });
+
+    if (mdx == null) {
+      // if we're returning the fallback string, this means validation failed
+      cacheLife({
+        stale: 0,
+        revalidate: 0,
+      });
+    }
+
+    return mdx ?? content;
   };
 
-  public getSerializedPage = async (
+  const getSerializedPage = async (
     pageId: string,
     options?: Omit<FernSerializeMdxOptions, "files" | "replaceSrc">
-    // revalidate?: number | false
   ) => {
+    "use cache";
+
+    cacheTag(domain);
+
     const [page, files, mdxBundlerFiles] = await Promise.all([
-      this.getPage(pageId),
-      this.getFiles(),
-      this.getMdxBundlerFiles(),
+      getPage(pageId),
+      getFiles(),
+      getMdxBundlerFiles(),
     ]);
     if (!page) {
       return undefined;
     }
-    return await serializeMdx(page.markdown, {
+    const mdx = await uncachedSerializeMdx(page.markdown, {
       ...options,
       filename: pageId,
       files: mdxBundlerFiles,
       replaceSrc: createFileResolver(files),
     });
+
+    if (mdx == null) {
+      // if we're returning the fallback string, this means validation failed
+      cacheLife({
+        stale: 0,
+        revalidate: 0,
+      });
+    }
+
+    return mdx ?? page.markdown;
   };
 
-  public getMdxBundlerFiles = unstable_cache(
-    async () => {
-      const response = await cachedLoadWithUrl(this.domain);
-      if (!response.ok) {
-        return {};
-      }
-      return response.body.definition.jsFiles ?? {};
-    },
-    ["docs-loader:mdx-bundler-files", this.domain],
-    { tags: [this.domain, "mdx-bundler-files"], revalidate: false }
-  );
+  const getMdxBundlerFiles = async () => {
+    "use cache";
 
-  public getColors = async () => {
-    const [config, files] = await Promise.all([
-      this.getConfig(),
-      this.getFiles(),
-    ]);
+    cacheTag(domain);
+
+    const response = await loadWithUrl(domain);
+    if (!response.ok) {
+      return {};
+    }
+    return response.body.definition.jsFiles ?? {};
+  };
+
+  const getColors = async () => {
+    "use cache";
+
+    cacheTag(domain);
+
+    const [config, files] = await Promise.all([getConfig(), getFiles()]);
     if (!config) {
       return { light: undefined, dark: undefined };
     }
@@ -387,8 +408,12 @@ class CachedDocsLoaderImpl implements DocsLoader {
     };
   };
 
-  public getLayout = async () => {
-    const config = await this.getConfig();
+  const getLayout = async () => {
+    "use cache";
+
+    cacheTag(domain);
+
+    const config = await getConfig();
     if (!config) {
       return {
         logoHeight: DEFAULT_LOGO_HEIGHT,
@@ -418,14 +443,26 @@ class CachedDocsLoaderImpl implements DocsLoader {
     };
   };
 
-  public get authConfig() {
-    return this._authConfig;
-  }
-
-  public getAuthState = async (pathname?: string) => {
-    return this._getAuthState(pathname);
+  return {
+    domain,
+    fern_token,
+    authConfig,
+    getBaseUrl,
+    getFiles,
+    getApi,
+    getRoot,
+    unsafe_getFullRoot,
+    getConfig,
+    getPage,
+    serializeMdx,
+    getSerializedPage,
+    getColors,
+    getLayout,
+    getAuthState: async (pathname?: string) => {
+      return getAuthState(pathname);
+    },
   };
-}
+};
 
 function toRgbaColor(color: RgbaColor): RgbaColor;
 function toRgbaColor(color: object | undefined): RgbaColor | undefined;

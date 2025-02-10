@@ -5,7 +5,6 @@ import type { MetadataRoute } from "next";
 import { headers } from "next/headers";
 import urlJoin from "url-join";
 
-export const dynamic = "force-dynamic";
 export const runtime = "edge";
 
 export default async function robots(): Promise<MetadataRoute.Robots> {

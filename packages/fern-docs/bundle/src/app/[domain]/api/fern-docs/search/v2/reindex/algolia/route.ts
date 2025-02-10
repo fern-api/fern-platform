@@ -18,7 +18,6 @@ import { addLeadingSlash, withoutStaging } from "@fern-docs/utils";
 import { NextRequest, NextResponse } from "next/server";
 
 export const maxDuration = 800; // 13 minutes
-export const dynamic = "force-dynamic";
 
 export async function GET(req: NextRequest): Promise<NextResponse> {
   const domain = getDocsDomainEdge(req);
