@@ -107,7 +107,7 @@
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "@types/react-test-renderer": "^18.0.7",
-    "@vitejs/plugin-react": "^4.2.1",
+    "@vitejs/plugin-react": "^4.3.4",
     "autoprefixer": "^10.4.16",
     "chromatic": "^11.3.0",
     "depcheck": "^1.4.7",

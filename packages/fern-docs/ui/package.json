@@ -151,7 +151,7 @@
     "@types/react-dom": "^18",
     "@types/three": "^0.170.0",
     "@types/tinycolor2": "^1.4.6",
-    "@vitejs/plugin-react": "^4.2.1",
+    "@vitejs/plugin-react": "^4.3.4",
     "autoprefixer": "^10.4.16",
     "chromatic": "^11.3.0",
     "depcheck": "^1.4.7",
