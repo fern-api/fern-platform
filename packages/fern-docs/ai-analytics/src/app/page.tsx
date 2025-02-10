@@ -1,17 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 interface Message {
   role: string;
   content: string;
-}
-
-interface Conversation {
-  input: Message[] | null;
-  output: {
-    message: Message;
-  } | null;
-}
-
-interface ApiResponse {
-  data: Conversation[];
 }
 
 interface DomainMessages {
@@ -90,7 +80,7 @@ export default async function Home() {
     body: JSON.stringify(body),
   });
 
-  const jsonData: ApiResponse = await response.json();
+  const jsonData = await response.json();
   const data = jsonData.data;
 
   const processedData: DomainMessages[] = [];
@@ -98,7 +88,7 @@ export default async function Home() {
   for (const convo of data) {
     if (convo.input !== null && convo.output !== null) {
       let domain = "";
-      convo.input.forEach((msg) => {
+      convo.input.forEach((msg: any) => {
         if (msg.role === "system") {
           if (msg.content && msg.content.includes("elevenlabs.io")) {
             domain = "elevenlabs.io";
@@ -109,7 +99,7 @@ export default async function Home() {
       });
 
       const cleanedInput = convo.input
-        .map((msg) => {
+        .map((msg: any) => {
           if (msg.role === "user") {
             return {
               role: "user",
@@ -119,7 +109,7 @@ export default async function Home() {
             return msg;
           }
         })
-        .filter((msg) => msg.role !== "system" && msg.role !== "tool");
+        .filter((msg: any) => msg.role !== "system" && msg.role !== "tool");
       cleanedInput.push(convo.output.message);
       processedData.push({ domain, content: cleanedInput });
     }
