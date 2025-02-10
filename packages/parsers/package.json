@@ -42,6 +42,6 @@
     "@types/uuid": "^9.0.1",
     "@types/whatwg-mimetype": "^3.0.2",
     "js-yaml": "^4.1.0",
-    "vitest": "^2.1.4"
+    "vitest": "^2.1.9"
   }
 }

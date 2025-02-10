@@ -48,7 +48,7 @@
     "prettier": "^3.4.2",
     "stylelint": "^16.1.0",
     "typescript": "^5",
-    "vitest": "^2.1.4"
+    "vitest": "^2.1.9"
   },
   "optionalDependencies": {
     "@next/swc-darwin-arm64": "14.2.9",
