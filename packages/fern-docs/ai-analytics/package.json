@@ -3,10 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "build": "next build",
-    "dev": "next dev --turbopack",
-    "lint": "next lint",
-    "start": "next start"
+    "build-storybook": "storybook build",
+    "demo:build": "next build",
+    "demo:dev": "next dev",
+    "demo:lint": "next lint",
+    "demo:start": "next start",
+    "storybook": "storybook dev -p 6006"
   },
   "dependencies": {
     "next": "15.1.6",
