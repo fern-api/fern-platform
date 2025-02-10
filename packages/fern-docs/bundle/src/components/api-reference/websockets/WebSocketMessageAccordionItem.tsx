@@ -2,12 +2,13 @@
 
 import { FC } from "react";
 
-import { APIV1Read } from "@fern-api/fdr-sdk/client/types";
-import { CopyToClipboardButton } from "@fern-docs/components";
-import { FernSyntaxHighlighter } from "@fern-docs/syntax-highlighter";
 import * as Accordion from "@radix-ui/react-accordion";
 import cn from "clsx";
 import { ArrowDown, ArrowUp, NavArrowDown } from "iconoir-react";
+
+import { APIV1Read } from "@fern-api/fdr-sdk/client/types";
+import { CopyToClipboardButton } from "@fern-docs/components";
+import { FernSyntaxHighlighter } from "@fern-docs/syntax-highlighter";
 
 import { WebSocketMessage } from "./WebSocketMessages";
 

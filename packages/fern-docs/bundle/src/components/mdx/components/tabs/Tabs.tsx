@@ -1,8 +1,9 @@
 import { FC, ReactNode, useEffect, useState } from "react";
 
-import { ApiDefinition } from "@fern-api/fdr-sdk";
 import * as RadixTabs from "@radix-ui/react-tabs";
 import { useAtom, useAtomValue } from "jotai";
+
+import { ApiDefinition } from "@fern-api/fdr-sdk";
 
 import { ANCHOR_ATOM, FERN_LANGUAGE_ATOM } from "../../../atoms";
 

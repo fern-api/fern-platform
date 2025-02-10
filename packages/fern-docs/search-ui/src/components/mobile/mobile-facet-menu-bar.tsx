@@ -5,6 +5,9 @@ import {
   forwardRef,
 } from "react";
 
+import * as Menubar from "@radix-ui/react-menubar";
+import { Check, ChevronDown, Minus } from "lucide-react";
+
 import { EMPTY_ARRAY } from "@fern-api/ui-core-utils";
 import {
   AvailabilityBadge,
@@ -15,8 +18,6 @@ import {
   isHttpMethod,
 } from "@fern-docs/components/badges";
 import { FacetName } from "@fern-docs/search-server/algolia/types";
-import * as Menubar from "@radix-ui/react-menubar";
-import { Check, ChevronDown, Minus } from "lucide-react";
 
 import { FacetFilter } from "../../types";
 import { getFacetDisplay, toFilterLabel } from "../../utils/facet-display";

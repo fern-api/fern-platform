@@ -1,13 +1,14 @@
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
+import urlJoin from "url-join";
+import { WebflowClient } from "webflow-api";
+import type { OauthScope } from "webflow-api/api/types/OAuthScope";
+
 import { withDefaultProtocol } from "@fern-api/ui-core-utils";
 import { APIKeyInjectionConfig, OryAccessTokenSchema } from "@fern-docs/auth";
 import { getAuthEdgeConfig } from "@fern-docs/edge-config";
 import { removeTrailingSlash } from "@fern-docs/utils";
-import urlJoin from "url-join";
-import { WebflowClient } from "webflow-api";
-import type { OauthScope } from "webflow-api/api/types/OAuthScope";
 
 import { safeVerifyFernJWTConfig } from "@/server/auth/FernJWT";
 import { OryOAuth2Client, getOryAuthorizationUrl } from "@/server/auth/ory";

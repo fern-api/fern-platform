@@ -1,9 +1,10 @@
+import { UnreachableCaseError } from "ts-essentials";
+
 import type { EndpointContext } from "@fern-api/fdr-sdk/api-definition";
 import { toCurlyBraceEndpointPathLiteral } from "@fern-api/fdr-sdk/api-definition";
 import { type APIV1Read, FdrAPI } from "@fern-api/fdr-sdk/client/types";
 import { SnippetTemplateResolver } from "@fern-api/template-resolver";
 import { unknownToString } from "@fern-api/ui-core-utils";
-import { UnreachableCaseError } from "ts-essentials";
 
 import { provideRegistryService } from "@/server/registry";
 

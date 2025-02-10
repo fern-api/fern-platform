@@ -1,8 +1,9 @@
 import { ComponentPropsWithoutRef, forwardRef, memo } from "react";
 
-import { Kbd } from "@fern-docs/components";
 import { VariantProps, cva } from "class-variance-authority";
 import { SearchIcon } from "lucide-react";
+
+import { Kbd } from "@fern-docs/components";
 
 import { cn } from "../ui/cn";
 

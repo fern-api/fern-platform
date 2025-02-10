@@ -1,11 +1,12 @@
-import { FdrAPI, FdrClient, FernNavigation } from "@fern-api/fdr-sdk";
-import { assertNever } from "@fern-api/ui-core-utils";
 import {
   SearchClient,
   SearchForFacetValuesResponse,
   SearchResponse,
   algoliasearch,
 } from "algoliasearch";
+
+import { FdrAPI, FdrClient, FernNavigation } from "@fern-api/fdr-sdk";
+import { assertNever } from "@fern-api/ui-core-utils";
 
 import { Rule, RuleArgs, RuleResult } from "../runRules";
 

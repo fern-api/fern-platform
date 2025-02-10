@@ -1,11 +1,12 @@
 import { ReactElement, forwardRef } from "react";
 
-import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
-import { FernTooltip } from "@fern-docs/components";
-import { HttpMethodBadge } from "@fern-docs/components/badges";
 import clsx from "clsx";
 import { atom, useAtomValue } from "jotai";
 import { useMemoOne } from "use-memo-one";
+
+import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
+import { FernTooltip } from "@fern-docs/components";
+import { HttpMethodBadge } from "@fern-docs/components/badges";
 
 import { FernLinkButton } from "@/components/components/FernLinkButton";
 

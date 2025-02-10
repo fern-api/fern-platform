@@ -1,9 +1,10 @@
 import { PropsWithChildren, ReactElement, useEffect, useState } from "react";
 
-import { useCopyToClipboard } from "@fern-ui/react-commons";
 import * as Tooltip from "@radix-ui/react-tooltip";
 import { Check, Link } from "iconoir-react";
 import { AnimatePresence, motion } from "motion/react";
+
+import { useCopyToClipboard } from "@fern-ui/react-commons";
 
 import { FernLink } from "./FernLink";
 

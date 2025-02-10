@@ -1,7 +1,8 @@
 import { ReactNode } from "react";
 
-import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { ExternalLink } from "lucide-react";
+
+import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 
 import { useLocationHref } from "../../hooks/useLocationHref";
 import { SidebarLink } from "../SidebarLink";

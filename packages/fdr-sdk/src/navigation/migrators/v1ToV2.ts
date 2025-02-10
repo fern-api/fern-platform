@@ -1,5 +1,6 @@
-import visitDiscriminatedUnion from "@fern-api/ui-core-utils/visitDiscriminatedUnion";
 import { UnreachableCaseError } from "ts-essentials";
+
+import visitDiscriminatedUnion from "@fern-api/ui-core-utils/visitDiscriminatedUnion";
 
 import { FernNavigation } from "../..";
 

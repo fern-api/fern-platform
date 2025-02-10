@@ -1,5 +1,6 @@
-import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 import type { Options } from "@mdx-js/esbuild";
+
+import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 
 import { RehypeFilesOptions } from "./plugins/rehype-files";
 

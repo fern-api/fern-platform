@@ -2,6 +2,8 @@
 
 import { ReactNode, memo, useCallback, useMemo } from "react";
 
+import { sortBy } from "es-toolkit/array";
+
 import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { EMPTY_OBJECT, visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
@@ -11,7 +13,6 @@ import {
   cn,
   statusCodeToIntent,
 } from "@fern-docs/components";
-import { sortBy } from "es-toolkit/array";
 
 import { WebSocketMessages } from "@/components/api-reference/websockets/WebSocketMessages";
 

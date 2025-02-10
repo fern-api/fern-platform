@@ -10,6 +10,9 @@ import React, {
   useState,
 } from "react";
 
+import { atom, useAtom, useAtomValue, useSetAtom } from "jotai";
+import { z } from "zod";
+
 import {
   CommandActions,
   CommandEmpty,
@@ -27,8 +30,6 @@ import {
   useIsMobile,
 } from "@fern-docs/search-ui";
 import { useEventCallback } from "@fern-ui/react-commons";
-import { atom, useAtom, useAtomValue, useSetAtom } from "jotai";
-import { z } from "zod";
 
 import {
   CURRENT_VERSION_ATOM,

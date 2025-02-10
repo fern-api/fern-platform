@@ -12,14 +12,15 @@ import {
   useRef,
 } from "react";
 
-import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
-import { FaIcon, FernTooltip } from "@fern-docs/components";
 import { composeEventHandlers } from "@radix-ui/primitive";
 import { composeRefs } from "@radix-ui/react-compose-refs";
 import cn, { clsx } from "clsx";
 import { range } from "es-toolkit/math";
 import { Lock, NavArrowDown } from "iconoir-react";
 import { useCallbackOne } from "use-memo-one";
+
+import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
+import { FaIcon, FernTooltip } from "@fern-docs/components";
 
 import {
   IS_READY_ATOM,

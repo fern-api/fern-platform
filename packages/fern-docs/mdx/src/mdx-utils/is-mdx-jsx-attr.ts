@@ -1,9 +1,10 @@
-import { isPlainObject } from "@fern-api/ui-core-utils";
 import type {
   MdxJsxAttribute,
   MdxJsxAttributeValueExpression,
   MdxJsxExpressionAttribute,
 } from "mdast-util-mdx";
+
+import { isPlainObject } from "@fern-api/ui-core-utils";
 
 export function isMdxJsxAttributeValueExpression(
   value: unknown

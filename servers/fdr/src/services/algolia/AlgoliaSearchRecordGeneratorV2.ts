@@ -1,3 +1,6 @@
+import { kebabCase } from "es-toolkit/string";
+import { v4 as uuid } from "uuid";
+
 import {
   APIV1Read,
   Algolia,
@@ -9,8 +12,6 @@ import {
   visitDbNavigationTab,
 } from "@fern-api/fdr-sdk";
 import { titleCase, visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
-import { kebabCase } from "es-toolkit/string";
-import { v4 as uuid } from "uuid";
 
 import { EndpointPathPart } from "../../../../../packages/fdr-sdk/src/client/APIV1Read";
 import { BreadcrumbsInfo } from "../../api/generated/api";

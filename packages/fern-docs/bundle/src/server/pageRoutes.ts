@@ -1,7 +1,8 @@
 import getAssetPathFromRoute from "next/dist/shared/lib/router/utils/get-asset-path-from-route";
 
-import { addLeadingSlash, removeTrailingSlash } from "@fern-docs/utils";
 import urlJoin from "url-join";
+
+import { addLeadingSlash, removeTrailingSlash } from "@fern-docs/utils";
 
 export function getPageRoute(
   ssg: boolean,

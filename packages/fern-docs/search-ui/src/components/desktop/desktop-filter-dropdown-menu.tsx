@@ -1,7 +1,8 @@
 import { cloneElement, isValidElement } from "react";
 
-import { Badge } from "@fern-docs/components/badges";
 import { Minus } from "lucide-react";
+
+import { Badge } from "@fern-docs/components/badges";
 
 import { FacetFilter } from "../../types";
 import { getFacetDisplay, toFilterLabel } from "../../utils/facet-display";

@@ -1,3 +1,5 @@
+import { mapValues } from "es-toolkit/object";
+
 import { ApiDefinitionV1ToLatest } from "@fern-api/fdr-sdk/api-definition";
 import type {
   APIV1Read,
@@ -7,7 +9,6 @@ import type {
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { ApiDefinitionLoader, MarkdownLoader } from "@fern-docs/cache";
 import type { EdgeFlags } from "@fern-docs/utils";
-import { mapValues } from "es-toolkit/object";
 
 import { serializeMdx } from "../mdx/bundlers/mdx-bundler";
 import type { FernSerializeMdxOptions } from "../mdx/types";

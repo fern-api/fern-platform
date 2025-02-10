@@ -1,7 +1,8 @@
-import { chunkToBytes, formatUtc, measureBytes } from "@fern-api/ui-core-utils";
-import { getFrontmatter, markdownToString } from "@fern-docs/mdx";
 import { compact, flatten } from "es-toolkit/array";
 import { decode } from "html-entities";
+
+import { chunkToBytes, formatUtc, measureBytes } from "@fern-api/ui-core-utils";
+import { getFrontmatter, markdownToString } from "@fern-docs/mdx";
 
 import { maybePrepareMdxContent } from "../../utils/prepare-mdx-content";
 import { BaseRecord, ChangelogRecord } from "../types";

@@ -1,8 +1,9 @@
-import { FdrClient } from "@fern-api/fdr-sdk";
 import { PrismaClient } from "@prisma/client";
 import { execa } from "execa";
 import express from "express";
 import http from "http";
+
+import { FdrClient } from "@fern-api/fdr-sdk";
 
 import { register } from "../../api";
 import { FdrApplication, FdrConfig } from "../../app";

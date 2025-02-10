@@ -1,10 +1,11 @@
 import { ReactElement } from "react";
 
-import { FaIcon } from "@fern-docs/components";
-import { SidebarTab } from "@fern-platform/fdr-utils";
 import clsx from "clsx";
 import { Lock } from "iconoir-react";
 import { useAtomValue } from "jotai";
+
+import { FaIcon } from "@fern-docs/components";
+import { SidebarTab } from "@fern-platform/fdr-utils";
 
 import { CURRENT_TAB_INDEX_ATOM, TABS_ATOM } from "../atoms";
 import { FernLink } from "../components/FernLink";

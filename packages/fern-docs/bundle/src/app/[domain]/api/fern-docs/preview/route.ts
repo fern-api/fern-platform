@@ -2,8 +2,9 @@ import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 import { NextRequest, NextResponse } from "next/server";
 
-import { COOKIE_FERN_DOCS_PREVIEW } from "@fern-docs/utils";
 import { getEnv } from "@vercel/functions";
+
+import { COOKIE_FERN_DOCS_PREVIEW } from "@fern-docs/utils";
 
 import {
   withDeleteCookie,

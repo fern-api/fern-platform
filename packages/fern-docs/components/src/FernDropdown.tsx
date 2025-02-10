@@ -12,10 +12,11 @@ import {
   useState,
 } from "react";
 
-import { useResizeObserver } from "@fern-ui/react-commons";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import cn, { clsx } from "clsx";
 import { Check, InfoCircle } from "iconoir-react";
+
+import { useResizeObserver } from "@fern-ui/react-commons";
 
 import { FernScrollArea } from "./FernScrollArea";
 import { FernTooltip, FernTooltipProvider } from "./FernTooltip";

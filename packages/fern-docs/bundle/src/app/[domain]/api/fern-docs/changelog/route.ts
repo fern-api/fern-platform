@@ -4,14 +4,15 @@ import { cacheTag } from "next/dist/server/use-cache/cache-tag";
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
+import { Feed, Item } from "feed";
+import urlJoin from "url-join";
+
 import type { DocsV1Read } from "@fern-api/fdr-sdk/client/types";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { NodeCollector } from "@fern-api/fdr-sdk/navigation";
 import { assertNever, withDefaultProtocol } from "@fern-api/ui-core-utils";
 import { getFrontmatter } from "@fern-docs/mdx";
 import { COOKIE_FERN_TOKEN, addLeadingSlash } from "@fern-docs/utils";
-import { Feed, Item } from "feed";
-import urlJoin from "url-join";
 
 import { DocsLoader } from "@/server/DocsLoader";
 import { getHostEdge } from "@/server/xfernhost/edge";

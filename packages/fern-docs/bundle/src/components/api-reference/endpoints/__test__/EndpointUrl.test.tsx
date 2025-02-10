@@ -1,9 +1,10 @@
 /**
  * @vitest-environment jsdom
  */
+import { render, screen } from "@testing-library/react";
+
 import { PathPart } from "@fern-api/fdr-sdk/api-definition";
 import { EnvironmentId, PropertyKey } from "@fern-api/fdr-sdk/navigation";
-import { render, screen } from "@testing-library/react";
 
 import { EndpointUrl } from "../EndpointUrl";
 

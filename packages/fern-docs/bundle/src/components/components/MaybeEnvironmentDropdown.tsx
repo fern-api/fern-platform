@@ -1,11 +1,12 @@
 import { ReactElement, useEffect, useState } from "react";
 
-import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
-import { FernButton, FernDropdown, FernInput } from "@fern-docs/components";
-import { useBooleanState } from "@fern-ui/react-commons";
 import cn from "clsx";
 import { useAtom } from "jotai";
 import { parse } from "url";
+
+import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
+import { FernButton, FernDropdown, FernInput } from "@fern-docs/components";
+import { useBooleanState } from "@fern-ui/react-commons";
 
 import { PLAYGROUND_ENVIRONMENT_ATOM } from "../atoms";
 import { SELECTED_ENVIRONMENT_ATOM } from "../atoms/environment";

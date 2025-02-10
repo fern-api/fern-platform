@@ -1,6 +1,7 @@
-import { APIResponse, APIV1Write, FdrAPI, FdrClient } from "@fern-api/fdr-sdk";
 import type { DocsV2, IndexSegment } from "@prisma/client";
 import { v4 } from "uuid";
+
+import { APIResponse, APIV1Write, FdrAPI, FdrClient } from "@fern-api/fdr-sdk";
 
 export function getUniqueDocsForUrl(prefix: string): string {
   return `${prefix}_${Math.random()}.fern.com`;

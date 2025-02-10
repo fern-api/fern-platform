@@ -1,10 +1,11 @@
-import { ColorsConfig } from "@fern-platform/fdr-utils";
 import { isEqual } from "es-toolkit/predicate";
 import { atom, useAtom, useAtomValue } from "jotai";
 import { atomWithRefresh, selectAtom } from "jotai/utils";
 import { noop } from "ts-essentials";
 import { useCallbackOne } from "use-memo-one";
 import { z } from "zod";
+
+import { ColorsConfig } from "@fern-platform/fdr-utils";
 
 import { getThemeColor } from "../themes/stylesheet/getColorVariables";
 import { DOCS_ATOM } from "./docs";

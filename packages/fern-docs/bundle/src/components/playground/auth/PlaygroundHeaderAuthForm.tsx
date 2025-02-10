@@ -1,11 +1,12 @@
 import type { ReactElement, SetStateAction } from "react";
 
-import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
-import { unknownToString } from "@fern-api/ui-core-utils";
 import { atom } from "jotai";
 import { useAtom, useAtomValue } from "jotai/react";
 import { RESET } from "jotai/utils";
 import { useMemoOne } from "use-memo-one";
+
+import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
+import { unknownToString } from "@fern-api/ui-core-utils";
 
 import { FERN_USER_ATOM, PLAYGROUND_AUTH_STATE_HEADER_ATOM } from "../../atoms";
 import { PasswordInputGroup } from "../PasswordInputGroup";

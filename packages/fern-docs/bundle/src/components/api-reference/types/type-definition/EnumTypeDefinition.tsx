@@ -1,13 +1,14 @@
 import React, { ReactElement, useState } from "react";
 
+import cn from "clsx";
+import { Search, Xmark } from "iconoir-react";
+
 import {
   FernButton,
   FernInput,
   FernTooltipProvider,
 } from "@fern-docs/components";
 import { useBooleanState } from "@fern-ui/react-commons";
-import cn from "clsx";
-import { Search, Xmark } from "iconoir-react";
 
 import {
   TypeDefinitionContext,

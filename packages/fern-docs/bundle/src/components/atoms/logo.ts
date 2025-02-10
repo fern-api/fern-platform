@@ -1,9 +1,10 @@
-import type { FdrAPI, FernNavigation } from "@fern-api/fdr-sdk";
-import type { Frontmatter } from "@fern-api/fdr-sdk/docs";
-import { addLeadingSlash, conformTrailingSlash } from "@fern-docs/utils";
 import { isEqual } from "es-toolkit/predicate";
 import { atom } from "jotai";
 import { selectAtom } from "jotai/utils";
+
+import type { FdrAPI, FernNavigation } from "@fern-api/fdr-sdk";
+import type { Frontmatter } from "@fern-api/fdr-sdk/docs";
+import { addLeadingSlash, conformTrailingSlash } from "@fern-docs/utils";
 
 import { FileData } from "@/server/types";
 import { getLogoFromFrontmatter } from "@/server/withLogo";

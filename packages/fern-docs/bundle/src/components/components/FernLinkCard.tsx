@@ -1,8 +1,9 @@
 import { LinkProps } from "next/link";
 import { PropsWithChildren, forwardRef } from "react";
 
-import { FernCardProps } from "@fern-docs/components";
 import cn from "clsx";
+
+import { FernCardProps } from "@fern-docs/components";
 
 import { FernLink } from "./FernLink";
 

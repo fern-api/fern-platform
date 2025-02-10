@@ -1,5 +1,6 @@
-import identity from "@fern-api/ui-core-utils/identity";
 import { z } from "zod";
+
+import identity from "@fern-api/ui-core-utils/identity";
 
 import { atomWithStorageValidation } from "./atomWithStorageValidation";
 

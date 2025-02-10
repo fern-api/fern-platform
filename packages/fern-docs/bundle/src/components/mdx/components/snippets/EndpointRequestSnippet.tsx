@@ -1,8 +1,9 @@
 import { ReactElement } from "react";
 
+import { useAtomValue } from "jotai";
+
 import type * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import { EMPTY_OBJECT } from "@fern-api/ui-core-utils";
-import { useAtomValue } from "jotai";
 
 import { CodeExampleClientDropdown } from "../../../api-reference/endpoints/CodeExampleClientDropdown";
 import { EndpointUrlWithOverflow } from "../../../api-reference/endpoints/EndpointUrlWithOverflow";

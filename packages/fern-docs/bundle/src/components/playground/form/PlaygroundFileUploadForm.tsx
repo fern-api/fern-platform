@@ -7,11 +7,12 @@ import {
   useState,
 } from "react";
 
-import { FernButton, FernButtonGroup, FernCard } from "@fern-docs/components";
 import cn from "clsx";
 import { uniqBy } from "es-toolkit/array";
 import { File, FilePlus, Mic, X } from "lucide-react";
 import numeral from "numeral";
+
+import { FernButton, FernButtonGroup, FernCard } from "@fern-docs/components";
 
 import { WithLabelInternal } from "../WithLabel";
 import { useAudioRecorder } from "../hooks/useAudioRecorder";

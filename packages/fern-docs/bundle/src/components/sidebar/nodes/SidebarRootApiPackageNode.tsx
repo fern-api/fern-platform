@@ -1,7 +1,8 @@
 import { ReactElement } from "react";
 
-import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import clsx from "clsx";
+
+import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 
 import { useIsApiReferenceShallowLink, useIsChildSelected } from "../../atoms";
 import { WithFeatureFlags } from "../../feature-flags/WithFeatureFlags";

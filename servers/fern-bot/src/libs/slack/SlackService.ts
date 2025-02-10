@@ -1,5 +1,6 @@
-import { PullRequest } from "@fern-fern/paged-generators-sdk/api";
 import { KnownBlock, SectionBlock, WebClient } from "@slack/web-api";
+
+import { PullRequest } from "@fern-fern/paged-generators-sdk/api";
 
 export interface GeneratorMessageMetadata {
   group: string;

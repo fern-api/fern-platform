@@ -1,10 +1,11 @@
 import { ReactElement } from "react";
 
-import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
-import { FernInput } from "@fern-docs/components";
 import { User } from "iconoir-react";
 import { useAtom, useAtomValue } from "jotai/react";
 import { RESET } from "jotai/utils";
+
+import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
+import { FernInput } from "@fern-docs/components";
 
 import {
   PLAYGROUND_AUTH_STATE_BASIC_AUTH_PASSWORD_ATOM,

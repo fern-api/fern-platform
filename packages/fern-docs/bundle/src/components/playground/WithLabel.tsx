@@ -1,5 +1,8 @@
 import { FC, PropsWithChildren, ReactNode } from "react";
 
+import cn from "clsx";
+import { HelpCircle, Xmark } from "iconoir-react";
+
 import {
   ObjectProperty,
   TypeDefinition,
@@ -9,8 +12,6 @@ import {
 } from "@fern-api/fdr-sdk/api-definition";
 import { FernButton, FernTooltip } from "@fern-docs/components";
 import { AvailabilityBadge } from "@fern-docs/components/badges";
-import cn from "clsx";
-import { HelpCircle, Xmark } from "iconoir-react";
 
 import { Markdown } from "../mdx/Markdown";
 import { renderTypeShorthandRoot } from "../type-shorthand";

@@ -1,14 +1,15 @@
 import { useEffect, useRef, useState } from "react";
 
+import * as Tabs from "@radix-ui/react-tabs";
+import clsx from "clsx";
+import { useAtom } from "jotai";
+
 import { ApiDefinition } from "@fern-api/fdr-sdk";
 import { CopyToClipboardButton } from "@fern-docs/components";
 import {
   FernSyntaxHighlighter,
   type FernSyntaxHighlighterProps,
 } from "@fern-docs/syntax-highlighter";
-import * as Tabs from "@radix-ui/react-tabs";
-import clsx from "clsx";
-import { useAtom } from "jotai";
 
 import { getLanguageDisplayName } from "../../../api-reference/examples/code-example";
 import { FERN_LANGUAGE_ATOM, useEdgeFlags } from "../../../atoms";

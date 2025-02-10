@@ -2,8 +2,9 @@
 
 import { type ReactNode, memo } from "react";
 
-import { ResolvedMdx } from "@fern-api/fdr-sdk/docs";
 import clsx from "clsx";
+
+import { ResolvedMdx } from "@fern-api/fdr-sdk/docs";
 
 import { MdxContent } from "./MdxContent";
 

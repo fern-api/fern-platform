@@ -1,8 +1,9 @@
 import { ReactElement } from "react";
 
+import cn from "clsx";
+
 import { FernTooltip } from "@fern-docs/components";
 import { useCopyToClipboard } from "@fern-ui/react-commons";
-import cn from "clsx";
 
 import { Markdown } from "../mdx/Markdown";
 

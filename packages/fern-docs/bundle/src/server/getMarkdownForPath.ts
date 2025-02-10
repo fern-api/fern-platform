@@ -1,3 +1,5 @@
+import { compact } from "es-toolkit/array";
+
 import { ApiDefinition, FernNavigation } from "@fern-api/fdr-sdk";
 import {
   EndpointDefinition,
@@ -6,7 +8,6 @@ import {
 } from "@fern-api/fdr-sdk/api-definition";
 import { isNonNullish } from "@fern-api/ui-core-utils";
 import { EdgeFlags, removeLeadingSlash } from "@fern-docs/utils";
-import { compact } from "es-toolkit/array";
 
 import { DocsLoader } from "./DocsLoader";
 import { pascalCaseHeaderKey } from "./headerKeyCase";

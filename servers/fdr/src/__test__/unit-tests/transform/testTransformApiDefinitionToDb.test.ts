@@ -1,10 +1,11 @@
+import { resolve } from "path";
+
 import {
   APIV1Write,
   FdrAPI,
   SDKSnippetHolder,
   convertAPIDefinitionToDb,
 } from "@fern-api/fdr-sdk";
-import { resolve } from "path";
 
 const EMPTY_SNIPPET_HOLDER = new SDKSnippetHolder({
   snippetsBySdkId: {},

@@ -1,6 +1,7 @@
-import { VercelClient } from "@fern-fern/vercel";
 import yargs from "yargs";
 import { hideBin } from "yargs/helpers";
+
+import { VercelClient } from "@fern-fern/vercel";
 
 import { deployCommand } from "./commands/deploy.js";
 import { getLastDeployCommand } from "./commands/last-deploy.js";

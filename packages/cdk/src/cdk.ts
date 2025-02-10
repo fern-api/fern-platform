@@ -1,9 +1,10 @@
 #!/usr/bin/env node
+import * as cdk from "aws-cdk-lib";
+
 import {
   EnvironmentType,
   Environments,
 } from "@fern-fern/fern-cloud-sdk/api/index";
-import * as cdk from "aws-cdk-lib";
 
 import { DocsFeStack } from "./docs-fe-stack";
 

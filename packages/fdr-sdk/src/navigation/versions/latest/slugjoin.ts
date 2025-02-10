@@ -1,5 +1,6 @@
-import { isNonNullish } from "@fern-api/ui-core-utils";
 import urljoin from "url-join";
+
+import { isNonNullish } from "@fern-api/ui-core-utils";
 
 import { Slug } from ".";
 

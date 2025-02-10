@@ -1,8 +1,9 @@
 import { usePathname } from "next/navigation";
 import { useEffect } from "react";
 
-import type { DocsV1Read } from "@fern-api/fdr-sdk";
 import type { PostHog } from "posthog-js";
+
+import type { DocsV1Read } from "@fern-api/fdr-sdk";
 
 import { useApiRoute } from "../hooks/useApiRoute";
 

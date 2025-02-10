@@ -2,8 +2,9 @@
 
 import { ReactElement } from "react";
 
-import { Badge } from "@fern-docs/components/badges";
 import { noop } from "ts-essentials";
+
+import { Badge } from "@fern-docs/components/badges";
 
 import { PlaygroundSendRequestButton } from "../PlaygroundSendRequestButton";
 import { PlaygroundCardSkeleton } from "./PlaygroundCardSkeleton";

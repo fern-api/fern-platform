@@ -1,7 +1,8 @@
+import { groupBy } from "es-toolkit/array";
+
 import { ApiDefinition, FernNavigation } from "@fern-api/fdr-sdk";
 import { NavigationNodePage } from "@fern-api/fdr-sdk/navigation";
 import { measureBytes } from "@fern-api/ui-core-utils";
-import { groupBy } from "es-toolkit/array";
 
 import { AlgoliaRecord } from "../types";
 import { createApiReferenceRecordHttp } from "./create-api-reference-record-http";

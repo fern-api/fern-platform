@@ -1,5 +1,9 @@
 import { ReactElement } from "react";
 
+import clsx from "clsx";
+import { round } from "es-toolkit/math";
+import { Download } from "iconoir-react";
+
 import {
   CopyToClipboardButton,
   FernAudioPlayer,
@@ -9,9 +13,6 @@ import {
   FernTooltipProvider,
 } from "@fern-docs/components";
 import { Loadable, visitLoadable } from "@fern-ui/loadable";
-import clsx from "clsx";
-import { round } from "es-toolkit/math";
-import { Download } from "iconoir-react";
 
 import { useEdgeFlags } from "../../atoms";
 import { FernErrorTag } from "../../components/FernErrorBoundary";

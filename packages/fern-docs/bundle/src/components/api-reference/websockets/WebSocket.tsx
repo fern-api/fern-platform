@@ -1,10 +1,11 @@
+import { ArrowDown, ArrowUp, Wifi } from "iconoir-react";
+
 import type { WebSocketContext } from "@fern-api/fdr-sdk/api-definition";
 import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import { APIV1Read } from "@fern-api/fdr-sdk/client/types";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { FernScrollArea } from "@fern-docs/components";
 import { AvailabilityBadge } from "@fern-docs/components/badges";
-import { ArrowDown, ArrowUp, Wifi } from "iconoir-react";
 
 import { PageHeader } from "@/components/components/PageHeader";
 import { ReferenceLayout } from "@/components/layouts/ReferenceLayout";

@@ -1,8 +1,9 @@
-import type { EdgeFlags } from "@fern-docs/utils";
 import { isEqual } from "es-toolkit/predicate";
 import { atom, useAtomValue } from "jotai";
 import { selectAtom } from "jotai/utils";
 import { useMemoOne } from "use-memo-one";
+
+import type { EdgeFlags } from "@fern-docs/utils";
 
 import { DOCS_ATOM } from "./docs";
 

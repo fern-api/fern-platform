@@ -1,11 +1,12 @@
 import { Dispatch, FC, SetStateAction, useCallback, useMemo } from "react";
 
+import { useAtomValue } from "jotai";
+
 import {
   type EndpointContext,
   PropertyKey,
 } from "@fern-api/fdr-sdk/api-definition";
 import { EMPTY_ARRAY, visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
-import { useAtomValue } from "jotai";
 
 import { FERN_USER_ATOM } from "../../atoms";
 import { PlaygroundFileUploadForm } from "../form/PlaygroundFileUploadForm";

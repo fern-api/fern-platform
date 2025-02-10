@@ -9,10 +9,11 @@ import {
   useState,
 } from "react";
 
-import type { TableOfContentsItem as TableOfContentsItemType } from "@fern-docs/mdx";
 import { clsx } from "clsx";
 import fastdom from "fastdom";
 import { useCallbackOne } from "use-memo-one";
+
+import type { TableOfContentsItem as TableOfContentsItemType } from "@fern-docs/mdx";
 
 import { ANCHOR_ATOM, useAtomEffect } from "../../atoms";
 import { TableOfContentsItem } from "./TableOfContentsItem";

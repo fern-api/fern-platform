@@ -2,6 +2,8 @@ import { notFound, permanentRedirect, redirect } from "next/navigation";
 import { Metadata } from "next/types";
 import React from "react";
 
+import urlJoin from "url-join";
+
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { withDefaultProtocol } from "@fern-api/ui-core-utils";
 import visitDiscriminatedUnion from "@fern-api/ui-core-utils/visitDiscriminatedUnion";
@@ -18,7 +20,6 @@ import {
   isTrailingSlashEnabled,
 } from "@fern-docs/utils";
 import { SidebarTab } from "@fern-platform/fdr-utils";
-import urlJoin from "url-join";
 
 import { toImageDescriptor } from "@/app/seo";
 import { withCustomJavascript } from "@/components/atoms/docs";

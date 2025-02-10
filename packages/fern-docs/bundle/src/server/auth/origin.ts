@@ -1,5 +1,6 @@
-import { getEnv } from "@vercel/functions";
 import "server-only";
+
+import { getEnv } from "@vercel/functions";
 
 export function preferPreview(domain: string) {
   const { VERCEL_ENV, VERCEL_URL } = getEnv();

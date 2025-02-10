@@ -1,9 +1,10 @@
-import { isNonNullish } from "@fern-api/ui-core-utils";
 import {
   FilterCondition,
   QueryResults,
   Turbopuffer,
 } from "@turbopuffer/turbopuffer";
+
+import { isNonNullish } from "@fern-api/ui-core-utils";
 
 import { createRoleFacet } from "../shared/roles/create-role-facet";
 import { createPermutations } from "../shared/roles/role-utils";

@@ -1,7 +1,8 @@
 import { ComponentProps, ReactElement } from "react";
 
-import { FernButtonGroup } from "@fern-docs/components";
 import clsx from "clsx";
+
+import { FernButtonGroup } from "@fern-docs/components";
 
 export function ButtonGroup(
   props: ComponentProps<typeof FernButtonGroup>

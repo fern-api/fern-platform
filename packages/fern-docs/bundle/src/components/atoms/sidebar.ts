@@ -1,9 +1,10 @@
 import { useCallback } from "react";
 
-import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { atom, useAtomValue, useSetAtom } from "jotai";
 import { RESET, atomWithDefault, useAtomCallback } from "jotai/utils";
 import { useCallbackOne, useMemoOne } from "use-memo-one";
+
+import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 
 import { EDGE_FLAGS_ATOM } from "./flags";
 import { useAtomEffect } from "./hooks";

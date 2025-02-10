@@ -1,12 +1,13 @@
 import { FC, PropsWithChildren, ReactNode } from "react";
 
+import cn from "clsx";
+import { Xmark } from "iconoir-react";
+
 import {
   FernButton,
   FernButtonProps,
   FernCollapse,
 } from "@fern-docs/components";
-import cn from "clsx";
-import { Xmark } from "iconoir-react";
 
 interface FernCollapseWithButtonProps {
   isOpen: boolean;

@@ -1,7 +1,8 @@
-import { Algolia, ApiDefinition, FernDocs } from "@fern-api/fdr-sdk";
-import { isNonNullish, titleCase } from "@fern-api/ui-core-utils";
 import { camelCase, upperFirst } from "es-toolkit/string";
 import { UnreachableCaseError } from "ts-essentials";
+
+import { Algolia, ApiDefinition, FernDocs } from "@fern-api/fdr-sdk";
+import { isNonNullish, titleCase } from "@fern-api/ui-core-utils";
 
 export function convertNameToAnchorPart(
   name: string | null | undefined

@@ -1,11 +1,12 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
+import cn from "clsx";
+import { compact } from "es-toolkit/array";
+
 import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import titleCase from "@fern-api/ui-core-utils/titleCase";
 import { AvailabilityBadge } from "@fern-docs/components/badges";
-import cn from "clsx";
-import { compact } from "es-toolkit/array";
 
 import { trackInternal } from "../../../analytics";
 import { useIsApiReferencePaginated, useRouteListener } from "../../../atoms";

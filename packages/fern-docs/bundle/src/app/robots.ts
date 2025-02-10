@@ -1,9 +1,10 @@
 import type { MetadataRoute } from "next";
 import { headers } from "next/headers";
 
+import urlJoin from "url-join";
+
 import { withDefaultProtocol } from "@fern-api/ui-core-utils";
 import { getSeoDisabled } from "@fern-docs/edge-config";
-import urlJoin from "url-join";
 
 import { getDocsDomainApp, getHostApp } from "@/server/xfernhost/app";
 

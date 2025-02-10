@@ -1,5 +1,8 @@
 import { ReactElement, useState } from "react";
 
+import { HelpCircle, Key, User } from "iconoir-react";
+import { useAtom } from "jotai";
+
 import { EndpointContext } from "@fern-api/fdr-sdk/api-definition";
 import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
 import { visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
@@ -10,8 +13,6 @@ import {
   FernTooltip,
   FernTooltipProvider,
 } from "@fern-docs/components";
-import { HelpCircle, Key, User } from "iconoir-react";
-import { useAtom } from "jotai";
 
 import {
   PLAYGROUND_AUTH_STATE_OAUTH_ATOM,

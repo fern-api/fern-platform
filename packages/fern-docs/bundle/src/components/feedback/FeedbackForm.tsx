@@ -1,5 +1,10 @@
 import { FC, FormEvent, useCallback, useMemo, useRef, useState } from "react";
 
+import clsx from "clsx";
+import { useAtom } from "jotai";
+import { atomWithStorage } from "jotai/utils";
+import { motion } from "motion/react";
+
 import {
   FernButton,
   FernCheckbox,
@@ -9,10 +14,6 @@ import {
   FernTextarea,
 } from "@fern-docs/components";
 import { useKeyboardPress } from "@fern-ui/react-commons";
-import clsx from "clsx";
-import { useAtom } from "jotai";
-import { atomWithStorage } from "jotai/utils";
-import { motion } from "motion/react";
 
 const MotionFernRadioGroup = motion(FernRadioGroup);
 

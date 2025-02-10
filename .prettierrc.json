@@ -8,8 +8,10 @@
   ],
   "tailwindFunctions": ["clsx", "cn", "cva"],
   "importOrder": [
+    "server-only",
     "^(react*|next*)",
     "<THIRD_PARTY_MODULES>",
+    "^@fern-*",
     "^@/(.*)$",
     "^[./]"
   ],

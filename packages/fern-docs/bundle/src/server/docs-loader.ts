@@ -1,6 +1,9 @@
 import { cacheLife } from "next/dist/server/use-cache/cache-life";
 import { cacheTag } from "next/dist/server/use-cache/cache-tag";
 
+import { mapValues } from "es-toolkit/object";
+import { UnreachableCaseError } from "ts-essentials";
+
 import {
   ApiDefinition,
   DocsV1Read,
@@ -15,8 +18,6 @@ import { isPlainObject } from "@fern-api/ui-core-utils";
 import { AuthEdgeConfig } from "@fern-docs/auth";
 import { getAuthEdgeConfig, getEdgeFlags } from "@fern-docs/edge-config";
 import { DEFAULT_LOGO_HEIGHT } from "@fern-docs/utils";
-import { mapValues } from "es-toolkit/object";
-import { UnreachableCaseError } from "ts-essentials";
 
 import { serializeMdx as uncachedSerializeMdx } from "@/components/mdx/bundlers/mdx-bundler";
 import { FernSerializeMdxOptions } from "@/components/mdx/types";

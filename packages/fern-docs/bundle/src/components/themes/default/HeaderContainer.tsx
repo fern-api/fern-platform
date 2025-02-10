@@ -1,8 +1,9 @@
 import { ReactElement, useEffect, useRef, useState } from "react";
 
-import { DEFAULT_HEADER_HEIGHT } from "@fern-docs/utils";
 import { clsx } from "clsx";
 import { useAtomValue } from "jotai";
+
+import { DEFAULT_HEADER_HEIGHT } from "@fern-docs/utils";
 
 import {
   HAS_HORIZONTAL_TABS,

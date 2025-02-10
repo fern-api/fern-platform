@@ -1,5 +1,6 @@
-import { FdrAPI } from "@fern-api/fdr-sdk";
 import { inject } from "vitest";
+
+import { FdrAPI } from "@fern-api/fdr-sdk";
 
 import { getAPIResponse, getClient } from "../util";
 

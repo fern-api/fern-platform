@@ -1,6 +1,7 @@
+import { get } from "@vercel/edge-config";
+
 import type { InkeepSharedSettings } from "@fern-docs/search-utils";
 import { withoutStaging } from "@fern-docs/utils";
-import { get } from "@vercel/edge-config";
 
 export async function getInkeepSettings(
   domain: string

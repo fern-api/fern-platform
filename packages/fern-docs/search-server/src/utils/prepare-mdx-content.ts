@@ -1,3 +1,5 @@
+import { decode } from "html-entities";
+
 import {
   isMdxExpression,
   isMdxJsxElement,
@@ -5,7 +7,6 @@ import {
   toTree,
   visit,
 } from "@fern-docs/mdx";
-import { decode } from "html-entities";
 
 interface PreparedMdxContent {
   content: string | undefined;

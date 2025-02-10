@@ -1,12 +1,13 @@
 import { memo, useCallback } from "react";
 
+import { clsx } from "clsx";
+import { Plus, Xmark } from "iconoir-react";
+
 import {
   TypeDefinition,
   TypeShapeOrReference,
 } from "@fern-api/fdr-sdk/api-definition";
 import { FernButton } from "@fern-docs/components";
-import { clsx } from "clsx";
-import { Plus, Xmark } from "iconoir-react";
 
 import { getEmptyValueForType, shouldRenderInline } from "../utils";
 import { PlaygroundTypeReferenceForm } from "./PlaygroundTypeReferenceForm";

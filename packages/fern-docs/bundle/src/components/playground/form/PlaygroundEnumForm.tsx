@@ -1,10 +1,11 @@
 import dynamic from "next/dynamic";
 import { memo, useMemo } from "react";
 
-import { EnumValue } from "@fern-api/fdr-sdk/api-definition";
-import { FernButton, FernDropdown } from "@fern-docs/components";
 import { sortBy } from "es-toolkit/array";
 import { NavArrowDown } from "iconoir-react";
+
+import { EnumValue } from "@fern-api/fdr-sdk/api-definition";
+import { FernButton, FernDropdown } from "@fern-docs/components";
 
 const Markdown = dynamic(() =>
   import("../../mdx/Markdown").then(({ Markdown }) => Markdown)

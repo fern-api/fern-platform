@@ -1,5 +1,6 @@
-import { DocsV1Db, DocsV1Read, DocsV2Read } from "@fern-api/fdr-sdk";
 import { AuthType } from "@prisma/client";
+
+import { DocsV1Db, DocsV1Read, DocsV2Read } from "@fern-api/fdr-sdk";
 
 import { FernRegistry } from "../../api/generated";
 import { DomainNotRegisteredError } from "../../api/generated/api/resources/docs/resources/v2/resources/read";

@@ -2,8 +2,9 @@
 
 import { Fragment, ReactElement } from "react";
 
-import type { FernNavigation } from "@fern-api/fdr-sdk";
 import { NavArrowRight } from "iconoir-react";
+
+import type { FernNavigation } from "@fern-api/fdr-sdk";
 
 import { useToHref } from "../hooks/useHref";
 import { FernLink } from "./FernLink";

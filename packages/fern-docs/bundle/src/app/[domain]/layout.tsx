@@ -1,11 +1,12 @@
 import { Metadata, Viewport } from "next/types";
 
+import { compact, uniqBy } from "es-toolkit/array";
+import tinycolor from "tinycolor2";
+
 import { DocsV2Read } from "@fern-api/fdr-sdk/client/types";
 import { withDefaultProtocol } from "@fern-api/ui-core-utils";
 import { getEdgeFlags, getSeoDisabled } from "@fern-docs/edge-config";
 import { EdgeFlags } from "@fern-docs/utils";
-import { compact, uniqBy } from "es-toolkit/array";
-import tinycolor from "tinycolor2";
 
 import { CustomerAnalytics } from "@/components/analytics/CustomerAnalytics";
 import { JavascriptProvider } from "@/components/components/JavascriptProvider";

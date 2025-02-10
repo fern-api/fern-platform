@@ -1,14 +1,15 @@
+import fs from "fs";
+import { mkdir, readFile } from "fs/promises";
+import path from "path";
+import { hideBin } from "yargs/helpers";
+import yargs from "yargs/yargs";
+
 import {
   AbsoluteFilePath,
   cwd,
   doesPathExist,
   resolve,
 } from "@fern-api/fs-utils";
-import fs from "fs";
-import { mkdir, readFile } from "fs/promises";
-import path from "path";
-import { hideBin } from "yargs/helpers";
-import yargs from "yargs/yargs";
 
 import { loadReadmeConfig } from "./configuration/loadReadmeConfig";
 import { loadReferenceConfig } from "./configuration/loadReferenceConfig";

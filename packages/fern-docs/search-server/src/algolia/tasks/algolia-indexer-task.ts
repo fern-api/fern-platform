@@ -1,6 +1,7 @@
-import { NavigationNodePage } from "@fern-api/fdr-sdk/navigation";
 import { algoliasearch } from "algoliasearch";
 import { assert } from "ts-essentials";
+
+import { NavigationNodePage } from "@fern-api/fdr-sdk/navigation";
 
 import { loadDocsWithUrl } from "../../fdr/load-docs-with-url";
 import { browseAllObjectsForDomain } from "../browse-all-objects";

@@ -1,3 +1,6 @@
+import { compact } from "es-toolkit/array";
+import { mapValues, omitBy, pick } from "es-toolkit/object";
+
 import type {
   EndpointContext,
   ObjectProperty,
@@ -5,8 +8,6 @@ import type {
 import { ExampleEndpointCall } from "@fern-api/fdr-sdk/api-definition";
 import { EMPTY_OBJECT } from "@fern-api/ui-core-utils";
 import { FernUser } from "@fern-docs/auth";
-import { compact } from "es-toolkit/array";
-import { mapValues, omitBy, pick } from "es-toolkit/object";
 
 import type {
   PlaygroundEndpointRequestFormState,

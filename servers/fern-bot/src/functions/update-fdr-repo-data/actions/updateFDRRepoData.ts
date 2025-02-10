@@ -1,8 +1,3 @@
-import { FernRegistryClient } from "@fern-fern/generators-sdk";
-import {
-  PullRequestReviewer,
-  PullRequestState,
-} from "@fern-fern/generators-sdk/api";
 import { Env } from "@libs/env";
 import {
   NO_API_FALLBACK_KEY,
@@ -17,6 +12,12 @@ import { RepoData } from "@libs/schemas";
 import { readFile } from "fs/promises";
 import { App, Octokit } from "octokit";
 import tmp from "tmp-promise";
+
+import { FernRegistryClient } from "@fern-fern/generators-sdk";
+import {
+  PullRequestReviewer,
+  PullRequestState,
+} from "@fern-fern/generators-sdk/api";
 
 // Note given we're making requests to FDR, this could take time, so we're parallelizing this function with a Map step in
 // the step function, as we do for all the other actions.

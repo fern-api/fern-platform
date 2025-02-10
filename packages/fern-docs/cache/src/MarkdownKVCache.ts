@@ -1,5 +1,6 @@
-import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 import { kv } from "@vercel/kv";
+
+import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 
 const DEPLOYMENT_ID = process.env.VERCEL_DEPLOYMENT_ID ?? "development";
 const PREFIX = `docs:${DEPLOYMENT_ID}`;

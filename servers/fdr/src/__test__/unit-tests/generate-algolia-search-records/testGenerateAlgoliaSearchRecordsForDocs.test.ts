@@ -1,3 +1,5 @@
+import { resolve } from "path";
+
 import {
   APIV1Write,
   DocsV1Write,
@@ -7,7 +9,6 @@ import {
   convertDocsDefinitionToDb,
   visitDbNavigationConfig,
 } from "@fern-api/fdr-sdk";
-import { resolve } from "path";
 
 import type { AlgoliaSearchRecord } from "../../../services/algolia";
 import { AlgoliaIndexSegmentManagerServiceImpl } from "../../../services/algolia-index-segment-manager";

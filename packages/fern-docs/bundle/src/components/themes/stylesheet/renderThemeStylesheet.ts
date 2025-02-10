@@ -1,5 +1,6 @@
-import type { DocsV1Read } from "@fern-api/fdr-sdk/client/types";
 import tinycolor from "tinycolor2";
+
+import type { DocsV1Read } from "@fern-api/fdr-sdk/client/types";
 
 import { ColorsThemeConfig } from "@/server/types";
 

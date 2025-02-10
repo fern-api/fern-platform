@@ -1,6 +1,7 @@
+import { isString } from "es-toolkit/predicate";
+
 import { FernDocs } from "@fern-api/fdr-sdk";
 import { isNonNullish } from "@fern-api/ui-core-utils";
-import { isString } from "es-toolkit/predicate";
 
 export function toDescription(
   descriptions:

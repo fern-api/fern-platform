@@ -1,5 +1,6 @@
-import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
 import { sortBy } from "es-toolkit/array";
+
+import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
 
 export function getAllObjectProperties(
   object: APIV1Read.ObjectType,

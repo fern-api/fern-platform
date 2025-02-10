@@ -1,6 +1,7 @@
+import { UnreachableCaseError } from "ts-essentials";
+
 import { DocsV1Read, FdrAPI } from "@fern-api/fdr-sdk/client/types";
 import { Availability } from "@fern-api/fdr-sdk/navigation";
-import { UnreachableCaseError } from "ts-essentials";
 
 export function isVersionedNavigationConfig(
   navigationConfig: DocsV1Read.NavigationConfig

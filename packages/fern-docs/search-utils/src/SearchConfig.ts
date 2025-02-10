@@ -1,6 +1,3 @@
-import type { FdrClient } from "@fern-api/fdr-sdk";
-import type { Algolia } from "@fern-api/fdr-sdk/client/types";
-import { assertNonNullish } from "@fern-api/ui-core-utils";
 import type {
   InkeepAIChatSettings,
   InkeepModalSettings,
@@ -8,6 +5,10 @@ import type {
   InkeepWidgetBaseSettings,
 } from "@inkeep/widgets";
 import type { DeepReadonly } from "ts-essentials";
+
+import type { FdrClient } from "@fern-api/fdr-sdk";
+import type { Algolia } from "@fern-api/fdr-sdk/client/types";
+import { assertNonNullish } from "@fern-api/ui-core-utils";
 
 export type InkeepSharedSettings = DeepReadonly<{
   replaceSearch: boolean;

@@ -1,5 +1,6 @@
-import { DocsV1Write, FdrAPI } from "@fern-api/fdr-sdk";
 import { inject } from "vitest";
+
+import { DocsV1Write, FdrAPI } from "@fern-api/fdr-sdk";
 
 import { DEFAULT_SNIPPETS_PAGE_SIZE } from "../../../db/snippets/SnippetsDao";
 import { createApiDefinition, getAPIResponse, getClient } from "../util";

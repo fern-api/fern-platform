@@ -1,3 +1,5 @@
+import GithubSlugger from "github-slugger";
+
 import {
   type BuildVisitor,
   CONTINUE,
@@ -10,7 +12,6 @@ import {
   unknownToMdxJsxAttribute,
   visit,
 } from "@fern-docs/mdx";
-import GithubSlugger from "github-slugger";
 
 import { getLanguageDisplayName } from "../../api-reference/examples/code-example";
 

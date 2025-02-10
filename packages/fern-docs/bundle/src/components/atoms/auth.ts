@@ -1,7 +1,8 @@
-import type { FernUser } from "@fern-docs/auth";
 import { isEqual } from "es-toolkit/predicate";
 import { Atom, useAtomValue } from "jotai";
 import { selectAtom } from "jotai/utils";
+
+import type { FernUser } from "@fern-docs/auth";
 
 import { DOCS_ATOM } from "./docs";
 

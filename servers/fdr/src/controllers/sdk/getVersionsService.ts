@@ -1,5 +1,6 @@
-import { getLatestTag } from "@fern-api/github";
 import semver from "semver";
+
+import { getLatestTag } from "@fern-api/github";
 
 import {
   FailedToComputeExistingVersion,

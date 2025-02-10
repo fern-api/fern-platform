@@ -1,9 +1,10 @@
+import { compact, flatten } from "es-toolkit/array";
+
 import {
   FormDataField,
   HttpRequestBodyShape,
 } from "@fern-api/fdr-sdk/api-definition";
 import { assertNever, isNonNullish } from "@fern-api/ui-core-utils";
-import { compact, flatten } from "es-toolkit/array";
 
 import { blobToDataURL } from "../fetch-utils/blobToDataURL";
 import {

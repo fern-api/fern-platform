@@ -6,15 +6,16 @@ import React, {
   useState,
 } from "react";
 
+import { composeRefs } from "@radix-ui/react-compose-refs";
+import cn from "clsx";
+import { noop } from "ts-essentials";
+
 import { APIV1Read } from "@fern-api/fdr-sdk";
 import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import visitDiscriminatedUnion from "@fern-api/ui-core-utils/visitDiscriminatedUnion";
 import { CopyToClipboardButton } from "@fern-docs/components";
 import { HttpMethodBadge } from "@fern-docs/components/badges";
 import { useBooleanState } from "@fern-ui/react-commons";
-import { composeRefs } from "@radix-ui/react-compose-refs";
-import cn from "clsx";
-import { noop } from "ts-essentials";
 
 import { MaybeEnvironmentDropdown } from "../../components/MaybeEnvironmentDropdown";
 

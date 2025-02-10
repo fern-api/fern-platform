@@ -1,10 +1,11 @@
 import { createOpenAI } from "@ai-sdk/openai";
+import { embed, embedMany } from "ai";
+
 import {
   FernTurbopufferRecord,
   queryTurbopuffer,
   turbopufferUpsertTask,
 } from "@fern-docs/search-server/turbopuffer";
-import { embed, embedMany } from "ai";
 
 import {
   fdrEnvironment,

@@ -1,5 +1,6 @@
-import { APIV1Db, DocsV1Db } from "@fern-api/fdr-sdk";
 import algolia, { type SearchClient } from "algoliasearch";
+
+import { APIV1Db, DocsV1Db } from "@fern-api/fdr-sdk";
 
 import { type FdrApplication } from "../../app";
 import { AlgoliaSearchRecordGenerator } from "./AlgoliaSearchRecordGenerator";

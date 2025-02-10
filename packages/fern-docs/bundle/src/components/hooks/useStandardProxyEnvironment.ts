@@ -1,5 +1,6 @@
-import { withDefaultProtocol } from "@fern-api/ui-core-utils";
 import { once } from "es-toolkit/function";
+
+import { withDefaultProtocol } from "@fern-api/ui-core-utils";
 
 const APP_BUILDWITHFERN_COM = "app.buildwithfern.com";
 

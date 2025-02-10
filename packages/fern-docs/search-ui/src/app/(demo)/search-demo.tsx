@@ -3,11 +3,12 @@
 import { useTheme } from "next-themes";
 import { useCallback, useEffect, useState } from "react";
 
-import { FacetsResponse, SEARCH_INDEX } from "@fern-docs/search-server/algolia";
 import { useAtom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 import useSWR from "swr";
 import { z } from "zod";
+
+import { FacetsResponse, SEARCH_INDEX } from "@fern-docs/search-server/algolia";
 
 import { AppSidebar, AppSidebarContent } from "@/app/(demo)/app-sidebar";
 import {

@@ -9,10 +9,11 @@ import React, {
 } from "react";
 import { ErrorBoundary, FallbackProps } from "react-error-boundary";
 
-import { FernButton } from "@fern-docs/components";
 import clsx from "clsx";
 import { memoize } from "es-toolkit/function";
 import { RefreshDouble, WarningTriangle } from "iconoir-react";
+
+import { FernButton } from "@fern-docs/components";
 
 import { useIsLocalPreview } from "../contexts/local-preview";
 

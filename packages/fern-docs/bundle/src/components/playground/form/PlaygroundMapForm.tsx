@@ -1,12 +1,13 @@
 import { memo, useCallback, useEffect, useState } from "react";
 
+import { Plus, Xmark } from "iconoir-react";
+
 import {
   TypeDefinition,
   TypeShapeOrReference,
 } from "@fern-api/fdr-sdk/api-definition";
 import { isPlainObject, unknownToString } from "@fern-api/ui-core-utils";
 import { FernButton } from "@fern-docs/components";
-import { Plus, Xmark } from "iconoir-react";
 
 import { getEmptyValueForType } from "../utils";
 import { PlaygroundTypeReferenceForm } from "./PlaygroundTypeReferenceForm";

@@ -1,3 +1,5 @@
+import { walk } from "estree-walker";
+
 import type {
   Hast,
   MdxJsxAttribute,
@@ -9,7 +11,6 @@ import {
   mdxJsxAttributeToString,
   visit,
 } from "@fern-docs/mdx";
-import { walk } from "estree-walker";
 
 import type { FileData } from "../../atoms/types";
 

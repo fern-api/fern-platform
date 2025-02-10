@@ -1,5 +1,6 @@
-import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { readFile } from "fs/promises";
+
+import { AbsoluteFilePath } from "@fern-api/fs-utils";
 
 import { FernGeneratorCli } from "./generated";
 

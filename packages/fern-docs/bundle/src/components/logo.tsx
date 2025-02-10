@@ -2,9 +2,10 @@
 
 import React from "react";
 
+import { isEqual } from "es-toolkit/predicate";
+
 import { cn } from "@fern-docs/components";
 import { DEFAULT_LOGO_HEIGHT } from "@fern-docs/utils";
-import { isEqual } from "es-toolkit/predicate";
 
 import { LogoConfiguration } from "@/components/atoms";
 

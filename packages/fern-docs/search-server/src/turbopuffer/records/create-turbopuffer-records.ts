@@ -1,3 +1,5 @@
+import { flatten } from "es-toolkit/array";
+
 import {
   NavigationNodePage,
   NodeCollector,
@@ -6,7 +8,6 @@ import {
   getPageId,
   hasMarkdown,
 } from "@fern-api/fdr-sdk/navigation";
-import { flatten } from "es-toolkit/array";
 
 import { FernTurbopufferRecordWithoutVector } from "../types";
 import { createBaseRecord } from "./create-base-record";

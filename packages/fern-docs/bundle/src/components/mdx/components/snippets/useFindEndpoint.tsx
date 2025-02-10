@@ -1,6 +1,7 @@
-import { EndpointDefinition } from "@fern-api/fdr-sdk/api-definition";
 import { atom, useAtomValue } from "jotai";
 import { useMemoOne } from "use-memo-one";
+
+import { EndpointDefinition } from "@fern-api/fdr-sdk/api-definition";
 
 import { READ_APIS_ATOM } from "../../../atoms";
 import { findEndpoint } from "../../../util/processRequestSnippetComponents";

@@ -3,10 +3,11 @@
 import { usePathname } from "next/navigation";
 import { FC, useCallback, useEffect, useRef, useState } from "react";
 
-import { FernButton, FernButtonGroup, toast } from "@fern-docs/components";
-import { useKeyboardPress } from "@fern-ui/react-commons";
 import clsx from "clsx";
 import { ThumbsDown, ThumbsUp } from "iconoir-react";
+
+import { FernButton, FernButtonGroup, toast } from "@fern-docs/components";
+import { useKeyboardPress } from "@fern-ui/react-commons";
 
 import { track } from "../analytics";
 import { registerPosthogProperties } from "../analytics/posthog";

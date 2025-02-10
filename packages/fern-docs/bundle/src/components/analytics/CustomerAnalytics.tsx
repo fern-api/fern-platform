@@ -4,10 +4,11 @@ import dynamic from "next/dynamic";
 import Script from "next/script";
 import { ReactElement, memo } from "react";
 
-import { DocsV1Read } from "@fern-api/fdr-sdk";
 import { isEqual } from "es-toolkit/predicate";
 import { useAtomValue } from "jotai";
 import { selectAtom } from "jotai/utils";
+
+import { DocsV1Read } from "@fern-api/fdr-sdk";
 
 import {
   DOCS_ATOM,

@@ -1,5 +1,6 @@
-import { removeTrailingSlash } from "@fern-docs/utils";
 import urlJoin from "url-join";
+
+import { removeTrailingSlash } from "@fern-docs/utils";
 
 import { AuthState, getWorkosRbacRoles } from "./getAuthState";
 import { preferPreview } from "./origin";

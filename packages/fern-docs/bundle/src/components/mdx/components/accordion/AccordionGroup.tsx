@@ -1,12 +1,13 @@
 import { ReactNode, forwardRef, useCallback, useEffect, useState } from "react";
 
+import { useAtom } from "jotai";
+
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@fern-docs/components";
-import { useAtom } from "jotai";
 
 import { ANCHOR_ATOM } from "../../../atoms";
 

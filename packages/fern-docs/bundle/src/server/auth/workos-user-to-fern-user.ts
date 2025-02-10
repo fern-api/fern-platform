@@ -1,5 +1,6 @@
-import { FernUser } from "@fern-docs/auth";
 import { compact } from "es-toolkit/array";
+
+import { FernUser } from "@fern-docs/auth";
 
 import { NoWorkOSUserInfo, WorkOSUserInfo } from "./interfaces";
 

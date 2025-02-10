@@ -1,6 +1,8 @@
 import dynamic from "next/dynamic";
 import { memo, useCallback, useMemo, useState } from "react";
 
+import { NavArrowDown } from "iconoir-react";
+
 import {
   TypeDefinition,
   UndiscriminatedUnionType,
@@ -10,7 +12,6 @@ import {
   FernDropdown,
   FernSegmentedControl,
 } from "@fern-docs/components";
-import { NavArrowDown } from "iconoir-react";
 
 import { renderTypeShorthand } from "../../type-shorthand";
 import { getEmptyValueForType, matchesTypeReference } from "../utils";

@@ -1,6 +1,7 @@
-import { APIV1Write, FdrAPI } from "@fern-api/fdr-sdk";
 import { v4 } from "uuid";
 import { expect, inject, it } from "vitest";
+
+import { APIV1Write, FdrAPI } from "@fern-api/fdr-sdk";
 
 import {
   createApiDefinition,

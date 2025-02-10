@@ -1,3 +1,5 @@
+import { v4 as uuidv4 } from "uuid";
+
 import {
   APIV1Db,
   APIV1Write,
@@ -5,7 +7,6 @@ import {
   SDKSnippetHolder,
   convertAPIDefinitionToDb,
 } from "@fern-api/fdr-sdk";
-import { v4 as uuidv4 } from "uuid";
 
 import { APIV1WriteService } from "../../api";
 import { SdkRequest } from "../../api/generated/api";

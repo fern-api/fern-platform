@@ -1,7 +1,8 @@
 import { ReactElement, memo, useRef } from "react";
 
-import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import clsx from "clsx";
+
+import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 
 import { useHref } from "../hooks/useHref";
 import { LayoutEvaluator } from "../layouts/LayoutEvaluator";

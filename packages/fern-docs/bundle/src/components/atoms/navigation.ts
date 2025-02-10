@@ -1,8 +1,9 @@
-import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
-import { SidebarTab, VersionSwitcherInfo } from "@fern-platform/fdr-utils";
 import { isEqual } from "es-toolkit/predicate";
 import { atom, useAtomValue } from "jotai";
 import { selectAtom } from "jotai/utils";
+
+import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
+import { SidebarTab, VersionSwitcherInfo } from "@fern-platform/fdr-utils";
 
 import { DOCS_ATOM } from "./docs";
 import { SLUG_ATOM } from "./location";

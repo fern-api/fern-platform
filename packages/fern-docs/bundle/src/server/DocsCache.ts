@@ -1,5 +1,6 @@
-import type { FernNavigation } from "@fern-api/fdr-sdk";
 import { kv } from "@vercel/kv";
+
+import type { FernNavigation } from "@fern-api/fdr-sdk";
 
 const DEPLOYMENT_ID = process.env.VERCEL_DEPLOYMENT_ID ?? "development";
 const PREFIX = `docs:${DEPLOYMENT_ID}`;

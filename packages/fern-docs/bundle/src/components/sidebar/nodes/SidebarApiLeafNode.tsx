@@ -1,8 +1,9 @@
 import { ReactNode } from "react";
 
+import clsx from "clsx";
+
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { HttpMethodBadge } from "@fern-docs/components/badges";
-import clsx from "clsx";
 
 import { useIsSelectedSidebarNode } from "../../atoms";
 import { WithFeatureFlags } from "../../feature-flags/WithFeatureFlags";

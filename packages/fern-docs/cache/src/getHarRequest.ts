@@ -1,3 +1,5 @@
+import type { HarRequest } from "httpsnippet-lite";
+
 import type { APIV1Read } from "@fern-api/fdr-sdk";
 import {
   type AuthSchemeId,
@@ -10,7 +12,6 @@ import {
   unknownToString,
   visitDiscriminatedUnion,
 } from "@fern-api/ui-core-utils";
-import type { HarRequest } from "httpsnippet-lite";
 
 export function getHarRequest(
   endpoint: EndpointDefinition,

@@ -1,7 +1,8 @@
 import { ReactElement } from "react";
 
-import { FernButton } from "@fern-docs/components";
 import { Menu, Xmark } from "iconoir-react";
+
+import { FernButton } from "@fern-docs/components";
 
 import {
   useCloseMobileSidebar,

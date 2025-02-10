@@ -2,6 +2,10 @@
 
 import { ReactElement, useCallback, useState } from "react";
 
+import { mapValues } from "es-toolkit/object";
+import { SendSolid } from "iconoir-react";
+import { useAtomValue, useSetAtom } from "jotai";
+
 import type { EndpointContext } from "@fern-api/fdr-sdk/api-definition";
 import { buildEndpointUrl } from "@fern-api/fdr-sdk/api-definition";
 import { unknownToString } from "@fern-api/ui-core-utils";
@@ -14,9 +18,6 @@ import {
   notStartedLoading,
 } from "@fern-ui/loadable";
 import { useEventCallback } from "@fern-ui/react-commons";
-import { mapValues } from "es-toolkit/object";
-import { SendSolid } from "iconoir-react";
-import { useAtomValue, useSetAtom } from "jotai";
 
 import { track } from "../../analytics";
 import {

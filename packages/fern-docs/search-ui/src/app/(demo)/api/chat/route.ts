@@ -1,7 +1,8 @@
-import { createDefaultSystemPrompt } from "@fern-docs/search-server";
-import { toDocuments } from "@fern-docs/search-server/turbopuffer";
 import { streamText, tool } from "ai";
 import { z } from "zod";
+
+import { createDefaultSystemPrompt } from "@fern-docs/search-server";
+import { toDocuments } from "@fern-docs/search-server/turbopuffer";
 
 import { models } from "@/server/models";
 import { runSemanticSearchTurbopuffer } from "@/server/run-reindex-turbopuffer";

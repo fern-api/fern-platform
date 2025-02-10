@@ -1,10 +1,11 @@
+import { useAtomValue } from "jotai";
+
 import {
   EndpointDefinition,
   Environment,
   EnvironmentId,
   WebSocketChannel,
 } from "@fern-api/fdr-sdk/api-definition";
-import { useAtomValue } from "jotai";
 
 import { usePlaygroundEnvironment } from "../../atoms";
 import { SELECTED_ENVIRONMENT_ATOM } from "../../atoms/environment";

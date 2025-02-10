@@ -1,6 +1,7 @@
+import { get } from "@vercel/edge-config";
+
 import { type AuthEdgeConfig, AuthEdgeConfigSchema } from "@fern-docs/auth";
 import { withoutStaging } from "@fern-docs/utils";
-import { get } from "@vercel/edge-config";
 
 const KEY = "authentication";
 

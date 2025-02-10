@@ -1,7 +1,8 @@
 import { ReactElement, ReactNode } from "react";
 
-import { FernButton } from "@fern-docs/components";
 import clsx from "clsx";
+
+import { FernButton } from "@fern-docs/components";
 
 import { FernLinkButton } from "../../../components/FernLinkButton";
 

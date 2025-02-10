@@ -1,3 +1,5 @@
+import { getAll } from "@vercel/edge-config";
+
 import type { EdgeFlags } from "@fern-docs/utils";
 import {
   isCustomDomain,
@@ -5,7 +7,6 @@ import {
   isFern,
   withoutStaging,
 } from "@fern-docs/utils";
-import { getAll } from "@vercel/edge-config";
 
 export const runtime = "edge";
 

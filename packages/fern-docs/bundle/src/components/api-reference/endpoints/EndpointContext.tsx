@@ -2,12 +2,13 @@
 
 import React from "react";
 
+import { noop } from "ts-essentials";
+import { useCallbackOne } from "use-memo-one";
+
 import {
   EndpointDefinition,
   ErrorResponse,
 } from "@fern-api/fdr-sdk/api-definition";
-import { noop } from "ts-essentials";
-import { useCallbackOne } from "use-memo-one";
 
 import { ANCHOR_ATOM, useAtomEffect } from "@/components/atoms";
 

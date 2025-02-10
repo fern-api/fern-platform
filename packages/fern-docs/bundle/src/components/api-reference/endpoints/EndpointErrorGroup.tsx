@@ -2,10 +2,11 @@
 
 import React from "react";
 
+import { sortBy } from "es-toolkit/array";
+
 import { ApiDefinition } from "@fern-api/fdr-sdk";
 import { ErrorResponse } from "@fern-api/fdr-sdk/api-definition";
 import { Slug } from "@fern-api/fdr-sdk/navigation";
-import { sortBy } from "es-toolkit/array";
 
 import { useEndpointContext } from "./EndpointContext";
 import { EndpointError } from "./EndpointError";

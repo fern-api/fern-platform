@@ -1,4 +1,3 @@
-import { createOrUpdatePullRequest, getOrUpdateBranch } from "@fern-api/github";
 import { generateChangelog, generateCommitMessage } from "@libs/cohere";
 import { execFernCli, findFernWorkspaces } from "@libs/fern";
 import {
@@ -8,6 +7,8 @@ import {
   configureGit,
 } from "@libs/github";
 import { Octokit } from "octokit";
+
+import { createOrUpdatePullRequest, getOrUpdateBranch } from "@fern-api/github";
 
 const OPENAPI_UPDATE_BRANCH = "fern/update-api-specs";
 

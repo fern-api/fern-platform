@@ -1,6 +1,7 @@
+import { kebabCase } from "es-toolkit/string";
+
 import assertNever from "@fern-api/ui-core-utils/assertNever";
 import visitDiscriminatedUnion from "@fern-api/ui-core-utils/visitDiscriminatedUnion";
-import { kebabCase } from "es-toolkit/string";
 
 import { FernNavigation } from "../../../..";
 import type { APIV1Read, DocsV1Read } from "../../../../client/types";

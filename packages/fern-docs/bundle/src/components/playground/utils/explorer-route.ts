@@ -1,6 +1,7 @@
+import escapeStringRegexp from "escape-string-regexp";
+
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { addLeadingSlash } from "@fern-docs/utils";
-import escapeStringRegexp from "escape-string-regexp";
 
 /**
  * Conforms the slug to the explorer route.

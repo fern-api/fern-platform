@@ -1,9 +1,10 @@
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
+import { WebflowClient } from "webflow-api";
+
 import { withDefaultProtocol } from "@fern-api/ui-core-utils";
 import { getAuthEdgeConfig } from "@fern-docs/edge-config";
-import { WebflowClient } from "webflow-api";
 
 import { FernNextResponse } from "@/server/FernNextResponse";
 import { getAllowedRedirectUrls } from "@/server/auth/allowed-redirects";

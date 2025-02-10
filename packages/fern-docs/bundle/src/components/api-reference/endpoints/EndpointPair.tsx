@@ -1,9 +1,10 @@
 import { ReactElement } from "react";
 
-import type { ApiDefinition } from "@fern-api/fdr-sdk/api-definition";
-import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { useAtomValue } from "jotai";
 import { useCallbackOne } from "use-memo-one";
+
+import type { ApiDefinition } from "@fern-api/fdr-sdk/api-definition";
+import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 
 import { FERN_STREAM_ATOM, SLUG_ATOM, useAtomEffect } from "../../atoms";
 import { Endpoint } from "./Endpoint";

@@ -1,6 +1,7 @@
-import { DocsV1Write, FdrAPI } from "@fern-api/fdr-sdk";
 import { uniqueId } from "es-toolkit/compat";
 import { inject } from "vitest";
+
+import { DocsV1Write, FdrAPI } from "@fern-api/fdr-sdk";
 
 import { getAPIResponse, getClient } from "../util";
 

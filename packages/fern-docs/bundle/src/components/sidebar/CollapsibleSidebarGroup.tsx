@@ -1,7 +1,8 @@
 import type { ReactElement } from "react";
 
-import type { FernNavigation } from "@fern-api/fdr-sdk";
 import * as Collapsible from "@radix-ui/react-collapsible";
+
+import type { FernNavigation } from "@fern-api/fdr-sdk";
 
 interface FernSidebarGroupProps<T> {
   nodes: T[];

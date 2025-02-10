@@ -1,9 +1,10 @@
 import { Fragment, ReactNode } from "react";
 
+import cn from "clsx";
+
 import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
-import cn from "clsx";
 
 import { Markdown } from "../../mdx/Markdown";
 import { renderTypeShorthand } from "../../type-shorthand";

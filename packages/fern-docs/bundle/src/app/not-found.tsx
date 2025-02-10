@@ -1,6 +1,7 @@
+import { Undo2 } from "lucide-react";
+
 import { Badge } from "@fern-docs/components";
 import { addLeadingSlash, conformTrailingSlash } from "@fern-docs/utils";
-import { Undo2 } from "lucide-react";
 
 import { FernLinkButton } from "@/components/components/FernLinkButton";
 import { Logo } from "@/components/logo";

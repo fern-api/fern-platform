@@ -1,13 +1,14 @@
 import { useEffect } from "react";
 
-import { isNonNullish } from "@fern-api/ui-core-utils";
-import { Badge } from "@fern-docs/components/badges";
 import { TooltipPortal } from "@radix-ui/react-tooltip";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { groupBy } from "es-toolkit/array";
 import type { Element as HastElement } from "hast";
 import { useAtom, useAtomValue } from "jotai";
 import { CONTINUE, EXIT, visit } from "unist-util-visit";
+
+import { isNonNullish } from "@fern-api/ui-core-utils";
+import { Badge } from "@fern-docs/components/badges";
 
 import { AlgoliaRecordHit } from "../../types";
 import { PageIcon } from "../icons/page";

@@ -1,8 +1,9 @@
 import { ReactElement } from "react";
 
-import { FernButton, FernInput, FernInputProps } from "@fern-docs/components";
 import { Mic, RotateCcw } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
+
+import { FernButton, FernInput, FernInputProps } from "@fern-docs/components";
 
 import { useAudioRecorder } from "../hooks/useAudioRecorder";
 import { PlaygroundAudioControls } from "./PlaygroundAudioControls";

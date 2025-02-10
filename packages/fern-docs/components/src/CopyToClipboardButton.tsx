@@ -1,7 +1,8 @@
 "use client";
 
-import { useCopyToClipboard } from "@fern-ui/react-commons";
 import { Check, Copy } from "iconoir-react";
+
+import { useCopyToClipboard } from "@fern-ui/react-commons";
 
 import { FernButton } from "./FernButton";
 import { FernTooltip, FernTooltipProvider } from "./FernTooltip";

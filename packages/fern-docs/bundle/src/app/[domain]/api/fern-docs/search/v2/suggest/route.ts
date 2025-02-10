@@ -3,6 +3,11 @@ import { NextRequest, NextResponse } from "next/server";
 
 import { createAnthropic } from "@ai-sdk/anthropic";
 import { searchClient } from "@algolia/client-search";
+import { getEnv } from "@vercel/functions";
+import { kv } from "@vercel/kv";
+import { streamObject } from "ai";
+import { z } from "zod";
+
 import { getEdgeFlags } from "@fern-docs/edge-config";
 import { SuggestionsSchema } from "@fern-docs/search-server";
 import {
@@ -10,10 +15,6 @@ import {
   SEARCH_INDEX,
 } from "@fern-docs/search-server/algolia";
 import { COOKIE_FERN_TOKEN } from "@fern-docs/utils";
-import { getEnv } from "@vercel/functions";
-import { kv } from "@vercel/kv";
-import { streamObject } from "ai";
-import { z } from "zod";
 
 import { track } from "@/server/analytics/posthog";
 import { algoliaAppId, anthropicApiKey } from "@/server/env-variables";

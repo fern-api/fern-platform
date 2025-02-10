@@ -1,15 +1,16 @@
 import { Fragment, ReactElement, ReactNode } from "react";
 import { Highlight, Snippet } from "react-instantsearch";
 
+import clsx from "clsx";
+import { uniq } from "es-toolkit/array";
+import { ChevronRight } from "lucide-react";
+import { MarkRequired, UnreachableCaseError } from "ts-essentials";
+
 import { formatUtc } from "@fern-api/ui-core-utils";
 import {
   AvailabilityBadge,
   HttpMethodBadge,
 } from "@fern-docs/components/badges";
-import clsx from "clsx";
-import { uniq } from "es-toolkit/array";
-import { ChevronRight } from "lucide-react";
-import { MarkRequired, UnreachableCaseError } from "ts-essentials";
 
 import {
   AlgoliaRecordHit,

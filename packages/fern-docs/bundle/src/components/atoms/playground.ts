@@ -1,13 +1,5 @@
 import { Dispatch, SetStateAction, useEffect } from "react";
 
-import {
-  EndpointContext,
-  WebSocketContext,
-  createEndpointContext,
-  createWebSocketContext,
-} from "@fern-api/fdr-sdk/api-definition";
-import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
-import { useEventCallback } from "@fern-ui/react-commons";
 import { WritableAtom, atom, useAtom, useAtomValue, useSetAtom } from "jotai";
 import {
   RESET,
@@ -16,6 +8,15 @@ import {
   useAtomCallback,
 } from "jotai/utils";
 import { useCallbackOne } from "use-memo-one";
+
+import {
+  EndpointContext,
+  WebSocketContext,
+  createEndpointContext,
+  createWebSocketContext,
+} from "@fern-api/fdr-sdk/api-definition";
+import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
+import { useEventCallback } from "@fern-ui/react-commons";
 
 import { selectHref } from "../hooks/useHref";
 import {

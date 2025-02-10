@@ -2,9 +2,10 @@
 
 import { FC } from "react";
 
+import { PlaySolid } from "iconoir-react";
+
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { FernTooltip, FernTooltipProvider } from "@fern-docs/components";
-import { PlaySolid } from "iconoir-react";
 
 import { FernLinkButton } from "../components/FernLinkButton";
 import { usePlaygroundSettings } from "../hooks/usePlaygroundSettings";

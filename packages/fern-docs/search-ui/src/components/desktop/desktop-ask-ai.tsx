@@ -15,9 +15,6 @@ import {
 } from "react";
 import { Components } from "react-markdown";
 
-import { Badge } from "@fern-docs/components/badges";
-import { Button } from "@fern-docs/components/button";
-import { useDebouncedCallback, useEventCallback } from "@fern-ui/react-commons";
 import { composeEventHandlers } from "@radix-ui/primitive";
 import { composeRefs } from "@radix-ui/react-compose-refs";
 import { TooltipPortal, TooltipProvider } from "@radix-ui/react-tooltip";
@@ -32,6 +29,10 @@ import {
   StopCircle,
 } from "lucide-react";
 import { useIsomorphicLayoutEffect } from "swr/_internal";
+
+import { Badge } from "@fern-docs/components/badges";
+import { Button } from "@fern-docs/components/button";
+import { useDebouncedCallback, useEventCallback } from "@fern-ui/react-commons";
 
 import { FootnoteSup, FootnotesSection } from "../chatbot/footnote";
 import {

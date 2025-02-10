@@ -1,9 +1,10 @@
 import type { MetadataRoute } from "next";
 
+import urljoin from "url-join";
+
 import { NodeCollector } from "@fern-api/fdr-sdk/navigation";
 import { withDefaultProtocol } from "@fern-api/ui-core-utils";
 import { conformTrailingSlash } from "@fern-docs/utils";
-import urljoin from "url-join";
 
 import { DocsLoader } from "@/server/DocsLoader";
 import { withPrunedNavigation } from "@/server/withPrunedNavigation";

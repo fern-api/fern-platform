@@ -2,9 +2,10 @@
 
 import React from "react";
 
-import type { Slug } from "@fern-api/fdr-sdk/navigation";
 import { composeRefs } from "@radix-ui/react-compose-refs";
 import { Slot } from "@radix-ui/react-slot";
+
+import type { Slug } from "@fern-api/fdr-sdk/navigation";
 
 import { useHref } from "../hooks/useHref";
 import { useApiPageCenterElement } from "./useApiPageCenterElement";

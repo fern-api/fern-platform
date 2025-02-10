@@ -1,6 +1,7 @@
-import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import { parse } from "url";
 import urljoin from "url-join";
+
+import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 
 export function findEndpoint({
   apiDefinition,

@@ -1,10 +1,11 @@
+import { compact } from "es-toolkit/array";
+import { UnreachableCaseError } from "ts-essentials";
+
 import {
   isNonNullish,
   isPlainObject,
   unknownToString,
 } from "@fern-api/ui-core-utils";
-import { compact } from "es-toolkit/array";
-import { UnreachableCaseError } from "ts-essentials";
 
 import type * as Latest from "../latest";
 import {

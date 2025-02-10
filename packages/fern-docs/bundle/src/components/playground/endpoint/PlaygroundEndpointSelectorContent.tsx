@@ -3,6 +3,9 @@
 import { usePathname } from "next/navigation";
 import { Fragment, forwardRef, useEffect, useRef, useState } from "react";
 
+import cn, { clsx } from "clsx";
+import { Search, Slash, Xmark } from "iconoir-react";
+
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { isNonNullish } from "@fern-api/ui-core-utils";
 import {
@@ -12,8 +15,6 @@ import {
   FernTooltipProvider,
 } from "@fern-docs/components";
 import { removeTrailingSlash } from "@fern-docs/utils";
-import cn, { clsx } from "clsx";
-import { Search, Slash, Xmark } from "iconoir-react";
 
 import { BuiltWithFern } from "@/components/built-with-fern";
 

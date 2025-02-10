@@ -6,9 +6,10 @@ import {
   useMemo,
 } from "react";
 
-import { useEventCallback } from "@fern-ui/react-commons";
 import { useControllableState } from "@radix-ui/react-use-controllable-state";
 import { noop } from "ts-essentials";
+
+import { useEventCallback } from "@fern-ui/react-commons";
 
 const CommandUxContext = createContext<{
   // focus: (opts?: { scrollToTop?: boolean }) => void;

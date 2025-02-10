@@ -1,5 +1,6 @@
-import { FernNavigation } from "@fern-api/fdr-sdk";
 import "server-only";
+
+import { FernNavigation } from "@fern-api/fdr-sdk";
 
 import { FileData } from "./types";
 

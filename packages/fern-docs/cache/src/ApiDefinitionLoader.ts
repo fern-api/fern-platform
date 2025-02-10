@@ -1,3 +1,6 @@
+import { HTTPSnippet, type TargetId } from "httpsnippet-lite";
+import { UnreachableCaseError } from "ts-essentials";
+
 import { APIV1Read, FdrClient } from "@fern-api/fdr-sdk";
 import {
   type ApiDefinition,
@@ -14,8 +17,6 @@ import {
 } from "@fern-api/fdr-sdk/api-definition";
 import type { EdgeFlags } from "@fern-docs/utils";
 import { DEFAULT_EDGE_FLAGS } from "@fern-docs/utils";
-import { HTTPSnippet, type TargetId } from "httpsnippet-lite";
-import { UnreachableCaseError } from "ts-essentials";
 
 import { ApiDefinitionKVCache } from "./ApiDefinitionKVCache";
 import { getHarRequest } from "./getHarRequest";

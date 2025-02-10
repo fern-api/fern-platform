@@ -2,8 +2,9 @@
 
 import { ReactElement, ReactNode } from "react";
 
-import { SyntaxHighlighterEdgeFlagsProvider } from "@fern-docs/syntax-highlighter";
 import { SWRConfig } from "swr";
+
+import { SyntaxHighlighterEdgeFlagsProvider } from "@fern-docs/syntax-highlighter";
 
 import { DocsProps, HydrateAtoms } from "../atoms";
 import { FeatureFlagProvider } from "../feature-flags/FeatureFlagProvider";

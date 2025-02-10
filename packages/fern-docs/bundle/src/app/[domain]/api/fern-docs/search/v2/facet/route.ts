@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import { fetchFacetValues } from "@fern-docs/search-server/algolia";
 import { algoliasearch } from "algoliasearch";
+
+import { fetchFacetValues } from "@fern-docs/search-server/algolia";
 
 import { algoliaAppId } from "@/server/env-variables";
 import { selectFirst } from "@/server/utils/selectFirst";

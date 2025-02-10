@@ -1,8 +1,9 @@
 import { ReactElement } from "react";
 
-import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
 import { useAtom, useAtomValue } from "jotai/react";
 import { RESET } from "jotai/utils";
+
+import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
 
 import {
   PLAYGROUND_AUTH_STATE_BEARER_TOKEN_ATOM,

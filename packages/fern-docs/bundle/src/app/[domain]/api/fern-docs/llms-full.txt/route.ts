@@ -4,12 +4,13 @@ import { cacheTag } from "next/dist/server/use-cache/cache-tag";
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
+import { uniqBy } from "es-toolkit/array";
+
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { CONTINUE, SKIP } from "@fern-api/fdr-sdk/traversers";
 import { isNonNullish } from "@fern-api/ui-core-utils";
 import { getEdgeFlags } from "@fern-docs/edge-config";
 import { COOKIE_FERN_TOKEN, addLeadingSlash } from "@fern-docs/utils";
-import { uniqBy } from "es-toolkit/array";
 
 import { DocsLoader } from "@/server/DocsLoader";
 import { getMarkdownForPath } from "@/server/getMarkdownForPath";

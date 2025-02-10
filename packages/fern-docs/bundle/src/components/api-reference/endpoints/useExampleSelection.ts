@@ -1,9 +1,10 @@
 import { useMemo } from "react";
 
-import { EndpointDefinition } from "@fern-api/fdr-sdk/api-definition";
 import { SetStateAction, atom, useAtom, useAtomValue } from "jotai";
 import { RESET, atomWithDefault } from "jotai/utils";
 import { useCallbackOne, useMemoOne } from "use-memo-one";
+
+import { EndpointDefinition } from "@fern-api/fdr-sdk/api-definition";
 
 import {
   DEFAULT_LANGUAGE_ATOM,

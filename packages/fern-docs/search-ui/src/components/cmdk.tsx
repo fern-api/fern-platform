@@ -19,13 +19,14 @@ import {
   useSyncExternalStore,
 } from "react";
 
-import { useDebouncedCallback } from "@fern-ui/react-commons";
 import * as RadixDialog from "@radix-ui/react-dialog";
 import { useId } from "@radix-ui/react-id";
 import { Primitive } from "@radix-ui/react-primitive";
 import { useIsomorphicLayoutEffect } from "swr/_internal";
 import { noop } from "ts-essentials";
 import { z } from "zod";
+
+import { useDebouncedCallback } from "@fern-ui/react-commons";
 
 import { commandScore } from "./command-score";
 

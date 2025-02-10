@@ -1,5 +1,7 @@
 import { ReactElement } from "react";
 
+import { useAtom, useSetAtom } from "jotai";
+
 import type { EndpointContext } from "@fern-api/fdr-sdk/api-definition";
 import {
   CopyToClipboardButton,
@@ -7,7 +9,6 @@ import {
   FernButtonGroup,
   FernCard,
 } from "@fern-docs/components";
-import { useAtom, useSetAtom } from "jotai";
 
 import {
   PLAYGROUND_AUTH_STATE_ATOM,

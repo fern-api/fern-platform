@@ -1,9 +1,10 @@
+import { SignJWT, jwtVerify } from "jose";
+
 import {
   type AuthEdgeConfig,
   type FernUser,
   FernUserSchema,
 } from "@fern-docs/auth";
-import { SignJWT, jwtVerify } from "jose";
 
 import { getJwtSecretKey } from "./workos";
 import { getSessionFromToken, toSessionUserInfo } from "./workos-session";

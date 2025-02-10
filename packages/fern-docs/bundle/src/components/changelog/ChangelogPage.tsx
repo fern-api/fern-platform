@@ -1,8 +1,9 @@
+import { compact } from "es-toolkit/compat";
+
 import { FernDocs, FernNavigation } from "@fern-api/fdr-sdk";
 import { EMPTY_FRONTMATTER } from "@fern-api/fdr-sdk/docs";
 import { isNonNullish } from "@fern-api/ui-core-utils";
 import { TableOfContentsItem, makeToc, toTree } from "@fern-docs/mdx";
-import { compact } from "es-toolkit/compat";
 
 import { createCachedDocsLoader } from "@/server/docs-loader";
 

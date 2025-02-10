@@ -1,9 +1,10 @@
-import { FernDocs } from "@fern-api/fdr-sdk";
 import express from "express";
 import { Server } from "http";
 import { fileURLToPath } from "url";
 import { ViteDevServer, createServer } from "vite";
 import { z } from "zod";
+
+import { FernDocs } from "@fern-api/fdr-sdk";
 
 import { serializeMdx } from "../mdx-bundler";
 

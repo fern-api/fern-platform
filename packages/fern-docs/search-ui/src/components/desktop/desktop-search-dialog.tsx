@@ -5,10 +5,11 @@ import {
   memo,
 } from "react";
 
-import { Button } from "@fern-docs/components/button";
 import * as Dialog from "@radix-ui/react-dialog";
 import { TooltipPortal } from "@radix-ui/react-tooltip";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
+
+import { Button } from "@fern-docs/components/button";
 
 import { cn } from "../ui/cn";
 import {

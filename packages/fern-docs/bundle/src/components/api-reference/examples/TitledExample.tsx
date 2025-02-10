@@ -8,8 +8,9 @@ import {
   forwardRef,
 } from "react";
 
-import { CopyToClipboardButton, SemanticColor } from "@fern-docs/components";
 import cn from "clsx";
+
+import { CopyToClipboardButton, SemanticColor } from "@fern-docs/components";
 
 export declare namespace TitledExample {
   export interface Props {

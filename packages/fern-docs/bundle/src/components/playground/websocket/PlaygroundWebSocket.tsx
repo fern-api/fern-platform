@@ -9,6 +9,9 @@ import {
   useState,
 } from "react";
 
+import { Wifi, WifiOff } from "iconoir-react";
+import urlJoin from "url-join";
+
 import type { WebSocketContext } from "@fern-api/fdr-sdk/api-definition";
 import {
   WebSocketMessage,
@@ -16,8 +19,6 @@ import {
 } from "@fern-api/fdr-sdk/api-definition";
 import { FernTooltipProvider } from "@fern-docs/components";
 import { usePrevious } from "@fern-ui/react-commons";
-import { Wifi, WifiOff } from "iconoir-react";
-import urlJoin from "url-join";
 
 import {
   PLAYGROUND_AUTH_STATE_ATOM,

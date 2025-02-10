@@ -1,3 +1,6 @@
+import type { BaseHit, Hit } from "instantsearch.js";
+import { MarkRequired } from "ts-essentials";
+
 import {
   type AlgoliaRecord,
   type ApiReferenceRecord,
@@ -6,8 +9,6 @@ import {
   type MarkdownRecord,
   SEARCHABLE_FACET_ATTRIBUTES,
 } from "@fern-docs/search-server/algolia/types";
-import type { BaseHit, Hit } from "instantsearch.js";
-import { MarkRequired } from "ts-essentials";
 
 export type AlgoliaRecordHit = Hit<AlgoliaRecord & BaseHit>;
 export type MarkdownRecordHit = MarkRequired<Hit<MarkdownRecord>, "type">;

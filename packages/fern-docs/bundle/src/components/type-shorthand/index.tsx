@@ -1,5 +1,7 @@
 import { ReactNode } from "react";
 
+import { uniq } from "es-toolkit/array";
+
 import {
   PrimitiveType,
   TypeDefinition,
@@ -10,7 +12,6 @@ import {
   unknownToString,
   visitDiscriminatedUnion,
 } from "@fern-api/ui-core-utils";
-import { uniq } from "es-toolkit/array";
 
 export interface TypeShorthandOptions {
   plural?: boolean;

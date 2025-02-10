@@ -1,7 +1,8 @@
-import { isNonNullish } from "@fern-api/ui-core-utils";
 import { ToolInvocation } from "ai";
 import { Message } from "ai/react";
 import { z } from "zod";
+
+import { isNonNullish } from "@fern-api/ui-core-utils";
 
 import { AlgoliaRecordHit } from "../../types";
 

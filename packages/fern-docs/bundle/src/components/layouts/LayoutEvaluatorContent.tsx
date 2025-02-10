@@ -1,9 +1,10 @@
 import { ReactElement, ReactNode } from "react";
 
+import { UnreachableCaseError } from "ts-essentials";
+
 import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import type { TableOfContentsItem } from "@fern-docs/mdx";
-import { UnreachableCaseError } from "ts-essentials";
 
 import { PageHeader } from "../components/PageHeader";
 import { CustomLayout } from "./CustomLayout";

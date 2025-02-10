@@ -3,6 +3,10 @@ import { NextRequest, NextResponse } from "next/server";
 
 import { createAmazonBedrock } from "@ai-sdk/amazon-bedrock";
 import { createOpenAI } from "@ai-sdk/openai";
+import { EmbeddingModel, embed, streamText, tool } from "ai";
+import { initLogger, traced, wrapAISDKModel } from "braintrust";
+import { z } from "zod";
+
 import { getAuthEdgeConfig, getEdgeFlags } from "@fern-docs/edge-config";
 import { createDefaultSystemPrompt } from "@fern-docs/search-server";
 import {
@@ -10,9 +14,6 @@ import {
   toDocuments,
 } from "@fern-docs/search-server/turbopuffer";
 import { COOKIE_FERN_TOKEN, withoutStaging } from "@fern-docs/utils";
-import { EmbeddingModel, embed, streamText, tool } from "ai";
-import { initLogger, traced, wrapAISDKModel } from "braintrust";
-import { z } from "zod";
 
 import { track } from "@/server/analytics/posthog";
 import { safeVerifyFernJWTConfig } from "@/server/auth/FernJWT";
