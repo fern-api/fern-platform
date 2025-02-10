@@ -2,6 +2,10 @@
   "name": "@fern-docs/ai-analytics",
   "version": "0.1.0",
   "private": true,
+  "exports": {
+    ".": "./src/page.tsx",
+    "./src/globals.css": "./src/globals.css"
+  },
   "scripts": {
     "build-storybook": "storybook build",
     "demo:build": "next build",
