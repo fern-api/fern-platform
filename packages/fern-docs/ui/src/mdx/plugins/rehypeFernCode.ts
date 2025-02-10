@@ -285,7 +285,7 @@ export function parseBlockMetaString(
   }
 
   const matchLanguage = meta.match(
-    /matchLanguage=(?:"((?:[^"\\]|\\.)*?)"|'((?:[^'\\]|\\.)*?)')/
+    /for=(?:"((?:[^"\\]|\\.)*?)"|'((?:[^'\\]|\\.)*?)')/
   );
   const match = matchLanguage?.[1] ?? matchLanguage?.[2];
   meta = meta.replace(matchLanguage?.[0] ?? "", "");
