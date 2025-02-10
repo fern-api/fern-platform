@@ -77,7 +77,7 @@ export function MessageTableClient({
                   {item.domain}
                 </td>
                 <td className="border border-gray-200 p-4">
-                  {expandedRows[index] && (
+                  {expandedRows[index] ? (
                     <div className="space-y-4">
                       {item.content.map((message, msgIndex) => (
                         <div
@@ -98,6 +98,12 @@ export function MessageTableClient({
                           </div>
                         </div>
                       ))}
+                    </div>
+                  ) : (
+                    <div
+                      className={`whitespace-pre-wrap rounded-lg bg-green-50 p-3 text-sm`}
+                    >
+                      {item.content[0].content}
                     </div>
                   )}
                 </td>

@@ -74,7 +74,6 @@ export default async function Home() {
       processedData.push({ domain, content: cleanedInput });
     }
   }
-  console.log(processedData);
 
   return (
     <main className="min-h-screen w-full overflow-x-hidden bg-white">
