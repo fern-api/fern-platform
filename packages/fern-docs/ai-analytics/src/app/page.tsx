@@ -72,20 +72,21 @@ const MessageTable = ({ data }: { data: DomainMessages[] }) => {
 };
 
 export default async function Home() {
-  // const url = "https://api.braintrust.dev/btql";
-  // const headers = {
-  //   Authorization: `Bearer ${process.env.BRAINTRUST_API_KEY}`,
-  //   "Content-Type": "application/json",
-  // };
-  // const body = {
-  //   query: `select: * | from: project_logs('${BRAINTRUST_PROJECT_ID}') | limit: 100`,
-  // };
-  // const response = await fetch(url, {
-  //   method: "POST",
-  //   headers: headers,
-  //   body: JSON.stringify(body),
-  // });
+  const url = "https://api.braintrust.dev/btql";
+  const headers = {
+    Authorization: `Bearer ${process.env.BRAINTRUST_API_KEY}`,
+    "Content-Type": "application/json",
+  };
+  const body = {
+    query: `select: * | from: project_logs('${BRAINTRUST_PROJECT_ID}') | limit: 100`,
+  };
+  const response = await fetch(url, {
+    method: "POST",
+    headers: headers,
+    body: JSON.stringify(body),
+  });
 
+  console.log(response.json());
   // const jsonData = await response.json();
   // const data = jsonData.data;
 
