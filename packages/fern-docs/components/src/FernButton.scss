@@ -129,6 +129,10 @@
     &[disabled] {
       @apply text-text-default/40 hover:text-text-default/40 cursor-not-allowed bg-black/20;
       @apply dark:text-text-default/50 dark:hover:text-text-default/50 dark:bg-white/10;
+
+      &#fern-search-button {
+        @apply bg-transparent;
+      }
     }
 
     &:not([disabled]) {

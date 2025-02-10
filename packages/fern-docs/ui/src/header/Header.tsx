@@ -136,12 +136,24 @@ const UnmemoizedHeader = forwardRef<
 
           {colors.dark && colors.light && <ThemeButton size="large" />}
 
-          {searchService.isAvailable && (
+          {searchService.isAvailable ? (
             <FernButton
               onClickCapture={(e) => {
                 e.stopPropagation();
                 openSearchDialog();
               }}
+              icon={<Search className="!size-icon-md" />}
+              intent="none"
+              variant="minimal"
+              rounded={true}
+              size="large"
+              className="max-sm:hidden"
+              id="fern-search-button"
+            />
+          ) : (
+            <FernButton
+              disabled
+              active={false}
               icon={<Search className="!size-icon-md" />}
               intent="none"
               variant="minimal"
