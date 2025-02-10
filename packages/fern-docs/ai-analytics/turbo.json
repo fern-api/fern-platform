@@ -6,18 +6,22 @@
     "demo:build": {
       "outputs": [".next/**", "!.next/cache/**"],
       "inputs": ["$TURBO_DEFAULT$", ".env*"],
-      "dependsOn": ["^build", "^compile"]
+      "dependsOn": ["^build", "^compile"],
+      "env": ["BRAINTRUST_API_KEY"]
     },
     "demo:dev": {
       "dependsOn": ["^build", "^compile"],
-      "persistent": true
+      "persistent": true,
+      "env": ["BRAINTRUST_API_KEY"]
     },
     "demo:start": {
       "dependsOn": ["demo:build"],
-      "persistent": true
+      "persistent": true,
+      "env": ["BRAINTRUST_API_KEY"]
     },
     "demo:lint": {
-      "dependsOn": ["^build", "^compile"]
+      "dependsOn": ["^build", "^compile"],
+      "env": ["BRAINTRUST_API_KEY"]
     }
   }
 }

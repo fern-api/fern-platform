@@ -86,9 +86,7 @@ export default async function Home() {
     body: JSON.stringify(body),
   });
 
-  console.log("test response");
   const jsonData = await response.json();
-  console.log(jsonData);
   // const data = jsonData.data;
 
   // const processedData: DomainMessages[] = [];
