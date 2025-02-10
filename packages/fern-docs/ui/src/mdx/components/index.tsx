@@ -35,6 +35,7 @@ import { A, HeadingRenderer, Image, Li, Ol, Strong, Ul } from "./html";
 import { Table } from "./html-table";
 import { If } from "./if";
 import { IFrame } from "./iframe";
+import { Json } from "./json";
 import { Mermaid } from "./mermaid";
 import { ParamField } from "./mintlify";
 import { ReferenceLayoutAside, ReferenceLayoutMain } from "./reference-layout";
@@ -91,6 +92,7 @@ const FERN_COMPONENTS = {
   CodeBlocks: CodeGroup,
   Tabs: TabGroup,
   ElevenLabsWaveform,
+  Json,
 };
 
 // internal-use only
