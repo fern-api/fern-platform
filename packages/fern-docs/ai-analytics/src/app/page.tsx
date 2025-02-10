@@ -1,3 +1,5 @@
+import { MessageTableClient } from "./MessageTable";
+
 interface APIMessage {
   role: string;
   content: string | { text: string; type: string }[];
@@ -14,60 +16,6 @@ interface DomainMessages {
 }
 
 const BRAINTRUST_PROJECT_ID = "9f4a7638-9f59-47f7-8cca-d6c9f4d0e270";
-
-const MessageTable = ({ data }: { data: DomainMessages[] }) => {
-  return (
-    <div className="w-full overflow-x-auto">
-      <table className="w-full border-collapse">
-        <thead>
-          <tr className="bg-gray-100">
-            <th className="border border-gray-200 p-4 text-left font-medium">
-              Domain
-            </th>
-            <th className="border border-gray-200 p-4 text-left font-medium">
-              Messages
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {data.map((item, index) => (
-            <tr
-              key={index}
-              className={index % 2 === 0 ? "bg-white" : "bg-gray-50"}
-            >
-              <td className="border border-gray-200 p-4 align-top">
-                {item.domain}
-              </td>
-              <td className="border border-gray-200 p-4">
-                <div className="space-y-4">
-                  {item.content.map((message, msgIndex) => (
-                    <div
-                      key={msgIndex}
-                      className={`rounded-lg p-3 ${
-                        message.role === "assistant"
-                          ? "bg-blue-50"
-                          : message.role === "user"
-                            ? "bg-green-50"
-                            : "bg-gray-50"
-                      }`}
-                    >
-                      <div className="mb-1 text-sm font-medium text-gray-700">
-                        {message.role}
-                      </div>
-                      <div className="whitespace-pre-wrap text-sm">
-                        {message.content}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  );
-};
 
 export default async function Home() {
   const url = "https://api.braintrust.dev/btql";
@@ -129,9 +77,10 @@ export default async function Home() {
   console.log(processedData);
 
   return (
-    <div className="grid min-h-screen grid-rows-[20px_1fr_20px] items-center justify-items-center gap-16 p-8 pb-20 font-[family-name:var(--font-geist-sans)] sm:p-20">
-      <MessageTable data={processedData} />
-      {/* {JSON.stringify(jsonData)} */}
-    </div>
+    <main className="min-h-screen w-full overflow-x-hidden bg-white">
+      <div className="container mx-auto px-4 py-8">
+        <MessageTableClient initialData={processedData} />
+      </div>
+    </main>
   );
 }
