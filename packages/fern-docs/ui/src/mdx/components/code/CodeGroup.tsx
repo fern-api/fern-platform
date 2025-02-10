@@ -35,15 +35,8 @@ export const CodeGroup: React.FC<React.PropsWithChildren<CodeGroup.Props>> = ({
   useEffect(() => {
     if (selectedLanguage) {
       const matchingTab = itemsRef.current.find((item) => {
-        if (item.matchLanguage) {
-          return (
-            ApiDefinition.cleanLanguage(item.matchLanguage) === selectedLanguage
-          );
-        }
-        return (
-          item.language &&
-          ApiDefinition.cleanLanguage(item.language) === selectedLanguage
-        );
+        const matchLanguage = item.matchLanguage || item.language;
+        return ApiDefinition.cleanLanguage(matchLanguage) === selectedLanguage;
       });
 
       if (matchingTab) {
@@ -51,12 +44,10 @@ export const CodeGroup: React.FC<React.PropsWithChildren<CodeGroup.Props>> = ({
         setSelectedTabIndex((prevIndex) => {
           const prevTab = itemsRef.current[prevIndex];
           if (prevTab) {
-            const currentMatch = prevTab.matchLanguage
-              ? ApiDefinition.cleanLanguage(prevTab.matchLanguage) ===
-                selectedLanguage
-              : prevTab.language &&
-                ApiDefinition.cleanLanguage(prevTab.language) ===
-                  selectedLanguage;
+            const prevMatchLanguage = prevTab.matchLanguage || prevTab.language;
+            const currentMatch =
+              ApiDefinition.cleanLanguage(prevMatchLanguage) ===
+              selectedLanguage;
             if (currentMatch) {
               return prevIndex;
             }
@@ -72,14 +63,12 @@ export const CodeGroup: React.FC<React.PropsWithChildren<CodeGroup.Props>> = ({
     setSelectedTabIndex(newIndex);
 
     const tab = itemsRef.current[newIndex];
-    const normalizedLanguage = tab?.matchLanguage
-      ? ApiDefinition.cleanLanguage(tab.matchLanguage)
-      : tab?.language
-        ? ApiDefinition.cleanLanguage(tab.language)
-        : undefined;
-
-    if (normalizedLanguage && normalizedLanguage !== selectedLanguage) {
-      setSelectedLanguage(normalizedLanguage);
+    if (tab) {
+      const matchLanguage = tab.matchLanguage || tab.language;
+      const normalizedLanguage = ApiDefinition.cleanLanguage(matchLanguage);
+      if (normalizedLanguage && normalizedLanguage !== selectedLanguage) {
+        setSelectedLanguage(normalizedLanguage);
+      }
     }
   };
 
