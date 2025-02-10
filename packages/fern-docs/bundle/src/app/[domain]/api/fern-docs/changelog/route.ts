@@ -1,5 +1,7 @@
+"use cache";
+
 import { DocsLoader } from "@/server/DocsLoader";
-import { getDocsDomainEdge, getHostEdge } from "@/server/xfernhost/edge";
+import { getHostEdge } from "@/server/xfernhost/edge";
 import type { DocsV1Read } from "@fern-api/fdr-sdk/client/types";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { NodeCollector } from "@fern-api/fdr-sdk/navigation";
@@ -7,20 +9,25 @@ import { assertNever, withDefaultProtocol } from "@fern-api/ui-core-utils";
 import { getFrontmatter } from "@fern-docs/mdx";
 import { addLeadingSlash, COOKIE_FERN_TOKEN } from "@fern-docs/utils";
 import { Feed, Item } from "feed";
+import { cacheTag } from "next/dist/server/use-cache/cache-tag";
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 import urlJoin from "url-join";
 
-export const revalidate = 60 * 60 * 24;
-
 const FORMATS = ["rss", "atom", "json"] as const;
 type Format = (typeof FORMATS)[number];
 
-export async function GET(req: NextRequest): Promise<NextResponse> {
+export async function GET(
+  req: NextRequest,
+  props: { params: Promise<{ domain: string }> }
+): Promise<NextResponse> {
+  const { domain } = await props.params;
+
+  cacheTag(domain);
+
   const path = addLeadingSlash(req.nextUrl.searchParams.get("slug") ?? "");
   const format = getFormat(req);
 
-  const domain = getDocsDomainEdge(req);
   const host = getHostEdge(req);
   const fernToken = (await cookies()).get(COOKIE_FERN_TOKEN)?.value;
   const loader = DocsLoader.for(domain, host, fernToken);

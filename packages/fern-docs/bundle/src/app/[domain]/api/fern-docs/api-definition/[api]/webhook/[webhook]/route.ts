@@ -1,18 +1,22 @@
-import { serializeMdx } from "@/components/mdx/bundlers/mdx-bundler";
+"use cache";
+
 import { createGetAuthStateEdge } from "@/server/auth/getAuthStateEdge";
 import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import { ApiDefinitionLoader } from "@fern-docs/cache";
 import { getEdgeFlags } from "@fern-docs/edge-config";
+import { cacheTag } from "next/dist/server/use-cache/cache-tag";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(
   req: NextRequest,
-  props: { params: Promise<{ api: string; webhook: string }> }
+  props: { params: Promise<{ domain: string; api: string; webhook: string }> }
 ): Promise<NextResponse> {
   const params = await props.params;
-  const { api, webhook } = params;
+  const { domain, api, webhook } = params;
 
-  const { getAuthState, domain } = await createGetAuthStateEdge(req);
+  cacheTag(domain);
+
+  const { getAuthState } = await createGetAuthStateEdge(req);
   const [authState, flags] = await Promise.all([
     getAuthState(),
     getEdgeFlags(domain),
@@ -30,7 +34,7 @@ export async function GET(
     ApiDefinition.ApiDefinitionId(api)
   )
     .withEdgeFlags(flags)
-    .withMdxBundler(serializeMdx, "mdx-bundler")
+    // .withMdxBundler(serializeMdx, "mdx-bundler")
     .withPrune({
       type: "webhook",
       webhookId: ApiDefinition.WebhookId(webhook),

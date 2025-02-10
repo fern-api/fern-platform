@@ -1,7 +1,10 @@
+"use cache";
+
 import { createGetAuthStateEdge } from "@/server/auth/getAuthStateEdge";
 import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import { ApiDefinitionLoader } from "@fern-docs/cache";
 import { getEdgeFlags } from "@fern-docs/edge-config";
+import { cacheTag } from "next/dist/server/use-cache/cache-tag";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(
@@ -10,6 +13,8 @@ export async function GET(
 ): Promise<NextResponse> {
   const params = await props.params;
   const { domain, api, endpoint } = params;
+
+  cacheTag(domain);
 
   const { getAuthState } = await createGetAuthStateEdge(req);
   const [authState, flags] = await Promise.all([

@@ -1,5 +1,4 @@
 import { createCachedDocsLoader } from "@/server/docs-loader";
-import { getDocsDomainEdge } from "@/server/xfernhost/edge";
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import {
   addLeadingSlash,
@@ -10,8 +9,11 @@ import { revalidateTag } from "next/cache";
 import { notFound } from "next/navigation";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(req: NextRequest) {
-  const domain = getDocsDomainEdge(req);
+export async function GET(
+  req: NextRequest,
+  props: { params: Promise<{ domain: string }> }
+): Promise<NextResponse> {
+  const { domain } = await props.params;
 
   revalidateTag(domain);
 

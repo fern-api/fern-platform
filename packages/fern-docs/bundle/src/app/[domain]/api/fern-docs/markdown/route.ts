@@ -1,11 +1,14 @@
+"use cache";
+
 import { DocsLoader } from "@/server/DocsLoader";
 import {
   getMarkdownForPath,
   getPageNodeForPath,
 } from "@/server/getMarkdownForPath";
-import { getDocsDomainEdge, getHostEdge } from "@/server/xfernhost/edge";
+import { getHostEdge } from "@/server/xfernhost/edge";
 import { getEdgeFlags } from "@fern-docs/edge-config";
 import { addLeadingSlash, COOKIE_FERN_TOKEN } from "@fern-docs/utils";
+import { cacheTag } from "next/dist/server/use-cache/cache-tag";
 import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 import { NextRequest, NextResponse } from "next/server";
@@ -14,9 +17,15 @@ import { NextRequest, NextResponse } from "next/server";
  * This endpoint returns the markdown content of any page in the docs by adding `.md` or `.mdx` to the end of any docs page.
  */
 
-export async function GET(req: NextRequest): Promise<NextResponse> {
+export async function GET(
+  req: NextRequest,
+  props: { params: Promise<{ domain: string }> }
+): Promise<NextResponse> {
+  const { domain } = await props.params;
+
+  cacheTag(domain);
+
   const path = addLeadingSlash(req.nextUrl.searchParams.get("slug") ?? "");
-  const domain = getDocsDomainEdge(req);
   const host = getHostEdge(req);
   const fern_token = (await cookies()).get(COOKIE_FERN_TOKEN)?.value;
   const edgeFlags = await getEdgeFlags(domain);

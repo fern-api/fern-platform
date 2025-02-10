@@ -1,19 +1,28 @@
+"use cache";
+
 import { DocsLoader } from "@/server/DocsLoader";
 import { getMarkdownForPath } from "@/server/getMarkdownForPath";
 import { getSectionRoot } from "@/server/getSectionRoot";
-import { getDocsDomainEdge, getHostEdge } from "@/server/xfernhost/edge";
+import { getHostEdge } from "@/server/xfernhost/edge";
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { CONTINUE, SKIP } from "@fern-api/fdr-sdk/traversers";
 import { isNonNullish } from "@fern-api/ui-core-utils";
 import { getEdgeFlags } from "@fern-docs/edge-config";
 import { addLeadingSlash, COOKIE_FERN_TOKEN } from "@fern-docs/utils";
 import { uniqBy } from "es-toolkit/array";
+import { cacheTag } from "next/dist/server/use-cache/cache-tag";
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(req: NextRequest): Promise<NextResponse> {
+export async function GET(
+  req: NextRequest,
+  props: { params: Promise<{ domain: string }> }
+): Promise<NextResponse> {
+  const { domain } = await props.params;
+
+  cacheTag(domain);
+
   const path = addLeadingSlash(req.nextUrl.searchParams.get("slug") ?? "");
-  const domain = getDocsDomainEdge(req);
   const host = getHostEdge(req);
   const fern_token = (await cookies()).get(COOKIE_FERN_TOKEN)?.value;
   const edgeFlags = await getEdgeFlags(domain);

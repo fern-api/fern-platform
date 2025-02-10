@@ -1,13 +1,16 @@
+"use cache";
+
 import { DocsLoader } from "@/server/DocsLoader";
 import { getMarkdownForPath } from "@/server/getMarkdownForPath";
 import { getSectionRoot } from "@/server/getSectionRoot";
 import { getLlmTxtMetadata } from "@/server/llm-txt-md";
-import { getDocsDomainEdge, getHostEdge } from "@/server/xfernhost/edge";
+import { getHostEdge } from "@/server/xfernhost/edge";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { CONTINUE, SKIP } from "@fern-api/fdr-sdk/traversers";
 import { isNonNullish, withDefaultProtocol } from "@fern-api/ui-core-utils";
 import { getEdgeFlags } from "@fern-docs/edge-config";
 import { COOKIE_FERN_TOKEN, addLeadingSlash } from "@fern-docs/utils";
+import { cacheTag } from "next/dist/server/use-cache/cache-tag";
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -32,9 +35,15 @@ import { NextRequest, NextResponse } from "next/server";
  * - should hidden pages be included under an `## Optional` heading?
  */
 
-export async function GET(req: NextRequest): Promise<NextResponse> {
+export async function GET(
+  req: NextRequest,
+  props: { params: Promise<{ domain: string }> }
+): Promise<NextResponse> {
+  const { domain } = await props.params;
+
+  cacheTag(domain);
+
   const path = addLeadingSlash(req.nextUrl.searchParams.get("slug") ?? "");
-  const domain = getDocsDomainEdge(req);
   const host = getHostEdge(req);
   const fern_token = (await cookies()).get(COOKIE_FERN_TOKEN)?.value;
   const edgeFlags = await getEdgeFlags(domain);
