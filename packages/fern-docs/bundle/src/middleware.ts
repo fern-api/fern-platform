@@ -71,7 +71,7 @@ export const middleware: NextMiddleware = async (request) => {
       API_FERN_DOCS_PATTERN,
       "/api/fern-docs/"
     );
-    return NextResponse.rewrite(withPathname(request, pathname), {
+    return NextResponse.rewrite(withPathname(request, withDomain(pathname)), {
       request: { headers },
     });
   }
@@ -83,7 +83,7 @@ export const middleware: NextMiddleware = async (request) => {
     return NextResponse.rewrite(
       withPathname(
         request,
-        "/api/fern-docs/llms.txt",
+        withDomain("/api/fern-docs/llms.txt"),
         String(
           new URLSearchParams({
             slug: removeLeadingSlash(pathname).replace(/\/llms\.txt$/, ""),
@@ -101,7 +101,7 @@ export const middleware: NextMiddleware = async (request) => {
     return NextResponse.rewrite(
       withPathname(
         request,
-        "/api/fern-docs/llms-full.txt",
+        withDomain("/api/fern-docs/llms-full.txt"),
         String(
           new URLSearchParams({
             slug: removeLeadingSlash(pathname).replace(/\/llms-full\.txt$/, ""),
@@ -119,7 +119,7 @@ export const middleware: NextMiddleware = async (request) => {
     return NextResponse.rewrite(
       withPathname(
         request,
-        "/api/fern-docs/markdown",
+        withDomain("/api/fern-docs/markdown"),
         String(
           new URLSearchParams({
             slug: removeLeadingSlash(pathname).replace(MARKDOWN_PATTERN, ""),
@@ -138,7 +138,7 @@ export const middleware: NextMiddleware = async (request) => {
     return NextResponse.rewrite(
       withPathname(
         request,
-        "/api/fern-docs/changelog",
+        withDomain("/api/fern-docs/changelog"),
         String(
           new URLSearchParams({
             format,
@@ -176,10 +176,6 @@ export const middleware: NextMiddleware = async (request) => {
 
 export const config = {
   matcher: [
-    /**
-     * Match all requests to posthog
-     */
-    "/api/fern-docs/analytics/posthog/:path*",
     /*
      * Match all request paths except for the ones starting with:
      * - api/fern-docs (API routes)
@@ -187,7 +183,7 @@ export const config = {
      * - _next/image (image optimization files)
      * - favicon.ico (favicon file)
      */
-    "/((?!api/fern-docs|.well-known|_next|_vercel|favicon.ico|manifest.webmanifest).*)",
+    "/((?!.well-known|_next|_vercel|favicon.ico|manifest.webmanifest).*)",
   ],
 };
 
