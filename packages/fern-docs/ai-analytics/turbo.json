@@ -1,6 +1,7 @@
 {
   "$schema": "https://turbo.build/schema.json",
   "extends": ["//"],
+  "globalEnv": ["BRAINTRUST_API_KEY"],
   "tasks": {
     "demo:build": {
       "outputs": [".next/**", "!.next/cache/**"],
