@@ -1,101 +1,135 @@
-import Image from "next/image";
+interface Message {
+  role: string;
+  content: string;
+}
 
-export default function Home() {
+interface Conversation {
+  input: Message[] | null;
+  output: {
+    message: Message;
+  } | null;
+}
+
+interface ApiResponse {
+  data: Conversation[];
+}
+
+interface DomainMessages {
+  domain: string;
+  content: Message[];
+}
+
+const BRAINTRUST_PROJECT_ID = "9f4a7638-9f59-47f7-8cca-d6c9f4d0e270";
+
+const MessageTable = ({ data }: { data: DomainMessages[] }) => {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+    <div className="w-full overflow-x-auto">
+      <table className="w-full border-collapse">
+        <thead>
+          <tr className="bg-gray-100">
+            <th className="border border-gray-200 p-4 text-left font-medium">
+              Domain
+            </th>
+            <th className="border border-gray-200 p-4 text-left font-medium">
+              Messages
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {data.map((item, index) => (
+            <tr
+              key={index}
+              className={index % 2 === 0 ? "bg-white" : "bg-gray-50"}
+            >
+              <td className="border border-gray-200 p-4 align-top">
+                {item.domain}
+              </td>
+              <td className="border border-gray-200 p-4">
+                <div className="space-y-4">
+                  {item.content.map((message, msgIndex) => (
+                    <div
+                      key={msgIndex}
+                      className={`rounded-lg p-3 ${
+                        message.role === "assistant"
+                          ? "bg-blue-50"
+                          : message.role === "user"
+                            ? "bg-green-50"
+                            : "bg-gray-50"
+                      }`}
+                    >
+                      <div className="mb-1 text-sm font-medium text-gray-700">
+                        {message.role}
+                      </div>
+                      <div className="whitespace-pre-wrap text-sm">
+                        {message.content}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+};
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+export default async function Home() {
+  const url = "https://api.braintrust.dev/btql";
+  const headers = {
+    Authorization: `Bearer ${process.env.BRAINTRUST_API_KEY}`,
+    "Content-Type": "application/json",
+  };
+  const body = {
+    query: `select: * | from: project_logs('${BRAINTRUST_PROJECT_ID}') | limit: 100`,
+  };
+  const response = await fetch(url, {
+    method: "POST",
+    headers: headers,
+    body: JSON.stringify(body),
+  });
+
+  const jsonData: ApiResponse = await response.json();
+  const data = jsonData.data;
+
+  const processedData: DomainMessages[] = [];
+
+  for (const convo of data) {
+    if (convo.input !== null && convo.output !== null) {
+      let domain = "";
+      convo.input.forEach((msg) => {
+        if (msg.role === "system") {
+          if (msg.content && msg.content.includes("elevenlabs.io")) {
+            domain = "elevenlabs.io";
+          } else {
+            domain = "buildwithfern.com";
+          }
+        }
+      });
+
+      const cleanedInput = convo.input
+        .map((msg) => {
+          if (msg.role === "user") {
+            return {
+              role: "user",
+              content: msg.content[0].text,
+            };
+          } else {
+            return msg;
+          }
+        })
+        .filter((msg) => msg.role !== "system" && msg.role !== "tool");
+      cleanedInput.push(convo.output.message);
+      processedData.push({ domain, content: cleanedInput });
+    }
+  }
+  console.log(processedData);
+  console.log(processedData[0].content[0]);
+
+  return (
+    <div className="grid min-h-screen grid-rows-[20px_1fr_20px] items-center justify-items-center gap-16 p-8 pb-20 font-[family-name:var(--font-geist-sans)] sm:p-20">
+      <MessageTable data={processedData} />
     </div>
   );
 }
