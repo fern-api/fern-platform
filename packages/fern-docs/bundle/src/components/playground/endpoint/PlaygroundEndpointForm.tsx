@@ -16,10 +16,7 @@ import {
   PlaygroundEndpointRequestFormState,
   PlaygroundFormStateBody,
 } from "../types";
-import {
-  pascalCaseHeaderKey,
-  pascalCaseHeaderKeys,
-} from "../utils/header-key-case";
+import { pascalCaseHeaderKey } from "../utils/header-key-case";
 import { PlaygroundEndpointAliasForm } from "./PlaygroundEndpointAliasForm";
 import { PlaygroundEndpointFormSection } from "./PlaygroundEndpointFormSection";
 import { PlaygroundEndpointMultipartForm } from "./PlaygroundEndpointMultipartForm";

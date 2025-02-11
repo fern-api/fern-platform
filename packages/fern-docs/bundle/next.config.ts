@@ -1,6 +1,5 @@
 import { NextConfig } from "next";
 import { PHASE_DEVELOPMENT_SERVER } from "next/constants";
-import type { RemotePattern } from "next/dist/shared/lib/image-config";
 
 import NextBundleAnalyzer from "@next/bundle-analyzer";
 import path from "node:path";
@@ -67,7 +66,6 @@ const nextConfig: NextConfig = {
     ],
     useCache: true,
     newDevOverlay: true,
-    reactCompiler: false,
   },
 
   env: {

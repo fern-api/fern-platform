@@ -1,6 +1,7 @@
 // @ts-check
 import { FlatCompat } from "@eslint/eslintrc";
 import eslint from "@eslint/js";
+import unusedImports from "eslint-plugin-unused-imports";
 import vitest from "eslint-plugin-vitest";
 import tseslint from "typescript-eslint";
 
@@ -23,6 +24,22 @@ export default tseslint.config(
       "**/node_modules",
       "fern/**",
     ],
+    plugins: {
+      "unused-imports": unusedImports,
+    },
+    rules: {
+      "unused-imports/no-unused-imports": "error",
+      "unused-imports/no-unused-vars": [
+        "error",
+        {
+          varsIgnorePattern: "^_",
+          argsIgnorePattern: "^_",
+          caughtErrorsIgnorePattern: "^_",
+          destructuredArrayIgnorePattern: "^_",
+          ignoreRestSiblings: true,
+        },
+      ],
+    },
   },
 
   eslint.configs.recommended,
@@ -87,16 +104,7 @@ export default tseslint.config(
       "no-empty": ["error", { allowEmptyCatch: true }],
       eqeqeq: ["error", "always", { null: "never" }],
       "@typescript-eslint/no-deprecated": "error",
-      "@typescript-eslint/no-unused-vars": [
-        "error",
-        {
-          varsIgnorePattern: "^_",
-          argsIgnorePattern: "^_",
-          caughtErrorsIgnorePattern: "^_",
-          destructuredArrayIgnorePattern: "^_",
-          ignoreRestSiblings: true,
-        },
-      ],
+      "@typescript-eslint/no-unused-vars": "off",
       "@typescript-eslint/no-empty-function": [
         "error",
         {

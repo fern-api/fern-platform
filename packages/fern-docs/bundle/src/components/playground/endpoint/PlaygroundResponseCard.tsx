@@ -14,10 +14,7 @@ import {
 } from "@fern-docs/components";
 import { Loadable, visitLoadable } from "@fern-ui/loadable";
 
-import {
-  ErrorBoundary,
-  ErrorBoundaryFallback,
-} from "@/components/error-boundary";
+import { ErrorBoundaryFallback } from "@/components/error-boundary";
 
 import { useEdgeFlags } from "../../atoms";
 import { PlaygroundResponsePreview } from "../PlaygroundResponsePreview";

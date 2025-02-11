@@ -1,7 +1,5 @@
 import { ReactElement, memo } from "react";
 
-import { useAtomValue } from "jotai";
-
 import { SearchV2Trigger } from "@/components/search-trigger";
 
 import { Header } from "../../header/Header";

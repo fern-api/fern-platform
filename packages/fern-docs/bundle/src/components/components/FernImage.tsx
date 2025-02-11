@@ -1,5 +1,4 @@
 /* eslint-disable @next/next/no-img-element */
-import { RemotePattern } from "next/dist/shared/lib/image-config";
 import Image from "next/image";
 import { ComponentPropsWithoutRef, forwardRef } from "react";
 

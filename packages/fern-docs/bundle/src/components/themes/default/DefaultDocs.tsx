@@ -8,12 +8,12 @@ import {
   DOCS_LAYOUT_ATOM,
   HEADER_OFFSET_ATOM,
   MOBILE_HEADER_OFFSET_ATOM,
-  SHOW_HEADER_ATOM,
   SIDEBAR_DISMISSABLE_ATOM,
   useColors,
   useTheme,
-} from "../../atoms";
-import { Sidebar } from "../../sidebar/Sidebar";
+} from "@/components/atoms";
+import { Sidebar } from "@/components/sidebar/Sidebar";
+
 import { HeaderContainer } from "./HeaderContainer";
 
 const DefaultDocsStyle = () => {

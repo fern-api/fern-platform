@@ -3,8 +3,6 @@
 import Script from "next/script";
 import React from "react";
 
-import { isEqual } from "es-toolkit/predicate";
-
 export interface JsConfig {
   remote:
     | {

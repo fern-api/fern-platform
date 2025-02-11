@@ -1,6 +1,5 @@
 import "server-only";
 
-import { unstable_cacheTag as cacheTag } from "next/cache";
 import { Metadata } from "next/types";
 
 import Page, { generateMetadata as _generateMetadata } from "../../_page";

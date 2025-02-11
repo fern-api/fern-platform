@@ -15,7 +15,6 @@ import {
 } from "@fern-docs/components";
 
 import { WebSocketMessages } from "@/components/api-reference/websockets/WebSocketMessages";
-import { ErrorBoundaryFallback } from "@/components/error-boundary";
 
 import { PlaygroundButton } from "../../playground/PlaygroundButton";
 import { usePlaygroundBaseUrl } from "../../playground/utils/select-environment";

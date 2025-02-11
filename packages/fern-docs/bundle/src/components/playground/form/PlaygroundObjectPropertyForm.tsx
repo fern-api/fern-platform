@@ -11,7 +11,6 @@ import {
   TypeReference,
   unwrapReference,
 } from "@fern-api/fdr-sdk/api-definition";
-import { isPlainObject } from "@fern-api/ui-core-utils";
 import { FernButton, FernDropdown } from "@fern-docs/components";
 import { useBooleanState } from "@fern-ui/react-commons";
 

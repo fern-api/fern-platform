@@ -1,5 +1,5 @@
 import Script from "next/script";
-import { ReactElement, useEffect } from "react";
+import { useEffect } from "react";
 
 import type { DocsV1Read } from "@fern-api/fdr-sdk";
 
@@ -32,7 +32,7 @@ export function useIntercomInitializer(
   config: DocsV1Read.IntercomConfig
 ): void {
   useEffect(() => {
-    let interval: number;
+    let interval: number = 0;
     const retry = () => {
       if (window.Intercom) {
         window.Intercom("boot", normalizeIntercomConfig(config));

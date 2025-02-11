@@ -1,6 +1,5 @@
 import "server-only";
 
-import type { Options } from "@mdx-js/esbuild";
 import { mapKeys } from "es-toolkit/object";
 import { bundleMDX } from "mdx-bundler";
 import path, { dirname } from "path";
@@ -35,7 +34,6 @@ import {
 } from "@fern-docs/mdx/plugins";
 
 import { RehypeFilesOptions, rehypeFiles } from "../plugins/rehype-files";
-import { rehypeExtractAsides } from "../plugins/rehypeExtractAsides";
 import { rehypeFernCode } from "../plugins/rehypeFernCode";
 import { rehypeFernComponents } from "../plugins/rehypeFernComponents";
 import { remarkExtractTitle } from "../plugins/remark-extract-title";

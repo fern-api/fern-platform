@@ -2,7 +2,7 @@
 
 import type { PropsWithChildren, ReactNode } from "react";
 
-import { atomWithReducer, selectAtom, useHydrateAtoms } from "jotai/utils";
+import { atomWithReducer, useHydrateAtoms } from "jotai/utils";
 
 import { DocsV1Read } from "@fern-api/fdr-sdk";
 import { DEFAULT_EDGE_FLAGS } from "@fern-docs/utils";
