@@ -1,6 +1,5 @@
 "use client";
 
-import { useTheme } from "next-themes";
 import { usePathname, useRouter } from "next/navigation";
 import React from "react";
 
@@ -38,6 +37,7 @@ import {
 import { Feedback } from "@/components/feedback/Feedback";
 import { useApiRoute } from "@/components/hooks/useApiRoute";
 import { useApiRouteSWRImmutable } from "@/components/hooks/useApiRouteSWR";
+import { useSetTheme, useThemeSwitchEnabled } from "@/hooks/theme-switch";
 
 import { searchDialogOpenAtom, searchInitializedAtom } from "./search-trigger";
 
@@ -238,8 +238,9 @@ function CommandPlayground({ onClose }: { onClose: () => void }) {
 }
 
 function CommandTheme({ onClose }: { onClose: () => void }) {
-  const { setTheme, forcedTheme } = useTheme();
-  if (forcedTheme) {
+  const themeSwitchEnabled = useThemeSwitchEnabled();
+  const setTheme = useSetTheme();
+  if (!themeSwitchEnabled) {
     return null;
   }
   return (

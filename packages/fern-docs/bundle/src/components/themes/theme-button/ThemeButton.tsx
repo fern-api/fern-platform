@@ -1,4 +1,3 @@
-import { useTheme } from "next-themes";
 import { memo, useState } from "react";
 import { Monitor, Moon, Sun } from "react-feather";
 
@@ -8,6 +7,8 @@ import cn from "clsx";
 import { FernButton, FernButtonProps } from "@fern-docs/components";
 import { useMounted } from "@fern-ui/react-commons";
 
+import { useResolvedTheme, useSetTheme } from "@/hooks/theme-switch";
+
 export declare namespace ThemeButton {
   export interface Props extends FernButtonProps {
     className?: string;
@@ -16,11 +17,12 @@ export declare namespace ThemeButton {
 
 export const ThemeButton = memo(
   ({ className, ...props }: ThemeButton.Props) => {
-    const { resolvedTheme, setTheme } = useTheme();
+    const theme = useResolvedTheme();
+    const setTheme = useSetTheme();
     const mounted = useMounted();
     const [isOpen, setOpen] = useState(false);
 
-    const IconToUse = mounted && resolvedTheme === "dark" ? Moon : Sun;
+    const IconToUse = mounted && theme === "dark" ? Moon : Sun;
 
     return (
       <Popover.Root
