@@ -16,7 +16,7 @@ import {
 import { FileData } from "@/server/types";
 
 export interface RehypeFilesOptions {
-  replaceSrc?(src: string): FileData | undefined;
+  replaceSrc?: (src: string) => FileData | undefined;
 }
 
 /**

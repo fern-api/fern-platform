@@ -1,14 +1,11 @@
 import { Dispatch, FC, SetStateAction, useCallback, useMemo } from "react";
 
-import { useAtomValue } from "jotai";
-
 import {
   type EndpointContext,
   PropertyKey,
 } from "@fern-api/fdr-sdk/api-definition";
 import { EMPTY_ARRAY, visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
 
-import { FERN_USER_ATOM } from "../../atoms";
 import { PlaygroundFileUploadForm } from "../form/PlaygroundFileUploadForm";
 import { PlaygroundObjectForm } from "../form/PlaygroundObjectForm";
 import { PlaygroundObjectPropertiesForm } from "../form/PlaygroundObjectPropertyForm";
@@ -34,11 +31,11 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
   setFormState,
   ignoreHeaders,
 }) => {
-  const {
-    headers: initialHeaders,
-    query_parameters: initialQueryParameters,
-    path_parameters: initialPathParameters,
-  } = useAtomValue(FERN_USER_ATOM)?.playground?.initial_state ?? {};
+  // const {
+  //   headers: initialHeaders,
+  //   query_parameters: initialQueryParameters,
+  //   path_parameters: initialPathParameters,
+  // } = useAtomValue(FERN_USER_ATOM)?.playground?.initial_state ?? {};
 
   const setHeaders = useCallback(
     (value: ((old: unknown) => unknown) | unknown) => {
