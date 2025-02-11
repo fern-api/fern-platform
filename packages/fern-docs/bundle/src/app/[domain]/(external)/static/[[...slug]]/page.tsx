@@ -1,20 +1,17 @@
-"use cache";
-
 import "server-only";
 
-import { unstable_cacheTag as cacheTag } from "next/cache";
 import { Metadata } from "next/types";
 
 import { slugjoin } from "@fern-api/fdr-sdk/navigation";
 
 import Page, { generateMetadata as _generateMetadata } from "../../_page";
 
+export const dynamic = "force-static";
+
 export default async function StaticPage(props: {
   params: Promise<{ slug?: string[]; domain: string }>;
 }) {
   const { domain, slug } = await props.params;
-
-  cacheTag(domain);
 
   return <Page domain={domain} slug={slugjoin(slug)} fern_token={undefined} />;
 }
