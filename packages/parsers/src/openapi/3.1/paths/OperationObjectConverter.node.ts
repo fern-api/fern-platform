@@ -320,7 +320,8 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
       this.path,
       this.method,
       sdkMethodName.sdkMethodName,
-      this.input.operationId
+      this.input.operationId,
+      this.isWebhook
     );
 
     // TODO: figure out how to merge user specified examples with success response
@@ -440,6 +441,9 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
         path:
           this.convertPathToPathParts()?.map((part) => part.value.toString()) ??
           [],
+        queryParameters: convertOperationObjectProperties(
+          this.queryParameters
+        )?.flat(),
         headers: convertOperationObjectProperties(this.requestHeaders)?.flat(),
         payloads: this.requests?.convertToWebhookPayload(),
         examples: [this.requests?.webhookExample()].filter(isNonNullish),

@@ -2,7 +2,67 @@
   "id": "test-uuid-replacement",
   "endpoints": {},
   "websockets": {},
-  "webhooks": {},
+  "webhooks": {
+    "webhook_.GetPet": {
+      "id": "webhook_.GetPet",
+      "operationId": "GetPet",
+      "method": "GET",
+      "path": [
+        "/",
+        "pet"
+      ],
+      "queryParameters": [
+        {
+          "key": "id",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "optional",
+              "shape": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "integer"
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "examples": []
+    },
+    "webhook_.CreatePet": {
+      "id": "webhook_.CreatePet",
+      "operationId": "CreatePet",
+      "method": "POST",
+      "path": [
+        "/",
+        "pet"
+      ],
+      "payloads": [
+        {
+          "shape": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "Pet"
+            }
+          }
+        }
+      ],
+      "examples": [
+        {
+          "payload": {
+            "id": 0,
+            "name": "name",
+            "tag": "tag"
+          }
+        }
+      ]
+    }
+  },
   "types": {
     "Pet": {
       "name": "Pet",

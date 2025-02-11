@@ -5,7 +5,8 @@ export function getEndpointId(
   path: string | undefined,
   method: string | undefined,
   sdkMethodName: string | undefined,
-  operationId: string | undefined
+  operationId: string | undefined,
+  isWebhook: boolean | undefined
 ): string | undefined {
   if (path == null) {
     return undefined;
@@ -19,5 +20,5 @@ export function getEndpointId(
   if (endpointName == null) {
     return undefined;
   }
-  return `endpoint_${camelCase(namespace != null ? (typeof namespace === "string" ? namespace : namespace.join("_")) : "")}.${camelCase(sdkMethodName ?? "") || operationId || camelCase(endpointName)}`;
+  return `${isWebhook ? "webhook_" : "endpoint_"}${camelCase(namespace != null ? (typeof namespace === "string" ? namespace : namespace.join("_")) : "")}.${camelCase(sdkMethodName ?? "") || operationId || camelCase(endpointName)}`;
 }

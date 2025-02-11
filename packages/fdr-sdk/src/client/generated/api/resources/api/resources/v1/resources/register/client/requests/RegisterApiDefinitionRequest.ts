@@ -631,6 +631,9 @@ import * as FernRegistry from "../../../../../../../../index";
  *                     headers: [{
  *                             "key": "value"
  *                         }],
+ *                     queryParameters: [{
+ *                             "key": "value"
+ *                         }],
  *                     payloads: [{
  *                             "key": "value"
  *                         }],

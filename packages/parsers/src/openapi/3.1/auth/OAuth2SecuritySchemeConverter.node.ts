@@ -79,6 +79,7 @@ export class OAuth2SecuritySchemeConverterNode extends BaseOpenApiV3_1ConverterN
       this.authorizationUrl,
       "POST",
       undefined,
+      undefined,
       undefined
     );
     if (endpointId == null) {
