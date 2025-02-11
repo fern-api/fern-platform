@@ -418,6 +418,10 @@ export async function generateMetadata({
   slug: Slug;
   fern_token: string | undefined;
 }): Promise<Metadata> {
+  "use cache";
+
+  cacheTag(domain);
+
   const docsLoader = await createCachedDocsLoader(domain, fern_token);
   const findNode = createFindNode(docsLoader);
   const [files, node, config, isSeoDisabled] = await Promise.all([
