@@ -70,7 +70,11 @@ const nextConfig: NextConfig = {
     swcTraceProfiling: true,
     slowModuleDetection: process.env.VERCEL
       ? undefined
-      : { buildTimeThresholdMs: 1000 },
+      : { buildTimeThresholdMs: 200 },
+    webpackBuildWorker: true,
+    parallelServerCompiles: true,
+    parallelServerBuildTraces: true,
+    webpackMemoryOptimizations: true,
   },
 
   env: {
