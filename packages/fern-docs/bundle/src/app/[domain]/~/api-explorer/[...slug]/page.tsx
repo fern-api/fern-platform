@@ -16,14 +16,14 @@ import { createCachedDocsLoader } from "@/server/docs-loader";
 export default async function Page(props: {
   params: Promise<{ slug: string[]; domain: string }>;
 }) {
-  const params = await props.params;
-  console.debug(`[${params.domain}] Loading API Explorer page`);
-  const slug = FernNavigation.slugjoin(
-    (await headers()).get("x-basepath"),
-    params.slug
-  );
-  const fern_token = (await cookies()).get(COOKIE_FERN_TOKEN)?.value;
-  const loader = await createCachedDocsLoader(params.domain, fern_token);
+  const [{ domain, slug: slugProp }, cookieJar, headersList] =
+    await Promise.all([props.params, cookies(), headers()]);
+  console.debug(`[${domain}] Loading API Explorer page`);
+
+  const slug = FernNavigation.slugjoin(headersList.get("x-basepath"), slugProp);
+  const fern_token = cookieJar.get(COOKIE_FERN_TOKEN)?.value;
+  const loader = await createCachedDocsLoader(domain, fern_token);
+
   console.debug(`[${loader.domain}] Loading API Explorer for slug: ${slug}`);
   const root = await loader.getRoot();
   if (root == null) {

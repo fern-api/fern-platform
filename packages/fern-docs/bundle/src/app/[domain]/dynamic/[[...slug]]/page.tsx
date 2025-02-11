@@ -1,3 +1,5 @@
+"use cache";
+
 import "server-only";
 
 // import { unstable_cacheTag as cacheTag } from "next/cache";

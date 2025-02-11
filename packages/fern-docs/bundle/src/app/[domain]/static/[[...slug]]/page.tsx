@@ -7,6 +7,8 @@ import { Metadata } from "next/types";
 
 import Page, { generateMetadata as _generateMetadata } from "../../_page";
 
+export const dynamic = "force-static";
+
 export default async function StaticPage(props: {
   params: Promise<{ slug?: string[]; domain: string }>;
 }) {

@@ -1,3 +1,4 @@
+import { unstable_cacheTag as cacheTag } from "next/cache";
 import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 
@@ -8,20 +9,23 @@ import { PlaygroundEndpointSelectorContent } from "@/components/playground/endpo
 import { flattenApiSection } from "@/components/playground/utils/flatten-apis";
 import { createCachedDocsLoader } from "@/server/docs-loader";
 
-export default async function Layout(props: {
+export default async function Layout({
+  params,
+  children,
+}: {
   children: React.ReactNode;
   params: Promise<{ domain: string }>;
 }) {
-  const params = await props.params;
+  const { domain } = await params;
 
-  const { children } = props;
+  const cookieJar = await cookies();
 
-  console.debug(`[${params.domain}] Loading API Explorer layout`);
-  const fern_token = (await cookies()).get(COOKIE_FERN_TOKEN)?.value;
-  const loader = await createCachedDocsLoader(params.domain, fern_token);
+  console.debug(`[${domain}] Loading API Explorer layout`);
+  const fern_token = cookieJar.get(COOKIE_FERN_TOKEN)?.value;
+  const loader = await createCachedDocsLoader(domain, fern_token);
   const root = await loader.getRoot();
   if (!root) {
-    console.error(`[${params.domain}] Root node not found`);
+    console.error(`[${domain}] Root node not found`);
     notFound();
   }
   const apiGroups = flattenApiSection(root);
