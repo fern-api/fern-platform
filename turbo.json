@@ -86,7 +86,8 @@
         "WORKOS_CLIENT_ID",
         "WORKOS_API_KEY",
         "HIGHLIGHT_PROJECT_ID_FERN_APP",
-        "NEXT_PUBLIC_FONTAWESOME_CDN_HOST"
+        "NEXT_PUBLIC_FONTAWESOME_CDN_HOST",
+        "DOCS_DEFINITION_S3_BUCKET_NAME"
       ],
       "passThroughEnv": [
         "ESBUILD_BINARY_PATH",

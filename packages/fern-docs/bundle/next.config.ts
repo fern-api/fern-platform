@@ -67,10 +67,8 @@ const nextConfig: NextConfig = {
     ],
     useCache: true,
     newDevOverlay: true,
-    serverComponentsHmrCache: true,
+    reactCompiler: true,
   },
-  removeConsole:
-    process.env.VERCEL_ENV === "production" ? { exclude: ["error"] } : false,
 
   env: {
     ESBUILD_BINARY_PATH: path.join(
@@ -101,6 +99,11 @@ const nextConfig: NextConfig = {
    */
   assetPrefix: cdnUri != null ? cdnUri.href : undefined,
   typescript: { ignoreBuildErrors: true },
+  compiler: {
+    removeConsole:
+      process.env.VERCEL_ENV === "production" ? { exclude: ["error"] } : false,
+    styledJsx: true,
+  },
   headers: async () => {
     const AccessControlHeaders = [
       {

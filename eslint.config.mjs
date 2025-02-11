@@ -1,7 +1,6 @@
 // @ts-check
 import { FlatCompat } from "@eslint/eslintrc";
 import eslint from "@eslint/js";
-import reactCompiler from "eslint-plugin-react-compiler";
 import vitest from "eslint-plugin-vitest";
 import tseslint from "typescript-eslint";
 
@@ -24,12 +23,6 @@ export default tseslint.config(
       "**/node_modules",
       "fern/**",
     ],
-    plugins: {
-      reactCompiler,
-    },
-    rules: {
-      "react-compiler/react-compiler": "error",
-    },
   },
 
   eslint.configs.recommended,
