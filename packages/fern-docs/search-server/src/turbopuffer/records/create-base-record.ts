@@ -71,7 +71,7 @@ export function createBaseRecord({
   );
 
   return {
-    id: `${org_id}:${domain}:${node.id}`,
+    id: node.id,
     attributes: {
       type,
       org_id,
