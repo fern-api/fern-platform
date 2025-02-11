@@ -1,6 +1,7 @@
 import dynamic from "next/dynamic";
 
-import { FernErrorBoundary } from "../components/FernErrorBoundary";
+import { ErrorBoundary } from "@/components/error-boundary";
+
 import type { FeatureProps } from "./types";
 
 // note: this is a dynamic import because we don't want to load the LD Feature component on every page load
@@ -13,7 +14,7 @@ const LDFeature = dynamic(
 // TODO: This becomes an indirection point where we can use different feature flag implementations
 // with different providers depending on config
 export const Feature = (props: FeatureProps): React.ReactNode => (
-  <FernErrorBoundary>
+  <ErrorBoundary>
     <LDFeature {...props} />
-  </FernErrorBoundary>
+  </ErrorBoundary>
 );

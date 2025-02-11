@@ -3,7 +3,7 @@ import { useMemo } from "react";
 import cn from "clsx";
 import { useAtomValue } from "jotai";
 
-import { SearchV2Trigger } from "@/components/search";
+import { SearchV2Trigger } from "@/components/search-trigger";
 
 import {
   DOCS_LAYOUT_ATOM,

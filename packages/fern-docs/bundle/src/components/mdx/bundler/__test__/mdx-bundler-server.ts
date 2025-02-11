@@ -6,7 +6,7 @@ import { z } from "zod";
 
 import { FernDocs } from "@fern-api/fdr-sdk";
 
-import { serializeMdx } from "../mdx-bundler";
+import { serializeMdx } from "../serialize";
 
 const __dirname = fileURLToPath(new URL(".", import.meta.url));
 

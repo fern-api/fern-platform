@@ -1,14 +1,7 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-import React, {
-  Dispatch,
-  SetStateAction,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { usePathname, useRouter } from "next/navigation";
+import React from "react";
 
 import { atom, useAtom, useAtomValue, useSetAtom } from "jotai";
 import { z } from "zod";
@@ -23,19 +16,17 @@ import {
   DefaultDesktopBackButton,
   DesktopCommand,
   DesktopCommandWithAskAI,
-  DesktopSearchButton,
   DesktopSearchDialog,
   SEARCH_INDEX,
   SearchClientRoot,
   useIsMobile,
 } from "@fern-docs/search-ui";
-import { useEventCallback } from "@fern-ui/react-commons";
+import { useEventCallback, useLazyRef } from "@fern-ui/react-commons";
 
 import {
   CURRENT_VERSION_ATOM,
   DOMAIN_ATOM,
   HAS_API_PLAYGROUND,
-  SEARCH_DIALOG_OPEN_ATOM,
   THEME_SWITCH_ENABLED_ATOM,
   atomWithStorageString,
   useClosePlayground,
@@ -49,6 +40,8 @@ import { Feedback } from "@/components/feedback/Feedback";
 import { useApiRoute } from "@/components/hooks/useApiRoute";
 import { useApiRouteSWRImmutable } from "@/components/hooks/useApiRouteSWR";
 
+import { searchDialogOpenAtom, searchInitializedAtom } from "./search-trigger";
+
 const ALGOLIA_USER_TOKEN_KEY = "algolia-user-token";
 
 const ApiKeySchema = z.object({
@@ -57,7 +50,7 @@ const ApiKeySchema = z.object({
 });
 
 function useAlgoliaUserToken() {
-  const userTokenRef = useRef(
+  const userTokenRef = useLazyRef(() =>
     atomWithStorageString(
       ALGOLIA_USER_TOKEN_KEY,
       `anonymous-user-${crypto.randomUUID()}`,
@@ -79,7 +72,7 @@ export const SearchV2 = React.memo(function SearchV2() {
   const [open, setOpen] = useCommandTrigger();
   const setCloseApiPlayground = useClosePlayground();
   const [askAi, setAskAi] = useAtom(askAiAtom);
-  const [initialInput, setInitialInput] = useState("");
+  const [initialInput, setInitialInput] = React.useState("");
   const domain = useAtomValue(DOMAIN_ATOM);
 
   const { data } = useApiRouteSWRImmutable("/api/fern-docs/search/v2/key", {
@@ -108,7 +101,7 @@ export const SearchV2 = React.memo(function SearchV2() {
     setCloseApiPlayground();
   });
 
-  const facetFetcher = useCallback(
+  const facetFetcher = React.useCallback(
     async (filters: readonly string[]) => {
       if (!data) {
         return {};
@@ -125,8 +118,28 @@ export const SearchV2 = React.memo(function SearchV2() {
     [data, facetApiEndpoint]
   );
 
+  const setInitialized = useSetAtom(searchInitializedAtom);
+
+  // initialize the search dialog when the data is loaded
+  React.useEffect(() => {
+    setInitialized(data != null);
+  }, [data]);
+
+  // reset the initialized state when the component unmounts
+  React.useEffect(() => {
+    return () => {
+      setInitialized(false);
+    };
+  }, []);
+
+  // close the search dialog when the pathname changes
+  const pathname = usePathname();
+  React.useEffect(() => {
+    setOpen(false);
+  }, [pathname]);
+
   if (!data) {
-    return <DesktopSearchButton variant="loading" />;
+    return null;
   }
 
   const { appId, apiKey } = data;
@@ -203,11 +216,6 @@ export const SearchV2 = React.memo(function SearchV2() {
   );
 });
 
-export const SearchV2Trigger = React.memo(function SearchV2Trigger() {
-  const setOpen = useSetAtom(SEARCH_DIALOG_OPEN_ATOM);
-  return <DesktopSearchButton onClick={() => setOpen(true)} />;
-});
-
 function CommandPlayground({ onClose }: { onClose: () => void }) {
   const hasApiPlayground = useAtomValue(HAS_API_PLAYGROUND);
   const togglePlayground = useTogglePlayground();
@@ -243,11 +251,14 @@ function CommandTheme({ onClose }: { onClose: () => void }) {
   );
 }
 
-function useCommandTrigger(): [boolean, Dispatch<SetStateAction<boolean>>] {
-  const [open, setOpen] = useAtom(SEARCH_DIALOG_OPEN_ATOM);
+function useCommandTrigger(): [
+  boolean,
+  React.Dispatch<React.SetStateAction<boolean>>,
+] {
+  const [open, setOpen] = useAtom(searchDialogOpenAtom);
   const isMobile = useIsMobile();
 
-  useEffect(() => {
+  React.useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (isMobile) {
         return;
@@ -286,5 +297,6 @@ function useCommandTrigger(): [boolean, Dispatch<SetStateAction<boolean>>] {
       window.removeEventListener("keydown", handleKeyDown);
     };
   }, [isMobile, setOpen]);
+
   return [open, setOpen];
 }

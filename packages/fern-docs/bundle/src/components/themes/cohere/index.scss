@@ -129,12 +129,12 @@
   }
 
   .fern-page-layout {
-    @apply pb-20 pt-8;
+    @apply pb-20;
     @apply w-full min-w-0 shrink px-4 sm:px-6 lg:px-10;
   }
 
   .fern-layout-content {
-    @apply min-w-0 pb-20 pt-8;
+    @apply min-w-0 pb-20;
   }
 
   .fern-guide-layout {

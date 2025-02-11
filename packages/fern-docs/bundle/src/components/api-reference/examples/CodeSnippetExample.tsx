@@ -8,8 +8,9 @@ import {
 } from "@fern-docs/syntax-highlighter";
 import { useResizeObserver } from "@fern-ui/react-commons";
 
+import { ErrorBoundary } from "@/components/error-boundary";
+
 import { useEdgeFlags } from "../../atoms";
-import { FernErrorBoundary } from "../../components/FernErrorBoundary";
 import { JsonPropertyPath } from "./JsonPropertyPath";
 import { TitledExample } from "./TitledExample";
 import { useHighlightJsonLines } from "./useHighlightJsonLines";
@@ -102,9 +103,9 @@ const CodeSnippetExampleInternal: FC<CodeSnippetExample.Props> = ({
 
 export const CodeSnippetExample: FC<CodeSnippetExample.Props> = (props) => {
   return (
-    <FernErrorBoundary component="CodeSnippetExample">
+    <ErrorBoundary>
       <CodeSnippetExampleInternal {...props} />
-    </FernErrorBoundary>
+    </ErrorBoundary>
   );
 };
 

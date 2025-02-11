@@ -1,3 +1,6 @@
+import "server-only";
+
+// import { unstable_cacheTag as cacheTag } from "next/cache";
 import { cookies } from "next/headers";
 import { Metadata } from "next/types";
 
@@ -9,6 +12,9 @@ export default async function StaticPage(props: {
   params: Promise<{ slug?: string[]; domain: string }>;
 }) {
   const params = await props.params;
+
+  // cacheTag(params.domain);
+
   const fern_token = (await cookies()).get(COOKIE_FERN_TOKEN)?.value;
   return <Page params={params} fern_token={fern_token} />;
 }

@@ -1,6 +1,4 @@
-"use cache";
-
-import { cacheTag } from "next/dist/server/use-cache/cache-tag";
+import { unstable_cacheTag as cacheTag } from "next/cache";
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -24,6 +22,8 @@ export async function GET(
   req: NextRequest,
   props: { params: Promise<{ domain: string }> }
 ): Promise<NextResponse> {
+  "use cache";
+
   const { domain } = await props.params;
 
   cacheTag(domain);

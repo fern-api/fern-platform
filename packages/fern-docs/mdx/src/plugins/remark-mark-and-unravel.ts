@@ -1,7 +1,8 @@
 import { collapseWhiteSpace } from "collapse-white-space";
 import { walk } from "estree-walker";
 import type { Root } from "mdast";
-import { visit } from "unist-util-visit";
+import type { Plugin } from "unified";
+import { SKIP, visit } from "unist-util-visit";
 
 // Forked from https://github.com/mdx-js/mdx/blob/main/packages/mdx/lib/plugin/remark-mark-and-unravel.js
 
@@ -15,9 +16,9 @@ import { visit } from "unist-util-visit";
  * @returns
  *   Transform.
  */
-export function remarkMarkAndUnravel(): (tree: Root) => void {
-  return (tree) => {
-    visit(tree, (node, index, parent) => {
+export const remarkMarkAndUnravel: Plugin<[], Root> = () => {
+  return (ast) => {
+    visit(ast, (node, index, parent) => {
       let offset = -1;
       let all = true;
       let oneOrMore = false;
@@ -83,7 +84,7 @@ export function remarkMarkAndUnravel(): (tree: Root) => void {
           }
 
           parent.children.splice(index, 1, ...newChildren);
-          return index;
+          return [SKIP, index];
         }
       }
 
@@ -114,4 +115,4 @@ export function remarkMarkAndUnravel(): (tree: Root) => void {
       return;
     });
   };
-}
+};

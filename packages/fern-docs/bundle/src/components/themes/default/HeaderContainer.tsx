@@ -16,6 +16,7 @@ import { Announcement } from "../../header/Announcement";
 import { Header } from "../../header/Header";
 import { HeaderTabs } from "../../header/HeaderTabs";
 import { useIsScrolled } from "../../hooks/useIsScrolled";
+import { FernHeader } from "./fern-header";
 
 interface HeaderContainerProps {
   className?: string;
@@ -23,48 +24,25 @@ interface HeaderContainerProps {
 
 export function HeaderContainer({
   className,
-}: HeaderContainerProps): ReactElement<any> {
-  const colors = useColors();
+  hasBackgroundLight,
+  hasBackgroundDark,
+}: {
+  className?: string;
+  hasBackgroundLight: boolean;
+  hasBackgroundDark: boolean;
+}): ReactElement<any> {
   const showHeaderTabs = useAtomValue(HAS_HORIZONTAL_TABS);
   const isScrolled = useIsScrolled();
   const isMobileSidebarEnabled = useAtomValue(MOBILE_SIDEBAR_ENABLED_ATOM);
   const isMobileSidebarOpen = useIsMobileSidebarOpen();
 
-  const ref = useRef<HTMLDivElement>(null);
-
-  const [headerHeight, setHeaderHeight] = useState<number>(
-    DEFAULT_HEADER_HEIGHT
-  );
-  useEffect(() => {
-    if (!ref.current) return;
-
-    const resizeObserver = new ResizeObserver((entries) => {
-      const headerHeight = entries[0]?.contentRect.height;
-      if (headerHeight) {
-        setHeaderHeight(headerHeight);
-      }
-    });
-
-    resizeObserver.observe(ref.current);
-    return () => {
-      resizeObserver.disconnect();
-    };
-  }, []);
-
   return (
-    <header ref={ref} id="fern-header" className={className} role="banner">
-      <style jsx>
-        {`
-          :global(:root) {
-            --header-height: ${headerHeight}px;
-          }
-        `}
-      </style>
+    <FernHeader className={className} defaultHeight={DEFAULT_HEADER_HEIGHT}>
       <Announcement />
       <div
         className={clsx("fern-header-container width-before-scroll-bar", {
-          "has-background-light": colors.light?.headerBackground != null,
-          "has-background-dark": colors.dark?.headerBackground != null,
+          "has-background-light": hasBackgroundLight,
+          "has-background-dark": hasBackgroundDark,
         })}
         data-border={
           isScrolled || (isMobileSidebarOpen && isMobileSidebarEnabled)
@@ -84,6 +62,6 @@ export function HeaderContainer({
           </nav>
         )}
       </div>
-    </header>
+    </FernHeader>
   );
 }

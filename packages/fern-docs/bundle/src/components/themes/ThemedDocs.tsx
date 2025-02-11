@@ -1,5 +1,5 @@
-import { CohereDocs } from "./cohere/CohereDocs";
-import { DefaultDocs } from "./default/DefaultDocs";
+import CohereDocs from "./cohere/CohereDocs";
+import DefaultDocs from "./default/DefaultDocs";
 
 const THEMES = {
   default: DefaultDocs,
@@ -12,7 +12,7 @@ export async function ThemedDocs({
   theme = "default",
   children,
 }: {
-  theme: FernTheme | undefined;
+  theme?: FernTheme;
   children: React.ReactNode;
 }) {
   const Docs = THEMES[theme];

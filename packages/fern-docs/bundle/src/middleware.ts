@@ -156,6 +156,21 @@ export const middleware: NextMiddleware = async (request) => {
   /**
    * Rewrite .../~/... to /[domain]/~/...
    */
+  if (pathname.includes("/api/fern-docs/")) {
+    if (!pathname.startsWith("/api/fern-docs/")) {
+      const index = pathname.indexOf("/api/fern-docs/");
+      const basepath = pathname.slice(0, index);
+      headers.set("x-basepath", basepath);
+      pathname = pathname.slice(index);
+    }
+    return NextResponse.rewrite(withPathname(request, withDomain(pathname)), {
+      request: { headers },
+    });
+  }
+
+  /**
+   * Rewrite .../~/... to /[domain]/~/...
+   */
   if (pathname.includes("/~/")) {
     if (!pathname.startsWith("/~/")) {
       const index = pathname.indexOf("/~/");

@@ -122,7 +122,7 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
 function errorResponse() {
   const errorBody = {
     error: {
-      message: "Something went wrong",
+      message: "Something went wrong!",
       description:
         "Couldn't sign in. If you are not sure what happened, please contact your organization admin.",
     },

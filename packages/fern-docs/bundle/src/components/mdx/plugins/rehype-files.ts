@@ -4,6 +4,7 @@ import type {
   Hast,
   MdxJsxAttribute,
   MdxJsxExpressionAttribute,
+  Unified,
 } from "@fern-docs/mdx";
 import {
   isMdxJsxAttribute,
@@ -12,7 +13,7 @@ import {
   visit,
 } from "@fern-docs/mdx";
 
-import type { FileData } from "../../atoms/types";
+import { FileData } from "@/server/types";
 
 export interface RehypeFilesOptions {
   replaceSrc?(src: string): FileData | undefined;
@@ -33,10 +34,10 @@ export interface RehypeFilesOptions {
  * @param options - the options for the plugin
  * @returns a function that will transform the tree
  */
-export function rehypeFiles(
-  options: RehypeFilesOptions
-): (tree: Hast.Root) => void {
-  return function (tree: Hast.Root): void {
+export const rehypeFiles: Unified.Plugin<[RehypeFilesOptions?], Hast.Root> = ({
+  replaceSrc,
+} = {}) => {
+  return (tree: Hast.Root) => {
     visit(tree, (node) => {
       if (isMdxJsxElementHast(node)) {
         const attributes = node.attributes.filter(isMdxJsxAttribute);
@@ -60,7 +61,7 @@ export function rehypeFiles(
           height,
           width,
           blurDataURL,
-        } = options.replaceSrc?.(src) ?? {};
+        } = replaceSrc?.(src) ?? {};
 
         if (newSrc != null) {
           srcAttribute.value = newSrc;
@@ -113,7 +114,7 @@ export function rehypeFiles(
           height,
           width,
           // blurDataURL, should this be handled here?
-        } = options.replaceSrc?.(srcAttribute) ?? {};
+        } = replaceSrc?.(srcAttribute) ?? {};
 
         if (newSrc != null) {
           node.properties.src = newSrc;
@@ -143,8 +144,7 @@ export function rehypeFiles(
                 // TODO: if the replaced src is a Image (contains width and height), we need to add them to the parent JSX root somehow.
                 // for example: <Card icon={<img src="fileId" />} /> -> <Card icon={<img src="replacedImgUrl" width={w} height={h} />} />
                 // currently, we cannot leverage NextJS Image Optimization for this edge case.
-                node.value =
-                  options.replaceSrc?.(node.value)?.src ?? node.value;
+                node.value = replaceSrc?.(node.value)?.src ?? node.value;
               }
             },
           });
@@ -152,7 +152,7 @@ export function rehypeFiles(
       }
     });
   };
-}
+};
 
 function getEstree(attr: MdxJsxAttribute | MdxJsxExpressionAttribute) {
   if (

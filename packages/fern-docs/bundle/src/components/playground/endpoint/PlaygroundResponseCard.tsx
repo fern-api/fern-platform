@@ -14,8 +14,12 @@ import {
 } from "@fern-docs/components";
 import { Loadable, visitLoadable } from "@fern-ui/loadable";
 
+import {
+  ErrorBoundary,
+  ErrorBoundaryFallback,
+} from "@/components/error-boundary";
+
 import { useEdgeFlags } from "../../atoms";
-import { FernErrorTag } from "../../components/FernErrorBoundary";
 import { PlaygroundResponsePreview } from "../PlaygroundResponsePreview";
 import { PlaygroundSendRequestButton } from "../PlaygroundSendRequestButton";
 import { PlaygroundResponse } from "../types/playgroundResponse";
@@ -145,21 +149,18 @@ export function PlaygroundResponseCard({
               allowFullScreen
             />
           ) : (
-            <FernErrorTag
-              component="PlaygroundEndpointContent"
-              error={`File preview not supported for ${response.contentType}`}
-              className="flex h-full items-center justify-center"
-              showError
+            <ErrorBoundaryFallback
+              error={
+                new Error(
+                  `File preview not supported for ${response.contentType}`
+                )
+              }
             />
           ),
-        failed: (e) => (
-          <FernErrorTag
-            component="PlaygroundEndpointContent"
-            error={e}
-            className="flex h-full items-center justify-center"
-            showError={true}
-          />
-        ),
+        failed: (e) => {
+          console.error(e);
+          return <ErrorBoundaryFallback error={new Error(String(e))} />;
+        },
       })}
     </FernCard>
   );

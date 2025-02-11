@@ -41,11 +41,6 @@ export const FernDatetimeInput = forwardRef<
       {...props}
       type="datetime-local"
       value={typeof value === "string" ? formatInputDate(value) : undefined}
-      defaultValue={
-        typeof defaultValue === "string"
-          ? formatInputDate(defaultValue)
-          : undefined
-      }
       onValueChange={(value) => {
         onValueChange?.(utcDate(value));
       }}

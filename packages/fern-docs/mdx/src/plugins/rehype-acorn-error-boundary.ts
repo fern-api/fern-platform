@@ -2,6 +2,7 @@ import type { Root } from "hast";
 import { visit } from "unist-util-visit";
 
 import { unknownToMdxJsxAttribute } from "../mdx-utils/unknown-to-mdx-jsx-attr";
+import { Unified } from "../unified";
 
 interface AcornErrorBoundaryOptions {
   errorBoundaryComponentName?: string;
@@ -10,11 +11,12 @@ interface AcornErrorBoundaryOptions {
 /**
  * This is an additional safeguard to ensure that any acorn expressions that are not valid does not throw an error in the final output.
  *
- * Requirement: `FernErrorBoundary` is globally available with `fallback` string property
+ * Requirement: `ErrorBoundary` is globally available with `fallback` string property
  */
-export function rehypeAcornErrorBoundary({
-  errorBoundaryComponentName = "FernErrorBoundary",
-}: AcornErrorBoundaryOptions = {}): (tree: Root) => void {
+export const rehypeAcornErrorBoundary: Unified.Plugin<
+  [AcornErrorBoundaryOptions?],
+  Root
+> = ({ errorBoundaryComponentName = "ErrorBoundary" } = {}) => {
   return (root) => {
     visit(root, (node, index, parent) => {
       if (index == null || parent == null) {
@@ -35,4 +37,4 @@ export function rehypeAcornErrorBoundary({
       return;
     });
   };
-}
+};

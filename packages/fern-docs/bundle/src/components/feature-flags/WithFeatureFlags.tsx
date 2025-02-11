@@ -1,7 +1,8 @@
 import dynamic from "next/dynamic";
 import React from "react";
 
-import { FernErrorBoundary } from "../components/FernErrorBoundary";
+import { ErrorBoundary } from "@/components/error-boundary";
+
 import { WithFeatureFlagsProps } from "./types";
 
 // note: this is a dynamic import because we don't want to load the LD Feature component on every page load
@@ -21,8 +22,8 @@ export const WithFeatureFlags: React.FC<WithFeatureFlagsProps> = ({
   }
 
   return (
-    <FernErrorBoundary>
+    <ErrorBoundary>
       <LDFeatures featureFlags={featureFlags}>{children}</LDFeatures>
-    </FernErrorBoundary>
+    </ErrorBoundary>
   );
 };

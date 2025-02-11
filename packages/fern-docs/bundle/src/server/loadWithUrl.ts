@@ -13,6 +13,8 @@ export type LoadWithUrlResponse = APIResponse<
 /**
  * - If the token is a WorkOS token, we need to use the getPrivateDocsForUrl endpoint.
  * - Otherwise, we can use the getDocsForUrl endpoint (including custom auth).
+ *
+ * this function cannot be cached because the response can be > 2MB
  */
 export async function loadWithUrl(
   domain: string
@@ -33,7 +35,6 @@ export async function loadWithUrl(
     }
   } catch (error) {
     console.error("Failed to load docs definition:", error);
-    response = null;
   }
 
   return provideRegistryService().docs.v2.read.getDocsForUrl({

@@ -1,5 +1,5 @@
 import { FernDocs } from "@fern-api/fdr-sdk";
-import { type Mdast, mdastToString } from "@fern-docs/mdx";
+import { type Mdast, Unified, mdastToString } from "@fern-docs/mdx";
 
 interface Options {
   frontmatter: FernDocs.Frontmatter;
@@ -15,7 +15,9 @@ interface Options {
  * Note: we'll ignore the title if there are any attributes on the <h1> tag. This is to avoid
  * extracting the title from a <h1> that was intentionally inserted.
  */
-export function remarkExtractTitle(options?: Options) {
+export const remarkExtractTitle: Unified.Plugin<[Options?], Mdast.Root> = (
+  options?: Options
+) => {
   return (tree: Mdast.Root) => {
     if (options == null) {
       return;
@@ -43,4 +45,4 @@ export function remarkExtractTitle(options?: Options) {
       tree.children = tree.children.slice(1);
     }
   };
-}
+};

@@ -61,7 +61,7 @@ const AnnouncementInternal = forwardRef<
 });
 AnnouncementInternal.displayName = "AnnouncementInternal";
 
-const MotionAnnouncement = motion(AnnouncementInternal, {
+const MotionAnnouncement = motion.create(AnnouncementInternal, {
   forwardMotionProps: true,
 });
 

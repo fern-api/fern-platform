@@ -4,6 +4,8 @@ import {
   type BuildVisitor,
   CONTINUE,
   Hast,
+  SKIP,
+  Unified,
   type VisitorResult,
   hastMdxJsxElementHastToProps,
   hastToString,
@@ -23,8 +25,8 @@ type Visitor = BuildVisitor<
   Hast.Root | Hast.Element | Hast.MdxJsxElement | undefined
 >;
 
-export function rehypeFernComponents(): (tree: Hast.Root) => void {
-  return function (tree: Hast.Root): void {
+export const rehypeFernComponents: Unified.Plugin<[], Hast.Root> = () => {
+  return (tree: Hast.Root) => {
     slugger.reset();
 
     // convert img to Image
@@ -130,7 +132,7 @@ export function rehypeFernComponents(): (tree: Hast.Root) => void {
 
     visit(tree, visitor);
   };
-}
+};
 
 function transformTabs(
   node: Hast.MdxJsxElement,
@@ -162,7 +164,7 @@ function transformTabs(
   };
 
   parent.children.splice(index, 1, child);
-  return index + 1;
+  return [SKIP, index];
 }
 
 function transformTabItem(
@@ -186,7 +188,7 @@ function transformTabItem(
   };
 
   parent.children.splice(index, 1, child);
-  return index + 1;
+  return [SKIP, index];
 }
 
 function transformAccordionGroup(
@@ -218,7 +220,7 @@ function transformAccordionGroup(
     children: [],
   };
   parent.children.splice(index, 1, child);
-  return index + 1;
+  return [SKIP, index];
 }
 
 // TODO: handle lone <Step> component
@@ -291,7 +293,7 @@ function transformSteps(
 
   parent.children.splice(index, 1, child);
 
-  return index + 1;
+  return [SKIP, index];
 }
 
 function transformAccordion(
@@ -316,7 +318,7 @@ function transformAccordion(
   };
 
   parent.children.splice(index, 1, child);
-  return index + 1;
+  return [SKIP, index];
 }
 
 function getTitle(node: Hast.MdxJsxElement): string | undefined {

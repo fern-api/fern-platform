@@ -10,7 +10,6 @@ import { z } from "zod";
 
 import { FacetsResponse, SEARCH_INDEX } from "@fern-docs/search-server/algolia";
 
-import { AppSidebar, AppSidebarContent } from "@/app/(demo)/app-sidebar";
 import {
   CommandActions,
   CommandEmpty,
@@ -126,19 +125,15 @@ export function DemoInstantSearchClient({
       fetchFacets={facetFetcher}
     >
       {isMobile ? (
-        <AppSidebar>
-          <MobileCommand open={open} onOpenChange={setOpen}>
-            {open ? (
-              <>
-                <CommandGroupFilters />
-                <CommandEmpty />
-                <CommandSearchHits onSelect={handleSubmit} domain={domain} />
-              </>
-            ) : (
-              <AppSidebarContent />
-            )}
-          </MobileCommand>
-        </AppSidebar>
+        <MobileCommand open={open} onOpenChange={setOpen}>
+          {open && (
+            <>
+              <CommandGroupFilters />
+              <CommandEmpty />
+              <CommandSearchHits onSelect={handleSubmit} domain={domain} />
+            </>
+          )}
+        </MobileCommand>
       ) : (
         <DesktopSearchDialog
           open={open}

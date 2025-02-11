@@ -47,7 +47,6 @@ export const PlaygroundObjectPropertyForm: FC<
   expandByDefault = true,
   types,
   disabled,
-  defaultValue,
 }) => {
   const handleChange = useCallback(
     (newValue: unknown) => {
@@ -85,7 +84,6 @@ export const PlaygroundObjectPropertyForm: FC<
       onCloseStack={handleCloseStack}
       types={types}
       disabled={disabled}
-      defaultValue={defaultValue}
     />
   );
 };
@@ -113,7 +111,6 @@ export const PlaygroundObjectPropertiesForm =
       types,
       disabled,
       extraProperties,
-      defaultValue,
     } = props;
 
     const onChangeObjectProperty = useCallback(
@@ -251,11 +248,6 @@ export const PlaygroundObjectPropertiesForm =
                     value={castToRecord(value)[property.key]}
                     types={types}
                     disabled={disabled}
-                    defaultValue={
-                      isPlainObject(defaultValue)
-                        ? defaultValue[property.key]
-                        : undefined
-                    }
                   />
                 </li>
               );

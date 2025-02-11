@@ -78,7 +78,6 @@ export const PlaygroundTypeReferenceForm =
             id={id}
             types={types}
             disabled={disabled}
-            defaultValue={defaultValue}
           />
         </WithLabel>
       ),
@@ -177,11 +176,6 @@ export const PlaygroundTypeReferenceForm =
                   onValueChange={onChange}
                   disabled={disabled}
                   placeholder={string.default}
-                  defaultValue={
-                    typeof defaultValue === "string"
-                      ? defaultValue
-                      : string.default
-                  }
                   resettable={typeof defaultValue === "string"}
                   maxLength={string.maxLength}
                   minLength={string.minLength}
@@ -235,11 +229,6 @@ export const PlaygroundTypeReferenceForm =
                 onValueChange={onChange}
                 disallowFloat={true}
                 disabled={disabled}
-                defaultValue={
-                  typeof defaultValue === "number"
-                    ? defaultValue
-                    : integer.default
-                }
                 // resettable={typeof defaultValue === "number"}
                 max={integer.maximum}
                 min={integer.minimum}
@@ -260,11 +249,6 @@ export const PlaygroundTypeReferenceForm =
                 value={typeof value === "number" ? value : undefined}
                 onValueChange={onChange}
                 disabled={disabled}
-                defaultValue={
-                  typeof defaultValue === "number"
-                    ? defaultValue
-                    : double.default
-                }
                 // resettable={typeof defaultValue === "number"}
                 max={double.maximum}
                 min={double.minimum}
@@ -286,9 +270,6 @@ export const PlaygroundTypeReferenceForm =
                 onValueChange={onChange}
                 disallowFloat={true}
                 disabled={disabled}
-                defaultValue={
-                  typeof defaultValue === "number" ? defaultValue : long.default
-                }
                 // resettable={typeof defaultValue === "number"}
                 max={long.maximum}
                 min={long.minimum}
@@ -307,9 +288,6 @@ export const PlaygroundTypeReferenceForm =
                 id={id}
                 className="w-full"
                 value={typeof value === "number" ? value : undefined}
-                defaultValue={
-                  typeof defaultValue === "number" ? defaultValue : undefined
-                }
                 // resettable={typeof defaultValue === "number"}
                 onValueChange={onChange}
                 disallowFloat={true}
@@ -329,9 +307,6 @@ export const PlaygroundTypeReferenceForm =
                 id={id}
                 className="w-full"
                 value={typeof value === "number" ? value : undefined}
-                defaultValue={
-                  typeof defaultValue === "number" ? defaultValue : undefined
-                }
                 // resettable={typeof defaultValue === "number"}
                 onValueChange={onChange}
                 disallowFloat={true}
@@ -352,9 +327,6 @@ export const PlaygroundTypeReferenceForm =
                 className="w-full"
                 placeholder="MM/DD/YYYY HH:MM"
                 value={typeof value === "string" ? value : undefined}
-                defaultValue={
-                  typeof defaultValue === "string" ? defaultValue : undefined
-                }
                 resettable={typeof defaultValue === "string"}
                 onValueChange={onChange}
                 disabled={disabled}
@@ -373,9 +345,6 @@ export const PlaygroundTypeReferenceForm =
                 id={id}
                 className="w-full"
                 value={typeof value === "string" ? value : ""}
-                defaultValue={
-                  typeof defaultValue === "string" ? defaultValue : undefined
-                }
                 resettable={typeof defaultValue === "string"}
                 placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
                 onValueChange={onChange}
@@ -395,10 +364,6 @@ export const PlaygroundTypeReferenceForm =
                 id={id}
                 className="w-full"
                 value={typeof value === "string" ? value : ""}
-                defaultValue={
-                  typeof defaultValue === "string" ? defaultValue : undefined
-                }
-                // resettable={typeof defaultValue === "string"}
                 onValueChange={onChange}
                 disabled={disabled}
               />
@@ -418,9 +383,6 @@ export const PlaygroundTypeReferenceForm =
                 className="w-full"
                 placeholder="MM/DD/YYYY"
                 value={typeof value === "string" ? value : undefined}
-                defaultValue={
-                  typeof defaultValue === "string" ? defaultValue : undefined
-                }
                 resettable={typeof defaultValue === "string"}
                 onValueChange={onChange}
                 disabled={disabled}
@@ -439,9 +401,6 @@ export const PlaygroundTypeReferenceForm =
                 id={id}
                 className="w-full"
                 value={typeof value === "string" ? value : ""}
-                defaultValue={
-                  typeof defaultValue === "string" ? defaultValue : undefined
-                }
                 // resettable={typeof defaultValue === "string"}
                 onValueChange={onChange}
                 disabled={disabled}

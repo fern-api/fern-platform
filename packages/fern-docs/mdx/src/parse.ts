@@ -51,11 +51,11 @@ export function toTree(
 
   // this is forked from mdxjs, but we need to run it before we convert to hast
   // so that we can correctly identify explicit JSX nodes
-  remarkMarkAndUnravel()(mdast);
+  (remarkMarkAndUnravel as any)()(mdast);
 
   if (sanitize) {
     // sanitize the acorn expressions
-    remarkSanitizeAcorn({ allowedIdentifiers })(mdast);
+    (remarkSanitizeAcorn as any)({ allowedIdentifiers })(mdast);
   }
 
   const hast = toHast(mdast, {

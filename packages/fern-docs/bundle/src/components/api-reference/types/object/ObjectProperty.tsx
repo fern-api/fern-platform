@@ -15,10 +15,11 @@ import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { AvailabilityBadge } from "@fern-docs/components/badges";
 
+import { ErrorBoundary } from "@/components/error-boundary";
+
 import { trackInternal } from "../../../analytics";
 import { useIsApiReferencePaginated, useRouteListener } from "../../../atoms";
 import { FernAnchor } from "../../../components/FernAnchor";
-import { FernErrorBoundary } from "../../../components/FernErrorBoundary";
 import { useHref } from "../../../hooks/useHref";
 import { Markdown } from "../../../mdx/Markdown";
 import { renderTypeShorthandRoot } from "../../../type-shorthand";
@@ -178,7 +179,7 @@ const UnmemoizedObjectPropertyInternal = forwardRef<
         )}
       </div>
       {hasInlineEnum(property.valueShape, types) && (
-        <FernErrorBoundary component="ObjectProperty">
+        <ErrorBoundary>
           <TypeDefinitionContext.Provider value={newContextValue}>
             <InternalTypeReferenceDefinitions
               shape={property.valueShape}
@@ -189,12 +190,12 @@ const UnmemoizedObjectPropertyInternal = forwardRef<
               types={types}
             />
           </TypeDefinitionContext.Provider>
-        </FernErrorBoundary>
+        </ErrorBoundary>
       )}
       <Markdown mdx={descriptions[0]} size="sm" />
       {hasInternalTypeReference(property.valueShape, types) &&
         !hasInlineEnum(property.valueShape, types) && (
-          <FernErrorBoundary component="ObjectProperty">
+          <ErrorBoundary>
             <TypeDefinitionContext.Provider value={newContextValue}>
               <InternalTypeReferenceDefinitions
                 shape={property.valueShape}
@@ -205,7 +206,7 @@ const UnmemoizedObjectPropertyInternal = forwardRef<
                 types={types}
               />
             </TypeDefinitionContext.Provider>
-          </FernErrorBoundary>
+          </ErrorBoundary>
         )}
     </div>
   );

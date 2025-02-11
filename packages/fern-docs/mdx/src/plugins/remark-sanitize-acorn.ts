@@ -3,6 +3,8 @@ import { walk } from "estree-walker";
 import type { Root } from "mdast";
 import { visit } from "unist-util-visit";
 
+import { Unified } from "../unified";
+
 interface Options {
   /**
    * This is the global scope of identifiers that are allowed to be consumed by acorn.
@@ -34,9 +36,9 @@ const ALLOWED_GLOBAL_IDENTIFIERS: string[] = [
  * - some global elements are allowed, such as Math, Date, JSON, etc.
  * - await expressions are not allowed, and will be escaped.
  */
-export function remarkSanitizeAcorn({
+export const remarkSanitizeAcorn: Unified.Plugin<[Options?], Root> = ({
   allowedIdentifiers = [],
-}: Options = {}): (tree: Root) => void {
+} = {}) => {
   return (tree) => {
     const allowedIdentifiersSet = new Set([
       ...ALLOWED_GLOBAL_IDENTIFIERS,
@@ -121,7 +123,7 @@ export function remarkSanitizeAcorn({
       return;
     });
   };
-}
+};
 
 function collectIdentifiers(estree: Program | null | undefined): {
   identifiers: string[];

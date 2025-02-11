@@ -4,10 +4,10 @@ import { ReactNode, createElement, useRef } from "react";
 
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 
+import { ErrorBoundary } from "@/components/error-boundary";
 import { Markdown } from "@/components/mdx/Markdown";
 
 import { FernAnchor } from "../../components/FernAnchor";
-import { FernErrorBoundary } from "../../components/FernErrorBoundary";
 import { useHref } from "../../hooks/useHref";
 import { getAnchorId } from "../../util/anchor";
 
@@ -33,7 +33,7 @@ export const EndpointSection: React.FC<EndpointSection.Props> = ({
   const anchorId = getAnchorId(anchorIdParts);
   const href = useHref(slug, anchorId);
   return (
-    <FernErrorBoundary component="EndpointSection">
+    <ErrorBoundary>
       <div ref={ref} id={href} className="scroll-mt-content">
         <FernAnchor href={href}>
           {createElement(
@@ -45,6 +45,6 @@ export const EndpointSection: React.FC<EndpointSection.Props> = ({
         <Markdown className="mb-2 text-base" mdx={description} />
         {children}
       </div>
-    </FernErrorBoundary>
+    </ErrorBoundary>
   );
 };

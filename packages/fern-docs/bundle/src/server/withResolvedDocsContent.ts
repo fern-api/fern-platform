@@ -79,7 +79,6 @@ export async function withResolvedDocsContent({
       replaceSrc,
     },
     domain,
-    engine: "mdx-bundler",
   });
 }
 

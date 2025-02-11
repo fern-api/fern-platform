@@ -10,7 +10,6 @@ import { SidebarTab, VersionSwitcherInfo } from "@fern-platform/fdr-utils";
 import { ColorsThemeConfig, FileData } from "@/server/types";
 
 import { CustomerAnalytics } from "../analytics/types";
-import { FernTheme } from "../themes/ThemedDocs";
 
 export interface NavigationProps {
   currentTabIndex: number | undefined;
@@ -83,7 +82,6 @@ export interface DocsProps {
   analytics: CustomerAnalytics | undefined; // deprecated
   analyticsConfig: DocsV1Read.AnalyticsConfig | undefined;
   fallback: Record<string, any>;
-  theme: FernTheme;
   user: FernUser | undefined;
   defaultLang: DocsV1Read.ProgrammingLanguage;
   featureFlagsConfig: FeatureFlagsConfig | undefined;

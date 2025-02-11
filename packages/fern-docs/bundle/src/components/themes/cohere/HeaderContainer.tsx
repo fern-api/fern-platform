@@ -2,23 +2,20 @@ import { ReactElement, memo } from "react";
 
 import { useAtomValue } from "jotai";
 
-import { SearchV2Trigger } from "@/components/search";
+import { SearchV2Trigger } from "@/components/search-trigger";
 
-import { HAS_HORIZONTAL_TABS, SEARCHBAR_PLACEMENT_ATOM } from "../../atoms";
 import { Header } from "../../header/Header";
 import { HeaderTabs } from "../../header/HeaderTabs";
 
-interface HeaderContainerProps {
-  className?: string;
-}
-
 export const HeaderContainer = memo(function HeaderContainer({
   className,
-}: HeaderContainerProps): ReactElement<any> {
-  const showHeaderTabs = useAtomValue(HAS_HORIZONTAL_TABS);
-  const showSearchBar =
-    useAtomValue(SEARCHBAR_PLACEMENT_ATOM) === "HEADER_TABS";
-
+  showHeaderTabs,
+  showSearchBar,
+}: {
+  className?: string;
+  showHeaderTabs: boolean;
+  showSearchBar: boolean;
+}): ReactElement<any> {
   return (
     <header id="fern-header" className={className}>
       <div className="fern-header-container width-before-scroll-bar">

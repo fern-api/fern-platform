@@ -13,9 +13,9 @@ import { track } from "../analytics";
 import { useSelection } from "../hooks/useSelection";
 import { FeedbackForm } from "./FeedbackForm";
 
-const MotionFernButton = motion(FernButton);
-const MotionFernButtonGroup = motion(FernButtonGroup);
-const MotionSelectionContent = motion(Selection.Content);
+const MotionFernButton = motion.create(FernButton);
+const MotionFernButtonGroup = motion.create(FernButtonGroup);
+const MotionSelectionContent = motion.create(Selection.Content);
 
 type SelectionTextToolbarElement = React.ComponentRef<typeof Selection.Trigger>;
 type SelectionTextToolbarProps = {

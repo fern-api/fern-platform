@@ -4,6 +4,7 @@ import { visit } from "unist-util-visit";
 import { parseStringStyle } from "../hast-utils/parse-string-style";
 import { isMdxJsxElementHast } from "../mdx-utils/is-mdx-element";
 import { unknownToMdxJsxAttribute } from "../mdx-utils/unknown-to-mdx-jsx-attr";
+import { Unified } from "../unified";
 
 /**
  * Handles cases where customer is migrating from md w/ html to mdx w/ jsx
@@ -12,9 +13,9 @@ import { unknownToMdxJsxAttribute } from "../mdx-utils/unknown-to-mdx-jsx-attr";
  *
  * <div class="classname" /> -> <div className="classname" />
  */
-export function rehypeMdxClassStyle(): (root: Root) => void {
-  return (root) => {
-    visit(root, (node) => {
+export const rehypeMdxClassStyle: Unified.Plugin<[], Root> = () => {
+  return (ast) => {
+    visit(ast, (node) => {
       if (isMdxJsxElementHast(node)) {
         node.attributes = node.attributes.map((attr) => {
           if (attr.type === "mdxJsxAttribute") {
@@ -39,4 +40,4 @@ export function rehypeMdxClassStyle(): (root: Root) => void {
       }
     });
   };
-}
+};

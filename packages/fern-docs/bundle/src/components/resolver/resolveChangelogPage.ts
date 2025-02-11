@@ -2,7 +2,7 @@ import type { DocsV1Read } from "@fern-api/fdr-sdk";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { isNonNullish } from "@fern-api/ui-core-utils";
 
-import { serializeMdx } from "../mdx/bundlers/mdx-bundler";
+import { serializeMdx } from "../mdx/bundler/serialize";
 import type { FernSerializeMdxOptions } from "../mdx/types";
 import type { DocsContent } from "./DocsContent";
 import { parseMarkdownPageToAnchorTag } from "./parseMarkdownPageToAnchorTag";

@@ -8,7 +8,7 @@ import { useAtomValue } from "jotai";
 import type { DocsV1Read } from "@fern-api/fdr-sdk/client/types";
 import { FernButton, FernButtonGroup } from "@fern-docs/components";
 
-import { SearchV2Trigger } from "@/components/search";
+import { SearchV2Trigger } from "@/components/search-trigger";
 
 import {
   NAVBAR_LINKS_ATOM,

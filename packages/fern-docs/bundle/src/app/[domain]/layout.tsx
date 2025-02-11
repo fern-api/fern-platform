@@ -1,4 +1,6 @@
+import { unstable_cacheTag as cacheTag } from "next/cache";
 import { Metadata, Viewport } from "next/types";
+import React from "react";
 
 import { compact, uniqBy } from "es-toolkit/array";
 import tinycolor from "tinycolor2";
@@ -24,7 +26,11 @@ export default async function Layout(props: {
   children: React.ReactNode;
   params: Promise<{ domain: string }>;
 }) {
+  "use cache";
+
   const params = await props.params;
+
+  cacheTag(params.domain);
 
   const { children } = props;
 
@@ -55,9 +61,11 @@ export default async function Layout(props: {
         <Preload key={href.href} href={href.href} options={href.options} />
       ))}
       <GlobalStyles>{stylesheet}</GlobalStyles>
-      <ThemeScript colors={colors} />
+      <ThemeScript dark={Boolean(colors.dark)} light={Boolean(colors.light)} />
       {children}
-      <SearchV2 />
+      <React.Suspense>
+        <SearchV2 />
+      </React.Suspense>
       <JavascriptProvider />
       <CustomerAnalytics />
     </>

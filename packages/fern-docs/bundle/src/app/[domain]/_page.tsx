@@ -1,4 +1,10 @@
-import { notFound, permanentRedirect, redirect } from "next/navigation";
+import { unstable_cacheTag as cacheTag } from "next/cache";
+import {
+  notFound,
+  permanentRedirect,
+  redirect,
+  unauthorized,
+} from "next/navigation";
 import { Metadata } from "next/types";
 import React from "react";
 
@@ -28,7 +34,7 @@ import { DocsMainContent } from "@/components/docs/DocsMainContent";
 import { DocsPage } from "@/components/docs/DocsPage";
 import { NextApp } from "@/components/docs/NextApp";
 import FeedbackPopover from "@/components/feedback/FeedbackPopover";
-import { serializeMdx } from "@/components/mdx/bundlers/mdx-bundler";
+import { serializeMdx } from "@/components/mdx/bundler/serialize";
 import { DocsContent } from "@/components/resolver/DocsContent";
 import { ThemedDocs } from "@/components/themes/ThemedDocs";
 import { getApiRouteSupplier } from "@/components/util/getApiRouteSupplier";
@@ -53,7 +59,12 @@ export default async function Page({
   params: { slug?: string[]; domain: string };
   fern_token: string | undefined;
 }) {
+  "use cache";
+
   const domain = params.domain;
+
+  cacheTag(domain);
+
   const slug = FernNavigation.slugjoin(params.slug);
   console.debug(`[${domain}] Loading page for slug: ${slug}`);
   const loader = await createCachedDocsLoader(domain, fern_token);
@@ -134,11 +145,10 @@ export default async function Page({
       redirect(prepareRedirect(found.node.pointsTo));
     }
 
-    // TODO: there's currently no way to express a 401 or 403 in Next.js so we'll redirect to 404.
-    // ideally this is handled in the middleware, and this should be a 500 error.
     if (authState.authorizationUrl == null) {
-      notFound();
+      unauthorized();
     }
+
     redirect(prepareRedirect(authState.authorizationUrl));
   }
 
@@ -340,9 +350,7 @@ export default async function Page({
     edgeFlags,
     user: authState.authed ? authState.user : undefined,
     fallback: {},
-
     analytics,
-    theme: edgeFlags.isCohereTheme ? "cohere" : "default",
     analyticsConfig: config?.analyticsConfig,
     defaultLang: config?.defaultLanguage ?? "curl",
     featureFlagsConfig: {
@@ -374,10 +382,12 @@ export default async function Page({
     ? FeedbackPopover
     : React.Fragment;
 
+  const theme = edgeFlags.isCohereTheme ? "cohere" : "default";
+
   return (
     <NextApp pageProps={props}>
       <DocsPage>
-        <ThemedDocs theme={props.theme}>
+        <ThemedDocs theme={theme}>
           <FeedbackPopoverProvider>
             <DocsMainContent
               domain={domain}

@@ -82,7 +82,6 @@ export const FernInput = forwardRef<HTMLInputElement, FernInputProps>(
         />
         <FernInputRightElement
           value={props.value}
-          defaultValue={props.defaultValue}
           onReset={
             onClickReset ??
             (() => {

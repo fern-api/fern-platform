@@ -16,13 +16,11 @@ export async function DocsMainContent({
   parents,
   neighbors,
   breadcrumb,
-  // apiReferenceNodes,
   scope,
 }: {
   domain: string;
   rootslug: FernNavigation.Slug;
   node: FernNavigation.NavigationNodePage;
-  // apiReference: FernNavigation.ApiReferenceNode | undefined;
   parents: readonly FernNavigation.NavigationNodeParent[];
   neighbors: DocsContent.Neighbors;
   breadcrumb: readonly FernNavigation.BreadcrumbItem[];

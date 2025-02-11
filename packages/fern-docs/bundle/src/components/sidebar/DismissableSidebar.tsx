@@ -14,7 +14,7 @@ import {
 } from "../atoms";
 import { SidebarContainer } from "./SidebarContainer";
 
-const SidebarContainerMotion = motion(SidebarContainer);
+const SidebarContainerMotion = motion.create(SidebarContainer);
 
 const BEZIER_CURVE = [0.16, 1, 0.3, 1];
 

@@ -1,7 +1,7 @@
 import rangeParser from "parse-numeric-range";
 
 import { unknownToString } from "@fern-api/ui-core-utils";
-import type { Hast } from "@fern-docs/mdx";
+import type { Hast, Unified } from "@fern-docs/mdx";
 import {
   type MdxJsxElementHast,
   isHastElement,
@@ -14,8 +14,8 @@ import type { FernSyntaxHighlighterProps } from "@fern-docs/syntax-highlighter";
 
 import type { CodeGroup } from "../components/code";
 
-export function rehypeFernCode(): (tree: Hast.Root) => void {
-  return async function (tree: Hast.Root): Promise<void> {
+export const rehypeFernCode: Unified.Plugin<[], Hast.Root> = () => {
+  return (tree: Hast.Root) => {
     // match CodeBlocks and its CodeBlock children
     visit(tree, (node, index, parent) => {
       if (index == null) {
@@ -125,7 +125,7 @@ export function rehypeFernCode(): (tree: Hast.Root) => void {
       return true;
     });
   };
-}
+};
 
 interface CodeBlockItem {
   code: string;

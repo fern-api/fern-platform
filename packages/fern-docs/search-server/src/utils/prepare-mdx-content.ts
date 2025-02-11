@@ -1,6 +1,7 @@
 import { decode } from "html-entities";
 
 import {
+  SKIP,
   isMdxExpression,
   isMdxJsxElement,
   mdastToString,
@@ -37,13 +38,13 @@ export function prepareMdxContent(content: string): PreparedMdxContent {
     // because they are javascript expressions and not valid for search
     if (node.type === "mdxjsEsm" || isMdxExpression(node)) {
       parent.children.splice(index, 1, { type: "break" });
-      return index + 1;
+      return [SKIP, index];
     }
 
     // squeeze MdxJsxElements to include only its children
     if (isMdxJsxElement(node)) {
       parent.children.splice(index, 1, { type: "break" }, ...node.children);
-      return index + 1;
+      return [SKIP, index];
     }
 
     if (node.type === "code") {
@@ -53,7 +54,7 @@ export function prepareMdxContent(content: string): PreparedMdxContent {
         code: node.value,
       });
       parent.children.splice(index, 1);
-      return index;
+      return [SKIP, index];
     }
 
     if (node.type === "text" || node.type === "html") {

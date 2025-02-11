@@ -1,9 +1,10 @@
 import React from "react";
 
-import cn from "clsx";
+import { cn } from "@fern-docs/components";
 
-import { FernAnchor } from "../../../components/FernAnchor";
-import { FernLink } from "../../../components/FernLink";
+import { FernAnchor } from "@/components/components/FernAnchor";
+import { FernLink } from "@/components/components/FernLink";
+
 import { NoZoom, isImageElement } from "./image";
 
 export const HeadingRenderer = (
@@ -31,10 +32,7 @@ export function Strong({ className, ...rest }: React.ComponentProps<"strong">) {
 
 export function Ol({ className, ...rest }: React.ComponentProps<"ol">) {
   return (
-    <ol
-      {...rest}
-      className={cn(className, "mb-3 list-outside list-decimal space-y-2")}
-    />
+    <ol {...rest} className={cn(className, "mb-3 list-outside list-decimal")} />
   );
 }
 
@@ -42,7 +40,10 @@ export function Ul({ className, ...rest }: React.ComponentProps<"ul">) {
   return (
     <ul
       {...rest}
-      className={cn(className, "mb-3 list-outside list-disc space-y-2")}
+      className={cn(
+        className,
+        "[&>li]:before:text-accented-a8 mb-3 list-none pl-3 [&>li]:pl-3 [&>li]:before:absolute [&>li]:before:ml-[-22px] [&>li]:before:mt-[-1px] [&>li]:before:content-['-']"
+      )}
     />
   );
 }

@@ -5,7 +5,7 @@ import { RenderResult, render } from "@testing-library/react";
 import { Server } from "http";
 import { ViteDevServer } from "vite";
 
-import { MdxBundlerComponent } from "../mdx-bundler-component";
+import { MdxBundlerComponent } from "../component";
 import {
   invokeTestServer,
   setupTestServer,

@@ -144,7 +144,6 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
             extraProperties={undefined}
             onChange={setHeaders}
             value={formState?.headers}
-            defaultValue={pascalCaseHeaderKeys(initialHeaders)}
             types={types}
           />
         </PlaygroundEndpointFormSection>
@@ -162,7 +161,6 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
               extraProperties={undefined}
               onChange={setPathParameters}
               value={formState?.pathParameters}
-              defaultValue={initialPathParameters}
               types={types}
             />
           </PlaygroundEndpointFormSection>
@@ -180,7 +178,6 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
               extraProperties={undefined}
               onChange={setQueryParameters}
               value={formState?.queryParameters}
-              defaultValue={initialQueryParameters}
               types={types}
             />
           </PlaygroundEndpointFormSection>

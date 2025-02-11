@@ -109,4 +109,6 @@ function UnmemoizedCohereDocs({ children }: { children: React.ReactNode }) {
   );
 }
 
-export const CohereDocs = memo(UnmemoizedCohereDocs);
+const CohereDocs = memo(UnmemoizedCohereDocs);
+
+export default CohereDocs;

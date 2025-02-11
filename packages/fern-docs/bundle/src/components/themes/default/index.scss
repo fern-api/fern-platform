@@ -153,7 +153,7 @@
     @apply gap-8;
 
     .fern-layout-content {
-      @apply mx-auto w-full min-w-0 pb-20 pt-8 xl:mx-auto;
+      @apply mx-auto w-full min-w-0 pb-20 xl:mx-auto;
     }
 
     &:has(.fern-layout-toc) {
@@ -166,7 +166,7 @@
   }
 
   .fern-page-layout {
-    @apply pb-20 pt-8;
+    @apply pb-20;
   }
 
   .fern-layout-toc {

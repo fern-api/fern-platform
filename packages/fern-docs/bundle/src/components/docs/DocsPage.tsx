@@ -3,9 +3,10 @@
 import { usePathname } from "next/navigation";
 import { ReactElement, useEffect } from "react";
 
+import { ErrorBoundary } from "@/components/error-boundary";
+
 import { useMessageHandler, useSetJustNavigated } from "../atoms";
 import { BgImageGradient } from "../components/BgImageGradient";
-import { FernErrorBoundary } from "../components/FernErrorBoundary";
 import { useConsoleMessage } from "../hooks/useConsoleMessage";
 import { InitializeTheme } from "../themes";
 import { scrollToRoute } from "../util/anchor";
@@ -44,7 +45,7 @@ export function DocsPage({
     <>
       <InitializeTheme />
       <BgImageGradient />
-      <FernErrorBoundary>{children}</FernErrorBoundary>
+      <ErrorBoundary>{children}</ErrorBoundary>
     </>
   );
 }

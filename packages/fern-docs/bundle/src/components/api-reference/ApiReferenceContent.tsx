@@ -4,8 +4,9 @@ import type { ApiDefinition } from "@fern-api/fdr-sdk/api-definition";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { dfs } from "@fern-api/fdr-sdk/traversers";
 
+import { ErrorBoundary } from "@/components/error-boundary";
+
 import { useIsReady } from "../atoms";
-import { FernErrorBoundary } from "../components/FernErrorBoundary";
 import { useIsLocalPreview } from "../contexts/local-preview";
 import { DocsContent } from "../resolver/DocsContent";
 import { scrollToRoute } from "../util/anchor";
@@ -98,7 +99,7 @@ const UnmemoizedApiReferenceContent: React.FC<ApiReferenceContentProps> = ({
   return (
     <>
       {filtered.map(({ node, breadcrumb }, idx) => (
-        <FernErrorBoundary component="ApiPackageContents" key={node.id}>
+        <ErrorBoundary key={node.id}>
           <ApiPackageContent
             node={node}
             mdxs={mdxs}
@@ -107,7 +108,7 @@ const UnmemoizedApiReferenceContent: React.FC<ApiReferenceContentProps> = ({
             showErrors={showErrors}
             last={idx === filtered.length - 1}
           />
-        </FernErrorBoundary>
+        </ErrorBoundary>
       ))}
     </>
   );

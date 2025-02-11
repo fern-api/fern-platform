@@ -3,8 +3,6 @@
 import Script from "next/script";
 import type { ReactElement } from "react";
 
-import { ColorsThemeConfig } from "@/server/types";
-
 import type { AvailableThemes } from "../atoms";
 
 // this script cannot reference any other code since it will be stringified to be executed in the browser
@@ -37,28 +35,22 @@ const script = (themes: AvailableThemes): void => {
   }
 };
 
-const getAvailableThemes = (
-  colors: {
-    dark?: ColorsThemeConfig;
-    light?: ColorsThemeConfig;
-  } = {}
-): AvailableThemes => {
-  if (Boolean(colors.dark) === Boolean(colors.light)) {
+const getAvailableThemes = (dark: boolean, light: boolean): AvailableThemes => {
+  if (dark === light) {
     return ["light", "dark"];
   }
 
-  return colors.dark ? ["dark"] : ["light"];
+  return dark ? ["dark"] : ["light"];
 };
 
 export function ThemeScript({
-  colors,
+  dark,
+  light,
 }: {
-  colors?: {
-    dark?: ColorsThemeConfig;
-    light?: ColorsThemeConfig;
-  };
+  dark: boolean;
+  light: boolean;
 }): ReactElement<any> {
-  const args = getAvailableThemes(colors);
+  const args = getAvailableThemes(dark, light);
   return (
     // eslint-disable-next-line @next/next/no-before-interactive-script-outside-document
     <Script
@@ -67,6 +59,7 @@ export function ThemeScript({
         __html: `(${script.toString()})(${JSON.stringify(args)})`,
       }}
       strategy="beforeInteractive"
+      suppressHydrationWarning
     />
   );
 }

@@ -7,8 +7,9 @@ import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { FernTooltipProvider } from "@fern-docs/components";
 import { useBooleanState, useIsHovering } from "@fern-ui/react-commons";
 
+import { ErrorBoundary } from "@/components/error-boundary";
+
 import { useRouteListener } from "../../../atoms";
-import { FernErrorBoundary } from "../../../components/FernErrorBoundary";
 import { getAnchorId } from "../../../util/anchor";
 import {
   TypeDefinitionContext,
@@ -81,14 +82,14 @@ export const InternalTypeDefinition = memo<InternalTypeDefinition.Props>(
       //     return null;
       // }
       return (
-        <FernErrorBoundary component="InternalTypeDefinition">
+        <ErrorBoundary>
           <FernTooltipProvider>
             <TypeDefinitionDetails
               elements={collapsableContent.elements}
               separatorText={collapsableContent.separatorText}
             />
           </FernTooltipProvider>
-        </FernErrorBoundary>
+        </ErrorBoundary>
       );
     }
 
@@ -142,9 +143,9 @@ export const InternalTypeDefinition = memo<InternalTypeDefinition.Props>(
     );
 
     return (
-      <FernErrorBoundary component="InternalTypeDefinition">
+      <ErrorBoundary>
         <FernTooltipProvider>{renderContent()}</FernTooltipProvider>
-      </FernErrorBoundary>
+      </ErrorBoundary>
     );
   }
 );

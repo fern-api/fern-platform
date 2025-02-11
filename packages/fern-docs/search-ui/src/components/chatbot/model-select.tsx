@@ -113,7 +113,6 @@ export const ChatbotModelSelect = forwardRef<
     return (
       <Select
         name="model"
-        defaultValue={defaultValue ?? models[0]?.model}
         value={value}
         onValueChange={onValueChange}
         open={open}

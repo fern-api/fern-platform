@@ -1,6 +1,9 @@
-import { PHASE_DEVELOPMENT_SERVER } from "next/constants.js";
+import { NextConfig } from "next";
+import { PHASE_DEVELOPMENT_SERVER } from "next/constants";
+import type { RemotePattern } from "next/dist/shared/lib/image-config";
 
 import NextBundleAnalyzer from "@next/bundle-analyzer";
+import path from "node:path";
 import process from "node:process";
 
 const cdnUri =
@@ -12,41 +15,16 @@ const isTrailingSlashEnabled =
   process.env.NEXT_PUBLIC_TRAILING_SLASH === "1";
 
 // TODO: move this to a shared location (this is copied in FernImage.tsx)
-const DOCS_FILES_ALLOWLIST = [
-  {
-    protocol: "https",
-    hostname: "fdr-prod-docs-files.s3.us-east-1.amazonaws.com",
-    port: "",
-  },
-  {
-    protocol: "https",
-    hostname: "fdr-prod-docs-files-public.s3.amazonaws.com",
-    port: "",
-  },
-  {
-    protocol: "https",
-    hostname: "fdr-dev2-docs-files.s3.us-east-1.amazonaws.com",
-    port: "",
-  },
-  {
-    protocol: "https",
-    hostname: "fdr-dev2-docs-files-public.s3.amazonaws.com",
-    port: "",
-  },
-  {
-    protocol: "https",
-    hostname: "files.buildwithfern.com",
-    port: "",
-  },
-  {
-    protocol: "https",
-    hostname: "files-dev2.buildwithfern.com",
-    port: "",
-  },
+const NEXT_IMAGE_HOSTS = [
+  "fdr-prod-docs-files.s3.us-east-1.amazonaws.com",
+  "fdr-prod-docs-files-public.s3.amazonaws.com",
+  "fdr-dev2-docs-files.s3.us-east-1.amazonaws.com",
+  "fdr-dev2-docs-files-public.s3.amazonaws.com",
+  "files.buildwithfern.com",
+  "files-dev2.buildwithfern.com",
 ];
 
-/** @type {import("next").NextConfig} */
-const nextConfig = {
+const nextConfig: NextConfig = {
   reactStrictMode: true,
   trailingSlash: isTrailingSlashEnabled,
   transpilePackages: [
@@ -87,7 +65,21 @@ const nextConfig = {
       "es-toolkit",
       "ts-essentials",
     ],
-    dynamicIO: true,
+    useCache: true,
+    newDevOverlay: true,
+    serverComponentsHmrCache: true,
+  },
+  removeConsole:
+    process.env.VERCEL_ENV === "production" ? { exclude: ["error"] } : false,
+
+  env: {
+    ESBUILD_BINARY_PATH: path.join(
+      process.cwd(),
+      "node_modules",
+      "esbuild",
+      "bin",
+      "esbuild"
+    ),
   },
 
   skipMiddlewareUrlNormalize: true,
@@ -172,7 +164,10 @@ const nextConfig = {
     ];
   },
   images: {
-    remotePatterns: DOCS_FILES_ALLOWLIST,
+    remotePatterns: NEXT_IMAGE_HOSTS.map((host) => ({
+      protocol: "https",
+      hostname: host,
+    })),
     path: cdnUri != null ? `${cdnUri.href}_next/image` : undefined,
   },
   webpack: (config, { isServer }) => {
@@ -201,16 +196,16 @@ const nextConfig = {
   },
 };
 
-function withVercelEnv(config) {
+function withVercelEnv(config: NextConfig): NextConfig {
   return {
     ...config,
     deploymentId: process.env.VERCEL_DEPLOYMENT_ID, // skew protection
     productionBrowserSourceMaps: process.env.VERCEL_ENV === "preview",
+    reactProductionProfiling: process.env.VERCEL_ENV !== "production",
   };
 }
 
-/** @type {import("next").NextConfig} */
-export default (phase) => {
+export default (phase: string): NextConfig => {
   const isDev = phase === PHASE_DEVELOPMENT_SERVER;
 
   /**

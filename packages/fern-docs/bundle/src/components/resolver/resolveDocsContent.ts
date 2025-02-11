@@ -10,7 +10,7 @@ import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { ApiDefinitionLoader, MarkdownLoader } from "@fern-docs/cache";
 import type { EdgeFlags } from "@fern-docs/utils";
 
-import { serializeMdx } from "../mdx/bundlers/mdx-bundler";
+import { serializeMdx } from "../mdx/bundler/serialize";
 import type { FernSerializeMdxOptions } from "../mdx/types";
 import type { DocsContent } from "./DocsContent";
 import { resolveApiEndpointPage } from "./resolveApiEndpointPage";
@@ -37,7 +37,6 @@ interface ResolveDocsContentArgs {
   pages: Record<string, DocsV1Read.PageContent>;
   mdxOptions?: FernSerializeMdxOptions;
   edgeFlags: EdgeFlags;
-  engine: string;
 }
 
 export async function resolveDocsContent({
@@ -54,20 +53,10 @@ export async function resolveDocsContent({
   pages,
   mdxOptions,
   edgeFlags,
-  engine,
 }: ResolveDocsContentArgs): Promise<DocsContent | undefined> {
   const neighbors = await getNeighbors({ prev, next }, pages);
 
-  const markdownLoader = MarkdownLoader.create(domain)
-    .withPages(pages)
-    .withMdxBundler(
-      (mdx: string, pageId: FernNavigation.PageId | undefined) =>
-        serializeMdx(mdx, {
-          ...mdxOptions,
-          filename: pageId,
-        }),
-      engine
-    );
+  const markdownLoader = MarkdownLoader.create(domain).withPages(pages);
 
   // TODO: remove legacy when done
   const apiLoaders = {

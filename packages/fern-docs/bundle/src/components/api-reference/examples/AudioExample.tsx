@@ -2,8 +2,9 @@ import { FC } from "react";
 
 import { FernAudioPlayer } from "@fern-docs/components";
 
+import { ErrorBoundary } from "@/components/error-boundary";
+
 import { useEdgeFlags } from "../../atoms";
-import { FernErrorBoundary } from "../../components/FernErrorBoundary";
 import { TitledExample } from "./TitledExample";
 
 export declare namespace AudioExample {
@@ -30,8 +31,8 @@ const AudioExampleInternal: FC<AudioExample.Props> = ({ ...props }) => {
 
 export const AudioExample: FC<AudioExample.Props> = (props) => {
   return (
-    <FernErrorBoundary component="AudioExample">
+    <ErrorBoundary>
       <AudioExampleInternal {...props} />
-    </FernErrorBoundary>
+    </ErrorBoundary>
   );
 };

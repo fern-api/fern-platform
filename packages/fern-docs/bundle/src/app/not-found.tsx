@@ -9,7 +9,8 @@ import { createCachedDocsLoader } from "@/server/docs-loader";
 import { getDocsDomainApp } from "@/server/xfernhost/app";
 
 export default async function NotFound() {
-  const loader = await createCachedDocsLoader(await getDocsDomainApp());
+  const domain = await getDocsDomainApp();
+  const loader = await createCachedDocsLoader(domain);
   const [baseUrl, colors, config] = await Promise.all([
     loader.getBaseUrl(),
     loader.getColors(),

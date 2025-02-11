@@ -1,12 +1,12 @@
 "use client";
 
-import React, { memo } from "react";
+import React from "react";
 
 import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 
-import { FernErrorBoundary } from "../components/FernErrorBoundary";
-import { FrontmatterContextProvider } from "../contexts/frontmatter";
-import { MdxBundlerComponent } from "./bundlers/mdx-bundler-component";
+import { ErrorBoundary } from "@/components/error-boundary";
+
+import { MdxComponent } from "./bundler/component";
 
 type MarkdownText = string | FernDocs.ResolvedMdx;
 
@@ -33,10 +33,7 @@ function isMdxEmpty(mdx: MarkdownText | MarkdownText[] | undefined): boolean {
   return mdx.code.trim().length === 0;
 }
 
-export const MdxContent = memo<MdxContent.Props>(function MdxContent({
-  mdx,
-  fallback,
-}) {
+export function MdxContent({ mdx, fallback }: MdxContent.Props) {
   if (isMdxEmpty(mdx) || mdx == null) {
     return fallback;
   }
@@ -56,10 +53,8 @@ export const MdxContent = memo<MdxContent.Props>(function MdxContent({
   }
 
   return (
-    <FernErrorBoundary component="MdxContent">
-      <FrontmatterContextProvider value={mdx.frontmatter}>
-        <MdxBundlerComponent {...mdx} />
-      </FrontmatterContextProvider>
-    </FernErrorBoundary>
+    <ErrorBoundary>
+      <MdxComponent {...mdx} />
+    </ErrorBoundary>
   );
-});
+}

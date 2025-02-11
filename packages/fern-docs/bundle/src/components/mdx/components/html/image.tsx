@@ -70,6 +70,7 @@ export const Image = forwardRef<
       height={toPixelValue(height)}
       {...rest}
       alt={rest.alt ?? ""}
+      className="mx-auto"
     />
   );
 
@@ -78,7 +79,7 @@ export const Image = forwardRef<
   }
 
   return (
-    <Zoom zoomImg={{ src }} classDialog="custom-backdrop">
+    <Zoom zoomImg={{ src }} classDialog="custom-backdrop" wrapElement="span">
       {fernImage}
     </Zoom>
   );

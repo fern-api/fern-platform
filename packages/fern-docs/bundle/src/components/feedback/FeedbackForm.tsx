@@ -15,7 +15,7 @@ import {
 } from "@fern-docs/components";
 import { useKeyboardPress } from "@fern-ui/react-commons";
 
-const MotionFernRadioGroup = motion(FernRadioGroup);
+const MotionFernRadioGroup = motion.create(FernRadioGroup);
 
 interface FeedbackFormProps {
   isHelpful: "yes" | "no";

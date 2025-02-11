@@ -1,16 +1,15 @@
 import dynamic from "next/dynamic";
-import React, { ComponentProps, PropsWithChildren, ReactElement } from "react";
+import React, { ComponentProps, ReactElement } from "react";
 
 import { FaIcon } from "@fern-docs/components";
 import type { MDXComponents } from "@fern-docs/mdx";
 
-import { SearchV2Trigger } from "@/components/search";
-
 import {
-  FernErrorBoundary,
-  FernErrorBoundaryProps,
-  FernErrorTag,
-} from "../../components/FernErrorBoundary";
+  ErrorBoundary,
+  ErrorBoundaryFallback,
+} from "@/components/error-boundary";
+import { SearchV2Trigger } from "@/components/search-trigger";
+
 import { AccordionGroup } from "./accordion";
 import { Availability } from "./availability";
 import { Badge } from "./badge";
@@ -151,9 +150,9 @@ const INTERNAL_COMPONENTS: MDXComponents = {
   ) => <ReferenceLayoutAside {...props} />,
 
   // error boundary
-  FernErrorBoundary: (
-    props: PropsWithChildren<Pick<FernErrorBoundaryProps, "error" | "fallback">>
-  ) => <FernErrorBoundary {...props} />,
+  ErrorBoundary: (props: React.ComponentProps<typeof ErrorBoundary>) => (
+    <ErrorBoundary {...props} />
+  ),
 };
 
 const HTML_COMPONENTS: MDXComponents = {
@@ -210,9 +209,8 @@ export function createMdxComponents(jsxElements: string[]): MDXComponents {
     ...jsxElements.reduce<Record<string, () => ReactElement<any>>>(
       (acc, jsxElement) => {
         acc[jsxElement] = () => (
-          <FernErrorTag
-            component={jsxElement}
-            error={`Unsupported JSX tag: <${jsxElement} />`}
+          <ErrorBoundaryFallback
+            error={new Error(`Unsupported JSX tag: <${jsxElement} />`)}
           />
         );
         return acc;

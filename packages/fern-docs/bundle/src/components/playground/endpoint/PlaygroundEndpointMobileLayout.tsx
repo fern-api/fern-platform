@@ -24,7 +24,6 @@ export function PlaygroundEndpointMobileLayout({
   return (
     <FernTabs
       className="px-4"
-      defaultValue="0"
       value={tabValue}
       onValueChange={setTabValue}
       tabs={[

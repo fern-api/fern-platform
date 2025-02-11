@@ -12,28 +12,25 @@ import { EndpointContentLeft } from "./EndpointContentLeft";
 import { EndpointContextProvider } from "./EndpointContext";
 import { EndpointUrlWithPlaygroundBaseUrl } from "./EndpointUrlWithPlaygroundBaseUrl";
 
-export async function EndpointContent({
+export function EndpointContent({
   domain,
   showErrors,
   context,
   breadcrumb,
   rootslug,
-  // streamToggle,
 }: {
   domain: string;
   showErrors: boolean;
   context: EndpointContext;
-  // hideBottomSeparator?: boolean;
   breadcrumb: readonly FernNavigation.BreadcrumbItem[];
   streamToggle?: React.ReactElement;
-  // last?: boolean;
   rootslug: FernNavigation.Slug;
 }) {
   const { node, endpoint } = context;
 
   return (
     <EndpointContextProvider endpoint={endpoint}>
-      <ApiPageCenter slug={node.slug} asChild>
+      <ApiPageCenter slug={node.slug}>
         <ReferenceLayout
           header={
             <PageHeader

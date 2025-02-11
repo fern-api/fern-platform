@@ -1,7 +1,5 @@
 "use client";
 
-import { memo } from "react";
-
 import clsx from "clsx";
 import { useAtomValue } from "jotai";
 
@@ -40,7 +38,7 @@ const DefaultDocsStyle = () => {
   );
 };
 
-function UnmemoizedDefaultDocs({ children }: { children: React.ReactNode }) {
+function DefaultDocs({ children }: { children: React.ReactNode }) {
   const colors = useColors();
   const layout = useAtomValue(DOCS_LAYOUT_ATOM);
   const showHeader = useAtomValue(SHOW_HEADER_ATOM);
@@ -98,4 +96,4 @@ function UnmemoizedDefaultDocs({ children }: { children: React.ReactNode }) {
   );
 }
 
-export const DefaultDocs = memo(UnmemoizedDefaultDocs);
+export default DefaultDocs;

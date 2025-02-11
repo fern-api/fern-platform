@@ -1,5 +1,7 @@
-import { cacheLife } from "next/dist/server/use-cache/cache-life";
-import { cacheTag } from "next/dist/server/use-cache/cache-tag";
+import {
+  unstable_cacheLife as cacheLife,
+  unstable_cacheTag as cacheTag,
+} from "next/cache";
 
 import { mapValues } from "es-toolkit/object";
 import { UnreachableCaseError } from "ts-essentials";
@@ -19,7 +21,7 @@ import { AuthEdgeConfig } from "@fern-docs/auth";
 import { getAuthEdgeConfig, getEdgeFlags } from "@fern-docs/edge-config";
 import { DEFAULT_LOGO_HEIGHT } from "@fern-docs/utils";
 
-import { serializeMdx as uncachedSerializeMdx } from "@/components/mdx/bundlers/mdx-bundler";
+import { serializeMdx as uncachedSerializeMdx } from "@/components/mdx/bundler/serialize";
 import { FernSerializeMdxOptions } from "@/components/mdx/types";
 
 import { AuthState, createGetAuthState } from "./auth/getAuthState";
@@ -112,6 +114,313 @@ export interface DocsLoader {
   getAuthState: (pathname?: string) => Promise<AuthState>;
 }
 
+const getBaseUrl = async (domain: string): Promise<DocsV2Read.BaseUrl> => {
+  "use cache";
+
+  cacheTag(domain);
+
+  const response = await loadWithUrl(domain);
+  if (!response.ok) {
+    return { domain, basePath: undefined };
+  }
+  return response.body.baseUrl;
+};
+
+const getFiles = async (domain: string): Promise<Record<string, FileData>> => {
+  "use cache";
+
+  cacheTag(domain);
+
+  const response = await loadWithUrl(domain);
+  if (!response.ok) {
+    return {};
+  }
+  return mapValues(response.body.definition.filesV2, (file) => {
+    if (file.type === "url") {
+      return {
+        src: file.url,
+      };
+    } else if (file.type === "image") {
+      return {
+        src: file.url,
+        width: file.width,
+        height: file.height,
+        blurDataURL: file.blurDataUrl,
+        alt: file.alt,
+      };
+    }
+    throw new UnreachableCaseError(file);
+  });
+};
+
+const getApi = async (
+  domain: string,
+  id: string
+): Promise<ApiDefinition.ApiDefinition | undefined> => {
+  const response = await loadWithUrl(domain);
+  if (!response.ok) {
+    return undefined;
+  }
+  const latest = response.body.definition.apisV2[ApiDefinitionId(id)];
+  if (latest != null) {
+    return latest;
+  }
+  const v1 = response.body.definition.apis[ApiDefinitionId(id)];
+  if (v1 == null) {
+    return undefined;
+  }
+  return ApiDefinitionV1ToLatest.from(v1, await getEdgeFlags(domain)).migrate();
+};
+
+const unsafe_getFullRoot = async (domain: string) => {
+  const response = await loadWithUrl(domain);
+  if (!response.ok) {
+    return undefined;
+  }
+  const v1 = response.body.definition.config.root;
+
+  if (!v1) {
+    return undefined;
+  }
+
+  const root =
+    FernNavigation.migrate.FernNavigationV1ToLatest.create().root(v1);
+
+  if ((await getEdgeFlags(domain)).isApiScrollingDisabled) {
+    FernNavigation.traverseBF(root, (node) => {
+      if (node.type === "apiReference") {
+        node.paginated = true;
+        return CONTINUE;
+      }
+      return SKIP;
+    });
+  }
+
+  return root;
+};
+
+const getRoot = async (
+  domain: string,
+  authState: AuthState,
+  authConfig: AuthEdgeConfig | undefined
+) => {
+  let root = await unsafe_getFullRoot(domain);
+
+  if (!root) {
+    return undefined;
+  }
+
+  if (authConfig) {
+    root = pruneWithAuthState(authState, authConfig, root);
+  }
+
+  if (root) {
+    FernNavigation.utils.mutableUpdatePointsTo(root);
+  }
+
+  return root;
+};
+
+const getConfig = async (domain: string) => {
+  const response = await loadWithUrl(domain);
+  if (!response.ok) {
+    return undefined;
+  }
+  const { navigation, root, ...config } = response.body.definition.config;
+  return config;
+};
+
+const getPage = async (domain: string, pageId: string) => {
+  "use cache";
+
+  cacheTag(domain);
+
+  const response = await loadWithUrl(domain);
+  if (!response.ok) {
+    return undefined;
+  }
+  return response.body.definition.pages[pageId as PageId];
+};
+
+const serializeMdx = async (
+  domain: string,
+  content: string | undefined,
+  options?: Omit<FernSerializeMdxOptions, "files" | "replaceSrc">
+) => {
+  "use cache";
+
+  cacheTag(domain);
+
+  if (content == null) {
+    return undefined;
+  }
+  const [files, mdxBundlerFiles] = await Promise.all([
+    getFiles(domain),
+    getMdxBundlerFiles(domain),
+  ]);
+
+  const mdx = await uncachedSerializeMdx(content, {
+    ...options,
+    files: mdxBundlerFiles,
+    replaceSrc: createFileResolver(files),
+  });
+
+  if (mdx == null) {
+    // if we're returning the fallback string, this means validation failed
+    cacheLife({
+      stale: 0,
+      revalidate: 0,
+    });
+  }
+
+  return mdx ?? content;
+};
+
+const getSerializedPage = async (
+  domain: string,
+  pageId: string,
+  options?: Omit<FernSerializeMdxOptions, "files" | "replaceSrc">
+) => {
+  "use cache";
+
+  cacheTag(domain);
+
+  const [page, files, mdxBundlerFiles] = await Promise.all([
+    getPage(domain, pageId),
+    getFiles(domain),
+    getMdxBundlerFiles(domain),
+  ]);
+  if (!page) {
+    return undefined;
+  }
+  const mdx = await uncachedSerializeMdx(page.markdown, {
+    ...options,
+    filename: pageId,
+    files: mdxBundlerFiles,
+    replaceSrc: createFileResolver(files),
+  });
+
+  if (mdx == null) {
+    // if we're returning the fallback string, this means validation failed
+    cacheLife({
+      stale: 0,
+      revalidate: 0,
+    });
+  }
+
+  return mdx ?? page.markdown;
+};
+
+const getMdxBundlerFiles = async (domain: string) => {
+  "use cache";
+
+  cacheTag(domain);
+
+  const response = await loadWithUrl(domain);
+  if (!response.ok) {
+    return {};
+  }
+  return response.body.definition.jsFiles ?? {};
+};
+
+const getColors = async (domain: string) => {
+  "use cache";
+
+  cacheTag(domain);
+
+  const [config, files] = await Promise.all([
+    getConfig(domain),
+    getFiles(domain),
+  ]);
+  if (!config) {
+    return { light: undefined, dark: undefined };
+  }
+
+  if (!config.colorsV3) {
+    return { light: undefined, dark: undefined };
+  }
+
+  const light =
+    config.colorsV3.type === "light"
+      ? config.colorsV3
+      : config.colorsV3.type === "darkAndLight"
+        ? config.colorsV3.light
+        : undefined;
+
+  const dark =
+    config.colorsV3.type === "dark"
+      ? config.colorsV3
+      : config.colorsV3.type === "darkAndLight"
+        ? config.colorsV3.dark
+        : undefined;
+
+  return {
+    light: light
+      ? {
+          logo: light.logo ? files[light.logo] : undefined,
+          backgroundImage: light.backgroundImage
+            ? files[light.backgroundImage]
+            : undefined,
+          accentPrimary: toRgbaColor(light.accentPrimary),
+          background: toRgbaColor(light.background),
+          border: toRgbaColor(light.border),
+          sidebarBackground: toRgbaColor(light.sidebarBackground),
+          headerBackground: toRgbaColor(light.headerBackground),
+          cardBackground: toRgbaColor(light.cardBackground),
+        }
+      : undefined,
+    dark: dark
+      ? {
+          logo: dark.logo ? files[dark.logo] : undefined,
+          backgroundImage: dark.backgroundImage
+            ? files[dark.backgroundImage]
+            : undefined,
+          accentPrimary: toRgbaColor(dark.accentPrimary),
+          background: toRgbaColor(dark.background),
+          border: toRgbaColor(dark.border),
+          sidebarBackground: toRgbaColor(dark.sidebarBackground),
+          headerBackground: toRgbaColor(dark.headerBackground),
+          cardBackground: toRgbaColor(dark.cardBackground),
+        }
+      : undefined,
+  };
+};
+
+const getLayout = async (domain: string) => {
+  "use cache";
+
+  cacheTag(domain);
+
+  const config = await getConfig(domain);
+  if (!config) {
+    return {
+      logoHeight: DEFAULT_LOGO_HEIGHT,
+      sidebarWidth: 288,
+      headerHeight: 64,
+      pageWidth: 1_408,
+      contentWidth: 704,
+      tabsPlacement: "SIDEBAR" as const,
+    };
+  }
+  const logoHeight = config?.logoHeight ?? DEFAULT_LOGO_HEIGHT;
+  const sidebarWidth = toPx(config?.layout?.sidebarWidth) ?? 288;
+  const pageWidth =
+    config?.layout?.pageWidth?.type === "full"
+      ? undefined
+      : (toPx(config?.layout?.pageWidth) ?? 1_408);
+  const headerHeight = toPx(config?.layout?.headerHeight) ?? 64;
+  const contentWidth = toPx(config?.layout?.contentWidth) ?? 704;
+  const tabsPlacement = config?.layout?.tabsPlacement ?? "SIDEBAR";
+  return {
+    logoHeight,
+    sidebarWidth,
+    headerHeight,
+    pageWidth,
+    contentWidth,
+    tabsPlacement,
+  };
+};
+
 /**
  * The "use cache" tags help us speed up rendering specific parts of the page that are static.
  * It has a hard-limit of 2MB which is why we cannot use it to cache the entire response.
@@ -121,348 +430,40 @@ export interface DocsLoader {
 export const createCachedDocsLoader = async (
   domain: string,
   fern_token?: string
-  // authConfig?: AuthEdgeConfig,
-  // getAuthState: (pathname?: string) => AsyncOrSync<AuthState>
 ): Promise<DocsLoader> => {
   const authConfig = await getAuthEdgeConfig(domain);
-  const { getAuthState } = await createGetAuthState(
-    domain,
-    fern_token,
-    authConfig
-  );
 
-  const getBaseUrl = async (): Promise<DocsV2Read.BaseUrl> => {
+  const getAuthState = async (pathname?: string) => {
     "use cache";
 
     cacheTag(domain);
 
-    const response = await loadWithUrl(domain);
-    if (!response.ok) {
-      return { domain, basePath: undefined };
-    }
-    return response.body.baseUrl;
-  };
+    const { getAuthState } = await createGetAuthState(
+      domain,
+      fern_token,
+      authConfig
+    );
 
-  const getFiles = async (): Promise<Record<string, FileData>> => {
-    "use cache";
-
-    cacheTag(domain);
-
-    const response = await loadWithUrl(domain);
-    if (!response.ok) {
-      return {};
-    }
-    return mapValues(response.body.definition.filesV2, (file) => {
-      if (file.type === "url") {
-        return {
-          src: file.url,
-        };
-      } else if (file.type === "image") {
-        return {
-          src: file.url,
-          width: file.width,
-          height: file.height,
-          blurDataURL: file.blurDataUrl,
-          alt: file.alt,
-        };
-      }
-      throw new UnreachableCaseError(file);
-    });
-  };
-
-  const getApi = async (
-    id: string
-  ): Promise<ApiDefinition.ApiDefinition | undefined> => {
-    "use cache";
-
-    cacheTag(domain);
-
-    const response = await loadWithUrl(domain);
-    if (!response.ok) {
-      return undefined;
-    }
-    const latest = response.body.definition.apisV2[ApiDefinitionId(id)];
-    if (latest != null) {
-      return latest;
-    }
-    const v1 = response.body.definition.apis[ApiDefinitionId(id)];
-    if (v1 == null) {
-      return undefined;
-    }
-    return ApiDefinitionV1ToLatest.from(
-      v1,
-      await getEdgeFlags(domain)
-    ).migrate();
-  };
-
-  const unsafe_getFullRoot = async () => {
-    "use cache";
-
-    cacheTag(domain);
-
-    const response = await loadWithUrl(domain);
-    if (!response.ok) {
-      return undefined;
-    }
-    const v1 = response.body.definition.config.root;
-
-    if (!v1) {
-      return undefined;
-    }
-
-    const root =
-      FernNavigation.migrate.FernNavigationV1ToLatest.create().root(v1);
-
-    if ((await getEdgeFlags(domain)).isApiScrollingDisabled) {
-      FernNavigation.traverseBF(root, (node) => {
-        if (node.type === "apiReference") {
-          node.paginated = true;
-          return CONTINUE;
-        }
-        return SKIP;
-      });
-    }
-
-    return root;
-  };
-
-  const getRoot = async () => {
-    cacheTag(domain);
-
-    let root = await unsafe_getFullRoot();
-
-    if (!root) {
-      return undefined;
-    }
-
-    if (authConfig) {
-      root = pruneWithAuthState(await getAuthState(), authConfig, root);
-    }
-
-    if (root) {
-      FernNavigation.utils.mutableUpdatePointsTo(root);
-    }
-
-    return root;
-  };
-
-  const getConfig = async () => {
-    "use cache";
-
-    cacheTag(domain);
-
-    const response = await loadWithUrl(domain);
-    if (!response.ok) {
-      return undefined;
-    }
-    const { navigation, root, ...config } = response.body.definition.config;
-    return config;
-  };
-
-  const getPage = async (pageId: string) => {
-    "use cache";
-
-    cacheTag(domain);
-
-    const response = await loadWithUrl(domain);
-    if (!response.ok) {
-      return undefined;
-    }
-    return response.body.definition.pages[pageId as PageId];
-  };
-
-  const serializeMdx = async (
-    content: string | undefined,
-    options?: Omit<FernSerializeMdxOptions, "files" | "replaceSrc">
-  ) => {
-    "use cache";
-
-    cacheTag(domain);
-
-    if (content == null) {
-      return undefined;
-    }
-    const [files, mdxBundlerFiles] = await Promise.all([
-      getFiles(),
-      getMdxBundlerFiles(),
-    ]);
-
-    const mdx = await uncachedSerializeMdx(content, {
-      ...options,
-      files: mdxBundlerFiles,
-      replaceSrc: createFileResolver(files),
-    });
-
-    if (mdx == null) {
-      // if we're returning the fallback string, this means validation failed
-      cacheLife({
-        stale: 0,
-        revalidate: 0,
-      });
-    }
-
-    return mdx ?? content;
-  };
-
-  const getSerializedPage = async (
-    pageId: string,
-    options?: Omit<FernSerializeMdxOptions, "files" | "replaceSrc">
-  ) => {
-    "use cache";
-
-    cacheTag(domain);
-
-    const [page, files, mdxBundlerFiles] = await Promise.all([
-      getPage(pageId),
-      getFiles(),
-      getMdxBundlerFiles(),
-    ]);
-    if (!page) {
-      return undefined;
-    }
-    const mdx = await uncachedSerializeMdx(page.markdown, {
-      ...options,
-      filename: pageId,
-      files: mdxBundlerFiles,
-      replaceSrc: createFileResolver(files),
-    });
-
-    if (mdx == null) {
-      // if we're returning the fallback string, this means validation failed
-      cacheLife({
-        stale: 0,
-        revalidate: 0,
-      });
-    }
-
-    return mdx ?? page.markdown;
-  };
-
-  const getMdxBundlerFiles = async () => {
-    "use cache";
-
-    cacheTag(domain);
-
-    const response = await loadWithUrl(domain);
-    if (!response.ok) {
-      return {};
-    }
-    return response.body.definition.jsFiles ?? {};
-  };
-
-  const getColors = async () => {
-    "use cache";
-
-    cacheTag(domain);
-
-    const [config, files] = await Promise.all([getConfig(), getFiles()]);
-    if (!config) {
-      return { light: undefined, dark: undefined };
-    }
-
-    if (!config.colorsV3) {
-      return { light: undefined, dark: undefined };
-    }
-
-    const light =
-      config.colorsV3.type === "light"
-        ? config.colorsV3
-        : config.colorsV3.type === "darkAndLight"
-          ? config.colorsV3.light
-          : undefined;
-
-    const dark =
-      config.colorsV3.type === "dark"
-        ? config.colorsV3
-        : config.colorsV3.type === "darkAndLight"
-          ? config.colorsV3.dark
-          : undefined;
-
-    return {
-      light: light
-        ? {
-            logo: light.logo ? files[light.logo] : undefined,
-            backgroundImage: light.backgroundImage
-              ? files[light.backgroundImage]
-              : undefined,
-            accentPrimary: toRgbaColor(light.accentPrimary),
-            background: toRgbaColor(light.background),
-            border: toRgbaColor(light.border),
-            sidebarBackground: toRgbaColor(light.sidebarBackground),
-            headerBackground: toRgbaColor(light.headerBackground),
-            cardBackground: toRgbaColor(light.cardBackground),
-          }
-        : undefined,
-      dark: dark
-        ? {
-            logo: dark.logo ? files[dark.logo] : undefined,
-            backgroundImage: dark.backgroundImage
-              ? files[dark.backgroundImage]
-              : undefined,
-            accentPrimary: toRgbaColor(dark.accentPrimary),
-            background: toRgbaColor(dark.background),
-            border: toRgbaColor(dark.border),
-            sidebarBackground: toRgbaColor(dark.sidebarBackground),
-            headerBackground: toRgbaColor(dark.headerBackground),
-            cardBackground: toRgbaColor(dark.cardBackground),
-          }
-        : undefined,
-    };
-  };
-
-  const getLayout = async () => {
-    "use cache";
-
-    cacheTag(domain);
-
-    const config = await getConfig();
-    if (!config) {
-      return {
-        logoHeight: DEFAULT_LOGO_HEIGHT,
-        sidebarWidth: 288,
-        headerHeight: 64,
-        pageWidth: 1_408,
-        contentWidth: 704,
-        tabsPlacement: "SIDEBAR" as const,
-      };
-    }
-    const logoHeight = config?.logoHeight ?? DEFAULT_LOGO_HEIGHT;
-    const sidebarWidth = toPx(config?.layout?.sidebarWidth) ?? 288;
-    const pageWidth =
-      config?.layout?.pageWidth?.type === "full"
-        ? undefined
-        : (toPx(config?.layout?.pageWidth) ?? 1_408);
-    const headerHeight = toPx(config?.layout?.headerHeight) ?? 64;
-    const contentWidth = toPx(config?.layout?.contentWidth) ?? 704;
-    const tabsPlacement = config?.layout?.tabsPlacement ?? "SIDEBAR";
-    return {
-      logoHeight,
-      sidebarWidth,
-      headerHeight,
-      pageWidth,
-      contentWidth,
-      tabsPlacement,
-    };
+    return await getAuthState(pathname);
   };
 
   return {
     domain,
     fern_token,
     authConfig,
-    getBaseUrl,
-    getFiles,
-    getApi,
-    getRoot,
-    unsafe_getFullRoot,
-    getConfig,
-    getPage,
-    serializeMdx,
-    getSerializedPage,
-    getColors,
-    getLayout,
-    getAuthState: async (pathname?: string) => {
-      return getAuthState(pathname);
-    },
+    getBaseUrl: () => getBaseUrl(domain),
+    getFiles: () => getFiles(domain),
+    getApi: (id: string) => getApi(domain, id),
+    getRoot: async () => getRoot(domain, await getAuthState(), authConfig),
+    unsafe_getFullRoot: () => unsafe_getFullRoot(domain),
+    getConfig: () => getConfig(domain),
+    getPage: (pageId: string) => getPage(domain, pageId),
+    serializeMdx: (content, options) => serializeMdx(domain, content, options),
+    getSerializedPage: (pageId, options) =>
+      getSerializedPage(domain, pageId, options),
+    getColors: () => getColors(domain),
+    getLayout: () => getLayout(domain),
+    getAuthState,
   };
 };
 

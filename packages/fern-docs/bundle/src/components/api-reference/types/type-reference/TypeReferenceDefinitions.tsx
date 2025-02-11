@@ -5,7 +5,8 @@ import { memo } from "react";
 import type * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 
-import { FernErrorBoundary } from "../../../components/FernErrorBoundary";
+import { ErrorBoundary } from "@/components/error-boundary";
+
 import { TypeDefinitionContextProvider } from "../context/TypeDefinitionContextProvider";
 import { InternalTypeReferenceDefinitions } from "./InternalTypeReferenceDefinitions";
 
@@ -35,7 +36,7 @@ export const TypeReferenceDefinitions = memo<TypeReferenceDefinitions.Props>(
     isResponse,
   }) {
     return (
-      <FernErrorBoundary component="TypeReferenceDefinitions">
+      <ErrorBoundary>
         <TypeDefinitionContextProvider isResponse={isResponse}>
           <InternalTypeReferenceDefinitions
             shape={shape}
@@ -47,7 +48,7 @@ export const TypeReferenceDefinitions = memo<TypeReferenceDefinitions.Props>(
             types={types}
           />
         </TypeDefinitionContextProvider>
-      </FernErrorBoundary>
+      </ErrorBoundary>
     );
   }
 );
