@@ -1,5 +1,3 @@
-"use cache";
-
 import { unstable_cacheTag } from "next/cache";
 
 import type { NavbarLink } from "@/components/atoms/types";
@@ -13,22 +11,23 @@ import { createCachedDocsLoader } from "@/server/docs-loader";
 import { createFileResolver } from "@/server/file-resolver";
 import { withLogo } from "@/server/withLogo";
 
-export default async function Layout({
+export default async function DocsLayout({
   children,
-  params,
-  sidebar,
+  domain,
+  fern_token,
 }: {
   children: React.ReactNode;
-  params: Promise<{ domain: string }>;
-  sidebar: React.ReactNode;
+  domain: string;
+  fern_token?: string;
 }) {
+  "use cache";
+
   console.debug("/app/[domain]/(external)/(docs)/layout.tsx: starting...");
   console.time("/app/[domain]/(external)/(docs)/layout.tsx");
-  const { domain } = await params;
 
   unstable_cacheTag(domain);
 
-  const loader = await createCachedDocsLoader(domain);
+  const loader = await createCachedDocsLoader(domain, fern_token);
   const [{ basePath }, config, edgeFlags, files, colors, layout] =
     await Promise.all([
       loader.getBaseUrl(),
@@ -144,7 +143,7 @@ export default async function Layout({
           versionSelect={false}
           navbarLinks={navbarLinks}
         >
-          {sidebar}
+          {false}
         </Sidebar>
       }
     >

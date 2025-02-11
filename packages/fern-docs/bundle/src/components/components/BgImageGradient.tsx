@@ -2,7 +2,7 @@ import { cn } from "@fern-docs/components";
 
 import { ColorsThemeConfig } from "@/server/types";
 
-export const BgImageGradient = ({
+export function BgImageGradient({
   className,
   colors,
 }: {
@@ -11,7 +11,7 @@ export const BgImageGradient = ({
     light?: ColorsThemeConfig;
     dark?: ColorsThemeConfig;
   };
-}) => {
+}) {
   const darkBackground = colors.dark?.background;
   const lightBackground = colors.light?.background;
   const darkBackgroundImage = colors.dark?.backgroundImage;
@@ -30,4 +30,4 @@ export const BgImageGradient = ({
       })}
     />
   );
-};
+}

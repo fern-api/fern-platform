@@ -1,8 +1,9 @@
 import { Metadata, Viewport } from "next/types";
 
+import { TooltipProvider } from "@radix-ui/react-tooltip";
 import { Provider as JotaiProvider } from "jotai/react";
 
-import { FernTooltipProvider, Toaster } from "@fern-docs/components";
+import { Toaster } from "@fern-docs/components";
 
 import { ConsoleMessage } from "@/components/console-message";
 
@@ -27,10 +28,10 @@ export default function DashboardLayout({
         <ConsoleMessage />
         <StyledJsxRegistry>
           <JotaiProvider>
-            <FernTooltipProvider>
+            <TooltipProvider>
               <Toaster />
               {children}
-            </FernTooltipProvider>
+            </TooltipProvider>
           </JotaiProvider>
         </StyledJsxRegistry>
       </body>

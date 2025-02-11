@@ -1,7 +1,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { CSSProperties, PropsWithChildren, useState } from "react";
+import { CSSProperties, useState } from "react";
 import React from "react";
 
 import cn, { clsx } from "clsx";
@@ -36,92 +36,84 @@ export declare namespace Header {
   }
 }
 
-export const Header = React.memo(
-  React.forwardRef<HTMLDivElement, PropsWithChildren<Header.Props>>(
-    function Header(
-      {
-        logo,
-        versionSelect,
-        className,
-        style,
-        colors,
-        showSearchBar,
-        navbarLinks,
-      },
-      ref
-    ) {
-      const toggleSearchDialog = useToggleSearchDialog();
+export function Header({
+  logo,
+  versionSelect,
+  className,
+  style,
+  colors,
+  showSearchBar,
+  navbarLinks,
+}: Header.Props) {
+  const toggleSearchDialog = useToggleSearchDialog();
 
-      const navbarLinksSection = (
-        <div className="lg-menu">
-          <FernButtonGroup>
-            {navbarLinks.map((navbarLink, idx) => (
-              <NavbarLink key={idx} navbarLink={navbarLink} />
-            ))}
+  const navbarLinksSection = (
+    <div className="lg-menu">
+      <FernButtonGroup>
+        {navbarLinks.map((navbarLink, idx) => (
+          <NavbarLink key={idx} navbarLink={navbarLink} />
+        ))}
 
-            {colors.dark && colors.light && <ThemeButton />}
-          </FernButtonGroup>
+        {colors.dark && colors.light && <ThemeButton />}
+      </FernButtonGroup>
+    </div>
+  );
+
+  const githubLink = navbarLinks.find((link) => link.type === "github");
+  const githubRepo = githubLink && getGitHubRepo(githubLink.href);
+
+  return (
+    <nav
+      aria-label="primary"
+      className={cn("fern-header-content", className)}
+      style={style}
+    >
+      <HeaderLogoSection logo={logo} versionSelect={versionSelect} />
+
+      {showSearchBar && (
+        <div className={cn("fern-header-searchbar")}>
+          <SearchV2Trigger />
         </div>
-      );
+      )}
 
-      const githubLink = navbarLinks.find((link) => link.type === "github");
-      const githubRepo = githubLink && getGitHubRepo(githubLink.href);
+      <div
+        className={cn("fern-header-right-menu", {
+          "flex-1": showSearchBar,
+        })}
+      >
+        {navbarLinksSection}
 
-      return (
-        <nav
-          aria-label="primary"
-          className={cn("fern-header-content", className)}
-          ref={ref}
-          style={style}
-        >
-          <HeaderLogoSection logo={logo} versionSelect={versionSelect} />
-
-          {showSearchBar && (
-            <div className={cn("fern-header-searchbar")}>
-              <SearchV2Trigger />
-            </div>
+        <div className="max-lg-menu">
+          {githubRepo && (
+            <GitHubWidget
+              repo={githubRepo}
+              className={githubLink?.className}
+              id={githubLink?.id}
+            />
           )}
 
-          <div
-            className={cn("fern-header-right-menu", {
-              "flex-1": showSearchBar,
-            })}
-          >
-            {navbarLinksSection}
+          {colors.dark && colors.light && <ThemeButton size="large" />}
 
-            <div className="max-lg-menu">
-              {githubRepo && (
-                <GitHubWidget
-                  repo={githubRepo}
-                  className={githubLink?.className}
-                  id={githubLink?.id}
-                />
-              )}
+          <FernButton
+            onClickCapture={(e) => {
+              e.stopPropagation();
+              toggleSearchDialog();
+            }}
+            icon={<Search className="!size-icon-md" />}
+            intent="none"
+            variant="minimal"
+            rounded={true}
+            size="large"
+            className="max-sm:hidden"
+            id="fern-search-button"
+          />
 
-              {colors.dark && colors.light && <ThemeButton size="large" />}
-
-              <FernButton
-                onClickCapture={(e) => {
-                  e.stopPropagation();
-                  toggleSearchDialog();
-                }}
-                icon={<Search className="!size-icon-md" />}
-                intent="none"
-                variant="minimal"
-                rounded={true}
-                size="large"
-                className="max-sm:hidden"
-                id="fern-search-button"
-              />
-
-              <MobileMenuButton />
-            </div>
-          </div>
-        </nav>
-      );
-    }
-  )
-);
+          <MobileMenuButton />
+        </div>
+      </div>
+    </nav>
+  );
+}
 
 function NavbarLink({ navbarLink }: { navbarLink: NavbarLink }) {
   const [href, setHref] = useState(() => navbarLink.href);

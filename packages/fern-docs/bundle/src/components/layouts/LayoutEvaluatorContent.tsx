@@ -1,4 +1,4 @@
-import { ReactElement, ReactNode } from "react";
+import React from "react";
 
 import { UnreachableCaseError } from "ts-essentials";
 
@@ -21,7 +21,7 @@ interface LayoutEvaluatorProps {
   subtitle?: string;
   breadcrumb: readonly FernNavigation.BreadcrumbItem[];
   tableOfContents: TableOfContentsItem[];
-  children: ReactNode;
+  children: React.ReactNode;
   hasAside: boolean;
 }
 
@@ -34,28 +34,24 @@ export function LayoutEvaluatorContent({
   tableOfContents,
   children,
   // hasAside,
-}: LayoutEvaluatorProps): ReactElement<any> {
+}: LayoutEvaluatorProps) {
   const layout = frontmatter.layout ?? "guide";
 
-  const PageHeaderComponent = () => {
-    return (
-      <PageHeader
-        domain={domain}
-        title={title}
-        subtitle={subtitle}
-        breadcrumb={breadcrumb}
-      />
-    );
-  };
+  const pageHeader = (
+    <PageHeader
+      domain={domain}
+      title={title}
+      subtitle={subtitle}
+      breadcrumb={breadcrumb}
+    />
+  );
 
-  const TableOfContentsComponent = () => {
-    return (
-      <TableOfContentsLayout
-        tableOfContents={tableOfContents}
-        hideTableOfContents={frontmatter["hide-toc"]}
-      />
-    );
-  };
+  const toc = (
+    <TableOfContentsLayout
+      tableOfContents={tableOfContents}
+      hideTableOfContents={frontmatter["hide-toc"]}
+    />
+  );
 
   switch (layout) {
     case "custom":
@@ -63,8 +59,8 @@ export function LayoutEvaluatorContent({
     case "guide":
       return (
         <GuideLayout
-          PageHeader={PageHeaderComponent}
-          TableOfContents={TableOfContentsComponent}
+          header={pageHeader}
+          toc={toc}
           editThisPageUrl={frontmatter["edit-this-page-url"]}
           hideFeedback={frontmatter["hide-feedback"]}
           hideNavLinks={frontmatter["hide-nav-links"]}
@@ -75,8 +71,8 @@ export function LayoutEvaluatorContent({
     case "overview":
       return (
         <OverviewLayout
-          PageHeader={PageHeaderComponent}
-          TableOfContents={TableOfContentsComponent}
+          header={pageHeader}
+          toc={toc}
           editThisPageUrl={frontmatter["edit-this-page-url"]}
           hideFeedback={frontmatter["hide-feedback"]}
         >
@@ -86,7 +82,7 @@ export function LayoutEvaluatorContent({
     case "page":
       return (
         <PageLayout
-          PageHeader={PageHeaderComponent}
+          header={pageHeader}
           editThisPageUrl={frontmatter["edit-this-page-url"]}
           hideFeedback={frontmatter["hide-feedback"]}
           hideNavLinks={frontmatter["hide-nav-links"]}
@@ -97,7 +93,7 @@ export function LayoutEvaluatorContent({
     case "reference":
       return (
         <ReferenceLayout
-          header={<PageHeaderComponent />}
+          header={pageHeader}
           // PageHeader={PageHeaderComponent}
           // editThisPageUrl={frontmatter["edit-this-page-url"]}
           // hideFeedback={frontmatter["hide-feedback"]}

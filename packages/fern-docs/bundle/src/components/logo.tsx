@@ -1,18 +1,14 @@
-"use client";
-
 import React from "react";
-
-import { isEqual } from "es-toolkit/predicate";
 
 import { cn } from "@fern-docs/components";
 import { DEFAULT_LOGO_HEIGHT } from "@fern-docs/utils";
 
-import { LogoConfiguration } from "@/components/atoms";
+import type { LogoConfiguration } from "@/components/atoms";
 
 import { FernImage } from "./components/FernImage";
 import { MaybeFernLink } from "./components/FernLink";
 
-export const Logo = React.memo(function Logo({
+export function Logo({
   logo,
   className,
   alt,
@@ -64,4 +60,4 @@ export const Logo = React.memo(function Logo({
       )}
     </MaybeFernLink>
   );
-}, isEqual);
+}

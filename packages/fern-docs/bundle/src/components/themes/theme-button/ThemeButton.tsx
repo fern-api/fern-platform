@@ -1,8 +1,10 @@
+"use client";
+
 import { memo, useState } from "react";
-import { Monitor, Moon, Sun } from "react-feather";
 
 import * as Popover from "@radix-ui/react-popover";
 import cn from "clsx";
+import { Monitor, Moon, Sun } from "lucide-react";
 
 import { FernButton, FernButtonProps } from "@fern-docs/components";
 import { useMounted } from "@fern-ui/react-commons";
@@ -37,9 +39,7 @@ export const ThemeButton = memo(
           <FernButton
             {...props}
             className={cn("fern-theme-button", className)}
-            onClick={() =>
-              setTheme(resolvedTheme === "dark" ? "light" : "dark")
-            }
+            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
             onContextMenu={(e) => {
               e.preventDefault();
               setOpen(true);

@@ -1,30 +1,29 @@
-import { FC, ReactElement, ReactNode } from "react";
+import React from "react";
 
 import { BuiltWithFern } from "@/components/built-with-fern";
-
-import { EditThisPageButton } from "../components/EditThisPage";
-import { Feedback } from "../feedback/Feedback";
+import { EditThisPageButton } from "@/components/components/EditThisPage";
+import { Feedback } from "@/components/feedback/Feedback";
 
 interface OverviewLayoutProps {
-  PageHeader: FC;
-  TableOfContents: FC;
-  children: ReactNode;
+  header: React.ReactNode;
+  toc: React.ReactNode;
+  children: React.ReactNode;
   editThisPageUrl: string | undefined;
   hideFeedback: boolean | undefined;
 }
 
 export function OverviewLayout({
-  PageHeader,
-  TableOfContents,
+  header,
+  toc,
   children,
   editThisPageUrl,
   hideFeedback,
-}: OverviewLayoutProps): ReactElement<any> {
+}: OverviewLayoutProps) {
   return (
-    <main className="fern-overview-layout">
-      <TableOfContents />
+    <div className="fern-overview-layout">
+      {toc}
       <article className="fern-layout-content max-w-content-wide-width">
-        <PageHeader />
+        {header}
         <div className="prose dark:prose-invert prose-h1:mt-[1.5em] first:prose-h1:mt-0 max-w-full break-words">
           {children}
         </div>
@@ -38,6 +37,6 @@ export function OverviewLayout({
         )}
         <BuiltWithFern className="mx-auto my-8 w-fit" />
       </article>
-    </main>
+    </div>
   );
 }

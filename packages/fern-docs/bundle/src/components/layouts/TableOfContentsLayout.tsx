@@ -1,5 +1,3 @@
-import { ReactElement } from "react";
-
 import { FernScrollArea } from "@fern-docs/components";
 import type { TableOfContentsItem } from "@fern-docs/mdx";
 
@@ -13,7 +11,7 @@ interface TableOfContentsLayoutProps {
 export function TableOfContentsLayout({
   tableOfContents,
   hideTableOfContents,
-}: TableOfContentsLayoutProps): ReactElement<any> {
+}: TableOfContentsLayoutProps) {
   return (
     <aside className="fern-layout-toc">
       {tableOfContents != null &&

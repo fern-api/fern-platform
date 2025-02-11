@@ -3,20 +3,10 @@ import React from "react";
 
 import { withDefaultProtocol } from "@fern-api/ui-core-utils";
 
-import { FernUser } from "@/components/fern-user";
 import { createCachedDocsLoader } from "@/server/docs-loader";
 
-export default async function Layout(props: {
-  children: React.ReactNode;
-  params: Promise<{ domain: string }>;
-}) {
-  const { domain } = await props.params;
-  return (
-    <>
-      <FernUser domain={domain} />
-      {props.children}
-    </>
-  );
+export default function Layout(props: { children: React.ReactNode }) {
+  return props.children;
 }
 
 export async function generateMetadata(props: {

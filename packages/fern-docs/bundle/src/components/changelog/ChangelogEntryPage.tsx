@@ -1,3 +1,5 @@
+import "server-only";
+
 import { unstable_cacheLife, unstable_cacheTag } from "next/cache";
 import { notFound } from "next/navigation";
 

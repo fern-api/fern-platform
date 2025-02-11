@@ -1,6 +1,6 @@
 "use client";
 
-import { ReactElement, memo } from "react";
+import { ReactElement } from "react";
 
 import clsx from "clsx";
 import { useAtomValue } from "jotai";
@@ -13,7 +13,7 @@ import {
 import { DismissableSidebar } from "./DismissableSidebar";
 import { SidebarContainer } from "./SidebarContainer";
 
-export const Sidebar = memo(function Sidebar({
+export function Sidebar({
   className,
   logo,
   versionSelect,
@@ -52,4 +52,4 @@ export const Sidebar = memo(function Sidebar({
       {children}
     </SidebarContainer>
   );
-});
+}

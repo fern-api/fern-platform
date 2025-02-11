@@ -1,4 +1,4 @@
-import type { FC, ReactElement, ReactNode } from "react";
+import type { ReactElement } from "react";
 
 import { BuiltWithFern } from "@/components/built-with-fern";
 
@@ -7,17 +7,17 @@ import { EditThisPageButton } from "../components/EditThisPage";
 import { Feedback } from "../feedback/Feedback";
 
 interface GuideLayoutProps {
-  PageHeader: FC;
-  TableOfContents: FC;
-  children: ReactNode;
+  header: React.ReactNode;
+  toc: React.ReactNode;
+  children: React.ReactNode;
   editThisPageUrl: string | undefined;
   hideFeedback: boolean | undefined;
   hideNavLinks: boolean | undefined;
 }
 
 export function GuideLayout({
-  PageHeader,
-  TableOfContents,
+  header,
+  toc,
   children,
   editThisPageUrl,
   hideFeedback,
@@ -25,9 +25,9 @@ export function GuideLayout({
 }: GuideLayoutProps): ReactElement<any> {
   return (
     <main className="fern-guide-layout">
-      <TableOfContents />
+      {toc}
       <article className="fern-layout-content max-w-content-width">
-        <PageHeader />
+        {header}
         <div className="prose dark:prose-invert prose-h1:mt-[1.5em] first:prose-h1:mt-0 max-w-full break-words">
           {children}
         </div>

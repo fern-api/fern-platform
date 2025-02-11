@@ -92,6 +92,7 @@ export default async function Layout(props: {
       {preloadHrefs.map((href) => (
         <Preload key={href.href} href={href.href} options={href.options} />
       ))}
+      {/* <FernUser domain={domain} fern_token={fern_token} /> */}
       <BgImageGradient colors={colors} />
       <GlobalStyles>{stylesheet}</GlobalStyles>
       <DarkCode value={edgeFlags.isDarkCodeEnabled} />

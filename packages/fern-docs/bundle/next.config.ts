@@ -63,6 +63,7 @@ const nextConfig: NextConfig = {
       "@fern-docs/search-server",
       "es-toolkit",
       "ts-essentials",
+      "lucide-react",
     ],
     useCache: true,
     newDevOverlay: true,
