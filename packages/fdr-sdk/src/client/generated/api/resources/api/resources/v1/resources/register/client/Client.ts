@@ -658,6 +658,9 @@ export class Register {
      *                     headers: [{
      *                             "key": "value"
      *                         }],
+     *                     queryParameters: [{
+     *                             "key": "value"
+     *                         }],
      *                     payloads: [{
      *                             "key": "value"
      *                         }],
