@@ -66,6 +66,10 @@ const nextConfig: NextConfig = {
     ],
     useCache: true,
     newDevOverlay: true,
+    swcTraceProfiling: true,
+    slowModuleDetection: {
+      buildTimeThresholdMs: 1000,
+    },
   },
 
   env: {

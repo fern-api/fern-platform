@@ -496,7 +496,7 @@ export function useOpenPlayground(): (
             return;
           }
 
-          void set(
+          set(
             formStateAtom,
             getInitialEndpointRequestFormStateWithExample(
               context,
@@ -520,7 +520,7 @@ export function useOpenPlayground(): (
             return;
           }
 
-          void set(
+          set(
             formStateAtom,
             getInitialWebSocketRequestFormState(context, playgroundInitialState)
           );
@@ -570,7 +570,7 @@ export function usePlaygroundEndpointFormState(
                       )
                 )
               : update;
-          void set(formStateAtom, newFormState);
+          set(formStateAtom, newFormState);
         },
         [formStateAtom, ctx, user?.playground?.initial_state]
       )
@@ -614,7 +614,7 @@ export function usePlaygroundWebsocketFormState(
                       )
                 )
               : update;
-          void set(formStateAtom, newFormState);
+          set(formStateAtom, newFormState);
         },
         [formStateAtom, context, user?.playground?.initial_state]
       )
