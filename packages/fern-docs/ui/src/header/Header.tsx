@@ -152,7 +152,9 @@ const UnmemoizedHeader = forwardRef<
             variant="minimal"
             rounded={true}
             size="large"
-            className="max-sm:hidden"
+            className={
+              searchService.isAvailable ? "max-sm:hidden" : "max-sm:block"
+            }
             id="fern-search-button"
           />
 
