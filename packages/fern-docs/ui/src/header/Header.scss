@@ -18,4 +18,16 @@
       @apply flex items-center lg:hidden;
     }
   }
+
+  &#fern-search-button {
+    @apply bg-transparent;
+
+    &:not([disabled]) {
+      &:hover,
+      &[data-state="open"],
+      &[data-state="opening"] {
+        @apply bg-tag-default;
+      }
+    }
+  }
 }

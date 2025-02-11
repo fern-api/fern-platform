@@ -131,18 +131,6 @@
       @apply dark:text-text-default/50 dark:hover:text-text-default/50 dark:bg-white/10;
     }
 
-    &#fern-search-button {
-      @apply bg-transparent;
-
-      &:not([disabled]) {
-        &:hover,
-        &[data-state="open"],
-        &[data-state="opening"] {
-          @apply bg-tag-default;
-        }
-      }
-    }
-
     &:not([disabled]) {
       &.minimal {
         @apply t-muted bg-transparent;
