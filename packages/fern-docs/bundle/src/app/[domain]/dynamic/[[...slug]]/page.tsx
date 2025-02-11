@@ -3,16 +3,23 @@ import "server-only";
 import { cookies } from "next/headers";
 import { Metadata } from "next/types";
 
+import { slugjoin } from "@fern-api/fdr-sdk/navigation";
 import { COOKIE_FERN_TOKEN } from "@fern-docs/utils";
 
 import Page, { generateMetadata as _generateMetadata } from "../../_page";
 
-export default async function StaticPage(props: {
+export default async function DynamicPage(props: {
   params: Promise<{ slug?: string[]; domain: string }>;
 }) {
   const [params, cookieJar] = await Promise.all([props.params, cookies()]);
   const fern_token = cookieJar.get(COOKIE_FERN_TOKEN)?.value;
-  return <Page params={params} fern_token={fern_token} />;
+  return (
+    <Page
+      domain={params.domain}
+      slug={slugjoin(params.slug)}
+      fern_token={fern_token}
+    />
+  );
 }
 
 export async function generateMetadata(props: {
@@ -20,5 +27,9 @@ export async function generateMetadata(props: {
 }): Promise<Metadata> {
   const [params, cookieJar] = await Promise.all([props.params, cookies()]);
   const fern_token = cookieJar.get(COOKIE_FERN_TOKEN)?.value;
-  return _generateMetadata({ params, fern_token });
+  return _generateMetadata({
+    domain: params.domain,
+    slug: slugjoin(params.slug),
+    fern_token,
+  });
 }

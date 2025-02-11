@@ -2,16 +2,24 @@ import "server-only";
 
 import { Metadata } from "next/types";
 
+import { slugjoin } from "@fern-api/fdr-sdk/navigation";
+
 import Page, { generateMetadata as _generateMetadata } from "../../_page";
 
-export const dynamic = "force-static";
+export const dynamic = "error";
 
 export default async function StaticPage(props: {
   params: Promise<{ slug?: string[]; domain: string }>;
 }) {
   const params = await props.params;
 
-  return <Page params={params} fern_token={undefined} />;
+  return (
+    <Page
+      domain={params.domain}
+      slug={slugjoin(params.slug)}
+      fern_token={undefined}
+    />
+  );
 }
 
 export async function generateMetadata(props: {
@@ -19,5 +27,9 @@ export async function generateMetadata(props: {
 }): Promise<Metadata> {
   const params = await props.params;
 
-  return _generateMetadata({ params, fern_token: undefined });
+  return _generateMetadata({
+    domain: params.domain,
+    slug: slugjoin(params.slug),
+    fern_token: undefined,
+  });
 }

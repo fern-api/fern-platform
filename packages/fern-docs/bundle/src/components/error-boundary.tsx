@@ -9,12 +9,15 @@ import {
   FernTooltip,
   FernTooltipProvider,
   SemanticBadge,
+  cn,
 } from "@fern-docs/components";
 
 export function ErrorBoundaryFallback({
+  className,
   error,
   resetErrorBoundary,
 }: {
+  className?: string;
   error: Error & { digest?: string };
   resetErrorBoundary?: () => void;
 }) {
@@ -33,7 +36,7 @@ export function ErrorBoundaryFallback({
     </SemanticBadge>
   );
   return (
-    <div className="size-full py-2">
+    <div className={cn("size-full py-2", className)}>
       {resetErrorBoundary != null ? (
         <FernTooltipProvider>
           <FernTooltip content="Click to refresh">{errorBadge}</FernTooltip>

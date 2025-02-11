@@ -33,8 +33,6 @@ import { GlobalStyles } from "../global-styles";
 import { toImageDescriptor } from "../seo";
 import { ThemeProvider } from "../theme";
 
-export const dynamic = "force-static";
-
 export default async function Layout(props: {
   children: React.ReactNode;
   params: Promise<{ domain: string }>;

@@ -11,6 +11,7 @@ import React from "react";
 import urlJoin from "url-join";
 
 import { FernNavigation } from "@fern-api/fdr-sdk";
+import { Slug } from "@fern-api/fdr-sdk/navigation";
 import { withDefaultProtocol } from "@fern-api/ui-core-utils";
 import visitDiscriminatedUnion from "@fern-api/ui-core-utils/visitDiscriminatedUnion";
 import {
@@ -54,20 +55,18 @@ import {
 import { withVersionSwitcherInfo } from "@/server/withVersionSwitcherInfo";
 
 export default async function Page({
-  params,
+  domain,
+  slug,
   fern_token,
 }: {
-  params: { slug?: string[]; domain: string };
+  domain: string;
+  slug: Slug;
   fern_token: string | undefined;
 }) {
   "use cache";
 
-  const domain = params.domain;
-
   cacheTag(domain);
 
-  const slug = FernNavigation.slugjoin(params.slug);
-  console.debug(`[${domain}] Loading page for slug: ${slug}`);
   const loader = await createCachedDocsLoader(domain, fern_token);
   const [baseUrl, config, authState, edgeFlags, colors] = await Promise.all([
     loader.getBaseUrl(),
@@ -411,14 +410,14 @@ export default async function Page({
 }
 
 export async function generateMetadata({
-  params,
+  domain,
+  slug,
   fern_token,
 }: {
-  params: { slug?: string[]; domain: string };
+  domain: string;
+  slug: Slug;
   fern_token: string | undefined;
 }): Promise<Metadata> {
-  const domain = params.domain;
-  const slug = FernNavigation.slugjoin(params.slug);
   const docsLoader = await createCachedDocsLoader(domain, fern_token);
   const findNode = createFindNode(docsLoader);
   const [files, node, config, isSeoDisabled] = await Promise.all([

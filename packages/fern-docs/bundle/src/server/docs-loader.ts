@@ -2,6 +2,7 @@ import {
   unstable_cacheLife as cacheLife,
   unstable_cacheTag as cacheTag,
 } from "next/cache";
+import React from "react";
 
 import { mapValues } from "es-toolkit/object";
 import { UnreachableCaseError } from "ts-essentials";
@@ -427,45 +428,45 @@ const getLayout = async (domain: string) => {
  * The expectation is that moving forward, we'll update the underlying API to be more cache-friendly
  * in a piece-meal fashion, and eventually remove all use of loadWithUrl.
  */
-export const createCachedDocsLoader = async (
-  domain: string,
-  fern_token?: string
-): Promise<DocsLoader> => {
-  const authConfig = await getAuthEdgeConfig(domain);
+export const createCachedDocsLoader = React.cache(
+  async (domain: string, fern_token?: string): Promise<DocsLoader> => {
+    const authConfig = await getAuthEdgeConfig(domain);
 
-  const getAuthState = async (pathname?: string) => {
-    "use cache";
+    const getAuthState = async (pathname?: string) => {
+      "use cache";
 
-    cacheTag(domain);
+      cacheTag(domain);
 
-    const { getAuthState } = await createGetAuthState(
+      const { getAuthState } = await createGetAuthState(
+        domain,
+        fern_token,
+        authConfig
+      );
+
+      return await getAuthState(pathname);
+    };
+
+    return {
       domain,
       fern_token,
-      authConfig
-    );
-
-    return await getAuthState(pathname);
-  };
-
-  return {
-    domain,
-    fern_token,
-    authConfig,
-    getBaseUrl: () => getBaseUrl(domain),
-    getFiles: () => getFiles(domain),
-    getApi: (id: string) => getApi(domain, id),
-    getRoot: async () => getRoot(domain, await getAuthState(), authConfig),
-    unsafe_getFullRoot: () => unsafe_getFullRoot(domain),
-    getConfig: () => getConfig(domain),
-    getPage: (pageId: string) => getPage(domain, pageId),
-    serializeMdx: (content, options) => serializeMdx(domain, content, options),
-    getSerializedPage: (pageId, options) =>
-      getSerializedPage(domain, pageId, options),
-    getColors: () => getColors(domain),
-    getLayout: () => getLayout(domain),
-    getAuthState,
-  };
-};
+      authConfig,
+      getBaseUrl: () => getBaseUrl(domain),
+      getFiles: () => getFiles(domain),
+      getApi: (id: string) => getApi(domain, id),
+      getRoot: async () => getRoot(domain, await getAuthState(), authConfig),
+      unsafe_getFullRoot: () => unsafe_getFullRoot(domain),
+      getConfig: () => getConfig(domain),
+      getPage: (pageId: string) => getPage(domain, pageId),
+      serializeMdx: (content, options) =>
+        serializeMdx(domain, content, options),
+      getSerializedPage: (pageId, options) =>
+        getSerializedPage(domain, pageId, options),
+      getColors: () => getColors(domain),
+      getLayout: () => getLayout(domain),
+      getAuthState,
+    };
+  }
+);
 
 function toRgbaColor(color: RgbaColor): RgbaColor;
 function toRgbaColor(color: object | undefined): RgbaColor | undefined;
