@@ -29,6 +29,7 @@ import type {
 import {
   useDeepCompareEffectNoCheck,
   useEventCallback,
+  useLazyRef,
 } from "@fern-ui/react-commons";
 
 import { FacetFilter, isFacetName } from "../types";
@@ -124,15 +125,16 @@ function SearchClientProvider({
   domain: string;
   indexName: string;
 }): ReactNode {
-  const client = useRef(liteClient(appId, apiKey));
+  const client = useLazyRef(() => liteClient(appId, apiKey));
 
   useEffect(() => {
     client.current.setClientApiKey({ apiKey });
-    void client.current.clearCache();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [apiKey]);
 
   const value = useMemo(
     () => ({ searchClient: client.current, apiKey, domain, indexName }),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [apiKey, domain, indexName]
   );
 
@@ -223,7 +225,7 @@ function useFacetFilters(
   handlePopState: KeyboardEventHandler<HTMLElement>;
 } {
   const contextAtom = useContext(FacetFiltersContext).atom;
-  // eslint-disable-next-line react-hooks/rules-of-hooks
+
   const [filters, setFilters] = useAtom(atom ?? contextAtom);
   return useMemo(() => {
     const clearFilters = () => setFilters([]);
@@ -311,14 +313,13 @@ function InstantSearchWrapper({
       future={{ preserveSharedStateOnUnmount: true }}
       insights={
         authenticatedUserToken
-          ? { insightsInitParams: [{ authenticatedUserToken }] }
+          ? { insightsInitParams: { authenticatedUserToken } }
           : undefined
       }
     >
       <Configure
         attributesToSnippet={["description:32", "content:32"]}
         facetFilters={toAlgoliaFacetFilters(filters)}
-        maxFacetHits={100}
         maxValuesPerFacet={1000}
         facetingAfterDistinct
         restrictHighlightAndSnippetArrays

@@ -123,6 +123,7 @@ export const SearchV2 = React.memo(function SearchV2() {
   // initialize the search dialog when the data is loaded
   React.useEffect(() => {
     setInitialized(data != null);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
   // reset the initialized state when the component unmounts
@@ -130,12 +131,14 @@ export const SearchV2 = React.memo(function SearchV2() {
     return () => {
       setInitialized(false);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // close the search dialog when the pathname changes
   const pathname = usePathname();
   React.useEffect(() => {
     setOpen(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
 
   if (!data) {

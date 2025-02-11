@@ -67,7 +67,7 @@ const nextConfig: NextConfig = {
     ],
     useCache: true,
     newDevOverlay: true,
-    reactCompiler: true,
+    reactCompiler: false,
   },
 
   env: {
