@@ -212,6 +212,17 @@
         {
           "path": "/oauth/token",
           "responseStatusCode": 200,
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "grant_type": "password",
+              "username": "username",
+              "password": "password",
+              "refresh_token": "refresh_token",
+              "client_id": "client_id",
+              "client_secret": "client_secret"
+            }
+          },
           "responseBody": {
             "type": "json",
             "value": {

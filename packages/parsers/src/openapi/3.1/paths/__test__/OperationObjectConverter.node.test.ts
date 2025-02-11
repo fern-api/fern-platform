@@ -43,7 +43,15 @@ describe("OperationObjectConverterNode", () => {
         displayName: undefined,
         environments: [],
         errors: undefined,
-        examples: [],
+        examples: [
+          {
+            path: "/pets/petId",
+            responseStatusCode: 200,
+            pathParameters: {
+              petId: "petId",
+            },
+          },
+        ],
         id: "endpoint_.getPetsPetId",
         method: "GET",
         namespace: undefined,

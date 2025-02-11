@@ -79,9 +79,6 @@
           "path": "/me",
           "responseStatusCode": 200,
           "name": "Successful Response",
-          "headers": {
-            "Intercom-Version": "2.11"
-          },
           "responseBody": {
             "type": "json",
             "value": {
@@ -325,9 +322,6 @@
           "pathParameters": {
             "id": 0
           },
-          "headers": {
-            "Intercom-Version": "2.11"
-          },
           "requestBody": {
             "type": "json",
             "value": {
@@ -356,9 +350,6 @@
           "pathParameters": {
             "id": 0
           },
-          "headers": {
-            "Intercom-Version": "2.11"
-          },
           "requestBody": {
             "type": "json",
             "value": {
@@ -386,9 +377,6 @@
           "name": "Unauthorized",
           "pathParameters": {
             "id": 0
-          },
-          "headers": {
-            "Intercom-Version": "2.11"
           },
           "requestBody": {
             "type": "json",
@@ -568,11 +556,7 @@
           "responseStatusCode": 200,
           "name": "Successful Response",
           "queryParameters": {
-            "created_at_after": "1677253093",
-            "created_at_before": "1677861493"
-          },
-          "headers": {
-            "Intercom-Version": "2.11"
+            "created_at_after": "1677253093"
           },
           "responseBody": {
             "type": "json",
@@ -740,9 +724,6 @@
           "path": "/admins",
           "responseStatusCode": 200,
           "name": "Successful Response",
-          "headers": {
-            "Intercom-Version": "2.11"
-          },
           "responseBody": {
             "type": "json",
             "value": {
@@ -932,9 +913,6 @@
           "pathParameters": {
             "id": 123
           },
-          "headers": {
-            "Intercom-Version": "2.11"
-          },
           "responseBody": {
             "type": "json",
             "value": {
@@ -1063,9 +1041,6 @@
           "path": "/articles",
           "responseStatusCode": 200,
           "name": "Successful",
-          "headers": {
-            "Intercom-Version": "2.11"
-          },
           "responseBody": {
             "type": "json",
             "value": {
@@ -1254,8 +1229,26 @@
           "path": "/articles",
           "responseStatusCode": 200,
           "name": "Article Created",
-          "headers": {
-            "Intercom-Version": "2.11"
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "title": "Thanks for everything",
+              "description": "Description of the Article",
+              "body": "Body of the Article",
+              "author_id": 991267407,
+              "state": "published",
+              "parent_id": 145,
+              "parent_type": "collection",
+              "translated_content": {
+                "fr": {
+                  "title": "Merci pour tout",
+                  "description": "Description de l'article",
+                  "body": "Corps de l'article",
+                  "author_id": 991267407,
+                  "state": "published"
+                }
+              }
+            }
           },
           "responseBody": {
             "type": "json",
@@ -1290,8 +1283,14 @@
           "path": "/articles",
           "responseStatusCode": 200,
           "name": "Bad Request",
-          "headers": {
-            "Intercom-Version": "2.11"
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "title": "Thanks for everything",
+              "description": "Description of the Article",
+              "body": "Body of the Article",
+              "state": "published"
+            }
           },
           "responseBody": {
             "type": "json",
@@ -1491,9 +1490,6 @@
           "name": "Article Found",
           "pathParameters": {
             "id": 123
-          },
-          "headers": {
-            "Intercom-Version": "2.11"
           },
           "responseBody": {
             "type": "json",
@@ -1706,8 +1702,12 @@
           "pathParameters": {
             "id": 123
           },
-          "headers": {
-            "Intercom-Version": "2.11"
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "title": "Christmas is here!",
+              "body": "<p>New gifts in store for the jolly season</p>"
+            }
           },
           "responseBody": {
             "type": "json",
@@ -1745,8 +1745,454 @@
           "pathParameters": {
             "id": 123
           },
-          "headers": {
-            "Intercom-Version": "2.11"
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "title": "Christmas is here!",
+              "body": "<p>New gifts in store for the jolly season</p>"
+            }
+          },
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "statistics": {
+                "type": "article_statistics",
+                "views": 10,
+                "conversions": 0,
+                "reactions": 10,
+                "happy_reaction_percentage": 40,
+                "neutral_reaction_percentage": 40,
+                "sad_reaction_percentage": 20
+              },
+              "type": "article",
+              "id": "6871119",
+              "workspace_id": "hfi1bx4l",
+              "title": "Default language title",
+              "description": "Default language description",
+              "body": "Default language body in html",
+              "author_id": "5017691",
+              "state": "published",
+              "created_at": 1672928359,
+              "updated_at": 1672928610,
+              "url": "http://intercom.test/help/en/articles/3-default-language",
+              "parent_id": "125685",
+              "parent_ids": [
+                18,
+                19
+              ],
+              "parent_type": "collection",
+              "default_locale": "en",
+              "translated_content": {
+                "type": "article_translated_content",
+                "ar": {
+                  "type": "article_content",
+                  "title": "How to create a new article",
+                  "description": "This article will show you how to create a new article.",
+                  "body": "This is the body of the article.",
+                  "author_id": "5017691",
+                  "state": "draft",
+                  "created_at": 1663597223,
+                  "updated_at": 1663597260,
+                  "url": "http://intercom.test/help/en/articles/3-default-language"
+                },
+                "bg": {
+                  "type": "article_content",
+                  "title": "How to create a new article",
+                  "description": "This article will show you how to create a new article.",
+                  "body": "This is the body of the article.",
+                  "author_id": "5017691",
+                  "state": "draft",
+                  "created_at": 1663597223,
+                  "updated_at": 1663597260,
+                  "url": "http://intercom.test/help/en/articles/3-default-language"
+                },
+                "bs": {
+                  "type": "article_content",
+                  "title": "How to create a new article",
+                  "description": "This article will show you how to create a new article.",
+                  "body": "This is the body of the article.",
+                  "author_id": "5017691",
+                  "state": "draft",
+                  "created_at": 1663597223,
+                  "updated_at": 1663597260,
+                  "url": "http://intercom.test/help/en/articles/3-default-language"
+                },
+                "ca": {
+                  "type": "article_content",
+                  "title": "How to create a new article",
+                  "description": "This article will show you how to create a new article.",
+                  "body": "This is the body of the article.",
+                  "author_id": "5017691",
+                  "state": "draft",
+                  "created_at": 1663597223,
+                  "updated_at": 1663597260,
+                  "url": "http://intercom.test/help/en/articles/3-default-language"
+                },
+                "cs": {
+                  "type": "article_content",
+                  "title": "How to create a new article",
+                  "description": "This article will show you how to create a new article.",
+                  "body": "This is the body of the article.",
+                  "author_id": "5017691",
+                  "state": "draft",
+                  "created_at": 1663597223,
+                  "updated_at": 1663597260,
+                  "url": "http://intercom.test/help/en/articles/3-default-language"
+                },
+                "da": {
+                  "type": "article_content",
+                  "title": "How to create a new article",
+                  "description": "This article will show you how to create a new article.",
+                  "body": "This is the body of the article.",
+                  "author_id": "5017691",
+                  "state": "draft",
+                  "created_at": 1663597223,
+                  "updated_at": 1663597260,
+                  "url": "http://intercom.test/help/en/articles/3-default-language"
+                },
+                "de": {
+                  "type": "article_content",
+                  "title": "How to create a new article",
+                  "description": "This article will show you how to create a new article.",
+                  "body": "This is the body of the article.",
+                  "author_id": "5017691",
+                  "state": "draft",
+                  "created_at": 1663597223,
+                  "updated_at": 1663597260,
+                  "url": "http://intercom.test/help/en/articles/3-default-language"
+                },
+                "el": {
+                  "type": "article_content",
+                  "title": "How to create a new article",
+                  "description": "This article will show you how to create a new article.",
+                  "body": "This is the body of the article.",
+                  "author_id": "5017691",
+                  "state": "draft",
+                  "created_at": 1663597223,
+                  "updated_at": 1663597260,
+                  "url": "http://intercom.test/help/en/articles/3-default-language"
+                },
+                "en": {
+                  "type": "article_content",
+                  "title": "How to create a new article",
+                  "description": "This article will show you how to create a new article.",
+                  "body": "This is the body of the article.",
+                  "author_id": "5017691",
+                  "state": "draft",
+                  "created_at": 1663597223,
+                  "updated_at": 1663597260,
+                  "url": "http://intercom.test/help/en/articles/3-default-language"
+                },
+                "es": {
+                  "type": "article_content",
+                  "title": "How to create a new article",
+                  "description": "This article will show you how to create a new article.",
+                  "body": "This is the body of the article.",
+                  "author_id": "5017691",
+                  "state": "draft",
+                  "created_at": 1663597223,
+                  "updated_at": 1663597260,
+                  "url": "http://intercom.test/help/en/articles/3-default-language"
+                },
+                "et": {
+                  "type": "article_content",
+                  "title": "How to create a new article",
+                  "description": "This article will show you how to create a new article.",
+                  "body": "This is the body of the article.",
+                  "author_id": "5017691",
+                  "state": "draft",
+                  "created_at": 1663597223,
+                  "updated_at": 1663597260,
+                  "url": "http://intercom.test/help/en/articles/3-default-language"
+                },
+                "fi": {
+                  "type": "article_content",
+                  "title": "How to create a new article",
+                  "description": "This article will show you how to create a new article.",
+                  "body": "This is the body of the article.",
+                  "author_id": "5017691",
+                  "state": "draft",
+                  "created_at": 1663597223,
+                  "updated_at": 1663597260,
+                  "url": "http://intercom.test/help/en/articles/3-default-language"
+                },
+                "fr": {
+                  "type": "article_content",
+                  "title": "How to create a new article",
+                  "description": "This article will show you how to create a new article.",
+                  "body": "This is the body of the article.",
+                  "author_id": "5017691",
+                  "state": "draft",
+                  "created_at": 1663597223,
+                  "updated_at": 1663597260,
+                  "url": "http://intercom.test/help/en/articles/3-default-language"
+                },
+                "he": {
+                  "type": "article_content",
+                  "title": "How to create a new article",
+                  "description": "This article will show you how to create a new article.",
+                  "body": "This is the body of the article.",
+                  "author_id": "5017691",
+                  "state": "draft",
+                  "created_at": 1663597223,
+                  "updated_at": 1663597260,
+                  "url": "http://intercom.test/help/en/articles/3-default-language"
+                },
+                "hr": {
+                  "type": "article_content",
+                  "title": "How to create a new article",
+                  "description": "This article will show you how to create a new article.",
+                  "body": "This is the body of the article.",
+                  "author_id": "5017691",
+                  "state": "draft",
+                  "created_at": 1663597223,
+                  "updated_at": 1663597260,
+                  "url": "http://intercom.test/help/en/articles/3-default-language"
+                },
+                "hu": {
+                  "type": "article_content",
+                  "title": "How to create a new article",
+                  "description": "This article will show you how to create a new article.",
+                  "body": "This is the body of the article.",
+                  "author_id": "5017691",
+                  "state": "draft",
+                  "created_at": 1663597223,
+                  "updated_at": 1663597260,
+                  "url": "http://intercom.test/help/en/articles/3-default-language"
+                },
+                "id": {
+                  "type": "article_content",
+                  "title": "How to create a new article",
+                  "description": "This article will show you how to create a new article.",
+                  "body": "This is the body of the article.",
+                  "author_id": "5017691",
+                  "state": "draft",
+                  "created_at": 1663597223,
+                  "updated_at": 1663597260,
+                  "url": "http://intercom.test/help/en/articles/3-default-language"
+                },
+                "it": {
+                  "type": "article_content",
+                  "title": "How to create a new article",
+                  "description": "This article will show you how to create a new article.",
+                  "body": "This is the body of the article.",
+                  "author_id": "5017691",
+                  "state": "draft",
+                  "created_at": 1663597223,
+                  "updated_at": 1663597260,
+                  "url": "http://intercom.test/help/en/articles/3-default-language"
+                },
+                "ja": {
+                  "type": "article_content",
+                  "title": "How to create a new article",
+                  "description": "This article will show you how to create a new article.",
+                  "body": "This is the body of the article.",
+                  "author_id": "5017691",
+                  "state": "draft",
+                  "created_at": 1663597223,
+                  "updated_at": 1663597260,
+                  "url": "http://intercom.test/help/en/articles/3-default-language"
+                },
+                "ko": {
+                  "type": "article_content",
+                  "title": "How to create a new article",
+                  "description": "This article will show you how to create a new article.",
+                  "body": "This is the body of the article.",
+                  "author_id": "5017691",
+                  "state": "draft",
+                  "created_at": 1663597223,
+                  "updated_at": 1663597260,
+                  "url": "http://intercom.test/help/en/articles/3-default-language"
+                },
+                "lt": {
+                  "type": "article_content",
+                  "title": "How to create a new article",
+                  "description": "This article will show you how to create a new article.",
+                  "body": "This is the body of the article.",
+                  "author_id": "5017691",
+                  "state": "draft",
+                  "created_at": 1663597223,
+                  "updated_at": 1663597260,
+                  "url": "http://intercom.test/help/en/articles/3-default-language"
+                },
+                "lv": {
+                  "type": "article_content",
+                  "title": "How to create a new article",
+                  "description": "This article will show you how to create a new article.",
+                  "body": "This is the body of the article.",
+                  "author_id": "5017691",
+                  "state": "draft",
+                  "created_at": 1663597223,
+                  "updated_at": 1663597260,
+                  "url": "http://intercom.test/help/en/articles/3-default-language"
+                },
+                "mn": {
+                  "type": "article_content",
+                  "title": "How to create a new article",
+                  "description": "This article will show you how to create a new article.",
+                  "body": "This is the body of the article.",
+                  "author_id": "5017691",
+                  "state": "draft",
+                  "created_at": 1663597223,
+                  "updated_at": 1663597260,
+                  "url": "http://intercom.test/help/en/articles/3-default-language"
+                },
+                "nb": {
+                  "type": "article_content",
+                  "title": "How to create a new article",
+                  "description": "This article will show you how to create a new article.",
+                  "body": "This is the body of the article.",
+                  "author_id": "5017691",
+                  "state": "draft",
+                  "created_at": 1663597223,
+                  "updated_at": 1663597260,
+                  "url": "http://intercom.test/help/en/articles/3-default-language"
+                },
+                "nl": {
+                  "type": "article_content",
+                  "title": "How to create a new article",
+                  "description": "This article will show you how to create a new article.",
+                  "body": "This is the body of the article.",
+                  "author_id": "5017691",
+                  "state": "draft",
+                  "created_at": 1663597223,
+                  "updated_at": 1663597260,
+                  "url": "http://intercom.test/help/en/articles/3-default-language"
+                },
+                "pl": {
+                  "type": "article_content",
+                  "title": "How to create a new article",
+                  "description": "This article will show you how to create a new article.",
+                  "body": "This is the body of the article.",
+                  "author_id": "5017691",
+                  "state": "draft",
+                  "created_at": 1663597223,
+                  "updated_at": 1663597260,
+                  "url": "http://intercom.test/help/en/articles/3-default-language"
+                },
+                "pt": {
+                  "type": "article_content",
+                  "title": "How to create a new article",
+                  "description": "This article will show you how to create a new article.",
+                  "body": "This is the body of the article.",
+                  "author_id": "5017691",
+                  "state": "draft",
+                  "created_at": 1663597223,
+                  "updated_at": 1663597260,
+                  "url": "http://intercom.test/help/en/articles/3-default-language"
+                },
+                "ro": {
+                  "type": "article_content",
+                  "title": "How to create a new article",
+                  "description": "This article will show you how to create a new article.",
+                  "body": "This is the body of the article.",
+                  "author_id": "5017691",
+                  "state": "draft",
+                  "created_at": 1663597223,
+                  "updated_at": 1663597260,
+                  "url": "http://intercom.test/help/en/articles/3-default-language"
+                },
+                "ru": {
+                  "type": "article_content",
+                  "title": "How to create a new article",
+                  "description": "This article will show you how to create a new article.",
+                  "body": "This is the body of the article.",
+                  "author_id": "5017691",
+                  "state": "draft",
+                  "created_at": 1663597223,
+                  "updated_at": 1663597260,
+                  "url": "http://intercom.test/help/en/articles/3-default-language"
+                },
+                "sl": {
+                  "type": "article_content",
+                  "title": "How to create a new article",
+                  "description": "This article will show you how to create a new article.",
+                  "body": "This is the body of the article.",
+                  "author_id": "5017691",
+                  "state": "draft",
+                  "created_at": 1663597223,
+                  "updated_at": 1663597260,
+                  "url": "http://intercom.test/help/en/articles/3-default-language"
+                },
+                "sr": {
+                  "type": "article_content",
+                  "title": "How to create a new article",
+                  "description": "This article will show you how to create a new article.",
+                  "body": "This is the body of the article.",
+                  "author_id": "5017691",
+                  "state": "draft",
+                  "created_at": 1663597223,
+                  "updated_at": 1663597260,
+                  "url": "http://intercom.test/help/en/articles/3-default-language"
+                },
+                "sv": {
+                  "type": "article_content",
+                  "title": "How to create a new article",
+                  "description": "This article will show you how to create a new article.",
+                  "body": "This is the body of the article.",
+                  "author_id": "5017691",
+                  "state": "draft",
+                  "created_at": 1663597223,
+                  "updated_at": 1663597260,
+                  "url": "http://intercom.test/help/en/articles/3-default-language"
+                },
+                "tr": {
+                  "type": "article_content",
+                  "title": "How to create a new article",
+                  "description": "This article will show you how to create a new article.",
+                  "body": "This is the body of the article.",
+                  "author_id": "5017691",
+                  "state": "draft",
+                  "created_at": 1663597223,
+                  "updated_at": 1663597260,
+                  "url": "http://intercom.test/help/en/articles/3-default-language"
+                },
+                "vi": {
+                  "type": "article_content",
+                  "title": "How to create a new article",
+                  "description": "This article will show you how to create a new article.",
+                  "body": "This is the body of the article.",
+                  "author_id": "5017691",
+                  "state": "draft",
+                  "created_at": 1663597223,
+                  "updated_at": 1663597260,
+                  "url": "http://intercom.test/help/en/articles/3-default-language"
+                },
+                "pt-BR": {
+                  "type": "article_content",
+                  "title": "How to create a new article",
+                  "description": "This article will show you how to create a new article.",
+                  "body": "This is the body of the article.",
+                  "author_id": "5017691",
+                  "state": "draft",
+                  "created_at": 1663597223,
+                  "updated_at": 1663597260,
+                  "url": "http://intercom.test/help/en/articles/3-default-language"
+                },
+                "zh-CN": {
+                  "type": "article_content",
+                  "title": "How to create a new article",
+                  "description": "This article will show you how to create a new article.",
+                  "body": "This is the body of the article.",
+                  "author_id": "5017691",
+                  "state": "draft",
+                  "created_at": 1663597223,
+                  "updated_at": 1663597260,
+                  "url": "http://intercom.test/help/en/articles/3-default-language"
+                },
+                "zh-TW": {
+                  "type": "article_content",
+                  "title": "How to create a new article",
+                  "description": "This article will show you how to create a new article.",
+                  "body": "This is the body of the article.",
+                  "author_id": "5017691",
+                  "state": "draft",
+                  "created_at": 1663597223,
+                  "updated_at": 1663597260,
+                  "url": "http://intercom.test/help/en/articles/3-default-language"
+                }
+              }
+            }
           }
         }
       ],
@@ -1918,9 +2364,6 @@
           "name": "Successful",
           "pathParameters": {
             "id": 123
-          },
-          "headers": {
-            "Intercom-Version": "2.11"
           },
           "responseBody": {
             "type": "json",
@@ -2131,15 +2574,6 @@
           "path": "/articles/search",
           "responseStatusCode": 200,
           "name": "Search Successful",
-          "queryParameters": {
-            "phrase": "Getting started",
-            "state": "published",
-            "help_center_id": 123,
-            "highlight": false
-          },
-          "headers": {
-            "Intercom-Version": "2.11"
-          },
           "responseBody": {
             "type": "json",
             "value": {
@@ -2297,9 +2731,6 @@
           "path": "/help_center/collections",
           "responseStatusCode": 200,
           "name": "Successful",
-          "headers": {
-            "Intercom-Version": "2.11"
-          },
           "responseBody": {
             "type": "json",
             "value": {
@@ -2506,8 +2937,11 @@
           "path": "/help_center/collections",
           "responseStatusCode": 200,
           "name": "Collection Created",
-          "headers": {
-            "Intercom-Version": "2.11"
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "name": "Thanks for everything"
+            }
           },
           "responseBody": {
             "type": "json",
@@ -2530,8 +2964,11 @@
           "path": "/help_center/collections",
           "responseStatusCode": 200,
           "name": "Bad Request",
-          "headers": {
-            "Intercom-Version": "2.11"
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "description": "Missing required parameter"
+            }
           },
           "responseBody": {
             "type": "json",
@@ -2727,9 +3164,6 @@
           "name": "Collection Found",
           "pathParameters": {
             "id": 123
-          },
-          "headers": {
-            "Intercom-Version": "2.11"
           },
           "responseBody": {
             "type": "json",
@@ -2938,8 +3372,11 @@
           "pathParameters": {
             "id": 123
           },
-          "headers": {
-            "Intercom-Version": "2.11"
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "name": "Update collection name"
+            }
           },
           "responseBody": {
             "type": "json",
@@ -2965,8 +3402,216 @@
           "pathParameters": {
             "id": 123
           },
-          "headers": {
-            "Intercom-Version": "2.11"
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "name": "Update collection name"
+            }
+          },
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "id": "6871119",
+              "workspace_id": "hfi1bx4l",
+              "name": "Default language name",
+              "description": "Default language description",
+              "created_at": 1672928359,
+              "updated_at": 1672928610,
+              "url": "http://intercom.test/help/collection/name",
+              "icon": "book-bookmark",
+              "order": "1",
+              "default_locale": "en",
+              "translated_content": {
+                "type": "group_translated_content",
+                "ar": {
+                  "type": "group_content",
+                  "name": "Collection name",
+                  "description": " Collection description"
+                },
+                "bg": {
+                  "type": "group_content",
+                  "name": "Collection name",
+                  "description": " Collection description"
+                },
+                "bs": {
+                  "type": "group_content",
+                  "name": "Collection name",
+                  "description": " Collection description"
+                },
+                "ca": {
+                  "type": "group_content",
+                  "name": "Collection name",
+                  "description": " Collection description"
+                },
+                "cs": {
+                  "type": "group_content",
+                  "name": "Collection name",
+                  "description": " Collection description"
+                },
+                "da": {
+                  "type": "group_content",
+                  "name": "Collection name",
+                  "description": " Collection description"
+                },
+                "de": {
+                  "type": "group_content",
+                  "name": "Collection name",
+                  "description": " Collection description"
+                },
+                "el": {
+                  "type": "group_content",
+                  "name": "Collection name",
+                  "description": " Collection description"
+                },
+                "en": {
+                  "type": "group_content",
+                  "name": "Collection name",
+                  "description": " Collection description"
+                },
+                "es": {
+                  "type": "group_content",
+                  "name": "Collection name",
+                  "description": " Collection description"
+                },
+                "et": {
+                  "type": "group_content",
+                  "name": "Collection name",
+                  "description": " Collection description"
+                },
+                "fi": {
+                  "type": "group_content",
+                  "name": "Collection name",
+                  "description": " Collection description"
+                },
+                "fr": {
+                  "type": "group_content",
+                  "name": "Collection name",
+                  "description": " Collection description"
+                },
+                "he": {
+                  "type": "group_content",
+                  "name": "Collection name",
+                  "description": " Collection description"
+                },
+                "hr": {
+                  "type": "group_content",
+                  "name": "Collection name",
+                  "description": " Collection description"
+                },
+                "hu": {
+                  "type": "group_content",
+                  "name": "Collection name",
+                  "description": " Collection description"
+                },
+                "id": {
+                  "type": "group_content",
+                  "name": "Collection name",
+                  "description": " Collection description"
+                },
+                "it": {
+                  "type": "group_content",
+                  "name": "Collection name",
+                  "description": " Collection description"
+                },
+                "ja": {
+                  "type": "group_content",
+                  "name": "Collection name",
+                  "description": " Collection description"
+                },
+                "ko": {
+                  "type": "group_content",
+                  "name": "Collection name",
+                  "description": " Collection description"
+                },
+                "lt": {
+                  "type": "group_content",
+                  "name": "Collection name",
+                  "description": " Collection description"
+                },
+                "lv": {
+                  "type": "group_content",
+                  "name": "Collection name",
+                  "description": " Collection description"
+                },
+                "mn": {
+                  "type": "group_content",
+                  "name": "Collection name",
+                  "description": " Collection description"
+                },
+                "nb": {
+                  "type": "group_content",
+                  "name": "Collection name",
+                  "description": " Collection description"
+                },
+                "nl": {
+                  "type": "group_content",
+                  "name": "Collection name",
+                  "description": " Collection description"
+                },
+                "pl": {
+                  "type": "group_content",
+                  "name": "Collection name",
+                  "description": " Collection description"
+                },
+                "pt": {
+                  "type": "group_content",
+                  "name": "Collection name",
+                  "description": " Collection description"
+                },
+                "ro": {
+                  "type": "group_content",
+                  "name": "Collection name",
+                  "description": " Collection description"
+                },
+                "ru": {
+                  "type": "group_content",
+                  "name": "Collection name",
+                  "description": " Collection description"
+                },
+                "sl": {
+                  "type": "group_content",
+                  "name": "Collection name",
+                  "description": " Collection description"
+                },
+                "sr": {
+                  "type": "group_content",
+                  "name": "Collection name",
+                  "description": " Collection description"
+                },
+                "sv": {
+                  "type": "group_content",
+                  "name": "Collection name",
+                  "description": " Collection description"
+                },
+                "tr": {
+                  "type": "group_content",
+                  "name": "Collection name",
+                  "description": " Collection description"
+                },
+                "vi": {
+                  "type": "group_content",
+                  "name": "Collection name",
+                  "description": " Collection description"
+                },
+                "pt-BR": {
+                  "type": "group_content",
+                  "name": "Collection name",
+                  "description": " Collection description"
+                },
+                "zh-CN": {
+                  "type": "group_content",
+                  "name": "Collection name",
+                  "description": " Collection description"
+                },
+                "zh-TW": {
+                  "type": "group_content",
+                  "name": "Collection name",
+                  "description": " Collection description"
+                }
+              },
+              "parent_id": "6871118",
+              "help_center_id": "123"
+            }
           }
         }
       ],
@@ -3146,9 +3791,6 @@
           "name": "Successful",
           "pathParameters": {
             "id": 123
-          },
-          "headers": {
-            "Intercom-Version": "2.11"
           },
           "responseBody": {
             "type": "json",
@@ -3337,9 +3979,6 @@
           "pathParameters": {
             "id": 123
           },
-          "headers": {
-            "Intercom-Version": "2.11"
-          },
           "responseBody": {
             "type": "json",
             "value": {
@@ -3475,9 +4114,6 @@
           "path": "/help_center/help_centers",
           "responseStatusCode": 200,
           "name": "Help Centers Found",
-          "headers": {
-            "Intercom-Version": "2.11"
-          },
           "responseBody": {
             "type": "json",
             "value": {
@@ -3746,17 +4382,6 @@
           "path": "/companies",
           "responseStatusCode": 200,
           "name": "Successful",
-          "queryParameters": {
-            "name": "my company",
-            "company_id": "12345",
-            "tag_id": "678910",
-            "segment_id": "98765",
-            "page": 1,
-            "per_page": 15
-          },
-          "headers": {
-            "Intercom-Version": "2.11"
-          },
           "responseBody": {
             "type": "json",
             "value": {
@@ -3953,8 +4578,13 @@
           "path": "/companies",
           "responseStatusCode": 200,
           "name": "Successful",
-          "headers": {
-            "Intercom-Version": "2.11"
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "company_id": "company_remote_id",
+              "name": "my company",
+              "remote_created_at": 1374138000
+            }
           },
           "responseBody": {
             "type": "json",
@@ -3989,8 +4619,11 @@
           "path": "/companies",
           "responseStatusCode": 200,
           "name": "Bad Request",
-          "headers": {
-            "Intercom-Version": "2.11"
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "test": "invalid"
+            }
           },
           "responseBody": {
             "type": "json",
@@ -4191,9 +4824,6 @@
           "pathParameters": {
             "id": "test-uuid-replacement"
           },
-          "headers": {
-            "Intercom-Version": "2.11"
-          },
           "responseBody": {
             "type": "json",
             "value": {
@@ -4390,9 +5020,6 @@
           "name": "Successful",
           "pathParameters": {
             "id": "test-uuid-replacement"
-          },
-          "headers": {
-            "Intercom-Version": "2.11"
           },
           "responseBody": {
             "type": "json",
@@ -4591,9 +5218,6 @@
           "pathParameters": {
             "id": "test-uuid-replacement"
           },
-          "headers": {
-            "Intercom-Version": "2.11"
-          },
           "responseBody": {
             "type": "json",
             "value": {
@@ -4781,9 +5405,6 @@
           "name": "Successful",
           "pathParameters": {
             "id": "test-uuid-replacement"
-          },
-          "headers": {
-            "Intercom-Version": "2.11"
           },
           "responseBody": {
             "type": "json",
@@ -4978,9 +5599,6 @@
           "pathParameters": {
             "id": "test-uuid-replacement"
           },
-          "headers": {
-            "Intercom-Version": "2.11"
-          },
           "responseBody": {
             "type": "json",
             "value": {
@@ -5170,14 +5788,6 @@
           "path": "/companies/list",
           "responseStatusCode": 200,
           "name": "Successful",
-          "queryParameters": {
-            "page": 1,
-            "per_page": 15,
-            "order": "desc"
-          },
-          "headers": {
-            "Intercom-Version": "2.11"
-          },
           "responseBody": {
             "type": "json",
             "value": {
@@ -5361,12 +5971,6 @@
           "path": "/companies/scroll",
           "responseStatusCode": 200,
           "name": "Successful",
-          "queryParameters": {
-            "scroll_param": "scroll_param"
-          },
-          "headers": {
-            "Intercom-Version": "2.11"
-          },
           "responseBody": {
             "type": "json",
             "value": {
@@ -5580,9 +6184,6 @@
           "name": "Successful",
           "pathParameters": {
             "id": "63a07ddf05a32042dffac965"
-          },
-          "headers": {
-            "Intercom-Version": "2.11"
           },
           "responseBody": {
             "type": "json",
@@ -5858,9 +6459,6 @@
           "pathParameters": {
             "id": "id"
           },
-          "headers": {
-            "Intercom-Version": "2.11"
-          },
           "requestBody": {
             "type": "json",
             "value": {
@@ -5901,9 +6499,6 @@
           "pathParameters": {
             "id": "id"
           },
-          "headers": {
-            "Intercom-Version": "2.11"
-          },
           "requestBody": {
             "type": "json",
             "value": null
@@ -5941,9 +6536,6 @@
           "name": "Company Not Found",
           "pathParameters": {
             "id": "id"
-          },
-          "headers": {
-            "Intercom-Version": "2.11"
           },
           "requestBody": {
             "type": "json",
@@ -6195,9 +6787,6 @@
             "contact_id": "58a430d35458202d41b1e65b",
             "id": "58a430d35458202d41b1e65b"
           },
-          "headers": {
-            "Intercom-Version": "2.11"
-          },
           "responseBody": {
             "type": "json",
             "value": {
@@ -6373,9 +6962,6 @@
           "name": "Successful Response",
           "pathParameters": {
             "id": 0
-          },
-          "headers": {
-            "Intercom-Version": "2.11"
           },
           "responseBody": {
             "type": "json",
@@ -6675,9 +7261,6 @@
           "pathParameters": {
             "id": "123"
           },
-          "headers": {
-            "Intercom-Version": "2.11"
-          },
           "requestBody": {
             "type": "json",
             "value": {
@@ -6715,9 +7298,6 @@
           "pathParameters": {
             "id": "123"
           },
-          "headers": {
-            "Intercom-Version": "2.11"
-          },
           "requestBody": {
             "type": "json",
             "value": {
@@ -6754,9 +7334,6 @@
           "name": "Contact Not Found",
           "pathParameters": {
             "id": "123"
-          },
-          "headers": {
-            "Intercom-Version": "2.11"
           },
           "requestBody": {
             "type": "json",
@@ -6967,9 +7544,6 @@
           "pathParameters": {
             "contact_id": "63a07ddf05a32042dffac965"
           },
-          "headers": {
-            "Intercom-Version": "2.11"
-          },
           "responseBody": {
             "type": "json",
             "value": {
@@ -7165,9 +7739,6 @@
           "name": "Successful",
           "pathParameters": {
             "contact_id": "63a07ddf05a32042dffac965"
-          },
-          "headers": {
-            "Intercom-Version": "2.11"
           },
           "responseBody": {
             "type": "json",
@@ -7452,9 +8023,6 @@
           "pathParameters": {
             "contact_id": "63a07ddf05a32042dffac965"
           },
-          "headers": {
-            "Intercom-Version": "2.11"
-          },
           "requestBody": {
             "type": "json",
             "value": {
@@ -7494,9 +8062,6 @@
           "pathParameters": {
             "contact_id": "63a07ddf05a32042dffac965"
           },
-          "headers": {
-            "Intercom-Version": "2.11"
-          },
           "requestBody": {
             "type": "json",
             "value": {
@@ -7535,9 +8100,6 @@
           "name": "Resource Not Found",
           "pathParameters": {
             "contact_id": "63a07ddf05a32042dffac965"
-          },
-          "headers": {
-            "Intercom-Version": "2.11"
           },
           "requestBody": {
             "type": "json",
@@ -7788,9 +8350,6 @@
             "contact_id": "63a07ddf05a32042dffac965",
             "id": "37846"
           },
-          "headers": {
-            "Intercom-Version": "2.11"
-          },
           "responseBody": {
             "type": "json",
             "value": {
@@ -7994,9 +8553,6 @@
           "name": "Successful",
           "pathParameters": {
             "contact_id": "63a07ddf05a32042dffac965"
-          },
-          "headers": {
-            "Intercom-Version": "2.11"
           },
           "responseBody": {
             "type": "json",
@@ -8231,9 +8787,6 @@
           "pathParameters": {
             "contact_id": "63a07ddf05a32042dffac965"
           },
-          "headers": {
-            "Intercom-Version": "2.11"
-          },
           "requestBody": {
             "type": "json",
             "value": {
@@ -8256,13 +8809,23 @@
           "pathParameters": {
             "contact_id": "63a07ddf05a32042dffac965"
           },
-          "headers": {
-            "Intercom-Version": "2.11"
-          },
           "requestBody": {
             "type": "json",
             "value": {
               "id": 95
+            }
+          },
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "type": "tag",
+              "id": "123456",
+              "name": "Test tag",
+              "applied_at": 1663597223,
+              "applied_by": {
+                "type": "contact",
+                "id": "1a2b3c"
+              }
             }
           }
         },
@@ -8273,13 +8836,23 @@
           "pathParameters": {
             "contact_id": "63a07ddf05a32042dffac965"
           },
-          "headers": {
-            "Intercom-Version": "2.11"
-          },
           "requestBody": {
             "type": "json",
             "value": {
               "id": "123"
+            }
+          },
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "type": "tag",
+              "id": "123456",
+              "name": "Test tag",
+              "applied_at": 1663597223,
+              "applied_by": {
+                "type": "contact",
+                "id": "1a2b3c"
+              }
             }
           }
         }
@@ -8500,9 +9073,6 @@
             "contact_id": "63a07ddf05a32042dffac965",
             "id": "7522907"
           },
-          "headers": {
-            "Intercom-Version": "2.11"
-          },
           "responseBody": {
             "type": "json",
             "value": {
@@ -8651,9 +9221,6 @@
           "name": "Successful",
           "pathParameters": {
             "id": "63a07ddf05a32042dffac965"
-          },
-          "headers": {
-            "Intercom-Version": "2.11"
           },
           "responseBody": {
             "type": "json",
@@ -8905,9 +9472,6 @@
           "pathParameters": {
             "id": "63a07ddf05a32042dffac965"
           },
-          "headers": {
-            "Intercom-Version": "2.11"
-          },
           "requestBody": {
             "type": "json",
             "value": {
@@ -9153,9 +9717,6 @@
           "pathParameters": {
             "id": "id"
           },
-          "headers": {
-            "Intercom-Version": "2.11"
-          },
           "responseBody": {
             "type": "json",
             "value": {
@@ -9300,8 +9861,12 @@
           "path": "/contacts/merge",
           "responseStatusCode": 200,
           "name": "Successful",
-          "headers": {
-            "Intercom-Version": "2.11"
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "from": "667d60ac8a68186f43bafdbb",
+              "into": "667d60ac8a68186f43bafdbc"
+            }
           },
           "responseBody": {
             "type": "json",
@@ -9535,8 +10100,23 @@
           "path": "/contacts/search",
           "responseStatusCode": 200,
           "name": "Successful",
-          "headers": {
-            "Intercom-Version": "2.11"
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "query": {
+                "operator": "AND",
+                "value": [
+                  {
+                    "field": "created_at",
+                    "operator": ">",
+                    "value": "1306054154"
+                  }
+                ]
+              },
+              "pagination": {
+                "per_page": 5
+              }
+            }
           },
           "responseBody": {
             "type": "json",
@@ -9667,9 +10247,6 @@
           "path": "/contacts",
           "responseStatusCode": 200,
           "name": "Successful",
-          "headers": {
-            "Intercom-Version": "2.11"
-          },
           "responseBody": {
             "type": "json",
             "value": {
@@ -9811,9 +10388,6 @@
           "path": "/contacts",
           "responseStatusCode": 200,
           "name": "Successful",
-          "headers": {
-            "Intercom-Version": "2.11"
-          },
           "requestBody": {
             "type": "json",
             "value": {
@@ -10035,9 +10609,6 @@
           "pathParameters": {
             "id": "63a07ddf05a32042dffac965"
           },
-          "headers": {
-            "Intercom-Version": "2.11"
-          },
           "responseBody": {
             "type": "json",
             "value": {
@@ -10164,9 +10735,6 @@
           "name": "Successful",
           "pathParameters": {
             "id": "63a07ddf05a32042dffac965"
-          },
-          "headers": {
-            "Intercom-Version": "2.11"
           },
           "responseBody": {
             "type": "json",
@@ -10394,9 +10962,6 @@
           "pathParameters": {
             "conversation_id": "64619700005694"
           },
-          "headers": {
-            "Intercom-Version": "2.11"
-          },
           "requestBody": {
             "type": "json",
             "value": {
@@ -10420,14 +10985,24 @@
           "pathParameters": {
             "conversation_id": "64619700005694"
           },
-          "headers": {
-            "Intercom-Version": "2.11"
-          },
           "requestBody": {
             "type": "json",
             "value": {
               "id": 100,
               "admin_id": 991267528
+            }
+          },
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "type": "tag",
+              "id": "123456",
+              "name": "Test tag",
+              "applied_at": 1663597223,
+              "applied_by": {
+                "type": "contact",
+                "id": "1a2b3c"
+              }
             }
           }
         }
@@ -10672,9 +11247,6 @@
             "conversation_id": "64619700005694",
             "id": "7522907"
           },
-          "headers": {
-            "Intercom-Version": "2.11"
-          },
           "requestBody": {
             "type": "json",
             "value": {
@@ -10698,13 +11270,23 @@
             "conversation_id": "64619700005694",
             "id": "7522907"
           },
-          "headers": {
-            "Intercom-Version": "2.11"
-          },
           "requestBody": {
             "type": "json",
             "value": {
               "admin_id": 991267532
+            }
+          },
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "type": "tag",
+              "id": "123456",
+              "name": "Test tag",
+              "applied_at": 1663597223,
+              "applied_by": {
+                "type": "contact",
+                "id": "1a2b3c"
+              }
             }
           }
         },
@@ -10716,13 +11298,23 @@
             "conversation_id": "64619700005694",
             "id": "7522907"
           },
-          "headers": {
-            "Intercom-Version": "2.11"
-          },
           "requestBody": {
             "type": "json",
             "value": {
               "admin_id": 991267533
+            }
+          },
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "type": "tag",
+              "id": "123456",
+              "name": "Test tag",
+              "applied_at": 1663597223,
+              "applied_by": {
+                "type": "contact",
+                "id": "1a2b3c"
+              }
             }
           }
         }
@@ -10912,13 +11504,6 @@
           "path": "/conversations",
           "responseStatusCode": 200,
           "name": "Successful",
-          "queryParameters": {
-            "per_page": 20,
-            "starting_after": "starting_after"
-          },
-          "headers": {
-            "Intercom-Version": "2.11"
-          },
           "responseBody": {
             "type": "json",
             "value": {
@@ -11182,8 +11767,15 @@
           "path": "/conversations",
           "responseStatusCode": 200,
           "name": "Conversation Created",
-          "headers": {
-            "Intercom-Version": "2.11"
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "from": {
+                "type": "user",
+                "id": "667d60d18a68186f43bafddd"
+              },
+              "body": "Hello there"
+            }
           },
           "responseBody": {
             "type": "json",
@@ -11201,8 +11793,15 @@
           "path": "/conversations",
           "responseStatusCode": 200,
           "name": "Contact Not Found",
-          "headers": {
-            "Intercom-Version": "2.11"
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "from": {
+                "type": "user",
+                "id": "123_doesnt_exist"
+              },
+              "body": "Hello there"
+            }
           },
           "responseBody": {
             "type": "json",
@@ -11436,12 +12035,6 @@
           "name": "Conversation Found",
           "pathParameters": {
             "id": 123
-          },
-          "queryParameters": {
-            "display_as": "plaintext"
-          },
-          "headers": {
-            "Intercom-Version": "2.11"
           },
           "responseBody": {
             "type": "json",
@@ -11746,11 +12339,15 @@
           "pathParameters": {
             "id": 123
           },
-          "queryParameters": {
-            "display_as": "plaintext"
-          },
-          "headers": {
-            "Intercom-Version": "2.11"
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "read": true,
+              "custom_attributes": {
+                "issue_type": "Billing",
+                "priority": "High"
+              }
+            }
           },
           "responseBody": {
             "type": "json",
@@ -11871,11 +12468,15 @@
           "pathParameters": {
             "id": 123
           },
-          "queryParameters": {
-            "display_as": "plaintext"
-          },
-          "headers": {
-            "Intercom-Version": "2.11"
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "read": true,
+              "custom_attributes": {
+                "issue_type": "Billing",
+                "priority": "High"
+              }
+            }
           },
           "responseBody": {
             "type": "json",
@@ -12092,8 +12693,23 @@
           "path": "/conversations/search",
           "responseStatusCode": 200,
           "name": "Successful",
-          "headers": {
-            "Intercom-Version": "2.11"
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "query": {
+                "operator": "AND",
+                "value": [
+                  {
+                    "field": "created_at",
+                    "operator": ">",
+                    "value": "1306054154"
+                  }
+                ]
+              },
+              "pagination": {
+                "per_page": 5
+              }
+            }
           },
           "responseBody": {
             "type": "json",
@@ -12392,8 +13008,14 @@
           "pathParameters": {
             "id": "123 or \"last\""
           },
-          "headers": {
-            "Intercom-Version": "2.11"
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "message_type": "comment",
+              "type": "user",
+              "intercom_user_id": "667d60f18a68186f43bafdf4",
+              "body": "Thanks again :)"
+            }
           },
           "responseBody": {
             "type": "json",
@@ -12496,8 +13118,14 @@
           "pathParameters": {
             "id": "123 or \"last\""
           },
-          "headers": {
-            "Intercom-Version": "2.11"
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "message_type": "note",
+              "type": "admin",
+              "admin_id": 991267596,
+              "body": "<html> <body>  <h2>An Unordered HTML List</h2>  <ul>   <li>Coffee</li>   <li>Tea</li>   <li>Milk</li> </ul>    <h2>An Ordered HTML List</h2>  <ol>   <li>Coffee</li>   <li>Tea</li>   <li>Milk</li> </ol>   </body> </html>"
+            }
           },
           "responseBody": {
             "type": "json",
@@ -12596,8 +13224,14 @@
           "pathParameters": {
             "id": "123 or \"last\""
           },
-          "headers": {
-            "Intercom-Version": "2.11"
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "message_type": "comment",
+              "type": "user",
+              "intercom_user_id": "667d60f78a68186f43bafdf7",
+              "body": "Thanks again :)"
+            }
           },
           "responseBody": {
             "type": "json",
@@ -12700,8 +13334,14 @@
           "pathParameters": {
             "id": "123 or \"last\""
           },
-          "headers": {
-            "Intercom-Version": "2.11"
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "message_type": "comment",
+              "type": "user",
+              "intercom_user_id": "667d60f98a68186f43bafdf8",
+              "body": "Thanks again :)"
+            }
           },
           "responseBody": {
             "type": "json",
@@ -13017,9 +13657,6 @@
           "pathParameters": {
             "id": "123"
           },
-          "headers": {
-            "Intercom-Version": "2.11"
-          },
           "requestBody": {
             "type": "json",
             "value": {
@@ -13126,9 +13763,6 @@
           "pathParameters": {
             "id": "123"
           },
-          "headers": {
-            "Intercom-Version": "2.11"
-          },
           "requestBody": {
             "type": "json",
             "value": {
@@ -13234,9 +13868,6 @@
           "pathParameters": {
             "id": "123"
           },
-          "headers": {
-            "Intercom-Version": "2.11"
-          },
           "requestBody": {
             "type": "json",
             "value": {
@@ -13340,9 +13971,6 @@
           "name": "Assign a Conversation",
           "pathParameters": {
             "id": "123"
-          },
-          "headers": {
-            "Intercom-Version": "2.11"
           },
           "requestBody": {
             "type": "json",
@@ -13452,9 +14080,6 @@
           "name": "Not Found",
           "pathParameters": {
             "id": "123"
-          },
-          "headers": {
-            "Intercom-Version": "2.11"
           },
           "requestBody": {
             "type": "json",
@@ -13765,9 +14390,6 @@
           "name": "Assign a Conversation Using Assignment Rules",
           "pathParameters": {
             "id": "123"
-          },
-          "headers": {
-            "Intercom-Version": "2.11"
           },
           "responseBody": {
             "type": "json",
@@ -14082,8 +14704,14 @@
           "pathParameters": {
             "id": "123"
           },
-          "headers": {
-            "Intercom-Version": "2.11"
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "admin_id": 991267631,
+              "customer": {
+                "intercom_user_id": "667d61168a68186f43bafe0d"
+              }
+            }
           },
           "responseBody": {
             "type": "json",
@@ -14104,8 +14732,14 @@
           "pathParameters": {
             "id": "123"
           },
-          "headers": {
-            "Intercom-Version": "2.11"
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "admin_id": 991267633,
+              "customer": {
+                "intercom_user_id": "667d61188a68186f43bafe0e"
+              }
+            }
           },
           "responseBody": {
             "type": "json",
@@ -14407,8 +15041,14 @@
             "conversation_id": "123",
             "contact_id": "123"
           },
-          "headers": {
-            "Intercom-Version": "2.11"
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "admin_id": 991267639,
+              "customer": {
+                "intercom_user_id": "667d611c8a68186f43bafe11"
+              }
+            }
           },
           "responseBody": {
             "type": "json",
@@ -14430,8 +15070,14 @@
             "conversation_id": "123",
             "contact_id": "123"
           },
-          "headers": {
-            "Intercom-Version": "2.11"
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "admin_id": 991267642,
+              "customer": {
+                "intercom_user_id": "667d61248a68186f43bafe1a"
+              }
+            }
           },
           "responseBody": {
             "type": "json",
@@ -14453,8 +15099,14 @@
             "conversation_id": "123",
             "contact_id": "123"
           },
-          "headers": {
-            "Intercom-Version": "2.11"
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "admin_id": 991267645,
+              "customer": {
+                "intercom_user_id": "667d612b8a68186f43bafe22"
+              }
+            }
           },
           "responseBody": {
             "type": "json",
@@ -14476,8 +15128,14 @@
             "conversation_id": "123",
             "contact_id": "123"
           },
-          "headers": {
-            "Intercom-Version": "2.11"
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "admin_id": 991267648,
+              "customer": {
+                "intercom_user_id": "667d61338a68186f43bafe2a"
+              }
+            }
           },
           "responseBody": {
             "type": "json",
@@ -14655,8 +15313,13 @@
           "path": "/conversations/redact",
           "responseStatusCode": 200,
           "name": "Redact a Conversation Part",
-          "headers": {
-            "Intercom-Version": "2.11"
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "type": "conversation_part",
+              "conversation_id": 471,
+              "conversation_part_id": 115
+            }
           },
           "responseBody": {
             "type": "json",
@@ -14756,8 +15419,13 @@
           "path": "/conversations/redact",
           "responseStatusCode": 200,
           "name": "Not Found",
-          "headers": {
-            "Intercom-Version": "2.11"
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "type": "conversation_part",
+              "conversation_id": "really_123_doesnt_exist",
+              "conversation_part_id": "really_123_doesnt_exist"
+            }
           },
           "responseBody": {
             "type": "json",
@@ -15013,8 +15681,11 @@
           "pathParameters": {
             "id": 123
           },
-          "headers": {
-            "Intercom-Version": "2.11"
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "ticket_type_id": "79"
+            }
           },
           "responseBody": {
             "type": "json",
@@ -15115,8 +15786,131 @@
           "pathParameters": {
             "id": 123
           },
-          "headers": {
-            "Intercom-Version": "2.11"
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "ticket_type_id": "80"
+            }
+          },
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "type": "ticket",
+              "id": "1295",
+              "ticket_id": "1390",
+              "category": "Customer",
+              "ticket_attributes": {
+                "_default_title_": "Found a bug",
+                "_default_description_": "The button's not working"
+              },
+              "ticket_state": "submitted",
+              "ticket_type": {
+                "type": "ticket_type",
+                "id": "1295",
+                "category": "Customer",
+                "name": "Bug",
+                "description": "A bug that has been reported.",
+                "icon": "🐞",
+                "workspace_id": "ecahpwf5",
+                "ticket_type_attributes": {
+                  "type": "type",
+                  "ticket_type_attributes": [
+                    {
+                      "type": "ticket_type_attribute",
+                      "id": "1",
+                      "workspace_id": "ecahpwf5",
+                      "name": "Title",
+                      "description": "Bug title.",
+                      "data_type": "string",
+                      "input_options": "multiline: true",
+                      "order": 1,
+                      "required_to_create": false,
+                      "required_to_create_for_contacts": false,
+                      "visible_on_create": false,
+                      "visible_to_contacts": false,
+                      "default": true,
+                      "ticket_type_id": 42,
+                      "archived": false,
+                      "created_at": 0,
+                      "updated_at": 0
+                    }
+                  ]
+                },
+                "archived": false,
+                "created_at": 0,
+                "updated_at": 0
+              },
+              "contacts": {
+                "type": "contact.list",
+                "contacts": [
+                  {
+                    "type": "contact",
+                    "id": "5ba682d23d7cf92bef87bfd4",
+                    "external_id": "f3b87a2e09d514c6c2e79b9a"
+                  }
+                ]
+              },
+              "admin_assignee_id": "1295",
+              "team_assignee_id": "1295",
+              "created_at": 1663597223,
+              "updated_at": 1663597260,
+              "open": true,
+              "snoozed_until": 1663597260,
+              "linked_objects": {
+                "type": "list",
+                "total_count": 100,
+                "has_more": false,
+                "data": [
+                  {
+                    "type": "ticket",
+                    "id": "7583",
+                    "category": "Customer"
+                  }
+                ]
+              },
+              "ticket_parts": {
+                "type": "ticket_part.list",
+                "ticket_parts": [
+                  {
+                    "type": "ticket_part",
+                    "id": "3",
+                    "part_type": "comment",
+                    "body": "<p>Okay!</p>",
+                    "previous_ticket_state": "submitted",
+                    "ticket_state": "submitted",
+                    "created_at": 1663597223,
+                    "updated_at": 1663597260,
+                    "assigned_to": {
+                      "type": "contact",
+                      "id": "1a2b3c"
+                    },
+                    "author": {
+                      "type": "admin",
+                      "id": "274",
+                      "name": "Operator",
+                      "email": "operator+abcd1234@intercom.io"
+                    },
+                    "attachments": [
+                      {
+                        "type": "upload",
+                        "name": "example.png",
+                        "url": "https://picsum.photos/200/300",
+                        "content_type": "image/png",
+                        "filesize": 100,
+                        "width": 100,
+                        "height": 100
+                      }
+                    ],
+                    "external_id": "abcd1234",
+                    "redacted": false
+                  }
+                ],
+                "total_count": 2
+              },
+              "is_shared": true,
+              "ticket_state_internal_label": "ticket_state_internal_label",
+              "ticket_state_external_label": "ticket_state_external_label"
+            }
           }
         }
       ],
@@ -15278,13 +16072,6 @@
           "path": "/data_attributes",
           "responseStatusCode": 200,
           "name": "Successful Response",
-          "queryParameters": {
-            "model": "company",
-            "include_archived": false
-          },
-          "headers": {
-            "Intercom-Version": "2.11"
-          },
           "responseBody": {
             "type": "json",
             "value": {
@@ -15756,8 +16543,13 @@
           "path": "/data_attributes",
           "responseStatusCode": 200,
           "name": "Successful",
-          "headers": {
-            "Intercom-Version": "2.11"
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "name": "Mithril Shirt",
+              "model": "company",
+              "data_type": "string"
+            }
           },
           "responseBody": {
             "type": "json",
@@ -15784,8 +16576,13 @@
           "path": "/data_attributes",
           "responseStatusCode": 200,
           "name": "Same Name Already Exists",
-          "headers": {
-            "Intercom-Version": "2.11"
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "name": "The One Ring",
+              "model": "contact",
+              "data_type": "integer"
+            }
           },
           "responseBody": {
             "type": "json",
@@ -15812,8 +16609,13 @@
           "path": "/data_attributes",
           "responseStatusCode": 200,
           "name": "Invalid Name",
-          "headers": {
-            "Intercom-Version": "2.11"
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "name": "!nv@l!d n@me",
+              "model": "company",
+              "data_type": "string"
+            }
           },
           "responseBody": {
             "type": "json",
@@ -15840,8 +16642,13 @@
           "path": "/data_attributes",
           "responseStatusCode": 200,
           "name": "Attribute Already Exists",
-          "headers": {
-            "Intercom-Version": "2.11"
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "name": "The One Ring",
+              "model": "company",
+              "data_type": "string"
+            }
           },
           "responseBody": {
             "type": "json",
@@ -15868,8 +16675,13 @@
           "path": "/data_attributes",
           "responseStatusCode": 200,
           "name": "Invalid Data Type",
-          "headers": {
-            "Intercom-Version": "2.11"
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "name": "The Second Ring",
+              "model": "company",
+              "data_type": "mithril"
+            }
           },
           "responseBody": {
             "type": "json",
@@ -15896,8 +16708,17 @@
           "path": "/data_attributes",
           "responseStatusCode": 200,
           "name": "Too Few Options for List",
-          "headers": {
-            "Intercom-Version": "2.11"
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "description": "Just a plain old ring",
+              "options": [
+                {
+                  "value": "1-10"
+                }
+              ],
+              "archived": false
+            }
           },
           "responseBody": {
             "type": "json",
@@ -16162,8 +16983,20 @@
           "pathParameters": {
             "id": 1
           },
-          "headers": {
-            "Intercom-Version": "2.11"
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "description": "Just a plain old ring",
+              "options": [
+                {
+                  "value": "1-10"
+                },
+                {
+                  "value": "11-20"
+                }
+              ],
+              "archived": false
+            }
           },
           "responseBody": {
             "type": "json",
@@ -16198,8 +17031,15 @@
           "pathParameters": {
             "id": 1
           },
-          "headers": {
-            "Intercom-Version": "2.11"
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "description": "Too few options",
+              "options": {
+                "value": "1-10"
+              },
+              "archived": false
+            }
           },
           "responseBody": {
             "type": "json",
@@ -16234,8 +17074,20 @@
           "pathParameters": {
             "id": 1
           },
-          "headers": {
-            "Intercom-Version": "2.11"
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "description": "Just a plain old ring",
+              "options": [
+                {
+                  "value": "1-10"
+                },
+                {
+                  "value": "11-20"
+                }
+              ],
+              "archived": false
+            }
           },
           "responseBody": {
             "type": "json",
@@ -16270,8 +17122,12 @@
           "pathParameters": {
             "id": 1
           },
-          "headers": {
-            "Intercom-Version": "2.11"
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "description": "Trying to archieve",
+              "archived": true
+            }
           },
           "responseBody": {
             "type": "json",
@@ -16522,11 +17378,7 @@
             "filter": {
               "user_id": "user_id"
             },
-            "type": "type",
-            "summary": false
-          },
-          "headers": {
-            "Intercom-Version": "2.11"
+            "type": "type"
           },
           "responseBody": {
             "type": "json",
@@ -16662,10 +17514,7 @@
       "examples": [
         {
           "path": "/events",
-          "responseStatusCode": 202,
-          "headers": {
-            "Intercom-Version": "2.11"
-          }
+          "responseStatusCode": 202
         }
       ],
       "protocol": {
@@ -16796,8 +17645,17 @@
         {
           "path": "/events/summaries",
           "responseStatusCode": 200,
-          "headers": {
-            "Intercom-Version": "2.11"
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "user_id": "314159",
+              "event_summaries": {
+                "event_name": "invited-friend",
+                "count": 1,
+                "first": 1671028894,
+                "last": 1671028894
+              }
+            }
           }
         }
       ],
@@ -16911,8 +17769,12 @@
           "path": "/export/content/data",
           "responseStatusCode": 200,
           "name": "Successful",
-          "headers": {
-            "Intercom-Version": "2.11"
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "created_at_after": 1719474967,
+              "created_at_before": 1719492967
+            }
           },
           "responseBody": {
             "type": "json",
@@ -17049,9 +17911,6 @@
           "pathParameters": {
             "job_identifier": "job_identifier"
           },
-          "headers": {
-            "Intercom-Version": "2.11"
-          },
           "responseBody": {
             "type": "json",
             "value": {
@@ -17178,9 +18037,6 @@
           "name": "Successful",
           "pathParameters": {
             "job_identifier": "job_identifier"
-          },
-          "headers": {
-            "Intercom-Version": "2.11"
           },
           "responseBody": {
             "type": "json",
@@ -17311,9 +18167,6 @@
           "responseStatusCode": 200,
           "pathParameters": {
             "job_identifier": "job_identifier"
-          },
-          "headers": {
-            "Intercom-Version": "2.11"
           }
         }
       ],
@@ -17548,8 +18401,16 @@
           "path": "/messages",
           "responseStatusCode": 200,
           "name": "User Message Created",
-          "headers": {
-            "Intercom-Version": "2.11"
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "from": {
+                "type": "user",
+                "id": "667d61698a68186f43bafe50"
+              },
+              "body": "heyy",
+              "referer": "https://twitter.com/bob"
+            }
           },
           "responseBody": {
             "type": "json",
@@ -17567,8 +18428,16 @@
           "path": "/messages",
           "responseStatusCode": 200,
           "name": "Lead Message Created",
-          "headers": {
-            "Intercom-Version": "2.11"
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "from": {
+                "type": "lead",
+                "id": "667d616a8a68186f43bafe51"
+              },
+              "body": "heyy",
+              "referer": "https://twitter.com/bob"
+            }
           },
           "responseBody": {
             "type": "json",
@@ -17586,8 +18455,20 @@
           "path": "/messages",
           "responseStatusCode": 200,
           "name": "Admin Message Created",
-          "headers": {
-            "Intercom-Version": "2.11"
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "from": {
+                "type": "admin",
+                "id": "991267716"
+              },
+              "to": {
+                "type": "user",
+                "id": "667d616c8a68186f43bafe52"
+              },
+              "message_type": "conversation",
+              "body": "heyy"
+            }
           },
           "responseBody": {
             "type": "json",
@@ -17613,8 +18494,21 @@
           "path": "/messages",
           "responseStatusCode": 200,
           "name": "No Body Supplied for Message",
-          "headers": {
-            "Intercom-Version": "2.11"
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "from": {
+                "type": "admin",
+                "id": "991267718"
+              },
+              "to": {
+                "type": "user",
+                "id": "667d616d8a68186f43bafe53"
+              },
+              "message_type": "inapp",
+              "body": null,
+              "subject": "heyy"
+            }
           },
           "responseBody": {
             "type": "json",
@@ -17640,8 +18534,20 @@
           "path": "/messages",
           "responseStatusCode": 200,
           "name": "No Subject Supplied for Email Message",
-          "headers": {
-            "Intercom-Version": "2.11"
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "from": {
+                "type": "admin",
+                "id": "991267719"
+              },
+              "to": {
+                "type": "user",
+                "user_id": "70"
+              },
+              "message_type": "email",
+              "body": "hey there"
+            }
           },
           "responseBody": {
             "type": "json",
@@ -17667,8 +18573,21 @@
           "path": "/messages",
           "responseStatusCode": 200,
           "name": "No Body Supplied for Email Message",
-          "headers": {
-            "Intercom-Version": "2.11"
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "from": {
+                "type": "admin",
+                "id": "991267720"
+              },
+              "to": {
+                "type": "user",
+                "id": "667d616e8a68186f43bafe55"
+              },
+              "message_type": "email",
+              "body": null,
+              "subject": "heyy"
+            }
           },
           "responseBody": {
             "type": "json",
@@ -17812,9 +18731,6 @@
           "path": "/news/news_items",
           "responseStatusCode": 200,
           "name": "Successful",
-          "headers": {
-            "Intercom-Version": "2.11"
-          },
           "responseBody": {
             "type": "json",
             "value": {
@@ -18007,8 +18923,30 @@
           "path": "/news/news_items",
           "responseStatusCode": 200,
           "name": "Successful",
-          "headers": {
-            "Intercom-Version": "2.11"
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "title": "Halloween is here!",
+              "body": "<p>New costumes in store for this spooky season</p>",
+              "labels": [
+                "Product",
+                "Update",
+                "New"
+              ],
+              "sender_id": 991267734,
+              "deliver_silently": true,
+              "reactions": [
+                "😆",
+                "😅"
+              ],
+              "state": "live",
+              "newsfeed_assignments": [
+                {
+                  "newsfeed_id": 53,
+                  "published_at": 1664638214
+                }
+              ]
+            }
           },
           "responseBody": {
             "type": "json",
@@ -18219,9 +19157,6 @@
           "name": "Successful",
           "pathParameters": {
             "id": 123
-          },
-          "headers": {
-            "Intercom-Version": "2.11"
           },
           "responseBody": {
             "type": "json",
@@ -18442,8 +19377,17 @@
           "pathParameters": {
             "id": 123
           },
-          "headers": {
-            "Intercom-Version": "2.11"
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "title": "Christmas is here!",
+              "body": "<p>New gifts in store for the jolly season</p>",
+              "sender_id": 991267745,
+              "reactions": [
+                "😝",
+                "😂"
+              ]
+            }
           },
           "responseBody": {
             "type": "json",
@@ -18475,8 +19419,45 @@
           "pathParameters": {
             "id": 123
           },
-          "headers": {
-            "Intercom-Version": "2.11"
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "title": "Christmas is here!",
+              "body": "<p>New gifts in store for the jolly season</p>",
+              "sender_id": 991267748,
+              "reactions": [
+                "😝",
+                "😂"
+              ]
+            }
+          },
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "type": "news-item",
+              "id": "141",
+              "workspace_id": "t74hdn32",
+              "title": "New feature: News Items",
+              "body": "We are excited to announce the launch of News Items, a new content type in Intercom enabling you to announce product updates, company news, promotions, events and more with your customers.",
+              "sender_id": 123,
+              "state": "live",
+              "newsfeed_assignments": [
+                {
+                  "newsfeed_id": 198313,
+                  "published_at": 1674917488
+                }
+              ],
+              "labels": [
+                "Product Update"
+              ],
+              "cover_image_url": "https://example.com/cover.jpg",
+              "reactions": [
+                "👍"
+              ],
+              "deliver_silently": true,
+              "created_at": 1610589632,
+              "updated_at": 1610589632
+            }
           }
         }
       ],
@@ -18657,9 +19638,6 @@
           "pathParameters": {
             "id": 123
           },
-          "headers": {
-            "Intercom-Version": "2.11"
-          },
           "responseBody": {
             "type": "json",
             "value": {
@@ -18825,9 +19803,6 @@
           "pathParameters": {
             "id": "123"
           },
-          "headers": {
-            "Intercom-Version": "2.11"
-          },
           "responseBody": {
             "type": "json",
             "value": {
@@ -18965,9 +19940,6 @@
           "path": "/news/newsfeeds",
           "responseStatusCode": 200,
           "name": "Successful",
-          "headers": {
-            "Intercom-Version": "2.11"
-          },
           "responseBody": {
             "type": "json",
             "value": {
@@ -19145,9 +20117,6 @@
           "name": "Successful",
           "pathParameters": {
             "id": "123"
-          },
-          "headers": {
-            "Intercom-Version": "2.11"
           },
           "responseBody": {
             "type": "json",
@@ -19330,9 +20299,6 @@
           "pathParameters": {
             "id": 1
           },
-          "headers": {
-            "Intercom-Version": "2.11"
-          },
           "responseBody": {
             "type": "json",
             "value": {
@@ -19490,12 +20456,6 @@
           "path": "/segments",
           "responseStatusCode": 200,
           "name": "Successful Response",
-          "queryParameters": {
-            "include_count": true
-          },
-          "headers": {
-            "Intercom-Version": "2.11"
-          },
           "responseBody": {
             "type": "json",
             "value": {
@@ -19691,9 +20651,6 @@
           "pathParameters": {
             "id": "123"
           },
-          "headers": {
-            "Intercom-Version": "2.11"
-          },
           "responseBody": {
             "type": "json",
             "value": {
@@ -19820,9 +20777,6 @@
           "path": "/subscription_types",
           "responseStatusCode": 200,
           "name": "Successful",
-          "headers": {
-            "Intercom-Version": "2.11"
-          },
           "responseBody": {
             "type": "json",
             "value": {
@@ -19979,8 +20933,15 @@
           "path": "/phone_call_redirects",
           "responseStatusCode": 200,
           "name": "Successful",
-          "headers": {
-            "Intercom-Version": "2.11"
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "phone": "+353832345678",
+              "custom_attributes": {
+                "issue_type": "Billing",
+                "priority": "High"
+              }
+            }
           },
           "responseBody": {
             "type": "json",
@@ -19994,24 +20955,66 @@
           "path": "/phone_call_redirects",
           "responseStatusCode": 200,
           "name": "Bad Request   Exception Sending Sms",
-          "headers": {
-            "Intercom-Version": "2.11"
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "phone": "+353832345678",
+              "custom_attributes": {
+                "issue_type": "Billing",
+                "priority": "High"
+              }
+            }
+          },
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "type": "phone_call_redirect",
+              "phone": "+1 1234567890"
+            }
           }
         },
         {
           "path": "/phone_call_redirects",
           "responseStatusCode": 200,
           "name": "Bad Request   Invalid Number",
-          "headers": {
-            "Intercom-Version": "2.11"
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "phone": "+353832345678",
+              "custom_attributes": {
+                "issue_type": "Billing",
+                "priority": "High"
+              }
+            }
+          },
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "type": "phone_call_redirect",
+              "phone": "+1 1234567890"
+            }
           }
         },
         {
           "path": "/phone_call_redirects",
           "responseStatusCode": 200,
           "name": "Unprocessable Entity",
-          "headers": {
-            "Intercom-Version": "2.11"
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "phone": "+40241100100",
+              "custom_attributes": {
+                "issue_type": "Billing",
+                "priority": "High"
+              }
+            }
+          },
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "type": "phone_call_redirect",
+              "phone": "+1 1234567890"
+            }
           }
         }
       ],
@@ -20128,9 +21131,6 @@
           "path": "/tags",
           "responseStatusCode": 200,
           "name": "Successful",
-          "headers": {
-            "Intercom-Version": "2.11"
-          },
           "responseBody": {
             "type": "json",
             "value": {
@@ -20347,9 +21347,6 @@
           "path": "/tags",
           "responseStatusCode": 200,
           "name": "Action Successful",
-          "headers": {
-            "Intercom-Version": "2.11"
-          },
           "requestBody": {
             "type": "json",
             "value": {
@@ -20369,9 +21366,6 @@
           "path": "/tags",
           "responseStatusCode": 200,
           "name": "Invalid Parameters",
-          "headers": {
-            "Intercom-Version": "2.11"
-          },
           "requestBody": {
             "type": "json",
             "value": {
@@ -20391,9 +21385,6 @@
           "path": "/tags",
           "responseStatusCode": 200,
           "name": "Company Not Found",
-          "headers": {
-            "Intercom-Version": "2.11"
-          },
           "requestBody": {
             "type": "json",
             "value": {
@@ -20418,9 +21409,6 @@
           "path": "/tags",
           "responseStatusCode": 200,
           "name": "User Not Found",
-          "headers": {
-            "Intercom-Version": "2.11"
-          },
           "requestBody": {
             "type": "json",
             "value": {
@@ -20610,9 +21598,6 @@
           "name": "Tag Found",
           "pathParameters": {
             "id": "123"
-          },
-          "headers": {
-            "Intercom-Version": "2.11"
           },
           "responseBody": {
             "type": "json",
@@ -20817,9 +21802,6 @@
           "responseStatusCode": 200,
           "pathParameters": {
             "id": "123"
-          },
-          "headers": {
-            "Intercom-Version": "2.11"
           }
         }
       ],
@@ -20936,9 +21918,6 @@
           "path": "/teams",
           "responseStatusCode": 200,
           "name": "Successful",
-          "headers": {
-            "Intercom-Version": "2.11"
-          },
           "responseBody": {
             "type": "json",
             "value": {
@@ -21117,9 +22096,6 @@
           "pathParameters": {
             "id": "123"
           },
-          "headers": {
-            "Intercom-Version": "2.11"
-          },
           "responseBody": {
             "type": "json",
             "value": {
@@ -21290,8 +22266,14 @@
           "pathParameters": {
             "ticket_type_id": "ticket_type_id"
           },
-          "headers": {
-            "Intercom-Version": "2.11"
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "name": "Attribute Title",
+              "description": "Attribute Description",
+              "data_type": "string",
+              "required_to_create": false
+            }
           },
           "responseBody": {
             "type": "json",
@@ -21500,8 +22482,11 @@
             "ticket_type_id": "ticket_type_id",
             "id": "id"
           },
-          "headers": {
-            "Intercom-Version": "2.11"
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "description": "New Attribute Description"
+            }
           },
           "responseBody": {
             "type": "json",
@@ -21639,9 +22624,6 @@
           "path": "/ticket_types",
           "responseStatusCode": 200,
           "name": "Successful",
-          "headers": {
-            "Intercom-Version": "2.11"
-          },
           "responseBody": {
             "type": "json",
             "value": {
@@ -21856,8 +22838,14 @@
           "path": "/ticket_types",
           "responseStatusCode": 200,
           "name": "Ticket Type Created",
-          "headers": {
-            "Intercom-Version": "2.11"
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "name": "Customer Issue",
+              "description": "Customer Report Template",
+              "icon": "🎟️",
+              "category": "Customer"
+            }
           },
           "responseBody": {
             "type": "json",
@@ -22062,9 +23050,6 @@
           "name": "Ticket Type Found",
           "pathParameters": {
             "id": "id"
-          },
-          "headers": {
-            "Intercom-Version": "2.11"
           },
           "responseBody": {
             "type": "json",
@@ -22301,8 +23286,11 @@
           "pathParameters": {
             "id": "id"
           },
-          "headers": {
-            "Intercom-Version": "2.11"
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "name": "Bug Report 2"
+            }
           },
           "responseBody": {
             "type": "json",
@@ -22606,9 +23594,6 @@
           "pathParameters": {
             "id": "123"
           },
-          "headers": {
-            "Intercom-Version": "2.11"
-          },
           "requestBody": {
             "type": "json",
             "value": {
@@ -22645,9 +23630,6 @@
           "pathParameters": {
             "id": "123"
           },
-          "headers": {
-            "Intercom-Version": "2.11"
-          },
           "requestBody": {
             "type": "json",
             "value": {
@@ -22682,9 +23664,6 @@
           "name": "Admin Quick Reply Reply",
           "pathParameters": {
             "id": "123"
-          },
-          "headers": {
-            "Intercom-Version": "2.11"
           },
           "requestBody": {
             "type": "json",
@@ -22729,9 +23708,6 @@
           "name": "Not Found",
           "pathParameters": {
             "id": "123"
-          },
-          "headers": {
-            "Intercom-Version": "2.11"
           },
           "requestBody": {
             "type": "json",
@@ -22977,9 +23953,6 @@
           "pathParameters": {
             "ticket_id": "64619700005694"
           },
-          "headers": {
-            "Intercom-Version": "2.11"
-          },
           "requestBody": {
             "type": "json",
             "value": {
@@ -23003,14 +23976,24 @@
           "pathParameters": {
             "ticket_id": "64619700005694"
           },
-          "headers": {
-            "Intercom-Version": "2.11"
-          },
           "requestBody": {
             "type": "json",
             "value": {
               "id": 135,
               "admin_id": 991267847
+            }
+          },
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "type": "tag",
+              "id": "123456",
+              "name": "Test tag",
+              "applied_at": 1663597223,
+              "applied_by": {
+                "type": "contact",
+                "id": "1a2b3c"
+              }
             }
           }
         }
@@ -23255,9 +24238,6 @@
             "ticket_id": "64619700005694",
             "id": "7522907"
           },
-          "headers": {
-            "Intercom-Version": "2.11"
-          },
           "requestBody": {
             "type": "json",
             "value": {
@@ -23281,13 +24261,23 @@
             "ticket_id": "64619700005694",
             "id": "7522907"
           },
-          "headers": {
-            "Intercom-Version": "2.11"
-          },
           "requestBody": {
             "type": "json",
             "value": {
               "admin_id": 991267856
+            }
+          },
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "type": "tag",
+              "id": "123456",
+              "name": "Test tag",
+              "applied_at": 1663597223,
+              "applied_by": {
+                "type": "contact",
+                "id": "1a2b3c"
+              }
             }
           }
         },
@@ -23299,13 +24289,23 @@
             "ticket_id": "64619700005694",
             "id": "7522907"
           },
-          "headers": {
-            "Intercom-Version": "2.11"
-          },
           "requestBody": {
             "type": "json",
             "value": {
               "admin_id": 991267859
+            }
+          },
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "type": "tag",
+              "id": "123456",
+              "name": "Test tag",
+              "applied_at": 1663597223,
+              "applied_by": {
+                "type": "contact",
+                "id": "1a2b3c"
+              }
             }
           }
         }
@@ -23435,8 +24435,20 @@
           "path": "/tickets",
           "responseStatusCode": 200,
           "name": "Successful Response",
-          "headers": {
-            "Intercom-Version": "2.11"
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "ticket_type_id": 106,
+              "contacts": [
+                {
+                  "id": "667d61b78a68186f43bafe8d"
+                }
+              ],
+              "ticket_attributes": {
+                "_default_title_": "example",
+                "_default_description_": "there is a problem"
+              }
+            }
           },
           "responseBody": {
             "type": "json",
@@ -23695,9 +24707,6 @@
           "name": "Ticket Found",
           "pathParameters": {
             "id": "id"
-          },
-          "headers": {
-            "Intercom-Version": "2.11"
           },
           "responseBody": {
             "type": "json",
@@ -23969,8 +24978,21 @@
           "pathParameters": {
             "id": "id"
           },
-          "headers": {
-            "Intercom-Version": "2.11"
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "ticket_attributes": {
+                "_default_title_": "example",
+                "_default_description_": "there is a problem"
+              },
+              "state": "in_progress",
+              "assignment": {
+                "admin_id": "991267883",
+                "assignee_id": "991267885"
+              },
+              "open": true,
+              "snoozed_until": 1673609604
+            }
           },
           "responseBody": {
             "type": "json",
@@ -24179,8 +25201,19 @@
           "pathParameters": {
             "id": "id"
           },
-          "headers": {
-            "Intercom-Version": "2.11"
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "ticket_attributes": {
+                "_default_title_": "example",
+                "_default_description_": "there is a problem"
+              },
+              "state": "in_progress",
+              "assignment": {
+                "admin_id": "123",
+                "assignee_id": "991267893"
+              }
+            }
           },
           "responseBody": {
             "type": "json",
@@ -24389,8 +25422,19 @@
           "pathParameters": {
             "id": "id"
           },
-          "headers": {
-            "Intercom-Version": "2.11"
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "ticket_attributes": {
+                "_default_title_": "example",
+                "_default_description_": "there is a problem"
+              },
+              "state": "in_progress",
+              "assignment": {
+                "admin_id": "991267899",
+                "assignee_id": "456"
+              }
+            }
           },
           "responseBody": {
             "type": "json",
@@ -24695,8 +25739,23 @@
           "path": "/tickets/search",
           "responseStatusCode": 200,
           "name": "Successful",
-          "headers": {
-            "Intercom-Version": "2.11"
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "query": {
+                "operator": "AND",
+                "value": [
+                  {
+                    "field": "created_at",
+                    "operator": ">",
+                    "value": "1306054154"
+                  }
+                ]
+              },
+              "pagination": {
+                "per_page": 5
+              }
+            }
           },
           "responseBody": {
             "type": "json",
@@ -24990,9 +26049,6 @@
           "queryParameters": {
             "user_id": "user_id"
           },
-          "headers": {
-            "Intercom-Version": "2.11"
-          },
           "responseBody": {
             "type": "json",
             "value": {
@@ -25203,8 +26259,12 @@
           "path": "/visitors",
           "responseStatusCode": 200,
           "name": "Successful",
-          "headers": {
-            "Intercom-Version": "2.11"
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "id": "667d61cc8a68186f43bafe95",
+              "name": "Gareth Bale"
+            }
           },
           "responseBody": {
             "type": "json",
@@ -25264,8 +26324,132 @@
           "path": "/visitors",
           "responseStatusCode": 200,
           "name": "Visitor Not Found",
-          "headers": {
-            "Intercom-Version": "2.11"
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "user_id": "fail",
+              "name": "Christian Fail"
+            }
+          },
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "type": "visitor",
+              "id": "530370b477ad7120001d",
+              "user_id": "test-uuid-replacement",
+              "anonymous": false,
+              "email": "jane.doe@example.com",
+              "phone": "555-555-5555",
+              "name": "Jane Doe",
+              "pseudonym": "Red Duck from Dublin",
+              "avatar": {
+                "type": "avatar",
+                "image_url": "https://example.com/avatar.png"
+              },
+              "app_id": "hfi1bx4l",
+              "companies": {
+                "type": "company.list",
+                "companies": [
+                  {
+                    "type": "company",
+                    "id": "531ee472cce572a6ec000006",
+                    "name": "Blue Sun",
+                    "app_id": "ecahpwf5",
+                    "plan": {
+                      "type": "plan",
+                      "id": "269315",
+                      "name": "Pro"
+                    },
+                    "company_id": "6",
+                    "remote_created_at": 1663597223,
+                    "created_at": 1663597223,
+                    "updated_at": 1663597223,
+                    "last_request_at": 1663597223,
+                    "size": 100,
+                    "website": "https://www.intercom.com",
+                    "industry": "Software",
+                    "monthly_spend": 100,
+                    "session_count": 100,
+                    "user_count": 100,
+                    "custom_attributes": {
+                      "paid_subscriber": true,
+                      "monthly_spend": 155.5,
+                      "team_mates": 9
+                    },
+                    "tags": {
+                      "type": "tag.list",
+                      "tags": [
+                        null
+                      ]
+                    },
+                    "segments": {
+                      "type": "segment.list",
+                      "segments": [
+                        {
+                          "type": "segment",
+                          "id": "56203d253cba154d39010062",
+                          "name": "Active",
+                          "created_at": 1394621988,
+                          "updated_at": 1394622004,
+                          "person_type": "contact",
+                          "count": 3
+                        }
+                      ]
+                    }
+                  }
+                ]
+              },
+              "location_data": {
+                "type": "location_data",
+                "city_name": "Dublin",
+                "continent_code": "EU",
+                "country_code": "IRL",
+                "country_name": "Ireland",
+                "postal_code": "D02 N960",
+                "region_name": "Leinster",
+                "timezone": "Europe/Dublin"
+              },
+              "las_request_at": 1663597260,
+              "created_at": 1663597223,
+              "remote_created_at": 1663597223,
+              "signed_up_at": 1663597223,
+              "updated_at": 1663597260,
+              "session_count": 1,
+              "social_profiles": {
+                "type": "social_profile.list",
+                "social_profiles": [
+                  "social_profiles"
+                ]
+              },
+              "owner_id": "5169261",
+              "unsubscribed_from_emails": false,
+              "marked_email_as_spam": false,
+              "has_hard_bounced": false,
+              "tags": {
+                "type": "tag.list",
+                "tags": [
+                  {
+                    "type": "tag",
+                    "id": "8482",
+                    "name": "tag_name"
+                  }
+                ]
+              },
+              "segments": {
+                "type": "segment.list",
+                "segments": [
+                  "segments"
+                ]
+              },
+              "custom_attributes": {},
+              "referrer": "https://www.google.com/",
+              "utm_campaign": "intercom-link",
+              "utm_content": "banner",
+              "utm_medium": "email",
+              "utm_source": "Intercom",
+              "utm_term": "messenger",
+              "do_not_track": false
+            }
           }
         }
       ],
@@ -25402,8 +26586,17 @@
           "path": "/visitors/convert",
           "responseStatusCode": 200,
           "name": "Successful",
-          "headers": {
-            "Intercom-Version": "2.11"
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "visitor": {
+                "user_id": "test-uuid-replacement"
+              },
+              "user": {
+                "email": "foo@bar.com"
+              },
+              "type": "user"
+            }
           },
           "responseBody": {
             "type": "json",

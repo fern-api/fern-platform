@@ -110,12 +110,6 @@
         {
           "path": "/list",
           "responseStatusCode": 200,
-          "queryParameters": {
-            "pageNumber": 0,
-            "limit": 0,
-            "ignoredParam1": "ignoredParam1",
-            "ignoredParam2": "ignoredParam2"
-          },
           "responseBody": {
             "type": "json",
             "value": {

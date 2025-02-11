@@ -222,25 +222,6 @@
         {
           "path": "/search",
           "responseStatusCode": 200,
-          "queryParameters": {
-            "filter": {
-              "name": "name",
-              "age": 0,
-              "location": {
-                "city": "city",
-                "country": "country",
-                "coordinates": {
-                  "latitude": 0,
-                  "longitude": 0
-                }
-              }
-            },
-            "sort": "asc",
-            "limit": 0,
-            "tags": [
-              "tags"
-            ]
-          },
           "responseBody": {
             "type": "json",
             "value": {

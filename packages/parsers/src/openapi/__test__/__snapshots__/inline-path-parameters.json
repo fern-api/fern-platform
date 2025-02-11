@@ -39,7 +39,15 @@
           }
         }
       ],
-      "examples": [],
+      "examples": [
+        {
+          "path": "/users/user_id",
+          "responseStatusCode": 200,
+          "pathParameters": {
+            "user_id": "user_id"
+          }
+        }
+      ],
       "protocol": {
         "type": "rest"
       }
@@ -293,6 +301,12 @@
           "responseStatusCode": 200,
           "pathParameters": {
             "id": "id"
+          },
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "access": "private"
+            }
           },
           "responseBody": {
             "type": "json",

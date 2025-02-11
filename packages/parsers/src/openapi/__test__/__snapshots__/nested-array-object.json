@@ -75,7 +75,7 @@
       "examples": [
         {
           "path": "/test/nested/array-object",
-          "responseStatusCode": 0,
+          "responseStatusCode": 200,
           "requestBody": {
             "type": "json",
             "value": [

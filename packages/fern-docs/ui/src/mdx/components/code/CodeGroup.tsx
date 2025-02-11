@@ -15,6 +15,7 @@ import { HorizontalOverflowMask } from "../../../components/HorizontalOverflowMa
 export declare namespace CodeGroup {
   export interface Item extends FernSyntaxHighlighterProps {
     title?: string;
+    matchLanguage?: string;
   }
 
   export interface Props {
@@ -34,19 +35,22 @@ export const CodeGroup: React.FC<React.PropsWithChildren<CodeGroup.Props>> = ({
   useEffect(() => {
     if (selectedLanguage) {
       const matchingTab = itemsRef.current.find((item) => {
-        const normalizedLanguage = ApiDefinition.cleanLanguage(item.language);
-        return item.language && normalizedLanguage === selectedLanguage;
+        const matchLanguage = item.matchLanguage || item.language;
+        return ApiDefinition.cleanLanguage(matchLanguage) === selectedLanguage;
       });
 
       if (matchingTab) {
         const newIndex = itemsRef.current.indexOf(matchingTab);
         setSelectedTabIndex((prevIndex) => {
           const prevTab = itemsRef.current[prevIndex];
-          if (
-            prevTab?.language &&
-            ApiDefinition.cleanLanguage(prevTab.language) === selectedLanguage
-          ) {
-            return prevIndex;
+          if (prevTab) {
+            const prevMatchLanguage = prevTab.matchLanguage || prevTab.language;
+            const currentMatch =
+              ApiDefinition.cleanLanguage(prevMatchLanguage) ===
+              selectedLanguage;
+            if (currentMatch) {
+              return prevIndex;
+            }
           }
           return newIndex;
         });
@@ -59,12 +63,12 @@ export const CodeGroup: React.FC<React.PropsWithChildren<CodeGroup.Props>> = ({
     setSelectedTabIndex(newIndex);
 
     const tab = itemsRef.current[newIndex];
-    const normalizedLanguage = tab?.language
-      ? ApiDefinition.cleanLanguage(tab.language)
-      : undefined;
-
-    if (normalizedLanguage && normalizedLanguage !== selectedLanguage) {
-      setSelectedLanguage(normalizedLanguage);
+    if (tab) {
+      const matchLanguage = tab.matchLanguage || tab.language;
+      const normalizedLanguage = ApiDefinition.cleanLanguage(matchLanguage);
+      if (normalizedLanguage && normalizedLanguage !== selectedLanguage) {
+        setSelectedLanguage(normalizedLanguage);
+      }
     }
   };
 

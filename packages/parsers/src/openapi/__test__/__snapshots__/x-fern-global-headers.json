@@ -143,6 +143,12 @@
             "x-api-key": "x-api-key",
             "my-api-version": "my-api-version"
           },
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "stream": false
+            }
+          },
           "responseBody": {
             "type": "json",
             "value": "string"
