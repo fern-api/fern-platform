@@ -66,10 +66,11 @@ const nextConfig: NextConfig = {
     ],
     useCache: true,
     newDevOverlay: true,
+    authInterrupts: true,
     swcTraceProfiling: true,
-    slowModuleDetection: {
-      buildTimeThresholdMs: 1000,
-    },
+    slowModuleDetection: process.env.VERCEL
+      ? undefined
+      : { buildTimeThresholdMs: 1000 },
   },
 
   env: {
