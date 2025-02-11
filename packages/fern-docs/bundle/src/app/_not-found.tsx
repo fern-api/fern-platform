@@ -18,6 +18,7 @@ export default async function NotFound() {
     loader.getColors(),
     loader.getConfig(),
   ]);
+
   return (
     <ThemeProvider
       hasLight={Boolean(colors.light)}

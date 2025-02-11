@@ -73,19 +73,16 @@ export interface DocsLoader {
    * @returns the config of the docs
    */
   getConfig: () => Promise<
-    Omit<DocsV1Read.DocsDefinition["config"], "navigation" | "root"> | undefined
+    Omit<DocsV1Read.DocsDefinition["config"], "navigation" | "root">
   >;
 
   /**
    * @returns the markdown content for the given page id
    */
-  getPage: (pageId: string) => Promise<
-    | {
-        markdown: string;
-        editThisPageUrl?: string;
-      }
-    | undefined
-  >;
+  getPage: (pageId: string) => Promise<{
+    markdown: string;
+    editThisPageUrl?: string;
+  }>;
 
   /**
    * @returns the serialized page for the given page id
@@ -242,7 +239,7 @@ const getRoot = async (
 const getConfig = async (domain: string) => {
   const response = await loadWithUrl(domain);
   if (!response.ok) {
-    return undefined;
+    notFound();
   }
   const { navigation, root, ...config } = response.body.definition.config;
   return config;
@@ -255,9 +252,13 @@ const getPage = async (domain: string, pageId: string) => {
 
   const response = await loadWithUrl(domain);
   if (!response.ok) {
-    return undefined;
+    notFound();
   }
-  return response.body.definition.pages[pageId as PageId];
+  const page = response.body.definition.pages[pageId as PageId];
+  if (page == null) {
+    notFound();
+  }
+  return page;
 };
 
 const serializeMdx = async (
