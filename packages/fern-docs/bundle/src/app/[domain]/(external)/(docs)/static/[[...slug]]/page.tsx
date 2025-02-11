@@ -11,6 +11,9 @@ export const dynamic = "force-static";
 export default async function StaticPage(props: {
   params: Promise<{ slug?: string[]; domain: string }>;
 }) {
+  console.debug(
+    "/app/[domain]/(external)/(docs)/static/[[...slug]]/page.tsx: starting..."
+  );
   console.time("/app/[domain]/(external)/(docs)/static/[[...slug]]/page.tsx");
   const { domain, slug } = await props.params;
 

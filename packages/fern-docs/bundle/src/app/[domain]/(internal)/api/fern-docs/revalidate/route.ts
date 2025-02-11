@@ -1,5 +1,4 @@
 import { revalidateTag } from "next/cache";
-import { notFound } from "next/navigation";
 import { NextRequest, NextResponse } from "next/server";
 
 import { FernNavigation } from "@fern-api/fdr-sdk";
@@ -22,9 +21,6 @@ export async function GET(
   if (req.nextUrl.searchParams.get("regenerate") === "true") {
     const docs = await createCachedDocsLoader(domain);
     const root = await docs.unsafe_getFullRoot();
-    if (!root) {
-      notFound();
-    }
     const collector = FernNavigation.NodeCollector.collect(root);
 
     const promises = collector.slugs.map((slug) => {

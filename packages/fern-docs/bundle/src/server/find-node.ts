@@ -7,9 +7,6 @@ import { DocsLoader } from "./docs-loader";
 export function createFindNode(loader: DocsLoader) {
   return async (slug: FernNavigation.Slug) => {
     const root = await loader.getRoot();
-    if (root == null) {
-      return undefined;
-    }
     const node = FernNavigation.utils.findNode(root, slug);
     if (node.type === "found") {
       return node.node;

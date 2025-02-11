@@ -1,5 +1,4 @@
 import { cookies } from "next/headers";
-import { notFound } from "next/navigation";
 
 import { COOKIE_FERN_TOKEN } from "@fern-docs/utils";
 
@@ -27,10 +26,6 @@ export default async function Layout({
     loader.getRoot(),
     loader.getEdgeFlags(),
   ]);
-  if (!root) {
-    console.error(`[${domain}] Root node not found`);
-    notFound();
-  }
   const apiGroups = flattenApiSection(root);
 
   return (

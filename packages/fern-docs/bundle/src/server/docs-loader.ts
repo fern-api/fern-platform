@@ -411,16 +411,16 @@ const getLayout = async (domain: string) => {
     notFound();
   }
 
-  const logoHeight = config?.logoHeight ?? DEFAULT_LOGO_HEIGHT;
-  const sidebarWidth = toPx(config?.layout?.sidebarWidth) ?? 288;
+  const logoHeight = config.logoHeight ?? DEFAULT_LOGO_HEIGHT;
+  const sidebarWidth = toPx(config.layout?.sidebarWidth) ?? 288;
   const pageWidth =
-    config?.layout?.pageWidth?.type === "full"
+    config.layout?.pageWidth?.type === "full"
       ? undefined
-      : (toPx(config?.layout?.pageWidth) ?? 1_408);
-  const headerHeight = toPx(config?.layout?.headerHeight) ?? 64;
-  const contentWidth = toPx(config?.layout?.contentWidth) ?? 704;
-  const tabsPlacement = config?.layout?.tabsPlacement ?? "SIDEBAR";
-  const searchbarPlacement = config?.layout?.searchbarPlacement ?? "HEADER";
+      : (toPx(config.layout?.pageWidth) ?? 1_408);
+  const headerHeight = toPx(config.layout?.headerHeight) ?? 64;
+  const contentWidth = toPx(config.layout?.contentWidth) ?? 704;
+  const tabsPlacement = config.layout?.tabsPlacement ?? "SIDEBAR";
+  const searchbarPlacement = config.layout?.searchbarPlacement ?? "HEADER";
   return {
     logoHeight,
     sidebarWidth,

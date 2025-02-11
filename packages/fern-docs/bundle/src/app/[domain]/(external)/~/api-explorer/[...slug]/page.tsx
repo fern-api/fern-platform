@@ -26,10 +26,6 @@ export default async function Page(props: {
 
   console.debug(`[${loader.domain}] Loading API Explorer for slug: ${slug}`);
   const root = await loader.getRoot();
-  if (root == null) {
-    console.error(`[${loader.domain}] Could not find root for slug: ${slug}`);
-    notFound();
-  }
 
   const found = FernNavigation.utils.findNode(root, slug);
   if (found.type !== "found") {
@@ -53,10 +49,7 @@ export default async function Page(props: {
     notFound();
   }
   const api = await loader.getApi(node.apiDefinitionId);
-  if (api == null) {
-    console.error(`[${loader.domain}] Could not find api for slug: ${slug}`);
-    notFound();
-  }
+
   if (node.type === "endpoint") {
     const context = createEndpointContext(node, api);
     if (context == null) {

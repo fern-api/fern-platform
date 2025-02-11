@@ -52,6 +52,7 @@ export default async function Page({
 
   cacheTag(domain);
 
+  console.debug("/app/[domain]/(external)/(docs)/_page.tsx: starting...");
   console.time("/app/[domain]/(external)/(docs)/_page.tsx");
   const loader = await createCachedDocsLoader(domain, fern_token);
   const [baseUrl, config, authState, edgeFlags, colors] = await Promise.all([
@@ -66,7 +67,7 @@ export default async function Page({
   const configuredRedirect = getRedirectForPath(
     conformTrailingSlash(addLeadingSlash(slug)),
     baseUrl,
-    config?.redirects
+    config.redirects
   );
 
   if (configuredRedirect != null) {
@@ -78,13 +79,6 @@ export default async function Page({
 
   // get the root node
   const root = await loader.getRoot();
-
-  // this should not happen, but if it does, we should return a 404
-  if (root == null) {
-    // TODO: sentry
-    console.error(`[${domain}] Root node not found`);
-    notFound();
-  }
 
   // always match the basepath of the root node
   if (!slug.startsWith(root.slug)) {
@@ -226,9 +220,9 @@ export default async function Page({
 
   const props: DocsProps = {
     baseUrl: baseUrl,
-    layout: config?.layout,
-    title: config?.title,
-    favicon: config?.favicon,
+    layout: config.layout,
+    title: config.title,
+    favicon: config.favicon,
     colors,
     navigation: {
       currentTabIndex,
@@ -238,7 +232,7 @@ export default async function Page({
       sidebar,
       trailingSlash: isTrailingSlashEnabled(),
     },
-    defaultLang: config?.defaultLanguage ?? "curl",
+    defaultLang: config.defaultLanguage ?? "curl",
     featureFlagsConfig: {
       launchDarkly,
     },
@@ -356,7 +350,7 @@ export async function generateMetadata({
       images: toImageDescriptor(files, frontmatter?.["twitter:image"]),
     },
     icons: {
-      icon: config?.favicon
+      icon: config.favicon
         ? toImageDescriptor(files, {
             type: "fileId",
             value: config.favicon,
@@ -389,9 +383,6 @@ async function getNeighbor(
     return null;
   }
   const page = await loader.getPage(pageId);
-  if (page == null) {
-    return null;
-  }
   const { data: frontmatter } = getFrontmatter(page.markdown);
   return {
     slug: node.slug,

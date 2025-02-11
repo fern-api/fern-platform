@@ -32,10 +32,10 @@ export default async function NotFound() {
               logo={{
                 light: colors.light?.logo,
                 dark: colors.dark?.logo,
-                height: config?.logoHeight,
-                href: config?.logoHref,
+                height: config.logoHeight,
+                href: config.logoHref,
               }}
-              alt={config?.title}
+              alt={config.title}
             />
             <p className="text-lg">
               We can&apos;t find the page you are looking for.

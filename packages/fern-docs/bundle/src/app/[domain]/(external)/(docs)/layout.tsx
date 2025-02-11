@@ -22,6 +22,7 @@ export default async function Layout({
   params: Promise<{ domain: string }>;
   sidebar: React.ReactNode;
 }) {
+  console.debug("/app/[domain]/(external)/(docs)/layout.tsx: starting...");
   console.time("/app/[domain]/(external)/(docs)/layout.tsx");
   const { domain } = await params;
 
@@ -38,12 +39,12 @@ export default async function Layout({
       loader.getLayout(),
     ]);
   const theme = edgeFlags.isCohereTheme ? "cohere" : "default";
-  const announcementText = config?.announcement?.text;
+  const announcementText = config.announcement?.text;
   const resolveFileSrc = createFileResolver(files);
 
   const navbarLinks: NavbarLink[] = [];
 
-  config?.navbarLinks?.forEach((link) => {
+  config.navbarLinks?.forEach((link) => {
     if (link.type === "github") {
       navbarLinks.push({
         type: "github",

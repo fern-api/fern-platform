@@ -31,9 +31,6 @@ export async function LayoutEvaluator({
 
   const loader = await createCachedDocsLoader(domain);
   const mdx = await loader.getSerializedPage(pageId);
-  if (mdx == null) {
-    throw new Error(`[${domain}] Could not serialize page: ${pageId}`);
-  }
 
   if (typeof mdx === "string") {
     unstable_cacheLife("seconds");

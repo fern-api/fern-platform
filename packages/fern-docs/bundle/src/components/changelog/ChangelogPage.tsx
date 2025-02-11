@@ -37,9 +37,6 @@ export default async function ChangelogPage({
     await Promise.all(
       compact([node.overviewPageId, ...pageIds]).map(async (pageId) => {
         const markdown = await loader.getPage(pageId);
-        if (markdown == null) {
-          return;
-        }
         return {
           pageId,
           anchors: getAnchorIds(makeToc(toTree(markdown.markdown).hast)),

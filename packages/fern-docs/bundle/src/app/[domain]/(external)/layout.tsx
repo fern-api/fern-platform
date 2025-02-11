@@ -39,6 +39,7 @@ export default async function Layout(props: {
   children: React.ReactNode;
   params: Promise<{ domain: string }>;
 }) {
+  console.debug("/app/[domain]/(external)/layout.tsx: starting...");
   console.time("/app/[domain]/(external)/layout.tsx");
   const params = await props.params;
 
@@ -65,22 +66,22 @@ export default async function Layout(props: {
   ]);
 
   const preloadHrefs = generatePreloadHrefs(
-    config?.typographyV2,
+    config.typographyV2,
     files,
     edgeFlags
   );
   const stylesheet = renderThemeStylesheet(
     colors,
-    config?.typographyV2,
-    config?.layout,
-    config?.css,
+    config.typographyV2,
+    config.layout,
+    config.css,
     files,
     true // todo: fix this
   );
 
   const { VERCEL_ENV } = getEnv();
 
-  const jsConfig = withJsConfig(config?.js, files);
+  const jsConfig = withJsConfig(config.js, files);
 
   console.timeEnd("/app/[domain]/(external)/layout.tsx");
   return (
@@ -105,7 +106,7 @@ export default async function Layout(props: {
         <CustomerAnalytics
           config={mergeCustomerAnalytics(
             deprecated_customerAnalytics,
-            config?.analyticsConfig
+            config.analyticsConfig
           )}
         />
       )}
@@ -198,42 +199,42 @@ export async function generateMetadata(props: {
     getSeoDisabled(domain),
   ]);
 
-  let index = config?.metadata?.noindex ? false : undefined;
-  let follow = config?.metadata?.nofollow ? false : undefined;
+  let index = config.metadata?.noindex ? false : undefined;
+  let follow = config.metadata?.nofollow ? false : undefined;
   if (seoDisabled) {
     index = false;
     follow = false;
   }
 
   return {
-    applicationName: config?.title,
+    applicationName: config.title,
     title: {
-      template: config?.title ? "%s | " + config?.title : "%s",
-      default: config?.title ?? "Documentation",
+      template: config.title ? "%s | " + config.title : "%s",
+      default: config.title ?? "Documentation",
     },
     robots: { index, follow },
     openGraph: {
-      title: config?.metadata?.["og:title"],
-      description: config?.metadata?.["og:description"],
-      locale: config?.metadata?.["og:locale"],
-      url: config?.metadata?.["og:url"],
-      siteName: config?.metadata?.["og:site_name"],
+      title: config.metadata?.["og:title"],
+      description: config.metadata?.["og:description"],
+      locale: config.metadata?.["og:locale"],
+      url: config.metadata?.["og:url"],
+      siteName: config.metadata?.["og:site_name"],
       images: toImageDescriptor(
         files,
-        config?.metadata?.["og:image"],
-        config?.metadata?.["og:image:width"],
-        config?.metadata?.["og:image:height"]
+        config.metadata?.["og:image"],
+        config.metadata?.["og:image:width"],
+        config.metadata?.["og:image:height"]
       ),
     },
     twitter: {
-      site: config?.metadata?.["twitter:site"],
-      creator: config?.metadata?.["twitter:handle"],
-      title: config?.metadata?.["twitter:title"],
-      description: config?.metadata?.["twitter:description"],
-      images: toImageDescriptor(files, config?.metadata?.["twitter:image"]),
+      site: config.metadata?.["twitter:site"],
+      creator: config.metadata?.["twitter:handle"],
+      title: config.metadata?.["twitter:title"],
+      description: config.metadata?.["twitter:description"],
+      images: toImageDescriptor(files, config.metadata?.["twitter:image"]),
     },
     icons: {
-      icon: config?.favicon
+      icon: config.favicon
         ? toImageDescriptor(files, {
             type: "fileId",
             value: config.favicon,

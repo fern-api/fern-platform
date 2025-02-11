@@ -11,6 +11,9 @@ import Page, { generateMetadata as _generateMetadata } from "../../_page";
 export default async function DynamicPage(props: {
   params: Promise<{ slug?: string[]; domain: string }>;
 }) {
+  console.debug(
+    "/app/[domain]/(external)/(docs)/dynamic/[[...slug]]/page.tsx: starting..."
+  );
   console.time("/app/[domain]/(external)/(docs)/dynamic/[[...slug]]/page.tsx");
 
   const [params, cookieJar] = await Promise.all([props.params, cookies()]);

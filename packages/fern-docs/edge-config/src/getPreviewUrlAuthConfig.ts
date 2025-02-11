@@ -30,7 +30,7 @@ export async function getPreviewUrlAuthConfig(
     return undefined;
   }
   const config = await get<PreviewUrlAuthConfig>("authed-previews");
-  return config?.[metadata.orgId];
+  return config.[metadata.orgId];
 }
 
 export function isPreviewDomain(domain: string): boolean {

@@ -54,7 +54,7 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
     nextUrl.host = req.headers.get(HEADER_X_FERN_HOST)!;
   }
 
-  if (config?.type === "oauth2" && config.partner === "ory") {
+  if (config.type === "oauth2" && config.partner === "ory") {
     nextUrl.pathname = nextUrl.pathname.replace(
       "/api/fern-docs/auth/callback",
       "/api/fern-docs/oauth/ory/callback"
@@ -63,7 +63,7 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
       destination: nextUrl,
       allowedDestinations: getAllowedRedirectUrls(config),
     });
-  } else if (config?.type === "sso") {
+  } else if (config.type === "sso") {
     nextUrl.pathname = nextUrl.pathname.replace(
       "/api/fern-docs/auth/callback",
       "/api/fern-docs/auth/sso/callback"

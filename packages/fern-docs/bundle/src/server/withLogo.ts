@@ -20,24 +20,24 @@ export function withLogo(
   light: FileData | undefined;
   dark: FileData | undefined;
 } {
-  const height = config?.logoHeight;
+  const height = config.logoHeight;
   const href =
-    config?.logoHref ??
+    config.logoHref ??
     encodeURI(conformTrailingSlash(addLeadingSlash(basepath ?? "")));
 
   const frontmatterLogo = getLogoFromFrontmatter(frontmatter);
 
   const lightDocsYmlLogo =
-    config?.colorsV3?.type === "light"
-      ? config?.colorsV3?.logo
-      : config?.colorsV3?.type === "darkAndLight"
-        ? config?.colorsV3?.light?.logo
+    config.colorsV3?.type === "light"
+      ? config.colorsV3?.logo
+      : config.colorsV3?.type === "darkAndLight"
+        ? config.colorsV3?.light?.logo
         : undefined;
   const darkDocsYmlLogo =
-    config?.colorsV3?.type === "dark"
-      ? config?.colorsV3.logo
-      : config?.colorsV3?.type === "darkAndLight"
-        ? config?.colorsV3.dark.logo
+    config.colorsV3?.type === "dark"
+      ? config.colorsV3.logo
+      : config.colorsV3?.type === "darkAndLight"
+        ? config.colorsV3.dark.logo
         : undefined;
 
   return {
