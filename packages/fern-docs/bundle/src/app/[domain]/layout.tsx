@@ -1,3 +1,4 @@
+import { ThemeProvider } from "next-themes";
 import { unstable_cacheTag as cacheTag } from "next/cache";
 import { Metadata, Viewport } from "next/types";
 import React from "react";
@@ -24,7 +25,6 @@ import { withJsConfig } from "@/components/components/with-js-config";
 import { FeatureFlagProvider } from "@/components/feature-flags/FeatureFlagProvider";
 import Preload, { PreloadHref } from "@/components/preload";
 import { SearchV2 } from "@/components/search";
-import { ThemeScript } from "@/components/themes/ThemeScript";
 import { renderThemeStylesheet } from "@/components/themes/stylesheet/renderThemeStylesheet";
 import { getOrgMetadataForDomain } from "@/server/auth/metadata-for-url";
 import { createCachedDocsLoader } from "@/server/docs-loader";
@@ -83,13 +83,27 @@ export default async function Layout(props: {
 
   const jsConfig = withJsConfig(config?.js, files);
 
+  const hasLight = Boolean(colors.light);
+  const hasDark = Boolean(colors.dark);
+  const enableSystem = hasLight === hasDark;
+
   return (
-    <>
+    <ThemeProvider
+      forcedTheme={
+        enableSystem
+          ? undefined
+          : hasLight
+            ? "light"
+            : hasDark
+              ? "dark"
+              : undefined
+      }
+      enableSystem={enableSystem}
+    >
       {preloadHrefs.map((href) => (
         <Preload key={href.href} href={href.href} options={href.options} />
       ))}
       <GlobalStyles>{stylesheet}</GlobalStyles>
-      <ThemeScript dark={Boolean(colors.dark)} light={Boolean(colors.light)} />
       <SyntaxHighlighterEdgeFlagsProvider
         isDarkCodeEnabled={edgeFlags.isDarkCodeEnabled}
       >
@@ -109,7 +123,7 @@ export default async function Layout(props: {
           )}
         />
       )}
-    </>
+    </ThemeProvider>
   );
 }
 

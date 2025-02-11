@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation";
 import { ReactElement, useEffect } from "react";
 
 import { ErrorBoundary } from "@/components/error-boundary";
+import { ColorsThemeConfig } from "@/server/types";
 
 import { useMessageHandler, useSetJustNavigated } from "../atoms";
 import { BgImageGradient } from "../components/BgImageGradient";
@@ -15,8 +16,13 @@ let timer: number;
 
 export function DocsPage({
   children,
+  colors,
 }: {
   children: React.ReactNode;
+  colors: {
+    light?: ColorsThemeConfig;
+    dark?: ColorsThemeConfig;
+  };
 }): ReactElement<any> | null {
   useConsoleMessage();
   useMessageHandler();
@@ -44,7 +50,7 @@ export function DocsPage({
   return (
     <>
       <InitializeTheme />
-      <BgImageGradient />
+      <BgImageGradient colors={colors} />
       <ErrorBoundary>{children}</ErrorBoundary>
     </>
   );

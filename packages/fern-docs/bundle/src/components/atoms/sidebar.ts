@@ -15,7 +15,6 @@ import {
   SIDEBAR_ROOT_NODE_ATOM,
   TABS_ATOM,
 } from "./navigation";
-import { THEME_ATOM } from "./theme";
 import { IS_MOBILE_SCREEN_ATOM, MOBILE_SIDEBAR_ENABLED_ATOM } from "./viewport";
 
 export const SIDEBAR_CHILD_TO_PARENTS_MAP_ATOM = atom((get) => {
@@ -401,16 +400,6 @@ export function useMessageHandler(): void {
         } else if (event.data === "openMobileSidebar") {
           set(MOBILE_SIDEBAR_OPEN_ATOM, true);
           event.source?.postMessage("mobileSidebarOpened", {
-            targetOrigin: event.origin,
-          });
-        } else if (event.data === "toggleTheme") {
-          set(THEME_ATOM, get.peek(THEME_ATOM) === "dark" ? "light" : "dark");
-          event.source?.postMessage("themeToggled", {
-            targetOrigin: event.origin,
-          });
-        } else if (event.data === "setSystemTheme") {
-          set(THEME_ATOM, "system");
-          event.source?.postMessage("themeSetToSystem", {
             targetOrigin: event.origin,
           });
         }

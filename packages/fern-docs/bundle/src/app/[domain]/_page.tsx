@@ -372,9 +372,10 @@ export default async function Page({
 
   return (
     <HydrateAtoms pageProps={props}>
-      <DocsPage>
+      <DocsPage colors={colors}>
         <ThemedDocs
           theme={theme}
+          colors={colors}
           announcement={
             announcementText && (
               <Announcement announcement={announcementText}>

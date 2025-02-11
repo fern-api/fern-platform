@@ -1,17 +1,17 @@
-import { FC } from "react";
+import { cn } from "@fern-docs/components";
 
-import cn from "clsx";
+import { ColorsThemeConfig } from "@/server/types";
 
-import { useColors } from "../atoms";
-
-export declare namespace BgImageGradient {
-  export interface Props {
-    className?: string;
-  }
-}
-
-export const BgImageGradient: FC<BgImageGradient.Props> = ({ className }) => {
-  const colors = useColors();
+export const BgImageGradient = ({
+  className,
+  colors,
+}: {
+  className?: string;
+  colors: {
+    light?: ColorsThemeConfig;
+    dark?: ColorsThemeConfig;
+  };
+}) => {
   const darkBackground = colors.dark?.background;
   const lightBackground = colors.light?.background;
   const darkBackgroundImage = colors.dark?.backgroundImage;
@@ -21,11 +21,10 @@ export const BgImageGradient: FC<BgImageGradient.Props> = ({ className }) => {
     <div
       className={cn(className, "fern-background", {
         "from-accent/10 bg-gradient-to-b to-transparent":
-          lightBackground?.type === "gradient" && lightBackgroundImage == null,
+          !lightBackground && lightBackgroundImage == null,
         "dark:from-accent/10 dark:bg-gradient-to-b dark:to-transparent":
-          darkBackground?.type === "gradient" && darkBackgroundImage == null,
-        "dark:from-transparent":
-          darkBackground?.type === "solid" && darkBackgroundImage == null,
+          !darkBackground && darkBackgroundImage == null,
+        "dark:from-transparent": darkBackground && darkBackgroundImage == null,
         "fern-background-image": lightBackgroundImage != null,
         "fern-background-image-dark": darkBackgroundImage != null,
       })}

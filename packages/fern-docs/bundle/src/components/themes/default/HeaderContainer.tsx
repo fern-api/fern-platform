@@ -13,6 +13,7 @@ import { BgImageGradient } from "@/components/components/BgImageGradient";
 import { Header } from "@/components/header/Header";
 import { HeaderTabs } from "@/components/header/HeaderTabs";
 import { useIsScrolled } from "@/components/hooks/useIsScrolled";
+import { ColorsThemeConfig } from "@/server/types";
 
 import { FernHeader } from "./fern-header";
 
@@ -23,6 +24,7 @@ export function HeaderContainer({
   hasBackgroundDark,
   showHeader,
   showHeaderTabs,
+  colors,
 }: {
   announcement?: React.ReactNode;
   className?: string;
@@ -30,6 +32,10 @@ export function HeaderContainer({
   hasBackgroundDark?: boolean;
   showHeader?: boolean;
   showHeaderTabs?: boolean;
+  colors: {
+    light?: ColorsThemeConfig;
+    dark?: ColorsThemeConfig;
+  };
 }): ReactElement<any> {
   const isScrolled = useIsScrolled();
   const isMobileSidebarEnabled = useAtomValue(MOBILE_SIDEBAR_ENABLED_ATOM);
@@ -51,10 +57,13 @@ export function HeaderContainer({
           }
         >
           <div className="clipped-background">
-            <BgImageGradient className="h-screen opacity-60 dark:opacity-80" />
+            <BgImageGradient
+              className="h-screen opacity-60 dark:opacity-80"
+              colors={colors}
+            />
           </div>
           <div className="fern-header">
-            <Header className="max-w-page-width mx-auto" />
+            <Header className="max-w-page-width mx-auto" colors={colors} />
           </div>
           {showHeaderTabs && (
             <nav aria-label="tabs" className="fern-header-tabs">

@@ -1,5 +1,7 @@
 "use client";
 
+import { useTheme } from "next-themes";
+
 import clsx from "clsx";
 import { useAtomValue } from "jotai";
 
@@ -9,10 +11,9 @@ import {
   HEADER_OFFSET_ATOM,
   MOBILE_HEADER_OFFSET_ATOM,
   SIDEBAR_DISMISSABLE_ATOM,
-  useColors,
-  useTheme,
 } from "@/components/atoms";
 import { Sidebar } from "@/components/sidebar/Sidebar";
+import { ColorsThemeConfig } from "@/server/types";
 
 import { HeaderContainer } from "./HeaderContainer";
 
@@ -38,16 +39,25 @@ const DefaultDocsStyle = () => {
   );
 };
 
+function useResolvedTheme() {
+  const { resolvedTheme: theme } = useTheme();
+  return theme === "dark" ? "dark" : "light";
+}
+
 export function DefaultDocs({
   children,
   announcement,
+  colors,
 }: {
   children: React.ReactNode;
   announcement?: React.ReactNode;
+  colors: {
+    light?: ColorsThemeConfig;
+    dark?: ColorsThemeConfig;
+  };
 }) {
-  const colors = useColors();
   const layout = useAtomValue(DOCS_LAYOUT_ATOM);
-  const theme = useTheme();
+  const theme = useResolvedTheme();
   const isSidebarFixed =
     layout?.disableHeader || colors[theme]?.sidebarBackground != null;
 
@@ -56,7 +66,12 @@ export function DefaultDocs({
   return (
     <div id="fern-docs" className="fern-container fern-theme-default">
       <DefaultDocsStyle />
-      <HeaderContainer announcement={announcement} showHeader showHeaderTabs />
+      <HeaderContainer
+        announcement={announcement}
+        showHeader
+        showHeaderTabs
+        colors={colors}
+      />
 
       <style jsx>
         {`

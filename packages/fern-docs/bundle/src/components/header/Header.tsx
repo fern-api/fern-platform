@@ -9,11 +9,11 @@ import type { DocsV1Read } from "@fern-api/fdr-sdk/client/types";
 import { FernButton, FernButtonGroup } from "@fern-docs/components";
 
 import { SearchV2Trigger } from "@/components/search-trigger";
+import { ColorsThemeConfig } from "@/server/types";
 
 import {
   NAVBAR_LINKS_ATOM,
   SEARCHBAR_PLACEMENT_ATOM,
-  useColors,
   useOpenSearchDialog,
 } from "../atoms";
 import { FernLinkButton } from "../components/FernLinkButton";
@@ -27,15 +27,18 @@ export declare namespace Header {
   export interface Props {
     className?: string;
     style?: CSSProperties;
+    colors: {
+      light?: ColorsThemeConfig;
+      dark?: ColorsThemeConfig;
+    };
   }
 }
 
 const UnmemoizedHeader = forwardRef<
   HTMLDivElement,
   PropsWithChildren<Header.Props>
->(function Header({ className, style }, ref) {
+>(function Header({ className, style, colors }, ref) {
   const navbarLinks = useAtomValue(NAVBAR_LINKS_ATOM);
-  const colors = useColors();
   const openSearchDialog = useOpenSearchDialog();
   const showSearchBar = useAtomValue(SEARCHBAR_PLACEMENT_ATOM) === "HEADER";
 

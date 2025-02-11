@@ -1,6 +1,5 @@
+import { useTheme } from "next-themes";
 import { ReactElement, useEffect, useRef, useState } from "react";
-
-import { useTheme } from "../../../atoms";
 
 export function Mermaid({ children }: { children: string }): ReactElement<any> {
   if (typeof window === "undefined" || typeof children !== "string") {
@@ -13,7 +12,7 @@ export function Mermaid({ children }: { children: string }): ReactElement<any> {
 function MermaidInternal({ code }: { code: string }): ReactElement<any> {
   const ref = useRef<HTMLDivElement>(null);
   const [svg, setSvg] = useState<string>();
-  const theme = useTheme();
+  const { resolvedTheme: theme } = useTheme();
 
   useEffect(() => {
     void (async () => {

@@ -1,3 +1,4 @@
+import { useTheme } from "next-themes";
 import { memo, useState } from "react";
 import { Monitor, Moon, Sun } from "react-feather";
 
@@ -7,8 +8,6 @@ import cn from "clsx";
 import { FernButton, FernButtonProps } from "@fern-docs/components";
 import { useMounted } from "@fern-ui/react-commons";
 
-import { useSetSystemTheme, useTheme, useToggleTheme } from "../../atoms";
-
 export declare namespace ThemeButton {
   export interface Props extends FernButtonProps {
     className?: string;
@@ -17,9 +16,7 @@ export declare namespace ThemeButton {
 
 export const ThemeButton = memo(
   ({ className, ...props }: ThemeButton.Props) => {
-    const resolvedTheme = useTheme();
-    const toggleTheme = useToggleTheme();
-    const setSystemTheme = useSetSystemTheme();
+    const { resolvedTheme, setTheme } = useTheme();
     const mounted = useMounted();
     const [isOpen, setOpen] = useState(false);
 
@@ -38,7 +35,9 @@ export const ThemeButton = memo(
           <FernButton
             {...props}
             className={cn("fern-theme-button", className)}
-            onClick={toggleTheme}
+            onClick={() =>
+              setTheme(resolvedTheme === "dark" ? "light" : "dark")
+            }
             onContextMenu={(e) => {
               e.preventDefault();
               setOpen(true);
@@ -56,7 +55,7 @@ export const ThemeButton = memo(
           <Popover.Content sideOffset={5} side="bottom" align="center">
             <FernButton
               onClick={() => {
-                setSystemTheme();
+                setTheme("system");
                 setOpen(false);
               }}
               variant="outlined"
