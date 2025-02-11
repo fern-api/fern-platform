@@ -35,8 +35,8 @@ export const Json: React.FC<JSONProps> = ({
           width: "100%",
           backgroundColor: "transparent",
           fontFamily: "var(--typography-code-font-family)",
-          fontSize: "0.875em",
-          lineHeight: "1.625",
+          fontSize: "0.875rem",
+          lineHeight: "1.25rem",
         }}
         iconStyle="square"
         indentWidth={4}
