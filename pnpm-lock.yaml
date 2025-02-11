@@ -853,7 +853,7 @@ importers:
         version: 1.10.1(@opentelemetry/api-logs@0.57.0)(@opentelemetry/api@1.9.0)(@opentelemetry/instrumentation@0.57.0(@opentelemetry/api@1.9.0))(@opentelemetry/resources@1.30.0(@opentelemetry/api@1.9.0))(@opentelemetry/sdk-logs@0.57.0(@opentelemetry/api@1.9.0))(@opentelemetry/sdk-metrics@1.30.0(@opentelemetry/api@1.9.0))(@opentelemetry/sdk-trace-base@1.30.0(@opentelemetry/api@1.9.0))
       '@workos-inc/node':
         specifier: ^7.31.0
-        version: 7.31.0(express@4.21.2)(next@15.2.0-canary.50(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(babel-plugin-react-compiler@19.0.0-beta-30d8a17-20250209)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.0))
+        version: 7.31.0(express@4.21.2)(next@15.2.0-canary.50(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.0))
       ai:
         specifier: ^4.0.18
         version: 4.0.18(react@19.0.0)(zod@3.24.1)
@@ -937,7 +937,7 @@ importers:
         version: 12.4.2(@emotion/is-prop-valid@1.2.2)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       next:
         specifier: 15.2.0-canary.50
-        version: 15.2.0-canary.50(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(babel-plugin-react-compiler@19.0.0-beta-30d8a17-20250209)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.0)
+        version: 15.2.0-canary.50(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.0)
       numeral:
         specifier: ^2.0.6
         version: 2.0.6
@@ -1067,7 +1067,7 @@ importers:
         version: 8.5.3(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(storybook@8.5.3(prettier@3.4.2))
       '@storybook/nextjs':
         specifier: ^8.5.3
-        version: 8.5.3(@swc/core@1.5.7)(esbuild@0.25.0)(next@15.2.0-canary.50(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(babel-plugin-react-compiler@19.0.0-beta-30d8a17-20250209)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.0)(storybook@8.5.3(prettier@3.4.2))(type-fest@4.21.0)(typescript@5.7.2)(webpack-hot-middleware@2.26.1)(webpack@5.94.0(@swc/core@1.5.7)(esbuild@0.25.0))
+        version: 8.5.3(@swc/core@1.5.7)(esbuild@0.25.0)(next@15.2.0-canary.50(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.0)(storybook@8.5.3(prettier@3.4.2))(type-fest@4.21.0)(typescript@5.7.2)(webpack-hot-middleware@2.26.1)(webpack@5.94.0(@swc/core@1.5.7)(esbuild@0.25.0))
       '@storybook/react':
         specifier: ^8.5.3
         version: 8.5.3(@storybook/test@8.5.3(storybook@8.5.3(prettier@3.4.2)))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(storybook@8.5.3(prettier@3.4.2))(typescript@5.7.2)
@@ -1110,9 +1110,6 @@ importers:
       autoprefixer:
         specifier: ^10.4.16
         version: 10.4.19(postcss@8.4.31)
-      babel-plugin-react-compiler:
-        specifier: 19.0.0-beta-30d8a17-20250209
-        version: 19.0.0-beta-30d8a17-20250209
       chromatic:
         specifier: ^11.3.0
         version: 11.18.1
@@ -1142,7 +1139,7 @@ importers:
         version: 24.0.0
       next-router-mock:
         specifier: ^0.9.13
-        version: 0.9.13(next@15.2.0-canary.50(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(babel-plugin-react-compiler@19.0.0-beta-30d8a17-20250209)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.0))(react@19.0.0)
+        version: 0.9.13(next@15.2.0-canary.50(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.0))(react@19.0.0)
       postcss:
         specifier: 8.4.31
         version: 8.4.31
@@ -1551,7 +1548,7 @@ importers:
         version: 9.17.0(jiti@1.21.7)
       next:
         specifier: 15.2.0-canary.50
-        version: 15.2.0-canary.50(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(babel-plugin-react-compiler@19.0.0-beta-30d8a17-20250209)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.0)
+        version: 15.2.0-canary.50(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.0)
       prettier:
         specifier: ^3.4.2
         version: 3.4.2
@@ -1965,7 +1962,7 @@ importers:
         version: 6.1.2(postcss@8.4.31)
       next:
         specifier: 15.2.0-canary.50
-        version: 15.2.0-canary.50(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(babel-plugin-react-compiler@19.0.0-beta-30d8a17-20250209)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.0)
+        version: 15.2.0-canary.50(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.0)
       postcss:
         specifier: 8.4.31
         version: 8.4.31
@@ -2072,7 +2069,7 @@ importers:
         version: 9.17.0(jiti@1.21.7)
       next:
         specifier: 15.2.0-canary.50
-        version: 15.2.0-canary.50(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(babel-plugin-react-compiler@19.0.0-beta-30d8a17-20250209)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.0)
+        version: 15.2.0-canary.50(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.0)
       prettier:
         specifier: ^3.4.2
         version: 3.4.2
@@ -2158,7 +2155,7 @@ importers:
         version: 9.17.0(jiti@1.21.7)
       next:
         specifier: 15.2.0-canary.50
-        version: 15.2.0-canary.50(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(babel-plugin-react-compiler@19.0.0-beta-30d8a17-20250209)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.0)
+        version: 15.2.0-canary.50(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.0)
       prettier:
         specifier: ^3.4.2
         version: 3.4.2
@@ -2381,7 +2378,7 @@ importers:
     dependencies:
       next:
         specifier: 15.2.0-canary.50
-        version: 15.2.0-canary.50(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(babel-plugin-react-compiler@19.0.0-beta-30d8a17-20250209)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.0)
+        version: 15.2.0-canary.50(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.0)
       react:
         specifier: 19.0.0
         version: 19.0.0
@@ -8758,9 +8755,6 @@ packages:
     resolution: {integrity: sha512-2R25rQZWP63nGwaAswvDazbPXfrM3HwVoBXK6HcqeKrSrL/JqcC/rDcf95l4r7LXLyxDXc8uQDa064GubtCABg==}
     peerDependencies:
       '@babel/core': 7.26.0
-
-  babel-plugin-react-compiler@19.0.0-beta-30d8a17-20250209:
-    resolution: {integrity: sha512-0pQHlz5nmBiEQ8ZWWVLeaBzz/FkToAdXEXBBnd21uSrDtIzhSe+s3VMvqMsv6vYHNTr+0KmsvVfEqXQp0W0kzg==}
 
   babel-preset-current-node-syntax@1.0.1:
     resolution: {integrity: sha512-M7LQ0bxarkxQoN+vz5aJPsLBn77n8QgTFmo8WK0/44auK2xlCXrYcUxHFxgU7qW5Yzw/CjmLRK2uJzaCd7LvqQ==}
@@ -22831,7 +22825,7 @@ snapshots:
     dependencies:
       storybook: 8.5.3(prettier@3.4.2)
 
-  '@storybook/nextjs@8.5.3(@swc/core@1.5.7)(esbuild@0.25.0)(next@15.2.0-canary.50(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(babel-plugin-react-compiler@19.0.0-beta-30d8a17-20250209)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.0)(storybook@8.5.3(prettier@3.4.2))(type-fest@4.21.0)(typescript@5.7.2)(webpack-hot-middleware@2.26.1)(webpack@5.94.0(@swc/core@1.5.7)(esbuild@0.25.0))':
+  '@storybook/nextjs@8.5.3(@swc/core@1.5.7)(esbuild@0.25.0)(next@15.2.0-canary.50(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.0)(storybook@8.5.3(prettier@3.4.2))(type-fest@4.21.0)(typescript@5.7.2)(webpack-hot-middleware@2.26.1)(webpack@5.94.0(@swc/core@1.5.7)(esbuild@0.25.0))':
     dependencies:
       '@babel/core': 7.26.0
       '@babel/plugin-syntax-bigint': 7.8.3(@babel/core@7.26.0)
@@ -22857,7 +22851,7 @@ snapshots:
       find-up: 5.0.0
       image-size: 1.1.1
       loader-utils: 3.2.1
-      next: 15.2.0-canary.50(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(babel-plugin-react-compiler@19.0.0-beta-30d8a17-20250209)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.0)
+      next: 15.2.0-canary.50(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.0)
       node-polyfill-webpack-plugin: 2.0.1(webpack@5.94.0(@swc/core@1.5.7)(esbuild@0.25.0))
       pnp-webpack-plugin: 1.7.0(typescript@5.7.2)
       postcss: 8.4.31
@@ -22922,7 +22916,7 @@ snapshots:
       find-up: 5.0.0
       image-size: 1.1.1
       loader-utils: 3.2.1
-      next: 15.2.0-canary.50(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(babel-plugin-react-compiler@19.0.0-beta-30d8a17-20250209)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.0)
+      next: 15.2.0-canary.50(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.0)
       node-polyfill-webpack-plugin: 2.0.1(webpack@5.94.0(@swc/core@1.5.7))
       pnp-webpack-plugin: 1.7.0(typescript@5.7.2)
       postcss: 8.4.31
@@ -24170,9 +24164,9 @@ snapshots:
 
   '@webgpu/types@0.1.54': {}
 
-  '@workos-inc/node@7.31.0(express@4.21.2)(next@15.2.0-canary.50(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(babel-plugin-react-compiler@19.0.0-beta-30d8a17-20250209)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.0))':
+  '@workos-inc/node@7.31.0(express@4.21.2)(next@15.2.0-canary.50(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.0))':
     dependencies:
-      iron-session: 6.3.1(express@4.21.2)(next@15.2.0-canary.50(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(babel-plugin-react-compiler@19.0.0-beta-30d8a17-20250209)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.0))
+      iron-session: 6.3.1(express@4.21.2)(next@15.2.0-canary.50(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.0))
       jose: 5.6.3
       pluralize: 8.0.0
     transitivePeerDependencies:
@@ -25694,10 +25688,6 @@ snapshots:
       '@babel/helper-define-polyfill-provider': 0.6.2(@babel/core@7.26.0)
     transitivePeerDependencies:
       - supports-color
-
-  babel-plugin-react-compiler@19.0.0-beta-30d8a17-20250209:
-    dependencies:
-      '@babel/types': 7.26.8
 
   babel-preset-current-node-syntax@1.0.1(@babel/core@7.26.0):
     dependencies:
@@ -29331,7 +29321,7 @@ snapshots:
 
   ipaddr.js@1.9.1: {}
 
-  iron-session@6.3.1(express@4.21.2)(next@15.2.0-canary.50(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(babel-plugin-react-compiler@19.0.0-beta-30d8a17-20250209)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.0)):
+  iron-session@6.3.1(express@4.21.2)(next@15.2.0-canary.50(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.0)):
     dependencies:
       '@peculiar/webcrypto': 1.5.0
       '@types/cookie': 0.5.4
@@ -29342,7 +29332,7 @@ snapshots:
       iron-webcrypto: 0.2.8
     optionalDependencies:
       express: 4.21.2
-      next: 15.2.0-canary.50(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(babel-plugin-react-compiler@19.0.0-beta-30d8a17-20250209)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.0)
+      next: 15.2.0-canary.50(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.0)
 
   iron-session@8.0.3:
     dependencies:
@@ -31524,9 +31514,9 @@ snapshots:
 
   neverthrow@7.2.0: {}
 
-  next-router-mock@0.9.13(next@15.2.0-canary.50(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(babel-plugin-react-compiler@19.0.0-beta-30d8a17-20250209)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.0))(react@19.0.0):
+  next-router-mock@0.9.13(next@15.2.0-canary.50(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.0))(react@19.0.0):
     dependencies:
-      next: 15.2.0-canary.50(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(babel-plugin-react-compiler@19.0.0-beta-30d8a17-20250209)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.0)
+      next: 15.2.0-canary.50(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.0)
       react: 19.0.0
 
   next-themes@0.4.3(react-dom@19.0.0(react@19.0.0))(react@19.0.0):
@@ -31536,7 +31526,7 @@ snapshots:
 
   next-tick@1.1.0: {}
 
-  next@15.2.0-canary.50(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(babel-plugin-react-compiler@19.0.0-beta-30d8a17-20250209)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.0):
+  next@15.2.0-canary.50(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.0):
     dependencies:
       '@next/env': 15.2.0-canary.50
       '@swc/counter': 0.1.3
@@ -31558,7 +31548,6 @@ snapshots:
       '@next/swc-win32-x64-msvc': 15.2.0-canary.50
       '@opentelemetry/api': 1.9.0
       '@playwright/test': 1.47.1
-      babel-plugin-react-compiler: 19.0.0-beta-30d8a17-20250209
       sass: 1.77.0
       sharp: 0.33.5
     transitivePeerDependencies:
@@ -32742,7 +32731,7 @@ snapshots:
 
   react-instantsearch-nextjs@0.4.4(next@15.2.0-canary.50(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.0))(react-instantsearch@7.15.3(algoliasearch@5.20.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)):
     dependencies:
-      next: 15.2.0-canary.50(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(babel-plugin-react-compiler@19.0.0-beta-30d8a17-20250209)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.0)
+      next: 15.2.0-canary.50(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.0)
       react-instantsearch: 7.15.3(algoliasearch@5.20.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
 
   react-instantsearch@7.15.3(algoliasearch@5.20.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0):
