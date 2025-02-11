@@ -9,7 +9,6 @@ import { ColorsThemeConfig } from "@/server/types";
 import { useMessageHandler, useSetJustNavigated } from "../atoms";
 import { BgImageGradient } from "../components/BgImageGradient";
 import { useConsoleMessage } from "../hooks/useConsoleMessage";
-import { InitializeTheme } from "../themes";
 import { scrollToRoute } from "../util/anchor";
 
 let timer: number;
@@ -49,7 +48,6 @@ export function DocsPage({
 
   return (
     <>
-      <InitializeTheme />
       <BgImageGradient colors={colors} />
       <ErrorBoundary>{children}</ErrorBoundary>
     </>

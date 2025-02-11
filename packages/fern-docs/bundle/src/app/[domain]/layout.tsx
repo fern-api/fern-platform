@@ -1,4 +1,3 @@
-import { ThemeProvider } from "next-themes";
 import { unstable_cacheTag as cacheTag } from "next/cache";
 import { Metadata, Viewport } from "next/types";
 import React from "react";
@@ -32,6 +31,7 @@ import { RgbaColor } from "@/server/types";
 
 import { GlobalStyles } from "../global-styles";
 import { toImageDescriptor } from "../seo";
+import { ThemeProvider } from "../theme";
 
 export const dynamic = "force-static";
 
@@ -82,23 +82,10 @@ export default async function Layout(props: {
   const { VERCEL_ENV } = getEnv();
 
   const jsConfig = withJsConfig(config?.js, files);
-
-  const hasLight = Boolean(colors.light);
-  const hasDark = Boolean(colors.dark);
-  const enableSystem = hasLight === hasDark;
-
   return (
     <ThemeProvider
-      forcedTheme={
-        enableSystem
-          ? undefined
-          : hasLight
-            ? "light"
-            : hasDark
-              ? "dark"
-              : undefined
-      }
-      enableSystem={enableSystem}
+      hasLight={Boolean(colors.light)}
+      hasDark={Boolean(colors.dark)}
     >
       {preloadHrefs.map((href) => (
         <Preload key={href.href} href={href.href} options={href.options} />

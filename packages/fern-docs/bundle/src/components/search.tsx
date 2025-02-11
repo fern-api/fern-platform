@@ -1,5 +1,6 @@
 "use client";
 
+import { useTheme } from "next-themes";
 import { usePathname, useRouter } from "next/navigation";
 import React from "react";
 
@@ -27,13 +28,11 @@ import {
   CURRENT_VERSION_ATOM,
   DOMAIN_ATOM,
   HAS_API_PLAYGROUND,
-  THEME_SWITCH_ENABLED_ATOM,
   atomWithStorageString,
   useClosePlayground,
   useEdgeFlags,
   useFernUser,
   useIsPlaygroundOpen,
-  useSetTheme,
   useTogglePlayground,
 } from "@/components/atoms";
 import { Feedback } from "@/components/feedback/Feedback";
@@ -239,9 +238,8 @@ function CommandPlayground({ onClose }: { onClose: () => void }) {
 }
 
 function CommandTheme({ onClose }: { onClose: () => void }) {
-  const isThemeSwitchEnabled = useAtomValue(THEME_SWITCH_ENABLED_ATOM);
-  const setTheme = useSetTheme();
-  if (!isThemeSwitchEnabled) {
+  const { setTheme, forcedTheme } = useTheme();
+  if (forcedTheme) {
     return null;
   }
   return (
