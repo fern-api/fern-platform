@@ -1,5 +1,4 @@
-import { unstable_cacheTag as cacheTag } from "next/cache";
-import { cacheLife } from "next/dist/server/use-cache/cache-life";
+import { unstable_cacheTag as cacheTag, unstable_cacheLife } from "next/cache";
 
 import { MdxContent } from "./MdxContent";
 import { serializeMdx } from "./bundler/serialize";
@@ -18,7 +17,7 @@ export async function MdxServerComponent({
   const mdx = await serializeMdx(children);
 
   if (!mdx) {
-    cacheLife({ stale: 0 });
+    unstable_cacheLife("seconds");
   }
 
   return <MdxContent mdx={mdx} fallback={children} />;

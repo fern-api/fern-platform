@@ -9,8 +9,8 @@ import {
 import { useResizeObserver } from "@fern-ui/react-commons";
 
 import { ErrorBoundary } from "@/components/error-boundary";
+import { useIsDarkCode } from "@/state/dark-code";
 
-import { useEdgeFlags } from "../../atoms";
 import { JsonPropertyPath } from "./JsonPropertyPath";
 import { TitledExample } from "./TitledExample";
 import { useHighlightJsonLines } from "./useHighlightJsonLines";
@@ -42,7 +42,6 @@ const CodeSnippetExampleInternal: FC<CodeSnippetExample.Props> = ({
   className,
   ...props
 }) => {
-  const { isDarkCodeEnabled } = useEdgeFlags();
   const codeBlockRef = createRef<HTMLPreElement>();
   const viewportRef = createRef<ScrollToHandle>();
 
@@ -78,12 +77,14 @@ const CodeSnippetExampleInternal: FC<CodeSnippetExample.Props> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [code]);
 
+  const isDarkCode = useIsDarkCode();
+
   return (
     <TitledExample
       copyToClipboardText={useCallback(() => code, [code])}
       {...props}
       className={clsx(className, {
-        "bg-card-solid dark": isDarkCodeEnabled,
+        "bg-card-solid dark": isDarkCode,
       })}
     >
       <FernSyntaxHighlighter

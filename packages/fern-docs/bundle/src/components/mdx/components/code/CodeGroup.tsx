@@ -1,18 +1,19 @@
 import { useEffect, useRef, useState } from "react";
 
 import * as Tabs from "@radix-ui/react-tabs";
-import clsx from "clsx";
 import { useAtom } from "jotai";
 
 import { ApiDefinition } from "@fern-api/fdr-sdk";
-import { CopyToClipboardButton } from "@fern-docs/components";
+import { CopyToClipboardButton, cn } from "@fern-docs/components";
 import {
   FernSyntaxHighlighter,
   type FernSyntaxHighlighterProps,
 } from "@fern-docs/syntax-highlighter";
 
+import { useIsDarkCode } from "@/state/dark-code";
+
 import { getLanguageDisplayName } from "../../../api-reference/examples/code-example";
-import { FERN_LANGUAGE_ATOM, useEdgeFlags } from "../../../atoms";
+import { FERN_LANGUAGE_ATOM } from "../../../atoms";
 import { HorizontalOverflowMask } from "../../../components/HorizontalOverflowMask";
 
 export declare namespace CodeGroup {
@@ -28,7 +29,7 @@ export declare namespace CodeGroup {
 export const CodeGroup: React.FC<React.PropsWithChildren<CodeGroup.Props>> = ({
   items,
 }) => {
-  const { isDarkCodeEnabled } = useEdgeFlags();
+  const isDarkCode = useIsDarkCode();
   const [selectedTabIndex, setSelectedTabIndex] = useState(0);
   const [selectedLanguage, setSelectedLanguage] = useAtom(FERN_LANGUAGE_ATOM);
   const itemsRef = useRef(items);
@@ -89,10 +90,10 @@ export const CodeGroup: React.FC<React.PropsWithChildren<CodeGroup.Props>> = ({
       : displayName;
   };
 
-  const containerClass = clsx(
+  const containerClass = cn(
     "bg-card after:ring-card-border relative mb-6 mt-4 flex w-full min-w-0 max-w-full flex-col rounded-lg shadow-sm after:pointer-events-none after:absolute after:inset-0 after:rounded-[inherit] after:ring-1 after:ring-inset after:content-[''] first:mt-0",
     {
-      "bg-card-solid dark": isDarkCodeEnabled,
+      "bg-card-solid dark": isDarkCode,
     }
   );
 

@@ -3,10 +3,20 @@ import React from "react";
 
 import { withDefaultProtocol } from "@fern-api/ui-core-utils";
 
+import { FernUser } from "@/components/fern-user";
 import { createCachedDocsLoader } from "@/server/docs-loader";
 
-export default async function Layout(props: { children: React.ReactNode }) {
-  return props.children;
+export default async function Layout(props: {
+  children: React.ReactNode;
+  params: Promise<{ domain: string }>;
+}) {
+  const { domain } = await props.params;
+  return (
+    <>
+      <FernUser domain={domain} />
+      {props.children}
+    </>
+  );
 }
 
 export async function generateMetadata(props: {
@@ -14,13 +24,13 @@ export async function generateMetadata(props: {
 }): Promise<Metadata> {
   const { domain } = await props.params;
 
-  const docsLoader = await createCachedDocsLoader(domain);
-  const baseUrl = await docsLoader.getBaseUrl();
+  const loader = await createCachedDocsLoader(domain);
+  const baseUrl = await loader.getBaseUrl();
 
   return {
     metadataBase: new URL(
       baseUrl.basePath || "/",
-      withDefaultProtocol(docsLoader.domain)
+      withDefaultProtocol(loader.domain)
     ),
   };
 }

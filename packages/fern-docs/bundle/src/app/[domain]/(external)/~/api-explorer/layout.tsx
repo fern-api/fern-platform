@@ -7,6 +7,7 @@ import { HorizontalSplitPane } from "@/components/playground/VerticalSplitPane";
 import { PlaygroundEndpointSelectorContent } from "@/components/playground/endpoint/PlaygroundEndpointSelectorContent";
 import { flattenApiSection } from "@/components/playground/utils/flatten-apis";
 import { createCachedDocsLoader } from "@/server/docs-loader";
+import { ApiExplorerFlags } from "@/state/api-explorer-flags";
 
 export default async function Layout({
   params,
@@ -22,7 +23,10 @@ export default async function Layout({
   console.debug(`[${domain}] Loading API Explorer layout`);
   const fern_token = cookieJar.get(COOKIE_FERN_TOKEN)?.value;
   const loader = await createCachedDocsLoader(domain, fern_token);
-  const root = await loader.getRoot();
+  const [root, edgeFlags] = await Promise.all([
+    loader.getRoot(),
+    loader.getEdgeFlags(),
+  ]);
   if (!root) {
     console.error(`[${domain}] Root node not found`);
     notFound();
@@ -31,6 +35,17 @@ export default async function Layout({
 
   return (
     <main className="h-screen">
+      <ApiExplorerFlags
+        isFileForgeHackEnabled={edgeFlags.isFileForgeHackEnabled}
+        isProxyDisabled={edgeFlags.isProxyDisabled}
+        hasVoiceIdPlaygroundForm={edgeFlags.hasVoiceIdPlaygroundForm}
+        usesApplicationJsonInFormDataValue={
+          edgeFlags.usesApplicationJsonInFormDataValue
+        }
+        isBinaryOctetStreamAudioPlayer={
+          edgeFlags.isBinaryOctetStreamAudioPlayer
+        }
+      />
       <HorizontalSplitPane
         mode="pixel"
         className="size-full"

@@ -1,5 +1,7 @@
 import { ReactElement, memo, useCallback } from "react";
 
+import { useAtomValue } from "jotai";
+
 import {
   ObjectProperty,
   TypeDefinition,
@@ -15,7 +17,8 @@ import {
   FernTextarea,
 } from "@fern-docs/components";
 
-import { useEdgeFlags } from "../../atoms";
+import { hasVoiceIdPlaygroundFormAtom } from "@/state/api-explorer-flags";
+
 import { WithLabel } from "../WithLabel";
 import { PlaygroundDiscriminatedUnionForm } from "./PlaygroundDescriminatedUnionForm";
 import { PlaygroundElevenLabsVoiceIdForm } from "./PlaygroundElevenLabsVoiceIdForm";
@@ -45,7 +48,7 @@ interface PlaygroundTypeReferenceFormProps {
 
 export const PlaygroundTypeReferenceForm =
   memo<PlaygroundTypeReferenceFormProps>((props) => {
-    const { hasVoiceIdPlaygroundForm } = useEdgeFlags();
+    const hasVoiceIdPlaygroundForm = useAtomValue(hasVoiceIdPlaygroundFormAtom);
     const {
       id,
       property,

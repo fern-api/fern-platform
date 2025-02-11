@@ -35,7 +35,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
   //   headers: initialHeaders,
   //   query_parameters: initialQueryParameters,
   //   path_parameters: initialPathParameters,
-  // } = useAtomValue(FERN_USER_ATOM)?.playground?.initial_state ?? {};
+  // } = useAtomValue(fernUserAtom)?.playground?.initial_state ?? {};
 
   const setHeaders = useCallback(
     (value: ((old: unknown) => unknown) | unknown) => {

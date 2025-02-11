@@ -3,13 +3,9 @@ import type { LDContext } from "launchdarkly-react-client-sdk";
 import type { DocsV1Read, DocsV2Read } from "@fern-api/fdr-sdk/client/types";
 import { ResolvedMdx } from "@fern-api/fdr-sdk/docs";
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
-import type { FernUser } from "@fern-docs/auth";
-import type { EdgeFlags } from "@fern-docs/utils";
 import { SidebarTab, VersionSwitcherInfo } from "@fern-platform/fdr-utils";
 
 import { ColorsThemeConfig, FileData } from "@/server/types";
-
-import { CustomerAnalytics } from "../analytics/types";
 
 export interface NavigationProps {
   currentTabIndex: number | undefined;
@@ -34,6 +30,7 @@ export interface DefaultNavbarLink {
   rounded: boolean | undefined;
   className: string | undefined;
   id: string | undefined;
+  returnToQueryParam: string | undefined;
 }
 
 export interface GithubNavbarLink {
@@ -73,15 +70,7 @@ export interface DocsProps {
     light?: ColorsThemeConfig;
     dark?: ColorsThemeConfig;
   };
-  announcement: AnnouncementConfig | undefined;
   layout: DocsV1Read.DocsLayoutConfig | undefined;
-  navbarLinks: NavbarLink[];
-  logo: LogoConfiguration;
-  edgeFlags: EdgeFlags;
-  analytics: CustomerAnalytics | undefined; // deprecated
-  analyticsConfig: DocsV1Read.AnalyticsConfig | undefined;
-  fallback: Record<string, any>;
-  user: FernUser | undefined;
   defaultLang: DocsV1Read.ProgrammingLanguage;
   featureFlagsConfig: FeatureFlagsConfig | undefined;
 }

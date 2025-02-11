@@ -1,3 +1,5 @@
+"use client";
+
 import { ReactElement, useRef } from "react";
 
 import clsx from "clsx";
@@ -9,6 +11,7 @@ import {
   DESKTOP_SIDEBAR_OPEN_ATOM,
   DISMISSABLE_SIDEBAR_OPEN_ATOM,
   IS_MOBILE_SCREEN_ATOM,
+  type NavbarLink,
   useAtomEffect,
   useDismissSidebar,
 } from "../atoms";
@@ -20,8 +23,16 @@ const BEZIER_CURVE = [0.16, 1, 0.3, 1];
 
 export function DismissableSidebar({
   className,
+  logo,
+  versionSelect,
+  navbarLinks,
+  children,
 }: {
   className?: string;
+  logo: React.ReactNode;
+  versionSelect: React.ReactNode;
+  navbarLinks: NavbarLink[];
+  children: React.ReactNode;
 }): ReactElement<any> {
   const handleDismissSidebar = useDismissSidebar();
   const showSidebar = useAtomValue(DISMISSABLE_SIDEBAR_OPEN_ATOM);
@@ -70,7 +81,12 @@ export function DismissableSidebar({
           animate={{ x: 0 }}
           exit={{ x: "-100%" }}
           transition={{ duration, curve: BEZIER_CURVE }}
-        />
+          logo={logo}
+          versionSelect={versionSelect}
+          navbarLinks={navbarLinks}
+        >
+          {children}
+        </SidebarContainerMotion>
       )}
     </AnimatePresence>
   );

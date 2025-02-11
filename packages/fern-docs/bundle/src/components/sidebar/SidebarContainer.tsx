@@ -1,3 +1,5 @@
+"use client";
+
 import { ComponentPropsWithoutRef, forwardRef, memo } from "react";
 
 import clsx from "clsx";
@@ -9,30 +11,33 @@ import {
   CURRENT_TAB_INDEX_ATOM,
   DOCS_LAYOUT_ATOM,
   MOBILE_SIDEBAR_ENABLED_ATOM,
+  type NavbarLink,
   SIDEBAR_SCROLL_CONTAINER_ATOM,
   TABS_ATOM,
   useInitSidebarExpandedNodes,
   useIsMobileSidebarOpen,
-  useSidebarNodes,
 } from "../atoms";
 import { useIsScrolled } from "../hooks/useIsScrolled";
 import { MobileSidebarHeaderLinks } from "./MobileSidebarHeaderLinks";
 import { SidebarFixedItemsSection } from "./SidebarFixedItemsSection";
 import { SidebarTabButton } from "./SidebarTabButton";
-import { SidebarRootNode } from "./nodes/SidebarRootNode";
 
 interface SidebarContainerProps extends ComponentPropsWithoutRef<"nav"> {
-  className?: string;
+  logo: React.ReactNode;
+  versionSelect: React.ReactNode;
+  navbarLinks: NavbarLink[];
 }
 
 const UnmemoizedSidebarContainer = forwardRef<
   HTMLElement,
   SidebarContainerProps
->(function DesktopSidebar(props, ref) {
+>(function DesktopSidebar(
+  { logo, versionSelect, navbarLinks, children, ...props },
+  ref
+) {
   const layout = useAtomValue(DOCS_LAYOUT_ATOM);
   const tabs = useAtomValue(TABS_ATOM);
   const currentTabIndex = useAtomValue(CURRENT_TAB_INDEX_ATOM);
-  const sidebar = useSidebarNodes();
   const [scrollRef, setScrollRef] = useAtom(SIDEBAR_SCROLL_CONTAINER_ATOM);
   const isScrolled = useIsScrolled({ current: scrollRef });
   const isMobileSidebarEnabled = useAtomValue(MOBILE_SIDEBAR_ENABLED_ATOM);
@@ -47,6 +52,8 @@ const UnmemoizedSidebarContainer = forwardRef<
       className={clsx("fern-sidebar-container", props.className)}
     >
       <SidebarFixedItemsSection
+        logo={logo}
+        versionSelect={versionSelect}
         showBorder={
           isScrolled || (isMobileSidebarOpen && isMobileSidebarEnabled)
         }
@@ -76,10 +83,8 @@ const UnmemoizedSidebarContainer = forwardRef<
             ))}
           </ul>
         )}
-        <FernTooltipProvider>
-          <SidebarRootNode node={sidebar} />
-        </FernTooltipProvider>
-        <MobileSidebarHeaderLinks />
+        <FernTooltipProvider>{children}</FernTooltipProvider>
+        <MobileSidebarHeaderLinks navbarLinks={navbarLinks} />
       </FernScrollArea>
     </nav>
   );

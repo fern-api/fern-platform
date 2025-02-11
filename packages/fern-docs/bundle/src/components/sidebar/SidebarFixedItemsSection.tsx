@@ -3,8 +3,8 @@ import { useMemo } from "react";
 import cn from "clsx";
 import { useAtomValue } from "jotai";
 
-import { SearchV2Trigger } from "@/components/search-trigger";
 import { useThemeSwitchEnabled } from "@/hooks/theme-switch";
+import { SearchV2Trigger } from "@/state/search";
 
 import { DOCS_LAYOUT_ATOM, SEARCHBAR_PLACEMENT_ATOM } from "../atoms";
 import { HeaderLogoSection } from "../header/HeaderLogoSection";
@@ -12,6 +12,8 @@ import { ThemeButton } from "../themes";
 
 export declare namespace SidebarFixedItemsSection {
   export interface Props {
+    logo: React.ReactNode;
+    versionSelect: React.ReactNode;
     className?: string;
     showBorder?: boolean;
     currentTabIndex?: number | undefined;
@@ -20,7 +22,7 @@ export declare namespace SidebarFixedItemsSection {
 
 export const SidebarFixedItemsSection: React.FC<
   SidebarFixedItemsSection.Props
-> = ({ className, showBorder }) => {
+> = ({ logo, versionSelect, className, showBorder }) => {
   const showSearchBar = useAtomValue(SEARCHBAR_PLACEMENT_ATOM) === "SIDEBAR";
   const themeSwitchEnabled = useThemeSwitchEnabled();
   const layout = useAtomValue(DOCS_LAYOUT_ATOM);
@@ -39,7 +41,7 @@ export const SidebarFixedItemsSection: React.FC<
 
   const header = layout?.disableHeader && (
     <div className="fern-sidebar-header">
-      <HeaderLogoSection />
+      <HeaderLogoSection logo={logo} versionSelect={versionSelect} />
       <div className="-mr-3">
         {themeSwitchEnabled && <ThemeButton size="large" />}
       </div>

@@ -4,6 +4,8 @@ import { Provider as JotaiProvider } from "jotai/react";
 
 import { FernTooltipProvider, Toaster } from "@fern-docs/components";
 
+import { ConsoleMessage } from "@/components/console-message";
+
 import "./globals.scss";
 import StyledJsxRegistry from "./registry";
 
@@ -22,6 +24,7 @@ export default function DashboardLayout({
         />
       </head>
       <body className="antialiased">
+        <ConsoleMessage />
         <StyledJsxRegistry>
           <JotaiProvider>
             <FernTooltipProvider>

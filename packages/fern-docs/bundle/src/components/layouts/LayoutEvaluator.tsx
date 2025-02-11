@@ -1,3 +1,5 @@
+import { unstable_cacheLife, unstable_cacheTag } from "next/cache";
+
 import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 import { EMPTY_FRONTMATTER } from "@fern-api/fdr-sdk/docs";
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
@@ -23,11 +25,20 @@ export async function LayoutEvaluator({
   breadcrumb,
   hasAside,
 }: LayoutEvaluatorProps) {
-  const docsLoader = await createCachedDocsLoader(domain);
-  const mdx = await docsLoader.getSerializedPage(pageId);
+  "use cache";
+
+  unstable_cacheTag(domain);
+
+  const loader = await createCachedDocsLoader(domain);
+  const mdx = await loader.getSerializedPage(pageId);
   if (mdx == null) {
     throw new Error(`[${domain}] Could not serialize page: ${pageId}`);
   }
+
+  if (typeof mdx === "string") {
+    unstable_cacheLife("seconds");
+  }
+
   const exports = getMDXExport(mdx);
   const toc = asToc(exports?.toc);
   const frontmatter: FernDocs.Frontmatter =

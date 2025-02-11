@@ -3,6 +3,7 @@ import { ReactElement } from "react";
 import clsx from "clsx";
 import { round } from "es-toolkit/math";
 import { Download } from "iconoir-react";
+import { useAtomValue } from "jotai";
 
 import {
   CopyToClipboardButton,
@@ -15,8 +16,8 @@ import {
 import { Loadable, visitLoadable } from "@fern-ui/loadable";
 
 import { ErrorBoundaryFallback } from "@/components/error-boundary";
+import { isBinaryOctetStreamAudioPlayerAtom } from "@/state/api-explorer-flags";
 
-import { useEdgeFlags } from "../../atoms";
 import { PlaygroundResponsePreview } from "../PlaygroundResponsePreview";
 import { PlaygroundSendRequestButton } from "../PlaygroundSendRequestButton";
 import { PlaygroundResponse } from "../types/playgroundResponse";
@@ -31,7 +32,9 @@ export function PlaygroundResponseCard({
   response,
   sendRequest,
 }: PlaygroundResponseCard): ReactElement<any> {
-  const { isBinaryOctetStreamAudioPlayer } = useEdgeFlags();
+  const isBinaryOctetStreamAudioPlayer = useAtomValue(
+    isBinaryOctetStreamAudioPlayerAtom
+  );
   return (
     <FernCard className="flex min-w-0 flex-1 shrink flex-col overflow-hidden rounded-xl shadow-sm">
       <div className="border-default flex h-10 w-full shrink-0 items-center justify-between border-b px-3 py-2">

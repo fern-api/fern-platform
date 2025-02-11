@@ -6,7 +6,6 @@ import { useCallbackOne, useMemoOne } from "use-memo-one";
 
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 
-import { EDGE_FLAGS_ATOM } from "./flags";
 import { useAtomEffect } from "./hooks";
 import { DOCS_LAYOUT_ATOM } from "./layout";
 import {
@@ -226,28 +225,24 @@ export const useToggleExpandedSidebarNode = (
               implicitExpandedNodes,
             };
           } else {
-            const parents = childToParentsMap.get(nodeId) ?? [];
-            const { isApiScrollingDisabled } = get(EDGE_FLAGS_ATOM);
+            // const parents = childToParentsMap.get(nodeId) ?? [];
+            // const { isApiScrollingDisabled } = get(EDGE_FLAGS_ATOM);
 
             // if long scrolling is enabled, implicitly "expand" its parent nodes
-            if (!isApiScrollingDisabled) {
-              const isLongScrollingApiReference = [...parents, nodeId]
-                .map((id) => collector.get(id))
-                .some(
-                  (node) => node?.type === "apiReference" && !node.paginated
-                );
-              if (isLongScrollingApiReference) {
-                implicitExpandedNodes.add(nodeId);
-                parents.forEach((parent) => {
-                  implicitExpandedNodes.add(parent);
-                });
-                return {
-                  sidebarRootId: prev.sidebarRootId,
-                  expandedNodes,
-                  implicitExpandedNodes,
-                };
-              }
-            }
+            // const isLongScrollingApiReference = [...parents, nodeId]
+            //   .map((id) => collector.get(id))
+            //   .some((node) => node?.type === "apiReference" && !node.paginated);
+            // if (isLongScrollingApiReference) {
+            //   implicitExpandedNodes.add(nodeId);
+            //   parents.forEach((parent) => {
+            //     implicitExpandedNodes.add(parent);
+            //   });
+            //   return {
+            //     sidebarRootId: prev.sidebarRootId,
+            //     expandedNodes,
+            //     implicitExpandedNodes,
+            //   };
+            // }
 
             expandedNodes.add(nodeId);
             childToParentsMap.get(nodeId)?.forEach((child) => {
@@ -384,51 +379,6 @@ export const SIDEBAR_DISMISSABLE_ATOM = atom((get) => {
   return false;
 });
 SIDEBAR_DISMISSABLE_ATOM.debugLabel = "SIDEBAR_DISMISSABLE_ATOM";
-
-export function useMessageHandler(): void {
-  useAtomEffect(
-    useCallbackOne((get, set) => {
-      if (typeof window === "undefined") {
-        return;
-      }
-      const handleMessage = (event: MessageEvent) => {
-        if (event.data === "openSearchDialog") {
-          set(SEARCH_DIALOG_OPEN_ATOM, true);
-          event.source?.postMessage("searchDialogOpened", {
-            targetOrigin: event.origin,
-          });
-        } else if (event.data === "openMobileSidebar") {
-          set(MOBILE_SIDEBAR_OPEN_ATOM, true);
-          event.source?.postMessage("mobileSidebarOpened", {
-            targetOrigin: event.origin,
-          });
-        }
-      };
-      window.addEventListener("message", handleMessage);
-      return () => {
-        window.removeEventListener("message", handleMessage);
-      };
-    }, [])
-  );
-}
-
-export function useIsSearchDialogOpen(): boolean {
-  return useAtomValue(SEARCH_DIALOG_OPEN_ATOM);
-}
-
-export function useOpenSearchDialog(): () => void {
-  const setSearchDialogState = useSetAtom(SEARCH_DIALOG_OPEN_ATOM);
-  return useCallback(() => {
-    setSearchDialogState(true);
-  }, [setSearchDialogState]);
-}
-
-export function useCloseSearchDialog(): () => void {
-  const setSearchDialogState = useSetAtom(SEARCH_DIALOG_OPEN_ATOM);
-  return useCallback(() => {
-    setSearchDialogState(false);
-  }, [setSearchDialogState]);
-}
 
 export function useIsMobileSidebarOpen(): boolean {
   return useAtomValue(MOBILE_SIDEBAR_OPEN_ATOM);

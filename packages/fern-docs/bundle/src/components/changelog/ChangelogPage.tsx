@@ -25,7 +25,7 @@ export default async function ChangelogPage({
   mdxOptions: Omit<FernSerializeMdxOptions, "files" | "replaceSrc">;
   breadcrumb: readonly FernNavigation.BreadcrumbItem[];
 }) {
-  const docsLoader = await createCachedDocsLoader(domain);
+  const loader = await createCachedDocsLoader(domain);
   const entries: FernNavigation.ChangelogEntryNode[] = [];
   FernNavigation.traverseDF(node, (n) => {
     if (n.type === "changelogEntry") {
@@ -36,7 +36,7 @@ export default async function ChangelogPage({
   const pages = (
     await Promise.all(
       compact([node.overviewPageId, ...pageIds]).map(async (pageId) => {
-        const markdown = await docsLoader.getPage(pageId);
+        const markdown = await loader.getPage(pageId);
         if (markdown == null) {
           return;
         }
@@ -100,10 +100,10 @@ async function ChangelogPageOverview({
   mdxOptions: Omit<FernSerializeMdxOptions, "files" | "replaceSrc">;
   breadcrumb: readonly FernNavigation.BreadcrumbItem[];
 }) {
-  const docsLoader = await createCachedDocsLoader(domain);
+  const loader = await createCachedDocsLoader(domain);
   const mdx =
     node.overviewPageId != null
-      ? await docsLoader.getSerializedPage(node.overviewPageId, mdxOptions)
+      ? await loader.getSerializedPage(node.overviewPageId, mdxOptions)
       : undefined;
 
   const frontmatter: FernDocs.Frontmatter =
@@ -132,14 +132,14 @@ async function ChangelogPageEntry({
   node: FernNavigation.ChangelogEntryNode;
   mdxOptions: Omit<FernSerializeMdxOptions, "files" | "replaceSrc">;
 }) {
-  const docsLoader = await createCachedDocsLoader(domain);
-  const mdx = await docsLoader.getSerializedPage(node.pageId, mdxOptions);
+  const loader = await createCachedDocsLoader(domain);
+  const mdx = await loader.getSerializedPage(node.pageId, mdxOptions);
 
   const frontmatter: FernDocs.Frontmatter =
     (typeof mdx !== "string" ? mdx?.frontmatter : undefined) ??
     EMPTY_FRONTMATTER;
 
-  const title = await docsLoader.serializeMdx(frontmatter.title);
+  const title = await loader.serializeMdx(frontmatter.title);
 
   return (
     <Markdown

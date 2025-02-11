@@ -10,7 +10,6 @@ import {
   useIsMobileSidebarOpen,
 } from "@/components/atoms";
 import { BgImageGradient } from "@/components/components/BgImageGradient";
-import { Header } from "@/components/header/Header";
 import { HeaderTabs } from "@/components/header/HeaderTabs";
 import { useIsScrolled } from "@/components/hooks/useIsScrolled";
 import { ColorsThemeConfig } from "@/server/types";
@@ -18,6 +17,7 @@ import { ColorsThemeConfig } from "@/server/types";
 import { FernHeader } from "./fern-header";
 
 export function HeaderContainer({
+  header,
   announcement,
   className,
   hasBackgroundLight,
@@ -26,6 +26,7 @@ export function HeaderContainer({
   showHeaderTabs,
   colors,
 }: {
+  header: React.ReactNode;
   announcement?: React.ReactNode;
   className?: string;
   hasBackgroundLight?: boolean;
@@ -62,9 +63,7 @@ export function HeaderContainer({
               colors={colors}
             />
           </div>
-          <div className="fern-header">
-            <Header className="max-w-page-width mx-auto" colors={colors} />
-          </div>
+          <div className="fern-header">{header}</div>
           {showHeaderTabs && (
             <nav aria-label="tabs" className="fern-header-tabs">
               <HeaderTabs />

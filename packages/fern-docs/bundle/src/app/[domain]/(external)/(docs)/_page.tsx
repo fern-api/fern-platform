@@ -8,17 +8,10 @@ import {
 import { Metadata } from "next/types";
 import React from "react";
 
-import urlJoin from "url-join";
-
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { Slug } from "@fern-api/fdr-sdk/navigation";
-import { withDefaultProtocol } from "@fern-api/ui-core-utils";
 import visitDiscriminatedUnion from "@fern-api/ui-core-utils/visitDiscriminatedUnion";
-import {
-  getCustomerAnalytics,
-  getEdgeFlags,
-  getSeoDisabled,
-} from "@fern-docs/edge-config";
+import { getSeoDisabled } from "@fern-docs/edge-config";
 import { getFrontmatter, markdownToString } from "@fern-docs/mdx";
 import {
   addLeadingSlash,
@@ -30,29 +23,21 @@ import { SidebarTab } from "@fern-platform/fdr-utils";
 
 import { toImageDescriptor } from "@/app/seo";
 import { HydrateAtoms } from "@/components/atoms/docs";
-import type { DocsProps, NavbarLink } from "@/components/atoms/types";
-import { DocsMainContent } from "@/components/docs/DocsMainContent";
-import { DocsPage } from "@/components/docs/DocsPage";
+import type { DocsProps } from "@/components/atoms/types";
 import FeedbackPopover from "@/components/feedback/FeedbackPopover";
-import { Announcement } from "@/components/header/announcement";
 import { serializeMdx } from "@/components/mdx/bundler/serialize";
-import { MdxServerComponent } from "@/components/mdx/server-component";
 import { DocsContent } from "@/components/resolver/DocsContent";
-import { ThemedDocs } from "@/components/themes/ThemedDocs";
-import { getApiRouteSupplier } from "@/components/util/getApiRouteSupplier";
-import { preferPreview } from "@/server/auth/origin";
-import { getReturnToQueryParam } from "@/server/auth/return-to";
 import { DocsLoader } from "@/server/docs-loader";
 import { createCachedDocsLoader } from "@/server/docs-loader";
-import { createFileResolver } from "@/server/file-resolver";
 import { createFindNode } from "@/server/find-node";
 import { withLaunchDarkly } from "@/server/ld-adapter";
-import { withLogo } from "@/server/withLogo";
 import {
   pruneNavigationPredicate,
   withPrunedNavigation,
 } from "@/server/withPrunedNavigation";
 import { withVersionSwitcherInfo } from "@/server/withVersionSwitcherInfo";
+
+import { DocsMainContent } from "./main";
 
 export default async function Page({
   domain,
@@ -67,12 +52,13 @@ export default async function Page({
 
   cacheTag(domain);
 
+  console.time("/app/[domain]/(external)/(docs)/_page.tsx");
   const loader = await createCachedDocsLoader(domain, fern_token);
   const [baseUrl, config, authState, edgeFlags, colors] = await Promise.all([
     loader.getBaseUrl(),
     loader.getConfig(),
     loader.getAuthState(conformTrailingSlash(addLeadingSlash(slug))),
-    getEdgeFlags(loader.domain),
+    loader.getEdgeFlags(),
     loader.getColors(),
   ]);
 
@@ -168,81 +154,6 @@ export default async function Page({
     notFound();
   }
 
-  const getApiRoute = getApiRouteSupplier({
-    basepath: baseUrl.basePath,
-    includeTrailingSlash: isTrailingSlashEnabled(),
-  });
-
-  const navbarLinks: NavbarLink[] = [];
-
-  config?.navbarLinks?.forEach((link) => {
-    if (link.type === "github") {
-      navbarLinks.push({
-        type: "github",
-        href: link.url,
-        className: undefined,
-        id: undefined,
-      });
-    } else {
-      navbarLinks.push({
-        type: link.type,
-        href: link.url,
-        text: link.text,
-        icon: link.icon,
-        rightIcon: link.rightIcon,
-        rounded: link.rounded,
-        className: undefined,
-        id: undefined,
-      });
-    }
-  });
-
-  // TODO: This is a hack to add a login button to the navbar. This should be done in a more generic way.
-  if (
-    loader.authConfig?.type === "basic_token_verification" &&
-    !authState.authed
-  ) {
-    const redirect = new URL(withDefaultProtocol(loader.authConfig.redirect));
-    redirect.searchParams.set(
-      getReturnToQueryParam(loader.authConfig),
-      urlJoin(preferPreview(domain), slug)
-    );
-
-    navbarLinks.push({
-      type: "outlined",
-      text: "Login",
-      href: redirect.toString(),
-      icon: undefined,
-      rightIcon: undefined,
-      rounded: false,
-      className: undefined,
-      id: "fern-docs-login-button",
-    });
-  }
-
-  // TODO: This is a hack to add a logout button to the navbar. This should be done in a more generic way.
-  if (authState.authed) {
-    const logout = new URL(
-      getApiRoute("/api/fern-docs/auth/logout"),
-      withDefaultProtocol(preferPreview(domain))
-    );
-    logout.searchParams.set(
-      getReturnToQueryParam(loader.authConfig),
-      urlJoin(withDefaultProtocol(preferPreview(domain)), slug)
-    );
-
-    navbarLinks.push({
-      type: "outlined",
-      text: "Logout",
-      href: logout.toString(),
-      icon: undefined,
-      rightIcon: undefined,
-      rounded: false,
-      className: undefined,
-      id: "fern-docs-logout-button",
-    });
-  }
-
   const pruneOpts = {
     visibleNodeIds: [found.node.id],
     authed: authState.authed,
@@ -309,35 +220,16 @@ export default async function Page({
       ? undefined
       : filteredTabs.indexOf(found.currentTab);
 
-  const pageId = FernNavigation.getPageId(found.node);
-  const [page, files, neighbors, analytics, announcmentMdx] = await Promise.all(
-    [
-      pageId != null ? loader.getPage(pageId) : undefined,
-      loader.getFiles(),
-      getNeighbors({ prev: found.prev, next: found.next }, loader),
-      getCustomerAnalytics(baseUrl.domain, baseUrl.basePath),
-      config?.announcement?.text != null
-        ? serializeMdx(config.announcement.text)
-        : undefined,
-    ]
-  );
+  const [neighbors] = await Promise.all([
+    getNeighbors({ prev: found.prev, next: found.next }, loader),
+  ]);
 
-  const frontmatter =
-    page != null ? getFrontmatter(page.markdown).data : undefined;
-  const announcementText = config?.announcement?.text;
-
-  const fileResolver = createFileResolver(files);
   const props: DocsProps = {
     baseUrl: baseUrl,
     layout: config?.layout,
     title: config?.title,
     favicon: config?.favicon,
     colors,
-    navbarLinks,
-    logo: withLogo(config, found, frontmatter, fileResolver),
-    announcement: announcementText
-      ? { mdx: announcmentMdx, text: announcementText }
-      : undefined,
     navigation: {
       currentTabIndex,
       tabs,
@@ -346,11 +238,6 @@ export default async function Page({
       sidebar,
       trailingSlash: isTrailingSlashEnabled(),
     },
-    edgeFlags,
-    user: authState.authed ? authState.user : undefined,
-    fallback: {},
-    analytics,
-    analyticsConfig: config?.analyticsConfig,
     defaultLang: config?.defaultLanguage ?? "curl",
     featureFlagsConfig: {
       launchDarkly,
@@ -367,44 +254,27 @@ export default async function Page({
     ? FeedbackPopover
     : React.Fragment;
 
-  const theme = edgeFlags.isCohereTheme ? "cohere" : "default";
-
+  console.timeEnd("/app/[domain]/(external)/(docs)/_page.tsx");
   return (
     <HydrateAtoms pageProps={props}>
-      <DocsPage colors={colors}>
-        <ThemedDocs
-          theme={theme}
-          colors={colors}
-          announcement={
-            announcementText && (
-              <Announcement announcement={announcementText}>
-                <MdxServerComponent domain={domain}>
-                  {announcementText}
-                </MdxServerComponent>
-              </Announcement>
-            )
-          }
-        >
-          <FeedbackPopoverProvider>
-            <DocsMainContent
-              domain={domain}
-              rootslug={root.slug}
-              node={found.node}
-              parents={found.parents}
-              neighbors={neighbors}
-              breadcrumb={found.breadcrumb}
-              // apiReferenceNodes={apiReferenceNodes}
-              scope={{
-                authed: authState.authed,
-                user: authState.authed ? authState.user : undefined,
-                version: found?.currentVersion?.versionId,
-                tab: found?.currentTab?.title,
-                slug: slug,
-              }}
-            />
-          </FeedbackPopoverProvider>
-        </ThemedDocs>
-      </DocsPage>
+      <FeedbackPopoverProvider>
+        <DocsMainContent
+          domain={domain}
+          rootslug={root.slug}
+          node={found.node}
+          parents={found.parents}
+          neighbors={neighbors}
+          breadcrumb={found.breadcrumb}
+          // apiReferenceNodes={apiReferenceNodes}
+          scope={{
+            authed: authState.authed,
+            user: authState.authed ? authState.user : undefined,
+            version: found?.currentVersion?.versionId,
+            tab: found?.currentTab?.title,
+            slug: slug,
+          }}
+        />
+      </FeedbackPopoverProvider>
     </HydrateAtoms>
   );
 }
@@ -422,16 +292,16 @@ export async function generateMetadata({
 
   cacheTag(domain);
 
-  const docsLoader = await createCachedDocsLoader(domain, fern_token);
-  const findNode = createFindNode(docsLoader);
+  const loader = await createCachedDocsLoader(domain, fern_token);
+  const findNode = createFindNode(loader);
   const [files, node, config, isSeoDisabled] = await Promise.all([
-    docsLoader.getFiles(),
+    loader.getFiles(),
     findNode(slug),
-    docsLoader.getConfig(),
-    getSeoDisabled(docsLoader.domain),
+    loader.getConfig(),
+    getSeoDisabled(loader.domain),
   ]);
   const pageId = node != null ? FernNavigation.getPageId(node) : undefined;
-  const page = pageId ? await docsLoader.getPage(pageId) : undefined;
+  const page = pageId ? await loader.getPage(pageId) : undefined;
   const frontmatter = page ? getFrontmatter(page.markdown)?.data : undefined;
 
   const noindex =

@@ -15,20 +15,21 @@ import {
   getLaunchDarklySettings,
   getSeoDisabled,
 } from "@fern-docs/edge-config";
-import { SyntaxHighlighterEdgeFlagsProvider } from "@fern-docs/syntax-highlighter";
 import { EdgeFlags } from "@fern-docs/utils";
 
 import { CustomerAnalytics } from "@/components/analytics/CustomerAnalytics";
-import { LaunchDarklyInfo } from "@/components/atoms/types";
+import type { LaunchDarklyInfo } from "@/components/atoms/types";
+import { BgImageGradient } from "@/components/components/BgImageGradient";
 import { JavascriptProvider } from "@/components/components/JavascriptProvider";
 import { withJsConfig } from "@/components/components/with-js-config";
 import { FeatureFlagProvider } from "@/components/feature-flags/FeatureFlagProvider";
-import Preload, { PreloadHref } from "@/components/preload";
+import Preload, { type PreloadHref } from "@/components/preload";
 import { SearchV2 } from "@/components/search";
 import { renderThemeStylesheet } from "@/components/themes/stylesheet/renderThemeStylesheet";
 import { getOrgMetadataForDomain } from "@/server/auth/metadata-for-url";
 import { createCachedDocsLoader } from "@/server/docs-loader";
-import { RgbaColor } from "@/server/types";
+import type { RgbaColor } from "@/server/types";
+import { DarkCode } from "@/state/dark-code";
 
 import { GlobalStyles } from "../../global-styles";
 import { toImageDescriptor } from "../../seo";
@@ -38,8 +39,7 @@ export default async function Layout(props: {
   children: React.ReactNode;
   params: Promise<{ domain: string }>;
 }) {
-  "use cache";
-
+  console.time("/app/[domain]/(external)/layout.tsx");
   const params = await props.params;
 
   cacheTag(params.domain);
@@ -47,7 +47,7 @@ export default async function Layout(props: {
   const { children } = props;
 
   const domain = params.domain;
-  const docsLoader = await createCachedDocsLoader(domain);
+  const loader = await createCachedDocsLoader(domain);
   const [
     config,
     edgeFlags,
@@ -56,10 +56,10 @@ export default async function Layout(props: {
     deprecated_customerAnalytics,
     launchDarkly,
   ] = await Promise.all([
-    docsLoader.getConfig(),
+    loader.getConfig(),
     getEdgeFlags(domain),
-    docsLoader.getFiles(),
-    docsLoader.getColors(),
+    loader.getFiles(),
+    loader.getColors(),
     deprecated_getCustomerAnalytics(domain),
     getLaunchDarklyInfo(domain),
   ]);
@@ -81,6 +81,8 @@ export default async function Layout(props: {
   const { VERCEL_ENV } = getEnv();
 
   const jsConfig = withJsConfig(config?.js, files);
+
+  console.timeEnd("/app/[domain]/(external)/layout.tsx");
   return (
     <ThemeProvider
       hasLight={Boolean(colors.light)}
@@ -89,16 +91,14 @@ export default async function Layout(props: {
       {preloadHrefs.map((href) => (
         <Preload key={href.href} href={href.href} options={href.options} />
       ))}
+      <BgImageGradient colors={colors} />
       <GlobalStyles>{stylesheet}</GlobalStyles>
-      <SyntaxHighlighterEdgeFlagsProvider
-        isDarkCodeEnabled={edgeFlags.isDarkCodeEnabled}
-      >
-        <FeatureFlagProvider featureFlagsConfig={{ launchDarkly }}>
-          {children}
-        </FeatureFlagProvider>
-      </SyntaxHighlighterEdgeFlagsProvider>
+      <DarkCode value={edgeFlags.isDarkCodeEnabled} />
+      <FeatureFlagProvider featureFlagsConfig={{ launchDarkly }}>
+        {children}
+      </FeatureFlagProvider>
       <React.Suspense>
-        <SearchV2 />
+        <SearchV2 domain={domain} isAskAiEnabled={edgeFlags.isAskAiEnabled} />
       </React.Suspense>
       {jsConfig != null && <JavascriptProvider config={jsConfig} />}
       {VERCEL_ENV === "production" && (
@@ -161,8 +161,8 @@ export async function generateViewport(props: {
 }): Promise<Viewport> {
   const { domain } = await props.params;
 
-  const docsLoader = await createCachedDocsLoader(domain);
-  const colors = await docsLoader.getColors();
+  const loader = await createCachedDocsLoader(domain);
+  const colors = await loader.getColors();
   const dark = maybeToHex(
     colors.dark?.background ?? colors.dark?.accentPrimary
   );
@@ -191,10 +191,10 @@ export async function generateMetadata(props: {
 }): Promise<Metadata> {
   const { domain } = await props.params;
 
-  const docsLoader = await createCachedDocsLoader(domain);
+  const loader = await createCachedDocsLoader(domain);
   const [files, config, seoDisabled] = await Promise.all([
-    docsLoader.getFiles(),
-    docsLoader.getConfig(),
+    loader.getFiles(),
+    loader.getConfig(),
     getSeoDisabled(domain),
   ]);
 

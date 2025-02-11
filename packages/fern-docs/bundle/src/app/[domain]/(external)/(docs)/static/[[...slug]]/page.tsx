@@ -11,8 +11,12 @@ export const dynamic = "force-static";
 export default async function StaticPage(props: {
   params: Promise<{ slug?: string[]; domain: string }>;
 }) {
+  console.time("/app/[domain]/(external)/(docs)/static/[[...slug]]/page.tsx");
   const { domain, slug } = await props.params;
 
+  console.timeEnd(
+    "/app/[domain]/(external)/(docs)/static/[[...slug]]/page.tsx"
+  );
   return <Page domain={domain} slug={slugjoin(slug)} fern_token={undefined} />;
 }
 

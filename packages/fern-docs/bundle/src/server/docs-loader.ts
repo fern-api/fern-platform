@@ -1,7 +1,10 @@
+import "server-only";
+
 import {
   unstable_cacheLife as cacheLife,
   unstable_cacheTag as cacheTag,
 } from "next/cache";
+import { notFound } from "next/navigation";
 import React from "react";
 
 import { mapValues } from "es-toolkit/object";
@@ -20,7 +23,7 @@ import { CONTINUE, SKIP } from "@fern-api/fdr-sdk/traversers";
 import { isPlainObject } from "@fern-api/ui-core-utils";
 import { AuthEdgeConfig } from "@fern-docs/auth";
 import { getAuthEdgeConfig, getEdgeFlags } from "@fern-docs/edge-config";
-import { DEFAULT_LOGO_HEIGHT } from "@fern-docs/utils";
+import { DEFAULT_LOGO_HEIGHT, EdgeFlags } from "@fern-docs/utils";
 
 import { serializeMdx as uncachedSerializeMdx } from "@/components/mdx/bundler/serialize";
 import { FernSerializeMdxOptions } from "@/components/mdx/types";
@@ -52,19 +55,19 @@ export interface DocsLoader {
   /**
    * @returns the api definition for the given id
    */
-  getApi: (id: string) => Promise<ApiDefinition.ApiDefinition | undefined>;
+  getApi: (id: string) => Promise<ApiDefinition.ApiDefinition>;
 
   /**
    * @returns the root node of the docs (aware of authentication)
    */
-  getRoot: () => Promise<FernNavigation.RootNode | undefined>;
+  getRoot: () => Promise<FernNavigation.RootNode>;
 
   /**
    * DO NOT USE THIS UNLESS YOU KNOW WHAT YOU ARE DOING.
    * This should never be exposed to the client, and should only be used for revalidation.
    * @returns the full root node of the docs (ignoring authentication)
    */
-  unsafe_getFullRoot: () => Promise<FernNavigation.RootNode | undefined>;
+  unsafe_getFullRoot: () => Promise<FernNavigation.RootNode>;
 
   /**
    * @returns the config of the docs
@@ -91,7 +94,7 @@ export interface DocsLoader {
     pageId: string,
     options?: Omit<FernSerializeMdxOptions, "files" | "replaceSrc">,
     revalidate?: number | false
-  ) => Promise<string | FernDocs.ResolvedMdx | undefined>;
+  ) => Promise<string | FernDocs.ResolvedMdx>;
 
   serializeMdx: (
     content: string | undefined,
@@ -110,10 +113,21 @@ export interface DocsLoader {
     pageWidth: number | undefined;
     contentWidth: number;
     tabsPlacement: "SIDEBAR" | "HEADER";
+    searchbarPlacement: "SIDEBAR" | "HEADER" | "HEADER_TABS";
   }>;
 
   getAuthState: (pathname?: string) => Promise<AuthState>;
+
+  getEdgeFlags: () => Promise<EdgeFlags>;
 }
+
+const cachedGetEdgeFlags = async (domain: string) => {
+  "use cache";
+
+  cacheTag(domain);
+
+  return await getEdgeFlags(domain);
+};
 
 const getBaseUrl = async (domain: string): Promise<DocsV2Read.BaseUrl> => {
   "use cache";
@@ -157,10 +171,11 @@ const getFiles = async (domain: string): Promise<Record<string, FileData>> => {
 const getApi = async (
   domain: string,
   id: string
-): Promise<ApiDefinition.ApiDefinition | undefined> => {
+): Promise<ApiDefinition.ApiDefinition> => {
   const response = await loadWithUrl(domain);
   if (!response.ok) {
-    return undefined;
+    cacheLife("seconds");
+    notFound();
   }
   const latest = response.body.definition.apisV2[ApiDefinitionId(id)];
   if (latest != null) {
@@ -168,26 +183,30 @@ const getApi = async (
   }
   const v1 = response.body.definition.apis[ApiDefinitionId(id)];
   if (v1 == null) {
-    return undefined;
+    cacheLife("seconds");
+    notFound();
   }
-  return ApiDefinitionV1ToLatest.from(v1, await getEdgeFlags(domain)).migrate();
+  const flags = await cachedGetEdgeFlags(domain);
+  return ApiDefinitionV1ToLatest.from(v1, flags).migrate();
 };
 
 const unsafe_getFullRoot = async (domain: string) => {
   const response = await loadWithUrl(domain);
   if (!response.ok) {
-    return undefined;
+    cacheLife("seconds");
+    notFound();
   }
   const v1 = response.body.definition.config.root;
 
   if (!v1) {
-    return undefined;
+    cacheLife("max");
+    notFound();
   }
 
   const root =
     FernNavigation.migrate.FernNavigationV1ToLatest.create().root(v1);
 
-  if ((await getEdgeFlags(domain)).isApiScrollingDisabled) {
+  if ((await cachedGetEdgeFlags(domain)).isApiScrollingDisabled) {
     FernNavigation.traverseBF(root, (node) => {
       if (node.type === "apiReference") {
         node.paginated = true;
@@ -205,19 +224,17 @@ const getRoot = async (
   authState: AuthState,
   authConfig: AuthEdgeConfig | undefined
 ) => {
-  let root = await unsafe_getFullRoot(domain);
+  "use cache";
 
-  if (!root) {
-    return undefined;
-  }
+  cacheTag(domain);
+
+  let root = await unsafe_getFullRoot(domain);
 
   if (authConfig) {
     root = pruneWithAuthState(authState, authConfig, root);
   }
 
-  if (root) {
-    FernNavigation.utils.mutableUpdatePointsTo(root);
-  }
+  FernNavigation.utils.mutableUpdatePointsTo(root);
 
   return root;
 };
@@ -268,10 +285,7 @@ const serializeMdx = async (
 
   if (mdx == null) {
     // if we're returning the fallback string, this means validation failed
-    cacheLife({
-      stale: 0,
-      revalidate: 0,
-    });
+    cacheLife("seconds");
   }
 
   return mdx ?? content;
@@ -292,7 +306,9 @@ const getSerializedPage = async (
     getMdxBundlerFiles(domain),
   ]);
   if (!page) {
-    return undefined;
+    console.error(`[${domain}] Could not find page: ${pageId}`);
+    cacheLife("seconds");
+    notFound();
   }
   const mdx = await uncachedSerializeMdx(page.markdown, {
     ...options,
@@ -303,10 +319,7 @@ const getSerializedPage = async (
 
   if (mdx == null) {
     // if we're returning the fallback string, this means validation failed
-    cacheLife({
-      stale: 0,
-      revalidate: 0,
-    });
+    cacheLife("seconds");
   }
 
   return mdx ?? page.markdown;
@@ -394,15 +407,9 @@ const getLayout = async (domain: string) => {
 
   const config = await getConfig(domain);
   if (!config) {
-    return {
-      logoHeight: DEFAULT_LOGO_HEIGHT,
-      sidebarWidth: 288,
-      headerHeight: 64,
-      pageWidth: 1_408,
-      contentWidth: 704,
-      tabsPlacement: "SIDEBAR" as const,
-    };
+    notFound();
   }
+
   const logoHeight = config?.logoHeight ?? DEFAULT_LOGO_HEIGHT;
   const sidebarWidth = toPx(config?.layout?.sidebarWidth) ?? 288;
   const pageWidth =
@@ -412,6 +419,7 @@ const getLayout = async (domain: string) => {
   const headerHeight = toPx(config?.layout?.headerHeight) ?? 64;
   const contentWidth = toPx(config?.layout?.contentWidth) ?? 704;
   const tabsPlacement = config?.layout?.tabsPlacement ?? "SIDEBAR";
+  const searchbarPlacement = config?.layout?.searchbarPlacement ?? "HEADER";
   return {
     logoHeight,
     sidebarWidth,
@@ -419,6 +427,7 @@ const getLayout = async (domain: string) => {
     pageWidth,
     contentWidth,
     tabsPlacement,
+    searchbarPlacement,
   };
 };
 
@@ -464,6 +473,7 @@ export const createCachedDocsLoader = React.cache(
       getColors: () => getColors(domain),
       getLayout: () => getLayout(domain),
       getAuthState,
+      getEdgeFlags: () => cachedGetEdgeFlags(domain),
     };
   }
 );

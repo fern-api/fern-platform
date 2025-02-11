@@ -1,18 +1,19 @@
-import type { FernNavigation } from "@fern-api/fdr-sdk";
+import "server-only";
+
 import type { FileIdOrUrl, Frontmatter } from "@fern-api/fdr-sdk/docs";
 import { isPlainObject } from "@fern-api/ui-core-utils";
 import { addLeadingSlash, conformTrailingSlash } from "@fern-docs/utils";
 
-import { DocsLoader } from "./docs-loader";
-import { FileData } from "./types";
+import type { DocsLoader } from "./docs-loader";
+import type { FileData } from "./types";
 
 const DEFAULT_LOGO_HEIGHT = 20;
 
 export function withLogo(
   config: Awaited<ReturnType<DocsLoader["getConfig"]>>,
-  found: FernNavigation.utils.Node.Found,
-  frontmatter: Frontmatter | undefined,
-  resolveFileSrc: (src: string | undefined) => FileData | undefined
+  resolveFileSrc: (src: string | undefined) => FileData | undefined,
+  basepath?: string,
+  frontmatter?: Frontmatter
 ): {
   height: number;
   href: string;
@@ -22,16 +23,7 @@ export function withLogo(
   const height = config?.logoHeight;
   const href =
     config?.logoHref ??
-    encodeURI(
-      conformTrailingSlash(
-        addLeadingSlash(
-          found.landingPage?.canonicalSlug ??
-            found.root.slug ??
-            found.root.canonicalSlug ??
-            found.root.slug
-        )
-      )
-    );
+    encodeURI(conformTrailingSlash(addLeadingSlash(basepath ?? "")));
 
   const frontmatterLogo = getLogoFromFrontmatter(frontmatter);
 

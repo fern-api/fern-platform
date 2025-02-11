@@ -1,6 +1,6 @@
 import { ReactElement } from "react";
 
-import { useAtom, useSetAtom } from "jotai";
+import { useAtom, useAtomValue, useSetAtom } from "jotai";
 
 import type { EndpointContext } from "@fern-api/fdr-sdk/api-definition";
 import {
@@ -10,12 +10,13 @@ import {
   FernCard,
 } from "@fern-docs/components";
 
+import { isFileForgeHackEnabledAtom } from "@/state/api-explorer-flags";
+
 import {
   PLAYGROUND_AUTH_STATE_ATOM,
   PLAYGROUND_AUTH_STATE_OAUTH_ATOM,
   PLAYGROUND_REQUEST_TYPE_ATOM,
   store,
-  useEdgeFlags,
 } from "../../atoms";
 import { PlaygroundRequestPreview } from "../PlaygroundRequestPreview";
 import { PlaygroundCodeSnippetResolverBuilder } from "../code-snippets/resolver";
@@ -31,7 +32,7 @@ export function PlaygroundEndpointRequestCard({
   context,
   formState,
 }: PlaygroundEndpointRequestCardProps): ReactElement<any> | null {
-  const { isSnippetTemplatesEnabled, isFileForgeHackEnabled } = useEdgeFlags();
+  const isFileForgeHackEnabled = useAtomValue(isFileForgeHackEnabledAtom);
   const [requestType, setRequestType] = useAtom(PLAYGROUND_REQUEST_TYPE_ATOM);
   const setOAuthValue = useSetAtom(PLAYGROUND_AUTH_STATE_OAUTH_ATOM);
   const [baseUrl] = usePlaygroundBaseUrl(context.endpoint);
@@ -73,7 +74,7 @@ export function PlaygroundEndpointRequestCard({
             const authState = store.get(PLAYGROUND_AUTH_STATE_ATOM);
             const resolver = new PlaygroundCodeSnippetResolverBuilder(
               context,
-              isSnippetTemplatesEnabled,
+              true,
               isFileForgeHackEnabled
             ).create(authState, formState, baseUrl, setOAuthValue);
             return resolver.resolve(requestType);

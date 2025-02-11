@@ -5,6 +5,7 @@ declare global {
   namespace JSX {
     type ElementClass = Jsx.ElementClass;
     type Element = Jsx.Element;
+    type ElementType = Jsx.ElementType;
     type IntrinsicElements = Jsx.IntrinsicElements;
   }
 }

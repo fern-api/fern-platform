@@ -2,12 +2,11 @@ import { notFound } from "next/navigation";
 
 import { FernNavigation } from "@fern-api/fdr-sdk";
 
-import ApiEndpointPage from "../api-reference/ApiEndpointPage";
-import ChangelogEntryPage from "../changelog/ChangelogEntryPage";
-import ChangelogPage from "../changelog/ChangelogPage";
-import { LayoutEvaluator } from "../layouts/LayoutEvaluator";
-import { FernSerializeMdxOptions } from "../mdx/types";
-import type { DocsContent } from "../resolver/DocsContent";
+import ApiEndpointPage from "@/components/api-reference/ApiEndpointPage";
+import ChangelogEntryPage from "@/components/changelog/ChangelogEntryPage";
+import ChangelogPage from "@/components/changelog/ChangelogPage";
+import { LayoutEvaluator } from "@/components/layouts/LayoutEvaluator";
+import { DocsContent } from "@/components/resolver/DocsContent";
 
 export async function DocsMainContent({
   domain,
@@ -26,7 +25,7 @@ export async function DocsMainContent({
   breadcrumb: readonly FernNavigation.BreadcrumbItem[];
   scope?: Record<string, unknown>;
 }) {
-  const mdxOptions: Omit<FernSerializeMdxOptions, "files" | "replaceSrc"> = {
+  const mdxOptions = {
     scope,
     toc: true,
   };

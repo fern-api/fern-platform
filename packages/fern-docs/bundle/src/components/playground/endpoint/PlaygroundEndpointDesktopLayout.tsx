@@ -1,6 +1,5 @@
 import { ReactElement, ReactNode } from "react";
 
-import { useEdgeFlags } from "../../atoms";
 import { HorizontalSplitPane, VerticalSplitPane } from "../VerticalSplitPane";
 
 interface PlaygroundEndpointDesktopLayoutProps {
@@ -16,10 +15,8 @@ export function PlaygroundEndpointDesktopLayout({
   form,
   requestCard,
   responseCard,
-  endpointId,
+  // endpointId,
 }: PlaygroundEndpointDesktopLayoutProps): ReactElement<any> {
-  const { grpcEndpoints } = useEdgeFlags();
-
   return (
     <HorizontalSplitPane
       rizeBarHeight={scrollAreaHeight}
@@ -31,18 +28,10 @@ export function PlaygroundEndpointDesktopLayout({
       <VerticalSplitPane
         className="sticky inset-0 pr-6"
         style={{ height: scrollAreaHeight }}
-        aboveClassName={
-          // TODO: Remove after pinecone demo
-          endpointId && grpcEndpoints?.includes(endpointId)
-            ? "py-6 flex items-stretch justify-stretch"
-            : "pt-6 pb-1 flex items-stretch justify-stretch"
-        }
+        aboveClassName={"pt-6 pb-1 flex items-stretch justify-stretch"}
         belowClassName="pb-6 pt-1 flex items-stretch justify-stretch"
       >
-        {
-          // TODO: Remove after pinecone demo
-          endpointId && grpcEndpoints?.includes(endpointId) ? null : requestCard
-        }
+        {requestCard}
         {responseCard}
       </VerticalSplitPane>
     </HorizontalSplitPane>

@@ -20,6 +20,7 @@ import { composeRefs } from "@radix-ui/react-compose-refs";
 import { TooltipPortal, TooltipProvider } from "@radix-ui/react-tooltip";
 import { useControllableState } from "@radix-ui/react-use-controllable-state";
 import { Message, useChat } from "ai/react";
+import type { Element as HastElement } from "hast";
 import { atom, useAtom, useAtomValue } from "jotai";
 import {
   ArrowLeft,
@@ -59,6 +60,8 @@ import { DesktopCommandInput } from "./desktop-command-input";
 import { DesktopCommandRoot } from "./desktop-command-root";
 import { Suggestions } from "./suggestions";
 
+type PropsWithElement<T> = T & { node: HastElement };
+
 const headerActions = tunnel();
 
 export const DesktopCommandWithAskAI = forwardRef<
@@ -80,6 +83,7 @@ export const DesktopCommandWithAskAI = forwardRef<
     renderActions?: (message: SqueezedMessage) => ReactNode;
     setInitialInput?: (initialInput: string) => void;
     children?: ReactNode;
+    darkCodeEnabled?: boolean;
   }
 >(
   (
@@ -101,6 +105,7 @@ export const DesktopCommandWithAskAI = forwardRef<
       renderActions,
       setInitialInput,
       asChild,
+      darkCodeEnabled,
       ...props
     },
     forwardedRef
@@ -189,6 +194,7 @@ export const DesktopCommandWithAskAI = forwardRef<
             composerActions={composerActions}
             domain={domain}
             renderActions={renderActions}
+            darkCodeEnabled={darkCodeEnabled}
           />
         ) : (
           <DesktopCommandContent asChild={asChild}>
@@ -224,6 +230,7 @@ const DesktopAskAIContent = (props: {
   composerActions?: ReactNode;
   domain: string;
   renderActions?: (message: SqueezedMessage) => ReactNode;
+  darkCodeEnabled?: boolean;
 }) => {
   return (
     <>
@@ -265,6 +272,7 @@ const DesktopAskAIChat = ({
   composerActions,
   domain,
   renderActions,
+  darkCodeEnabled,
 }: {
   onReturnToSearch?: () => void;
   initialInput?: string;
@@ -278,6 +286,7 @@ const DesktopAskAIChat = ({
   composerActions?: ReactNode;
   domain: string;
   renderActions?: (message: SqueezedMessage) => ReactNode;
+  darkCodeEnabled?: boolean;
 }) => {
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const [userScrolled, setUserScrolled] = useState(false);
@@ -391,8 +400,11 @@ const DesktopAskAIChat = ({
           onSelectHit={onSelectHit}
           prefetch={prefetch}
           components={useMemo(
-            () => ({
-              pre(props) {
+            (): Components => ({
+              pre({
+                node,
+                ...props
+              }: PropsWithElement<React.ComponentProps<"pre">>) {
                 if (
                   isValidElement(props.children) &&
                   props.children.type === "code"
@@ -410,6 +422,9 @@ const DesktopAskAIChat = ({
                         code={children}
                         language={match}
                         fontSize="sm"
+                        className={cn({
+                          "bg-card-solid dark": darkCodeEnabled,
+                        })}
                       />
                     );
                   }
@@ -417,7 +432,11 @@ const DesktopAskAIChat = ({
                 return <pre {...props} />;
               },
 
-              a: ({ children, node, ...props }) => (
+              a: ({
+                children,
+                node,
+                ...props
+              }: PropsWithElement<React.ComponentProps<"a">>) => (
                 <a
                   {...props}
                   className="font-semibold decoration-[var(--accent-a10)] hover:text-[var(--accent-a10)] hover:decoration-2"
@@ -428,7 +447,7 @@ const DesktopAskAIChat = ({
                 </a>
               ),
             }),
-            []
+            [darkCodeEnabled]
           )}
           isLoading={chat.isLoading}
           userScrolled={userScrolled}
@@ -573,7 +592,7 @@ const AskAICommandItems = memo<{
   ({
     messages,
     onSelectHit,
-    components,
+    components = {},
     userScrolled = true,
     isLoading,
     children,
@@ -663,7 +682,13 @@ const AskAICommandItems = memo<{
                             components={{
                               ...components,
                               sup: FootnoteSup,
-                              section: ({ children, node, ...props }) => {
+                              section: ({
+                                children,
+                                node,
+                                ...props
+                              }: PropsWithElement<
+                                React.ComponentProps<"section">
+                              >) => {
                                 if (node?.properties.dataFootnotes) {
                                   return (
                                     <FootnotesSection
@@ -674,9 +699,13 @@ const AskAICommandItems = memo<{
                                   );
                                 }
 
-                                if (components?.section) {
+                                if ("section" in components) {
                                   return createElement(
-                                    components.section,
+                                    components.section as React.ComponentType<
+                                      PropsWithElement<
+                                        React.ComponentProps<"section">
+                                      >
+                                    >,
                                     {
                                       ...props,
                                       node,

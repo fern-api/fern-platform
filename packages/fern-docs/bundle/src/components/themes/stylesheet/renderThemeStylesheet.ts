@@ -1,3 +1,5 @@
+import "server-only";
+
 import tinycolor from "tinycolor2";
 
 import type { DocsV1Read } from "@fern-api/fdr-sdk/client/types";

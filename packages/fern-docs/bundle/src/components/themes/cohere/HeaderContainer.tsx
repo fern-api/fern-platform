@@ -1,15 +1,16 @@
 import { ReactElement, memo } from "react";
 
-import { SearchV2Trigger } from "@/components/search-trigger";
+import { SearchV2Trigger } from "@/state/search";
 
-import { Header } from "../../header/Header";
 import { HeaderTabs } from "../../header/HeaderTabs";
 
 export const HeaderContainer = memo(function HeaderContainer({
+  header,
   className,
   showHeaderTabs,
   showSearchBar,
 }: {
+  header: React.ReactNode;
   className?: string;
   showHeaderTabs: boolean;
   showSearchBar: boolean;
@@ -17,9 +18,7 @@ export const HeaderContainer = memo(function HeaderContainer({
   return (
     <header id="fern-header" className={className}>
       <div className="fern-header-container width-before-scroll-bar">
-        <div className="fern-header">
-          <Header className="max-w-page-width mx-auto" />
-        </div>
+        <div className="fern-header">{header}</div>
         {showHeaderTabs && (
           <nav aria-label="tabs" className="fern-header-tabs">
             <HeaderTabs />

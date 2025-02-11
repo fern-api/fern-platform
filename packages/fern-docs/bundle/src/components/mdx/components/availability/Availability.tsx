@@ -21,6 +21,6 @@ function parseAvailability(type: unknown): APIV1Read.Availability {
   }
 }
 
-export const Availability: React.FC<Availability.Props> = ({ type }) => {
+export function Availability({ type }: Availability.Props) {
   return <AvailabilityBadge availability={parseAvailability(type)} />;
-};
+}

@@ -18,6 +18,8 @@ import {
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { useEventCallback } from "@fern-ui/react-commons";
 
+import { fernUserAtom } from "@/state/fern-user";
+
 import { selectHref } from "../hooks/useHref";
 import {
   PLAYGROUND_AUTH_STATE_BASIC_AUTH_INITIAL,
@@ -40,14 +42,11 @@ import {
 } from "../playground/utils";
 import { flattenApiSection } from "../playground/utils/flatten-apis";
 import { pascalCaseHeaderKeys } from "../playground/utils/header-key-case";
-import { FERN_USER_ATOM } from "./auth";
-import { EDGE_FLAGS_ATOM } from "./flags";
 import { useAtomEffect } from "./hooks";
 import { HEADER_HEIGHT_ATOM } from "./layout";
 import { LOCATION_ATOM } from "./location";
 import {
   CURRENT_NODE_ATOM,
-  DOMAIN_ATOM,
   NAVIGATION_NODES_ATOM,
   SIDEBAR_ROOT_NODE_ATOM,
 } from "./navigation";
@@ -57,9 +56,7 @@ import { IS_MOBILE_SCREEN_ATOM } from "./viewport";
 const PLAYGROUND_IS_OPEN_ATOM = atom(false);
 PLAYGROUND_IS_OPEN_ATOM.debugLabel = "PLAYGROUND_IS_OPEN_ATOM";
 
-export const IS_PLAYGROUND_ENABLED_ATOM = atom(
-  (get) => get(EDGE_FLAGS_ATOM).isApiPlaygroundEnabled
-);
+export const IS_PLAYGROUND_ENABLED_ATOM = atom(true);
 
 export const MAX_PLAYGROUND_HEIGHT_ATOM = atom((get) => {
   const isMobileScreen = get(IS_MOBILE_SCREEN_ATOM);
@@ -206,7 +203,7 @@ export const PLAYGROUND_AUTH_STATE_BEARER_TOKEN_ATOM = atom(
   (get) => ({
     token:
       get(PLAYGROUND_AUTH_STATE_ATOM).bearerAuth?.token ??
-      get(FERN_USER_ATOM)?.playground?.initial_state?.auth?.bearer_token ??
+      get(fernUserAtom)?.playground?.initial_state?.auth?.bearer_token ??
       "",
   }),
   (
@@ -241,7 +238,7 @@ export const PLAYGROUND_AUTH_STATE_BEARER_TOKEN_IS_RESETTABLE_ATOM = atom(
   (get) => {
     const inputBearerAuth = get(PLAYGROUND_AUTH_STATE_BEARER_TOKEN_ATOM).token;
     const injectedBearerAuth =
-      get(FERN_USER_ATOM)?.playground?.initial_state?.auth?.bearer_token;
+      get(fernUserAtom)?.playground?.initial_state?.auth?.bearer_token;
     return injectedBearerAuth != null && inputBearerAuth !== injectedBearerAuth;
   }
 );
@@ -250,7 +247,7 @@ export const PLAYGROUND_AUTH_STATE_HEADER_ATOM = atom(
   (get) => ({
     headers: pascalCaseHeaderKeys({
       ...(get(PLAYGROUND_AUTH_STATE_ATOM).header?.headers ??
-        get(FERN_USER_ATOM)?.playground?.initial_state?.headers),
+        get(fernUserAtom)?.playground?.initial_state?.headers),
     }),
   }),
   (
@@ -277,10 +274,10 @@ export const PLAYGROUND_AUTH_STATE_BASIC_AUTH_ATOM = atom(
   (get) => ({
     username:
       get(PLAYGROUND_AUTH_STATE_ATOM).basicAuth?.username ??
-      get(FERN_USER_ATOM)?.playground?.initial_state?.auth?.basic?.username,
+      get(fernUserAtom)?.playground?.initial_state?.auth?.basic?.username,
     password:
       get(PLAYGROUND_AUTH_STATE_ATOM).basicAuth?.password ??
-      get(FERN_USER_ATOM)?.playground?.initial_state?.auth?.basic?.password,
+      get(fernUserAtom)?.playground?.initial_state?.auth?.basic?.password,
   }),
   (
     _get,
@@ -358,7 +355,7 @@ export const PLAYGROUND_AUTH_STATE_BASIC_AUTH_USERNAME_IS_RESETTABLE_ATOM =
   atom((get) => {
     const inputBasicAuth = get(PLAYGROUND_AUTH_STATE_BASIC_AUTH_ATOM);
     const injectedBasicAuth =
-      get(FERN_USER_ATOM)?.playground?.initial_state?.auth?.basic;
+      get(fernUserAtom)?.playground?.initial_state?.auth?.basic;
     return (
       injectedBasicAuth != null &&
       inputBasicAuth.username !== injectedBasicAuth.username
@@ -369,7 +366,7 @@ export const PLAYGROUND_AUTH_STATE_BASIC_AUTH_PASSWORD_IS_RESETTABLE_ATOM =
   atom((get) => {
     const inputBasicAuth = get(PLAYGROUND_AUTH_STATE_BASIC_AUTH_ATOM);
     const injectedBasicAuth =
-      get(FERN_USER_ATOM)?.playground?.initial_state?.auth?.basic;
+      get(fernUserAtom)?.playground?.initial_state?.auth?.basic;
     return (
       injectedBasicAuth != null &&
       inputBasicAuth.password !== injectedBasicAuth.password
@@ -443,7 +440,7 @@ export function useOpenPlayground(): (
   return useAtomCallback(
     useCallbackOne(
       async (get, set, node?: FernNavigation.NavigationNodeApiLeaf) => {
-        const domain = get(DOMAIN_ATOM);
+        const domain = window.location.hostname;
 
         if (!get(HAS_API_PLAYGROUND)) {
           set(PLAYGROUND_NODE_ID, undefined);
@@ -485,7 +482,7 @@ export function useOpenPlayground(): (
         }
 
         const playgroundInitialState =
-          get(FERN_USER_ATOM)?.playground?.initial_state;
+          get(fernUserAtom)?.playground?.initial_state;
 
         if (node.type === "endpoint") {
           const context = createEndpointContext(node, undefined);
@@ -499,7 +496,7 @@ export function useOpenPlayground(): (
             return;
           }
 
-          set(
+          void set(
             formStateAtom,
             getInitialEndpointRequestFormStateWithExample(
               context,
@@ -523,7 +520,7 @@ export function useOpenPlayground(): (
             return;
           }
 
-          set(
+          void set(
             formStateAtom,
             getInitialWebSocketRequestFormState(context, playgroundInitialState)
           );
@@ -543,7 +540,7 @@ export function usePlaygroundEndpointFormState(
 ] {
   const formStateAtom = playgroundFormStateFamily(ctx.node.id);
   const formState = useAtomValue(formStateAtom);
-  const user = useAtomValue(FERN_USER_ATOM);
+  const user = useAtomValue(fernUserAtom);
 
   return [
     formState?.type === "endpoint"
@@ -573,7 +570,7 @@ export function usePlaygroundEndpointFormState(
                       )
                 )
               : update;
-          set(formStateAtom, newFormState);
+          void set(formStateAtom, newFormState);
         },
         [formStateAtom, ctx, user?.playground?.initial_state]
       )
@@ -589,7 +586,7 @@ export function usePlaygroundWebsocketFormState(
 ] {
   const formStateAtom = playgroundFormStateFamily(context.node.id);
   const formState = useAtomValue(playgroundFormStateFamily(context.node.id));
-  const user = useAtomValue(FERN_USER_ATOM);
+  const user = useAtomValue(fernUserAtom);
 
   return [
     formState?.type === "websocket"
@@ -617,7 +614,7 @@ export function usePlaygroundWebsocketFormState(
                       )
                 )
               : update;
-          set(formStateAtom, newFormState);
+          void set(formStateAtom, newFormState);
         },
         [formStateAtom, context, user?.playground?.initial_state]
       )

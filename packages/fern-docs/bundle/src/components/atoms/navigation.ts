@@ -7,7 +7,6 @@ import { SidebarTab, VersionSwitcherInfo } from "@fern-platform/fdr-utils";
 
 import { DOCS_ATOM } from "./docs";
 import { SLUG_ATOM } from "./location";
-import { NavbarLink } from "./types";
 
 export const DOMAIN_ATOM = atom<string>((get) => get(DOCS_ATOM).baseUrl.domain);
 DOMAIN_ATOM.debugLabel = "DOMAIN_ATOM";
@@ -45,13 +44,6 @@ export const TRAILING_SLASH_ATOM = atom<boolean>(
   (get) => get(DOCS_ATOM).navigation.trailingSlash
 );
 TRAILING_SLASH_ATOM.debugLabel = "TRAILING_SLASH_ATOM";
-
-export const NAVBAR_LINKS_ATOM = selectAtom(
-  DOCS_ATOM,
-  (docs): readonly NavbarLink[] => docs.navbarLinks,
-  isEqual
-);
-NAVBAR_LINKS_ATOM.debugLabel = "NAVBAR_LINKS_ATOM";
 
 export const CURRENT_VERSION_ATOM = atom((get) => {
   const versionId = get(CURRENT_VERSION_ID_ATOM);

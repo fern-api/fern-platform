@@ -24,11 +24,11 @@ export const PageHeader = async ({
   tags?: React.ReactNode;
   children?: React.ReactNode;
 }) => {
-  const docsLoader = await createCachedDocsLoader(domain);
+  const loader = await createCachedDocsLoader(domain);
 
   const [title, subtitle] = await Promise.all([
-    docsLoader.serializeMdx(titleProp, { stripParagraph: true }),
-    docsLoader.serializeMdx(subtitleProp),
+    loader.serializeMdx(titleProp, { stripParagraph: true }),
+    loader.serializeMdx(subtitleProp),
   ]);
 
   return (

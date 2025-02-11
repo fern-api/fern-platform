@@ -2,8 +2,6 @@ import { ReactElement, ReactNode, useState } from "react";
 
 import { FernTabs } from "@fern-docs/components";
 
-import { useEdgeFlags } from "../../atoms";
-
 interface PlaygroundEndpointMobileLayoutProps {
   form: ReactNode;
   requestCard: ReactNode;
@@ -13,14 +11,13 @@ interface PlaygroundEndpointMobileLayoutProps {
 }
 
 export function PlaygroundEndpointMobileLayout({
-  endpointId,
+  // endpointId,
   form,
   requestCard,
   responseCard,
   sendButton,
 }: PlaygroundEndpointMobileLayoutProps): ReactElement<any> {
   const [tabValue, setTabValue] = useState<string>("0");
-  const { grpcEndpoints } = useEdgeFlags();
   return (
     <FernTabs
       className="px-4"
@@ -44,7 +41,7 @@ export function PlaygroundEndpointMobileLayout({
                                     }
                                 /> */}
               </div>
-              {endpointId && grpcEndpoints?.includes(endpointId) && requestCard}
+              {requestCard}
             </div>
           ),
         },

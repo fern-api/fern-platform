@@ -3,6 +3,7 @@
 import { usePathname, useRouter } from "next/navigation";
 import React from "react";
 
+import { isEqual } from "es-toolkit/predicate";
 import { atom, useAtom, useAtomValue, useSetAtom } from "jotai";
 import { z } from "zod";
 
@@ -10,7 +11,6 @@ import {
   CommandActions,
   CommandEmpty,
   CommandGroupFilters,
-  CommandGroupPlayground,
   CommandGroupTheme,
   CommandSearchHits,
   DefaultDesktopBackButton,
@@ -21,25 +21,18 @@ import {
   SearchClientRoot,
   useIsMobile,
 } from "@fern-docs/search-ui";
+import { VersionSwitcherInfo } from "@fern-platform/fdr-utils";
 import { useEventCallback, useLazyRef } from "@fern-ui/react-commons";
 
-import {
-  CURRENT_VERSION_ATOM,
-  DOMAIN_ATOM,
-  HAS_API_PLAYGROUND,
-  atomWithStorageString,
-  useClosePlayground,
-  useEdgeFlags,
-  useFernUser,
-  useIsPlaygroundOpen,
-  useTogglePlayground,
-} from "@/components/atoms";
 import { Feedback } from "@/components/feedback/Feedback";
 import { useApiRoute } from "@/components/hooks/useApiRoute";
 import { useApiRouteSWRImmutable } from "@/components/hooks/useApiRouteSWR";
 import { useSetTheme, useThemeSwitchEnabled } from "@/hooks/theme-switch";
+import { useIsDarkCode } from "@/state/dark-code";
+import { useFernUser } from "@/state/fern-user";
 
-import { searchDialogOpenAtom, searchInitializedAtom } from "./search-trigger";
+import { searchDialogOpenAtom, searchInitializedAtom } from "../state/search";
+import { atomWithStorageString } from "./atoms/utils/atomWithStorageString";
 
 const ALGOLIA_USER_TOKEN_KEY = "algolia-user-token";
 
@@ -61,18 +54,22 @@ function useAlgoliaUserToken() {
 
 const askAiAtom = atom(false);
 
-export const SearchV2 = React.memo(function SearchV2() {
-  const version = useAtomValue(CURRENT_VERSION_ATOM);
-  const { isAskAiEnabled } = useEdgeFlags();
-
+export const SearchV2 = React.memo(function SearchV2({
+  domain,
+  version,
+  isAskAiEnabled,
+}: {
+  domain: string;
+  isAskAiEnabled: boolean;
+  version?: VersionSwitcherInfo;
+}) {
+  const isDarkCodeEnabled = useIsDarkCode();
   const userToken = useAlgoliaUserToken();
   const user = useFernUser();
 
   const [open, setOpen] = useCommandTrigger();
-  const setCloseApiPlayground = useClosePlayground();
   const [askAi, setAskAi] = useAtom(askAiAtom);
   const [initialInput, setInitialInput] = React.useState("");
-  const domain = useAtomValue(DOMAIN_ATOM);
 
   const { data } = useApiRouteSWRImmutable("/api/fern-docs/search/v2/key", {
     request: { headers: { "X-User-Token": userToken } },
@@ -97,7 +94,6 @@ export const SearchV2 = React.memo(function SearchV2() {
   const handleNavigate = useEventCallback((path: string) => {
     router.push(path);
     setOpen(false);
-    setCloseApiPlayground();
   });
 
   const facetFetcher = React.useCallback(
@@ -118,20 +114,11 @@ export const SearchV2 = React.memo(function SearchV2() {
   );
 
   const setInitialized = useSetAtom(searchInitializedAtom);
-
   // initialize the search dialog when the data is loaded
   React.useEffect(() => {
     setInitialized(data != null);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
-
-  // reset the initialized state when the component unmounts
-  React.useEffect(() => {
-    return () => {
-      setInitialized(false);
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   // close the search dialog when the pathname changes
   const pathname = usePathname();
@@ -157,7 +144,6 @@ export const SearchV2 = React.memo(function SearchV2() {
         domain={domain}
       />
       <CommandActions>
-        <CommandPlayground onClose={() => setOpen(false)} />
         <CommandTheme onClose={() => setOpen(false)} />
       </CommandActions>
     </>
@@ -205,6 +191,7 @@ export const SearchV2 = React.memo(function SearchV2() {
                 />
               );
             }}
+            darkCodeEnabled={isDarkCodeEnabled}
           >
             {children}
           </DesktopCommandWithAskAI>
@@ -216,26 +203,7 @@ export const SearchV2 = React.memo(function SearchV2() {
       </DesktopSearchDialog>
     </SearchClientRoot>
   );
-});
-
-function CommandPlayground({ onClose }: { onClose: () => void }) {
-  const hasApiPlayground = useAtomValue(HAS_API_PLAYGROUND);
-  const togglePlayground = useTogglePlayground();
-  const playgroundOpen = useIsPlaygroundOpen();
-
-  if (!hasApiPlayground) {
-    return null;
-  }
-  return (
-    <CommandGroupPlayground
-      togglePlayground={() => {
-        togglePlayground();
-        onClose();
-      }}
-      playgroundOpen={playgroundOpen}
-    />
-  );
-}
+}, isEqual);
 
 function CommandTheme({ onClose }: { onClose: () => void }) {
   const themeSwitchEnabled = useThemeSwitchEnabled();

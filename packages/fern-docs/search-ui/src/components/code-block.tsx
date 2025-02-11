@@ -6,8 +6,11 @@ import {
   type FernSyntaxHighlighterProps,
 } from "@fern-docs/syntax-highlighter";
 
-export const CodeBlock: FC<FernSyntaxHighlighterProps> = (props) => (
-  <CodeBlockWithClipboardButton code={props.code}>
+export const CodeBlock: FC<FernSyntaxHighlighterProps> = ({
+  className,
+  ...props
+}) => (
+  <CodeBlockWithClipboardButton code={props.code} className={className}>
     <FernSyntaxHighlighter {...props} />
   </CodeBlockWithClipboardButton>
 );

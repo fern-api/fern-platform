@@ -1,3 +1,5 @@
+"use client";
+
 import {
   ComponentProps,
   ReactElement,
@@ -8,7 +10,6 @@ import {
 } from "react";
 import Zoom from "react-medium-image-zoom";
 
-import { useEdgeFlags } from "../../../atoms";
 import { FernImage } from "../../../components/FernImage";
 import { useFrontmatter } from "../../../contexts/frontmatter";
 import { toPixelValue } from "../../../util/to-pixel-value";
@@ -115,7 +116,6 @@ function useIsImageZoomDisabled({
   enableZoom: boolean;
 }) {
   const isImageZoomDisabledContext = useContext(NoZoomContext);
-  const isImageZoomDisabledFeatureFlag = useEdgeFlags().isImageZoomDisabled;
 
   const { "no-image-zoom": isImageZoomDisabledFrontmatter, layout } =
     useFrontmatter();
@@ -123,9 +123,7 @@ function useIsImageZoomDisabled({
   const isImageZoomDisabledLayout =
     isImageZoomDisabledFrontmatter ?? layout === "custom";
 
-  return isImageZoomDisabledContext ||
-    isImageZoomDisabledFeatureFlag ||
-    isImageZoomDisabledLayout
+  return isImageZoomDisabledContext || isImageZoomDisabledLayout
     ? !enableZoom
     : noZoom;
 }

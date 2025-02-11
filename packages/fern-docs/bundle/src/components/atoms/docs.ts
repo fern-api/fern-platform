@@ -4,32 +4,9 @@ import type { PropsWithChildren, ReactNode } from "react";
 
 import { atomWithReducer, useHydrateAtoms } from "jotai/utils";
 
-import { DocsV1Read } from "@fern-api/fdr-sdk";
-import { DEFAULT_EDGE_FLAGS } from "@fern-docs/utils";
-
 import type { DocsProps } from "./types";
 
-export const EMPTY_ANALYTICS_CONFIG: DocsV1Read.AnalyticsConfig = {
-  segment: undefined,
-  fullstory: undefined,
-  intercom: undefined,
-  posthog: undefined,
-  gtm: undefined,
-  ga4: undefined,
-  amplitude: undefined,
-  mixpanel: undefined,
-  hotjar: undefined,
-  koala: undefined,
-  logrocket: undefined,
-  pirsch: undefined,
-  plausible: undefined,
-  fathom: undefined,
-  clearbit: undefined,
-  heap: undefined,
-};
-
 export const EMPTY_DOCS_STATE: DocsProps = {
-  announcement: undefined,
   baseUrl: {
     domain: "app.buildwithfern.com",
     basePath: undefined,
@@ -49,18 +26,6 @@ export const EMPTY_DOCS_STATE: DocsProps = {
     dark: undefined,
   },
   layout: undefined,
-  navbarLinks: [],
-  logo: {
-    height: undefined,
-    href: undefined,
-    light: undefined,
-    dark: undefined,
-  },
-  edgeFlags: DEFAULT_EDGE_FLAGS,
-  analytics: undefined,
-  analyticsConfig: EMPTY_ANALYTICS_CONFIG,
-  fallback: {},
-  user: undefined,
   defaultLang: "curl",
   featureFlagsConfig: undefined,
 };

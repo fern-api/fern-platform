@@ -7,13 +7,16 @@ import { useAtomValue } from "jotai";
 import {
   DOCS_LAYOUT_ATOM,
   MOBILE_SIDEBAR_ENABLED_ATOM,
-  NAVBAR_LINKS_ATOM,
+  type NavbarLink,
 } from "../atoms";
 import { FernLinkButton } from "../components/FernLinkButton";
 
-export function MobileSidebarHeaderLinks(): ReactElement<any> | null {
+export function MobileSidebarHeaderLinks({
+  navbarLinks,
+}: {
+  navbarLinks: NavbarLink[];
+}): ReactElement<any> | null {
   const layout = useAtomValue(DOCS_LAYOUT_ATOM);
-  const navbarLinks = useAtomValue(NAVBAR_LINKS_ATOM);
   const isMobileSidebarEnabled = useAtomValue(MOBILE_SIDEBAR_ENABLED_ATOM);
   if (navbarLinks == null || navbarLinks.length === 0) {
     return null;

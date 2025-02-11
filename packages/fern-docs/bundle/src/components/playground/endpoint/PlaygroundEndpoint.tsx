@@ -19,13 +19,17 @@ import {
 } from "@fern-ui/loadable";
 import { useEventCallback } from "@fern-ui/react-commons";
 
+import {
+  isProxyDisabledAtom,
+  usesApplicationJsonInFormDataValueAtom,
+} from "@/state/api-explorer-flags";
+import { fernUserAtom } from "@/state/fern-user";
+
 import { track } from "../../analytics";
 import {
-  FERN_USER_ATOM,
   PLAYGROUND_AUTH_STATE_ATOM,
   PLAYGROUND_AUTH_STATE_OAUTH_ATOM,
   store,
-  useEdgeFlags,
   usePlaygroundEndpointFormState,
 } from "../../atoms";
 import { usePlaygroundSettings } from "../../hooks/usePlaygroundSettings";
@@ -47,7 +51,7 @@ export const PlaygroundEndpoint = ({
 }: {
   context: EndpointContext;
 }): ReactElement<any> => {
-  const user = useAtomValue(FERN_USER_ATOM);
+  const user = useAtomValue(fernUserAtom);
   const { node, endpoint, auth } = context;
 
   const [formState, setFormState] = usePlaygroundEndpointFormState(context);
@@ -72,8 +76,10 @@ export const PlaygroundEndpoint = ({
     );
   });
 
-  const { usesApplicationJsonInFormDataValue, isProxyDisabled } =
-    useEdgeFlags();
+  const usesApplicationJsonInFormDataValue = useAtomValue(
+    usesApplicationJsonInFormDataValueAtom
+  );
+  const isProxyDisabled = useAtomValue(isProxyDisabledAtom);
   const [response, setResponse] =
     useState<Loadable<PlaygroundResponse>>(notStartedLoading());
 

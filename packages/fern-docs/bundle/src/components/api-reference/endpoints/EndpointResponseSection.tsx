@@ -3,7 +3,6 @@
 import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 
-import { useEdgeFlags } from "../../atoms";
 import { Markdown } from "../../mdx/Markdown";
 import { renderTypeShorthand } from "../../type-shorthand";
 import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";
@@ -21,7 +20,7 @@ export declare namespace EndpointResponseSection {
 export const EndpointResponseSection: React.FC<
   EndpointResponseSection.Props
 > = ({ response, anchorIdParts, slug, types }) => {
-  const { isAudioFileDownloadSpanSummary } = useEdgeFlags();
+  const isAudioFileDownloadSpanSummary = false;
   const { selectedExample } = useEndpointContext();
   const exampleResponseBody = selectedExample?.exampleCall.responseBody;
 

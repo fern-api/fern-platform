@@ -15,7 +15,6 @@ import {
   SHOW_HEADER_ATOM,
   SIDEBAR_DISMISSABLE_ATOM,
 } from "@/components/atoms";
-import { Sidebar } from "@/components/sidebar/Sidebar";
 
 import { HeaderContainer } from "./HeaderContainer";
 
@@ -48,9 +47,13 @@ const CohereDocsStyle = () => {
 };
 
 export default function CohereDocs({
+  header,
+  sidebar,
   children,
   announcement,
 }: {
+  header: React.ReactNode;
+  sidebar: React.ReactNode;
   children: React.ReactNode;
   announcement?: React.ReactNode;
 }) {
@@ -81,9 +84,11 @@ export default function CohereDocs({
     <div id="fern-docs" className="fern-container fern-theme-cohere">
       <CohereDocsStyle />
       {announcement}
-      {showHeader && <HeaderContainer showHeaderTabs showSearchBar={false} />}
+      {showHeader && (
+        <HeaderContainer header={header} showHeaderTabs showSearchBar={false} />
+      )}
       <div className="fern-body">
-        <Sidebar />
+        {sidebar}
         <FernScrollArea
           rootClassName="fern-main"
           className={clsx({

@@ -10,7 +10,9 @@ import {
 } from "launchdarkly-react-client-sdk";
 import useSWR from "swr";
 
-import { CURRENT_VERSION_ID_ATOM, useFernUser } from "../atoms";
+import { useFernUser } from "@/state/fern-user";
+
+import { CURRENT_VERSION_ID_ATOM } from "../atoms";
 
 interface Props extends PropsWithChildren {
   clientSideId: string;

@@ -1,4 +1,4 @@
-import { notFound } from "next/navigation";
+import { unstable_cacheTag } from "next/cache";
 
 import {
   ApiDefinition,
@@ -26,11 +26,12 @@ export default async function ApiEndpointPage({
   breadcrumb: readonly FernNavigation.BreadcrumbItem[];
   rootslug: FernNavigation.Slug;
 }) {
-  const docsLoader = await createCachedDocsLoader(domain);
-  const apiDefinition = await docsLoader.getApi(node.apiDefinitionId);
-  if (!apiDefinition) {
-    notFound();
-  }
+  "use cache";
+
+  unstable_cacheTag(domain);
+
+  const loader = await createCachedDocsLoader(domain);
+  const apiDefinition = await loader.getApi(node.apiDefinitionId);
 
   return (
     <ApiPageLayout>

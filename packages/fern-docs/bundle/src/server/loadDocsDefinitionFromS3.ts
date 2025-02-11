@@ -1,9 +1,5 @@
 import "server-only";
 
-import {
-  unstable_cacheLife as cacheLife,
-  unstable_cacheTag as cacheTag,
-} from "next/cache";
 import React from "react";
 
 import { GetObjectCommand, S3Client } from "@aws-sdk/client-s3";
@@ -13,23 +9,15 @@ import { FdrAPI } from "@fern-api/fdr-sdk";
 import { getS3KeyForV1DocsDefinition } from "@fern-api/fdr-sdk/docs";
 
 const getSignedUrl = React.cache(
-  async (
-    domain: string,
-    {
-      Bucket,
-      Key,
-      expiresIn,
-    }: {
-      Bucket: string;
-      Key: string;
-      expiresIn: number;
-    }
-  ) => {
-    "use cache";
-
-    cacheTag(domain);
-    cacheLife({ expire: expiresIn - 60 });
-
+  async ({
+    Bucket,
+    Key,
+    expiresIn,
+  }: {
+    Bucket: string;
+    Key: string;
+    expiresIn: number;
+  }) => {
     const accessKeyId = process.env.AWS_ACCESS_KEY_ID;
     const secretAccessKey = process.env.AWS_SECRET_ACCESS_KEY;
 
@@ -69,7 +57,7 @@ export const loadDocsDefinitionFromS3 = React.cache(
       const cleanDomain = domain.replace(/^https?:\/\//, "");
       const s3Key = getS3KeyForV1DocsDefinition(cleanDomain);
 
-      const signedUrl = await getSignedUrl(domain, {
+      const signedUrl = await getSignedUrl({
         Bucket: docsBucketName,
         Key: s3Key,
         expiresIn: 60 * 60, // 1 hour

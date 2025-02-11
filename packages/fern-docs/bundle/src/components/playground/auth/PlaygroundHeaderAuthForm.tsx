@@ -8,7 +8,9 @@ import { useMemoOne } from "use-memo-one";
 import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
 import { unknownToString } from "@fern-api/ui-core-utils";
 
-import { FERN_USER_ATOM, PLAYGROUND_AUTH_STATE_HEADER_ATOM } from "../../atoms";
+import { fernUserAtom } from "@/state/fern-user";
+
+import { PLAYGROUND_AUTH_STATE_HEADER_ATOM } from "../../atoms";
 import { PasswordInputGroup } from "../PasswordInputGroup";
 import { pascalCaseHeaderKey } from "../utils/header-key-case";
 
@@ -52,7 +54,7 @@ function isHeaderResettableAtom(headerName: string) {
       pascalCaseHeaderKey(headerName)
     ];
     const injectedHeader =
-      get(FERN_USER_ATOM)?.playground?.initial_state?.headers?.[
+      get(fernUserAtom)?.playground?.initial_state?.headers?.[
         pascalCaseHeaderKey(headerName)
       ];
     return injectedHeader != null && injectedHeader !== inputHeader;

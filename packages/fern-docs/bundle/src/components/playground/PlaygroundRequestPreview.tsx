@@ -5,10 +5,11 @@ import { useAtom, useAtomValue } from "jotai";
 import type { EndpointContext } from "@fern-api/fdr-sdk/api-definition";
 import { FernSyntaxHighlighter } from "@fern-docs/syntax-highlighter";
 
+import { isFileForgeHackEnabledAtom } from "@/state/api-explorer-flags";
+
 import {
   PLAYGROUND_AUTH_STATE_ATOM,
   PLAYGROUND_AUTH_STATE_OAUTH_ATOM,
-  useEdgeFlags,
 } from "../atoms";
 import { PlaygroundCodeSnippetResolverBuilder } from "./code-snippets/resolver";
 import { useSnippet } from "./code-snippets/useSnippet";
@@ -26,9 +27,8 @@ export const PlaygroundRequestPreview: FC<PlaygroundRequestPreviewProps> = ({
   formState,
   requestType,
 }) => {
-  const { isSnippetTemplatesEnabled } = useEdgeFlags();
+  const isFileForgeHackEnabled = useAtomValue(isFileForgeHackEnabledAtom);
   const authState = useAtomValue(PLAYGROUND_AUTH_STATE_ATOM);
-  const { isFileForgeHackEnabled } = useEdgeFlags();
   const [oAuthValue, setOAuthValue] = useAtom(PLAYGROUND_AUTH_STATE_OAUTH_ATOM);
   const [baseUrl] = usePlaygroundBaseUrl(context.endpoint);
 
@@ -36,10 +36,10 @@ export const PlaygroundRequestPreview: FC<PlaygroundRequestPreviewProps> = ({
     () =>
       new PlaygroundCodeSnippetResolverBuilder(
         context,
-        isSnippetTemplatesEnabled,
+        true,
         isFileForgeHackEnabled
       ),
-    [context, isSnippetTemplatesEnabled, isFileForgeHackEnabled]
+    [context, isFileForgeHackEnabled]
   );
 
   const resolver = useMemo(
@@ -52,7 +52,7 @@ export const PlaygroundRequestPreview: FC<PlaygroundRequestPreviewProps> = ({
 
   return (
     <FernSyntaxHighlighter
-      className="relative min-h-0 flex-1 shrink"
+      className={"relative min-h-0 flex-1 shrink"}
       language={requestType === "curl" ? "bash" : requestType}
       code={code}
       fontSize="sm"
