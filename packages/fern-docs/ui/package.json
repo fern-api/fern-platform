@@ -170,6 +170,6 @@
     "ts-essentials": "^10.0.1",
     "typescript": "^5",
     "vite": "^5.4.10",
-    "vitest": "^2.1.4"
+    "vitest": "^2.1.9"
   }
 }

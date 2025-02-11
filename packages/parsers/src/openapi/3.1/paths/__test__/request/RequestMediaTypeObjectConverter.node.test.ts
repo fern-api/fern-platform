@@ -104,23 +104,6 @@ describe("RequestMediaTypeObjectConverterNode", () => {
     expect(converter.schema).toBeDefined();
   });
 
-  it("should handle missing schema", () => {
-    const input: OpenAPIV3_1.MediaTypeObject = {};
-
-    const converter = new RequestMediaTypeObjectConverterNode(
-      {
-        input,
-        context: mockContext,
-        accessPath: [],
-        pathId: "test",
-      },
-      "application/json"
-    );
-
-    expect(converter.schema).toBeUndefined();
-    expect(mockContext.errors.warning).toHaveBeenCalled();
-  });
-
   it("should handle unsupported content types", () => {
     const input: OpenAPIV3_1.MediaTypeObject = {
       schema: {

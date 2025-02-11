@@ -205,14 +205,17 @@ export class XFernEndpointExampleConverterNode extends BaseOpenApiV3_1ConverterN
                 : undefined;
               break;
             case "json":
-              requestBody = {
-                type: "json",
-                value: example.request,
-              };
+              requestBody =
+                example.request != null
+                  ? {
+                      type: "json",
+                      value: example.request,
+                    }
+                  : undefined;
               break;
             case "bytes":
               requestBody =
-                typeof example.request === "string"
+                typeof example.request === "string" && example.request != null
                   ? {
                       type: "bytes",
                       value: {

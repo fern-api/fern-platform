@@ -1,11 +1,31 @@
 [
   {
+    "message": "Expected request body of reference or object with json, streaming or form-data content types. Received: application/xml",
+    "path": [
+      "paths",
+      "/pet",
+      "post",
+      "requestBody",
+      "content",
+    ],
+  },
+  {
     "message": "No auth scheme found for petstore_auth. Inline security schemes are not supported.",
     "path": [
       "paths",
       "/pet",
       "post",
       "security",
+    ],
+  },
+  {
+    "message": "Expected request body of reference or object with json, streaming or form-data content types. Received: application/xml",
+    "path": [
+      "paths",
+      "/pet",
+      "put",
+      "requestBody",
+      "content",
     ],
   },
   {

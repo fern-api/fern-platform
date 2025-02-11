@@ -26,6 +26,6 @@
     "redis-cli": "^2.1.2",
     "ts-node": "^10.9.1",
     "typescript": "^5",
-    "vitest": "^2.1.4"
+    "vitest": "^2.1.9"
   }
 }

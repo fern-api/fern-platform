@@ -118,9 +118,12 @@
         {
           "path": "/v2/chats",
           "responseStatusCode": 200,
-          "headers": {
-            "Request-Timeout": 0,
-            "Request-Timeout-Millis": 0
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "query": "How can I use the Vectara platform?",
+              "stream_response": false
+            }
           },
           "responseBody": {
             "type": "json",
@@ -134,9 +137,12 @@
         {
           "path": "/v2/chats",
           "responseStatusCode": 200,
-          "headers": {
-            "Request-Timeout": 0,
-            "Request-Timeout-Millis": 0
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "query": "How can I use the Vectara platform?",
+              "stream_response": false
+            }
           },
           "responseBody": {
             "type": "json",
@@ -148,9 +154,12 @@
         {
           "path": "/v2/chats",
           "responseStatusCode": 200,
-          "headers": {
-            "Request-Timeout": 0,
-            "Request-Timeout-Millis": 0
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "query": "How can I use the Vectara platform?",
+              "stream_response": false
+            }
           },
           "responseBody": {
             "type": "json",
@@ -164,9 +173,12 @@
         {
           "path": "/v2/chats",
           "responseStatusCode": 200,
-          "headers": {
-            "Request-Timeout": 0,
-            "Request-Timeout-Millis": 0
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "query": "How can I use the Vectara platform?",
+              "stream_response": false
+            }
           },
           "responseBody": {
             "type": "json",
