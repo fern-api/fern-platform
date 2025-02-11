@@ -2,6 +2,7 @@ import {
   unstable_cacheLife as cacheLife,
   unstable_cacheTag as cacheTag,
 } from "next/cache";
+import React from "react";
 
 import { mapValues } from "es-toolkit/object";
 import { UnreachableCaseError } from "ts-essentials";

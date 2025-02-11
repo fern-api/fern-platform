@@ -9,7 +9,7 @@ import {
 } from "./posthog";
 import { useSafeListenTrackEvents } from "./use-track";
 
-export function Posthog(props: {
+export function PosthogProvider(props: {
   customerConfig?: DocsV1Read.PostHogConfig;
 }): ReactElement<any> {
   useInitializePosthog(props.customerConfig);

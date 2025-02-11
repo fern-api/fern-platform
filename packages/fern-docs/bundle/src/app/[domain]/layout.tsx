@@ -2,25 +2,38 @@ import { unstable_cacheTag as cacheTag } from "next/cache";
 import { Metadata, Viewport } from "next/types";
 import React from "react";
 
+import { getEnv } from "@vercel/functions";
 import { compact, uniqBy } from "es-toolkit/array";
 import tinycolor from "tinycolor2";
 
-import { DocsV2Read } from "@fern-api/fdr-sdk/client/types";
+import { DocsV1Read, DocsV2Read } from "@fern-api/fdr-sdk/client/types";
 import { withDefaultProtocol } from "@fern-api/ui-core-utils";
-import { getEdgeFlags, getSeoDisabled } from "@fern-docs/edge-config";
+import {
+  getCustomerAnalytics as deprecated_getCustomerAnalytics,
+  getEdgeFlags,
+  getLaunchDarklySettings,
+  getSeoDisabled,
+} from "@fern-docs/edge-config";
+import { SyntaxHighlighterEdgeFlagsProvider } from "@fern-docs/syntax-highlighter";
 import { EdgeFlags } from "@fern-docs/utils";
 
 import { CustomerAnalytics } from "@/components/analytics/CustomerAnalytics";
+import { LaunchDarklyInfo } from "@/components/atoms/types";
 import { JavascriptProvider } from "@/components/components/JavascriptProvider";
+import { withJsConfig } from "@/components/components/with-js-config";
+import { FeatureFlagProvider } from "@/components/feature-flags/FeatureFlagProvider";
 import Preload, { PreloadHref } from "@/components/preload";
 import { SearchV2 } from "@/components/search";
 import { ThemeScript } from "@/components/themes/ThemeScript";
 import { renderThemeStylesheet } from "@/components/themes/stylesheet/renderThemeStylesheet";
+import { getOrgMetadataForDomain } from "@/server/auth/metadata-for-url";
 import { createCachedDocsLoader } from "@/server/docs-loader";
 import { RgbaColor } from "@/server/types";
 
 import { GlobalStyles } from "../global-styles";
 import { toImageDescriptor } from "../seo";
+
+export const dynamic = "force-static";
 
 export default async function Layout(props: {
   children: React.ReactNode;
@@ -36,12 +49,22 @@ export default async function Layout(props: {
 
   const domain = params.domain;
   const docsLoader = await createCachedDocsLoader(domain);
-  const [config, edgeFlags, files, colors] = await Promise.all([
+  const [
+    config,
+    edgeFlags,
+    files,
+    colors,
+    deprecated_customerAnalytics,
+    launchDarkly,
+  ] = await Promise.all([
     docsLoader.getConfig(),
     getEdgeFlags(domain),
     docsLoader.getFiles(),
     docsLoader.getColors(),
+    deprecated_getCustomerAnalytics(domain),
+    getLaunchDarklyInfo(domain),
   ]);
+
   const preloadHrefs = generatePreloadHrefs(
     config?.typographyV2,
     files,
@@ -55,6 +78,11 @@ export default async function Layout(props: {
     files,
     true // todo: fix this
   );
+
+  const { VERCEL_ENV } = getEnv();
+
+  const jsConfig = withJsConfig(config?.js, files);
+
   return (
     <>
       {preloadHrefs.map((href) => (
@@ -62,21 +90,77 @@ export default async function Layout(props: {
       ))}
       <GlobalStyles>{stylesheet}</GlobalStyles>
       <ThemeScript dark={Boolean(colors.dark)} light={Boolean(colors.light)} />
-      {children}
+      <SyntaxHighlighterEdgeFlagsProvider
+        isDarkCodeEnabled={edgeFlags.isDarkCodeEnabled}
+      >
+        <FeatureFlagProvider featureFlagsConfig={{ launchDarkly }}>
+          {children}
+        </FeatureFlagProvider>
+      </SyntaxHighlighterEdgeFlagsProvider>
       <React.Suspense>
         <SearchV2 />
       </React.Suspense>
-      <JavascriptProvider />
-      <CustomerAnalytics />
+      {jsConfig != null && <JavascriptProvider config={jsConfig} />}
+      {VERCEL_ENV === "production" && (
+        <CustomerAnalytics
+          config={mergeCustomerAnalytics(
+            deprecated_customerAnalytics,
+            config?.analyticsConfig
+          )}
+        />
+      )}
     </>
   );
+}
+
+// TODO: delete this once we've migrated all customers to the new analytics config
+function mergeCustomerAnalytics(
+  deprecated_customerAnalytics: Awaited<
+    ReturnType<typeof deprecated_getCustomerAnalytics>
+  >,
+  config: DocsV1Read.AnalyticsConfig | undefined
+): Partial<DocsV1Read.AnalyticsConfig> {
+  return {
+    ga4: deprecated_customerAnalytics?.ga4?.measurementId
+      ? { measurementId: deprecated_customerAnalytics.ga4.measurementId }
+      : undefined,
+    gtm: deprecated_customerAnalytics?.gtm?.tagId
+      ? { containerId: deprecated_customerAnalytics.gtm.tagId }
+      : undefined,
+    ...config,
+  };
+}
+
+async function getLaunchDarklyInfo(
+  domain: string
+): Promise<LaunchDarklyInfo | undefined> {
+  const unstable_launchDarklySettings = await getLaunchDarklySettings(
+    domain,
+    getOrgMetadataForDomain(domain).then((metadata) => metadata?.orgId)
+  );
+  if (!unstable_launchDarklySettings) {
+    return undefined;
+  }
+
+  return {
+    clientSideId: unstable_launchDarklySettings["client-side-id"],
+    contextEndpoint: unstable_launchDarklySettings["context-endpoint"],
+    context: undefined,
+    defaultFlags: undefined,
+    options: {
+      baseUrl: unstable_launchDarklySettings.options?.["base-url"],
+      streamUrl: unstable_launchDarklySettings.options?.["stream-url"],
+      eventsUrl: unstable_launchDarklySettings.options?.["events-url"],
+      hash: undefined,
+    },
+  };
 }
 
 export async function generateViewport(props: {
   params: Promise<{ domain: string }>;
 }): Promise<Viewport> {
-  const params = await props.params;
-  const domain = params.domain;
+  const { domain } = await props.params;
+
   const docsLoader = await createCachedDocsLoader(domain);
   const colors = await docsLoader.getColors();
   const dark = maybeToHex(
@@ -105,8 +189,8 @@ function maybeToHex(color: RgbaColor | undefined): string | undefined {
 export async function generateMetadata(props: {
   params: Promise<{ domain: string }>;
 }): Promise<Metadata> {
-  const params = await props.params;
-  const domain = params.domain;
+  const { domain } = await props.params;
+
   const docsLoader = await createCachedDocsLoader(domain);
   const [files, config, baseUrl, seoDisabled] = await Promise.all([
     docsLoader.getFiles(),

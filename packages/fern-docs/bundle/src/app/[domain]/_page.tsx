@@ -28,20 +28,21 @@ import {
 import { SidebarTab } from "@fern-platform/fdr-utils";
 
 import { toImageDescriptor } from "@/app/seo";
-import { withCustomJavascript } from "@/components/atoms/docs";
+import { HydrateAtoms } from "@/components/atoms/docs";
 import type { DocsProps, NavbarLink } from "@/components/atoms/types";
 import { DocsMainContent } from "@/components/docs/DocsMainContent";
 import { DocsPage } from "@/components/docs/DocsPage";
-import { NextApp } from "@/components/docs/NextApp";
 import FeedbackPopover from "@/components/feedback/FeedbackPopover";
+import { Announcement } from "@/components/header/announcement";
 import { serializeMdx } from "@/components/mdx/bundler/serialize";
+import { MdxServerComponent } from "@/components/mdx/server-component";
 import { DocsContent } from "@/components/resolver/DocsContent";
 import { ThemedDocs } from "@/components/themes/ThemedDocs";
 import { getApiRouteSupplier } from "@/components/util/getApiRouteSupplier";
-import { getGitHubInfo, getGitHubRepo } from "@/components/util/github";
 import { preferPreview } from "@/server/auth/origin";
 import { getReturnToQueryParam } from "@/server/auth/return-to";
-import { DocsLoader, createCachedDocsLoader } from "@/server/docs-loader";
+import { DocsLoader } from "@/server/docs-loader";
+import { createCachedDocsLoader } from "@/server/docs-loader";
 import { createFileResolver } from "@/server/file-resolver";
 import { createFindNode } from "@/server/find-node";
 import { withLaunchDarkly } from "@/server/ld-adapter";
@@ -333,7 +334,6 @@ export default async function Page({
     title: config?.title,
     favicon: config?.favicon,
     colors,
-    js: withCustomJavascript(config?.js, fileResolver),
     navbarLinks,
     logo: withLogo(config, found, frontmatter, fileResolver),
     announcement: announcementText
@@ -358,20 +358,6 @@ export default async function Page({
     },
   };
 
-  // if the user specifies a github navbar link, grab the repo info from it and save it as an SWR fallback
-  const githubNavbarLink = config?.navbarLinks?.find(
-    (link) => link.type === "github"
-  );
-  if (githubNavbarLink) {
-    const repo = getGitHubRepo(githubNavbarLink.url);
-    if (repo) {
-      const data = await getGitHubInfo(repo);
-      if (data) {
-        props.fallback[repo] = data;
-      }
-    }
-  }
-
   // note: we start from the version node because endpoint Ids can be duplicated across versions
   // if we introduce versioned sections, and versioned api references, this logic will need to change
   // const apiReferenceNodes = FernNavigation.utils.collectApiReferences(
@@ -385,9 +371,20 @@ export default async function Page({
   const theme = edgeFlags.isCohereTheme ? "cohere" : "default";
 
   return (
-    <NextApp pageProps={props}>
+    <HydrateAtoms pageProps={props}>
       <DocsPage>
-        <ThemedDocs theme={theme}>
+        <ThemedDocs
+          theme={theme}
+          announcement={
+            announcementText && (
+              <Announcement announcement={announcementText}>
+                <MdxServerComponent domain={domain}>
+                  {announcementText}
+                </MdxServerComponent>
+              </Announcement>
+            )
+          }
+        >
           <FeedbackPopoverProvider>
             <DocsMainContent
               domain={domain}
@@ -408,7 +405,7 @@ export default async function Page({
           </FeedbackPopoverProvider>
         </ThemedDocs>
       </DocsPage>
-    </NextApp>
+    </HydrateAtoms>
   );
 }
 

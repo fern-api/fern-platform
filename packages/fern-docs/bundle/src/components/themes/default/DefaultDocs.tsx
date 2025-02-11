@@ -38,10 +38,15 @@ const DefaultDocsStyle = () => {
   );
 };
 
-function DefaultDocs({ children }: { children: React.ReactNode }) {
+export function DefaultDocs({
+  children,
+  announcement,
+}: {
+  children: React.ReactNode;
+  announcement?: React.ReactNode;
+}) {
   const colors = useColors();
   const layout = useAtomValue(DOCS_LAYOUT_ATOM);
-  const showHeader = useAtomValue(SHOW_HEADER_ATOM);
   const theme = useTheme();
   const isSidebarFixed =
     layout?.disableHeader || colors[theme]?.sidebarBackground != null;
@@ -51,9 +56,9 @@ function DefaultDocs({ children }: { children: React.ReactNode }) {
   return (
     <div id="fern-docs" className="fern-container fern-theme-default">
       <DefaultDocsStyle />
-      {showHeader && <HeaderContainer />}
+      <HeaderContainer announcement={announcement} showHeader showHeaderTabs />
 
-      <style jsx global>
+      <style jsx>
         {`
           .fern-sidebar-container {
             border-right-width: ${colors.light?.sidebarBackground == null
@@ -65,7 +70,7 @@ function DefaultDocs({ children }: { children: React.ReactNode }) {
               : 1}px;
           }
 
-          :is(.dark) .fern-sidebar-container {
+          :global(:is(.dark)) .fern-sidebar-container {
             border-right-width: ${colors.dark?.sidebarBackground == null
               ? 0
               : 1}px;

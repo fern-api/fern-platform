@@ -1,3 +1,5 @@
+"use client";
+
 import { FC, PropsWithChildren, ReactNode, useEffect } from "react";
 
 import { useAtomValue } from "jotai";

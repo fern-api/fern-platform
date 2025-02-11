@@ -1,7 +1,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import React, { memo, useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 
 import clsx from "clsx";
 import { useAtomValue, useSetAtom } from "jotai";
@@ -10,14 +10,13 @@ import { FernScrollArea } from "@fern-docs/components";
 import { useResizeObserver } from "@fern-ui/react-commons";
 
 import {
-  ANNOUNCEMENT_HEIGHT_ATOM,
   CONTENT_HEIGHT_ATOM,
   SCROLL_BODY_ATOM,
   SHOW_HEADER_ATOM,
   SIDEBAR_DISMISSABLE_ATOM,
-} from "../../atoms";
-import { Announcement } from "../../header/Announcement";
-import { Sidebar } from "../../sidebar/Sidebar";
+} from "@/components/atoms";
+import { Sidebar } from "@/components/sidebar/Sidebar";
+
 import { HeaderContainer } from "./HeaderContainer";
 
 const CohereDocsStyle = () => {
@@ -48,9 +47,14 @@ const CohereDocsStyle = () => {
   );
 };
 
-function UnmemoizedCohereDocs({ children }: { children: React.ReactNode }) {
+export default function CohereDocs({
+  children,
+  announcement,
+}: {
+  children: React.ReactNode;
+  announcement?: React.ReactNode;
+}) {
   const showHeader = useAtomValue(SHOW_HEADER_ATOM);
-  const announcementHeight = useAtomValue(ANNOUNCEMENT_HEIGHT_ATOM);
 
   const showDismissableSidebar = useAtomValue(SIDEBAR_DISMISSABLE_ATOM);
 
@@ -73,14 +77,11 @@ function UnmemoizedCohereDocs({ children }: { children: React.ReactNode }) {
     mainRef.current?.scrollTo(0, 0);
   }, [pathname]);
 
-  const fernDocs = (
-    <div
-      id="fern-docs"
-      className="fern-container fern-theme-cohere"
-      style={{ top: announcementHeight }}
-    >
+  return (
+    <div id="fern-docs" className="fern-container fern-theme-cohere">
       <CohereDocsStyle />
-      {showHeader && <HeaderContainer />}
+      {announcement}
+      {showHeader && <HeaderContainer showHeaderTabs showSearchBar={false} />}
       <div className="fern-body">
         <Sidebar />
         <FernScrollArea
@@ -99,16 +100,4 @@ function UnmemoizedCohereDocs({ children }: { children: React.ReactNode }) {
       </div>
     </div>
   );
-
-  return (
-    <>
-      <CohereDocsStyle />
-      <Announcement className="fixed inset-x-0 top-0" />
-      {fernDocs}
-    </>
-  );
 }
-
-const CohereDocs = memo(UnmemoizedCohereDocs);
-
-export default CohereDocs;

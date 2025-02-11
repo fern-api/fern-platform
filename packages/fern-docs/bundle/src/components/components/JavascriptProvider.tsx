@@ -1,27 +1,33 @@
 "use client";
 
 import Script from "next/script";
-import { memo } from "react";
+import React from "react";
 
-import { useAtomValue } from "jotai";
+import { isEqual } from "es-toolkit/predicate";
 
-import { JS_ATOM } from "../atoms";
+export interface JsConfig {
+  remote:
+    | {
+        url: string;
+        strategy:
+          | "beforeInteractive"
+          | "afterInteractive"
+          | "lazyOnload"
+          | undefined;
+      }[]
+    | undefined;
+  inline: string[] | undefined;
+}
 
-export const JavascriptProvider = memo(() => {
-  const js = useAtomValue(JS_ATOM);
-
-  if (!js) {
-    return false;
-  }
-
+export function JavascriptProvider({ config }: { config: JsConfig }) {
   return (
     <>
-      {js?.inline?.map((inline, idx) => (
+      {config.inline?.map((inline, idx) => (
         <Script key={`inline-script-${idx}`} id={`inline-script-${idx}`}>
           {inline}
         </Script>
       ))}
-      {js?.remote?.map((remote) => (
+      {config.remote?.map((remote) => (
         <Script
           key={remote.url}
           src={remote.url}
@@ -32,6 +38,4 @@ export const JavascriptProvider = memo(() => {
       ))}
     </>
   );
-});
-
-JavascriptProvider.displayName = "JavascriptProvider";
+}

@@ -1,13 +1,13 @@
+"use client";
+
 import type { PropsWithChildren, ReactNode } from "react";
 
-import { isEqual } from "es-toolkit/predicate";
 import { atomWithReducer, selectAtom, useHydrateAtoms } from "jotai/utils";
 
 import { DocsV1Read } from "@fern-api/fdr-sdk";
-import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { DEFAULT_EDGE_FLAGS } from "@fern-docs/utils";
 
-import type { DocsProps, JsConfig } from "./types";
+import type { DocsProps } from "./types";
 
 export const EMPTY_ANALYTICS_CONFIG: DocsV1Read.AnalyticsConfig = {
   segment: undefined,
@@ -49,7 +49,6 @@ export const EMPTY_DOCS_STATE: DocsProps = {
     dark: undefined,
   },
   layout: undefined,
-  js: undefined,
   navbarLinks: [],
   logo: {
     height: undefined,
@@ -85,39 +84,4 @@ export function HydrateAtoms({
     dangerouslyForceHydrate: true,
   });
   return children;
-}
-
-export const JS_ATOM = selectAtom(DOCS_ATOM, (docs) => docs.js, isEqual);
-
-export function withCustomJavascript(
-  readShapeJsConfig: DocsV1Read.JsConfig | undefined,
-  resolveFileSrc: (fileId: string) => { src: string } | undefined
-): JsConfig | undefined {
-  const remote = [
-    ...(readShapeJsConfig?.remote ?? []),
-    ...(readShapeJsConfig?.files ?? []).map((file) => ({
-      url: resolveFileSrc(file.fileId)?.src,
-      strategy: file.strategy,
-    })),
-  ].filter(isRemote);
-
-  const toRet = {
-    inline: readShapeJsConfig?.inline,
-    remote: remote.length > 0 ? remote : undefined,
-  };
-
-  if (!toRet.inline && !toRet.remote) {
-    return undefined;
-  }
-
-  return toRet;
-}
-
-type RemoteJs = NonNullable<JsConfig["remote"]>[number];
-
-function isRemote(remote: {
-  url: string | undefined; // potentially undefined if the file is not found
-  strategy: RemoteJs["strategy"];
-}): remote is RemoteJs {
-  return remote.url != null;
 }

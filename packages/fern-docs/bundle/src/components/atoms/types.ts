@@ -75,7 +75,6 @@ export interface DocsProps {
   };
   announcement: AnnouncementConfig | undefined;
   layout: DocsV1Read.DocsLayoutConfig | undefined;
-  js: JsConfig | undefined;
   navbarLinks: NavbarLink[];
   logo: LogoConfiguration;
   edgeFlags: EdgeFlags;

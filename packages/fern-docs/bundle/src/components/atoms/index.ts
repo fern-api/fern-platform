@@ -6,7 +6,6 @@ export {
   EMPTY_ANALYTICS_CONFIG,
   EMPTY_DOCS_STATE,
   HydrateAtoms,
-  JS_ATOM,
 } from "./docs";
 export * from "./flags";
 export * from "./hooks";
