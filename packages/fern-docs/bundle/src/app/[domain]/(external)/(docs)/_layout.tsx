@@ -1,5 +1,3 @@
-import { unstable_cacheTag } from "next/cache";
-
 import type { NavbarLink } from "@/components/atoms/types";
 import { Header } from "@/components/header/Header";
 import { Announcement } from "@/components/header/announcement";
@@ -14,20 +12,14 @@ import { withLogo } from "@/server/withLogo";
 export default async function DocsLayout({
   children,
   domain,
-  fern_token,
 }: {
   children: React.ReactNode;
   domain: string;
-  fern_token?: string;
 }) {
-  "use cache";
-
   console.debug("/app/[domain]/(external)/(docs)/layout.tsx: starting...");
   console.time("/app/[domain]/(external)/(docs)/layout.tsx");
 
-  unstable_cacheTag(domain);
-
-  const loader = await createCachedDocsLoader(domain, fern_token);
+  const loader = await createCachedDocsLoader(domain);
   const [{ basePath }, config, edgeFlags, files, colors, layout] =
     await Promise.all([
       loader.getBaseUrl(),

@@ -34,7 +34,7 @@ export async function DocsMainContent({
     return (
       <ChangelogPage
         domain={domain}
-        node={node}
+        nodeId={node.id}
         breadcrumb={breadcrumb}
         mdxOptions={mdxOptions}
       />

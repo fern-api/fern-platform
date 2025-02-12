@@ -1,4 +1,3 @@
-import { unstable_cacheTag as cacheTag } from "next/cache";
 import {
   notFound,
   permanentRedirect,
@@ -21,6 +20,7 @@ import {
 } from "@fern-docs/utils";
 import { SidebarTab } from "@fern-platform/fdr-utils";
 
+import { getFernToken } from "@/app/fern-token";
 import { toImageDescriptor } from "@/app/seo";
 import { HydrateAtoms } from "@/components/atoms/docs";
 import type { DocsProps } from "@/components/atoms/types";
@@ -42,19 +42,14 @@ import { DocsMainContent } from "./main";
 export default async function Page({
   domain,
   slug,
-  fern_token,
 }: {
   domain: string;
   slug: Slug;
-  fern_token: string | undefined;
 }) {
-  "use cache";
-
-  cacheTag(domain);
-
   console.debug("/app/[domain]/(external)/(docs)/_page.tsx: starting...");
   console.time("/app/[domain]/(external)/(docs)/_page.tsx");
-  const loader = await createCachedDocsLoader(domain, fern_token);
+
+  const loader = await createCachedDocsLoader(domain, await getFernToken());
   const [baseUrl, config, authState, edgeFlags, colors] = await Promise.all([
     loader.getBaseUrl(),
     loader.getConfig(),
@@ -282,10 +277,6 @@ export async function generateMetadata({
   slug: Slug;
   fern_token: string | undefined;
 }): Promise<Metadata> {
-  "use cache";
-
-  cacheTag(domain);
-
   const loader = await createCachedDocsLoader(domain, fern_token);
   const findNode = createFindNode(loader);
   const [files, node, config, isSeoDisabled] = await Promise.all([

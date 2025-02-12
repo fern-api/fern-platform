@@ -1,5 +1,3 @@
-import React from "react";
-
 import { APIResponse, FdrAPI } from "@fern-api/fdr-sdk/client/types";
 import { withoutStaging } from "@fern-docs/utils";
 
@@ -16,34 +14,33 @@ export type LoadWithUrlResponse = APIResponse<
  * - If the token is a WorkOS token, we need to use the getPrivateDocsForUrl endpoint.
  * - Otherwise, we can use the getDocsForUrl endpoint (including custom auth).
  *
- * this function cannot be stored in the data cache because the response can be > 2MB,
- * (but it can be cached using React.cache)
+ * Note: this function cannot be stored in the data cache because the response can be > 2MB,
  */
-export const loadWithUrl = React.cache(
-  async (domain: string): Promise<LoadWithUrlResponse> => {
-    const domainWithoutStaging = withoutStaging(domain);
+export const loadWithUrl = async (
+  domain: string
+): Promise<LoadWithUrlResponse> => {
+  const domainWithoutStaging = withoutStaging(domain);
 
-    let response;
-    try {
-      response = await loadDocsDefinitionFromS3({
-        domain: domainWithoutStaging,
-        docsBucketName: getDocsDefinitionBucketName(),
-      });
-      if (response != null) {
-        return {
-          ok: true,
-          body: response,
-        };
-      }
-    } catch (error) {
-      console.error("Failed to load docs definition:", error);
-    }
-
-    return provideRegistryService().docs.v2.read.getDocsForUrl({
-      url: FdrAPI.Url(domainWithoutStaging),
+  let response;
+  try {
+    response = await loadDocsDefinitionFromS3({
+      domain: domainWithoutStaging,
+      docsBucketName: getDocsDefinitionBucketName(),
     });
+    if (response != null) {
+      return {
+        ok: true,
+        body: response,
+      };
+    }
+  } catch (error) {
+    console.error("Failed to load docs definition:", error);
   }
-);
+
+  return provideRegistryService().docs.v2.read.getDocsForUrl({
+    url: FdrAPI.Url(domainWithoutStaging),
+  });
+};
 
 function getDocsDefinitionBucketName() {
   return (

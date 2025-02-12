@@ -6,8 +6,6 @@ import { slugjoin } from "@fern-api/fdr-sdk/navigation";
 
 import Page, { generateMetadata as _generateMetadata } from "../../_page";
 
-export const dynamic = "force-static";
-
 export default async function StaticPage(props: {
   params: Promise<{ slug?: string[]; domain: string }>;
 }) {
@@ -20,7 +18,7 @@ export default async function StaticPage(props: {
   console.timeEnd(
     "/app/[domain]/(external)/(docs)/static/[[...slug]]/page.tsx"
   );
-  return <Page domain={domain} slug={slugjoin(slug)} fern_token={undefined} />;
+  return <Page domain={domain} slug={slugjoin(slug)} />;
 }
 
 export async function generateMetadata(props: {

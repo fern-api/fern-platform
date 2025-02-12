@@ -1,6 +1,4 @@
-"use cache";
-
-import { unstable_cacheTag as cacheTag } from "next/cache";
+import { unstable_cacheLife, unstable_cacheTag } from "next/cache";
 import { Metadata, Viewport } from "next/types";
 import React from "react";
 
@@ -43,7 +41,8 @@ export default async function Layout(props: {
   console.time("/app/[domain]/(external)/layout.tsx");
   const params = await props.params;
 
-  cacheTag(params.domain);
+  unstable_cacheTag(params.domain);
+  unstable_cacheLife("days");
 
   const { children } = props;
 

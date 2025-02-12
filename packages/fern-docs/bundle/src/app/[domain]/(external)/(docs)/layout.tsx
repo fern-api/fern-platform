@@ -1,6 +1,6 @@
-import DocsLayout from "../../_layout";
+import DocsLayout from "./_layout";
 
-export default async function DynamicDocsLayout({
+export default async function StaticDocsLayout({
   children,
   params,
 }: {

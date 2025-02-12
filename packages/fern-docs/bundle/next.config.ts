@@ -76,6 +76,7 @@ const nextConfig: NextConfig = {
     parallelServerCompiles: true,
     parallelServerBuildTraces: true,
     webpackMemoryOptimizations: true,
+    ppr: true,
   },
 
   env: {

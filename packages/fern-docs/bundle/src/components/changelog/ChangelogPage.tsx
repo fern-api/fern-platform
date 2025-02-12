@@ -1,5 +1,7 @@
 import "server-only";
 
+import { notFound } from "next/navigation";
+
 import { compact } from "es-toolkit/compat";
 
 import { FernDocs, FernNavigation } from "@fern-api/fdr-sdk";
@@ -7,6 +9,7 @@ import { EMPTY_FRONTMATTER } from "@fern-api/fdr-sdk/docs";
 import { isNonNullish } from "@fern-api/ui-core-utils";
 import { type TableOfContentsItem, makeToc, toTree } from "@fern-docs/mdx";
 
+import { getFernToken } from "@/app/fern-token";
 import { createCachedDocsLoader } from "@/server/docs-loader";
 
 import { FernLink } from "../components/FernLink";
@@ -18,16 +21,21 @@ import ChangelogPageClient from "./ChangelogPageClient";
 
 export default async function ChangelogPage({
   domain,
-  node,
+  nodeId,
   mdxOptions,
   breadcrumb,
 }: {
   domain: string;
-  node: FernNavigation.ChangelogNode;
+  nodeId: FernNavigation.NodeId;
   mdxOptions: Omit<FernSerializeMdxOptions, "files" | "replaceSrc">;
   breadcrumb: readonly FernNavigation.BreadcrumbItem[];
 }) {
-  const loader = await createCachedDocsLoader(domain);
+  const loader = await createCachedDocsLoader(domain, await getFernToken());
+  const node = await loader.getNavigationNode(nodeId);
+  if (node.type !== "changelog") {
+    notFound();
+  }
+
   const entries: FernNavigation.ChangelogEntryNode[] = [];
   FernNavigation.traverseDF(node, (n) => {
     if (n.type === "changelogEntry") {

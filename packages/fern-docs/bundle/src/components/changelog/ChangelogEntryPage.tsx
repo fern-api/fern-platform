@@ -1,6 +1,5 @@
 import "server-only";
 
-import { unstable_cacheLife, unstable_cacheTag } from "next/cache";
 import { notFound } from "next/navigation";
 
 import type { FernNavigation } from "@fern-api/fdr-sdk";
@@ -26,16 +25,11 @@ export default async function ChangelogEntryPage({
   breadcrumb: readonly FernNavigation.BreadcrumbItem[];
   neighbors: DocsContent.Neighbors;
 }) {
-  "use cache";
-
-  unstable_cacheTag(domain);
-
   const loader = await createCachedDocsLoader(domain);
   const changelogNode = [...parents]
     .reverse()
     .find((n): n is FernNavigation.ChangelogNode => n.type === "changelog");
   if (changelogNode == null) {
-    unstable_cacheLife("seconds");
     notFound();
   }
   const page = await loader.getSerializedPage(node.pageId, mdxOptions);

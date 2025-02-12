@@ -34,6 +34,8 @@ export async function LayoutEvaluator({
 
   if (typeof mdx === "string") {
     unstable_cacheLife("seconds");
+  } else {
+    unstable_cacheLife("days");
   }
 
   const exports = getMDXExport(mdx);

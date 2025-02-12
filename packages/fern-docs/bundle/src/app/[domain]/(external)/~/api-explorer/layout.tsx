@@ -1,7 +1,4 @@
-import { cookies } from "next/headers";
-
-import { COOKIE_FERN_TOKEN } from "@fern-docs/utils";
-
+import { getFernToken } from "@/app/fern-token";
 import { HorizontalSplitPane } from "@/components/playground/VerticalSplitPane";
 import { PlaygroundEndpointSelectorContent } from "@/components/playground/endpoint/PlaygroundEndpointSelectorContent";
 import { flattenApiSection } from "@/components/playground/utils/flatten-apis";
@@ -17,11 +14,8 @@ export default async function Layout({
 }) {
   const { domain } = await params;
 
-  const cookieJar = await cookies();
-
   console.debug(`[${domain}] Loading API Explorer layout`);
-  const fern_token = cookieJar.get(COOKIE_FERN_TOKEN)?.value;
-  const loader = await createCachedDocsLoader(domain, fern_token);
+  const loader = await createCachedDocsLoader(domain, await getFernToken());
   const [root, edgeFlags] = await Promise.all([
     loader.getRoot(),
     loader.getEdgeFlags(),

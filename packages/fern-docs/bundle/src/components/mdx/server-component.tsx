@@ -1,24 +1,26 @@
-import { unstable_cacheTag as cacheTag, unstable_cacheLife } from "next/cache";
+import { unstable_cacheLife, unstable_cacheTag } from "next/cache";
 
 import { MdxContent } from "./MdxContent";
 import { serializeMdx } from "./bundler/serialize";
 
 export async function MdxServerComponent({
   domain,
-  children,
+  mdx,
 }: {
   domain: string;
-  children: string;
+  mdx: string;
 }) {
   "use cache";
 
-  cacheTag(domain);
+  unstable_cacheTag(domain);
 
-  const mdx = await serializeMdx(children);
+  const parsed_mdx = await serializeMdx(mdx);
 
-  if (!mdx) {
+  if (!parsed_mdx) {
     unstable_cacheLife("seconds");
+  } else {
+    unstable_cacheLife("days");
   }
 
-  return <MdxContent mdx={mdx} fallback={children} />;
+  return <MdxContent mdx={parsed_mdx} fallback={mdx} />;
 }
