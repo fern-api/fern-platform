@@ -17,5 +17,5 @@ export async function getCustomerAnalytics(
   basePath?: string
 ): Promise<CustomerAnalytics | undefined> {
   const config = await get<Record<string, CustomerAnalytics>>("analytics");
-  return config.[urlJoin(host, basePath ?? "")];
+  return config?.[urlJoin(host, basePath ?? "")];
 }

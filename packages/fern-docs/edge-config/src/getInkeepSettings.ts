@@ -9,7 +9,7 @@ export async function getInkeepSettings(
   try {
     const config =
       await get<Record<string, InkeepSharedSettings>>("inkeep-enabled");
-    return config.[domain] ?? config.[withoutStaging(domain)];
+    return config?.[domain] ?? config?.[withoutStaging(domain)];
   } catch (_e) {
     return undefined;
   }
