@@ -7,7 +7,6 @@ export * from "./layout";
 export * from "./location";
 export * from "./navigation";
 export * from "./playground";
-export * from "./sidebar";
 export * from "./store";
 export * from "./stream";
 export * from "./types";

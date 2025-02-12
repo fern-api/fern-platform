@@ -1,37 +1,32 @@
-import { ReactElement } from "react";
+// import {
+//   useCloseMobileSidebar,
+//   useIsMobileSidebarOpen,
+//   useOpenMobileSidebar,
+// } from "../atoms";
 
-import { Menu, Xmark } from "iconoir-react";
-
-import { FernButton } from "@fern-docs/components";
-
-import {
-  useCloseMobileSidebar,
-  useIsMobileSidebarOpen,
-  useOpenMobileSidebar,
-} from "../atoms";
-
-export function MobileMenuButton(): ReactElement<any> {
-  const isMobileSidebarOpen = useIsMobileSidebarOpen();
-  const closeMobileSidebar = useCloseMobileSidebar();
-  const openMobileSidebar = useOpenMobileSidebar();
-  return (
-    <FernButton
-      onClickCapture={(e) => {
-        e.stopPropagation();
-        e.preventDefault();
-        if (isMobileSidebarOpen) {
-          closeMobileSidebar();
-        } else {
-          openMobileSidebar();
-        }
-      }}
-      icon={
-        isMobileSidebarOpen ? <Xmark /> : <Menu className="!size-icon-md" />
-      }
-      intent={isMobileSidebarOpen ? "primary" : "none"}
-      variant={isMobileSidebarOpen ? "filled" : "minimal"}
-      rounded={true}
-      size="large"
-    />
-  );
+export function MobileMenuButton() {
+  return null;
+  // const isMobileSidebarOpen = useIsMobileSidebarOpen();
+  // const closeMobileSidebar = useCloseMobileSidebar();
+  // const openMobileSidebar = useOpenMobileSidebar();
+  // return (
+  //   <FernButton
+  //     onClickCapture={(e) => {
+  //       e.stopPropagation();
+  //       e.preventDefault();
+  //       if (isMobileSidebarOpen) {
+  //         closeMobileSidebar();
+  //       } else {
+  //         openMobileSidebar();
+  //       }
+  //     }}
+  //     icon={
+  //       isMobileSidebarOpen ? <Xmark /> : <Menu className="!size-icon-md" />
+  //     }
+  //     intent={isMobileSidebarOpen ? "primary" : "none"}
+  //     variant={isMobileSidebarOpen ? "filled" : "minimal"}
+  //     rounded={true}
+  //     size="large"
+  //   />
+  // );
 }

@@ -4,10 +4,11 @@ import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 
 import {
   useIsChildSelected,
-  useIsExpandedSidebarNode,
+  useIsExpanded,
   useIsSelectedSidebarNode,
-  useToggleExpandedSidebarNode,
-} from "../../atoms";
+  useToggleSidebarNode,
+} from "@/state/navigation";
+
 import { WithFeatureFlags } from "../../feature-flags/WithFeatureFlags";
 import { CollapsibleSidebarGroup } from "../CollapsibleSidebarGroup";
 import { SidebarSlugLink } from "../SidebarLink";
@@ -26,9 +27,9 @@ export function SidebarSectionNode({
   depth,
 }: SidebarSectionNodeProps): ReactNode {
   const selected = useIsSelectedSidebarNode(node.id);
-  const handleToggleExpand = useToggleExpandedSidebarNode(node.id);
+  const handleToggleExpand = useToggleSidebarNode(node.id);
   const childSelected = useIsChildSelected(node.id);
-  const expanded = useIsExpandedSidebarNode(node.id);
+  const expanded = useIsExpanded(node.id);
 
   const renderNode = useCallback(
     (node: FernNavigation.NavigationChild) => (

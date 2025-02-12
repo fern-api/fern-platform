@@ -2,15 +2,9 @@
 
 import { ReactElement } from "react";
 
-import { useAtomValue } from "jotai";
-
 import { cn } from "@fern-docs/components";
 import { DEFAULT_HEADER_HEIGHT } from "@fern-docs/utils";
 
-import {
-  MOBILE_SIDEBAR_ENABLED_ATOM,
-  useIsMobileSidebarOpen,
-} from "@/components/atoms";
 import { BgImageGradient } from "@/components/components/BgImageGradient";
 import { HeaderTabs } from "@/components/header/HeaderTabs";
 import { useIsScrolled } from "@/components/hooks/useIsScrolled";
@@ -41,8 +35,8 @@ export function HeaderContainer({
   };
 }): ReactElement<any> {
   const isScrolled = useIsScrolled();
-  const isMobileSidebarEnabled = useAtomValue(MOBILE_SIDEBAR_ENABLED_ATOM);
-  const isMobileSidebarOpen = useIsMobileSidebarOpen();
+  // const isMobileSidebarEnabled = useAtomValue(MOBILE_SIDEBAR_ENABLED_ATOM);
+  // const isMobileSidebarOpen = useIsMobileSidebarOpen();
 
   return (
     <FernHeader className={className} defaultHeight={DEFAULT_HEADER_HEIGHT}>
@@ -53,11 +47,7 @@ export function HeaderContainer({
             "has-background-light": hasBackgroundLight,
             "has-background-dark": hasBackgroundDark,
           })}
-          data-border={
-            isScrolled || (isMobileSidebarOpen && isMobileSidebarEnabled)
-              ? "show"
-              : "hide"
-          }
+          data-border={isScrolled ? "show" : "hide"}
         >
           <div className="clipped-background">
             <BgImageGradient

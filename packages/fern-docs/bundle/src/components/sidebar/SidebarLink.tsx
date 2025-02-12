@@ -17,21 +17,14 @@ import { composeRefs } from "@radix-ui/react-compose-refs";
 import cn, { clsx } from "clsx";
 import { range } from "es-toolkit/math";
 import { Lock, NavArrowDown } from "iconoir-react";
-import { useCallbackOne } from "use-memo-one";
 
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { FaIcon, FernTooltip } from "@fern-docs/components";
 
-import {
-  IS_READY_ATOM,
-  SIDEBAR_SCROLL_CONTAINER_ATOM,
-  useAtomEffect,
-  useCloseMobileSidebar,
-} from "../atoms";
+// import { useCloseMobileSidebar } from "../atoms";
 import { FernLink } from "../components/FernLink";
 import { useHref } from "../hooks/useHref";
 import { scrollToRoute } from "../util/anchor";
-import { scrollToCenter } from "../util/scrollToCenter";
 
 interface SidebarSlugLinkProps {
   nodeId: FernNavigation.NodeId;
@@ -94,7 +87,7 @@ const SidebarLinkInternal = forwardRef<HTMLDivElement, SidebarLinkProps>(
     } = props;
 
     const ref = useRef<HTMLDivElement>(null);
-    const closeMobileSidebar = useCloseMobileSidebar();
+    // const closeMobileSidebar = useCloseMobileSidebar();
 
     if (hidden && !expanded && !selected) {
       return null;
@@ -110,7 +103,7 @@ const SidebarLinkInternal = forwardRef<HTMLDivElement, SidebarLinkProps>(
           href={href}
           className={linkClassName}
           onClick={composeEventHandlers(onClick, () => {
-            closeMobileSidebar();
+            // closeMobileSidebar();
           })}
           shallow={shallow}
           target={target}
@@ -123,7 +116,7 @@ const SidebarLinkInternal = forwardRef<HTMLDivElement, SidebarLinkProps>(
         <button
           className={linkClassName}
           onClick={composeEventHandlers(onClick, () => {
-            closeMobileSidebar();
+            // closeMobileSidebar();
           })}
         >
           {child}
@@ -221,20 +214,20 @@ export const SidebarSlugLink = forwardRef<
   const { slug, ...innerProps } = props;
   const ref = useRef<HTMLDivElement>(null);
 
-  useAtomEffect(
-    useCallbackOne(
-      (get) => {
-        if (props.selected) {
-          scrollToCenter(
-            get.peek(SIDEBAR_SCROLL_CONTAINER_ATOM),
-            ref.current,
-            get.peek(IS_READY_ATOM)
-          );
-        }
-      },
-      [props.selected]
-    )
-  );
+  // useAtomEffect(
+  //   useCallbackOne(
+  //     (get) => {
+  //       if (props.selected) {
+  //         scrollToCenter(
+  //           get.peek(SIDEBAR_SCROLL_CONTAINER_ATOM),
+  //           ref.current,
+  //           get.peek(IS_READY_ATOM)
+  //         );
+  //       }
+  //     },
+  //     [props.selected]
+  //   )
+  // );
 
   const href = useHref(slug);
   return (

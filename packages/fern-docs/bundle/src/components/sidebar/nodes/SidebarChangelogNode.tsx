@@ -4,7 +4,8 @@ import { Calendar } from "iconoir-react";
 
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 
-import { useIsSelectedSidebarNode } from "../../atoms";
+import { useIsSelectedSidebarNode } from "@/state/navigation";
+
 import { WithFeatureFlags } from "../../feature-flags/WithFeatureFlags";
 import { Changelog } from "../../util/dateUtils";
 import { SidebarSlugLink } from "../SidebarLink";

@@ -6,15 +6,12 @@ import { isEqual } from "es-toolkit/predicate";
 
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 
+import { useCurrentSidebarRoot } from "@/state/navigation";
+
 import { SidebarRootChild, SidebarRootChildProps } from "./SidebarRootChild";
 
-interface SidebarRootNodeProps {
-  node: FernNavigation.SidebarRootNode | undefined;
-}
-
-export const SidebarRootNode = memo(function SidebarRootNode({
-  node,
-}: SidebarRootNodeProps) {
+export const SidebarRootNode = memo(function SidebarRootNode() {
+  const node = useCurrentSidebarRoot();
   if (!node) {
     return null;
   }

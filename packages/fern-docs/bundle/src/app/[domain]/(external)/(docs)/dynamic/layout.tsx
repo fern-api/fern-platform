@@ -11,11 +11,9 @@ import { withLogo } from "@/server/withLogo";
 
 export default async function DocsLayout({
   children,
-  sidebar,
   params,
 }: {
   children: React.ReactNode;
-  sidebar: React.ReactNode;
   params: Promise<{ domain: string }>;
 }) {
   const { domain } = await params;
@@ -132,9 +130,7 @@ export default async function DocsLayout({
           }
           versionSelect={false}
           navbarLinks={navbarLinks}
-        >
-          {sidebar}
-        </Sidebar>
+        />
       }
     >
       {children}

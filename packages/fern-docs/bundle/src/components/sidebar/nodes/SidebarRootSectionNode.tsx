@@ -4,7 +4,8 @@ import clsx from "clsx";
 
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 
-import { useIsChildSelected } from "../../atoms";
+import { useIsChildSelected } from "@/state/navigation";
+
 import { WithFeatureFlags } from "../../feature-flags/WithFeatureFlags";
 import { SidebarNavigationChild } from "./SidebarNavigationChild";
 import { SidebarPageNode } from "./SidebarPageNode";

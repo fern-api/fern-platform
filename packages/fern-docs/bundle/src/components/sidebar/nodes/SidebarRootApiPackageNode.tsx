@@ -4,7 +4,9 @@ import clsx from "clsx";
 
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 
-import { useIsApiReferenceShallowLink, useIsChildSelected } from "../../atoms";
+import { useIsChildSelected } from "@/state/navigation";
+
+import { useIsApiReferenceShallowLink } from "../../atoms";
 import { WithFeatureFlags } from "../../feature-flags/WithFeatureFlags";
 import { SidebarApiPackageChild } from "./SidebarApiPackageChild";
 import { SidebarPageNode } from "./SidebarPageNode";

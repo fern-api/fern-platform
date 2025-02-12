@@ -3,19 +3,15 @@
 import React from "react";
 
 import clsx from "clsx";
-import { useAtom, useAtomValue } from "jotai";
+import { useAtomValue } from "jotai";
 
 import { FernScrollArea, FernTooltipProvider } from "@fern-docs/components";
 
 import {
   CURRENT_TAB_INDEX_ATOM,
   DOCS_LAYOUT_ATOM,
-  MOBILE_SIDEBAR_ENABLED_ATOM,
   type NavbarLink,
-  SIDEBAR_SCROLL_CONTAINER_ATOM,
   TABS_ATOM,
-  useInitSidebarExpandedNodes,
-  useIsMobileSidebarOpen,
 } from "../atoms";
 import { useIsScrolled } from "../hooks/useIsScrolled";
 import { MobileSidebarHeaderLinks } from "./MobileSidebarHeaderLinks";
@@ -36,20 +32,17 @@ export const SidebarContainer = React.memo(function SidebarContainer({
   const layout = useAtomValue(DOCS_LAYOUT_ATOM);
   const tabs = useAtomValue(TABS_ATOM);
   const currentTabIndex = useAtomValue(CURRENT_TAB_INDEX_ATOM);
-  const [scrollRef, setScrollRef] = useAtom(SIDEBAR_SCROLL_CONTAINER_ATOM);
-  const isScrolled = useIsScrolled({ current: scrollRef });
-  const isMobileSidebarEnabled = useAtomValue(MOBILE_SIDEBAR_ENABLED_ATOM);
-  const isMobileSidebarOpen = useIsMobileSidebarOpen();
-  useInitSidebarExpandedNodes();
+  const ref = React.useRef<HTMLDivElement>(null);
+  const isScrolled = useIsScrolled(ref);
+  // const isMobileSidebarEnabled = useAtomValue(MOBILE_SIDEBAR_ENABLED_ATOM);
+  // const isMobileSidebarOpen = useIsMobileSidebarOpen();
 
   return (
     <>
       <SidebarFixedItemsSection
         logo={logo}
         versionSelect={versionSelect}
-        showBorder={
-          isScrolled || (isMobileSidebarOpen && isMobileSidebarEnabled)
-        }
+        showBorder={isScrolled}
       />
       <FernScrollArea
         rootClassName="flex-1"
@@ -57,7 +50,7 @@ export const SidebarContainer = React.memo(function SidebarContainer({
           "group/sidebar fern-sidebar-content overscroll-contain"
         )}
         scrollbars="vertical"
-        ref={setScrollRef}
+        ref={ref}
       >
         {tabs.length > 0 && (
           <ul
