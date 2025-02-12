@@ -10,9 +10,12 @@ export default async function manifest(): Promise<MetadataRoute.Manifest> {
   const domain = await getDocsDomainApp();
   const loader = await createCachedDocsLoader(domain);
 
-  const baseUrl = await loader.getBaseUrl();
-  const docs = await loader.getConfig();
-  const files = await loader.getFiles();
+  const [baseUrl, docs, files] = await Promise.all([
+    loader.getBaseUrl(),
+    loader.getConfig(),
+    loader.getFiles(),
+  ]);
+
   const favicon =
     docs?.favicon != null && files[docs.favicon] != null
       ? files[docs.favicon]?.src
