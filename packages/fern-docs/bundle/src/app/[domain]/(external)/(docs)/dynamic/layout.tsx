@@ -8,6 +8,7 @@ import { ThemedDocs } from "@/components/themes/ThemedDocs";
 import { createCachedDocsLoader } from "@/server/docs-loader";
 import { createFileResolver } from "@/server/file-resolver";
 import { withLogo } from "@/server/withLogo";
+import { RootNodeProvider } from "@/state/navigation";
 
 export default async function DocsLayout({
   children,
@@ -19,9 +20,10 @@ export default async function DocsLayout({
   const { domain } = await params;
 
   const loader = await createCachedDocsLoader(domain);
-  const [{ basePath }, config, edgeFlags, files, colors, layout] =
+  const [{ basePath }, root, config, edgeFlags, files, colors, layout] =
     await Promise.all([
       loader.getBaseUrl(),
+      loader.getRoot(),
       loader.getConfig(),
       loader.getEdgeFlags(),
       loader.getFiles(),
@@ -95,45 +97,47 @@ export default async function DocsLayout({
   // }
 
   return (
-    <ThemedDocs
-      theme={theme}
-      colors={colors}
-      announcement={
-        announcementText && (
-          <Announcement announcement={announcementText}>
-            <MdxServerComponent domain={domain} mdx={announcementText} />
-          </Announcement>
-        )
-      }
-      header={
-        <Header
-          className="max-w-page-width mx-auto"
-          colors={colors}
-          logo={
-            <Logo
-              logo={withLogo(config, resolveFileSrc, basePath)}
-              className="w-fit shrink-0"
-            />
-          }
-          versionSelect={false}
-          showSearchBar={layout.searchbarPlacement === "HEADER"}
-          navbarLinks={navbarLinks}
-        />
-      }
-      sidebar={
-        <Sidebar
-          logo={
-            <Logo
-              logo={withLogo(config, resolveFileSrc, basePath)}
-              className="w-fit shrink-0"
-            />
-          }
-          versionSelect={false}
-          navbarLinks={navbarLinks}
-        />
-      }
-    >
-      {children}
-    </ThemedDocs>
+    <RootNodeProvider root={root}>
+      <ThemedDocs
+        theme={theme}
+        colors={colors}
+        announcement={
+          announcementText && (
+            <Announcement announcement={announcementText}>
+              <MdxServerComponent domain={domain} mdx={announcementText} />
+            </Announcement>
+          )
+        }
+        header={
+          <Header
+            className="max-w-page-width mx-auto"
+            colors={colors}
+            logo={
+              <Logo
+                logo={withLogo(config, resolveFileSrc, basePath)}
+                className="w-fit shrink-0"
+              />
+            }
+            versionSelect={false}
+            showSearchBar={layout.searchbarPlacement === "HEADER"}
+            navbarLinks={navbarLinks}
+          />
+        }
+        sidebar={
+          <Sidebar
+            logo={
+              <Logo
+                logo={withLogo(config, resolveFileSrc, basePath)}
+                className="w-fit shrink-0"
+              />
+            }
+            versionSelect={false}
+            navbarLinks={navbarLinks}
+          />
+        }
+      >
+        {children}
+      </ThemedDocs>
+    </RootNodeProvider>
   );
 }
