@@ -18,6 +18,7 @@ export async function generateMetadata(props: {
   const baseUrl = await loader.getBaseUrl();
 
   return {
+    // URL cannot be cached.
     metadataBase: new URL(
       baseUrl.basePath || "/",
       withDefaultProtocol(loader.domain)

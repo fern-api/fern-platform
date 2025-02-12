@@ -32,7 +32,7 @@ export function FernHeader({
   }, []);
 
   return (
-    <header id="fern-header" role="banner" {...props}>
+    <header ref={ref} id="fern-header" role="banner" {...props}>
       <style jsx>
         {`
           :global(:root) {

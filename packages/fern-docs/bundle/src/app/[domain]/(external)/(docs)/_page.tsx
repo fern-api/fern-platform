@@ -47,7 +47,6 @@ export default async function Page({
   slug: Slug;
 }) {
   console.debug("/app/[domain]/(external)/(docs)/_page.tsx: starting...");
-  console.time("/app/[domain]/(external)/(docs)/_page.tsx");
 
   const loader = await createCachedDocsLoader(domain, await getFernToken());
   const [baseUrl, config, authState, edgeFlags, colors] = await Promise.all([
@@ -243,7 +242,6 @@ export default async function Page({
     ? FeedbackPopover
     : React.Fragment;
 
-  console.timeEnd("/app/[domain]/(external)/(docs)/_page.tsx");
   return (
     <HydrateAtoms pageProps={props}>
       <FeedbackPopoverProvider>
@@ -271,13 +269,11 @@ export default async function Page({
 export async function generateMetadata({
   domain,
   slug,
-  fern_token,
 }: {
   domain: string;
   slug: Slug;
-  fern_token: string | undefined;
 }): Promise<Metadata> {
-  const loader = await createCachedDocsLoader(domain, fern_token);
+  const loader = await createCachedDocsLoader(domain, await getFernToken());
   const findNode = createFindNode(loader);
   const [files, node, config, isSeoDisabled] = await Promise.all([
     loader.getFiles(),

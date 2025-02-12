@@ -1,4 +1,8 @@
-import { ReactElement, memo } from "react";
+"use client";
+
+import { memo } from "react";
+
+import { isEqual } from "es-toolkit/predicate";
 
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 
@@ -10,7 +14,7 @@ interface SidebarRootNodeProps {
 
 export const SidebarRootNode = memo(function SidebarRootNode({
   node,
-}: SidebarRootNodeProps): ReactElement<any> | null {
+}: SidebarRootNodeProps) {
   if (!node) {
     return null;
   }
@@ -68,4 +72,4 @@ export const SidebarRootNode = memo(function SidebarRootNode({
       ))}
     </ul>
   );
-});
+}, isEqual);

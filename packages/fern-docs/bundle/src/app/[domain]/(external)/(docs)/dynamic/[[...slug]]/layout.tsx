@@ -11,13 +11,14 @@ import { withLogo } from "@/server/withLogo";
 
 export default async function DocsLayout({
   children,
-  domain,
+  sidebar,
+  params,
 }: {
   children: React.ReactNode;
-  domain: string;
+  sidebar: React.ReactNode;
+  params: Promise<{ domain: string }>;
 }) {
-  console.debug("/app/[domain]/(external)/(docs)/layout.tsx: starting...");
-  console.time("/app/[domain]/(external)/(docs)/layout.tsx");
+  const { domain } = await params;
 
   const loader = await createCachedDocsLoader(domain);
   const [{ basePath }, config, edgeFlags, files, colors, layout] =
@@ -95,7 +96,6 @@ export default async function DocsLayout({
   //   });
   // }
 
-  console.timeEnd("/app/[domain]/(external)/(docs)/layout.tsx");
   return (
     <ThemedDocs
       theme={theme}
@@ -103,9 +103,7 @@ export default async function DocsLayout({
       announcement={
         announcementText && (
           <Announcement announcement={announcementText}>
-            <MdxServerComponent domain={domain}>
-              {announcementText}
-            </MdxServerComponent>
+            <MdxServerComponent domain={domain} mdx={announcementText} />
           </Announcement>
         )
       }
@@ -135,7 +133,7 @@ export default async function DocsLayout({
           versionSelect={false}
           navbarLinks={navbarLinks}
         >
-          {false}
+          {sidebar}
         </Sidebar>
       }
     >

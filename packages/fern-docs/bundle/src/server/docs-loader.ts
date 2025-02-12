@@ -484,6 +484,8 @@ const getLayout = cache(async (domain: string) => {
   };
 });
 
+const getAuthConfig = cache(getAuthEdgeConfig);
+
 /**
  * The "use cache" tags help us speed up rendering specific parts of the page that are static.
  * It has a hard-limit of 2MB which is why we cannot use it to cache the entire response.
@@ -494,13 +496,9 @@ export const createCachedDocsLoader = async (
   domain: string,
   fern_token?: string
 ): Promise<DocsLoader> => {
-  const authConfig = await getAuthEdgeConfig(domain);
+  const authConfig = await getAuthConfig(domain);
 
   const getAuthState = async (pathname?: string) => {
-    "use cache";
-
-    unstable_cacheTag(domain);
-
     const { getAuthState } = await createGetAuthState(
       domain,
       fern_token,

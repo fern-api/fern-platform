@@ -1,6 +1,6 @@
 "use client";
 
-import { ComponentPropsWithoutRef, forwardRef, memo } from "react";
+import React from "react";
 
 import clsx from "clsx";
 import { useAtom, useAtomValue } from "jotai";
@@ -22,19 +22,17 @@ import { MobileSidebarHeaderLinks } from "./MobileSidebarHeaderLinks";
 import { SidebarFixedItemsSection } from "./SidebarFixedItemsSection";
 import { SidebarTabButton } from "./SidebarTabButton";
 
-interface SidebarContainerProps extends ComponentPropsWithoutRef<"nav"> {
+export const SidebarContainer = React.memo(function SidebarContainer({
+  logo,
+  versionSelect,
+  navbarLinks,
+  children,
+}: {
   logo: React.ReactNode;
   versionSelect: React.ReactNode;
   navbarLinks: NavbarLink[];
-}
-
-const UnmemoizedSidebarContainer = forwardRef<
-  HTMLElement,
-  SidebarContainerProps
->(function DesktopSidebar(
-  { logo, versionSelect, navbarLinks, children, ...props },
-  ref
-) {
+  children: React.ReactNode;
+}) {
   const layout = useAtomValue(DOCS_LAYOUT_ATOM);
   const tabs = useAtomValue(TABS_ATOM);
   const currentTabIndex = useAtomValue(CURRENT_TAB_INDEX_ATOM);
@@ -45,12 +43,7 @@ const UnmemoizedSidebarContainer = forwardRef<
   useInitSidebarExpandedNodes();
 
   return (
-    <nav
-      aria-label="secondary"
-      ref={ref}
-      {...props}
-      className={clsx("fern-sidebar-container", props.className)}
-    >
+    <>
       <SidebarFixedItemsSection
         logo={logo}
         versionSelect={versionSelect}
@@ -86,8 +79,6 @@ const UnmemoizedSidebarContainer = forwardRef<
         <FernTooltipProvider>{children}</FernTooltipProvider>
         <MobileSidebarHeaderLinks navbarLinks={navbarLinks} />
       </FernScrollArea>
-    </nav>
+    </>
   );
 });
-
-export const SidebarContainer = memo(UnmemoizedSidebarContainer);

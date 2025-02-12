@@ -37,8 +37,8 @@ export default async function Layout(props: {
   children: React.ReactNode;
   params: Promise<{ domain: string }>;
 }) {
-  console.debug("/app/[domain]/(external)/layout.tsx: starting...");
-  console.time("/app/[domain]/(external)/layout.tsx");
+  "use cache";
+
   const params = await props.params;
 
   unstable_cacheTag(params.domain);
@@ -82,7 +82,6 @@ export default async function Layout(props: {
 
   const jsConfig = withJsConfig(config.js, files);
 
-  console.timeEnd("/app/[domain]/(external)/layout.tsx");
   return (
     <ThemeProvider
       hasLight={Boolean(colors.light)}
@@ -160,7 +159,12 @@ async function getLaunchDarklyInfo(
 export async function generateViewport(props: {
   params: Promise<{ domain: string }>;
 }): Promise<Viewport> {
+  "use cache";
+
   const { domain } = await props.params;
+
+  unstable_cacheTag(domain);
+  unstable_cacheLife("max");
 
   const loader = await createCachedDocsLoader(domain);
   const colors = await loader.getColors();
@@ -190,7 +194,12 @@ function maybeToHex(color: RgbaColor | undefined): string | undefined {
 export async function generateMetadata(props: {
   params: Promise<{ domain: string }>;
 }): Promise<Metadata> {
+  "use cache";
+
   const { domain } = await props.params;
+
+  unstable_cacheTag(domain);
+  unstable_cacheLife("max");
 
   const loader = await createCachedDocsLoader(domain);
   const [files, config, seoDisabled] = await Promise.all([
