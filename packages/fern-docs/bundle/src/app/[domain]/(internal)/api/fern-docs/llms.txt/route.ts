@@ -1,4 +1,3 @@
-import { unstable_cacheLife, unstable_cacheTag } from "next/cache";
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -39,12 +38,7 @@ export async function GET(
   req: NextRequest,
   props: { params: Promise<{ domain: string }> }
 ): Promise<NextResponse> {
-  "use cache";
-
   const { domain } = await props.params;
-
-  unstable_cacheTag(domain);
-  unstable_cacheLife("days");
 
   const path = addLeadingSlash(req.nextUrl.searchParams.get("slug") ?? "");
   const host = getHostEdge(req);
