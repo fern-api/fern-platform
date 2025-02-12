@@ -965,9 +965,6 @@ importers:
       react-error-boundary:
         specifier: ^5.0.0
         version: 5.0.0(react@19.0.0)
-      react-feather:
-        specifier: ^2.0.10
-        version: 2.0.10(react@19.0.0)
       react-instantsearch:
         specifier: ^7.15.3
         version: 7.15.3(algoliasearch@5.20.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
@@ -14469,11 +14466,6 @@ packages:
 
   react-error-boundary@5.0.0:
     resolution: {integrity: sha512-tnjAxG+IkpLephNcePNA7v6F/QpWLH8He65+DmedchDwg162JZqx4NmbXj0mlAYVVEd81OW7aFhmbsScYfiAFQ==}
-    peerDependencies:
-      react: 19.0.0
-
-  react-feather@2.0.10:
-    resolution: {integrity: sha512-BLhukwJ+Z92Nmdcs+EMw6dy1Z/VLiJTzEQACDUEnWMClhYnFykJCGWQx+NmwP/qQHGX/5CzQ+TGi8ofg2+HzVQ==}
     peerDependencies:
       react: 19.0.0
 
@@ -32835,11 +32827,6 @@ snapshots:
   react-error-boundary@5.0.0(react@19.0.0):
     dependencies:
       '@babel/runtime': 7.26.0
-      react: 19.0.0
-
-  react-feather@2.0.10(react@19.0.0):
-    dependencies:
-      prop-types: 15.8.1
       react: 19.0.0
 
   react-hook-form@7.51.5(react@19.0.0):
