@@ -11,7 +11,6 @@ import {
   ApiDefinition,
   DocsV1Read,
   DocsV2Read,
-  FernDocs,
   FernNavigation,
 } from "@fern-api/fdr-sdk";
 import { ApiDefinitionV1ToLatest } from "@fern-api/fdr-sdk/api-definition";
@@ -22,11 +21,7 @@ import { AuthEdgeConfig } from "@fern-docs/auth";
 import { getAuthEdgeConfig, getEdgeFlags } from "@fern-docs/edge-config";
 import { DEFAULT_LOGO_HEIGHT, EdgeFlags } from "@fern-docs/utils";
 
-import { serializeMdx as uncachedSerializeMdx } from "@/components/mdx/bundler/serialize";
-import { FernSerializeMdxOptions } from "@/components/mdx/types";
-
 import { AuthState, createGetAuthState } from "./auth/getAuthState";
-import { createFileResolver } from "./file-resolver";
 import { loadWithUrl as uncachedLoadWithUrl } from "./loadWithUrl";
 import { ColorsThemeConfig, FileData, RgbaColor } from "./types";
 import { pruneWithAuthState } from "./withRbac";
@@ -50,6 +45,11 @@ export interface DocsLoader {
    * @returns a map of file names to their contents
    */
   getFiles: () => Promise<Record<string, FileData>>;
+
+  /**
+   * @returns a map of mdx bundler files
+   */
+  getMdxBundlerFiles: () => Promise<Record<string, string>>;
 
   /**
    * @returns the api definition for the given id
@@ -84,23 +84,10 @@ export interface DocsLoader {
    * @returns the markdown content for the given page id
    */
   getPage: (pageId: string) => Promise<{
+    filename: string;
     markdown: string;
     editThisPageUrl?: string;
   }>;
-
-  /**
-   * @returns the serialized page for the given page id
-   */
-  getSerializedPage: (
-    pageId: string,
-    options?: Omit<FernSerializeMdxOptions, "files" | "replaceSrc">,
-    revalidate?: number | false
-  ) => Promise<string | FernDocs.ResolvedMdx>;
-
-  serializeMdx: (
-    content: string | undefined,
-    options?: Omit<FernSerializeMdxOptions, "files" | "replaceSrc">
-  ) => Promise<string | FernDocs.ResolvedMdx | undefined>;
 
   getColors: () => Promise<{
     light?: ColorsThemeConfig;
@@ -132,7 +119,10 @@ const getBaseUrl = cache(
     if (!response.ok) {
       return { domain, basePath: undefined };
     }
-    return response.body.baseUrl;
+    return {
+      domain: response.body.baseUrl.domain,
+      basePath: response.body.baseUrl.basePath,
+    };
   }
 );
 
@@ -207,29 +197,27 @@ const unsafe_getFullRoot = cache(async (domain: string) => {
   return root;
 });
 
-const unsafe_getRootCached = async (domain: string) => {
+const unsafe_getRootCached = cache(async (domain: string) => {
   return await unstable_cache(unsafe_getFullRoot, ["unsafe_getRoot"], {
     tags: [domain],
   })(domain);
-};
+});
 
-const getRoot = cache(
-  async (
-    domain: string,
-    authState: AuthState,
-    authConfig: AuthEdgeConfig | undefined
-  ) => {
-    let root = await unsafe_getRootCached(domain);
+const getRoot = async (
+  domain: string,
+  authState: AuthState,
+  authConfig: AuthEdgeConfig | undefined
+) => {
+  let root = await unsafe_getRootCached(domain);
 
-    if (authConfig) {
-      root = pruneWithAuthState(authState, authConfig, root);
-    }
-
-    FernNavigation.utils.mutableUpdatePointsTo(root);
-
-    return root;
+  if (authConfig) {
+    root = pruneWithAuthState(authState, authConfig, root);
   }
-);
+
+  FernNavigation.utils.mutableUpdatePointsTo(root);
+
+  return root;
+};
 
 const getRootCached = async (
   domain: string,
@@ -241,22 +229,20 @@ const getRootCached = async (
   })(domain, authState, authConfig);
 };
 
-const getNavigationNode = cache(
-  async (
-    domain: string,
-    id: string,
-    authState: AuthState,
-    authConfig: AuthEdgeConfig | undefined
-  ) => {
-    const root = await getRoot(domain, authState, authConfig);
-    const collector = FernNavigation.NodeCollector.collect(root);
-    const node = collector.get(FernNavigation.NodeId(id));
-    if (node == null) {
-      notFound();
-    }
-    return node;
+const getNavigationNode = async (
+  domain: string,
+  id: string,
+  authState: AuthState,
+  authConfig: AuthEdgeConfig | undefined
+) => {
+  const root = await getRoot(domain, authState, authConfig);
+  const collector = FernNavigation.NodeCollector.collect(root);
+  const node = collector.get(FernNavigation.NodeId(id));
+  if (node == null) {
+    notFound();
   }
-);
+  return node;
+};
 
 const getConfig = cache(async (domain: string) => {
   const response = await loadWithUrl(domain);
@@ -276,62 +262,12 @@ const getPage = cache(async (domain: string, pageId: string) => {
   if (page == null) {
     notFound();
   }
-  return page;
-});
-
-const serializeMdx = async (
-  domain: string,
-  content: string | undefined,
-  options?: Omit<FernSerializeMdxOptions, "files" | "replaceSrc">
-) => {
-  if (content == null) {
-    return undefined;
-  }
-  const [files, mdxBundlerFiles] = await Promise.all([
-    getFiles(domain),
-    getMdxBundlerFiles(domain),
-  ]);
-
-  const mdx = await uncachedSerializeMdx(content, {
-    ...options,
-    files: mdxBundlerFiles,
-    replaceSrc: createFileResolver(files),
-  });
-
-  if (mdx == null) {
-    // if we're returning the fallback string, this means validation failed
-  }
-
-  return mdx ?? content;
-};
-
-const getSerializedPage = async (
-  domain: string,
-  pageId: string,
-  options?: Omit<FernSerializeMdxOptions, "files" | "replaceSrc">
-) => {
-  const [page, files, mdxBundlerFiles] = await Promise.all([
-    getPage(domain, pageId),
-    getFiles(domain),
-    getMdxBundlerFiles(domain),
-  ]);
-  if (!page) {
-    console.error(`[${domain}] Could not find page: ${pageId}`);
-    notFound();
-  }
-  const mdx = await uncachedSerializeMdx(page.markdown, {
-    ...options,
+  return {
     filename: pageId,
-    files: mdxBundlerFiles,
-    replaceSrc: createFileResolver(files),
-  });
-
-  if (mdx == null) {
-    // if we're returning the fallback string, this means validation failed
-  }
-
-  return mdx ?? page.markdown;
-};
+    markdown: page.markdown,
+    editThisPageUrl: page.editThisPageUrl,
+  };
+});
 
 const getMdxBundlerFiles = cache(async (domain: string) => {
   const response = await loadWithUrl(domain);
@@ -459,10 +395,15 @@ export const createCachedDocsLoader = async (
       tags: [domain, "getBaseUrl"],
     }),
     getFiles: unstable_cache(() => getFiles(domain), [domain], {
-      tags: [domain, "getFiles"],
+      tags: [domain, "files"],
     }),
+    getMdxBundlerFiles: unstable_cache(
+      () => getMdxBundlerFiles(domain),
+      [domain],
+      { tags: [domain, "mdxBundlerFiles"] }
+    ),
     getApi: unstable_cache((id: string) => getApi(domain, id), [domain], {
-      tags: [domain, "getApi"],
+      tags: [domain, "api"],
     }),
     getRoot: async () =>
       getRootCached(domain, await getAuthState(), authConfig),
@@ -476,16 +417,6 @@ export const createCachedDocsLoader = async (
       (pageId: string) => getPage(domain, pageId),
       [domain],
       { tags: [domain, "getPage"] }
-    ),
-    serializeMdx: unstable_cache(
-      (content, options) => serializeMdx(domain, content, options),
-      [domain],
-      { tags: [domain, "serializeMdx"] }
-    ),
-    getSerializedPage: unstable_cache(
-      (pageId, options) => getSerializedPage(domain, pageId, options),
-      [domain],
-      { tags: [domain, "getSerializedPage"] }
     ),
     getColors: unstable_cache(() => getColors(domain), [domain], {
       tags: [domain, "getColors"],

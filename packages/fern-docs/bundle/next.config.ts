@@ -64,12 +64,9 @@ const nextConfig: NextConfig = {
       "ts-essentials",
       "lucide-react",
     ],
-    // newDevOverlay: true,
+    newDevOverlay: true,
     authInterrupts: true,
     swcTraceProfiling: true,
-    // slowModuleDetection: process.env.VERCEL
-    //   ? undefined
-    //   : { buildTimeThresholdMs: 200 },
     webpackBuildWorker: true,
     parallelServerCompiles: true,
     parallelServerBuildTraces: true,

@@ -1,6 +1,6 @@
 import "server-only";
 
-import { DocsLoader } from "@fern-docs/cache";
+import { DocsMetadataLoader } from "@fern-docs/cache";
 
 export interface OrgMetadata {
   orgId: string;
@@ -15,7 +15,7 @@ export async function getOrgMetadataForDomain(
   }
 
   try {
-    const loader = DocsLoader.create(domain).withEnvironment(
+    const loader = DocsMetadataLoader.create(domain).withEnvironment(
       process.env.NEXT_PUBLIC_FDR_ORIGIN
     );
     const metadata = await loader.getMetadata();

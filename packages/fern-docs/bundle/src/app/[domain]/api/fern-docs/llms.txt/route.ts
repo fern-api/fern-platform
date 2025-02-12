@@ -1,17 +1,14 @@
-import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { CONTINUE, SKIP } from "@fern-api/fdr-sdk/traversers";
 import { isNonNullish, withDefaultProtocol } from "@fern-api/ui-core-utils";
-import { getEdgeFlags } from "@fern-docs/edge-config";
-import { COOKIE_FERN_TOKEN, addLeadingSlash } from "@fern-docs/utils";
+import { addLeadingSlash } from "@fern-docs/utils";
 
-import { DocsLoader } from "@/server/DocsLoader";
+import { createCachedDocsLoader } from "@/server/docs-loader";
 import { getMarkdownForPath } from "@/server/getMarkdownForPath";
 import { getSectionRoot } from "@/server/getSectionRoot";
 import { getLlmTxtMetadata } from "@/server/llm-txt-md";
-import { getHostEdge } from "@/server/xfernhost/edge";
 
 /**
  * This endpoint follows the https://llmstxt.org/ specification for a LLM-friendly markdown-esque page listing all the pages in the docs.
@@ -41,15 +38,9 @@ export async function GET(
   const { domain } = await props.params;
 
   const path = addLeadingSlash(req.nextUrl.searchParams.get("slug") ?? "");
-  const host = getHostEdge(req);
-  const fern_token = (await cookies()).get(COOKIE_FERN_TOKEN)?.value;
-  const edgeFlags = await getEdgeFlags(domain);
-  const loader = DocsLoader.for(domain, host, fern_token).withEdgeFlags(
-    edgeFlags
-  );
+  const loader = await createCachedDocsLoader(domain);
 
-  const root = getSectionRoot(await loader.root(), path);
-  const pages = await loader.pages();
+  const root = getSectionRoot(await loader.getRoot(), path);
 
   if (root == null) {
     return NextResponse.json(null, { status: 404 });
@@ -74,7 +65,7 @@ export async function GET(
   const landingPage = getLandingPage(root);
   const markdown =
     landingPage != null
-      ? await getMarkdownForPath(landingPage, loader, edgeFlags)
+      ? await getMarkdownForPath(landingPage, loader)
       : undefined;
 
   // traverse the tree in a depth-first manner to collect all the nodes that have markdown content
@@ -128,17 +119,17 @@ export async function GET(
     return CONTINUE;
   });
 
-  const docs = pageInfos
-    .map(
-      (
+  const docs = await Promise.allSettled(
+    pageInfos.map(
+      async (
         pageInfo
-      ): {
+      ): Promise<{
         title: string;
         description: string | undefined;
         href: string;
-      } => {
+      }> => {
         if (pageInfo.pageId != null) {
-          const page = pages[pageInfo.pageId];
+          const page = await loader.getPage(pageInfo.pageId);
           if (page != null) {
             const { title, description } = getLlmTxtMetadata(
               page.markdown,
@@ -169,10 +160,7 @@ export async function GET(
         };
       }
     )
-    .map(
-      (doc) =>
-        `- [${doc.title}](${doc.href})${doc.description != null ? `: ${doc.description}` : ""}`
-    );
+  );
 
   const endpoints = endpointPageInfos
     .map((endpointPageInfo) => {
@@ -197,7 +185,16 @@ export async function GET(
     [
       // if there's a landing page, use the llm-friendly markdown version instead of the ${root.title}
       markdown?.content ?? `# ${root.title}`,
-      docs.length > 0 ? `## Docs\n\n${docs.join("\n")}` : undefined,
+      docs.length > 0
+        ? `## Docs\n\n${docs
+            .filter((doc) => doc.status === "fulfilled")
+            .map((doc) => doc.value)
+            .map(
+              (doc) =>
+                `- [${doc.title}](${doc.href})${doc.description != null ? `: ${doc.description}` : ""}`
+            )
+            .join("\n")}`
+        : undefined,
       endpoints.length > 0
         ? `## API Docs\n\n${endpoints.join("\n")}`
         : undefined,

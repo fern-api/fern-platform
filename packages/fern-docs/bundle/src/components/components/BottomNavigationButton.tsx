@@ -1,5 +1,6 @@
-import clsx from "clsx";
 import { NavArrowLeft, NavArrowRight } from "iconoir-react";
+
+import { cn } from "@fern-docs/components";
 
 import { Markdown } from "../mdx/Markdown";
 import { FernLinkCard } from "./FernLinkCard";
@@ -9,7 +10,7 @@ export declare namespace BottomNavigationButton {
     title: string;
     hint?: string;
     href: string;
-    excerpt?: string;
+    excerpt?: string | { code: string };
     dir: "prev" | "next";
     className?: string;
   }
@@ -25,10 +26,7 @@ export const BottomNavigationButton: React.FC<BottomNavigationButton.Props> = ({
 }) => {
   return (
     <FernLinkCard
-      className={clsx(
-        "my-12 flex flex-1 items-center rounded-xl p-6",
-        className
-      )}
+      className={cn("my-12 flex flex-1 items-center rounded-xl p-6", className)}
       href={href}
     >
       {dir === "prev" && (

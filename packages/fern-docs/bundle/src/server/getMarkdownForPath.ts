@@ -7,22 +7,18 @@ import {
   TypeShape,
 } from "@fern-api/fdr-sdk/api-definition";
 import { isNonNullish } from "@fern-api/ui-core-utils";
-import { EdgeFlags, removeLeadingSlash } from "@fern-docs/utils";
+import { removeLeadingSlash } from "@fern-docs/utils";
 
-import { DocsLoader } from "./DocsLoader";
+import { DocsLoader } from "./docs-loader";
 import { pascalCaseHeaderKey } from "./headerKeyCase";
 import { convertToLlmTxtMarkdown } from "./llm-txt-md";
 
 export async function getMarkdownForPath(
   node: FernNavigation.NavigationNodePage,
-  loader: DocsLoader,
-  edgeFlags: EdgeFlags
+  loader: DocsLoader
 ): Promise<{ content: string; contentType: "markdown" | "mdx" } | undefined> {
-  loader = loader.withEdgeFlags(edgeFlags);
-  const pages = await loader.pages();
-
   if (FernNavigation.isApiLeaf(node)) {
-    const apiDefinition = await loader.getApiDefinition(node.apiDefinitionId);
+    const apiDefinition = await loader.getApi(node.apiDefinitionId);
     if (apiDefinition == null) {
       return undefined;
     }
@@ -49,7 +45,7 @@ export async function getMarkdownForPath(
     return undefined;
   }
 
-  const page = pages[pageId];
+  const page = await loader.getPage(pageId);
   if (!page) {
     return undefined;
   }

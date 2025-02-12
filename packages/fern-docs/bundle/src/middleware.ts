@@ -1,62 +1,82 @@
-import { type NextMiddleware, NextResponse } from "next/server";
+import {
+  type MiddlewareConfig,
+  type NextMiddleware,
+  NextResponse,
+} from "next/server";
 
-import { COOKIE_FERN_TOKEN, removeLeadingSlash } from "@fern-docs/utils";
+import {
+  COOKIE_FERN_TOKEN,
+  HEADER_X_FERN_BASEPATH,
+  HEADER_X_FERN_HOST,
+  removeLeadingSlash,
+} from "@fern-docs/utils";
 
 import { rewritePosthog } from "@/server/analytics/rewritePosthog";
+import { MARKDOWN_PATTERN, RSS_PATTERN } from "@/server/patterns";
+import { withPathname } from "@/server/withPathname";
+import { getDocsDomainEdge } from "@/server/xfernhost/edge";
 
-import { MARKDOWN_PATTERN, RSS_PATTERN } from "./server/patterns";
-import { withPathname } from "./server/withPathname";
-import { getDocsDomainEdge } from "./server/xfernhost/edge";
+import { createGetAuthStateEdge } from "./server/auth/getAuthStateEdge";
 
-const API_FERN_DOCS_PATTERN = /^(?!\/api\/fern-docs\/).*(\/api\/fern-docs\/)/;
+function splitPathname(
+  pathname: string,
+  splitter: string | RegExp
+): [basepath: string, pathname: string] {
+  const index =
+    typeof splitter === "string"
+      ? pathname.indexOf(splitter)
+      : pathname.search(splitter);
+  if (index <= 0) {
+    return ["/", pathname];
+  }
+  return [pathname.slice(0, index), pathname.slice(index)];
+}
 
 export const middleware: NextMiddleware = async (request) => {
   const domain = getDocsDomainEdge(request);
-  const withDomain = createWithDomain(domain);
-  let pathname = request.nextUrl.pathname;
+
+  const pathname = removeLeadingSlash(request.nextUrl.pathname);
 
   const headers = new Headers(request.headers);
-  headers.set("x-fern-host", domain);
+  headers.set(HEADER_X_FERN_HOST, domain);
 
-  /**
-   * Rewrite /.../_next/*
-   */
-  if (pathname.includes("/_next/")) {
-    const index = pathname.indexOf("/_next/");
-    pathname = pathname.slice(index);
-    return NextResponse.rewrite(withPathname(request, pathname), {
+  const rewrite = (
+    pathname: string,
+    search?: string | URLSearchParams | Record<string, string> | string[][]
+  ) => {
+    if (request.nextUrl.pathname === pathname && !search) {
+      return NextResponse.next({ request: { headers } });
+    }
+    return NextResponse.rewrite(withPathname(request, pathname, search), {
       request: { headers },
     });
-  }
+  };
 
-  headers.set("x-pathname", pathname);
+  const withDomain = (pathname: string) => `/${domain}${pathname}`;
+
+  const withoutBasepath = (splitter: string | RegExp) => {
+    const [basepath, newPathname] = splitPathname(pathname, splitter);
+    headers.set(HEADER_X_FERN_BASEPATH, basepath);
+    return newPathname;
+  };
+
+  const withoutEnding = (splitter: string | RegExp) => {
+    const [newPathname] = splitPathname(pathname, splitter);
+    return newPathname;
+  };
 
   /**
    * Rewrite robots.txt
    */
   if (pathname.endsWith("/robots.txt")) {
-    if (pathname === "/robots.txt") {
-      return NextResponse.next();
-    }
-
-    headers.set("x-fern-basepath", pathname.replace(/\/robots\.txt$/, ""));
-
-    return NextResponse.rewrite(withPathname(request, "/robots.txt"), {
-      request: { headers },
-    });
+    return rewrite(withoutBasepath("/robots.txt"));
   }
 
   /**
    * Rewrite sitemap.xml
    */
   if (pathname.endsWith("/sitemap.xml")) {
-    if (pathname === "/sitemap.xml") {
-      return NextResponse.next();
-    }
-
-    return NextResponse.rewrite(withPathname(request, "/sitemap.xml"), {
-      request: { headers },
-    });
+    return rewrite(withoutBasepath("/sitemap.xml"));
   }
 
   /**
@@ -69,68 +89,32 @@ export const middleware: NextMiddleware = async (request) => {
   /**
    * Rewrite API routes to /api/fern-docs
    */
-  if (pathname.match(API_FERN_DOCS_PATTERN)) {
-    pathname = request.nextUrl.pathname.replace(
-      API_FERN_DOCS_PATTERN,
-      "/api/fern-docs/"
-    );
-    return NextResponse.rewrite(withPathname(request, withDomain(pathname)), {
-      request: { headers },
-    });
+  if (pathname.includes("/api/fern-docs/")) {
+    return rewrite(withDomain(withoutBasepath("/api/fern-docs/")));
   }
 
   /**
    * Rewrite llms.txt
    */
   if (pathname.endsWith("/llms.txt")) {
-    return NextResponse.rewrite(
-      withPathname(
-        request,
-        withDomain("/api/fern-docs/llms.txt"),
-        String(
-          new URLSearchParams({
-            slug: removeLeadingSlash(pathname).replace(/\/llms\.txt$/, ""),
-          })
-        )
-      ),
-      { request: { headers } }
-    );
+    const slug = removeLeadingSlash(withoutEnding(/\/llms\.txt$/));
+    return rewrite(withDomain("/api/fern-docs/llms.txt"), { slug });
   }
 
   /**
    * Rewrite llms-full.txt
    */
   if (pathname.endsWith("/llms-full.txt")) {
-    return NextResponse.rewrite(
-      withPathname(
-        request,
-        withDomain("/api/fern-docs/llms-full.txt"),
-        String(
-          new URLSearchParams({
-            slug: removeLeadingSlash(pathname).replace(/\/llms-full\.txt$/, ""),
-          })
-        )
-      ),
-      { request: { headers } }
-    );
+    const slug = removeLeadingSlash(withoutEnding(/\/llms-full\.txt$/));
+    return rewrite(withDomain("/api/fern-docs/llms-full.txt"), { slug });
   }
 
   /**
    * Rewrite markdown
    */
   if (pathname.match(MARKDOWN_PATTERN)) {
-    return NextResponse.rewrite(
-      withPathname(
-        request,
-        withDomain("/api/fern-docs/markdown"),
-        String(
-          new URLSearchParams({
-            slug: removeLeadingSlash(pathname).replace(MARKDOWN_PATTERN, ""),
-          })
-        )
-      ),
-      { request: { headers } }
-    );
+    const slug = removeLeadingSlash(withoutEnding(MARKDOWN_PATTERN));
+    return rewrite(withDomain("/api/fern-docs/markdown"), { slug });
   }
 
   /**
@@ -138,61 +122,33 @@ export const middleware: NextMiddleware = async (request) => {
    */
   if (pathname.match(RSS_PATTERN)) {
     const format = pathname.match(RSS_PATTERN)?.[1] ?? "rss";
-    return NextResponse.rewrite(
-      withPathname(
-        request,
-        withDomain("/api/fern-docs/changelog"),
-        String(
-          new URLSearchParams({
-            format,
-            slug: removeLeadingSlash(pathname).replace(RSS_PATTERN, ""),
-          })
-        )
-      ),
-      { request: { headers } }
-    );
+    const slug = removeLeadingSlash(withoutEnding(RSS_PATTERN));
+    return rewrite(withDomain("/api/fern-docs/changelog"), { format, slug });
   }
 
   /**
-   * Rewrite .../~/... to /[domain]/~/...
+   * Rewrite .../~explorer to /[domain]/explorer/...
    */
-  if (pathname.includes("/api/fern-docs/")) {
-    if (!pathname.startsWith("/api/fern-docs/")) {
-      const index = pathname.indexOf("/api/fern-docs/");
-      const basepath = pathname.slice(0, index);
-      headers.set("x-basepath", basepath);
-      pathname = pathname.slice(index);
-    }
-    return NextResponse.rewrite(withPathname(request, withDomain(pathname)), {
-      request: { headers },
-    });
+  if (pathname.endsWith("/~explorer")) {
+    const pathname = withoutEnding("/~explorer");
+    return rewrite(withDomain(`/explorer${pathname}`));
   }
 
-  /**
-   * Rewrite .../~/... to /[domain]/~/...
-   */
-  if (pathname.includes("/~/")) {
-    if (!pathname.startsWith("/~/")) {
-      const index = pathname.indexOf("/~/");
-      const basepath = pathname.slice(0, index);
-      headers.set("x-basepath", basepath);
-      pathname = pathname.slice(index);
-    }
-    return NextResponse.rewrite(withPathname(request, withDomain(pathname)), {
-      request: { headers },
+  if (request.cookies.has(COOKIE_FERN_TOKEN)) {
+    const dynamicResponse = rewrite(withDomain(`/dynamic${pathname}`));
+    const { getAuthState } = await createGetAuthStateEdge(request, (token) => {
+      dynamicResponse.cookies.set(COOKIE_FERN_TOKEN, token);
     });
+    const authState = await getAuthState();
+    if (authState.authed) {
+      return dynamicResponse;
+    }
   }
 
-  const fern_token = request.cookies.get(COOKIE_FERN_TOKEN)?.value;
-  const withPrefix = createWithPrefix(fern_token);
-
-  return NextResponse.rewrite(
-    withPathname(request, withDomain(withPrefix(pathname))),
-    { request: { headers } }
-  );
+  return rewrite(withDomain(`/static${pathname}`));
 };
 
-export const config = {
+export const config: MiddlewareConfig = {
   matcher: [
     /*
      * Match all request paths except for the ones starting with:
@@ -204,16 +160,3 @@ export const config = {
     "/((?!.well-known|_next|_vercel|favicon.ico|manifest.webmanifest).*)",
   ],
 };
-
-function createWithDomain(domain: string) {
-  return (pathname: string) => {
-    return `/${domain}${pathname}`;
-  };
-}
-
-function createWithPrefix(fern_token: string | undefined) {
-  return (pathname: string) => {
-    const prefix = fern_token == null ? "static" : "dynamic";
-    return `/${prefix}${pathname}`;
-  };
-}

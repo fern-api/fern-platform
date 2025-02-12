@@ -6,13 +6,11 @@ import { uniqBy } from "es-toolkit/array";
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { CONTINUE, SKIP } from "@fern-api/fdr-sdk/traversers";
 import { isNonNullish } from "@fern-api/ui-core-utils";
-import { getEdgeFlags } from "@fern-docs/edge-config";
 import { COOKIE_FERN_TOKEN, addLeadingSlash } from "@fern-docs/utils";
 
-import { DocsLoader } from "@/server/DocsLoader";
+import { createCachedDocsLoader } from "@/server/docs-loader";
 import { getMarkdownForPath } from "@/server/getMarkdownForPath";
 import { getSectionRoot } from "@/server/getSectionRoot";
-import { getHostEdge } from "@/server/xfernhost/edge";
 
 export async function GET(
   req: NextRequest,
@@ -21,14 +19,10 @@ export async function GET(
   const { domain } = await props.params;
 
   const path = addLeadingSlash(req.nextUrl.searchParams.get("slug") ?? "");
-  const host = getHostEdge(req);
   const fern_token = (await cookies()).get(COOKIE_FERN_TOKEN)?.value;
-  const edgeFlags = await getEdgeFlags(domain);
-  const loader = DocsLoader.for(domain, host, fern_token).withEdgeFlags(
-    edgeFlags
-  );
+  const loader = await createCachedDocsLoader(domain, fern_token);
 
-  const root = getSectionRoot(await loader.root(), path);
+  const root = getSectionRoot(await loader.getRoot(), path);
 
   if (root == null) {
     return NextResponse.json(null, { status: 404 });
@@ -56,7 +50,7 @@ export async function GET(
         nodes,
         (a) => FernNavigation.getPageId(a) ?? a.canonicalSlug ?? a.slug
       ).map(async (node) => {
-        const markdown = await getMarkdownForPath(node, loader, edgeFlags);
+        const markdown = await getMarkdownForPath(node, loader);
         if (markdown == null) {
           return undefined;
         }

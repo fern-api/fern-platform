@@ -1,14 +1,10 @@
-"use client";
-
 import React from "react";
-
-import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 
 import { ErrorBoundary } from "@/components/error-boundary";
 
 import { MdxComponent } from "./bundler/component";
 
-type MarkdownText = string | FernDocs.ResolvedMdx;
+type MarkdownText = string | { code: string };
 
 export declare namespace MdxContent {
   export interface Props {

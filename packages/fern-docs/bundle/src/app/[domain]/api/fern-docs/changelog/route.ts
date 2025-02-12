@@ -11,8 +11,8 @@ import { assertNever, withDefaultProtocol } from "@fern-api/ui-core-utils";
 import { getFrontmatter } from "@fern-docs/mdx";
 import { COOKIE_FERN_TOKEN, addLeadingSlash } from "@fern-docs/utils";
 
-import { DocsLoader } from "@/server/DocsLoader";
-import { getHostEdge } from "@/server/xfernhost/edge";
+import { createCachedDocsLoader } from "@/server/docs-loader";
+import { FileData } from "@/server/types";
 
 const FORMATS = ["rss", "atom", "json"] as const;
 type Format = (typeof FORMATS)[number];
@@ -26,11 +26,9 @@ export async function GET(
   const path = addLeadingSlash(req.nextUrl.searchParams.get("slug") ?? "");
   const format = getFormat(req);
 
-  const host = getHostEdge(req);
   const fernToken = (await cookies()).get(COOKIE_FERN_TOKEN)?.value;
-  const loader = DocsLoader.for(domain, host, fernToken);
-
-  const root = await loader.root();
+  const loader = await createCachedDocsLoader(domain, fernToken);
+  const root = await loader.getRoot();
 
   if (!root) {
     return NextResponse.json(null, { status: 404 });
@@ -54,21 +52,24 @@ export async function GET(
     generator: "buildwithfern.com",
   });
 
-  const pages = await loader.pages();
-  const files = await loader.files();
+  const files = await loader.getFiles();
 
-  node.children.forEach((year) => {
-    year.children.forEach((month) => {
-      month.children.forEach((entry) => {
-        try {
-          feed.addItem(toFeedItem(entry, domain, pages, files));
-        } catch (e) {
-          console.error(e);
-          // TODO: sentry
-        }
+  await Promise.allSettled(
+    node.children.flatMap((year) => {
+      return year.children.flatMap((month) => {
+        return month.children.map(async (entry) => {
+          try {
+            feed.addItem(
+              await toFeedItem(entry, domain, (id) => loader.getPage(id), files)
+            );
+          } catch (e) {
+            console.error(e);
+            // TODO: sentry
+          }
+        });
       });
-    });
-  });
+    })
+  );
 
   if (format === "json") {
     return new NextResponse(feed.json1(), {
@@ -97,20 +98,20 @@ function getFormat(req: NextRequest): Format {
   return format;
 }
 
-function toFeedItem(
+async function toFeedItem(
   entry: FernNavigation.ChangelogEntryNode,
   domain: string,
-  pages: Record<DocsV1Read.PageId, DocsV1Read.PageContent>,
-  files: Record<DocsV1Read.FileId, DocsV1Read.File_>
-): Item {
+  getPage: (id: string) => Promise<{ filename: string; markdown: string }>,
+  files: Record<string, FileData>
+): Promise<Item> {
   const item: Item = {
     title: entry.title,
     link: urlJoin(withDefaultProtocol(domain), entry.slug),
     date: new Date(entry.date),
   };
 
-  const markdown = pages[entry.pageId]?.markdown;
-  if (markdown != null) {
+  try {
+    const { markdown } = await getPage(entry.pageId);
     const { data: frontmatter, content } = getFrontmatter(markdown);
     item.description =
       frontmatter.description ?? frontmatter.subtitle ?? frontmatter.excerpt;
@@ -118,31 +119,29 @@ function toFeedItem(
     // TODO: content should be converted into HTML markup
     item.content = content;
 
-    try {
-      let image: string | undefined;
+    let image: string | undefined;
 
-      // TODO: (rohin) Clean up after safe deploy, but include for back compat
-      if (frontmatter.image != null && typeof frontmatter.image === "string") {
-        image = frontmatter.image;
-      } else if (frontmatter["og:image"] != null) {
-        image = toUrl(frontmatter["og:image"], files);
-      }
-
-      if (image != null) {
-        validateExternalUrl(image);
-        item.image = { url: image };
-      }
-    } catch (e) {
-      console.error(e);
-      // TODO: sentry
+    // TODO: (rohin) Clean up after safe deploy, but include for back compat
+    if (frontmatter.image != null && typeof frontmatter.image === "string") {
+      image = frontmatter.image;
+    } else if (frontmatter["og:image"] != null) {
+      image = toUrl(frontmatter["og:image"], files);
     }
+
+    if (image != null) {
+      validateExternalUrl(image);
+      item.image = { url: image };
+    }
+  } catch (e) {
+    console.error(e);
+    // TODO: sentry
   }
   return item;
 }
 
 function toUrl(
   idOrUrl: DocsV1Read.FileIdOrUrl | undefined,
-  files: Record<DocsV1Read.FileId, DocsV1Read.File_>
+  files: Record<string, FileData>
 ): string | undefined {
   if (idOrUrl == null) {
     return undefined;
@@ -150,7 +149,7 @@ function toUrl(
   if (idOrUrl.type === "url") {
     return idOrUrl.value;
   } else if (idOrUrl.type === "fileId") {
-    return files[idOrUrl.value]?.url;
+    return files[idOrUrl.value]?.src;
   } else {
     assertNever(idOrUrl);
   }

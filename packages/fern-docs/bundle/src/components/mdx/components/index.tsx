@@ -41,7 +41,6 @@ import { If } from "./if";
 import { IFrame } from "./iframe";
 import { Mermaid } from "./mermaid";
 import { ParamField } from "./mintlify";
-import { ReferenceLayoutAside, ReferenceLayoutMain } from "./reference-layout";
 import { EndpointRequestSnippet, EndpointResponseSnippet } from "./snippets";
 import { Step, StepGroup } from "./steps";
 import { TabGroup } from "./tabs";
@@ -108,12 +107,12 @@ const FERN_COMPONENTS = {
 
 // internal-use only
 const INTERNAL_COMPONENTS: MDXComponents = {
-  ReferenceLayoutMain: (
-    props: React.ComponentProps<typeof ReferenceLayoutMain>
-  ) => <ReferenceLayoutMain {...props} />,
-  ReferenceLayoutAside: (
-    props: React.ComponentProps<typeof ReferenceLayoutAside>
-  ) => <ReferenceLayoutAside {...props} />,
+  // ReferenceLayoutMain: (
+  //   props: React.ComponentProps<typeof ReferenceLayoutMain>
+  // ) => <ReferenceLayoutMain {...props} />,
+  // ReferenceLayoutAside: (
+  //   props: React.ComponentProps<typeof ReferenceLayoutAside>
+  // ) => <ReferenceLayoutAside {...props} />,
 
   // error boundary
   ErrorBoundary: (props: React.ComponentProps<typeof ErrorBoundary>) => (

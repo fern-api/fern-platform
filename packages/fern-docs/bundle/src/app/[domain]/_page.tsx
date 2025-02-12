@@ -25,12 +25,12 @@ import { toImageDescriptor } from "@/app/seo";
 import { HydrateAtoms } from "@/components/atoms/docs";
 import type { DocsProps } from "@/components/atoms/types";
 import FeedbackPopover from "@/components/feedback/FeedbackPopover";
-import { serializeMdx } from "@/components/mdx/bundler/serialize";
 import { DocsContent } from "@/components/resolver/DocsContent";
 import { DocsLoader } from "@/server/docs-loader";
 import { createCachedDocsLoader } from "@/server/docs-loader";
 import { createFindNode } from "@/server/find-node";
 import { withLaunchDarkly } from "@/server/ld-adapter";
+import { createCachedMdxSerializer } from "@/server/mdx-serializer";
 import {
   pruneNavigationPredicate,
   withPrunedNavigation,
@@ -369,13 +369,21 @@ async function getNeighbor(
   if (pageId == null) {
     return null;
   }
-  const page = await loader.getPage(pageId);
-  const { data: frontmatter } = getFrontmatter(page.markdown);
-  return {
-    slug: node.slug,
-    title: node.title,
-    excerpt: await serializeMdx(frontmatter.excerpt),
-  };
+  try {
+    const page = await loader.getPage(pageId);
+    const { data: frontmatter } = getFrontmatter(page.markdown);
+    const excerpt = frontmatter.subtitle ?? frontmatter.excerpt;
+    const serialize = createCachedMdxSerializer(loader.domain);
+    const mdx = await serialize(excerpt);
+    return {
+      slug: node.slug,
+      title: node.title,
+      excerpt: mdx ? { code: mdx.code } : excerpt,
+    };
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
 }
 
 async function getNeighbors(

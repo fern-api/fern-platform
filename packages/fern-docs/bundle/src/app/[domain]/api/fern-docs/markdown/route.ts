@@ -1,16 +1,13 @@
-import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 import { NextRequest, NextResponse } from "next/server";
 
-import { getEdgeFlags } from "@fern-docs/edge-config";
-import { COOKIE_FERN_TOKEN, addLeadingSlash } from "@fern-docs/utils";
+import { addLeadingSlash } from "@fern-docs/utils";
 
-import { DocsLoader } from "@/server/DocsLoader";
+import { createCachedDocsLoader } from "@/server/docs-loader";
 import {
   getMarkdownForPath,
   getPageNodeForPath,
 } from "@/server/getMarkdownForPath";
-import { getHostEdge } from "@/server/xfernhost/edge";
 
 /**
  * This endpoint returns the markdown content of any page in the docs by adding `.md` or `.mdx` to the end of any docs page.
@@ -23,14 +20,9 @@ export async function GET(
   const { domain } = await props.params;
 
   const path = addLeadingSlash(req.nextUrl.searchParams.get("slug") ?? "");
-  const host = getHostEdge(req);
-  const fern_token = (await cookies()).get(COOKIE_FERN_TOKEN)?.value;
-  const edgeFlags = await getEdgeFlags(domain);
-  const loader = DocsLoader.for(domain, host, fern_token).withEdgeFlags(
-    edgeFlags
-  );
+  const loader = await createCachedDocsLoader(domain);
 
-  const node = getPageNodeForPath(await loader.root(), path);
+  const node = getPageNodeForPath(await loader.getRoot(), path);
   console.log(path, node);
   if (node == null) {
     console.error(`[${domain}] Node not found: ${path}`);
@@ -38,11 +30,11 @@ export async function GET(
   }
 
   // If the page is authed, but the user is not authed, return a 403
-  if (node.authed && !(await loader.isAuthed())) {
+  if (node.authed) {
     return new NextResponse(null, { status: 403 });
   }
 
-  const markdown = await getMarkdownForPath(node, loader, edgeFlags);
+  const markdown = await getMarkdownForPath(node, loader);
   if (markdown == null) {
     console.error(`[${domain}] Markdown not found: ${path}`);
     notFound();

@@ -4,30 +4,27 @@ import { notFound } from "next/navigation";
 
 import { compact } from "es-toolkit/compat";
 
-import { FernDocs, FernNavigation } from "@fern-api/fdr-sdk";
-import { EMPTY_FRONTMATTER } from "@fern-api/fdr-sdk/docs";
+import { FernNavigation } from "@fern-api/fdr-sdk";
 import { isNonNullish } from "@fern-api/ui-core-utils";
 import { type TableOfContentsItem, makeToc, toTree } from "@fern-docs/mdx";
 
 import { getFernToken } from "@/app/fern-token";
 import { createCachedDocsLoader } from "@/server/docs-loader";
+import { createCachedMdxSerializer } from "@/server/mdx-serializer";
 
 import { FernLink } from "../components/FernLink";
 import { PageHeader } from "../components/PageHeader";
 import { Markdown } from "../mdx/Markdown";
 import { MdxContent } from "../mdx/MdxContent";
-import type { FernSerializeMdxOptions } from "../mdx/types";
 import ChangelogPageClient from "./ChangelogPageClient";
 
 export default async function ChangelogPage({
   domain,
   nodeId,
-  mdxOptions,
   breadcrumb,
 }: {
   domain: string;
   nodeId: FernNavigation.NodeId;
-  mdxOptions: Omit<FernSerializeMdxOptions, "files" | "replaceSrc">;
   breadcrumb: readonly FernNavigation.BreadcrumbItem[];
 }) {
   const loader = await createCachedDocsLoader(domain, await getFernToken());
@@ -75,7 +72,6 @@ export default async function ChangelogPage({
         <ChangelogPageOverview
           domain={domain}
           node={node}
-          mdxOptions={mdxOptions}
           breadcrumb={breadcrumb}
         />
       }
@@ -87,7 +83,6 @@ export default async function ChangelogPage({
               key={entry.pageId}
               node={entry}
               domain={domain}
-              mdxOptions={mdxOptions}
             />,
           ] as const;
         })
@@ -99,33 +94,31 @@ export default async function ChangelogPage({
 async function ChangelogPageOverview({
   domain,
   node,
-  mdxOptions,
   breadcrumb,
 }: {
   domain: string;
   node: FernNavigation.ChangelogNode;
-  mdxOptions: Omit<FernSerializeMdxOptions, "files" | "replaceSrc">;
   breadcrumb: readonly FernNavigation.BreadcrumbItem[];
 }) {
   const loader = await createCachedDocsLoader(domain);
-  const mdx =
+  const page =
     node.overviewPageId != null
-      ? await loader.getSerializedPage(node.overviewPageId, mdxOptions)
+      ? await loader.getPage(node.overviewPageId)
       : undefined;
-
-  const frontmatter: FernDocs.Frontmatter =
-    (typeof mdx !== "string" ? mdx?.frontmatter : undefined) ??
-    EMPTY_FRONTMATTER;
+  const serialize = createCachedMdxSerializer(domain);
+  const mdx = await serialize(page?.markdown, {
+    filename: node.overviewPageId,
+  });
 
   return (
     <>
       <PageHeader
         domain={domain}
-        title={frontmatter.title ?? node.title}
-        subtitle={frontmatter.subtitle ?? frontmatter.excerpt}
+        title={mdx?.frontmatter?.title ?? node.title}
+        subtitle={mdx?.frontmatter?.subtitle ?? mdx?.frontmatter?.excerpt}
         breadcrumb={breadcrumb}
       />
-      <Markdown mdx={mdx} />
+      <Markdown mdx={mdx} fallback={page?.markdown} />
     </>
   );
 }
@@ -133,20 +126,18 @@ async function ChangelogPageOverview({
 async function ChangelogPageEntry({
   domain,
   node,
-  mdxOptions,
 }: {
   domain: string;
   node: FernNavigation.ChangelogEntryNode;
-  mdxOptions: Omit<FernSerializeMdxOptions, "files" | "replaceSrc">;
 }) {
   const loader = await createCachedDocsLoader(domain);
-  const mdx = await loader.getSerializedPage(node.pageId, mdxOptions);
+  const page = await loader.getPage(node.pageId);
+  const serialize = createCachedMdxSerializer(domain);
+  const mdx = await serialize(page.markdown, {
+    filename: node.pageId,
+  });
 
-  const frontmatter: FernDocs.Frontmatter =
-    (typeof mdx !== "string" ? mdx?.frontmatter : undefined) ??
-    EMPTY_FRONTMATTER;
-
-  const title = await loader.serializeMdx(frontmatter.title);
+  const title = await serialize(mdx?.frontmatter?.title);
 
   return (
     <Markdown

@@ -5,16 +5,28 @@ import urlJoin from "url-join";
 
 import { withDefaultProtocol } from "@fern-api/ui-core-utils";
 import { getSeoDisabled } from "@fern-docs/edge-config";
-
-import { getDocsDomainApp, getHostApp } from "@/server/xfernhost/app";
+import { HEADER_HOST, HEADER_X_FERN_HOST } from "@fern-docs/utils";
 
 export const runtime = "edge";
 
 export default async function robots(): Promise<MetadataRoute.Robots> {
-  const domain = await getDocsDomainApp();
-  const host = (await getHostApp()) ?? domain;
-  const basepath = (await headers()).get("x-fern-basepath") ?? "";
-  const sitemap = urlJoin(withDefaultProtocol(host), basepath, "/sitemap.xml");
+  const headersList = await headers();
+  const domain =
+    headersList.get(HEADER_X_FERN_HOST) ?? headersList.get(HEADER_HOST);
+  if (!domain) {
+    return {
+      rules: {
+        userAgent: "*",
+        disallow: "/",
+      },
+    };
+  }
+  const basepath = headersList.get("x-fern-basepath") ?? "";
+  const sitemap = urlJoin(
+    withDefaultProtocol(domain),
+    basepath,
+    "/sitemap.xml"
+  );
 
   if (await getSeoDisabled(domain)) {
     return {
@@ -23,7 +35,7 @@ export default async function robots(): Promise<MetadataRoute.Robots> {
         disallow: "/",
       },
       sitemap,
-      host,
+      host: domain,
     };
   }
 
@@ -33,6 +45,6 @@ export default async function robots(): Promise<MetadataRoute.Robots> {
       allow: "/",
     },
     sitemap,
-    host,
+    host: domain,
   };
 }

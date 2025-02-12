@@ -4,8 +4,6 @@ import { type ReactNode, memo } from "react";
 
 import clsx from "clsx";
 
-import { ResolvedMdx } from "@fern-api/fdr-sdk/docs";
-
 import { MdxContent } from "./MdxContent";
 
 export declare namespace Markdown {
@@ -13,7 +11,7 @@ export declare namespace Markdown {
     title?: ReactNode;
 
     // mdx: string | FernDocs.ResolvedMdx | string | FernDocs.ResolvedMdx[] | undefined;
-    mdx: string | ResolvedMdx | (string | ResolvedMdx)[] | undefined;
+    mdx: string | { code: string } | (string | { code: string })[] | undefined;
     className?: string;
     size?: "xs" | "sm" | "lg";
 

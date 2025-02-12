@@ -7,7 +7,13 @@ export declare namespace DocsContent {
   export interface Neighbor {
     slug: FernNavigation.Slug;
     title: string;
-    excerpt: string | FernDocs.ResolvedMdx | undefined;
+    excerpt:
+      | string
+      | {
+          code: string;
+          frontmatter?: Partial<FernDocs.Frontmatter>;
+        }
+      | undefined;
   }
 
   export interface Neighbors {
@@ -29,7 +35,7 @@ export declare namespace DocsContent {
   interface ChangelogEntryPage
     extends Omit<FernNavigation.ChangelogEntryNode, "type"> {
     type: "changelog-entry";
-    page: string | FernDocs.ResolvedMdx;
+    page: string | { code: string };
     breadcrumb: readonly FernNavigation.BreadcrumbItem[];
     neighbors: Neighbors;
     changelogTitle: string;

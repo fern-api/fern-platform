@@ -8,8 +8,7 @@ import { ThemedDocs } from "@/components/themes/ThemedDocs";
 import { createCachedDocsLoader } from "@/server/docs-loader";
 import { createFileResolver } from "@/server/file-resolver";
 import { withLogo } from "@/server/withLogo";
-
-import { RootNodeProvider } from "../../../../../state/navigation";
+import { RootNodeProvider } from "@/state/navigation";
 
 export default async function DocsLayout({
   children,

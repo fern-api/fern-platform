@@ -81,7 +81,7 @@
     "@upstash/qstash": "^2.7.16",
     "autoprefixer": "^10.4.16",
     "cssnano": "^6.0.3",
-    "next": "15.2.0-canary.50",
+    "next": "15.2.0-canary.55",
     "postcss": "^8.4.33",
     "react": "19.0.0",
     "react-dom": "19.0.0",
@@ -92,7 +92,7 @@
     "typescript": "^5"
   },
   "peerDependencies": {
-    "next": "15.2.0-canary.50",
+    "next": "15.2.0-canary.55",
     "react": "19.0.0",
     "react-dom": "19.0.0"
   }

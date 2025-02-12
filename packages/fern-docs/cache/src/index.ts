@@ -1,3 +1,1 @@
-export * from "./ApiDefinitionLoader";
-export * from "./DocsLoader";
-export * from "./MarkdownLoader";
+export * from "./DocsMetadataLoader";

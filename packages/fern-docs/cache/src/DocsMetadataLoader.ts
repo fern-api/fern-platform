@@ -7,9 +7,9 @@ export interface DocsMetadata {
   isPreviewUrl: boolean;
 }
 
-export class DocsLoader {
-  public static create(domain: string): DocsLoader {
-    return new DocsLoader(domain);
+export class DocsMetadataLoader {
+  public static create(domain: string): DocsMetadataLoader {
+    return new DocsMetadataLoader(domain);
   }
 
   private environment: string | undefined;

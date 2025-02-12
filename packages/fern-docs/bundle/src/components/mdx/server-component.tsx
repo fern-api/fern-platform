@@ -1,14 +1,16 @@
+import { createCachedMdxSerializer } from "@/server/mdx-serializer";
+
 import { MdxContent } from "./MdxContent";
-import { serializeMdx } from "./bundler/serialize";
 
 export async function MdxServerComponent({
-  // domain,
+  domain,
   mdx,
 }: {
   domain: string;
   mdx: string;
 }) {
-  const parsed_mdx = await serializeMdx(mdx);
+  const serialize = createCachedMdxSerializer(domain);
+  const parsed_mdx = await serialize(mdx);
 
   return <MdxContent mdx={parsed_mdx} fallback={mdx} />;
 }

@@ -4,7 +4,7 @@ import React from "react";
 
 import type { FernNavigation } from "@fern-api/fdr-sdk";
 
-import { createCachedDocsLoader } from "@/server/docs-loader";
+import { createCachedMdxSerializer } from "@/server/mdx-serializer";
 
 import { MdxContent } from "../mdx/MdxContent";
 import { FernBreadcrumbs } from "./FernBreadcrumbs";
@@ -24,11 +24,11 @@ export const PageHeader = async ({
   tags?: React.ReactNode;
   children?: React.ReactNode;
 }) => {
-  const loader = await createCachedDocsLoader(domain);
+  const serialize = createCachedMdxSerializer(domain);
 
   const [title, subtitle] = await Promise.all([
-    loader.serializeMdx(titleProp, { stripParagraph: true }),
-    loader.serializeMdx(subtitleProp),
+    serialize(titleProp),
+    serialize(subtitleProp),
   ]);
 
   return (
