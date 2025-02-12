@@ -88,27 +88,41 @@ export function MessageTableClient({
   return (
     <div className="space-y-4">
       <div className="w-full overflow-x-auto">
-        <TextField.Root
-          placeholder="Type here for text filter"
-          value={filter}
-          onChange={(e) => setFilter(e.target.value)}
-        />
+        <Card>
+          <TextField.Root
+            placeholder="Type here for text filter"
+            value={filter}
+            onChange={(e) => setFilter(e.target.value)}
+            style={{
+              display: "inline-block",
+              width: "400px",
+              marginRight: "10px",
+            }}
+          />
 
-        <Button onClick={() => exportToCSV(filteredData)}>Export to CSV</Button>
+          <Button variant="outline" onClick={() => exportToCSV(filteredData)}>
+            Export to CSV
+          </Button>
 
-        <Select.Root defaultValue="show-all-domains" onValueChange={setDomain}>
-          <Select.Trigger />
-          <Select.Content>
-            <Select.Item value="show-all-domains">Show all domains</Select.Item>
-            <Select.Item value="elevenlabs.io">
-              elevenlabs.io ({countByDomain["elevenlabs.io"]} conversations)
-            </Select.Item>
-            <Select.Item value="buildwithfern.com">
-              Buildwithfern.com ({countByDomain["buildwithfern.com"]}{" "}
-              conversations)
-            </Select.Item>
-          </Select.Content>
-        </Select.Root>
+          <Select.Root
+            defaultValue="show-all-domains"
+            onValueChange={setDomain}
+          >
+            <Select.Trigger />
+            <Select.Content>
+              <Select.Item value="show-all-domains">
+                Show all domains
+              </Select.Item>
+              <Select.Item value="elevenlabs.io">
+                elevenlabs.io ({countByDomain["elevenlabs.io"]} conversations)
+              </Select.Item>
+              <Select.Item value="buildwithfern.com">
+                Buildwithfern.com ({countByDomain["buildwithfern.com"]}{" "}
+                conversations)
+              </Select.Item>
+            </Select.Content>
+          </Select.Root>
+        </Card>
 
         <Table.Root variant="surface">
           <Table.Header>

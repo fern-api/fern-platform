@@ -179,6 +179,9 @@ export default async function Home({
           <h1 className="text-2xl font-bold">
             Showing conversations since {thresholdDate.toLocaleDateString()}
           </h1>
+          <p>
+            To modify the date range, add <code>?daysBack=X</code> to the URL.
+          </p>
         </div>
         <MessageTableClient initialData={processedData} />
       </div>
