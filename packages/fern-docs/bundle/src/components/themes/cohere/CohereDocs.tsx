@@ -13,7 +13,7 @@ import {
   CONTENT_HEIGHT_ATOM,
   SCROLL_BODY_ATOM,
   SHOW_HEADER_ATOM,
-  SIDEBAR_DISMISSABLE_ATOM,
+  // SIDEBAR_DISMISSABLE_ATOM,
 } from "@/components/atoms";
 
 import { HeaderContainer } from "./HeaderContainer";
@@ -59,7 +59,7 @@ export default function CohereDocs({
 }) {
   const showHeader = useAtomValue(SHOW_HEADER_ATOM);
 
-  const showDismissableSidebar = useAtomValue(SIDEBAR_DISMISSABLE_ATOM);
+  const showDismissableSidebar = false;
 
   const mainRef = useRef<HTMLDivElement>(null);
 
