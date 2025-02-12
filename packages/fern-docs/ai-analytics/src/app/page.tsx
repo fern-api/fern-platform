@@ -115,7 +115,7 @@ async function fetchChatLogs(
 export default async function Home({
   searchParams,
 }: {
-  searchParams: { [key: string]: string | undefined };
+  searchParams: Promise<{ [key: string]: string | undefined }>;
 }) {
   const params = await searchParams;
   const daysBack = params.daysBack ? parseInt(params.daysBack) : 1;
@@ -179,9 +179,9 @@ export default async function Home({
           <h1 className="text-2xl font-bold">
             Showing conversations since {thresholdDate.toLocaleDateString()}
           </h1>
-          <p>
+          <h6>
             To modify the date range, add <code>?daysBack=X</code> to the URL.
-          </p>
+          </h6>
         </div>
         <MessageTableClient initialData={processedData} />
       </div>

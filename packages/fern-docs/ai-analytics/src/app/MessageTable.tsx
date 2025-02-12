@@ -156,7 +156,7 @@ export function MessageTableClient({
                 </Table.Cell>
                 <Table.Cell className="border border-gray-200 p-4">
                   {expandedRows[index] ? (
-                    <Card className="space-y-4">
+                    <div style={{ padding: "10px" }}>
                       {item.content.map((message, msgIndex) => (
                         <Card
                           key={msgIndex}
@@ -168,15 +168,13 @@ export function MessageTableClient({
                                 : "bg-gray-50"
                           }`}
                         >
-                          <Card className="mb-1 text-sm font-medium text-gray-700">
-                            {message.role}
-                          </Card>
-                          <Card className="whitespace-pre-wrap text-sm">
+                          <h6>{message.role}</h6>
+                          <div className="whitespace-pre-wrap text-sm">
                             {message.content}
-                          </Card>
+                          </div>
                         </Card>
                       ))}
-                    </Card>
+                    </div>
                   ) : (
                     <div
                       className={`whitespace-pre-wrap rounded-lg bg-green-50 p-3 text-sm`}
