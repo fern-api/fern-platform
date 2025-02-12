@@ -14,6 +14,7 @@ export interface WebhookDefinition
     method: FernRegistry.api.latest.WebhookHttpMethod;
     path: string[];
     headers: FernRegistry.api.latest.ObjectProperty[] | undefined;
+    queryParameters: FernRegistry.api.latest.ObjectProperty[] | undefined;
     payloads: FernRegistry.api.latest.WebhookPayload[] | undefined;
     examples: FernRegistry.api.v1.read.ExampleWebhookPayload[] | undefined;
 }

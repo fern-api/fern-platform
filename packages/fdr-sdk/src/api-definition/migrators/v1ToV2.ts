@@ -247,6 +247,7 @@ export class ApiDefinitionV1ToLatest {
       availability: undefined,
       method: v1.method,
       path: v1.path,
+      queryParameters: undefined,
       headers: this.migrateParameters(v1.headers),
       payloads: [payload],
       examples: v1.examples.map((example) => ({

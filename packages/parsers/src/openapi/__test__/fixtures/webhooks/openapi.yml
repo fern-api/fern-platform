@@ -4,6 +4,13 @@ info:
   version: 1.0.0
 webhooks:
   /pet:
+    get:
+      operationId: GetPet
+      parameters:
+        - name: id
+          in: query
+          schema:
+            type: integer
     post:
       operationId: CreatePet
       requestBody:
