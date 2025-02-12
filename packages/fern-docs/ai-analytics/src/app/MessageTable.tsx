@@ -22,10 +22,24 @@ export function MessageTableClient({
 }) {
   const [currentPage, setCurrentPage] = useState(1);
   const [expandedRows, setExpandedRows] = useState<Record<number, boolean>>({});
+  const [filter, setFilter] = useState("");
 
-  const totalPages = Math.ceil(initialData.length / ITEMS_PER_PAGE);
+  const filteredData = initialData.filter((item) => {
+    let found = false;
+    item.content.forEach((message) => {
+      if (
+        message.content &&
+        message.content.toLowerCase().includes(filter.toLowerCase())
+      ) {
+        found = true;
+      }
+    });
+    return found;
+  });
+
+  const totalPages = Math.ceil(filteredData.length / ITEMS_PER_PAGE);
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-  const paginatedData = initialData.slice(
+  const paginatedData = filteredData.slice(
     startIndex,
     startIndex + ITEMS_PER_PAGE
   );
@@ -40,6 +54,13 @@ export function MessageTableClient({
   return (
     <div className="space-y-4">
       <div className="w-full overflow-x-auto">
+        <input
+          type="text"
+          placeholder="Filter"
+          value={filter}
+          onChange={(e) => setFilter(e.target.value)}
+        />
+
         <table className="w-full border-collapse">
           <thead>
             <tr className="bg-gray-100">
