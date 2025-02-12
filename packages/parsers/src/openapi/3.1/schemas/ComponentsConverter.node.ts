@@ -6,14 +6,33 @@ import {
   BaseOpenApiV3_1ConverterNode,
   BaseOpenApiV3_1ConverterNodeConstructorArgs,
 } from "../../BaseOpenApiV3_1Converter.node";
+import { resolveSecurityScheme } from "../../utils/3.1/resolveSecurityScheme";
 import { maybeSingleValueToArray } from "../../utils/maybeSingleValueToArray";
+import { SecuritySchemeConverterNode } from "../auth/SecuritySchemeConverter.node";
+import { isReferenceObject } from "../guards/isReferenceObject";
 import { SchemaConverterNode } from "./SchemaConverter.node";
+
+export function hasOpenApiLikeSecurityScheme(
+  input: OpenAPIV3_1.ComponentsObject | Components
+): input is OpenAPIV3_1.ComponentsObject {
+  return (
+    typeof input.securitySchemes === "object" && input.securitySchemes != null
+  );
+}
+
+declare namespace ComponentsConverterNode {
+  interface Output {
+    types: FernRegistry.api.latest.ApiDefinition["types"];
+    auths: FernRegistry.api.latest.ApiDefinition["auths"];
+  }
+}
 
 export class ComponentsConverterNode extends BaseOpenApiV3_1ConverterNode<
   OpenAPIV3_1.ComponentsObject | Components,
-  FernRegistry.api.latest.ApiDefinition["types"]
+  ComponentsConverterNode.Output
 > {
   typeSchemas: Record<string, SchemaConverterNode> | undefined;
+  securitySchemes: Record<string, SecuritySchemeConverterNode> | undefined;
 
   constructor(
     args: BaseOpenApiV3_1ConverterNodeConstructorArgs<
@@ -41,34 +60,79 @@ export class ComponentsConverterNode extends BaseOpenApiV3_1ConverterNode<
         })
       );
     }
+    if (
+      hasOpenApiLikeSecurityScheme(this.input) &&
+      this.input.securitySchemes != null
+    ) {
+      this.securitySchemes = Object.fromEntries(
+        Object.entries(this.input.securitySchemes ?? {})
+          .map(([key, securityScheme], index) => {
+            let resolvedScheme: OpenAPIV3_1.SecuritySchemeObject | undefined;
+            if (isReferenceObject(securityScheme)) {
+              resolvedScheme = resolveSecurityScheme(
+                securityScheme.$ref,
+                this.context.document
+              );
+            } else {
+              resolvedScheme = securityScheme;
+            }
+            if (resolvedScheme == null) {
+              return undefined;
+            }
+            return [
+              key,
+              new SecuritySchemeConverterNode({
+                input: resolvedScheme,
+                context: this.context,
+                accessPath: this.accessPath,
+                pathId: ["securitySchemes", `${index}`],
+              }),
+            ];
+          })
+          .filter(isNonNullish)
+      );
+    }
   }
 
-  convert(): FernRegistry.api.latest.ApiDefinition["types"] | undefined {
+  convert(): ComponentsConverterNode.Output | undefined {
     if (this.typeSchemas == null) {
       return undefined;
     }
 
-    return Object.fromEntries(
-      Object.entries(this.typeSchemas)
-        .map(([key, value]) => {
-          const name = value.name ?? key;
-          const maybeShapes = maybeSingleValueToArray(value.convert());
+    return {
+      auths: Object.fromEntries(
+        Object.entries(this.securitySchemes ?? {})
+          .map(([key, value]) => {
+            const maybeAuth = value.convert();
+            if (maybeAuth == null) {
+              return undefined;
+            }
+            return [FernRegistry.api.latest.AuthSchemeId(key), maybeAuth];
+          })
+          .filter(isNonNullish)
+      ),
+      types: Object.fromEntries(
+        Object.entries(this.typeSchemas)
+          .map(([key, value]) => {
+            const name = value.name ?? key;
+            const maybeShapes = maybeSingleValueToArray(value.convert());
 
-          if (maybeShapes == null) {
-            return [key, undefined];
-          }
+            if (maybeShapes == null) {
+              return [key, undefined];
+            }
 
-          return [
-            FernRegistry.TypeId(key),
-            {
-              name,
-              shape: maybeShapes[0],
-              description: value.description,
-              availability: undefined,
-            },
-          ];
-        })
-        .filter(([_, value]) => isNonNullish(value))
-    );
+            return [
+              FernRegistry.TypeId(key),
+              {
+                name,
+                shape: maybeShapes[0],
+                description: value.description,
+                availability: undefined,
+              },
+            ];
+          })
+          .filter(([_, value]) => isNonNullish(value))
+      ),
+    };
   }
 }

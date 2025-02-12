@@ -72,10 +72,10 @@ describe("ComponentsConverterNode", () => {
       accessPath: [],
       pathId: "test",
     });
-    const result = converter.convert() ?? {};
+    const { types } = converter.convert() ?? {};
 
-    expect(result).toBeDefined();
-    const firstKey = FernRegistry.TypeId(Object.keys(result)[0] ?? "");
-    expect(result[firstKey]?.name).toBe("User");
+    expect(types).toBeDefined();
+    const firstKey = FernRegistry.TypeId(Object.keys(types)[0] ?? "");
+    expect(types[firstKey]?.name).toBe("User");
   });
 });

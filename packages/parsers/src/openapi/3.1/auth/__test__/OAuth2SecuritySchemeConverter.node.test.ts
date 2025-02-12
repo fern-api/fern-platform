@@ -61,7 +61,10 @@ describe("OAuth2SecuritySchemeConverterNode", () => {
       pathId: "test",
     });
 
-    expect(node.convert()).toBeUndefined();
+    expect(node.convert()).toEqual({
+      type: "bearerAuth",
+      tokenName: undefined,
+    });
     expect(mockContext.errors.error).toHaveBeenCalledWith({
       message: "Expected 'tokenUrl' property to be specified",
       path: ["test"],
@@ -86,7 +89,10 @@ describe("OAuth2SecuritySchemeConverterNode", () => {
       pathId: "test",
     });
 
-    expect(node.convert()).toBeUndefined();
+    expect(node.convert()).toEqual({
+      type: "bearerAuth",
+      tokenName: undefined,
+    });
   });
 
   it("should handle missing client credentials flow", () => {
@@ -102,6 +108,9 @@ describe("OAuth2SecuritySchemeConverterNode", () => {
       pathId: "test",
     });
 
-    expect(node.convert()).toBeUndefined();
+    expect(node.convert()).toEqual({
+      type: "bearerAuth",
+      tokenName: undefined,
+    });
   });
 });

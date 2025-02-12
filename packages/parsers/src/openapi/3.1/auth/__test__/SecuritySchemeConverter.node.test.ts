@@ -125,6 +125,26 @@ describe("SecuritySchemeConverterNode", () => {
         tokenName: "TOKEN_VAR",
       });
     });
+
+    it("should parse bearer auth with no extension", () => {
+      const input = {
+        type: "http",
+        scheme: "bearer",
+      } as OpenAPIV3_1.HttpSecurityScheme;
+
+      const node = new SecuritySchemeConverterNode({
+        input,
+        context: mockContext,
+        accessPath: [],
+        pathId: "test",
+      });
+
+      const converted = node.convert();
+      expect(converted).toEqual({
+        type: "bearerAuth",
+        tokenName: undefined,
+      });
+    });
   });
 
   describe("header auth", () => {
