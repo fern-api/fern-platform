@@ -94,8 +94,16 @@ async function serializeMdxImpl(
     ? getFrontmatter(content).data
     : { ...EMPTY_FRONTMATTER };
 
+  process.env.ESBUILD_BINARY_PATH = path.join(
+    process.cwd(),
+    "node_modules",
+    "esbuild",
+    "bin",
+    "esbuild"
+  );
+
   const bundled = await bundleMDX({
-    source: content + "\n\n",
+    source: content,
     files: mapKeys(files ?? {}, (_file, filename) => {
       if (cwd != null) {
         return path.relative(cwd, filename);

@@ -2,7 +2,6 @@ import { NextConfig } from "next";
 import { PHASE_DEVELOPMENT_SERVER } from "next/constants";
 
 import NextBundleAnalyzer from "@next/bundle-analyzer";
-import path from "node:path";
 import process from "node:process";
 
 const cdnUri =
@@ -75,16 +74,6 @@ const nextConfig: NextConfig = {
     parallelServerCompiles: true,
     parallelServerBuildTraces: true,
     webpackMemoryOptimizations: true,
-  },
-
-  env: {
-    ESBUILD_BINARY_PATH: path.join(
-      process.cwd(),
-      "node_modules",
-      "esbuild",
-      "bin",
-      "esbuild"
-    ),
   },
 
   skipMiddlewareUrlNormalize: true,
