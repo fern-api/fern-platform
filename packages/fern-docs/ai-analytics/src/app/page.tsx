@@ -23,31 +23,31 @@ interface ChatLog {
   [key: string]: any;
 }
 
-async function fetchCountsByDomainAfterThreshold(thresholdDate: Date) {
-  const url = "https://api.braintrust.dev/btql";
-  const headers = {
-    Authorization: `Bearer ${process.env.BRAINTRUST_API_KEY}`,
-    "Content-Type": "application/json",
-  };
+// async function fetchCountsByDomainAfterThreshold(thresholdDate: Date) {
+//   const url = "https://api.braintrust.dev/btql";
+//   const headers = {
+//     Authorization: `Bearer ${process.env.BRAINTRUST_API_KEY}`,
+//     "Content-Type": "application/json",
+//   };
 
-  const domains = ["elevenlabs.io", "buildwithfern.com"];
-  const counts: { [key: string]: number } = {};
-  for (const domain of domains) {
-    const body = {
-      query: `measures: count(1) as count | from: project_logs('${BRAINTRUST_PROJECT_ID}') | 
-        filter: created > '${thresholdDate.toISOString()}' and input LIKE '%${domain}%'
-        `,
-    };
-    const response = await fetch(url, {
-      method: "POST",
-      headers: headers,
-      body: JSON.stringify(body),
-    });
-    const jsonData = await response.json();
-    counts[domain] = jsonData.data[0].count;
-  }
-  return counts;
-}
+//   const domains = ["elevenlabs.io", "buildwithfern.com"];
+//   const counts: { [key: string]: number } = {};
+//   for (const domain of domains) {
+//     const body = {
+//       query: `measures: count(1) as count | from: project_logs('${BRAINTRUST_PROJECT_ID}') |
+//         filter: created > '${thresholdDate.toISOString()}' and input LIKE '%${domain}%'
+//         `,
+//     };
+//     const response = await fetch(url, {
+//       method: "POST",
+//       headers: headers,
+//       body: JSON.stringify(body),
+//     });
+//     const jsonData = await response.json();
+//     counts[domain] = jsonData.data[0].count;
+//   }
+//   return counts;
+// }
 
 async function fetchChatLogs(
   projectId: string,
