@@ -42,7 +42,7 @@
     "@types/node": "^18.7.18",
     "depcheck": "^1.4.7",
     "eslint": "^9",
-    "next": "15.2.0-canary.52",
+    "next": "15.1.7",
     "prettier": "^3.4.2",
     "stylelint": "^16.1.0",
     "typescript": "^5",

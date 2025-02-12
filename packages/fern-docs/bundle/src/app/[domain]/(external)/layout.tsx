@@ -1,4 +1,3 @@
-import { unstable_cacheLife, unstable_cacheTag } from "next/cache";
 import { Metadata, Viewport } from "next/types";
 import React from "react";
 
@@ -37,12 +36,7 @@ export default async function Layout(props: {
   children: React.ReactNode;
   params: Promise<{ domain: string }>;
 }) {
-  "use cache";
-
   const params = await props.params;
-
-  unstable_cacheTag(params.domain);
-  unstable_cacheLife("days");
 
   const { children } = props;
 
@@ -159,12 +153,7 @@ async function getLaunchDarklyInfo(
 export async function generateViewport(props: {
   params: Promise<{ domain: string }>;
 }): Promise<Viewport> {
-  "use cache";
-
   const { domain } = await props.params;
-
-  unstable_cacheTag(domain);
-  unstable_cacheLife("max");
 
   const loader = await createCachedDocsLoader(domain);
   const colors = await loader.getColors();
@@ -194,12 +183,7 @@ function maybeToHex(color: RgbaColor | undefined): string | undefined {
 export async function generateMetadata(props: {
   params: Promise<{ domain: string }>;
 }): Promise<Metadata> {
-  "use cache";
-
   const { domain } = await props.params;
-
-  unstable_cacheTag(domain);
-  unstable_cacheLife("max");
 
   const loader = await createCachedDocsLoader(domain);
   const [files, config, seoDisabled] = await Promise.all([

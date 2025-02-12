@@ -1,5 +1,3 @@
-import { unstable_cacheLife, unstable_cacheTag } from "next/cache";
-
 import {
   ApiDefinition,
   createEndpointContext,
@@ -26,11 +24,6 @@ export default async function ApiEndpointPage({
   breadcrumb: readonly FernNavigation.BreadcrumbItem[];
   rootslug: FernNavigation.Slug;
 }) {
-  "use cache";
-
-  unstable_cacheTag(domain);
-  unstable_cacheLife("days");
-
   const loader = await createCachedDocsLoader(domain);
   const apiDefinition = await loader.getApi(node.apiDefinitionId);
 

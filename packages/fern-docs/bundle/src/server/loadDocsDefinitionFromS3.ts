@@ -1,7 +1,5 @@
 import "server-only";
 
-import { unstable_cacheLife, unstable_cacheTag } from "next/cache";
-
 import { GetObjectCommand, S3Client } from "@aws-sdk/client-s3";
 import { getSignedUrl as getUncachedSignedUrl } from "@aws-sdk/s3-request-presigner";
 
@@ -20,11 +18,6 @@ const getSignedUrl = async (
     expiresIn: number;
   }
 ) => {
-  "use cache";
-
-  unstable_cacheTag(domain);
-  unstable_cacheLife("minutes");
-
   const accessKeyId = process.env.AWS_ACCESS_KEY_ID;
   const secretAccessKey = process.env.AWS_SECRET_ACCESS_KEY;
 

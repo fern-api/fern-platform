@@ -1,5 +1,3 @@
-import { unstable_cacheLife, unstable_cacheTag } from "next/cache";
-
 import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 import { EMPTY_FRONTMATTER } from "@fern-api/fdr-sdk/docs";
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
@@ -25,18 +23,8 @@ export async function LayoutEvaluator({
   breadcrumb,
   hasAside,
 }: LayoutEvaluatorProps) {
-  "use cache";
-
-  unstable_cacheTag(domain);
-
   const loader = await createCachedDocsLoader(domain);
   const mdx = await loader.getSerializedPage(pageId);
-
-  if (typeof mdx === "string") {
-    unstable_cacheLife("seconds");
-  } else {
-    unstable_cacheLife("days");
-  }
 
   const exports = getMDXExport(mdx);
   const toc = asToc(exports?.toc);

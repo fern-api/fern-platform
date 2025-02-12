@@ -13,15 +13,13 @@ import { safeVerifyFernJWTConfig } from "@/server/auth/FernJWT";
 import { getOrgMetadataForDomain } from "@/server/auth/metadata-for-url";
 import { algoliaAppId, algoliaSearchApikey } from "@/server/env-variables";
 import { selectFirst } from "@/server/utils/selectFirst";
+import { getDocsDomainEdge } from "@/server/xfernhost/edge";
 
 export const runtime = "edge";
 export const maxDuration = 10;
 
-export async function GET(
-  req: NextRequest,
-  { params }: { params: Promise<{ domain: string }> }
-): Promise<NextResponse> {
-  const { domain } = await params;
+export async function GET(req: NextRequest): Promise<NextResponse> {
+  const domain = getDocsDomainEdge(req);
 
   const orgMetadata = await getOrgMetadataForDomain(withoutStaging(domain));
   if (orgMetadata == null) {

@@ -1,6 +1,6 @@
 import "server-only";
 
-import { unstable_cacheLife, unstable_cacheTag } from "next/cache";
+import { unstable_cache } from "next/cache";
 import { notFound } from "next/navigation";
 import { cache } from "react";
 
@@ -123,22 +123,13 @@ export interface DocsLoader {
 }
 
 const cachedGetEdgeFlags = cache(async (domain: string) => {
-  "use cache";
-
-  unstable_cacheTag(domain);
-
   return await getEdgeFlags(domain);
 });
 
 const getBaseUrl = cache(
   async (domain: string): Promise<DocsV2Read.BaseUrl> => {
-    "use cache";
-
-    unstable_cacheTag(domain);
-
     const response = await loadWithUrl(domain);
     if (!response.ok) {
-      unstable_cacheLife("seconds");
       return { domain, basePath: undefined };
     }
     return response.body.baseUrl;
@@ -147,13 +138,8 @@ const getBaseUrl = cache(
 
 const getFiles = cache(
   async (domain: string): Promise<Record<string, FileData>> => {
-    "use cache";
-
-    unstable_cacheTag(domain);
-
     const response = await loadWithUrl(domain);
     if (!response.ok) {
-      unstable_cacheLife("seconds");
       return {};
     }
     return mapValues(response.body.definition.filesV2, (file) => {
@@ -177,13 +163,8 @@ const getFiles = cache(
 
 const getApi = cache(
   async (domain: string, id: string): Promise<ApiDefinition.ApiDefinition> => {
-    "use cache";
-
-    unstable_cacheTag(domain);
-
     const response = await loadWithUrl(domain);
     if (!response.ok) {
-      unstable_cacheLife("seconds");
       notFound();
     }
     const latest = response.body.definition.apisV2[ApiDefinitionId(id)];
@@ -192,7 +173,6 @@ const getApi = cache(
     }
     const v1 = response.body.definition.apis[ApiDefinitionId(id)];
     if (v1 == null) {
-      unstable_cacheLife("seconds");
       notFound();
     }
     const flags = await cachedGetEdgeFlags(domain);
@@ -201,19 +181,13 @@ const getApi = cache(
 );
 
 const unsafe_getFullRoot = cache(async (domain: string) => {
-  "use cache";
-
-  unstable_cacheTag(domain);
-
   const response = await loadWithUrl(domain);
   if (!response.ok) {
-    unstable_cacheLife("seconds");
     notFound();
   }
   const v1 = response.body.definition.config.root;
 
   if (!v1) {
-    unstable_cacheLife("max");
     notFound();
   }
 
@@ -233,17 +207,19 @@ const unsafe_getFullRoot = cache(async (domain: string) => {
   return root;
 });
 
+const unsafe_getRootCached = async (domain: string) => {
+  return await unstable_cache(unsafe_getFullRoot, ["unsafe_getRoot"], {
+    tags: [domain],
+  })(domain);
+};
+
 const getRoot = cache(
   async (
     domain: string,
     authState: AuthState,
     authConfig: AuthEdgeConfig | undefined
   ) => {
-    "use cache";
-
-    unstable_cacheTag(domain);
-
-    let root = await unsafe_getFullRoot(domain);
+    let root = await unsafe_getRootCached(domain);
 
     if (authConfig) {
       root = pruneWithAuthState(authState, authConfig, root);
@@ -255,6 +231,16 @@ const getRoot = cache(
   }
 );
 
+const getRootCached = async (
+  domain: string,
+  authState: AuthState,
+  authConfig: AuthEdgeConfig | undefined
+) => {
+  return await unstable_cache(getRoot, [], {
+    tags: [!authState.authed ? domain : `${domain}_authed`],
+  })(domain, authState, authConfig);
+};
+
 const getNavigationNode = cache(
   async (
     domain: string,
@@ -262,15 +248,10 @@ const getNavigationNode = cache(
     authState: AuthState,
     authConfig: AuthEdgeConfig | undefined
   ) => {
-    "use cache";
-
-    unstable_cacheTag(domain);
-
     const root = await getRoot(domain, authState, authConfig);
     const collector = FernNavigation.NodeCollector.collect(root);
     const node = collector.get(FernNavigation.NodeId(id));
     if (node == null) {
-      unstable_cacheLife("seconds");
       notFound();
     }
     return node;
@@ -278,13 +259,8 @@ const getNavigationNode = cache(
 );
 
 const getConfig = cache(async (domain: string) => {
-  "use cache";
-
-  unstable_cacheTag(domain);
-
   const response = await loadWithUrl(domain);
   if (!response.ok) {
-    unstable_cacheLife("seconds");
     notFound();
   }
   const { navigation, root, ...config } = response.body.definition.config;
@@ -292,13 +268,8 @@ const getConfig = cache(async (domain: string) => {
 });
 
 const getPage = cache(async (domain: string, pageId: string) => {
-  "use cache";
-
-  unstable_cacheTag(domain);
-
   const response = await loadWithUrl(domain);
   if (!response.ok) {
-    unstable_cacheLife("seconds");
     notFound();
   }
   const page = response.body.definition.pages[pageId as PageId];
@@ -314,10 +285,6 @@ const serializeMdx = cache(
     content: string | undefined,
     options?: Omit<FernSerializeMdxOptions, "files" | "replaceSrc">
   ) => {
-    "use cache";
-
-    unstable_cacheTag(domain);
-
     if (content == null) {
       return undefined;
     }
@@ -334,7 +301,6 @@ const serializeMdx = cache(
 
     if (mdx == null) {
       // if we're returning the fallback string, this means validation failed
-      unstable_cacheLife("seconds");
     }
 
     return mdx ?? content;
@@ -347,10 +313,6 @@ const getSerializedPage = cache(
     pageId: string,
     options?: Omit<FernSerializeMdxOptions, "files" | "replaceSrc">
   ) => {
-    "use cache";
-
-    unstable_cacheTag(domain);
-
     const [page, files, mdxBundlerFiles] = await Promise.all([
       getPage(domain, pageId),
       getFiles(domain),
@@ -358,7 +320,6 @@ const getSerializedPage = cache(
     ]);
     if (!page) {
       console.error(`[${domain}] Could not find page: ${pageId}`);
-      unstable_cacheLife("seconds");
       notFound();
     }
     const mdx = await uncachedSerializeMdx(page.markdown, {
@@ -370,7 +331,6 @@ const getSerializedPage = cache(
 
     if (mdx == null) {
       // if we're returning the fallback string, this means validation failed
-      unstable_cacheLife("seconds");
     }
 
     return mdx ?? page.markdown;
@@ -378,10 +338,6 @@ const getSerializedPage = cache(
 );
 
 const getMdxBundlerFiles = cache(async (domain: string) => {
-  "use cache";
-
-  unstable_cacheTag(domain);
-
   const response = await loadWithUrl(domain);
   if (!response.ok) {
     return {};
@@ -390,10 +346,6 @@ const getMdxBundlerFiles = cache(async (domain: string) => {
 });
 
 const getColors = cache(async (domain: string) => {
-  "use cache";
-
-  unstable_cacheTag(domain);
-
   const [config, files] = await Promise.all([
     getConfig(domain),
     getFiles(domain),
@@ -453,13 +405,8 @@ const getColors = cache(async (domain: string) => {
 });
 
 const getLayout = cache(async (domain: string) => {
-  "use cache";
-
-  unstable_cacheTag(domain);
-
   const config = await getConfig(domain);
   if (!config) {
-    unstable_cacheLife("seconds");
     notFound();
   }
 
@@ -512,22 +459,48 @@ export const createCachedDocsLoader = async (
     domain,
     fern_token,
     authConfig,
-    getBaseUrl: () => getBaseUrl(domain),
-    getFiles: () => getFiles(domain),
-    getApi: (id: string) => getApi(domain, id),
-    getRoot: async () => getRoot(domain, await getAuthState(), authConfig),
+    getBaseUrl: unstable_cache(() => getBaseUrl(domain), [domain], {
+      tags: [domain, "getBaseUrl"],
+    }),
+    getFiles: unstable_cache(() => getFiles(domain), [domain], {
+      tags: [domain, "getFiles"],
+    }),
+    getApi: unstable_cache((id: string) => getApi(domain, id), [domain], {
+      tags: [domain, "getApi"],
+    }),
+    getRoot: async () =>
+      getRootCached(domain, await getAuthState(), authConfig),
     getNavigationNode: async (id: string) =>
       getNavigationNode(domain, id, await getAuthState(), authConfig),
-    unsafe_getFullRoot: () => unsafe_getFullRoot(domain),
-    getConfig: () => getConfig(domain),
-    getPage: (pageId: string) => getPage(domain, pageId),
-    serializeMdx: (content, options) => serializeMdx(domain, content, options),
-    getSerializedPage: (pageId, options) =>
-      getSerializedPage(domain, pageId, options),
-    getColors: () => getColors(domain),
-    getLayout: () => getLayout(domain),
+    unsafe_getFullRoot: () => unsafe_getRootCached(domain),
+    getConfig: unstable_cache(() => getConfig(domain), [domain], {
+      tags: [domain, "getConfig"],
+    }),
+    getPage: unstable_cache(
+      (pageId: string) => getPage(domain, pageId),
+      [domain],
+      { tags: [domain, "getPage"] }
+    ),
+    serializeMdx: unstable_cache(
+      (content, options) => serializeMdx(domain, content, options),
+      [domain],
+      { tags: [domain, "serializeMdx"] }
+    ),
+    getSerializedPage: unstable_cache(
+      (pageId, options) => getSerializedPage(domain, pageId, options),
+      [domain],
+      { tags: [domain, "getSerializedPage"] }
+    ),
+    getColors: unstable_cache(() => getColors(domain), [domain], {
+      tags: [domain, "getColors"],
+    }),
+    getLayout: unstable_cache(() => getLayout(domain), [domain], {
+      tags: [domain, "getLayout"],
+    }),
     getAuthState,
-    getEdgeFlags: () => cachedGetEdgeFlags(domain),
+    getEdgeFlags: unstable_cache(() => cachedGetEdgeFlags(domain), [domain], {
+      tags: [domain, "getEdgeFlags"],
+    }),
   };
 };
 
