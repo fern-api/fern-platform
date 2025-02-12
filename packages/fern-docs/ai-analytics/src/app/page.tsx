@@ -44,10 +44,8 @@ async function fetchCountsByDomainAfterThreshold(thresholdDate: Date) {
       body: JSON.stringify(body),
     });
     const jsonData = await response.json();
-    console.log(jsonData);
     counts[domain] = jsonData.data[0].count;
   }
-  console.log(counts);
   return counts;
 }
 
@@ -114,15 +112,20 @@ async function fetchChatLogs(
   return allResults;
 }
 
-export default async function Home() {
-  // const thresholdDate = new Date("2025-02-01T00:00:00Z");
-  const thresholdDate = new Date("2025-02-12T00:00:00Z");
+export default async function Home({
+  searchParams,
+}: {
+  searchParams: { [key: string]: string | undefined };
+}) {
+  const params = await searchParams;
+  const daysBack = params.daysBack ? parseInt(params.daysBack) : 1;
+  const thresholdDate = new Date(Date.now() - 1000 * 60 * 60 * 24 * daysBack);
   const chatLogs = await fetchChatLogs(
     BRAINTRUST_PROJECT_ID,
     process.env.BRAINTRUST_API_KEY || "",
     thresholdDate
   );
-  const counts = await fetchCountsByDomainAfterThreshold(thresholdDate);
+  // const counts = await fetchCountsByDomainAfterThreshold(thresholdDate);
 
   const data = chatLogs;
 
@@ -174,12 +177,7 @@ export default async function Home() {
       <div className="container mx-auto px-4 py-8">
         <div className="flex flex-col gap-4">
           <h1 className="text-2xl font-bold">
-            {counts["elevenlabs.io"]} messages from elevenlabs.io after{" "}
-            {thresholdDate.toLocaleDateString()}
-          </h1>
-          <h1 className="text-2xl font-bold">
-            {counts["buildwithfern.com"]} messages from buildwithfern.com after{" "}
-            {thresholdDate.toLocaleDateString()}
+            Showing conversations since {thresholdDate.toLocaleDateString()}
           </h1>
         </div>
         <MessageTableClient initialData={processedData} />

@@ -1,5 +1,6 @@
 "use client";
 
+import { Button, Card, Select, Table, TextField } from "@radix-ui/themes";
 import { ChevronDown, ChevronRight } from "lucide-react";
 import { useState } from "react";
 
@@ -23,8 +24,11 @@ export function MessageTableClient({
   const [currentPage, setCurrentPage] = useState(1);
   const [expandedRows, setExpandedRows] = useState<Record<number, boolean>>({});
   const [filter, setFilter] = useState("");
-
+  const [domain, setDomain] = useState("show-all-domains");
   const filteredData = initialData.filter((item) => {
+    if (domain !== "show-all-domains" && item.domain !== domain) {
+      return false;
+    }
     let found = false;
     item.content.forEach((message) => {
       if (
@@ -37,12 +41,42 @@ export function MessageTableClient({
     return found;
   });
 
+  const countByDomain: Record<string, number> = initialData.reduce(
+    (acc, item) => {
+      acc[item.domain] = (acc[item.domain] || 0) + 1;
+      return acc;
+    },
+    {} as Record<string, number>
+  );
+
   const totalPages = Math.ceil(filteredData.length / ITEMS_PER_PAGE);
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
   const paginatedData = filteredData.slice(
     startIndex,
     startIndex + ITEMS_PER_PAGE
   );
+
+  function sanitizeForCSV(str: string) {
+    return str.replace(/"/g, "");
+  }
+
+  const exportToCSV = (data: DomainMessages[]) => {
+    const csvContent = [];
+    csvContent.push("Domain,Conversation Index,Messages");
+    data.forEach((item) => {
+      csvContent.push(
+        `${item.domain},${item.content.map((m) => sanitizeForCSV(m.content)).join(",")}`
+      );
+    });
+    const blob = new Blob([csvContent.join("\n")], {
+      type: "text/csv;charset=utf-8;",
+    });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "messages.csv";
+    a.click();
+  };
 
   const toggleRow = (index: number) => {
     setExpandedRows((prev) => ({
@@ -54,33 +88,43 @@ export function MessageTableClient({
   return (
     <div className="space-y-4">
       <div className="w-full overflow-x-auto">
-        <input
-          type="text"
-          placeholder="Filter"
+        <TextField.Root
+          placeholder="Type here for text filter"
           value={filter}
           onChange={(e) => setFilter(e.target.value)}
         />
+        </TextField.Root>
 
-        <table className="w-full border-collapse">
-          <thead>
-            <tr className="bg-gray-100">
-              <th className="w-8 border border-gray-200 p-4"></th>
-              <th className="border border-gray-200 p-4 text-left font-medium">
-                Domain
-              </th>
-              <th className="border border-gray-200 p-4 text-left font-medium">
-                Messages
-              </th>
-            </tr>
-          </thead>
-          <tbody>
+        <Button onClick={() => exportToCSV(filteredData)}>Export to CSV</Button>
+        
+        <Select.Root defaultValue="show-all-domains" onValueChange={setDomain}>
+          <Select.Trigger />
+          <Select.Content>
+            <Select.Item value="show-all-domains">All domains</Select.Item>
+            <Select.Item value="elevenlabs.io">
+              elevenlabs.io ({countByDomain["elevenlabs.io"]} conversations)
+            </Select.Item>
+            <Select.Item value="buildwithfern.com">
+              Buildwithfern.com ({countByDomain["buildwithfern.com"]}{" "}
+              conversations)
+            </Select.Item>
+          </Select.Content>
+        </Select.Root>
+
+        <Table.Root variant="surface">
+          <Table.Header>
+            <Table.Row>
+              <Table.ColumnHeaderCell></Table.ColumnHeaderCell>
+              <Table.ColumnHeaderCell>Domain</Table.ColumnHeaderCell>
+              <Table.ColumnHeaderCell>Messages</Table.ColumnHeaderCell>
+            </Table.Row>
+          </Table.Header>
+          <Table.Body>
             {paginatedData.map((item, index) => (
-              <tr
-                key={index}
-                className={index % 2 === 0 ? "bg-white" : "bg-gray-50"}
-              >
-                <td className="border border-gray-200 p-4">
-                  <button
+              <Table.Row key={index}>
+                <Table.Cell>
+                  <Button
+                    color="gray"
                     onClick={() => toggleRow(index)}
                     className="flex items-center justify-center"
                     aria-label={
@@ -92,16 +136,16 @@ export function MessageTableClient({
                     ) : (
                       <ChevronRight className="h-4 w-4" />
                     )}
-                  </button>
-                </td>
-                <td className="border border-gray-200 p-4 align-top">
+                  </Button>
+                </Table.Cell>
+                <Table.Cell className="border border-gray-200 p-4 align-top">
                   {item.domain}
-                </td>
-                <td className="border border-gray-200 p-4">
+                </Table.Cell>
+                <Table.Cell className="border border-gray-200 p-4">
                   {expandedRows[index] ? (
-                    <div className="space-y-4">
+                    <Card className="space-y-4">
                       {item.content.map((message, msgIndex) => (
-                        <div
+                        <Card
                           key={msgIndex}
                           className={`rounded-lg p-3 ${
                             message.role === "assistant"
@@ -111,15 +155,15 @@ export function MessageTableClient({
                                 : "bg-gray-50"
                           }`}
                         >
-                          <div className="mb-1 text-sm font-medium text-gray-700">
+                          <Card className="mb-1 text-sm font-medium text-gray-700">
                             {message.role}
-                          </div>
-                          <div className="whitespace-pre-wrap text-sm">
+                          </Card>
+                          <Card className="whitespace-pre-wrap text-sm">
                             {message.content}
-                          </div>
-                        </div>
+                          </Card>
+                        </Card>
                       ))}
-                    </div>
+                    </Card>
                   ) : (
                     <div
                       className={`whitespace-pre-wrap rounded-lg bg-green-50 p-3 text-sm`}
@@ -127,26 +171,26 @@ export function MessageTableClient({
                       {item.content[0].content}
                     </div>
                   )}
-                </td>
-              </tr>
+                </Table.Cell>
+              </Table.Row>
             ))}
-          </tbody>
-        </table>
+          </Table.Body>
+        </Table.Root>
       </div>
 
       {/* Pagination Controls */}
       <div className="flex items-center justify-center space-x-2">
-        <button
+        <Button
           onClick={() => setCurrentPage((prev) => Math.max(1, prev - 1))}
           disabled={currentPage === 1}
           className="rounded px-4 py-2 text-sm font-medium disabled:opacity-50"
         >
           Previous
-        </button>
+        </Button>
         <span className="text-sm">
           Page {currentPage} of {totalPages}
         </span>
-        <button
+        <Button
           onClick={() =>
             setCurrentPage((prev) => Math.min(totalPages, prev + 1))
           }
@@ -154,7 +198,7 @@ export function MessageTableClient({
           className="rounded px-4 py-2 text-sm font-medium disabled:opacity-50"
         >
           Next
-        </button>
+        </Button>
       </div>
     </div>
   );
