@@ -93,14 +93,13 @@ export function MessageTableClient({
           value={filter}
           onChange={(e) => setFilter(e.target.value)}
         />
-        </TextField.Root>
 
         <Button onClick={() => exportToCSV(filteredData)}>Export to CSV</Button>
-        
+
         <Select.Root defaultValue="show-all-domains" onValueChange={setDomain}>
           <Select.Trigger />
           <Select.Content>
-            <Select.Item value="show-all-domains">All domains</Select.Item>
+            <Select.Item value="show-all-domains">Show all domains</Select.Item>
             <Select.Item value="elevenlabs.io">
               elevenlabs.io ({countByDomain["elevenlabs.io"]} conversations)
             </Select.Item>
