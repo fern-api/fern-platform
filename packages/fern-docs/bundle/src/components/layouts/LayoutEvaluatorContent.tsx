@@ -16,7 +16,7 @@ import { TableOfContentsLayout } from "./TableOfContentsLayout";
 
 interface LayoutEvaluatorProps {
   domain: string;
-  frontmatter: FernDocs.Frontmatter;
+  frontmatter?: Partial<FernDocs.Frontmatter>;
   title: string;
   subtitle?: string;
   breadcrumb: readonly FernNavigation.BreadcrumbItem[];
@@ -35,7 +35,7 @@ export function LayoutEvaluatorContent({
   children,
   // hasAside,
 }: LayoutEvaluatorProps) {
-  const layout = frontmatter.layout ?? "guide";
+  const layout = frontmatter?.layout ?? "guide";
 
   const pageHeader = (
     <PageHeader
@@ -49,7 +49,7 @@ export function LayoutEvaluatorContent({
   const toc = (
     <TableOfContentsLayout
       tableOfContents={tableOfContents}
-      hideTableOfContents={frontmatter["hide-toc"]}
+      hideTableOfContents={frontmatter?.["hide-toc"]}
     />
   );
 
@@ -61,9 +61,9 @@ export function LayoutEvaluatorContent({
         <GuideLayout
           header={pageHeader}
           toc={toc}
-          editThisPageUrl={frontmatter["edit-this-page-url"]}
-          hideFeedback={frontmatter["hide-feedback"]}
-          hideNavLinks={frontmatter["hide-nav-links"]}
+          editThisPageUrl={frontmatter?.["edit-this-page-url"]}
+          hideFeedback={frontmatter?.["hide-feedback"]}
+          hideNavLinks={frontmatter?.["hide-nav-links"]}
         >
           {children}
         </GuideLayout>
@@ -73,8 +73,8 @@ export function LayoutEvaluatorContent({
         <OverviewLayout
           header={pageHeader}
           toc={toc}
-          editThisPageUrl={frontmatter["edit-this-page-url"]}
-          hideFeedback={frontmatter["hide-feedback"]}
+          editThisPageUrl={frontmatter?.["edit-this-page-url"]}
+          hideFeedback={frontmatter?.["hide-feedback"]}
         >
           {children}
         </OverviewLayout>
@@ -83,9 +83,9 @@ export function LayoutEvaluatorContent({
       return (
         <PageLayout
           header={pageHeader}
-          editThisPageUrl={frontmatter["edit-this-page-url"]}
-          hideFeedback={frontmatter["hide-feedback"]}
-          hideNavLinks={frontmatter["hide-nav-links"]}
+          editThisPageUrl={frontmatter?.["edit-this-page-url"]}
+          hideFeedback={frontmatter?.["hide-feedback"]}
+          hideNavLinks={frontmatter?.["hide-nav-links"]}
         >
           {children}
         </PageLayout>

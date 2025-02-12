@@ -36,14 +36,13 @@ interface WebSocketContentProps {
   context: WebSocketContext;
   breadcrumb: readonly FernNavigation.BreadcrumbItem[];
   last?: boolean;
-  rootslug: FernNavigation.Slug;
 }
 
 export function WebSocketContent({
   domain,
   context,
   breadcrumb,
-  rootslug,
+
   // last,
 }: WebSocketContentProps) {
   const { channel, node, types, globalHeaders } = context;
@@ -108,9 +107,7 @@ export function WebSocketContent({
             <TitledExample
               title="Handshake"
               actions={
-                node != null ? (
-                  <PlaygroundButton state={node} rootslug={rootslug} />
-                ) : undefined
+                node != null ? <PlaygroundButton state={node} /> : undefined
               }
               disableClipboard={true}
             >

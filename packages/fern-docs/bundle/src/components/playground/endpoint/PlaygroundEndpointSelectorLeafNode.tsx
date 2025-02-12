@@ -19,13 +19,12 @@ interface PlaygroundEndpointSelectorLeafNodeProps {
   filterValue: string;
   active: boolean;
   shallow?: boolean;
-  rootslug: FernNavigation.Slug;
 }
 
 export const PlaygroundEndpointSelectorLeafNode = forwardRef<
   HTMLLIElement,
   PlaygroundEndpointSelectorLeafNodeProps
->(({ node, filterValue, active, shallow, rootslug }, ref) => {
+>(({ node, filterValue, active, shallow }, ref) => {
   const text = renderTextWithHighlight(node.title, filterValue);
 
   const description = useAtomValue(
@@ -55,7 +54,7 @@ export const PlaygroundEndpointSelectorLeafNode = forwardRef<
       <li ref={ref}>
         <FernTooltip content={tooltipContent} side="right">
           <FernLinkButton
-            href={conformExplorerRoute(node.slug, rootslug)}
+            href={conformExplorerRoute(node.slug)}
             shallow={shallow}
             text={text}
             className="w-full text-left"
@@ -83,7 +82,7 @@ export const PlaygroundEndpointSelectorLeafNode = forwardRef<
       <li ref={ref}>
         <FernTooltip content={tooltipContent} side="right">
           <FernLinkButton
-            href={conformExplorerRoute(node.slug, rootslug)}
+            href={conformExplorerRoute(node.slug)}
             shallow={shallow}
             text={text}
             className="w-full text-left"

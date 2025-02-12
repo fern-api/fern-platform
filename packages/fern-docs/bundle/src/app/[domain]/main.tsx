@@ -10,7 +10,7 @@ import { DocsContent } from "@/components/resolver/DocsContent";
 
 export async function DocsMainContent({
   domain,
-  rootslug,
+
   node,
   parents,
   neighbors,
@@ -18,7 +18,6 @@ export async function DocsMainContent({
   scope,
 }: {
   domain: string;
-  rootslug: FernNavigation.Slug;
   node: FernNavigation.NavigationNodePage;
   parents: readonly FernNavigation.NavigationNodeParent[];
   neighbors: DocsContent.Neighbors;
@@ -56,12 +55,7 @@ export async function DocsMainContent({
 
   if (FernNavigation.isApiLeaf(node)) {
     return (
-      <ApiEndpointPage
-        node={node}
-        domain={domain}
-        breadcrumb={breadcrumb}
-        rootslug={rootslug}
-      />
+      <ApiEndpointPage node={node} domain={domain} breadcrumb={breadcrumb} />
     );
   }
 

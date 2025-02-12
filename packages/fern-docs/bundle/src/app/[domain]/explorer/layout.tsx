@@ -43,7 +43,6 @@ export default async function Layout({
         <PlaygroundEndpointSelectorContent
           apiGroups={apiGroups}
           className="h-full"
-          rootslug={root.slug}
         />
         {children}
       </HorizontalSplitPane>

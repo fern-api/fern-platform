@@ -17,12 +17,10 @@ export default async function ApiEndpointPage({
   domain,
   node,
   breadcrumb,
-  rootslug,
 }: {
   domain: string;
   node: FernNavigation.NavigationNodeApiLeaf;
   breadcrumb: readonly FernNavigation.BreadcrumbItem[];
-  rootslug: FernNavigation.Slug;
 }) {
   const loader = await createCachedDocsLoader(domain);
   const apiDefinition = await loader.getApi(node.apiDefinitionId);
@@ -34,7 +32,6 @@ export default async function ApiEndpointPage({
         node={node}
         apiDefinition={apiDefinition}
         breadcrumb={breadcrumb}
-        rootslug={rootslug}
       />
     </ApiPageLayout>
   );
@@ -45,13 +42,11 @@ function ApiEndpointContent({
   node,
   apiDefinition,
   breadcrumb,
-  rootslug,
 }: {
   domain: string;
   node: FernNavigation.NavigationNodeApiLeaf;
   apiDefinition: ApiDefinition;
   breadcrumb: readonly FernNavigation.BreadcrumbItem[];
-  rootslug: FernNavigation.Slug;
 }) {
   switch (node.type) {
     case "endpoint": {
@@ -67,7 +62,6 @@ function ApiEndpointContent({
           breadcrumb={breadcrumb}
           context={context}
           showErrors
-          rootslug={rootslug}
         />
       );
     }
@@ -83,7 +77,6 @@ function ApiEndpointContent({
           domain={domain}
           breadcrumb={breadcrumb}
           context={context}
-          rootslug={rootslug}
         />
       );
     }

@@ -13,8 +13,7 @@ import { conformExplorerRoute } from "./utils/explorer-route";
 
 export const PlaygroundButton: FC<{
   state: FernNavigation.NavigationNodeApiLeaf;
-  rootslug: FernNavigation.Slug;
-}> = ({ state, rootslug }) => {
+}> = ({ state }) => {
   const settings = usePlaygroundSettings(state.id);
 
   return (
@@ -33,9 +32,7 @@ export const PlaygroundButton: FC<{
               ? "Opens an API Explorer in a new tab"
               : "Opens the API Explorer"
           }
-          href={
-            settings?.button?.href ?? conformExplorerRoute(state.slug, rootslug)
-          }
+          href={settings?.button?.href ?? conformExplorerRoute(state.slug)}
           target={settings?.button?.href ? "_blank" : undefined}
           rightIcon={<PlaySolid />}
           variant="outlined"

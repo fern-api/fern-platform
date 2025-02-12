@@ -3,11 +3,10 @@ import {
   getMDXExport as getMDXExportOriginal,
 } from "mdx-bundler/client";
 
-import { FernDocs } from "@fern-api/fdr-sdk";
 import { TableOfContentsItem, isToc } from "@fern-docs/mdx";
 
 export function getMDXExport(
-  mdx: string | FernDocs.ResolvedMdx | undefined,
+  mdx: { code: string } | undefined,
   useMDXComponents: () => unknown = () => ({})
 ):
   | {

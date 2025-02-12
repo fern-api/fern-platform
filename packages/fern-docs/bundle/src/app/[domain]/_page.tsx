@@ -46,7 +46,7 @@ export default async function Page({
   domain: string;
   slug: Slug;
 }) {
-  console.debug("/app/[domain]/(external)/(docs)/_page.tsx: starting...");
+  console.debug("/app/[domain]/_page.tsx: starting...");
 
   const loader = await createCachedDocsLoader(domain, await getFernToken());
   const [baseUrl, config, authState, edgeFlags, colors] = await Promise.all([
@@ -247,7 +247,6 @@ export default async function Page({
       <FeedbackPopoverProvider>
         <DocsMainContent
           domain={domain}
-          rootslug={root.slug}
           node={found.node}
           parents={found.parents}
           neighbors={neighbors}

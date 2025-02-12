@@ -8,7 +8,9 @@ import {
   COOKIE_FERN_TOKEN,
   HEADER_X_FERN_BASEPATH,
   HEADER_X_FERN_HOST,
+  conformTrailingSlash,
   removeLeadingSlash,
+  removeTrailingSlash,
 } from "@fern-docs/utils";
 
 import { rewritePosthog } from "@/server/analytics/rewritePosthog";
@@ -34,20 +36,32 @@ function splitPathname(
 
 export const middleware: NextMiddleware = async (request) => {
   const domain = getDocsDomainEdge(request);
-
-  const pathname = removeLeadingSlash(request.nextUrl.pathname);
+  const pathname = removeTrailingSlash(request.nextUrl.pathname);
 
   const headers = new Headers(request.headers);
   headers.set(HEADER_X_FERN_HOST, domain);
 
   const rewrite = (
-    pathname: string,
+    newPathname: string,
     search?: string | URLSearchParams | Record<string, string> | string[][]
   ) => {
-    if (request.nextUrl.pathname === pathname && !search) {
+    if (pathname === newPathname && !search) {
       return NextResponse.next({ request: { headers } });
     }
-    return NextResponse.rewrite(withPathname(request, pathname, search), {
+    const destination = withPathname(
+      request,
+      conformTrailingSlash(newPathname),
+      search
+    );
+
+    console.log(
+      "[middleware] rewrote",
+      request.nextUrl.pathname,
+      "to",
+      destination
+    );
+
+    return NextResponse.rewrite(destination, {
       request: { headers },
     });
   };

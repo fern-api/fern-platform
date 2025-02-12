@@ -26,7 +26,6 @@ export interface PlaygroundEndpointSelectorContentProps {
   apiGroups: ApiGroup[];
   className?: string;
   shallow?: boolean;
-  rootslug: FernNavigation.Slug;
 }
 
 function matchesEndpoint(
@@ -48,7 +47,7 @@ function matchesEndpoint(
 export const PlaygroundEndpointSelectorContent = forwardRef<
   HTMLDivElement,
   PlaygroundEndpointSelectorContentProps
->(({ apiGroups, className, shallow, rootslug }, forwardedRef) => {
+>(({ apiGroups, className, shallow }, forwardedRef) => {
   const pathname = usePathname();
 
   const [filterValue, setFilterValue] = useState<string>("");
@@ -90,8 +89,7 @@ export const PlaygroundEndpointSelectorContent = forwardRef<
         <ul className="relative z-0 list-none">
           {apiLeafNodes.map((node) => {
             const active =
-              removeTrailingSlash(pathname) ===
-              conformExplorerRoute(node.slug, rootslug);
+              removeTrailingSlash(pathname) === conformExplorerRoute(node.slug);
             return (
               <PlaygroundEndpointSelectorLeafNode
                 key={node.id}
@@ -100,7 +98,6 @@ export const PlaygroundEndpointSelectorContent = forwardRef<
                 ref={active ? selectedItemRef : undefined}
                 filterValue={filterValue}
                 shallow={shallow}
-                rootslug={rootslug}
               />
             );
           })}

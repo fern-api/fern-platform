@@ -185,7 +185,7 @@ function CloseButton() {
       size="large"
       rounded
       variant="outlined"
-      href={pathname.replace("/~/api-explorer", "")}
+      href={pathname.replace("/~explorer", "")}
     />
   );
 }

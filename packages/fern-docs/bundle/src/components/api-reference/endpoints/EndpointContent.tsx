@@ -17,14 +17,12 @@ export function EndpointContent({
   showErrors,
   context,
   breadcrumb,
-  rootslug,
 }: {
   domain: string;
   showErrors: boolean;
   context: EndpointContext;
   breadcrumb: readonly FernNavigation.BreadcrumbItem[];
   streamToggle?: React.ReactElement;
-  rootslug: FernNavigation.Slug;
 }) {
   const { node, endpoint } = context;
 
@@ -51,7 +49,6 @@ export function EndpointContent({
           }
           aside={
             <EndpointContentCodeSnippets
-              rootslug={rootslug}
               endpoint={endpoint}
               showErrors={showErrors}
               node={node}

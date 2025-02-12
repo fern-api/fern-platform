@@ -34,10 +34,7 @@ export default async function Page(props: {
         `[${loader.domain}] Redirecting from ${slug} to ${found.redirect}`
       );
       // follows the route path hierarchy
-      // e.g. /docs/foo/bar -> /docs/~/api-explorer/foo/bar
-      redirect(
-        conformTrailingSlash(conformExplorerRoute(found.redirect, root.slug))
-      );
+      redirect(conformTrailingSlash(conformExplorerRoute(found.redirect)));
     }
 
     console.error(`[${loader.domain}] Could not find node for slug: ${slug}`);
