@@ -1,3 +1,4 @@
+import dynamic from "next/dynamic";
 import { Metadata, Viewport } from "next/types";
 import React from "react";
 
@@ -21,7 +22,6 @@ import { JavascriptProvider } from "@/components/components/JavascriptProvider";
 import { withJsConfig } from "@/components/components/with-js-config";
 import { FeatureFlagProvider } from "@/components/feature-flags/FeatureFlagProvider";
 import Preload, { type PreloadHref } from "@/components/preload";
-import { SearchV2 } from "@/components/search";
 import { renderThemeStylesheet } from "@/components/themes/stylesheet/renderThemeStylesheet";
 import { getOrgMetadataForDomain } from "@/server/auth/metadata-for-url";
 import { createCachedDocsLoader } from "@/server/docs-loader";
@@ -31,6 +31,8 @@ import { DarkCode } from "@/state/dark-code";
 import { GlobalStyles } from "../../global-styles";
 import { toImageDescriptor } from "../../seo";
 import { ThemeProvider } from "../../theme";
+
+const SearchV2 = dynamic(() => import("@/components/search"));
 
 export default async function Layout(props: {
   children: React.ReactNode;
@@ -91,9 +93,7 @@ export default async function Layout(props: {
       <FeatureFlagProvider featureFlagsConfig={{ launchDarkly }}>
         {children}
       </FeatureFlagProvider>
-      <React.Suspense>
-        <SearchV2 domain={domain} isAskAiEnabled={edgeFlags.isAskAiEnabled} />
-      </React.Suspense>
+      <SearchV2 domain={domain} isAskAiEnabled={edgeFlags.isAskAiEnabled} />
       {jsConfig != null && <JavascriptProvider config={jsConfig} />}
       {VERCEL_ENV === "production" && (
         <CustomerAnalytics

@@ -270,3 +270,5 @@ function useCommandTrigger(): [
 
   return [open, setOpen];
 }
+
+export default SearchV2;
