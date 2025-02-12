@@ -1,0 +1,10 @@
+[
+  {
+    "message": "Expected 'x-fern-access-token-locator' property to be specified",
+    "path": [
+      "components",
+      "securitySchemes",
+      "0",
+    ],
+  },
+]
