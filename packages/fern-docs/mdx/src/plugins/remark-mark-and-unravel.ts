@@ -4,6 +4,8 @@ import type { Root } from "mdast";
 import type { Plugin } from "unified";
 import { SKIP, visit } from "unist-util-visit";
 
+import { Mdast } from "../types";
+
 // Forked from https://github.com/mdx-js/mdx/blob/main/packages/mdx/lib/plugin/remark-mark-and-unravel.js
 
 /**
@@ -54,8 +56,7 @@ export const remarkMarkAndUnravel: Plugin<[], Root> = () => {
         if (all && oneOrMore) {
           offset = -1;
 
-          /** @type {Array<RootContent>} */
-          const newChildren = [];
+          const newChildren: Mdast.RootContent[] = [];
 
           while (++offset < children.length) {
             const child = children[offset];

@@ -1,7 +1,7 @@
 import type { Program } from "estree";
 import { walk } from "estree-walker";
 import type { Root } from "mdast";
-import { visit } from "unist-util-visit";
+import { SKIP, visit } from "unist-util-visit";
 
 import { Unified } from "../unified";
 
@@ -58,7 +58,7 @@ export const remarkSanitizeAcorn: Unified.Plugin<[Options?], Root> = ({
             type: "text",
             value: `{${node.value}}`,
           };
-          return "skip";
+          return SKIP;
         }
         identifiers.forEach((id) => allowedIdentifiersSet.add(id));
         jsxIdentifiers.forEach((id) => allowedIdentifiersSet.add(id));
@@ -116,7 +116,7 @@ export const remarkSanitizeAcorn: Unified.Plugin<[Options?], Root> = ({
             type: "text",
             value: `{${node.value}}`,
           };
-          return "skip";
+          return SKIP;
         }
       }
 

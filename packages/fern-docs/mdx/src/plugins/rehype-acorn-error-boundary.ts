@@ -1,5 +1,5 @@
 import type { Root } from "hast";
-import { visit } from "unist-util-visit";
+import { SKIP, visit } from "unist-util-visit";
 
 import { unknownToMdxJsxAttribute } from "../mdx-utils/unknown-to-mdx-jsx-attr";
 import { Unified } from "../unified";
@@ -32,7 +32,7 @@ export const rehypeAcornErrorBoundary: Unified.Plugin<
           children: [node],
           attributes: [unknownToMdxJsxAttribute("fallback", `{${node.value}}`)],
         };
-        return "skip";
+        return SKIP;
       }
       return;
     });

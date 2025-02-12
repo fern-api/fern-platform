@@ -279,63 +279,59 @@ const getPage = cache(async (domain: string, pageId: string) => {
   return page;
 });
 
-const serializeMdx = cache(
-  async (
-    domain: string,
-    content: string | undefined,
-    options?: Omit<FernSerializeMdxOptions, "files" | "replaceSrc">
-  ) => {
-    if (content == null) {
-      return undefined;
-    }
-    const [files, mdxBundlerFiles] = await Promise.all([
-      getFiles(domain),
-      getMdxBundlerFiles(domain),
-    ]);
-
-    const mdx = await uncachedSerializeMdx(content, {
-      ...options,
-      files: mdxBundlerFiles,
-      replaceSrc: createFileResolver(files),
-    });
-
-    if (mdx == null) {
-      // if we're returning the fallback string, this means validation failed
-    }
-
-    return mdx ?? content;
+const serializeMdx = async (
+  domain: string,
+  content: string | undefined,
+  options?: Omit<FernSerializeMdxOptions, "files" | "replaceSrc">
+) => {
+  if (content == null) {
+    return undefined;
   }
-);
+  const [files, mdxBundlerFiles] = await Promise.all([
+    getFiles(domain),
+    getMdxBundlerFiles(domain),
+  ]);
 
-const getSerializedPage = cache(
-  async (
-    domain: string,
-    pageId: string,
-    options?: Omit<FernSerializeMdxOptions, "files" | "replaceSrc">
-  ) => {
-    const [page, files, mdxBundlerFiles] = await Promise.all([
-      getPage(domain, pageId),
-      getFiles(domain),
-      getMdxBundlerFiles(domain),
-    ]);
-    if (!page) {
-      console.error(`[${domain}] Could not find page: ${pageId}`);
-      notFound();
-    }
-    const mdx = await uncachedSerializeMdx(page.markdown, {
-      ...options,
-      filename: pageId,
-      files: mdxBundlerFiles,
-      replaceSrc: createFileResolver(files),
-    });
+  const mdx = await uncachedSerializeMdx(content, {
+    ...options,
+    files: mdxBundlerFiles,
+    replaceSrc: createFileResolver(files),
+  });
 
-    if (mdx == null) {
-      // if we're returning the fallback string, this means validation failed
-    }
-
-    return mdx ?? page.markdown;
+  if (mdx == null) {
+    // if we're returning the fallback string, this means validation failed
   }
-);
+
+  return mdx ?? content;
+};
+
+const getSerializedPage = async (
+  domain: string,
+  pageId: string,
+  options?: Omit<FernSerializeMdxOptions, "files" | "replaceSrc">
+) => {
+  const [page, files, mdxBundlerFiles] = await Promise.all([
+    getPage(domain, pageId),
+    getFiles(domain),
+    getMdxBundlerFiles(domain),
+  ]);
+  if (!page) {
+    console.error(`[${domain}] Could not find page: ${pageId}`);
+    notFound();
+  }
+  const mdx = await uncachedSerializeMdx(page.markdown, {
+    ...options,
+    filename: pageId,
+    files: mdxBundlerFiles,
+    replaceSrc: createFileResolver(files),
+  });
+
+  if (mdx == null) {
+    // if we're returning the fallback string, this means validation failed
+  }
+
+  return mdx ?? page.markdown;
+};
 
 const getMdxBundlerFiles = cache(async (domain: string) => {
   const response = await loadWithUrl(domain);

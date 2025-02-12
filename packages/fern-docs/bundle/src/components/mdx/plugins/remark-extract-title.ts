@@ -28,7 +28,9 @@ export const remarkExtractTitle: Unified.Plugin<[Options?], Mdast.Root> = (
       return;
     }
 
-    const firstChild = tree.children[0];
+    const firstChild = tree.children.find(
+      (child) => child.type !== "mdxjsEsm" && child.type !== "yaml"
+    );
     if (!firstChild) {
       return;
     }

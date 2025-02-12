@@ -4,6 +4,7 @@ import { unknownToString } from "@fern-api/ui-core-utils";
 import type { Hast, Unified } from "@fern-docs/mdx";
 import {
   type MdxJsxElementHast,
+  SKIP,
   isHastElement,
   isHastText,
   isMdxJsxElementHast,
@@ -33,7 +34,7 @@ export const rehypeFernCode: Unified.Plugin<[], Hast.Root> = () => {
           attributes: [unknownToMdxJsxAttribute("items", codeBlockItems)],
           children: [],
         });
-        return "skip";
+        return [SKIP, index];
       }
 
       if (isMdxJsxElementHast(node) && node.name === "CodeBlock") {
@@ -61,7 +62,7 @@ export const rehypeFernCode: Unified.Plugin<[], Hast.Root> = () => {
             children: [],
           });
         }
-        return "skip";
+        return [SKIP, index];
       }
 
       // neither CodeBlocks nor CodeBlock were matched, so we need to check for raw code blocks
@@ -75,7 +76,7 @@ export const rehypeFernCode: Unified.Plugin<[], Hast.Root> = () => {
 
           if (code == null) {
             parent?.children.splice(index, 1);
-            return;
+            return [SKIP, index];
           }
 
           const meta = parseBlockMetaString(head, "plaintext");
@@ -87,7 +88,7 @@ export const rehypeFernCode: Unified.Plugin<[], Hast.Root> = () => {
               attributes: [],
               children: [{ type: "text", value: code }],
             });
-            return;
+            return [SKIP, index];
           }
 
           const props: FernSyntaxHighlighterProps = {
@@ -108,6 +109,7 @@ export const rehypeFernCode: Unified.Plugin<[], Hast.Root> = () => {
               ),
               children: [],
             });
+            return [SKIP, index];
           } else {
             const itemsProps: [CodeGroup.Item] = [
               { ...props, title: meta.title },
@@ -118,6 +120,7 @@ export const rehypeFernCode: Unified.Plugin<[], Hast.Root> = () => {
               attributes: [unknownToMdxJsxAttribute("items", itemsProps)],
               children: [],
             });
+            return [SKIP, index];
           }
         }
       }

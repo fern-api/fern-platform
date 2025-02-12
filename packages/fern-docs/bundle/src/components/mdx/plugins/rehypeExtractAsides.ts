@@ -1,5 +1,6 @@
 import {
   type Hast,
+  SKIP,
   extractElementsFromRootContentHast,
   visit,
 } from "@fern-docs/mdx";
@@ -31,7 +32,7 @@ export function rehypeExtractAsides({
       asides.push(...node.children);
 
       // don't visit the children of this <Aside> tag
-      return "skip";
+      return [SKIP, index];
     });
 
     // if there are no asides, don't do anything
