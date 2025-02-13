@@ -168,5 +168,16 @@
       "displayName": "chatCompletions"
     }
   },
-  "auths": {}
+  "auths": {
+    "api_key": {
+      "type": "bearerAuth"
+    },
+    "custom_header": {
+      "type": "header",
+      "headerWireValue": "X-API-Key"
+    },
+    "access_token": {
+      "type": "bearerAuth"
+    }
+  }
 }

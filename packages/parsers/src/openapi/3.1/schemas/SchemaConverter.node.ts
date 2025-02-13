@@ -288,10 +288,16 @@ export class SchemaConverterNode extends BaseOpenApiV3_1ConverterNodeWithTrackin
         accessPath: this.accessPath,
         pathId: this.pathId,
       });
-      this.context.errors.error({
-        message: "Expected type declaration. Received: null",
-        path: this.accessPath,
-      });
+      if (
+        !isReferenceObject(this.input) &&
+        ((!isArraySchema(this.input) && this.input == null) ||
+          (isArraySchema(this.input) && this.input.items == null))
+      ) {
+        this.context.errors.error({
+          message: "Expected type declaration. Received: null",
+          path: this.accessPath,
+        });
+      }
     }
   }
 

@@ -143,10 +143,7 @@ export class OpenApiDocumentConverterNode extends BaseOpenApiV3_1ConverterNode<
       FernRegistry.api.latest.SubpackageMetadata
     > = computeSubpackages({ endpoints, webhookEndpoints });
 
-    const types = {
-      ...this.components?.convert(),
-      ...this.context.generatedTypes,
-    };
+    const { types, auths } = this.components?.convert() ?? {};
 
     return {
       id: FernRegistry.ApiDefinitionId(apiDefinitionId),
@@ -159,13 +156,14 @@ export class OpenApiDocumentConverterNode extends BaseOpenApiV3_1ConverterNode<
       },
       types:
         types != null
-          ? Object.fromEntries(
-              Object.entries(types).map(([id, type]) => [id, type])
-            )
+          ? {
+              ...types,
+              ...this.context.generatedTypes,
+            }
           : {},
       // This is not necessary and will be removed
       subpackages,
-      auths: this.auth?.convert() ?? {},
+      auths: { ...auths, ...(this.auth?.convert() ?? {}) },
       globalHeaders: this.globalHeaders?.convert(),
     };
   }

@@ -70,7 +70,10 @@ export class OAuth2SecuritySchemeConverterNode extends BaseOpenApiV3_1ConverterN
   convert(): FernRegistry.api.latest.AuthScheme | undefined {
     const accessTokenLocator = this.accessTokenLocatorNode?.convert();
     if (accessTokenLocator == null || this.authorizationUrl == null) {
-      return undefined;
+      return {
+        type: "bearerAuth",
+        tokenName: undefined,
+      };
     }
 
     // TODO: revisit this -- this is not correct
