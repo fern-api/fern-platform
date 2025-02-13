@@ -3,7 +3,6 @@ import urljoin from "url-join";
 import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { withDefaultProtocol } from "@fern-api/ui-core-utils";
-import { JsonLd } from "@fern-docs/seo";
 
 function toUrl(domain: string, slug: FernNavigation.Slug): string {
   return urljoin(withDefaultProtocol(domain), slug);
@@ -30,13 +29,12 @@ export function getBreadcrumbList(
           : undefined
         : parent.slug;
       if (slug != null && slug !== node.slug) {
-        elements.push(
-          JsonLd.listItem(
-            elements.length + 1,
-            parent.title,
-            toUrl(domain, slug)
-          )
-        );
+        elements.push({
+          "@type": "ListItem",
+          position: elements.length + 1,
+          name: parent.title,
+          item: toUrl(domain, slug),
+        });
         visitedSlugs.add(parent.slug);
       }
     }
@@ -44,8 +42,18 @@ export function getBreadcrumbList(
 
   // the current page is the last item in the breadcrumb
   elements.push(
-    JsonLd.listItem(elements.length + 1, title, toUrl(domain, node.slug))
+    // JsonLd.listItem(elements.length + 1, title, toUrl(domain, node.slug))
+    {
+      "@type": "ListItem",
+      position: elements.length + 1,
+      name: title,
+      item: toUrl(domain, node.slug),
+    }
   );
 
-  return JsonLd.breadcrumbList(elements);
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: elements,
+  };
 }
