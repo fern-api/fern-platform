@@ -77,14 +77,14 @@ export class OAuth2SecuritySchemeConverterNode extends BaseOpenApiV3_1ConverterN
     }
 
     // TODO: revisit this -- this is not correct
-    const endpointId = getEndpointId(
-      undefined,
-      this.authorizationUrl,
-      "POST",
-      undefined,
-      undefined,
-      undefined
-    );
+    const endpointId = getEndpointId({
+      namespace: undefined,
+      path: this.authorizationUrl,
+      method: "POST",
+      sdkMethodName: undefined,
+      operationId: undefined,
+      isWebhook: undefined,
+    });
     if (endpointId == null) {
       return undefined;
     }

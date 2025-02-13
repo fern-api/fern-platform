@@ -334,14 +334,14 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
 
     this.endpointIds = this.namespaces
       .map((namespace) =>
-        getEndpointId(
-          maybeSingleValueToArray(namespace?.groupName),
-          this.path,
-          this.method,
-          sdkMethodName.sdkMethodName,
-          this.input.operationId,
-          this.isWebhook
-        )
+        getEndpointId({
+          namespace: maybeSingleValueToArray(namespace?.groupName),
+          path: this.path,
+          method: this.method,
+          sdkMethodName: sdkMethodName.sdkMethodName,
+          operationId: this.input.operationId,
+          isWebhook: this.isWebhook,
+        })
       )
       .filter(isNonNullish);
 
