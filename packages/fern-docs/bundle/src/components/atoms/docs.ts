@@ -45,8 +45,6 @@ export function HydrateAtoms({
   pageProps,
   children,
 }: PropsWithChildren<{ pageProps: DocsProps | undefined }>): ReactNode {
-  useHydrateAtoms(new Map([[DOCS_ATOM, pageProps]]), {
-    dangerouslyForceHydrate: true,
-  });
+  useHydrateAtoms([[DOCS_ATOM, pageProps]]);
   return children;
 }

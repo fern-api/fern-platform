@@ -1,38 +1,24 @@
 import React from "react";
 
 import { BuiltWithFern } from "@/components/built-with-fern";
-import { EditThisPageButton } from "@/components/components/EditThisPage";
-import { Feedback } from "@/components/feedback/Feedback";
+import { SetLayout } from "@/state/layout";
 
 interface PageLayoutProps {
-  header: React.ReactNode;
-  children: React.ReactNode;
-  editThisPageUrl: string | undefined;
-  hideFeedback: boolean | undefined;
-  hideNavLinks: boolean | undefined;
+  header?: React.ReactNode;
+  children?: React.ReactNode;
+  footer?: React.ReactNode;
 }
 
-export function PageLayout({
-  header,
-  children,
-  editThisPageUrl,
-  hideFeedback,
-}: PageLayoutProps) {
+export function PageLayout({ header, children, footer }: PageLayoutProps) {
   return (
-    <main className="fern-page-layout">
+    <article className="max-w-page-width mx-auto flex-1">
+      <SetLayout value="page" />
       {header}
       <div className="prose dark:prose-invert prose-h1:mt-[1.5em] first:prose-h1:mt-0 max-w-full break-words">
         {children}
       </div>
-      {(!hideFeedback || editThisPageUrl != null) && (
-        <footer className="mt-12">
-          <div className="flex gap-4 max-sm:flex-col sm:justify-between">
-            <div>{!hideFeedback && <Feedback />}</div>
-            <EditThisPageButton editThisPageUrl={editThisPageUrl} />
-          </div>
-        </footer>
-      )}
+      {footer}
       <BuiltWithFern className="mx-auto my-8 w-fit" />
-    </main>
+    </article>
   );
 }

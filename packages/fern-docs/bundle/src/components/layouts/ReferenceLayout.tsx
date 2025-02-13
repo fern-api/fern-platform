@@ -5,6 +5,7 @@ import React, { ComponentPropsWithoutRef } from "react";
 import { cn } from "@fern-docs/components";
 
 import { BuiltWithFern } from "@/components/built-with-fern";
+import { SetLayout } from "@/state/layout";
 
 interface ReferenceLayoutProps {
   header: React.ReactNode;
@@ -23,6 +24,7 @@ export const ReferenceLayout = React.forwardRef<
 ) {
   return (
     <div className="px-4 md:px-6 lg:px-8">
+      <SetLayout value="reference" />
       <article
         {...props}
         className={cn(

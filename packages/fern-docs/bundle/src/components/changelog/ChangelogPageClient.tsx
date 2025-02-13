@@ -144,41 +144,39 @@ export default function ChangelogPageClient({
         "full-width": fullWidth,
       })}
     >
-      <main>
-        <HideBuiltWithFern>
-          <ChangelogContentLayout as="section" className="pb-8">
-            {overview}
+      <HideBuiltWithFern>
+        <ChangelogContentLayout as="section" className="pb-8">
+          {overview}
+        </ChangelogContentLayout>
+
+        {visibleEntries.map((entry) => {
+          return (
+            <Fragment key={entry.id}>
+              <hr />
+              <ChangelogContentLayout
+                as="article"
+                id={entry.date}
+                stickyContent={
+                  <FernLink href={addLeadingSlash(entry.slug)}>
+                    {entry.title}
+                  </FernLink>
+                }
+              >
+                {entries[entry.pageId]}
+              </ChangelogContentLayout>
+            </Fragment>
+          );
+        })}
+
+        {(prev != null || next != null) && (
+          <ChangelogContentLayout as="div">
+            <BottomNavigationButtons prev={prev} next={next} alwaysShowGrid />
           </ChangelogContentLayout>
+        )}
+      </HideBuiltWithFern>
 
-          {visibleEntries.map((entry) => {
-            return (
-              <Fragment key={entry.id}>
-                <hr />
-                <ChangelogContentLayout
-                  as="article"
-                  id={entry.date}
-                  stickyContent={
-                    <FernLink href={addLeadingSlash(entry.slug)}>
-                      {entry.title}
-                    </FernLink>
-                  }
-                >
-                  {entries[entry.pageId]}
-                </ChangelogContentLayout>
-              </Fragment>
-            );
-          })}
-
-          {(prev != null || next != null) && (
-            <ChangelogContentLayout as="div">
-              <BottomNavigationButtons prev={prev} next={next} alwaysShowGrid />
-            </ChangelogContentLayout>
-          )}
-        </HideBuiltWithFern>
-
-        <div className="h-48" />
-        <BuiltWithFern className="mx-auto my-8 w-fit" />
-      </main>
+      <div className="h-48" />
+      <BuiltWithFern className="mx-auto my-8 w-fit" />
     </div>
   );
 }
