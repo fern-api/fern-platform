@@ -57,15 +57,30 @@ export function MessageTableClient({
     startIndex + ITEMS_PER_PAGE
   );
 
+  const removeCommas = (str: string) => {
+    return str.replace(/,/g, "");
+  };
+
   const exportToCSV = (data: DomainMessages[]) => {
     const csvContent = [];
-    csvContent.push("Domain,Conversation Index,Messages,Created");
+    csvContent.push("Domain,Input,Output,Created");
     data.forEach((item) => {
-      csvContent.push(
-        `${item.domain},` +
-          JSON.stringify(item.content) +
-          `,${item.created.toISOString()}`
-      );
+      for (let i = 0; i < item.content.length - 1; i++) {
+        const message = item.content[i];
+        if (message.role === "user") {
+          let assistantMessage = item.content[i + 1].content;
+          while (
+            item.content[i + 1] &&
+            item.content[i + 1].role == "assistant"
+          ) {
+            assistantMessage += item.content[i + 1].content;
+            i++;
+          }
+          csvContent.push(
+            `${item.domain},${removeCommas(JSON.stringify(message.content))},${removeCommas(JSON.stringify(assistantMessage))},${item.created.toISOString()}`
+          );
+        }
+      }
     });
     const blob = new Blob([csvContent.join("\n")], {
       type: "text/csv;charset=utf-8;",
