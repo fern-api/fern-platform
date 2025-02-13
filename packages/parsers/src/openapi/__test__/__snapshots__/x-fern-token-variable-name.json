@@ -58,6 +58,13 @@
         {
           "path": "/completions/chat",
           "responseStatusCode": 200,
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "stream": false,
+              "prompt": "prompt"
+            }
+          },
           "responseBody": {
             "type": "json",
             "value": "string"

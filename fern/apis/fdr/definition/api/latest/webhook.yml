@@ -19,6 +19,7 @@ types:
       method: WebhookHttpMethod
       path: list<string>
       headers: optional<list<type.ObjectProperty>>
+      queryParameters: optional<list<type.ObjectProperty>>
       payloads: optional<list<WebhookPayload>>
       examples: optional<list<v1Read.ExampleWebhookPayload>>
 

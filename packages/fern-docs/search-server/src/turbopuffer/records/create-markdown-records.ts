@@ -10,6 +10,7 @@ import { decode } from "html-entities";
 import { maybePrepareMdxContent } from "../../utils/prepare-mdx-content";
 import { FernTurbopufferRecordWithoutVector } from "../types";
 import { BaseRecord } from "./create-base-record";
+import { createHash } from "crypto";
 
 interface CreateMarkdownRecordsOptions {
   base: BaseRecord;
@@ -180,7 +181,7 @@ export async function createMarkdownRecords({
         return chunked_content.map((chunk, i) => {
           const record: FernTurbopufferRecordWithoutVector = {
             ...base_markdown_record,
-            id: `${base.id}-${heading.id}-chunk:${i}`, // theoretically this is unique, but we'll see
+            id: createHash("sha256").update(`${base.id}-${heading.id}-chunk:${i}`).digest("hex"),
             attributes: {
               ...base_markdown_record.attributes,
               ...hierarchy,

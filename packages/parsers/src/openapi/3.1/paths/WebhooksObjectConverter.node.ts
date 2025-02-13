@@ -9,6 +9,7 @@ import {
 import { resolveWebhookReference } from "../../utils/3.1/resolveWebhookReference";
 import { SecurityRequirementObjectConverterNode } from "../auth/SecurityRequirementObjectConverter.node";
 import { XFernBasePathConverterNode } from "../extensions/XFernBasePathConverter.node";
+import { isWebhookDefinition } from "../guards/isWebhookDefinition";
 import { PathItemObjectConverterNode } from "./PathItemObjectConverter.node";
 import { ServerObjectConverterNode } from "./ServerObjectConverter.node";
 
@@ -16,7 +17,7 @@ export class WebhooksObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
   OpenAPIV3_1.Document["webhooks"],
   FernRegistry.api.latest.ApiDefinition["webhooks"]
 > {
-  webhooks: Record<string, PathItemObjectConverterNode> | undefined;
+  webhooks: PathItemObjectConverterNode[] | undefined;
 
   constructor(
     args: BaseOpenApiV3_1ConverterNodeConstructorArgs<
@@ -33,37 +34,42 @@ export class WebhooksObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
   }
 
   parse(): void {
-    this.webhooks = Object.fromEntries(
-      Object.entries(this.input ?? {})
-        .map(([operation, operationItem]) => {
-          const resolvedOperationItem = resolveWebhookReference(
-            operationItem,
-            this.context.document
-          );
-          if (resolvedOperationItem == null) {
-            return undefined;
-          }
-          return [
-            operation,
-            new PathItemObjectConverterNode(
-              {
-                input: resolvedOperationItem,
-                context: this.context,
-                accessPath: this.accessPath,
-                pathId: operation,
-              },
-              this.servers,
-              this.globalAuth,
-              this.basePath,
-              true
-            ),
-          ];
-        })
-        .filter(isNonNullish)
-    );
+    this.webhooks = Object.entries(this.input ?? {})
+      .map(([operation, operationItem]) => {
+        const resolvedOperationItem = resolveWebhookReference(
+          operationItem,
+          this.context.document
+        );
+        if (resolvedOperationItem == null) {
+          return undefined;
+        }
+        return new PathItemObjectConverterNode(
+          {
+            input: resolvedOperationItem,
+            context: this.context,
+            accessPath: this.accessPath,
+            pathId: operation,
+          },
+          this.servers,
+          this.globalAuth,
+          this.basePath,
+          true
+        );
+      })
+      .filter(isNonNullish);
   }
 
   convert(): FernRegistry.api.latest.ApiDefinition["webhooks"] | undefined {
-    return {};
+    return this.webhooks?.reduce<
+      FernRegistry.api.latest.ApiDefinition["webhooks"]
+    >((acc, webhook) => {
+      webhook.convert()?.forEach((convertedWebhook) => {
+        if (isWebhookDefinition(convertedWebhook)) {
+          acc[FernRegistry.WebhookId(convertedWebhook.id)] = convertedWebhook;
+        }
+      });
+
+      return acc;
+    }, {});
   }
 }

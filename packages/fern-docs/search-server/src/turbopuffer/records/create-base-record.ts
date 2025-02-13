@@ -1,6 +1,7 @@
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { isNonNullish } from "@fern-api/ui-core-utils";
 import { addLeadingSlash } from "@fern-docs/utils";
+import { createHash } from "crypto";
 import { createRoleFacet } from "../../shared/roles/create-role-facet";
 import {
   flipAndOrToOrAnd,
@@ -71,7 +72,7 @@ export function createBaseRecord({
   );
 
   return {
-    id: `${org_id}:${domain}:${node.id}`,
+    id: createHash("sha256").update(node.id).digest("hex"),
     attributes: {
       type,
       org_id,
