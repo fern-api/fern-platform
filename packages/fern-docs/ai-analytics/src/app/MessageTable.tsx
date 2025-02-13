@@ -13,6 +13,7 @@ interface DomainMessages {
   domain: string;
   content: Message[];
   created: Date;
+  conversationId: string;
 }
 
 const ITEMS_PER_PAGE = 10;
@@ -63,7 +64,7 @@ export function MessageTableClient({
 
   const exportToCSV = (data: DomainMessages[]) => {
     const csvContent = [];
-    csvContent.push("Domain,Input,Output,Created");
+    csvContent.push("Domain,Conversation Id,Input,Output,Created");
     data.forEach((item) => {
       for (let i = 0; i < item.content.length - 1; i++) {
         const message = item.content[i];
@@ -77,7 +78,7 @@ export function MessageTableClient({
             i++;
           }
           csvContent.push(
-            `${item.domain},${removeCommas(JSON.stringify(message.content))},${removeCommas(JSON.stringify(assistantMessage))},${item.created.toISOString()}`
+            `${item.domain},${item.conversationId},${removeCommas(JSON.stringify(message.content))},${removeCommas(JSON.stringify(assistantMessage))},${item.created.toISOString()}`
           );
         }
       }

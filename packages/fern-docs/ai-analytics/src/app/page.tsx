@@ -16,6 +16,7 @@ interface DomainMessages {
   domain: string;
   content: Message[];
   created: Date;
+  conversationId: string;
 }
 
 const BRAINTRUST_PROJECT_ID = "9f4a7638-9f59-47f7-8cca-d6c9f4d0e270";
@@ -172,6 +173,7 @@ export default async function Home({
         domain,
         content: cleanedInput,
         created: new Date(convo.created),
+        conversationId: convo.id,
       });
     }
   }
