@@ -23,39 +23,28 @@ export function FernHeader({
         dangerouslySetInnerHTML={{
           __html: `(${String(function () {
             window.requestAnimationFrame(() => {
-              const headerHeight =
-                document.getElementById("fern-header")?.clientHeight;
-              if (headerHeight != null) {
-                document.documentElement.style.setProperty(
-                  "--header-height",
-                  `${String(headerHeight)}px`
-                );
+              const header = document.getElementById("fern-header");
+              if (header == null) {
+                return;
               }
+
+              const resizeObserver = new window.ResizeObserver((entries) => {
+                const headerHeight = entries[0]?.contentRect.height;
+                if (headerHeight) {
+                  document.documentElement.style.setProperty(
+                    "--header-height",
+                    `${headerHeight}px`
+                  );
+                }
+              });
+
+              resizeObserver.observe(header);
             });
           })})()`,
         }}
       />
     );
   });
-
-  React.useEffect(() => {
-    if (!ref.current) return;
-
-    const resizeObserver = new ResizeObserver((entries) => {
-      const headerHeight = entries[0]?.contentRect.height;
-      if (headerHeight) {
-        document.documentElement.style.setProperty(
-          "--header-height",
-          `${headerHeight}px`
-        );
-      }
-    });
-
-    resizeObserver.observe(ref.current);
-    return () => {
-      resizeObserver.disconnect();
-    };
-  }, []);
 
   return (
     <header ref={ref} id="fern-header" role="banner" {...props}>

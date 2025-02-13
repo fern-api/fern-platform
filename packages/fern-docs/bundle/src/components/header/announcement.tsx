@@ -94,7 +94,7 @@ export function Announcement({
                 dismissed &&
                 JSON.parse(dismissed)?.state?.announcement === announcement
               ) {
-                requestAnimationFrame(() => {
+                window.requestAnimationFrame(() => {
                   const announcement =
                     document.querySelector(".fern-announcement");
                   if (announcement) {
