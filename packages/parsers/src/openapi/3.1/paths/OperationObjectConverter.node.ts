@@ -10,6 +10,7 @@ import { coalesceServers } from "../../utils/3.1/coalesceServers";
 import { resolveParameterReference } from "../../utils/3.1/resolveParameterReference";
 import { getEndpointId } from "../../utils/getEndpointId";
 import { getExampleName } from "../../utils/getExampleName";
+import { maybeSingleValueToArray } from "../../utils/maybeSingleValueToArray";
 import { mergeSnippets } from "../../utils/mergeSnippets";
 import { mergeXFernAndResponseExamples } from "../../utils/mergeXFernAndResponsesExamples";
 import { SecurityRequirementObjectConverterNode } from "../auth/SecurityRequirementObjectConverter.node";
@@ -33,10 +34,10 @@ import { ResponsesObjectConverterNode } from "./response/ResponsesObjectConverte
 
 export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
   OpenAPIV3_1.OperationObject,
-  | FernRegistry.api.latest.EndpointDefinition
-  | FernRegistry.api.latest.WebhookDefinition
+  | FernRegistry.api.latest.EndpointDefinition[]
+  | FernRegistry.api.latest.WebhookDefinition[]
 > {
-  endpointId: string | undefined;
+  endpointIds: string[] | undefined;
   description: string | undefined;
   displayName: string | undefined;
   operationId: string | undefined;
@@ -47,7 +48,7 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
   responses: ResponsesObjectConverterNode | undefined;
   availability: AvailabilityConverterNode | undefined;
   auth: SecurityRequirementObjectConverterNode | undefined;
-  namespace: XFernGroupNameConverterNode | undefined;
+  namespaces: XFernGroupNameConverterNode[] | undefined;
   xFernExamplesNode: XFernEndpointExampleConverterNode | undefined;
   redocExamplesNode: RedocExampleConverterNode | undefined;
   emptyResponseExamples: ExampleObjectConverterNode[] | undefined;
@@ -297,15 +298,30 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
       });
     }
 
-    this.namespace = new XFernGroupNameConverterNode({
-      input: this.input,
-      context: this.context,
-      accessPath: this.accessPath,
-      pathId: "x-fern-group-name",
-    });
+    this.namespaces = [
+      new XFernGroupNameConverterNode({
+        input: this.input,
+        context: this.context,
+        accessPath: this.accessPath,
+        pathId: "x-fern-group-name",
+      }),
+    ];
 
-    if (this.namespace?.groupName == null && this.input.tags != null) {
-      this.namespace.groupName = this.input.tags;
+    if (
+      this.namespaces?.every((namespace) => namespace.groupName == null) &&
+      this.input.tags != null
+    ) {
+      // TODO: review if tags multiplex endpoint definitions, or if there should
+      // be some cascading behavior
+      this.namespaces = this.input.tags.slice(0, 1).map((tag) => {
+        const newNamespaceNode = new XFernGroupNameConverterNode({
+          input: { "x-fern-group-name": tag },
+          context: this.context,
+          accessPath: this.accessPath,
+          pathId: "x-fern-group-name",
+        });
+        return newNamespaceNode;
+      });
     }
 
     const sdkMethodName = new XFernSdkMethodNameConverterNode({
@@ -315,14 +331,18 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
       pathId: "x-fern-sdk-method-name",
     });
 
-    this.endpointId = getEndpointId(
-      this.namespace?.groupName,
-      this.path,
-      this.method,
-      sdkMethodName.sdkMethodName,
-      this.input.operationId,
-      this.isWebhook
-    );
+    this.endpointIds = this.namespaces
+      .map((namespace) =>
+        getEndpointId(
+          maybeSingleValueToArray(namespace?.groupName),
+          this.path,
+          this.method,
+          sdkMethodName.sdkMethodName,
+          this.input.operationId,
+          this.isWebhook
+        )
+      )
+      .filter(isNonNullish);
 
     // TODO: figure out how to merge user specified examples with success response
     this.xFernExamplesNode = new XFernEndpointExampleConverterNode(
@@ -389,14 +409,14 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
   }
 
   convert():
-    | FernRegistry.api.latest.EndpointDefinition
-    | FernRegistry.api.latest.WebhookDefinition
+    | FernRegistry.api.latest.EndpointDefinition[]
+    | FernRegistry.api.latest.WebhookDefinition[]
     | undefined {
     if (this.path == null) {
       return undefined;
     }
 
-    if (this.endpointId == null) {
+    if (this.endpointIds == null) {
       return undefined;
     }
 
@@ -426,28 +446,34 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
     });
 
     if (this.isWebhook) {
-      if (this.method !== "POST" && this.method !== "GET") {
-        return undefined;
-      }
-
-      return {
-        id: FernRegistry.WebhookId(this.endpointId),
-        description: this.description,
-        availability: this.availability?.convert(),
-        displayName: this.displayName,
-        operationId: this.operationId,
-        namespace: this.namespace?.convert(),
-        method: this.method,
-        path:
-          this.convertPathToPathParts()?.map((part) => part.value.toString()) ??
-          [],
-        queryParameters: convertOperationObjectProperties(
-          this.queryParameters
-        )?.flat(),
-        headers: convertOperationObjectProperties(this.requestHeaders)?.flat(),
-        payloads: this.requests?.convertToWebhookPayload(),
-        examples: [this.requests?.webhookExample()].filter(isNonNullish),
-      };
+      return this.endpointIds
+        .map((endpointId, index) => {
+          if (this.method !== "POST" && this.method !== "GET") {
+            return undefined;
+          }
+          return {
+            id: FernRegistry.WebhookId(endpointId),
+            description: this.description,
+            availability: this.availability?.convert(),
+            displayName: this.displayName,
+            operationId: this.operationId,
+            namespace: this.namespaces?.[index]?.convert(),
+            method: this.method,
+            path:
+              this.convertPathToPathParts()?.map((part) =>
+                part.value.toString()
+              ) ?? [],
+            queryParameters: convertOperationObjectProperties(
+              this.queryParameters
+            )?.flat(),
+            headers: convertOperationObjectProperties(
+              this.requestHeaders
+            )?.flat(),
+            payloads: this.requests?.convertToWebhookPayload(),
+            examples: [this.requests?.webhookExample()].filter(isNonNullish),
+          };
+        })
+        .filter(isNonNullish);
     }
 
     const environments = this.servers
@@ -468,11 +494,13 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
       ?.flatMap((response) => response.headers)
       .filter(isNonNullish);
 
-    return {
-      id: FernRegistry.EndpointId(this.endpointId),
+    return this.endpointIds.map((endpointId, index) => ({
+      id: FernRegistry.EndpointId(endpointId),
       description: this.description,
       availability: this.availability?.convert(),
-      namespace: this.namespace?.convert(),
+      namespace: this.namespaces?.[index]
+        ?.convert()
+        ?.map((id) => FernRegistry.api.v1.SubpackageId(`subpackage_${id}`)),
       displayName: this.displayName,
       operationId: this.operationId,
       method: this.method,
@@ -501,6 +529,6 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
       protocol: {
         type: "rest",
       },
-    };
+    }));
   }
 }

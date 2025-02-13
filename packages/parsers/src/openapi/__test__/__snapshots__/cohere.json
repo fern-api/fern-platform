@@ -1719,7 +1719,7 @@
       "id": "endpoint_v2.chat",
       "description": "Generates a text response to a user message and streams it down, token by token. To learn how to use the Chat API with streaming follow our [Text Generation guides](https://docs.cohere.com/v2/docs/chat-api).\n\nFollow the [Migration Guide](https://docs.cohere.com/v2/docs/migrating-v1-to-v2) for instructions on moving from API v1 to API v2.\n",
       "namespace": [
-        "v2"
+        "subpackage_v2"
       ],
       "displayName": "Chat with the model",
       "operationId": "chatv2",
@@ -8493,7 +8493,7 @@
       "id": "endpoint_v2.embed",
       "description": "This endpoint returns text embeddings. An embedding is a list of floating point numbers that captures semantic information about the text that it represents.\n\nEmbeddings can be used to create text classifiers as well as empower semantic search. To learn more about embeddings, see the embedding page.\n\nIf you want to learn more how to use the embedding model, have a look at the [Semantic Search Guide](https://docs.cohere.com/docs/semantic-search).",
       "namespace": [
-        "v2"
+        "subpackage_v2"
       ],
       "displayName": "Embed",
       "operationId": "embedv2",
@@ -12360,7 +12360,7 @@
       "id": "endpoint_embedJobs.list",
       "description": "The list embed job endpoint allows users to view all embed jobs history for that specific user.",
       "namespace": [
-        "embed-jobs"
+        "subpackage_embedJobs"
       ],
       "displayName": "List Embed Jobs",
       "operationId": "list-embed-jobs",
@@ -12934,7 +12934,7 @@
       "id": "endpoint_embedJobs.create",
       "description": "This API launches an async Embed job for a [Dataset](https://docs.cohere.com/docs/datasets) of type `embed-input`. The result of a completed embed job is new Dataset of type `embed-output`, which contains the original text entries and the corresponding embeddings.",
       "namespace": [
-        "embed-jobs"
+        "subpackage_embedJobs"
       ],
       "displayName": "Create an Embed Job",
       "operationId": "create-embed-job",
@@ -13522,7 +13522,7 @@
       "id": "endpoint_embedJobs.get",
       "description": "This API retrieves the details about an embed job started by the same user.",
       "namespace": [
-        "embed-jobs"
+        "subpackage_embedJobs"
       ],
       "displayName": "Fetch an Embed Job",
       "operationId": "get-embed-job",
@@ -14118,7 +14118,7 @@
       "id": "endpoint_embedJobs.cancel",
       "description": "This API allows users to cancel an active embed job. Once invoked, the embedding process will be terminated, and users will be charged for the embeddings processed up to the cancellation point. It's important to note that partial results will not be available to users after cancellation.",
       "namespace": [
-        "embed-jobs"
+        "subpackage_embedJobs"
       ],
       "displayName": "Cancel an Embed Job",
       "operationId": "cancel-embed-job",
@@ -15517,7 +15517,7 @@
       "id": "endpoint_v2.rerank",
       "description": "This endpoint takes in a query and a list of texts and produces an ordered array with each text assigned a relevance score.",
       "namespace": [
-        "v2"
+        "subpackage_v2"
       ],
       "displayName": "Rerank",
       "operationId": "rerankv2",
@@ -17172,7 +17172,7 @@
       "id": "endpoint_datasets.list",
       "description": "List datasets that have been created.",
       "namespace": [
-        "datasets"
+        "subpackage_datasets"
       ],
       "displayName": "List Datasets",
       "operationId": "list-datasets",
@@ -17894,7 +17894,7 @@
       "id": "endpoint_datasets.create",
       "description": "Create a dataset by uploading a file. See ['Dataset Creation'](https://docs.cohere.com/docs/datasets#dataset-creation) for more information.",
       "namespace": [
-        "datasets"
+        "subpackage_datasets"
       ],
       "displayName": "Create a Dataset",
       "operationId": "create-dataset",
@@ -18605,7 +18605,7 @@
       "id": "endpoint_datasets.getUsage",
       "description": "View the dataset storage usage for your Organization. Each Organization can have up to 10GB of storage across all their users.",
       "namespace": [
-        "datasets"
+        "subpackage_datasets"
       ],
       "displayName": "Get Dataset Usage",
       "operationId": "get-dataset-usage",
@@ -19146,7 +19146,7 @@
       "id": "endpoint_datasets.get",
       "description": "Retrieve a dataset by ID. See ['Datasets'](https://docs.cohere.com/docs/datasets) for more information.",
       "namespace": [
-        "datasets"
+        "subpackage_datasets"
       ],
       "displayName": "Get a Dataset",
       "operationId": "get-dataset",
@@ -19772,7 +19772,7 @@
       "id": "endpoint_datasets.delete",
       "description": "Delete a dataset by ID. Datasets are automatically deleted after 30 days, but they can also be deleted manually.",
       "namespace": [
-        "datasets"
+        "subpackage_datasets"
       ],
       "displayName": "Delete a Dataset",
       "operationId": "delete-dataset",
@@ -22351,7 +22351,7 @@
       "id": "endpoint_connectors.list",
       "description": "Returns a list of connectors ordered by descending creation date (newer first). See ['Managing your Connector'](https://docs.cohere.com/docs/managing-your-connector) for more information.",
       "namespace": [
-        "connectors"
+        "subpackage_connectors"
       ],
       "displayName": "List Connectors",
       "operationId": "list-connectors",
@@ -22939,7 +22939,7 @@
       "id": "endpoint_connectors.create",
       "description": "Creates a new connector. The connector is tested during registration and will cancel registration when the test is unsuccessful. See ['Creating and Deploying a Connector'](https://docs.cohere.com/v1/docs/creating-and-deploying-a-connector) for more information.",
       "namespace": [
-        "connectors"
+        "subpackage_connectors"
       ],
       "displayName": "Create a Connector",
       "operationId": "create-connector",
@@ -23518,7 +23518,7 @@
       "id": "endpoint_connectors.get",
       "description": "Retrieve a connector by ID. See ['Connectors'](https://docs.cohere.com/docs/connectors) for more information.",
       "namespace": [
-        "connectors"
+        "subpackage_connectors"
       ],
       "displayName": "Get a Connector",
       "operationId": "get-connector",
@@ -24087,7 +24087,7 @@
       "id": "endpoint_connectors.update",
       "description": "Update a connector by ID. Omitted fields will not be updated. See ['Managing your Connector'](https://docs.cohere.com/docs/managing-your-connector) for more information.",
       "namespace": [
-        "connectors"
+        "subpackage_connectors"
       ],
       "displayName": "Update a Connector",
       "operationId": "update-connector",
@@ -24691,7 +24691,7 @@
       "id": "endpoint_connectors.delete",
       "description": "Delete a connector by ID. See ['Connectors'](https://docs.cohere.com/docs/connectors) for more information.",
       "namespace": [
-        "connectors"
+        "subpackage_connectors"
       ],
       "displayName": "Delete a Connector",
       "operationId": "delete-connector",
@@ -25236,7 +25236,7 @@
       "id": "endpoint_connectors.oAuthAuthorize",
       "description": "Authorize the connector with the given ID for the connector oauth app.  See ['Connector Authentication'](https://docs.cohere.com/docs/connector-authentication) for more information.",
       "namespace": [
-        "connectors"
+        "subpackage_connectors"
       ],
       "displayName": "Authorize with oAuth",
       "operationId": "oAuthAuthorize-connector",
@@ -25820,7 +25820,7 @@
       "id": "endpoint_models.get",
       "description": "Returns the details of a model, provided its name.",
       "namespace": [
-        "models"
+        "subpackage_models"
       ],
       "displayName": "Get a Model",
       "operationId": "get-model",
@@ -26348,7 +26348,7 @@
       "id": "endpoint_models.list",
       "description": "Returns a list of models available for use. The list contains models from Cohere as well as your fine-tuned models.",
       "namespace": [
-        "models"
+        "subpackage_models"
       ],
       "displayName": "List Models",
       "operationId": "list-models",
@@ -27456,7 +27456,7 @@
     "endpoint_finetuning.ListFinetunedModels": {
       "id": "endpoint_finetuning.ListFinetunedModels",
       "namespace": [
-        "finetuning"
+        "subpackage_finetuning"
       ],
       "displayName": "Lists fine-tuned models.",
       "operationId": "ListFinetunedModels",
@@ -27837,7 +27837,7 @@
     "endpoint_finetuning.CreateFinetunedModel": {
       "id": "endpoint_finetuning.CreateFinetunedModel",
       "namespace": [
-        "finetuning"
+        "subpackage_finetuning"
       ],
       "displayName": "Trains and deploys a fine-tuned model.",
       "operationId": "CreateFinetunedModel",
@@ -28172,7 +28172,7 @@
     "endpoint_finetuning.GetFinetunedModel": {
       "id": "endpoint_finetuning.GetFinetunedModel",
       "namespace": [
-        "finetuning"
+        "subpackage_finetuning"
       ],
       "displayName": "Returns a fine-tuned model by ID.",
       "operationId": "GetFinetunedModel",
@@ -28499,7 +28499,7 @@
     "endpoint_finetuning.UpdateFinetunedModel": {
       "id": "endpoint_finetuning.UpdateFinetunedModel",
       "namespace": [
-        "finetuning"
+        "subpackage_finetuning"
       ],
       "displayName": "Updates a fine-tuned model.",
       "operationId": "UpdateFinetunedModel",
@@ -29044,7 +29044,7 @@
     "endpoint_finetuning.DeleteFinetunedModel": {
       "id": "endpoint_finetuning.DeleteFinetunedModel",
       "namespace": [
-        "finetuning"
+        "subpackage_finetuning"
       ],
       "displayName": "Deletes a fine-tuned model.",
       "operationId": "DeleteFinetunedModel",
@@ -29344,7 +29344,7 @@
     "endpoint_finetuning.ListEvents": {
       "id": "endpoint_finetuning.ListEvents",
       "namespace": [
-        "finetuning"
+        "subpackage_finetuning"
       ],
       "displayName": "Retrieves the chronology of statuses the fine-tuned model has been through.",
       "operationId": "ListEvents",
@@ -29734,7 +29734,7 @@
     "endpoint_finetuning.ListTrainingStepMetrics": {
       "id": "endpoint_finetuning.ListTrainingStepMetrics",
       "namespace": [
-        "finetuning"
+        "subpackage_finetuning"
       ],
       "displayName": "Retrieves metrics measured during the training of a fine-tuned model.",
       "operationId": "ListTrainingStepMetrics",
@@ -41120,35 +41120,35 @@
     }
   },
   "subpackages": {
-    "v2": {
-      "id": "v2",
+    "subpackage_v2": {
+      "id": "subpackage_v2",
       "name": "v2",
-      "displayName": "v2"
+      "displayName": "V2"
     },
-    "embedJobs": {
-      "id": "embedJobs",
-      "name": "embed-jobs",
-      "displayName": "embed-jobs"
+    "subpackage_embedJobs": {
+      "id": "subpackage_embedJobs",
+      "name": "embedJobs",
+      "displayName": "Embed Jobs"
     },
-    "datasets": {
-      "id": "datasets",
+    "subpackage_datasets": {
+      "id": "subpackage_datasets",
       "name": "datasets",
-      "displayName": "datasets"
+      "displayName": "Datasets"
     },
-    "connectors": {
-      "id": "connectors",
+    "subpackage_connectors": {
+      "id": "subpackage_connectors",
       "name": "connectors",
-      "displayName": "connectors"
+      "displayName": "Connectors"
     },
-    "models": {
-      "id": "models",
+    "subpackage_models": {
+      "id": "subpackage_models",
       "name": "models",
-      "displayName": "models"
+      "displayName": "Models"
     },
-    "finetuning": {
-      "id": "finetuning",
+    "subpackage_finetuning": {
+      "id": "subpackage_finetuning",
       "name": "finetuning",
-      "displayName": "finetuning"
+      "displayName": "Finetuning"
     }
   },
   "auths": {

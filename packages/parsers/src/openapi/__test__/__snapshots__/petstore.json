@@ -1,12 +1,9 @@
 {
   "id": "test-uuid-replacement",
   "endpoints": {
-    "endpoint_pet.addPet": {
-      "id": "endpoint_pet.addPet",
+    "endpoint_.addPet": {
+      "id": "endpoint_.addPet",
       "description": "Add a new pet to the store",
-      "namespace": [
-        "pet"
-      ],
       "displayName": "Add a new pet to the store",
       "operationId": "addPet",
       "method": "POST",
@@ -365,12 +362,9 @@
         "type": "rest"
       }
     },
-    "endpoint_pet.updatePet": {
-      "id": "endpoint_pet.updatePet",
+    "endpoint_.updatePet": {
+      "id": "endpoint_.updatePet",
       "description": "Update an existing pet by Id",
-      "namespace": [
-        "pet"
-      ],
       "displayName": "Update an existing pet",
       "operationId": "updatePet",
       "method": "PUT",
@@ -729,12 +723,9 @@
         "type": "rest"
       }
     },
-    "endpoint_pets.getPetById": {
-      "id": "endpoint_pets.getPetById",
+    "endpoint_.getPetById": {
+      "id": "endpoint_.getPetById",
       "description": "Returns a pet when 0 < ID <= 10.  ID > 10 or nonintegers will simulate API error conditions",
-      "namespace": [
-        "pets"
-      ],
       "displayName": "Find pet by ID",
       "operationId": "getPetById",
       "method": "GET",
@@ -1605,17 +1596,6 @@
       }
     }
   },
-  "subpackages": {
-    "pet": {
-      "id": "pet",
-      "name": "pet",
-      "displayName": "pet"
-    },
-    "pets": {
-      "id": "pets",
-      "name": "pets",
-      "displayName": "pets"
-    }
-  },
+  "subpackages": {},
   "auths": {}
 }

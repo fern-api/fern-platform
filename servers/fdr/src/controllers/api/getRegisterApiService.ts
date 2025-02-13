@@ -7,6 +7,7 @@ import {
 } from "@fern-api/fdr-sdk";
 import { v4 as uuidv4 } from "uuid";
 import { APIV1WriteService } from "../../api";
+import { FernRegistry } from "../../api/generated";
 import { SdkRequest } from "../../api/generated/api";
 import type { FdrApplication } from "../../app";
 import { LOGGER } from "../../app/FdrApplication";
@@ -110,16 +111,13 @@ export function getRegisterApiService(app: FdrApplication): APIV1WriteService {
         );
       }
 
+      // TODO: we need to keep this until dynamic snippets are implemented
       let isLatest = false;
-      if (transformedApiDefinition == null) {
-        if (
-          req.body.definitionV2 == null ||
-          (req.body.definitionV2 != null &&
-            Object.keys(req.body.definitionV2).length === 0)
-        ) {
-          throw new Error("No latest definition provided");
-        }
-        transformedApiDefinition = req.body.definitionV2;
+      if (req.body.definitionV2 != null && transformedApiDefinition != null) {
+        transformedApiDefinition = mergeEndpointSnippets(
+          req.body.definitionV2,
+          transformedApiDefinition as APIV1Db.DbApiDefinition
+        );
         isLatest = true;
         apiDefinitionId = transformedApiDefinition.id;
       }
@@ -168,6 +166,101 @@ export function getRegisterApiService(app: FdrApplication): APIV1WriteService {
       });
     },
   });
+}
+
+function stringifyPathParts(path: FernRegistry.api.latest.PathPart[]) {
+  return path
+    .map((part) => {
+      if (part.type === "literal") {
+        return part.value;
+      } else if (part.type === "pathParameter") {
+        return `{${part}}`;
+      } else {
+        return "";
+      }
+    })
+    .join("/");
+}
+
+function mergeEndpointSnippets(
+  definitionV2: FernRegistry.api.latest.ApiDefinition,
+  definition: APIV1Db.DbApiDefinition
+) {
+  for (const vLatestEndpoint of Object.values(definitionV2.endpoints)) {
+    for (const v1Endpoint of definition.rootPackage.endpoints) {
+      if (
+        stringifyPathParts(vLatestEndpoint.path) ===
+          stringifyPathParts(v1Endpoint.path.parts) &&
+        vLatestEndpoint.method === v1Endpoint.method
+      ) {
+        for (const v1Example of v1Endpoint.examples) {
+          for (const vLatestExample of vLatestEndpoint.examples ?? []) {
+            if (v1Example.name === vLatestExample.name) {
+              vLatestExample.snippets ??= {};
+              if (v1Example.codeExamples.goSdk != null) {
+                vLatestExample.snippets.go ??= [];
+                vLatestExample.snippets.go.push({
+                  language: "go",
+                  name: v1Example.name,
+                  code: v1Example.codeExamples.goSdk.client,
+                  install: v1Example.codeExamples.goSdk.install,
+                  generated: true,
+                  description: v1Example.description,
+                });
+              }
+
+              if (v1Example.codeExamples.typescriptSdk != null) {
+                vLatestExample.snippets.typescriptSdk ??= [];
+                vLatestExample.snippets.typescriptSdk.push({
+                  language: "typescript",
+                  name: v1Example.name,
+                  code: v1Example.codeExamples.typescriptSdk.client,
+                  install: v1Example.codeExamples.typescriptSdk.install,
+                  generated: true,
+                  description: v1Example.description,
+                });
+              }
+
+              if (v1Example.codeExamples.pythonSdk != null) {
+                vLatestExample.snippets.pythonSdk ??= [];
+                vLatestExample.snippets.pythonSdk.push({
+                  language: "python",
+                  name: v1Example.name,
+                  code: v1Example.codeExamples.pythonSdk.async_client,
+                  install: v1Example.codeExamples.pythonSdk.install,
+                  generated: true,
+                  description: v1Example.description,
+                });
+                vLatestExample.snippets.pythonSdk.push({
+                  language: "python",
+                  name: v1Example.name,
+                  code: v1Example.codeExamples.pythonSdk.sync_client,
+                  install: v1Example.codeExamples.pythonSdk.install,
+                  generated: true,
+                  description: v1Example.description,
+                });
+              }
+
+              if (v1Example.codeExamples.rubySdk != null) {
+                vLatestExample.snippets.rubySdk ??= [];
+                vLatestExample.snippets.rubySdk.push({
+                  language: "ruby",
+                  name: v1Example.name,
+                  code: v1Example.codeExamples.rubySdk.client,
+                  install: v1Example.codeExamples.rubySdk.install,
+                  generated: true,
+                  description: v1Example.description,
+                });
+              }
+            }
+          }
+        }
+        vLatestEndpoint.snippetTemplates = v1Endpoint.snippetTemplates;
+      }
+    }
+  }
+
+  return definitionV2;
 }
 
 function getSnippetSdkRequests({

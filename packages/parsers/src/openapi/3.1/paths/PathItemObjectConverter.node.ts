@@ -135,11 +135,11 @@ export class PathItemObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
       )[]
     | undefined {
     return [
-      this.get?.convert(),
-      this.post?.convert(),
-      this.put?.convert(),
-      this.patch?.convert(),
-      this.delete?.convert(),
+      ...(this.get?.convert() ?? []),
+      ...(this.post?.convert() ?? []),
+      ...(this.put?.convert() ?? []),
+      ...(this.patch?.convert() ?? []),
+      ...(this.delete?.convert() ?? []),
     ].filter(isNonNullish);
   }
 }

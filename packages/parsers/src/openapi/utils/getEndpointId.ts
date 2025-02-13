@@ -1,4 +1,5 @@
 import { camelCase } from "es-toolkit";
+import { maybeSingleValueToArray } from "./maybeSingleValueToArray";
 
 export function getEndpointId(
   namespace: string | string[] | undefined,
@@ -20,5 +21,11 @@ export function getEndpointId(
   if (endpointName == null) {
     return undefined;
   }
-  return `${isWebhook ? "webhook_" : "endpoint_"}${camelCase(namespace != null ? (typeof namespace === "string" ? namespace : namespace.join("_")) : "")}.${camelCase(sdkMethodName ?? "") || operationId || camelCase(endpointName)}`;
+  return `${isWebhook ? "subpackage_" : "endpoint_"}${
+    namespace != null
+      ? maybeSingleValueToArray(namespace)
+          ?.map((member) => camelCase(member))
+          .join(".")
+      : ""
+  }.${camelCase(sdkMethodName ?? "") || operationId || camelCase(endpointName)}`;
 }

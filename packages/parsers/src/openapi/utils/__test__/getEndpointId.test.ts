@@ -16,7 +16,7 @@ describe("getEndpointId", () => {
   it("handles array namespace", () => {
     expect(
       getEndpointId(["pets", "v1"], "/pets/get", "getById", undefined)
-    ).toBe("endpoint_petsV1.getByIdPetsGet");
+    ).toBe("endpoint_pets.v1.getByIdPetsGet");
   });
 
   it("handles undefined namespace", () => {

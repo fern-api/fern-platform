@@ -4,7 +4,7 @@
     "endpoint_chatCompletions.create": {
       "id": "endpoint_chatCompletions.create",
       "namespace": [
-        "chatCompletions"
+        "subpackage_chatCompletions"
       ],
       "method": "POST",
       "path": [
@@ -162,10 +162,10 @@
     }
   },
   "subpackages": {
-    "chatCompletions": {
-      "id": "chatCompletions",
+    "subpackage_chatCompletions": {
+      "id": "subpackage_chatCompletions",
       "name": "chatCompletions",
-      "displayName": "chatCompletions"
+      "displayName": "Chat Completions"
     }
   },
   "auths": {}

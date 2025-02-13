@@ -1,12 +1,9 @@
 {
   "id": "test-uuid-replacement",
   "endpoints": {
-    "endpoint_admins.identifyAdmin": {
-      "id": "endpoint_admins.identifyAdmin",
+    "endpoint_.identifyAdmin": {
+      "id": "endpoint_.identifyAdmin",
       "description": "\nYou can view the currently authorised admin along with the embedded app object (a \"workspace\" in legacy terminology).\n\n> 🚧 Single Sign On\n>\n> If you are building a custom \"Log in with Intercom\" flow for your site, and you call the `/me` endpoint to identify the logged-in user, you should not accept any sign-ins from users with unverified email addresses as it poses a potential impersonation security risk.\n",
-      "namespace": [
-        "Admins"
-      ],
       "displayName": "Identify an admin",
       "operationId": "identifyAdmin",
       "method": "GET",
@@ -110,12 +107,9 @@
         "type": "rest"
       }
     },
-    "endpoint_admins.setAwayAdmin": {
-      "id": "endpoint_admins.setAwayAdmin",
+    "endpoint_.setAwayAdmin": {
+      "id": "endpoint_.setAwayAdmin",
       "description": "You can set an Admin as away for the Inbox.",
-      "namespace": [
-        "Admins"
-      ],
       "displayName": "Set an admin to away",
       "operationId": "setAwayAdmin",
       "method": "PUT",
@@ -404,12 +398,9 @@
         "type": "rest"
       }
     },
-    "endpoint_admins.listActivityLogs": {
-      "id": "endpoint_admins.listActivityLogs",
+    "endpoint_.listActivityLogs": {
+      "id": "endpoint_.listActivityLogs",
       "description": "You can get a log of activities by all admins in an app.",
-      "namespace": [
-        "Admins"
-      ],
       "displayName": "List all activity logs",
       "operationId": "listActivityLogs",
       "method": "GET",
@@ -615,12 +606,9 @@
         "type": "rest"
       }
     },
-    "endpoint_admins.listAdmins": {
-      "id": "endpoint_admins.listAdmins",
+    "endpoint_.listAdmins": {
+      "id": "endpoint_.listAdmins",
       "description": "You can fetch a list of admins for a given workspace.",
-      "namespace": [
-        "Admins"
-      ],
       "displayName": "List all admins",
       "operationId": "listAdmins",
       "method": "GET",
@@ -748,12 +736,9 @@
         "type": "rest"
       }
     },
-    "endpoint_admins.retrieveAdmin": {
-      "id": "endpoint_admins.retrieveAdmin",
+    "endpoint_.retrieveAdmin": {
+      "id": "endpoint_.retrieveAdmin",
       "description": "You can retrieve the details of a single admin.",
-      "namespace": [
-        "Admins"
-      ],
       "displayName": "Retrieve an admin",
       "operationId": "retrieveAdmin",
       "method": "GET",
@@ -932,12 +917,9 @@
         "type": "rest"
       }
     },
-    "endpoint_articles.listArticles": {
-      "id": "endpoint_articles.listArticles",
+    "endpoint_.listArticles": {
+      "id": "endpoint_.listArticles",
       "description": "You can fetch a list of all articles by making a GET request to `https://api.intercom.io/articles`.\n\n> 📘 How are the articles sorted and ordered?\n>\n> Articles will be returned in descending order on the `updated_at` attribute. This means if you need to iterate through results then we'll show the most recently updated articles first.\n",
-      "namespace": [
-        "Articles"
-      ],
       "displayName": "List all articles",
       "operationId": "listArticles",
       "method": "GET",
@@ -1078,12 +1060,9 @@
         "type": "rest"
       }
     },
-    "endpoint_articles.createArticle": {
-      "id": "endpoint_articles.createArticle",
+    "endpoint_.createArticle": {
+      "id": "endpoint_.createArticle",
       "description": "You can create a new article by making a POST request to `https://api.intercom.io/articles`.",
-      "namespace": [
-        "Articles"
-      ],
       "displayName": "Create an article",
       "operationId": "createArticle",
       "method": "POST",
@@ -1326,12 +1305,9 @@
         "type": "rest"
       }
     },
-    "endpoint_articles.retrieveArticle": {
-      "id": "endpoint_articles.retrieveArticle",
+    "endpoint_.retrieveArticle": {
+      "id": "endpoint_.retrieveArticle",
       "description": "You can fetch the details of a single article by making a GET request to `https://api.intercom.io/articles/<id>`.",
-      "namespace": [
-        "Articles"
-      ],
       "displayName": "Retrieve an article",
       "operationId": "retrieveArticle",
       "method": "GET",
@@ -1525,12 +1501,9 @@
         "type": "rest"
       }
     },
-    "endpoint_articles.updateArticle": {
-      "id": "endpoint_articles.updateArticle",
+    "endpoint_.updateArticle": {
+      "id": "endpoint_.updateArticle",
       "description": "You can update the details of a single article by making a PUT request to `https://api.intercom.io/articles/<id>`.",
-      "namespace": [
-        "Articles"
-      ],
       "displayName": "Update an article",
       "operationId": "updateArticle",
       "method": "PUT",
@@ -2200,12 +2173,9 @@
         "type": "rest"
       }
     },
-    "endpoint_articles.deleteArticle": {
-      "id": "endpoint_articles.deleteArticle",
+    "endpoint_.deleteArticle": {
+      "id": "endpoint_.deleteArticle",
       "description": "You can delete a single article by making a DELETE request to `https://api.intercom.io/articles/<id>`.",
-      "namespace": [
-        "Articles"
-      ],
       "displayName": "Delete an article",
       "operationId": "deleteArticle",
       "method": "DELETE",
@@ -2379,12 +2349,9 @@
         "type": "rest"
       }
     },
-    "endpoint_articles.searchArticles": {
-      "id": "endpoint_articles.searchArticles",
+    "endpoint_.searchArticles": {
+      "id": "endpoint_.searchArticles",
       "description": "You can search for articles by making a GET request to `https://api.intercom.io/articles/search`.",
-      "namespace": [
-        "Articles"
-      ],
       "displayName": "Search for articles",
       "operationId": "searchArticles",
       "method": "GET",
@@ -2614,12 +2581,9 @@
         "type": "rest"
       }
     },
-    "endpoint_helpCenter.listAllCollections": {
-      "id": "endpoint_helpCenter.listAllCollections",
+    "endpoint_.listAllCollections": {
+      "id": "endpoint_.listAllCollections",
       "description": "You can fetch a list of all collections by making a GET request to `https://api.intercom.io/help_center/collections`.\n\nCollections will be returned in descending order on the `updated_at` attribute. This means if you need to iterate through results then we'll show the most recently updated collections first.\n",
-      "namespace": [
-        "Help Center"
-      ],
       "displayName": "List all collections",
       "operationId": "listAllCollections",
       "method": "GET",
@@ -2778,12 +2742,9 @@
         "type": "rest"
       }
     },
-    "endpoint_helpCenter.createCollection": {
-      "id": "endpoint_helpCenter.createCollection",
+    "endpoint_.createCollection": {
+      "id": "endpoint_.createCollection",
       "description": "You can create a new collection by making a POST request to `https://api.intercom.io/help_center/collections.`",
-      "namespace": [
-        "Help Center"
-      ],
       "displayName": "Create a collection",
       "operationId": "createCollection",
       "method": "POST",
@@ -2992,12 +2953,9 @@
         "type": "rest"
       }
     },
-    "endpoint_helpCenter.retrieveCollection": {
-      "id": "endpoint_helpCenter.retrieveCollection",
+    "endpoint_.retrieveCollection": {
+      "id": "endpoint_.retrieveCollection",
       "description": "You can fetch the details of a single collection by making a GET request to `https://api.intercom.io/help_center/collections/<id>`.",
-      "namespace": [
-        "Help Center"
-      ],
       "displayName": "Retrieve a collection",
       "operationId": "retrieveCollection",
       "method": "GET",
@@ -3187,12 +3145,9 @@
         "type": "rest"
       }
     },
-    "endpoint_helpCenter.updateCollection": {
-      "id": "endpoint_helpCenter.updateCollection",
+    "endpoint_.updateCollection": {
+      "id": "endpoint_.updateCollection",
       "description": "You can update the details of a single collection by making a PUT request to `https://api.intercom.io/collections/<id>`.",
-      "namespace": [
-        "Help Center"
-      ],
       "displayName": "Update a collection",
       "operationId": "updateCollection",
       "method": "PUT",
@@ -3619,12 +3574,9 @@
         "type": "rest"
       }
     },
-    "endpoint_helpCenter.deleteCollection": {
-      "id": "endpoint_helpCenter.deleteCollection",
+    "endpoint_.deleteCollection": {
+      "id": "endpoint_.deleteCollection",
       "description": "You can delete a single collection by making a DELETE request to `https://api.intercom.io/collections/<id>`.",
-      "namespace": [
-        "Help Center"
-      ],
       "displayName": "Delete a collection",
       "operationId": "deleteCollection",
       "method": "DELETE",
@@ -3806,12 +3758,9 @@
         "type": "rest"
       }
     },
-    "endpoint_helpCenter.retrieveHelpCenter": {
-      "id": "endpoint_helpCenter.retrieveHelpCenter",
+    "endpoint_.retrieveHelpCenter": {
+      "id": "endpoint_.retrieveHelpCenter",
       "description": "You can fetch the details of a single Help Center by making a GET request to `https://api.intercom.io/help_center/help_center/<id>`.",
-      "namespace": [
-        "Help Center"
-      ],
       "displayName": "Retrieve a Help Center",
       "operationId": "retrieveHelpCenter",
       "method": "GET",
@@ -3997,12 +3946,9 @@
         "type": "rest"
       }
     },
-    "endpoint_helpCenter.listHelpCenters": {
-      "id": "endpoint_helpCenter.listHelpCenters",
+    "endpoint_.listHelpCenters": {
+      "id": "endpoint_.listHelpCenters",
       "description": "You can list all Help Centers by making a GET request to `https://api.intercom.io/help_center/help_centers`.",
-      "namespace": [
-        "Help Center"
-      ],
       "displayName": "List all Help Centers",
       "operationId": "listHelpCenters",
       "method": "GET",
@@ -4127,12 +4073,9 @@
         "type": "rest"
       }
     },
-    "endpoint_companies.retrieveCompany": {
-      "id": "endpoint_companies.retrieveCompany",
+    "endpoint_.retrieveCompany": {
+      "id": "endpoint_.retrieveCompany",
       "description": "You can fetch a single company by passing in `company_id` or `name`.\n\n  `https://api.intercom.io/companies?name={name}`\n\n  `https://api.intercom.io/companies?company_id={company_id}`\n\nYou can fetch all companies and filter by `segment_id` or `tag_id` as a query parameter.\n\n  `https://api.intercom.io/companies?tag_id={tag_id}`\n\n  `https://api.intercom.io/companies?segment_id={segment_id}`\n",
-      "namespace": [
-        "Companies"
-      ],
       "displayName": "Retrieve companies",
       "operationId": "retrieveCompany",
       "method": "GET",
@@ -4427,12 +4370,9 @@
         "type": "rest"
       }
     },
-    "endpoint_companies.createOrUpdateCompany": {
-      "id": "endpoint_companies.createOrUpdateCompany",
+    "endpoint_.createOrUpdateCompany": {
+      "id": "endpoint_.createOrUpdateCompany",
       "description": "You can create or update a company.\n\nCompanies will be only visible in Intercom when there is at least one associated user.\n\nCompanies are looked up via `company_id` in a `POST` request, if not found via `company_id`, the new company will be created, if found, that company will be updated.\n\n{% admonition type=\"attention\" name=\"Using `company_id`\" %}\n  You can set a unique `company_id` value when creating a company. However, it is not possible to update `company_id`. Be sure to set a unique value once upon creation of the company.\n{% /admonition %}\n",
-      "namespace": [
-        "Companies"
-      ],
       "displayName": "Create or Update a company",
       "operationId": "createOrUpdateCompany",
       "method": "POST",
@@ -4659,12 +4599,9 @@
         "type": "rest"
       }
     },
-    "endpoint_companies.RetrieveACompanyById": {
-      "id": "endpoint_companies.RetrieveACompanyById",
+    "endpoint_.RetrieveACompanyById": {
+      "id": "endpoint_.RetrieveACompanyById",
       "description": "You can fetch a single company.",
-      "namespace": [
-        "Companies"
-      ],
       "displayName": "Retrieve a company by ID",
       "operationId": "RetrieveACompanyById",
       "method": "GET",
@@ -4856,12 +4793,9 @@
         "type": "rest"
       }
     },
-    "endpoint_companies.UpdateCompany": {
-      "id": "endpoint_companies.UpdateCompany",
+    "endpoint_.UpdateCompany": {
+      "id": "endpoint_.UpdateCompany",
       "description": "You can update a single company using the Intercom provisioned `id`.\n\n{% admonition type=\"attention\" name=\"Using `company_id`\" %}\n  When updating a company it is not possible to update `company_id`. This can only be set once upon creation of the company.\n{% /admonition %}\n",
-      "namespace": [
-        "Companies"
-      ],
       "displayName": "Update a company",
       "operationId": "UpdateCompany",
       "method": "PUT",
@@ -5053,12 +4987,9 @@
         "type": "rest"
       }
     },
-    "endpoint_companies.deleteCompany": {
-      "id": "endpoint_companies.deleteCompany",
+    "endpoint_.deleteCompany": {
+      "id": "endpoint_.deleteCompany",
       "description": "You can delete a single company.",
-      "namespace": [
-        "Companies"
-      ],
       "displayName": "Delete a company",
       "operationId": "deleteCompany",
       "method": "DELETE",
@@ -5232,13 +5163,9 @@
         "type": "rest"
       }
     },
-    "endpoint_companiesContacts.ListAttachedContacts": {
-      "id": "endpoint_companiesContacts.ListAttachedContacts",
+    "endpoint_.ListAttachedContacts": {
+      "id": "endpoint_.ListAttachedContacts",
       "description": "You can fetch a list of all contacts that belong to a company.",
-      "namespace": [
-        "Companies",
-        "Contacts"
-      ],
       "displayName": "List attached contacts",
       "operationId": "ListAttachedContacts",
       "method": "GET",
@@ -5426,12 +5353,9 @@
         "type": "rest"
       }
     },
-    "endpoint_companies.ListAttachedSegmentsForCompanies": {
-      "id": "endpoint_companies.ListAttachedSegmentsForCompanies",
+    "endpoint_.ListAttachedSegmentsForCompanies": {
+      "id": "endpoint_.ListAttachedSegmentsForCompanies",
       "description": "You can fetch a list of all segments that belong to a company.",
-      "namespace": [
-        "Companies"
-      ],
       "displayName": "List attached segments for companies",
       "operationId": "ListAttachedSegmentsForCompanies",
       "method": "GET",
@@ -5612,12 +5536,9 @@
         "type": "rest"
       }
     },
-    "endpoint_companies.listAllCompanies": {
-      "id": "endpoint_companies.listAllCompanies",
+    "endpoint_.listAllCompanies": {
+      "id": "endpoint_.listAllCompanies",
       "description": "You can list companies. The company list is sorted by the `last_request_at` field and by default is ordered descending, most recently requested first.\n\nNote that the API does not include companies who have no associated users in list responses.\n\nWhen using the Companies endpoint and the pages object to iterate through the returned companies, there is a limit of 10,000 Companies that can be returned. If you need to list or iterate on more than 10,000 Companies, please use the [Scroll API](https://developers.intercom.com/reference#iterating-over-all-companies).\n{% admonition type=\"warning\" name=\"Pagination\" %}\n  You can use pagination to limit the number of results returned. The default is `20` results per page.\n  See the [pagination section](https://developers.intercom.com/docs/build-an-integration/learn-more/rest-apis/pagination/#pagination-for-list-apis) for more details on how to use the `starting_after` param.\n{% /admonition %}\n",
-      "namespace": [
-        "Companies"
-      ],
       "displayName": "List all companies",
       "operationId": "listAllCompanies",
       "method": "POST",
@@ -5833,12 +5754,9 @@
         "type": "rest"
       }
     },
-    "endpoint_companies.scrollOverAllCompanies": {
-      "id": "endpoint_companies.scrollOverAllCompanies",
+    "endpoint_.scrollOverAllCompanies": {
+      "id": "endpoint_.scrollOverAllCompanies",
       "description": "      The `list all companies` functionality does not work well for huge datasets, and can result in errors and performance problems when paging deeply. The Scroll API provides an efficient mechanism for iterating over all companies in a dataset.\n\n- Each app can only have 1 scroll open at a time. You'll get an error message if you try to have more than one open per app.\n- If the scroll isn't used for 1 minute, it expires and calls with that scroll param will fail\n- If the end of the scroll is reached, \"companies\" will be empty and the scroll parameter will expire\n\n{% admonition type=\"info\" name=\"Scroll Parameter\" %}\n  You can get the first page of companies by simply sending a GET request to the scroll endpoint.\n  For subsequent requests you will need to use the scroll parameter from the response.\n{% /admonition %}\n{% admonition type=\"danger\" name=\"Scroll network timeouts\" %}\n  Since scroll is often used on large datasets network errors such as timeouts can be encountered. When this occurs you will see a HTTP 500 error with the following message:\n  \"Request failed due to an internal network error. Please restart the scroll operation.\"\n  If this happens, you will need to restart your scroll query: It is not possible to continue from a specific point when using scroll.\n{% /admonition %}\n",
-      "namespace": [
-        "Companies"
-      ],
       "displayName": "Scroll over all companies",
       "operationId": "scrollOverAllCompanies",
       "method": "GET",
@@ -6011,13 +5929,9 @@
         "type": "rest"
       }
     },
-    "endpoint_contactsCompanies.listCompaniesForAContact": {
-      "id": "endpoint_contactsCompanies.listCompaniesForAContact",
+    "endpoint_.listCompaniesForAContact": {
+      "id": "endpoint_.listCompaniesForAContact",
       "description": "You can fetch a list of companies that are associated to a contact.",
-      "namespace": [
-        "Contacts",
-        "Companies"
-      ],
       "displayName": "List attached companies for contact",
       "operationId": "listCompaniesForAContact",
       "method": "GET",
@@ -6231,13 +6145,9 @@
         "type": "rest"
       }
     },
-    "endpoint_companiesContacts.attachContactToACompany": {
-      "id": "endpoint_companiesContacts.attachContactToACompany",
+    "endpoint_.attachContactToACompany": {
+      "id": "endpoint_.attachContactToACompany",
       "description": "You can attach a company to a single contact.",
-      "namespace": [
-        "Companies",
-        "Contacts"
-      ],
       "displayName": "Attach a Contact to a Company",
       "operationId": "attachContactToACompany",
       "method": "POST",
@@ -6575,13 +6485,9 @@
         "type": "rest"
       }
     },
-    "endpoint_companiesContacts.detachContactFromACompany": {
-      "id": "endpoint_companiesContacts.detachContactFromACompany",
+    "endpoint_.detachContactFromACompany": {
+      "id": "endpoint_.detachContactFromACompany",
       "description": "You can detach a company from a single contact.",
-      "namespace": [
-        "Companies",
-        "Contacts"
-      ],
       "displayName": "Detach a contact from a company",
       "operationId": "detachContactFromACompany",
       "method": "DELETE",
@@ -6819,13 +6725,9 @@
         "type": "rest"
       }
     },
-    "endpoint_notesContacts.listNotes": {
-      "id": "endpoint_notesContacts.listNotes",
+    "endpoint_.listNotes": {
+      "id": "endpoint_.listNotes",
       "description": "You can fetch a list of notes that are associated to a contact.",
-      "namespace": [
-        "Notes",
-        "Contacts"
-      ],
       "displayName": "List all notes",
       "operationId": "listNotes",
       "method": "GET",
@@ -7039,13 +6941,9 @@
         "type": "rest"
       }
     },
-    "endpoint_notesContacts.createNote": {
-      "id": "endpoint_notesContacts.createNote",
+    "endpoint_.createNote": {
+      "id": "endpoint_.createNote",
       "description": "You can add a note to a single contact.",
-      "namespace": [
-        "Notes",
-        "Contacts"
-      ],
       "displayName": "Create a note",
       "operationId": "createNote",
       "method": "POST",
@@ -7370,13 +7268,9 @@
         "type": "rest"
       }
     },
-    "endpoint_contactsSegments.listSegmentsForAContact": {
-      "id": "endpoint_contactsSegments.listSegmentsForAContact",
+    "endpoint_.listSegmentsForAContact": {
+      "id": "endpoint_.listSegmentsForAContact",
       "description": "You can fetch a list of segments that are associated to a contact.",
-      "namespace": [
-        "Contacts",
-        "Segments"
-      ],
       "displayName": "List attached segments for contact",
       "operationId": "listSegmentsForAContact",
       "method": "GET",
@@ -7566,13 +7460,9 @@
         "type": "rest"
       }
     },
-    "endpoint_contactsSubscriptionTypes.listSubscriptionsForAContact": {
-      "id": "endpoint_contactsSubscriptionTypes.listSubscriptionsForAContact",
+    "endpoint_.listSubscriptionsForAContact": {
+      "id": "endpoint_.listSubscriptionsForAContact",
       "description": "You can fetch a list of subscription types that are attached to a contact. These can be subscriptions that a user has 'opted-in' to or has 'opted-out' from, depending on the subscription type.\nThis will return a list of Subscription Type objects that the contact is associated with.\n\nThe data property will show a combined list of:\n\n  1.Opt-out subscription types that the user has opted-out from.\n  2.Opt-in subscription types that the user has opted-in to receiving.\n",
-      "namespace": [
-        "Contacts",
-        "Subscription Types"
-      ],
       "displayName": "List subscriptions for a contact",
       "operationId": "listSubscriptionsForAContact",
       "method": "GET",
@@ -7796,13 +7686,9 @@
         "type": "rest"
       }
     },
-    "endpoint_subscriptionTypesContacts.attachSubscriptionTypeToContact": {
-      "id": "endpoint_subscriptionTypesContacts.attachSubscriptionTypeToContact",
+    "endpoint_.attachSubscriptionTypeToContact": {
+      "id": "endpoint_.attachSubscriptionTypeToContact",
       "description": "You can add a specific subscription to a contact. In Intercom, we have two different subscription types based on user consent - opt-out and opt-in:\n\n  1.Attaching a contact to an opt-out subscription type will opt that user out from receiving messages related to that subscription type.\n\n  2.Attaching a contact to an opt-in subscription type will opt that user in to receiving messages related to that subscription type.\n\nThis will return a subscription type model for the subscription type that was added to the contact.\n",
-      "namespace": [
-        "Subscription Types",
-        "Contacts"
-      ],
       "displayName": "Add subscription to a contact",
       "operationId": "attachSubscriptionTypeToContact",
       "method": "POST",
@@ -8138,13 +8024,9 @@
         "type": "rest"
       }
     },
-    "endpoint_subscriptionTypesContacts.detachSubscriptionTypeToContact": {
-      "id": "endpoint_subscriptionTypesContacts.detachSubscriptionTypeToContact",
+    "endpoint_.detachSubscriptionTypeToContact": {
+      "id": "endpoint_.detachSubscriptionTypeToContact",
       "description": "You can remove a specific subscription from a contact. This will return a subscription type model for the subscription type that was removed from the contact.",
-      "namespace": [
-        "Subscription Types",
-        "Contacts"
-      ],
       "displayName": "Remove subscription from a contact",
       "operationId": "detachSubscriptionTypeToContact",
       "method": "DELETE",
@@ -8380,13 +8262,9 @@
         "type": "rest"
       }
     },
-    "endpoint_contactsTags.listTagsForAContact": {
-      "id": "endpoint_contactsTags.listTagsForAContact",
+    "endpoint_.listTagsForAContact": {
+      "id": "endpoint_.listTagsForAContact",
       "description": "You can fetch a list of all tags that are attached to a specific contact.",
-      "namespace": [
-        "Contacts",
-        "Tags"
-      ],
       "displayName": "List tags attached to a contact",
       "operationId": "listTagsForAContact",
       "method": "GET",
@@ -8573,13 +8451,9 @@
         "type": "rest"
       }
     },
-    "endpoint_tagsContacts.attachTagToContact": {
-      "id": "endpoint_tagsContacts.attachTagToContact",
+    "endpoint_.attachTagToContact": {
+      "id": "endpoint_.attachTagToContact",
       "description": "You can tag a specific contact. This will return a tag object for the tag that was added to the contact.",
-      "namespace": [
-        "Tags",
-        "Contacts"
-      ],
       "displayName": "Add tag to a contact",
       "operationId": "attachTagToContact",
       "method": "POST",
@@ -8861,13 +8735,9 @@
         "type": "rest"
       }
     },
-    "endpoint_tagsContacts.detachTagFromContact": {
-      "id": "endpoint_tagsContacts.detachTagFromContact",
+    "endpoint_.detachTagFromContact": {
+      "id": "endpoint_.detachTagFromContact",
       "description": "You can remove tag from a specific contact. This will return a tag object for the tag that was removed from the contact.",
-      "namespace": [
-        "Tags",
-        "Contacts"
-      ],
       "displayName": "Remove tag from a contact",
       "operationId": "detachTagFromContact",
       "method": "DELETE",
@@ -9087,12 +8957,9 @@
         "type": "rest"
       }
     },
-    "endpoint_contacts.ShowContact": {
-      "id": "endpoint_contacts.ShowContact",
+    "endpoint_.ShowContact": {
+      "id": "endpoint_.ShowContact",
       "description": "You can fetch the details of a single contact.",
-      "namespace": [
-        "Contacts"
-      ],
       "displayName": "Get a contact",
       "operationId": "ShowContact",
       "method": "GET",
@@ -9325,12 +9192,9 @@
         "type": "rest"
       }
     },
-    "endpoint_contacts.UpdateContact": {
-      "id": "endpoint_contacts.UpdateContact",
+    "endpoint_.UpdateContact": {
+      "id": "endpoint_.UpdateContact",
       "description": "You can update an existing contact (ie. user or lead).",
-      "namespace": [
-        "Contacts"
-      ],
       "displayName": "Update a contact",
       "operationId": "UpdateContact",
       "method": "PUT",
@@ -9582,12 +9446,9 @@
         "type": "rest"
       }
     },
-    "endpoint_contacts.DeleteContact": {
-      "id": "endpoint_contacts.DeleteContact",
+    "endpoint_.DeleteContact": {
+      "id": "endpoint_.DeleteContact",
       "description": "You can delete a single contact.",
-      "namespace": [
-        "Contacts"
-      ],
       "displayName": "Delete a contact",
       "operationId": "DeleteContact",
       "method": "DELETE",
@@ -9732,12 +9593,9 @@
         "type": "rest"
       }
     },
-    "endpoint_contacts.MergeContact": {
-      "id": "endpoint_contacts.MergeContact",
+    "endpoint_.MergeContact": {
+      "id": "endpoint_.MergeContact",
       "description": "You can merge a contact with a `role` of `lead` into a contact with a `role` of `user`.",
-      "namespace": [
-        "Contacts"
-      ],
       "displayName": "Merge a lead and a user",
       "operationId": "MergeContact",
       "method": "POST",
@@ -9971,12 +9829,9 @@
         "type": "rest"
       }
     },
-    "endpoint_contacts.SearchContacts": {
-      "id": "endpoint_contacts.SearchContacts",
+    "endpoint_.SearchContacts": {
+      "id": "endpoint_.SearchContacts",
       "description": "You can search for multiple contacts by the value of their attributes in order to fetch exactly who you want.\n\nTo search for contacts, you need to send a `POST` request to `https://api.intercom.io/contacts/search`.\n\nThis will accept a query object in the body which will define your filters in order to search for contacts.\n\n{% admonition type=\"warning\" name=\"Optimizing search queries\" %}\n  Search queries can be complex, so optimizing them can help the performance of your search.\n  Use the `AND` and `OR` operators to combine multiple filters to get the exact results you need and utilize\n  pagination to limit the number of results returned. The default is `50` results per page.\n  See the [pagination section](https://developers.intercom.com/docs/build-an-integration/learn-more/rest-apis/pagination/#example-search-conversations-request) for more details on how to use the `starting_after` param.\n{% /admonition %}\n### Contact Creation Delay\n\nIf a contact has recently been created, there is a possibility that it will not yet be available when searching. This means that it may not appear in the response. This delay can take a few minutes. If you need to be instantly notified it is recommended to use webhooks and iterate to see if they match your search filters.\n\n### Nesting & Limitations\n\nYou can nest these filters in order to get even more granular insights that pinpoint exactly what you need. Example: (1 OR 2) AND (3 OR 4).\nThere are some limitations to the amount of multiple's there can be:\n* There's a limit of max 2 nested filters\n* There's a limit of max 15 filters for each AND or OR group\n\n### Searching for Timestamp Fields\n\nAll timestamp fields (created_at, updated_at etc.) are indexed as Dates for Contact Search queries; Datetime queries are not currently supported. This means you can only query for timestamp fields by day - not hour, minute or second.\nFor example, if you search for all Contacts with a created_at value greater (>) than 1577869200 (the UNIX timestamp for January 1st, 2020 9:00 AM), that will be interpreted as 1577836800 (January 1st, 2020 12:00 AM). The search results will then include Contacts created from January 2nd, 2020 12:00 AM onwards.\nIf you'd like to get contacts created on January 1st, 2020 you should search with a created_at value equal (=) to 1577836800 (January 1st, 2020 12:00 AM).\nThis behaviour applies only to timestamps used in search queries. The search results will still contain the full UNIX timestamp and be sorted accordingly.\n\n### Accepted Fields\n\nMost key listed as part of the Contacts Model are searchable, whether writeable or not. The value you search for has to match the accepted type, otherwise the query will fail (ie. as `created_at` accepts a date, the `value` cannot be a string such as `\"foorbar\"`).\n\n| Field                              | Type                           |\n| ---------------------------------- | ------------------------------ |\n| id                                 | String                         |\n| role                               | String<br>Accepts user or lead |\n| name                               | String                         |\n| avatar                             | String                         |\n| owner_id                           | Integer                        |\n| email                              | String                         |\n| email_domain                       | String                         |\n| phone                              | String                         |\n| formatted_phone                    | String                         |\n| external_id                        | String                         |\n| created_at                         | Date (UNIX Timestamp)          |\n| signed_up_at                       | Date (UNIX Timestamp)          |\n| updated_at                         | Date (UNIX Timestamp)          |\n| last_seen_at                       | Date (UNIX Timestamp)          |\n| last_contacted_at                  | Date (UNIX Timestamp)          |\n| last_replied_at                    | Date (UNIX Timestamp)          |\n| last_email_opened_at               | Date (UNIX Timestamp)          |\n| last_email_clicked_at              | Date (UNIX Timestamp)          |\n| language_override                  | String                         |\n| browser                            | String                         |\n| browser_language                   | String                         |\n| os                                 | String                         |\n| location.country                   | String                         |\n| location.region                    | String                         |\n| location.city                      | String                         |\n| unsubscribed_from_emails           | Boolean                        |\n| marked_email_as_spam               | Boolean                        |\n| has_hard_bounced                   | Boolean                        |\n| ios_last_seen_at                   | Date (UNIX Timestamp)          |\n| ios_app_version                    | String                         |\n| ios_device                         | String                         |\n| ios_app_device                     | String                         |\n| ios_os_version                     | String                         |\n| ios_app_name                       | String                         |\n| ios_sdk_version                    | String                         |\n| android_last_seen_at               | Date (UNIX Timestamp)          |\n| android_app_version                | String                         |\n| android_device                     | String                         |\n| android_app_name                   | String                         |\n| andoid_sdk_version                 | String                         |\n| segment_id                         | String                         |\n| tag_id                             | String                         |\n| custom_attributes.{attribute_name} | String                         |\n\n### Accepted Operators\n\n{% admonition type=\"attention\" name=\"Searching based on `created_at`\" %}\n  You cannot use the `<=` or `>=` operators to search by `created_at`.\n{% /admonition %}\n\nThe table below shows the operators you can use to define how you want to search for the value.  The operator should be put in as a string (`\"=\"`). The operator has to be compatible with the field's type (eg. you cannot search with `>` for a given string value as it's only compatible for integer's and dates).\n\n| Operator | Valid Types                      | Description                                                      |\n| :------- | :------------------------------- | :--------------------------------------------------------------- |\n| =        | All                              | Equals                                                           |\n| !=       | All                              | Doesn't Equal                                                    |\n| IN       | All                              | In<br>Shortcut for `OR` queries<br>Values must be in Array       |\n| NIN      | All                              | Not In<br>Shortcut for `OR !` queries<br>Values must be in Array |\n| >        | Integer<br>Date (UNIX Timestamp) | Greater than                                                     |\n| <       | Integer<br>Date (UNIX Timestamp) | Lower than                                                       |\n| ~        | String                           | Contains                                                         |\n| !~       | String                           | Doesn't Contain                                                  |\n| ^        | String                           | Starts With                                                      |\n| $        | String                           | Ends With                                                        |\n",
-      "namespace": [
-        "Contacts"
-      ],
       "displayName": "Search contacts",
       "operationId": "SearchContacts",
       "method": "POST",
@@ -10138,12 +9993,9 @@
         "type": "rest"
       }
     },
-    "endpoint_contacts.ListContacts": {
-      "id": "endpoint_contacts.ListContacts",
+    "endpoint_.ListContacts": {
+      "id": "endpoint_.ListContacts",
       "description": "You can fetch a list of all contacts (ie. users or leads) in your workspace.\n{% admonition type=\"warning\" name=\"Pagination\" %}\n  You can use pagination to limit the number of results returned. The default is `50` results per page.\n  See the [pagination section](https://developers.intercom.com/docs/build-an-integration/learn-more/rest-apis/pagination/#pagination-for-list-apis) for more details on how to use the `starting_after` param.\n{% /admonition %}\n",
-      "namespace": [
-        "Contacts"
-      ],
       "displayName": "List all contacts",
       "operationId": "ListContacts",
       "method": "GET",
@@ -10267,12 +10119,9 @@
         "type": "rest"
       }
     },
-    "endpoint_contacts.CreateContact": {
-      "id": "endpoint_contacts.CreateContact",
+    "endpoint_.CreateContact": {
+      "id": "endpoint_.CreateContact",
       "description": "You can create a new contact (ie. user or lead).",
-      "namespace": [
-        "Contacts"
-      ],
       "displayName": "Create contact",
       "operationId": "CreateContact",
       "method": "POST",
@@ -10497,12 +10346,9 @@
         "type": "rest"
       }
     },
-    "endpoint_contacts.ArchiveContact": {
-      "id": "endpoint_contacts.ArchiveContact",
+    "endpoint_.ArchiveContact": {
+      "id": "endpoint_.ArchiveContact",
       "description": "You can archive a single contact.",
-      "namespace": [
-        "Contacts"
-      ],
       "displayName": "Archive contact",
       "operationId": "ArchiveContact",
       "method": "POST",
@@ -10624,12 +10470,9 @@
         "type": "rest"
       }
     },
-    "endpoint_contacts.UnarchiveContact": {
-      "id": "endpoint_contacts.UnarchiveContact",
+    "endpoint_.UnarchiveContact": {
+      "id": "endpoint_.UnarchiveContact",
       "description": "You can unarchive a single contact.",
-      "namespace": [
-        "Contacts"
-      ],
       "displayName": "Unarchive contact",
       "operationId": "UnarchiveContact",
       "method": "POST",
@@ -10751,13 +10594,9 @@
         "type": "rest"
       }
     },
-    "endpoint_tagsConversations.attachTagToConversation": {
-      "id": "endpoint_tagsConversations.attachTagToConversation",
+    "endpoint_.attachTagToConversation": {
+      "id": "endpoint_.attachTagToConversation",
       "description": "You can tag a specific conversation. This will return a tag object for the tag that was added to the conversation.",
-      "namespace": [
-        "Tags",
-        "Conversations"
-      ],
       "displayName": "Add tag to a conversation",
       "operationId": "attachTagToConversation",
       "method": "POST",
@@ -11011,13 +10850,9 @@
         "type": "rest"
       }
     },
-    "endpoint_tagsConversations.detachTagFromConversation": {
-      "id": "endpoint_tagsConversations.detachTagFromConversation",
+    "endpoint_.detachTagFromConversation": {
+      "id": "endpoint_.detachTagFromConversation",
       "description": "You can remove tag from a specific conversation. This will return a tag object for the tag that was removed from the conversation.",
-      "namespace": [
-        "Tags",
-        "Conversations"
-      ],
       "displayName": "Remove tag from a conversation",
       "operationId": "detachTagFromConversation",
       "method": "DELETE",
@@ -11323,12 +11158,9 @@
         "type": "rest"
       }
     },
-    "endpoint_conversations.listConversations": {
-      "id": "endpoint_conversations.listConversations",
+    "endpoint_.listConversations": {
+      "id": "endpoint_.listConversations",
       "description": "You can fetch a list of all conversations.\n\nYou can optionally request the result page size and the cursor to start after to fetch the result.\n{% admonition type=\"warning\" name=\"Pagination\" %}\n  You can use pagination to limit the number of results returned. The default is `20` results per page.\n  See the [pagination section](https://developers.intercom.com/docs/build-an-integration/learn-more/rest-apis/pagination/#pagination-for-list-apis) for more details on how to use the `starting_after` param.\n{% /admonition %}\n",
-      "namespace": [
-        "Conversations"
-      ],
       "displayName": "List all conversations",
       "operationId": "listConversations",
       "method": "GET",
@@ -11586,12 +11418,9 @@
         "type": "rest"
       }
     },
-    "endpoint_conversations.createConversation": {
-      "id": "endpoint_conversations.createConversation",
+    "endpoint_.createConversation": {
+      "id": "endpoint_.createConversation",
       "description": "You can create a conversation that has been initiated by a contact (ie. user or lead).\nThe conversation can be an in-app message only.\n\n{% admonition type=\"info\" name=\"Sending for visitors\" %}\nYou can also send a message from a visitor by specifying their `user_id` or `id` value in the `from` field, along with a `type` field value of `contact`.\nThis visitor will be automatically converted to a contact with a lead role once the conversation is created.\n{% /admonition %}\n\nThis will return the Message model that has been created.\n\n",
-      "namespace": [
-        "Conversations"
-      ],
       "displayName": "Creates a conversation",
       "operationId": "createConversation",
       "method": "POST",
@@ -11820,12 +11649,9 @@
         "type": "rest"
       }
     },
-    "endpoint_conversations.retrieveConversation": {
-      "id": "endpoint_conversations.retrieveConversation",
+    "endpoint_.retrieveConversation": {
+      "id": "endpoint_.retrieveConversation",
       "description": "\nYou can fetch the details of a single conversation.\n\nThis will return a single Conversation model with all its conversation parts.\n\n{% admonition type=\"warning\" name=\"Hard limit of 500 parts\" %}\nThe maximum number of conversation parts that can be returned via the API is 500. If you have more than that we will return the 500 most recent conversation parts.\n{% /admonition %}\n\nFor AI agent conversation metadata, please note that you need to have the agent enabled in your workspace, which is a [paid feature](https://www.intercom.com/help/en/articles/8205718-fin-resolutions#h_97f8c2e671).\n",
-      "namespace": [
-        "Conversations"
-      ],
       "displayName": "Retrieve a conversation",
       "operationId": "retrieveConversation",
       "method": "GET",
@@ -12111,12 +11937,9 @@
         "type": "rest"
       }
     },
-    "endpoint_conversations.updateConversation": {
-      "id": "endpoint_conversations.updateConversation",
+    "endpoint_.updateConversation": {
+      "id": "endpoint_.updateConversation",
       "description": "\nYou can update an existing conversation.\n\n{% admonition type=\"info\" name=\"Replying and other actions\" %}\nIf you want to reply to a coveration or take an action such as assign, unassign, open, close or snooze, take a look at the reply and manage endpoints.\n{% /admonition %}\n\n",
-      "namespace": [
-        "Conversations"
-      ],
       "displayName": "Update a conversation",
       "operationId": "updateConversation",
       "method": "PUT",
@@ -12595,12 +12418,9 @@
         "type": "rest"
       }
     },
-    "endpoint_conversations.searchConversations": {
-      "id": "endpoint_conversations.searchConversations",
+    "endpoint_.searchConversations": {
+      "id": "endpoint_.searchConversations",
       "description": "You can search for multiple conversations by the value of their attributes in order to fetch exactly which ones you want.\n\nTo search for conversations, you need to send a `POST` request to `https://api.intercom.io/conversations/search`.\n\nThis will accept a query object in the body which will define your filters in order to search for conversations.\n{% admonition type=\"warning\" name=\"Optimizing search queries\" %}\n  Search queries can be complex, so optimizing them can help the performance of your search.\n  Use the `AND` and `OR` operators to combine multiple filters to get the exact results you need and utilize\n  pagination to limit the number of results returned. The default is `20` results per page and maximum is `150`.\n  See the [pagination section](https://developers.intercom.com/docs/build-an-integration/learn-more/rest-apis/pagination/#example-search-conversations-request) for more details on how to use the `starting_after` param.\n{% /admonition %}\n\n### Nesting & Limitations\n\nYou can nest these filters in order to get even more granular insights that pinpoint exactly what you need. Example: (1 OR 2) AND (3 OR 4).\nThere are some limitations to the amount of multiple's there can be:\n- There's a limit of max 2 nested filters\n- There's a limit of max 15 filters for each AND or OR group\n\n### Accepted Fields\n\nMost keys listed as part of the The conversation model is searchable, whether writeable or not. The value you search for has to match the accepted type, otherwise the query will fail (ie. as `created_at` accepts a date, the `value` cannot be a string such as `\"foorbar\"`).\n\n| Field                                     | Type                                                                                                                                                   |\n| :---------------------------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------- |\n| id                                        | String                                                                                                                                                 |\n| created_at                                | Date (UNIX timestamp)                                                                                                                                  |\n| updated_at                                | Date (UNIX timestamp)                                                                                                                                  |\n| source.type                               | String<br>Accepted fields are `conversation`, `email`, `facebook`, `instagram`, `phone_call`, `phone_switch`, `push`, `sms`, `twitter` and `whatsapp`. |\n| source.id                                 | String                                                                                                                                                 |\n| source.delivered_as                       | String                                                                                                                                                 |\n| source.subject                            | String                                                                                                                                                 |\n| source.body                               | String                                                                                                                                                 |\n| source.author.id                          | String                                                                                                                                                 |\n| source.author.type                        | String                                                                                                                                                 |\n| source.author.name                        | String                                                                                                                                                 |\n| source.author.email                       | String                                                                                                                                                 |\n| source.url                                | String                                                                                                                                                 |\n| contact_ids                               | String                                                                                                                                                 |\n| teammate_ids                              | String                                                                                                                                                 |\n| admin_assignee_id                         | String                                                                                                                                                 |\n| team_assignee_id                          | String                                                                                                                                                 |\n| channel_initiated                         | String                                                                                                                                                 |\n| open                                      | Boolean                                                                                                                                                |\n| read                                      | Boolean                                                                                                                                                |\n| state                                     | String                                                                                                                                                 |\n| waiting_since                             | Date (UNIX timestamp)                                                                                                                                  |\n| snoozed_until                             | Date (UNIX timestamp)                                                                                                                                  |\n| tag_ids                                   | String                                                                                                                                                 |\n| priority                                  | String                                                                                                                                                 |\n| statistics.time_to_assignment             | Integer                                                                                                                                                |\n| statistics.time_to_admin_reply            | Integer                                                                                                                                                |\n| statistics.time_to_first_close            | Integer                                                                                                                                                |\n| statistics.time_to_last_close             | Integer                                                                                                                                                |\n| statistics.median_time_to_reply           | Integer                                                                                                                                                |\n| statistics.first_contact_reply_at         | Date (UNIX timestamp)                                                                                                                                  |\n| statistics.first_assignment_at            | Date (UNIX timestamp)                                                                                                                                  |\n| statistics.first_admin_reply_at           | Date (UNIX timestamp)                                                                                                                                  |\n| statistics.first_close_at                 | Date (UNIX timestamp)                                                                                                                                  |\n| statistics.last_assignment_at             | Date (UNIX timestamp)                                                                                                                                  |\n| statistics.last_assignment_admin_reply_at | Date (UNIX timestamp)                                                                                                                                  |\n| statistics.last_contact_reply_at          | Date (UNIX timestamp)                                                                                                                                  |\n| statistics.last_admin_reply_at            | Date (UNIX timestamp)                                                                                                                                  |\n| statistics.last_close_at                  | Date (UNIX timestamp)                                                                                                                                  |\n| statistics.last_closed_by_id              | String                                                                                                                                                 |\n| statistics.count_reopens                  | Integer                                                                                                                                                |\n| statistics.count_assignments              | Integer                                                                                                                                                |\n| statistics.count_conversation_parts       | Integer                                                                                                                                                |\n| conversation_rating.requested_at          | Date (UNIX timestamp)                                                                                                                                  |\n| conversation_rating.replied_at            | Date (UNIX timestamp)                                                                                                                                  |\n| conversation_rating.score                 | Integer                                                                                                                                                |\n| conversation_rating.remark                | String                                                                                                                                                 |\n| conversation_rating.contact_id            | String                                                                                                                                                 |\n| conversation_rating.admin_d               | String                                                                                                                                                 |\n| ai_agent_participated                     | Boolean                                                                                                                                                |\n| ai_agent.resolution_state                 | String                                                                                                                                                 |\n| ai_agent.last_answer_type                 | String                                                                                                                                                 |\n| ai_agent.rating                           | Integer                                                                                                                                                |\n| ai_agent.rating_remark                    | String                                                                                                                                                 |\n| ai_agent.source_type                      | String                                                                                                                                                 |\n| ai_agent.source_title                     | String                                                                                                                                                 |\n\n### Accepted Operators\n\nThe table below shows the operators you can use to define how you want to search for the value.  The operator should be put in as a string (`\"=\"`). The operator has to be compatible with the field's type  (eg. you cannot search with `>` for a given string value as it's only compatible for integer's and dates).\n\n| Operator | Valid Types                    | Description                                                  |\n| :------- | :----------------------------- | :----------------------------------------------------------- |\n| =        | All                            | Equals                                                       |\n| !=       | All                            | Doesn't Equal                                                |\n| IN       | All                            | In  Shortcut for `OR` queries  Values most be in Array       |\n| NIN      | All                            | Not In  Shortcut for `OR !` queries  Values must be in Array |\n| >        | Integer  Date (UNIX Timestamp) | Greater (or equal) than                                      |\n| <       | Integer  Date (UNIX Timestamp) | Lower (or equal) than                                        |\n| ~        | String                         | Contains                                                     |\n| !~       | String                         | Doesn't Contain                                              |\n| ^        | String                         | Starts With                                                  |\n| $        | String                         | Ends With                                                    |\n",
-      "namespace": [
-        "Conversations"
-      ],
       "displayName": "Search conversations",
       "operationId": "searchConversations",
       "method": "POST",
@@ -12793,12 +12613,9 @@
         "type": "rest"
       }
     },
-    "endpoint_conversations.replyConversation": {
-      "id": "endpoint_conversations.replyConversation",
+    "endpoint_.replyConversation": {
+      "id": "endpoint_.replyConversation",
       "description": "You can reply to a conversation with a message from an admin or on behalf of a contact, or with a note for admins.",
-      "namespace": [
-        "Conversations"
-      ],
       "displayName": "Reply to a conversation",
       "operationId": "replyConversation",
       "method": "POST",
@@ -13442,12 +13259,9 @@
         "type": "rest"
       }
     },
-    "endpoint_conversations.manageConversation": {
-      "id": "endpoint_conversations.manageConversation",
+    "endpoint_.manageConversation": {
+      "id": "endpoint_.manageConversation",
       "description": "For managing conversations you can:\n- Close a conversation\n- Snooze a conversation to reopen on a future date\n- Open a conversation which is `snoozed` or `closed`\n- Assign a conversation to an admin and/or team.\n",
-      "namespace": [
-        "Conversations"
-      ],
       "displayName": "Manage a conversation",
       "operationId": "manageConversation",
       "method": "POST",
@@ -14188,12 +14002,9 @@
         "type": "rest"
       }
     },
-    "endpoint_conversations.autoAssignConversation": {
-      "id": "endpoint_conversations.autoAssignConversation",
+    "endpoint_.autoAssignConversation": {
+      "id": "endpoint_.autoAssignConversation",
       "description": "You can let a conversation be automatically assigned following assignment rules.\n{% admonition type=\"attention\" name=\"When using workflows\" %}\nIt is not possible to use this endpoint with Workflows.\n{% /admonition %}\n",
-      "namespace": [
-        "Conversations"
-      ],
       "displayName": "Run Assignment Rules on a conversation",
       "operationId": "autoAssignConversation",
       "method": "POST",
@@ -14489,12 +14300,9 @@
         "type": "rest"
       }
     },
-    "endpoint_conversations.attachContactToConversation": {
-      "id": "endpoint_conversations.attachContactToConversation",
+    "endpoint_.attachContactToConversation": {
+      "id": "endpoint_.attachContactToConversation",
       "description": "You can add participants who are contacts to a conversation, on behalf of either another contact or an admin.\n\n{% admonition type=\"attention\" name=\"Contacts without an email\" %}\nIf you add a contact via the email parameter and there is no user/lead found on that workspace with he given email, then we will create a new contact with `role` set to `lead`.\n{% /admonition %}\n\n",
-      "namespace": [
-        "Conversations"
-      ],
       "displayName": "Attach a contact to a conversation",
       "operationId": "attachContactToConversation",
       "method": "POST",
@@ -14758,12 +14566,9 @@
         "type": "rest"
       }
     },
-    "endpoint_conversations.detachContactFromConversation": {
-      "id": "endpoint_conversations.detachContactFromConversation",
+    "endpoint_.detachContactFromConversation": {
+      "id": "endpoint_.detachContactFromConversation",
       "description": "You can add participants who are contacts to a conversation, on behalf of either another contact or an admin.\n\n{% admonition type=\"attention\" name=\"Contacts without an email\" %}\nIf you add a contact via the email parameter and there is no user/lead found on that workspace with he given email, then we will create a new contact with `role` set to `lead`.\n{% /admonition %}\n\n",
-      "namespace": [
-        "Conversations"
-      ],
       "displayName": "Detach a contact from a group conversation",
       "operationId": "detachContactFromConversation",
       "method": "DELETE",
@@ -15154,12 +14959,9 @@
         "type": "rest"
       }
     },
-    "endpoint_conversations.redactConversation": {
-      "id": "endpoint_conversations.redactConversation",
+    "endpoint_.redactConversation": {
+      "id": "endpoint_.redactConversation",
       "description": "You can redact a conversation part or the source message of a conversation (as seen in the source object).\n\n{% admonition type=\"info\" name=\"Redacting parts and messages\" %}\nIf you are redacting a conversation part, it must have a `body`. If you are redacting a source message, it must have been created by a contact. We will return a `conversation_part_not_redactable` error if these criteria are not met.\n{% /admonition %}\n\n",
-      "namespace": [
-        "Conversations"
-      ],
       "displayName": "Redact a conversation part",
       "operationId": "redactConversation",
       "method": "POST",
@@ -15526,12 +15328,9 @@
         "type": "rest"
       }
     },
-    "endpoint_conversations.convertConversationToTicket": {
-      "id": "endpoint_conversations.convertConversationToTicket",
+    "endpoint_.convertConversationToTicket": {
+      "id": "endpoint_.convertConversationToTicket",
       "description": "You can convert a conversation to a ticket.",
-      "namespace": [
-        "Conversations"
-      ],
       "displayName": "Convert a conversation to a ticket",
       "operationId": "convertConversationToTicket",
       "method": "POST",
@@ -15918,12 +15717,9 @@
         "type": "rest"
       }
     },
-    "endpoint_dataAttributes.lisDataAttributes": {
-      "id": "endpoint_dataAttributes.lisDataAttributes",
+    "endpoint_.lisDataAttributes": {
+      "id": "endpoint_.lisDataAttributes",
       "description": "You can fetch a list of all data attributes belonging to a workspace for contacts, companies or conversations.",
-      "namespace": [
-        "Data Attributes"
-      ],
       "displayName": "List all data attributes",
       "operationId": "lisDataAttributes",
       "method": "GET",
@@ -16328,12 +16124,9 @@
         "type": "rest"
       }
     },
-    "endpoint_dataAttributes.createDataAttribute": {
-      "id": "endpoint_dataAttributes.createDataAttribute",
+    "endpoint_.createDataAttribute": {
+      "id": "endpoint_.createDataAttribute",
       "description": "You can create a data attributes for a `contact` or a `company`.",
-      "namespace": [
-        "Data Attributes"
-      ],
       "displayName": "Create a data attribute",
       "operationId": "createDataAttribute",
       "method": "POST",
@@ -16746,12 +16539,9 @@
         "type": "rest"
       }
     },
-    "endpoint_dataAttributes.updateDataAttribute": {
-      "id": "endpoint_dataAttributes.updateDataAttribute",
+    "endpoint_.updateDataAttribute": {
+      "id": "endpoint_.updateDataAttribute",
       "description": "\nYou can update a data attribute.\n\n> 🚧 Updating the data type is not possible\n>\n> It is currently a dangerous action to execute changing a data attribute's type via the API. You will need to update the type via the UI instead.\n",
-      "namespace": [
-        "Data Attributes"
-      ],
       "displayName": "Update a data attribute",
       "operationId": "updateDataAttribute",
       "method": "PUT",
@@ -17160,12 +16950,9 @@
         "type": "rest"
       }
     },
-    "endpoint_dataEvents.lisDataEvents": {
-      "id": "endpoint_dataEvents.lisDataEvents",
+    "endpoint_.lisDataEvents": {
+      "id": "endpoint_.lisDataEvents",
       "description": "\n> 🚧\n>\n> Please note that you can only 'list' events that are less than 90 days old. Event counts and summaries will still include your events older than 90 days but you cannot 'list' these events individually if they are older than 90 days\n\nThe events belonging to a customer can be listed by sending a GET request to `https://api.intercom.io/events` with a user or lead identifier along with a `type` parameter. The identifier parameter can be one of `user_id`, `email` or `intercom_user_id`. The `type` parameter value must be `user`.\n\n- `https://api.intercom.io/events?type=user&user_id={user_id}`\n- `https://api.intercom.io/events?type=user&email={email}`\n- `https://api.intercom.io/events?type=user&intercom_user_id={id}` (this call can be used to list leads)\n\nThe `email` parameter value should be [url encoded](http://en.wikipedia.org/wiki/Percent-encoding) when sending.\n\nYou can optionally define the result page size as well with the `per_page` parameter.\n",
-      "namespace": [
-        "Data Events"
-      ],
       "displayName": "List all data events",
       "operationId": "lisDataEvents",
       "method": "GET",
@@ -17399,12 +17186,9 @@
         "type": "rest"
       }
     },
-    "endpoint_dataEvents.createDataEvent": {
-      "id": "endpoint_dataEvents.createDataEvent",
+    "endpoint_.createDataEvent": {
+      "id": "endpoint_.createDataEvent",
       "description": "\nYou will need an Access Token that has write permissions to send Events. Once you have a key you can submit events via POST to the Events resource, which is located at https://api.intercom.io/events, or you can send events using one of the client libraries. When working with the HTTP API directly a client should send the event with a `Content-Type` of `application/json`.\n\nWhen using the JavaScript API, [adding the code to your app](http://docs.intercom.io/configuring-Intercom/tracking-user-events-in-your-app) makes the Events API available. Once added, you can submit an event using the `trackEvent` method. This will associate the event with the Lead or currently logged-in user or logged-out visitor/lead and send it to Intercom. The final parameter is a map that can be used to send optional metadata about the event.\n\nWith the Ruby client you pass a hash describing the event to `Intercom::Event.create`, or call the `track_user` method directly on the current user object (e.g. `user.track_event`).\n\n**NB: For the JSON object types, please note that we do not currently support nested JSON structure.**\n\n| Type            | Description                                                                                                                                                                                                     | Example                                                                           |\n| :-------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :-------------------------------------------------------------------------------- |\n| String          | The value is a JSON String                                                                                                                                                                                      | `\"source\":\"desktop\"`                                                              |\n| Number          | The value is a JSON Number                                                                                                                                                                                      | `\"load\": 3.67`                                                                    |\n| Date            | The key ends with the String `_date` and the value is a [Unix timestamp](http://en.wikipedia.org/wiki/Unix_time), assumed to be in the [UTC](http://en.wikipedia.org/wiki/Coordinated_Universal_Time) timezone. | `\"contact_date\": 1392036272`                                                      |\n| Link            | The value is a HTTP or HTTPS URI.                                                                                                                                                                               | `\"article\": \"https://example.org/ab1de.html\"`                                     |\n| Rich Link       | The value is a JSON object that contains `url` and `value` keys.                                                                                                                                                | `\"article\": {\"url\": \"https://example.org/ab1de.html\", \"value\":\"the dude abides\"}` |\n| Monetary Amount | The value is a JSON object that contains `amount` and `currency` keys. The `amount` key is a positive integer representing the amount in cents. The price in the example to the right denotes €349.99.          | `\"price\": {\"amount\": 34999, \"currency\": \"eur\"}`                                   |\n\n**Lead Events**\n\nWhen submitting events for Leads, you will need to specify the Lead's `id`.\n\n**Metadata behaviour**\n\n- We currently limit the number of tracked metadata keys to 10 per event. Once the quota is reached, we ignore any further keys we receive. The first 10 metadata keys are determined by the order in which they are sent in with the event.\n- It is not possible to change the metadata keys once the event has been sent. A new event will need to be created with the new keys and you can archive the old one.\n- There might be up to 24 hrs delay when you send a new metadata for an existing event.\n\n**Event de-duplication**\n\nThe API may detect and ignore duplicate events. Each event is uniquely identified as a combination of the following data - the Workspace identifier, the Contact external identifier, the Data Event name and the Data Event created time. As a result, it is **strongly recommended** to send a second granularity Unix timestamp in the `created_at` field.\n\nDuplicated events are responded to using the normal `202 Accepted` code - an error is not thrown, however repeat requests will be counted against any rate limit that is in place.\n\n### HTTP API Responses\n\n- Successful responses to submitted events return `202 Accepted` with an empty body.\n- Unauthorised access will be rejected with a `401 Unauthorized` or `403 Forbidden` response code.\n- Events sent about users that cannot be found will return a `404 Not Found`.\n- Event lists containing duplicate events will have those duplicates ignored.\n- Server errors will return a `500` response code and may contain an error message in the body.\n\n",
-      "namespace": [
-        "Data Events"
-      ],
       "displayName": "Submit a data event",
       "operationId": "createDataEvent",
       "method": "POST",
@@ -17521,12 +17305,9 @@
         "type": "rest"
       }
     },
-    "endpoint_dataEvents.dataEventSummaries": {
-      "id": "endpoint_dataEvents.dataEventSummaries",
+    "endpoint_.dataEventSummaries": {
+      "id": "endpoint_.dataEventSummaries",
       "description": "Create event summaries for a user. Event summaries are used to track the number of times an event has occurred, the first time it occurred and the last time it occurred.\n\n",
-      "namespace": [
-        "Data Events"
-      ],
       "displayName": "Create event summaries",
       "operationId": "dataEventSummaries",
       "method": "POST",
@@ -17663,12 +17444,9 @@
         "type": "rest"
       }
     },
-    "endpoint_dataExport.createDataExport": {
-      "id": "endpoint_dataExport.createDataExport",
+    "endpoint_.createDataExport": {
+      "id": "endpoint_.createDataExport",
       "description": "To create your export job, you need to send a `POST` request to the export endpoint `https://api.intercom.io/export/content/data`.\n\nThe only parameters you need to provide are the range of dates that you want exported.\n\n>🚧 Limit of one active job\n>\n> You can only have one active job per workspace. You will receive a HTTP status code of 429 with the message Exceeded rate limit of 1 pending message data export jobs if you attempt to create a second concurrent job.\n\n>❗️ Updated_at not included\n>\n> It should be noted that the timeframe only includes messages sent during the time period and not messages that were only updated during this period. For example, if a message was updated yesterday but sent two days ago, you would need to set the created_at_after date before the message was sent to include that in your retrieval job.\n\n>📘 Date ranges are inclusive\n>\n> Requesting data for 2018-06-01 until 2018-06-30 will get all data for those days including those specified - e.g. 2018-06-01 00:00:00 until 2018-06-30 23:59:99.\n",
-      "namespace": [
-        "Data Export"
-      ],
       "displayName": "Create content data export",
       "operationId": "createDataExport",
       "method": "POST",
@@ -17791,12 +17569,9 @@
         "type": "rest"
       }
     },
-    "endpoint_dataExport.getDataExport": {
-      "id": "endpoint_dataExport.getDataExport",
+    "endpoint_.getDataExport": {
+      "id": "endpoint_.getDataExport",
       "description": "You can view the status of your job by sending a `GET` request to the URL\n`https://api.intercom.io/export/content/data/{job_identifier}` - the `{job_identifier}` is the value returned in the response when you first created the export job. More on it can be seen in the Export Job Model.\n\n> 🚧 Jobs expire after two days\n> All jobs that have completed processing (and are thus available to download from the provided URL) will have an expiry limit of two days from when the export ob completed. After this, the data will no longer be available.\n",
-      "namespace": [
-        "Data Export"
-      ],
       "displayName": "Show content data export",
       "operationId": "getDataExport",
       "method": "GET",
@@ -17926,12 +17701,9 @@
         "type": "rest"
       }
     },
-    "endpoint_dataExport.cancelDataExport": {
-      "id": "endpoint_dataExport.cancelDataExport",
+    "endpoint_.cancelDataExport": {
+      "id": "endpoint_.cancelDataExport",
       "description": "You can cancel your job",
-      "namespace": [
-        "Data Export"
-      ],
       "displayName": "Cancel content data export",
       "operationId": "cancelDataExport",
       "method": "POST",
@@ -18053,12 +17825,9 @@
         "type": "rest"
       }
     },
-    "endpoint_dataExport.downloadDataExport": {
-      "id": "endpoint_dataExport.downloadDataExport",
+    "endpoint_.downloadDataExport": {
+      "id": "endpoint_.downloadDataExport",
       "description": "When a job has a status of complete, and thus a filled download_url, you can download your data by hitting that provided URL, formatted like so: https://api.intercom.io/download/content/data/xyz1234.\n\nYour exported message data will be streamed continuously back down to you in a gzipped CSV format.\n\n> 📘 Octet header required\n>\n> You will have to specify the header Accept: `application/octet-stream` when hitting this endpoint.\n",
-      "namespace": [
-        "Data Export"
-      ],
       "displayName": "Download content data export",
       "operationId": "downloadDataExport",
       "method": "GET",
@@ -18174,12 +17943,9 @@
         "type": "rest"
       }
     },
-    "endpoint_messages.createMessage": {
-      "id": "endpoint_messages.createMessage",
+    "endpoint_.createMessage": {
+      "id": "endpoint_.createMessage",
       "description": "You can create a message that has been initiated by an admin. The conversation can be either an in-app message or an email.\n\n> 🚧 Sending for visitors\n>\n> There can be a short delay between when a contact is created and when a contact becomes available to be messaged through the API. A 404 Not Found error will be returned in this case.\n\nThis will return the Message model that has been created.\n\n> 🚧 Retrieving Associated Conversations\n>\n> As this is a message, there will be no conversation present until the contact responds. Once they do, you will have to search for a contact's conversations with the id of the message.\n",
-      "namespace": [
-        "Messages"
-      ],
       "displayName": "Create a message",
       "operationId": "createMessage",
       "method": "POST",
@@ -18614,12 +18380,9 @@
         "type": "rest"
       }
     },
-    "endpoint_news.listNewsItems": {
-      "id": "endpoint_news.listNewsItems",
+    "endpoint_.listNewsItems": {
+      "id": "endpoint_.listNewsItems",
       "description": "You can fetch a list of all news items",
-      "namespace": [
-        "News"
-      ],
       "displayName": "List all news items",
       "operationId": "listNewsItems",
       "method": "GET",
@@ -18794,12 +18557,9 @@
         "type": "rest"
       }
     },
-    "endpoint_news.createNewsItem": {
-      "id": "endpoint_news.createNewsItem",
+    "endpoint_.createNewsItem": {
+      "id": "endpoint_.createNewsItem",
       "description": "You can create a news item",
-      "namespace": [
-        "News"
-      ],
       "displayName": "Create a news item",
       "operationId": "createNewsItem",
       "method": "POST",
@@ -18985,12 +18745,9 @@
         "type": "rest"
       }
     },
-    "endpoint_news.retrieveNewsItem": {
-      "id": "endpoint_news.retrieveNewsItem",
+    "endpoint_.retrieveNewsItem": {
+      "id": "endpoint_.retrieveNewsItem",
       "description": "You can fetch the details of a single news item.",
-      "namespace": [
-        "News"
-      ],
       "displayName": "Retrieve a news item",
       "operationId": "retrieveNewsItem",
       "method": "GET",
@@ -19193,11 +18950,8 @@
         "type": "rest"
       }
     },
-    "endpoint_news.updateNewsItem": {
-      "id": "endpoint_news.updateNewsItem",
-      "namespace": [
-        "News"
-      ],
+    "endpoint_.updateNewsItem": {
+      "id": "endpoint_.updateNewsItem",
       "displayName": "Update a news item",
       "operationId": "updateNewsItem",
       "method": "PUT",
@@ -19465,12 +19219,9 @@
         "type": "rest"
       }
     },
-    "endpoint_news.deleteNewsItem": {
-      "id": "endpoint_news.deleteNewsItem",
+    "endpoint_.deleteNewsItem": {
+      "id": "endpoint_.deleteNewsItem",
       "description": "You can delete a single news item.",
-      "namespace": [
-        "News"
-      ],
       "displayName": "Delete a news item",
       "operationId": "deleteNewsItem",
       "method": "DELETE",
@@ -19652,12 +19403,9 @@
         "type": "rest"
       }
     },
-    "endpoint_news.listLiveNewsfeedItems": {
-      "id": "endpoint_news.listLiveNewsfeedItems",
+    "endpoint_.listLiveNewsfeedItems": {
+      "id": "endpoint_.listLiveNewsfeedItems",
       "description": "You can fetch a list of all news items that are live on a given newsfeed",
-      "namespace": [
-        "News"
-      ],
       "displayName": "List all live newsfeed items",
       "operationId": "listLiveNewsfeedItems",
       "method": "GET",
@@ -19823,12 +19571,9 @@
         "type": "rest"
       }
     },
-    "endpoint_news.listNewsfeeds": {
-      "id": "endpoint_news.listNewsfeeds",
+    "endpoint_.listNewsfeeds": {
+      "id": "endpoint_.listNewsfeeds",
       "description": "You can fetch a list of all newsfeeds",
-      "namespace": [
-        "News"
-      ],
       "displayName": "List all newsfeeds",
       "operationId": "listNewsfeeds",
       "method": "GET",
@@ -19975,12 +19720,9 @@
         "type": "rest"
       }
     },
-    "endpoint_news.retrieveNewsfeed": {
-      "id": "endpoint_news.retrieveNewsfeed",
+    "endpoint_.retrieveNewsfeed": {
+      "id": "endpoint_.retrieveNewsfeed",
       "description": "You can fetch the details of a single newsfeed",
-      "namespace": [
-        "News"
-      ],
       "displayName": "Retrieve a newsfeed",
       "operationId": "retrieveNewsfeed",
       "method": "GET",
@@ -20134,12 +19876,9 @@
         "type": "rest"
       }
     },
-    "endpoint_notes.retrieveNote": {
-      "id": "endpoint_notes.retrieveNote",
+    "endpoint_.retrieveNote": {
+      "id": "endpoint_.retrieveNote",
       "description": "You can fetch the details of a single note.",
-      "namespace": [
-        "Notes"
-      ],
       "displayName": "Retrieve a note",
       "operationId": "retrieveNote",
       "method": "GET",
@@ -20326,12 +20065,9 @@
         "type": "rest"
       }
     },
-    "endpoint_segments.listSegments": {
-      "id": "endpoint_segments.listSegments",
+    "endpoint_.listSegments": {
+      "id": "endpoint_.listSegments",
       "description": "You can fetch a list of all segments.",
-      "namespace": [
-        "Segments"
-      ],
       "displayName": "List all segments",
       "operationId": "listSegments",
       "method": "GET",
@@ -20486,12 +20222,9 @@
         "type": "rest"
       }
     },
-    "endpoint_segments.retrieveSegment": {
-      "id": "endpoint_segments.retrieveSegment",
+    "endpoint_.retrieveSegment": {
+      "id": "endpoint_.retrieveSegment",
       "description": "You can fetch the details of a single segment.",
-      "namespace": [
-        "Segments"
-      ],
       "displayName": "Retrieve a segment",
       "operationId": "retrieveSegment",
       "method": "GET",
@@ -20668,12 +20401,9 @@
         "type": "rest"
       }
     },
-    "endpoint_subscriptionTypes.listSubscriptionTypes": {
-      "id": "endpoint_subscriptionTypes.listSubscriptionTypes",
+    "endpoint_.listSubscriptionTypes": {
+      "id": "endpoint_.listSubscriptionTypes",
       "description": "You can list all subscription types. A list of subscription type objects will be returned.",
-      "namespace": [
-        "Subscription Types"
-      ],
       "displayName": "List subscription types",
       "operationId": "listSubscriptionTypes",
       "method": "GET",
@@ -20812,12 +20542,9 @@
         "type": "rest"
       }
     },
-    "endpoint_switch.createPhoneSwitch": {
-      "id": "endpoint_switch.createPhoneSwitch",
+    "endpoint_.createPhoneSwitch": {
+      "id": "endpoint_.createPhoneSwitch",
       "description": "You can use the API to deflect phone calls to the Intercom Messenger.\nCalling this endpoint will send an SMS with a link to the Messenger to the phone number specified.\n\nIf custom attributes are specified, they will be added to the user or lead's custom data attributes.\n",
-      "namespace": [
-        "Switch"
-      ],
       "displayName": "Create a phone Switch",
       "operationId": "createPhoneSwitch",
       "method": "POST",
@@ -21022,12 +20749,9 @@
         "type": "rest"
       }
     },
-    "endpoint_tags.listTags": {
-      "id": "endpoint_tags.listTags",
+    "endpoint_.listTags": {
+      "id": "endpoint_.listTags",
       "description": "You can fetch a list of all tags for a given workspace.\n\n",
-      "namespace": [
-        "Tags"
-      ],
       "displayName": "List all tags",
       "operationId": "listTags",
       "method": "GET",
@@ -21150,12 +20874,9 @@
         "type": "rest"
       }
     },
-    "endpoint_tags.createTag": {
-      "id": "endpoint_tags.createTag",
+    "endpoint_.createTag": {
+      "id": "endpoint_.createTag",
       "description": "You can use this endpoint to perform the following operations:\n\n  **1. Create a new tag:** You can create a new tag by passing in the tag name as specified in \"Create or Update Tag Request Payload\" described below.\n\n  **2. Update an existing tag:** You can update an existing tag by passing the id of the tag as specified in \"Create or Update Tag Request Payload\" described below.\n\n  **3. Tag Companies:** You can tag single company or a list of companies. You can tag a company by passing in the tag name and the company details as specified in \"Tag Company Request Payload\" described below. Also, if the tag doesn't exist then a new one will be created automatically.\n\n  **4. Untag Companies:** You can untag a single company or a list of companies. You can untag a company by passing in the tag id and the company details as specified in \"Untag Company Request Payload\" described below.\n\n  **5. Tag Multiple Users:** You can tag a list of users. You can tag the users by passing in the tag name and the user details as specified in \"Tag Users Request Payload\" described below.\n\nEach operation will return a tag object.\n",
-      "namespace": [
-        "Tags"
-      ],
       "displayName": "Create or update a tag, Tag or untag companies, Tag contacts",
       "operationId": "createTag",
       "method": "POST",
@@ -21434,12 +21155,9 @@
         "type": "rest"
       }
     },
-    "endpoint_tags.findTag": {
-      "id": "endpoint_tags.findTag",
+    "endpoint_.findTag": {
+      "id": "endpoint_.findTag",
       "description": "You can fetch the details of tags that are on the workspace by their id.\nThis will return a tag object.\n",
-      "namespace": [
-        "Tags"
-      ],
       "displayName": "Find a specific tag",
       "operationId": "findTag",
       "method": "GET",
@@ -21613,12 +21331,9 @@
         "type": "rest"
       }
     },
-    "endpoint_tags.deleteTag": {
-      "id": "endpoint_tags.deleteTag",
+    "endpoint_.deleteTag": {
+      "id": "endpoint_.deleteTag",
       "description": "You can delete the details of tags that are on the workspace by passing in the id.",
-      "namespace": [
-        "Tags"
-      ],
       "displayName": "Delete tag",
       "operationId": "deleteTag",
       "method": "DELETE",
@@ -21809,12 +21524,9 @@
         "type": "rest"
       }
     },
-    "endpoint_teams.listTeams": {
-      "id": "endpoint_teams.listTeams",
+    "endpoint_.listTeams": {
+      "id": "endpoint_.listTeams",
       "description": "This will return a list of team objects for the App.",
-      "namespace": [
-        "Teams"
-      ],
       "displayName": "List all teams",
       "operationId": "listTeams",
       "method": "GET",
@@ -21931,12 +21643,9 @@
         "type": "rest"
       }
     },
-    "endpoint_teams.retrieveTeam": {
-      "id": "endpoint_teams.retrieveTeam",
+    "endpoint_.retrieveTeam": {
+      "id": "endpoint_.retrieveTeam",
       "description": "You can fetch the details of a single team, containing an array of admins that belong to this team.",
-      "namespace": [
-        "Teams"
-      ],
       "displayName": "Retrieve a team",
       "operationId": "retrieveTeam",
       "method": "GET",
@@ -22111,12 +21820,9 @@
         "type": "rest"
       }
     },
-    "endpoint_ticketTypeAttributes.createTicketTypeAttribute": {
-      "id": "endpoint_ticketTypeAttributes.createTicketTypeAttribute",
+    "endpoint_.createTicketTypeAttribute": {
+      "id": "endpoint_.createTicketTypeAttribute",
       "description": "You can create a new attribute for a ticket type.",
-      "namespace": [
-        "Ticket Type Attributes"
-      ],
       "displayName": "Create a new attribute for a ticket type",
       "operationId": "createTicketTypeAttribute",
       "method": "POST",
@@ -22305,12 +22011,9 @@
         "type": "rest"
       }
     },
-    "endpoint_ticketTypeAttributes.updateTicketTypeAttribute": {
-      "id": "endpoint_ticketTypeAttributes.updateTicketTypeAttribute",
+    "endpoint_.updateTicketTypeAttribute": {
+      "id": "endpoint_.updateTicketTypeAttribute",
       "description": "You can update an existing attribute for a ticket type.",
-      "namespace": [
-        "Ticket Type Attributes"
-      ],
       "displayName": "Update an existing attribute for a ticket type",
       "operationId": "updateTicketTypeAttribute",
       "method": "PUT",
@@ -22515,12 +22218,9 @@
         "type": "rest"
       }
     },
-    "endpoint_ticketTypes.listTicketTypes": {
-      "id": "endpoint_ticketTypes.listTicketTypes",
+    "endpoint_.listTicketTypes": {
+      "id": "endpoint_.listTicketTypes",
       "description": "You can get a list of all ticket types for a workspace.",
-      "namespace": [
-        "Ticket Types"
-      ],
       "displayName": "List all ticket types",
       "operationId": "listTicketTypes",
       "method": "GET",
@@ -22717,12 +22417,9 @@
         "type": "rest"
       }
     },
-    "endpoint_ticketTypes.createTicketType": {
-      "id": "endpoint_ticketTypes.createTicketType",
+    "endpoint_.createTicketType": {
+      "id": "endpoint_.createTicketType",
       "description": "You can create a new ticket type.\n> 📘 Creating ticket types.\n>\n> Every ticket type will be created with two default attributes: _default_title_ and _default_description_.\n> For the `icon` propery, use an emoji from [Twemoji Cheatsheet](https://twemoji-cheatsheet.vercel.app/)\n",
-      "namespace": [
-        "Ticket Types"
-      ],
       "displayName": "Create a ticket type",
       "operationId": "createTicketType",
       "method": "POST",
@@ -22916,12 +22613,9 @@
         "type": "rest"
       }
     },
-    "endpoint_ticketTypes.getTicketType": {
-      "id": "endpoint_ticketTypes.getTicketType",
+    "endpoint_.getTicketType": {
+      "id": "endpoint_.getTicketType",
       "description": "You can fetch the details of a single ticket type.",
-      "namespace": [
-        "Ticket Types"
-      ],
       "displayName": "Retrieve a ticket type",
       "operationId": "getTicketType",
       "method": "GET",
@@ -23139,12 +22833,9 @@
         "type": "rest"
       }
     },
-    "endpoint_ticketTypes.updateTicketType": {
-      "id": "endpoint_ticketTypes.updateTicketType",
+    "endpoint_.updateTicketType": {
+      "id": "endpoint_.updateTicketType",
       "description": "\nYou can update a ticket type.\n\n> 📘 Updating a ticket type.\n>\n> For the `icon` propery, use an emoji from [Twemoji Cheatsheet](https://twemoji-cheatsheet.vercel.app/)\n",
-      "namespace": [
-        "Ticket Types"
-      ],
       "displayName": "Update a ticket type",
       "operationId": "updateTicketType",
       "method": "PUT",
@@ -23380,12 +23071,9 @@
         "type": "rest"
       }
     },
-    "endpoint_tickets.replyTicket": {
-      "id": "endpoint_tickets.replyTicket",
+    "endpoint_.replyTicket": {
+      "id": "endpoint_.replyTicket",
       "description": "You can reply to a ticket with a message from an admin or on behalf of a contact, or with a note for admins.",
-      "namespace": [
-        "Tickets"
-      ],
       "displayName": "Reply to a ticket",
       "operationId": "replyTicket",
       "method": "POST",
@@ -23742,13 +23430,9 @@
         "type": "rest"
       }
     },
-    "endpoint_tagsTickets.attachTagToTicket": {
-      "id": "endpoint_tagsTickets.attachTagToTicket",
+    "endpoint_.attachTagToTicket": {
+      "id": "endpoint_.attachTagToTicket",
       "description": "You can tag a specific ticket. This will return a tag object for the tag that was added to the ticket.",
-      "namespace": [
-        "Tags",
-        "Tickets"
-      ],
       "displayName": "Add tag to a ticket",
       "operationId": "attachTagToTicket",
       "method": "POST",
@@ -24002,13 +23686,9 @@
         "type": "rest"
       }
     },
-    "endpoint_tagsTickets.detachTagFromTicket": {
-      "id": "endpoint_tagsTickets.detachTagFromTicket",
+    "endpoint_.detachTagFromTicket": {
+      "id": "endpoint_.detachTagFromTicket",
       "description": "You can remove tag from a specific ticket. This will return a tag object for the tag that was removed from the ticket.",
-      "namespace": [
-        "Tags",
-        "Tickets"
-      ],
       "displayName": "Remove tag from a ticket",
       "operationId": "detachTagFromTicket",
       "method": "DELETE",
@@ -24314,12 +23994,9 @@
         "type": "rest"
       }
     },
-    "endpoint_tickets.createTicket": {
-      "id": "endpoint_tickets.createTicket",
+    "endpoint_.createTicket": {
+      "id": "endpoint_.createTicket",
       "description": "You can create a new ticket.",
-      "namespace": [
-        "Tickets"
-      ],
       "displayName": "Create a ticket",
       "operationId": "createTicket",
       "method": "POST",
@@ -24573,12 +24250,9 @@
         "type": "rest"
       }
     },
-    "endpoint_tickets.getTicket": {
-      "id": "endpoint_tickets.getTicket",
+    "endpoint_.getTicket": {
+      "id": "endpoint_.getTicket",
       "description": "You can fetch the details of a single ticket.",
-      "namespace": [
-        "Tickets"
-      ],
       "displayName": "Retrieve a ticket",
       "operationId": "getTicket",
       "method": "GET",
@@ -24831,12 +24505,9 @@
         "type": "rest"
       }
     },
-    "endpoint_tickets.updateTicket": {
-      "id": "endpoint_tickets.updateTicket",
+    "endpoint_.updateTicket": {
+      "id": "endpoint_.updateTicket",
       "description": "You can update a ticket.",
-      "namespace": [
-        "Tickets"
-      ],
       "displayName": "Update a ticket",
       "operationId": "updateTicket",
       "method": "PUT",
@@ -25641,12 +25312,9 @@
         "type": "rest"
       }
     },
-    "endpoint_tickets.searchTickets": {
-      "id": "endpoint_tickets.searchTickets",
+    "endpoint_.searchTickets": {
+      "id": "endpoint_.searchTickets",
       "description": "You can search for multiple tickets by the value of their attributes in order to fetch exactly which ones you want.\n\nTo search for tickets, you send a `POST` request to `https://api.intercom.io/tickets/search`.\n\nThis will accept a query object in the body which will define your filters.\n{% admonition type=\"warning\" name=\"Optimizing search queries\" %}\n  Search queries can be complex, so optimizing them can help the performance of your search.\n  Use the `AND` and `OR` operators to combine multiple filters to get the exact results you need and utilize\n  pagination to limit the number of results returned. The default is `20` results per page.\n  See the [pagination section](https://developers.intercom.com/docs/build-an-integration/learn-more/rest-apis/pagination/#example-search-conversations-request) for more details on how to use the `starting_after` param.\n{% /admonition %}\n\n### Nesting & Limitations\n\nYou can nest these filters in order to get even more granular insights that pinpoint exactly what you need. Example: (1 OR 2) AND (3 OR 4).\nThere are some limitations to the amount of multiples there can be:\n- There's a limit of max 2 nested filters\n- There's a limit of max 15 filters for each AND or OR group\n\n### Accepted Fields\n\nMost keys listed as part of the Ticket model are searchable, whether writeable or not. The value you search for has to match the accepted type, otherwise the query will fail (ie. as `created_at` accepts a date, the `value` cannot be a string such as `\"foobar\"`).\n\n| Field                                     | Type                                                                                     |\n| :---------------------------------------- | :--------------------------------------------------------------------------------------- |\n| id                                        | String                                                                                   |\n| created_at                                | Date (UNIX timestamp)                                                                    |\n| updated_at                                | Date (UNIX timestamp)                                                                    |\n| _default_title_                           | String                                                                                   |\n| _default_description_                     | String                                                                                   |\n| category                                  | String                                                                                   |\n| ticket_type_id                            | String                                                                                   |\n| contact_ids                               | String                                                                                   |\n| teammate_ids                              | String                                                                                   |\n| admin_assignee_id                         | String                                                                                   |\n| team_assignee_id                          | String                                                                                   |\n| open                                      | Boolean                                                                                  |\n| state                                     | String                                                                                   |\n| snoozed_until                             | Date (UNIX timestamp)                                                                    |\n| ticket_attribute.{id}                     | String or Boolean or Date (UNIX timestamp) or Float or Integer                           |\n\n### Accepted Operators\n\n{% admonition type=\"info\" name=\"Searching based on `created_at`\" %}\n  You may use the `<=` or `>=` operators to search by `created_at`.\n{% /admonition %}\n\nThe table below shows the operators you can use to define how you want to search for the value.  The operator should be put in as a string (`\"=\"`). The operator has to be compatible with the field's type  (eg. you cannot search with `>` for a given string value as it's only compatible for integer's and dates).\n\n| Operator | Valid Types                    | Description                                                  |\n| :------- | :----------------------------- | :----------------------------------------------------------- |\n| =        | All                            | Equals                                                       |\n| !=       | All                            | Doesn't Equal                                                |\n| IN       | All                            | In  Shortcut for `OR` queries  Values most be in Array       |\n| NIN      | All                            | Not In  Shortcut for `OR !` queries  Values must be in Array |\n| >        | Integer  Date (UNIX Timestamp) | Greater (or equal) than                                      |\n| <       | Integer  Date (UNIX Timestamp) | Lower (or equal) than                                        |\n| ~        | String                         | Contains                                                     |\n| !~       | String                         | Doesn't Contain                                              |\n| ^        | String                         | Starts With                                                  |\n| $        | String                         | Ends With                                                    |\n",
-      "namespace": [
-        "Tickets"
-      ],
       "displayName": "Search tickets",
       "operationId": "searchTickets",
       "method": "POST",
@@ -25892,12 +25560,9 @@
         "type": "rest"
       }
     },
-    "endpoint_visitors.retrieveVisitorWithUserId": {
-      "id": "endpoint_visitors.retrieveVisitorWithUserId",
+    "endpoint_.retrieveVisitorWithUserId": {
+      "id": "endpoint_.retrieveVisitorWithUserId",
       "description": "You can fetch the details of a single visitor.",
-      "namespace": [
-        "Visitors"
-      ],
       "displayName": "Retrieve a visitor with User ID",
       "operationId": "retrieveVisitorWithUserId",
       "method": "GET",
@@ -26108,12 +25773,9 @@
         "type": "rest"
       }
     },
-    "endpoint_visitors.updateVisitor": {
-      "id": "endpoint_visitors.updateVisitor",
+    "endpoint_.updateVisitor": {
+      "id": "endpoint_.updateVisitor",
       "description": "Sending a PUT request to `/visitors` will result in an update of an existing Visitor.\n\n**Option 1.** You can update a visitor by passing in the `user_id` of the visitor in the Request body.\n\n**Option 2.** You can update a visitor by passing in the `id` of the visitor in the Request body.\n",
-      "namespace": [
-        "Visitors"
-      ],
       "displayName": "Update a visitor",
       "operationId": "updateVisitor",
       "method": "PUT",
@@ -26457,12 +26119,9 @@
         "type": "rest"
       }
     },
-    "endpoint_visitors.convertVisitor": {
-      "id": "endpoint_visitors.convertVisitor",
+    "endpoint_.convertVisitor": {
+      "id": "endpoint_.convertVisitor",
       "description": "You can merge a Visitor to a Contact of role type `lead` or `user`.\n\n> 📘 What happens upon a visitor being converted?\n>\n> If the User exists, then the Visitor will be merged into it, the Visitor deleted and the User returned. If the User does not exist, the Visitor will be converted to a User, with the User identifiers replacing it's Visitor identifiers.\n",
-      "namespace": [
-        "Visitors"
-      ],
       "displayName": "Convert a visitor",
       "operationId": "convertVisitor",
       "method": "POST",
@@ -44209,113 +43868,7 @@
       }
     }
   },
-  "subpackages": {
-    "admins": {
-      "id": "admins",
-      "name": "Admins",
-      "displayName": "Admins"
-    },
-    "articles": {
-      "id": "articles",
-      "name": "Articles",
-      "displayName": "Articles"
-    },
-    "helpCenter": {
-      "id": "helpCenter",
-      "name": "Help Center",
-      "displayName": "Help Center"
-    },
-    "companies": {
-      "id": "companies",
-      "name": "Companies",
-      "displayName": "Companies"
-    },
-    "contacts": {
-      "id": "contacts",
-      "name": "Contacts",
-      "displayName": "Contacts"
-    },
-    "notes": {
-      "id": "notes",
-      "name": "Notes",
-      "displayName": "Notes"
-    },
-    "segments": {
-      "id": "segments",
-      "name": "Segments",
-      "displayName": "Segments"
-    },
-    "subscriptionTypes": {
-      "id": "subscriptionTypes",
-      "name": "Subscription Types",
-      "displayName": "Subscription Types"
-    },
-    "tags": {
-      "id": "tags",
-      "name": "Tags",
-      "displayName": "Tags"
-    },
-    "conversations": {
-      "id": "conversations",
-      "name": "Conversations",
-      "displayName": "Conversations"
-    },
-    "dataAttributes": {
-      "id": "dataAttributes",
-      "name": "Data Attributes",
-      "displayName": "Data Attributes"
-    },
-    "dataEvents": {
-      "id": "dataEvents",
-      "name": "Data Events",
-      "displayName": "Data Events"
-    },
-    "dataExport": {
-      "id": "dataExport",
-      "name": "Data Export",
-      "displayName": "Data Export"
-    },
-    "messages": {
-      "id": "messages",
-      "name": "Messages",
-      "displayName": "Messages"
-    },
-    "news": {
-      "id": "news",
-      "name": "News",
-      "displayName": "News"
-    },
-    "switch": {
-      "id": "switch",
-      "name": "Switch",
-      "displayName": "Switch"
-    },
-    "teams": {
-      "id": "teams",
-      "name": "Teams",
-      "displayName": "Teams"
-    },
-    "ticketTypeAttributes": {
-      "id": "ticketTypeAttributes",
-      "name": "Ticket Type Attributes",
-      "displayName": "Ticket Type Attributes"
-    },
-    "ticketTypes": {
-      "id": "ticketTypes",
-      "name": "Ticket Types",
-      "displayName": "Ticket Types"
-    },
-    "tickets": {
-      "id": "tickets",
-      "name": "Tickets",
-      "displayName": "Tickets"
-    },
-    "visitors": {
-      "id": "visitors",
-      "name": "Visitors",
-      "displayName": "Visitors"
-    }
-  },
+  "subpackages": {},
   "auths": {
     "bearerAuth": {
       "type": "bearerAuth"

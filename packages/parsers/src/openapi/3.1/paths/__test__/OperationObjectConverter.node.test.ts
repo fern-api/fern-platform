@@ -35,7 +35,7 @@ describe("OperationObjectConverterNode", () => {
 
       const result = node.convert();
 
-      expect(result).toEqual({
+      expect(result).toEqual([{
         auth: undefined,
         availability: undefined,
         defaultEnvironment: undefined,
@@ -99,7 +99,7 @@ describe("OperationObjectConverterNode", () => {
         responseHeaders: undefined,
         responses: undefined,
         snippetTemplates: undefined,
-      });
+      }]);
     });
 
     it("should handle undefined path", () => {

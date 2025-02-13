@@ -1,12 +1,9 @@
 {
   "id": "test-uuid-replacement",
   "endpoints": {
-    "endpoint_chats.chat": {
-      "id": "endpoint_chats.chat",
+    "endpoint_.chat": {
+      "id": "endpoint_.chat",
       "description": "Create a chat while specifying the default retrieval parameters used by the prompt.",
-      "namespace": [
-        "Chats"
-      ],
       "displayName": "Start a chat",
       "operationId": "createChat",
       "method": "POST",
@@ -311,12 +308,6 @@
       "description": "An individual event when the response is streamed."
     }
   },
-  "subpackages": {
-    "chats": {
-      "id": "chats",
-      "name": "Chats",
-      "displayName": "Chats"
-    }
-  },
+  "subpackages": {},
   "auths": {}
 }

@@ -4,7 +4,7 @@
     "endpoint_user.get": {
       "id": "endpoint_user.get",
       "namespace": [
-        "user"
+        "subpackage_user"
       ],
       "operationId": "get",
       "method": "POST",
@@ -231,10 +231,10 @@
     }
   },
   "subpackages": {
-    "user": {
-      "id": "user",
+    "subpackage_user": {
+      "id": "subpackage_user",
       "name": "user",
-      "displayName": "user"
+      "displayName": "User"
     }
   },
   "auths": {},

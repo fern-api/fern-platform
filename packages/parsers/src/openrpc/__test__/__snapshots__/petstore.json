@@ -429,10 +429,10 @@
   "websockets": {},
   "webhooks": {},
   "subpackages": {
-    "pets": {
-      "id": "pets",
+    "subpackage_pets": {
+      "id": "subpackage_pets",
       "name": "pets",
-      "displayName": "pets"
+      "displayName": "Pets"
     }
   },
   "auths": {},

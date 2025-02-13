@@ -1,3 +1,4 @@
+import { camelCase } from "es-toolkit";
 import { FernRegistry } from "../../../client/generated";
 import {
   BaseOpenApiV3_1ConverterNode,
@@ -42,6 +43,8 @@ export class XFernGroupNameConverterNode extends BaseOpenApiV3_1ConverterNode<
       subpackagePath = [this.groupName];
     }
 
-    return subpackagePath.map((path) => FernRegistry.api.v1.SubpackageId(path));
+    return subpackagePath.map((path) =>
+      FernRegistry.api.v1.SubpackageId(camelCase(path))
+    );
   }
 }
