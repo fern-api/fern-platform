@@ -188,9 +188,12 @@
         "type": "rest"
       }
     },
-    "endpoint_.Search": {
-      "id": "endpoint_.Search",
+    "endpoint_organizations.Search": {
+      "id": "endpoint_organizations.Search",
       "description": "",
+      "namespace": [
+        "subpackage_organizations"
+      ],
       "displayName": "Search an organization",
       "operationId": "Search",
       "method": "POST",
@@ -323,6 +326,12 @@
   "websockets": {},
   "webhooks": {},
   "types": {},
-  "subpackages": {},
+  "subpackages": {
+    "subpackage_organizations": {
+      "id": "subpackage_organizations",
+      "name": "organizations",
+      "displayName": "Organizations"
+    }
+  },
   "auths": {}
 }

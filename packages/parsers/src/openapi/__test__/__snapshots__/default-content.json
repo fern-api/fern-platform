@@ -1,8 +1,11 @@
 {
   "id": "test-uuid-replacement",
   "endpoints": {
-    "endpoint_.GenerateContent": {
-      "id": "endpoint_.GenerateContent",
+    "endpoint_generativelanguage.GenerateContent": {
+      "id": "endpoint_generativelanguage.GenerateContent",
+      "namespace": [
+        "subpackage_generativelanguage"
+      ],
       "operationId": "GenerateContent",
       "method": "POST",
       "path": [
@@ -95,6 +98,12 @@
       }
     }
   },
-  "subpackages": {},
+  "subpackages": {
+    "subpackage_generativelanguage": {
+      "id": "subpackage_generativelanguage",
+      "name": "generativelanguage",
+      "displayName": "Generativelanguage"
+    }
+  },
   "auths": {}
 }

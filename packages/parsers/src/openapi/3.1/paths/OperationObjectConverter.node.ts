@@ -21,6 +21,7 @@ import { XFernGroupNameConverterNode } from "../extensions/XFernGroupNameConvert
 import { XFernSdkMethodNameConverterNode } from "../extensions/XFernSdkMethodNameConverter.node";
 import { XFernWebhookConverterNode } from "../extensions/XFernWebhookConverter.node";
 import { RedocExampleConverterNode } from "../extensions/examples/RedocExampleConverter.node";
+import { X_FERN_GROUP_NAME } from "../extensions/fernExtension.consts";
 import { isReferenceObject } from "../guards/isReferenceObject";
 import { ExampleObjectConverterNode } from "./ExampleObjectConverter.node";
 import { ServerObjectConverterNode } from "./ServerObjectConverter.node";
@@ -313,12 +314,12 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
     ) {
       // TODO: review if tags multiplex endpoint definitions, or if there should
       // be some cascading behavior
-      this.namespaces = this.input.tags.slice(0, 1).map((tag) => {
+      this.namespaces = this.input.tags.slice(0, 1).map((tag, index) => {
         const newNamespaceNode = new XFernGroupNameConverterNode({
-          input: { "x-fern-group-name": tag },
+          input: { [X_FERN_GROUP_NAME]: tag },
           context: this.context,
           accessPath: this.accessPath,
-          pathId: "x-fern-group-name",
+          pathId: ["tags", `${index}`],
         });
         return newNamespaceNode;
       });
