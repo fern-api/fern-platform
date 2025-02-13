@@ -4,11 +4,7 @@ import cn from "clsx";
 import { ArrowRight } from "iconoir-react";
 import { useAtomValue } from "jotai";
 
-import {
-  DOCS_LAYOUT_ATOM,
-  MOBILE_SIDEBAR_ENABLED_ATOM,
-  type NavbarLink,
-} from "../atoms";
+import { MOBILE_SIDEBAR_ENABLED_ATOM, type NavbarLink } from "../atoms";
 import { FernLinkButton } from "../components/FernLinkButton";
 
 export function MobileSidebarHeaderLinks({
@@ -16,7 +12,6 @@ export function MobileSidebarHeaderLinks({
 }: {
   navbarLinks: NavbarLink[];
 }): ReactElement<any> | null {
-  const layout = useAtomValue(DOCS_LAYOUT_ATOM);
   const isMobileSidebarEnabled = useAtomValue(MOBILE_SIDEBAR_ENABLED_ATOM);
   if (navbarLinks == null || navbarLinks.length === 0) {
     return null;
@@ -24,7 +19,7 @@ export function MobileSidebarHeaderLinks({
   return (
     <div
       className={cn("border-concealed -mx-4 mt-4 list-none border-t p-4", {
-        "lg:hidden": layout?.disableHeader !== true,
+        "lg:hidden": true,
       })}
     >
       {navbarLinks?.map((navbarLink, idx) =>

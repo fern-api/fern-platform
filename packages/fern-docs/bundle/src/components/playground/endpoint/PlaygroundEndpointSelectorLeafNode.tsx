@@ -1,8 +1,6 @@
 import { ReactElement, forwardRef } from "react";
 
 import clsx from "clsx";
-import { atom, useAtomValue } from "jotai";
-import { useMemoOne } from "use-memo-one";
 
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { FernTooltip } from "@fern-docs/components";
@@ -10,8 +8,6 @@ import { HttpMethodBadge } from "@fern-docs/components/badges";
 
 import { FernLinkButton } from "@/components/components/FernLinkButton";
 
-import { getApiDefinitionAtom } from "../../atoms";
-import { Markdown } from "../../mdx/Markdown";
 import { conformExplorerRoute } from "../utils/explorer-route";
 
 interface PlaygroundEndpointSelectorLeafNodeProps {
@@ -27,32 +23,32 @@ export const PlaygroundEndpointSelectorLeafNode = forwardRef<
 >(({ node, filterValue, active, shallow }, ref) => {
   const text = renderTextWithHighlight(node.title, filterValue);
 
-  const description = useAtomValue(
-    useMemoOne(
-      () =>
-        atom((get) => {
-          const definition = get(getApiDefinitionAtom(node.apiDefinitionId));
-          if (definition == null) {
-            return undefined;
-          }
-          if (node.type === "endpoint") {
-            return definition.endpoints[node.endpointId]?.description;
-          } else if (node.type === "webSocket") {
-            return definition.websockets[node.webSocketId]?.description;
-          }
-          return undefined;
-        }),
-      [node]
-    )
-  );
+  // const description = useAtomValue(
+  //   useMemoOne(
+  //     () =>
+  //       atom((get) => {
+  //         const definition = get(getApiDefinitionAtom(node.apiDefinitionId));
+  //         if (definition == null) {
+  //           return undefined;
+  //         }
+  //         if (node.type === "endpoint") {
+  //           return definition.endpoints[node.endpointId]?.description;
+  //         } else if (node.type === "webSocket") {
+  //           return definition.websockets[node.webSocketId]?.description;
+  //         }
+  //         return undefined;
+  //       }),
+  //     [node]
+  //   )
+  // );
 
-  const tooltipContent =
-    description != null ? <Markdown mdx={description} size="xs" /> : undefined;
+  // const tooltipContent =
+  //   description != null ? <Markdown mdx={description} size="xs" /> : undefined;
 
   if (node.type === "endpoint") {
     return (
       <li ref={ref}>
-        <FernTooltip content={tooltipContent} side="right">
+        <FernTooltip content={null} side="right">
           <FernLinkButton
             href={conformExplorerRoute(node.slug)}
             shallow={shallow}
@@ -80,7 +76,7 @@ export const PlaygroundEndpointSelectorLeafNode = forwardRef<
   } else if (node.type === "webSocket") {
     return (
       <li ref={ref}>
-        <FernTooltip content={tooltipContent} side="right">
+        <FernTooltip content={null} side="right">
           <FernLinkButton
             href={conformExplorerRoute(node.slug)}
             shallow={shallow}

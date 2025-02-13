@@ -9,32 +9,22 @@ import React from "react";
 
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { Slug } from "@fern-api/fdr-sdk/navigation";
-import visitDiscriminatedUnion from "@fern-api/ui-core-utils/visitDiscriminatedUnion";
 import { getSeoDisabled } from "@fern-docs/edge-config";
 import { getFrontmatter, markdownToString } from "@fern-docs/mdx";
 import {
   addLeadingSlash,
   conformTrailingSlash,
   getRedirectForPath,
-  isTrailingSlashEnabled,
 } from "@fern-docs/utils";
-import { SidebarTab } from "@fern-platform/fdr-utils";
 
 import { getFernToken } from "@/app/fern-token";
 import { toImageDescriptor } from "@/app/seo";
-import { HydrateAtoms } from "@/components/atoms/docs";
-import type { DocsProps } from "@/components/atoms/types";
 import FeedbackPopover from "@/components/feedback/FeedbackPopover";
 import { DocsLoader } from "@/server/docs-loader";
 import { createCachedDocsLoader } from "@/server/docs-loader";
 import { createFindNode } from "@/server/find-node";
 import { withLaunchDarkly } from "@/server/ld-adapter";
 import { createCachedMdxSerializer } from "@/server/mdx-serializer";
-import {
-  pruneNavigationPredicate,
-  withPrunedNavigation,
-} from "@/server/withPrunedNavigation";
-import { withVersionSwitcherInfo } from "@/server/withVersionSwitcherInfo";
 
 import { DocsMainContent } from "./main";
 
@@ -53,12 +43,11 @@ export default async function Page({
     domain,
     disableAuth ? undefined : await getFernToken()
   );
-  const [baseUrl, config, authState, edgeFlags, colors] = await Promise.all([
+  const [baseUrl, config, authState, edgeFlags] = await Promise.all([
     loader.getBaseUrl(),
     loader.getConfig(),
     loader.getAuthState(conformTrailingSlash(addLeadingSlash(slug))),
     loader.getEdgeFlags(),
-    loader.getColors(),
   ]);
 
   // check for redirects
@@ -133,7 +122,7 @@ export default async function Page({
   }
 
   // TODO: parallelize this with the other edge config calls:
-  const [launchDarkly, flagPredicate] = await withLaunchDarkly(loader, found);
+  const [_, flagPredicate] = await withLaunchDarkly(loader, found);
 
   if (
     ![...found.parents, found.node]
@@ -143,92 +132,6 @@ export default async function Page({
     console.error(`[${domain}] Feature flag predicate failed: ${slug}`);
     notFound();
   }
-
-  const pruneOpts = {
-    visibleNodeIds: [found.node.id],
-    authed: authState.authed,
-    // when true, all unauthed pages are visible, but rendered with a LOCK button
-    // so they're not actually "pruned" from the sidebar
-    // TODO: move this out of a feature flag and into the navigation node metadata
-    discoverable: edgeFlags.isAuthenticatedPagesDiscoverable
-      ? (true as const)
-      : undefined,
-  };
-
-  const currentVersionId = found.currentVersion?.versionId;
-  const versions = withVersionSwitcherInfo({
-    node: found.node,
-    parents: found.parents,
-    versions: found.versions.filter(
-      (version) =>
-        pruneNavigationPredicate(version, pruneOpts) ||
-        version.versionId === currentVersionId
-    ),
-    slugMap: found.collector.slugMap,
-  });
-
-  const sidebar = withPrunedNavigation(found.sidebar, pruneOpts);
-
-  const filteredTabs = found.tabs.filter(
-    (tab) =>
-      pruneNavigationPredicate(tab, pruneOpts) || tab === found.currentTab
-  );
-
-  const tabs = filteredTabs.map((tab, index) =>
-    visitDiscriminatedUnion(tab)._visit<SidebarTab>({
-      tab: (tab) => ({
-        type: "tabGroup",
-        title: tab.title,
-        icon: tab.icon,
-        index,
-        slug: tab.slug,
-        pointsTo: tab.pointsTo,
-        hidden: tab.hidden,
-        authed: tab.authed,
-      }),
-      link: (link) => ({
-        type: "tabLink",
-        title: link.title,
-        icon: link.icon,
-        index,
-        url: link.url,
-      }),
-      changelog: (changelog) => ({
-        type: "tabChangelog",
-        title: changelog.title,
-        icon: changelog.icon,
-        index,
-        slug: changelog.slug,
-        hidden: changelog.hidden,
-        authed: changelog.authed,
-      }),
-    })
-  );
-
-  const currentTabIndex =
-    found.currentTab == null
-      ? undefined
-      : filteredTabs.indexOf(found.currentTab);
-
-  const props: DocsProps = {
-    baseUrl: baseUrl,
-    layout: config.layout,
-    title: config.title,
-    favicon: config.favicon,
-    colors,
-    navigation: {
-      currentTabIndex,
-      tabs,
-      currentVersionId,
-      versions,
-      sidebar,
-      trailingSlash: isTrailingSlashEnabled(),
-    },
-    defaultLang: config.defaultLanguage ?? "curl",
-    featureFlagsConfig: {
-      launchDarkly,
-    },
-  };
 
   // note: we start from the version node because endpoint Ids can be duplicated across versions
   // if we introduce versioned sections, and versioned api references, this logic will need to change
@@ -241,24 +144,22 @@ export default async function Page({
     : React.Fragment;
 
   return (
-    <HydrateAtoms pageProps={props}>
-      <FeedbackPopoverProvider>
-        <DocsMainContent
-          loader={loader}
-          node={found.node}
-          parents={found.parents}
-          neighbors={await neighborsPromise}
-          breadcrumb={found.breadcrumb}
-          scope={{
-            authed: authState.authed,
-            user: authState.authed ? authState.user : undefined,
-            version: found?.currentVersion?.versionId,
-            tab: found?.currentTab?.title,
-            slug: slug,
-          }}
-        />
-      </FeedbackPopoverProvider>
-    </HydrateAtoms>
+    <FeedbackPopoverProvider>
+      <DocsMainContent
+        loader={loader}
+        node={found.node}
+        parents={found.parents}
+        neighbors={await neighborsPromise}
+        breadcrumb={found.breadcrumb}
+        scope={{
+          authed: authState.authed,
+          user: authState.authed ? authState.user : undefined,
+          version: found?.currentVersion?.versionId,
+          tab: found?.currentTab?.title,
+          slug: slug,
+        }}
+      />
+    </FeedbackPopoverProvider>
   );
 }
 

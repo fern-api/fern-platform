@@ -8,8 +8,10 @@ import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
 import { FernButton, FernDropdown, FernInput } from "@fern-docs/components";
 import { useBooleanState } from "@fern-ui/react-commons";
 
-import { PLAYGROUND_ENVIRONMENT_ATOM } from "../atoms";
-import { SELECTED_ENVIRONMENT_ATOM } from "../atoms/environment";
+import {
+  PLAYGROUND_ENVIRONMENT_ATOM,
+  SELECTED_ENVIRONMENT_ATOM,
+} from "../atoms";
 
 interface MaybeEnvironmentDropdownProps {
   baseUrl?: string;

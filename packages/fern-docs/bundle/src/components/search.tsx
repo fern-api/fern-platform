@@ -27,7 +27,7 @@ import { useEventCallback, useLazyRef } from "@fern-ui/react-commons";
 import { Feedback } from "@/components/feedback/Feedback";
 import { useApiRoute } from "@/components/hooks/useApiRoute";
 import { useApiRouteSWRImmutable } from "@/components/hooks/useApiRouteSWR";
-import { useSetTheme, useThemeSwitchEnabled } from "@/hooks/theme-switch";
+import { useSetTheme, useThemeSwitchEnabled } from "@/hooks/use-theme";
 import { useIsDarkCode } from "@/state/dark-code";
 import { useFernUser } from "@/state/fern-user";
 

@@ -9,7 +9,7 @@ import {
   AccordionTrigger,
 } from "@fern-docs/components";
 
-import { ANCHOR_ATOM } from "../../../atoms";
+import { ANCHOR_ATOM } from "@/components/atoms";
 
 export interface AccordionItemProps {
   title: string;

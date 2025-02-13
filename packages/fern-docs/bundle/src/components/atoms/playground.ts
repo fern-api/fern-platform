@@ -16,11 +16,11 @@ import {
   createWebSocketContext,
 } from "@fern-api/fdr-sdk/api-definition";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
+import { addLeadingSlash } from "@fern-docs/utils";
 import { useEventCallback } from "@fern-ui/react-commons";
 
 import { fernUserAtom } from "@/state/fern-user";
 
-import { selectHref } from "../hooks/useHref";
 import {
   PLAYGROUND_AUTH_STATE_BASIC_AUTH_INITIAL,
   PLAYGROUND_AUTH_STATE_BEARER_TOKEN_INITIAL,
@@ -100,7 +100,7 @@ export const PLAYGROUND_NODE_ID = atom(
       // set playground open
       set(PLAYGROUND_IS_OPEN_ATOM, true);
 
-      newLocation.searchParams.set("playground", selectHref(get, node.slug));
+      newLocation.searchParams.set("playground", addLeadingSlash(node.slug));
     } else {
       newLocation.searchParams.delete("playground");
       set(PLAYGROUND_IS_OPEN_ATOM, false);

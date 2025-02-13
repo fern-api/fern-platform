@@ -4,10 +4,10 @@ import { createContext, useContext, useEffect, useRef } from "react";
 
 import { BuiltWithFern as BuiltWithFernComponent } from "@fern-docs/components";
 
+import { useDomain } from "@/state/domain";
 import { useIsWhitelabeled } from "@/state/whitelabeled";
 
 import { trackInternal } from "./analytics";
-import { useDomain } from "./atoms";
 
 const HideBuiltWithFernContext = createContext(false);
 

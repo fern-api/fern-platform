@@ -9,7 +9,7 @@ import { Monitor, Moon, Sun } from "lucide-react";
 import { FernButton, FernButtonProps } from "@fern-docs/components";
 import { useMounted } from "@fern-ui/react-commons";
 
-import { useResolvedTheme, useSetTheme } from "@/hooks/theme-switch";
+import { useResolvedTheme, useSetTheme } from "@/hooks/use-theme";
 
 export declare namespace ThemeButton {
   export interface Props extends FernButtonProps {

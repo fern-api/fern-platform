@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 import { withDefaultProtocol } from "@fern-api/ui-core-utils";
 
-import { useDomain } from "../atoms";
+import { useDomain } from "@/state/domain";
 
 function useServerSideLocationHref() {
   const domain = useDomain();

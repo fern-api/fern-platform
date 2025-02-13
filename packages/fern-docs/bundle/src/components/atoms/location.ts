@@ -6,9 +6,9 @@ import { useAtomCallback } from "jotai/utils";
 import { useCallbackOne } from "use-memo-one";
 
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
+import { addLeadingSlash } from "@fern-docs/utils";
 import { useEventCallback } from "@fern-ui/react-commons";
 
-import { useHref } from "../hooks/useHref";
 import { useAtomEffect } from "./hooks";
 
 export const LOCATION_ATOM = atomWithLocation();
@@ -36,7 +36,7 @@ export function useRouteListener(
   callback: (hash: string | undefined) => void
 ): void {
   const callbackRef = useEventCallback(callback);
-  const route = useHref(slug);
+  const route = addLeadingSlash(slug);
   return useAtomEffect(
     useCallbackOne(
       (get) => {

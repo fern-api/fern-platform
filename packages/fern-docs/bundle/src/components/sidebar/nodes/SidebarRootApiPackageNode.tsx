@@ -6,7 +6,6 @@ import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 
 import { useIsChildSelected } from "@/state/navigation";
 
-import { useIsApiReferenceShallowLink } from "../../atoms";
 import { WithFeatureFlags } from "../../feature-flags/WithFeatureFlags";
 import { SidebarApiPackageChild } from "./SidebarApiPackageChild";
 import { SidebarPageNode } from "./SidebarPageNode";
@@ -22,7 +21,7 @@ export function SidebarRootApiPackageNode({
   className,
 }: SidebarRootApiPackageNodeProps): ReactElement<any> | null {
   const childSelected = useIsChildSelected(node.id);
-  const shallow = useIsApiReferenceShallowLink(node);
+  const shallow = false;
 
   if (node.children.length === 0 && FernNavigation.hasMarkdown(node)) {
     return (

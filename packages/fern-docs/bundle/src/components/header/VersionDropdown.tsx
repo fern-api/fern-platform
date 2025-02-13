@@ -1,23 +1,20 @@
 import { Lock, NavArrowDown } from "iconoir-react";
-import { useAtomValue } from "jotai";
 
 import { FernButton } from "@fern-docs/components";
+import { addLeadingSlash } from "@fern-docs/utils";
 import { getVersionAvailabilityLabel } from "@fern-platform/fdr-utils";
 
-import { CURRENT_VERSION_ID_ATOM, VERSIONS_ATOM } from "../atoms";
+import { useCurrentVersion, useVersions } from "@/state/navigation";
+
 import { FernLinkDropdown } from "../components/FernLinkDropdown";
-import { useToHref } from "../hooks/useHref";
 
 export declare namespace VersionDropdown {
   export interface Props {}
 }
 
 export const VersionDropdown: React.FC<VersionDropdown.Props> = () => {
-  const versions = useAtomValue(VERSIONS_ATOM);
-  const currentVersionId = useAtomValue(CURRENT_VERSION_ID_ATOM);
-  const toHref = useToHref();
-
-  const currentVersion = versions.find(({ id }) => id === currentVersionId);
+  const versions = useVersions();
+  const currentVersion = useCurrentVersion();
 
   if (versions.length <= 1) {
     return null;
@@ -26,18 +23,26 @@ export const VersionDropdown: React.FC<VersionDropdown.Props> = () => {
   return (
     <div className="flex max-w-32">
       <FernLinkDropdown
-        value={currentVersionId}
+        value={currentVersion?.versionId}
         options={versions.map(
-          ({ id, title, availability, slug, pointsTo, hidden, authed }) => ({
+          ({
+            versionId,
+            title,
+            availability,
+            slug,
+            pointsTo,
+            hidden,
+            authed,
+          }) => ({
             type: "value",
             label: title,
             helperText:
               availability != null
                 ? getVersionAvailabilityLabel(availability)
                 : undefined,
-            value: id,
+            value: versionId,
             disabled: availability == null,
-            href: toHref(pointsTo ?? slug),
+            href: addLeadingSlash(pointsTo ?? slug),
             icon: authed ? (
               <Lock className="text-faded size-4 self-center" />
             ) : undefined,
@@ -52,7 +57,7 @@ export const VersionDropdown: React.FC<VersionDropdown.Props> = () => {
           data-testid="version-dropdown"
           intent="primary"
           variant="outlined"
-          text={currentVersion?.title ?? currentVersionId}
+          text={currentVersion?.title ?? currentVersion?.versionId}
           rightIcon={
             <NavArrowDown className="transition-transform data-[state=open]:rotate-180" />
           }

@@ -2,16 +2,15 @@ import { useEffect, useRef, useState } from "react";
 import React from "react";
 
 import * as Tabs from "@radix-ui/react-tabs";
-import { useAtom } from "jotai";
 
 import { cleanLanguage } from "@fern-api/fdr-sdk/api-definition";
 import { CopyToClipboardButton, cn } from "@fern-docs/components";
 import { FernSyntaxHighlighter } from "@fern-docs/syntax-highlighter";
 
 import { useIsDarkCode } from "@/state/dark-code";
+import { useProgrammingLanguage } from "@/state/language";
 
 import { getLanguageDisplayName } from "../../../api-reference/examples/code-example";
-import { FERN_LANGUAGE_ATOM } from "../../../atoms";
 import { HorizontalOverflowMask } from "../../../components/HorizontalOverflowMask";
 import { CodeBlock, toSyntaxHighlighterProps } from "./CodeBlock";
 
@@ -23,7 +22,7 @@ export function CodeGroup({ children }: { children: React.ReactNode }) {
   ) as React.ReactElement<React.ComponentProps<typeof CodeBlock>>[];
 
   const [selectedTabIndex, setSelectedTabIndex] = useState(0);
-  const [selectedLanguage, setSelectedLanguage] = useAtom(FERN_LANGUAGE_ATOM);
+  const [selectedLanguage, setSelectedLanguage] = useProgrammingLanguage();
   const itemsRef = useRef(items);
   itemsRef.current = items;
 

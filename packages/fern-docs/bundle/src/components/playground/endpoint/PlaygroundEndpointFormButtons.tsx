@@ -1,12 +1,13 @@
 import { ReactElement } from "react";
 
 import { ArrowUpRight } from "iconoir-react";
-import { useAtomValue } from "jotai";
 
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { FernButton, FernButtonGroup } from "@fern-docs/components";
 
-import { CURRENT_NODE_ATOM, useClosePlayground } from "../../atoms";
+import { useClosePlayground } from "@/components/atoms";
+import { useNode } from "@/state/navigation";
+
 import { FernLink } from "../../components/FernLink";
 
 const USE_EXAMPLE_TEXT = "Use example";
@@ -23,9 +24,8 @@ export function PlaygroundEndpointFormButtons({
   resetWithExample,
   resetWithoutExample,
 }: PlaygroundEndpointFormButtonsProps): ReactElement<any> {
-  const activeNavigatable = useAtomValue(CURRENT_NODE_ATOM);
-  const apiReferenceId =
-    FernNavigation.utils.getApiReferenceId(activeNavigatable);
+  const { current } = useNode();
+  const apiReferenceId = FernNavigation.utils.getApiReferenceId(current);
   const closePlayground = useClosePlayground();
   return (
     <div className="flex items-center justify-between">

@@ -1,8 +1,7 @@
 import { Url } from "next/dist/shared/lib/router/router";
 import {
   HTMLAttributeAnchorTarget,
-  JSX,
-  JSXElementConstructor,
+  HTMLElementType,
   PropsWithChildren,
   ReactElement,
   ReactNode,
@@ -20,10 +19,9 @@ import { Lock, NavArrowDown } from "iconoir-react";
 
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { FaIcon, FernTooltip } from "@fern-docs/components";
+import { addLeadingSlash } from "@fern-docs/utils";
 
-// import { useCloseMobileSidebar } from "../atoms";
 import { FernLink } from "../components/FernLink";
-import { useHref } from "../hooks/useHref";
 import { scrollToRoute } from "../util/anchor";
 
 interface SidebarSlugLinkProps {
@@ -46,7 +44,7 @@ interface SidebarSlugLinkProps {
   tooltipContent?: ReactNode;
   hidden?: boolean;
   authed?: boolean;
-  as?: keyof JSX.IntrinsicElements | JSXElementConstructor<any>;
+  as?: HTMLElementType;
 }
 
 type SidebarLinkProps = PropsWithChildren<
@@ -229,7 +227,7 @@ export const SidebarSlugLink = forwardRef<
   //   )
   // );
 
-  const href = useHref(slug);
+  const href = slug ? addLeadingSlash(slug) : undefined;
   return (
     <SidebarLink
       {...innerProps}

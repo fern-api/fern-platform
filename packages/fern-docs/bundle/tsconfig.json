@@ -28,9 +28,6 @@
       "path": "../auth"
     },
     {
-      "path": "../cache"
-    },
-    {
       "path": "../components"
     },
     {

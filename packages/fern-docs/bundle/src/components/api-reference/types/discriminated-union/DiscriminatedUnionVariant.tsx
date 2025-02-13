@@ -7,11 +7,11 @@ import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import titleCase from "@fern-api/ui-core-utils/titleCase";
 import { AvailabilityBadge } from "@fern-docs/components/badges";
+import { addLeadingSlash } from "@fern-docs/utils";
 
 import { trackInternal } from "../../../analytics";
-import { useIsApiReferencePaginated, useRouteListener } from "../../../atoms";
+import { useRouteListener } from "../../../atoms";
 import { FernAnchor } from "../../../components/FernAnchor";
-import { useHref } from "../../../hooks/useHref";
 import { Markdown } from "../../../mdx/Markdown";
 import { getAnchorId } from "../../../util/anchor";
 import {
@@ -40,7 +40,7 @@ export const DiscriminatedUnionVariant: React.FC<
   const ref = useRef<HTMLDivElement>(null);
 
   const [isActive, setIsActive] = useState(false);
-  const isPaginated = useIsApiReferencePaginated();
+  const isPaginated = true; // TODO: useIsApiReferencePaginated();
   useRouteListener(slug, (anchor) => {
     const isActive = anchor === anchorId;
     setIsActive(isActive);
@@ -90,7 +90,7 @@ export const DiscriminatedUnionVariant: React.FC<
     [contextValue, discriminant, unionVariant.discriminantValue]
   );
 
-  const href = useHref(slug, anchorId);
+  const href = `${addLeadingSlash(slug)}#${anchorId}`;
   const descriptions = compact([
     unionVariant.description,
     ...additionalDescriptions,

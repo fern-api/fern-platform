@@ -1,3 +1,4 @@
+import { usePathname } from "next/navigation";
 import { ReactElement } from "react";
 
 import { useAtomValue } from "jotai";
@@ -5,8 +6,9 @@ import { useCallbackOne } from "use-memo-one";
 
 import type { ApiDefinition } from "@fern-api/fdr-sdk/api-definition";
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
+import { slugjoin } from "@fern-api/fdr-sdk/navigation";
 
-import { FERN_STREAM_ATOM, SLUG_ATOM, useAtomEffect } from "../../atoms";
+import { FERN_STREAM_ATOM, useAtomEffect } from "../../atoms";
 import { Endpoint } from "./Endpoint";
 import { EndpointStreamingEnabledToggle } from "./EndpointStreamingEnabledToggle";
 
@@ -26,18 +28,18 @@ export function EndpointPair({
   last,
 }: EndpointPairProps): ReactElement<any> {
   const isStream = useAtomValue(FERN_STREAM_ATOM);
+  const slug = slugjoin(usePathname());
 
   useAtomEffect(
     useCallbackOne(
-      (get, set) => {
-        const slug = get(SLUG_ATOM);
+      (_, set) => {
         if (node.nonStream.slug === slug) {
           set(FERN_STREAM_ATOM, false);
         } else if (node.stream.slug === slug) {
           set(FERN_STREAM_ATOM, true);
         }
       },
-      [node.nonStream.slug, node.stream.slug]
+      [node.nonStream.slug, node.stream.slug, slug]
     )
   );
 

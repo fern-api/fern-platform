@@ -24,12 +24,12 @@ import {
   usesApplicationJsonInFormDataValueAtom,
 } from "@/state/api-explorer-flags";
 import { fernUserAtom } from "@/state/fern-user";
+import { jotaiStore } from "@/state/jotai-provider";
 
 import { track } from "../../analytics";
 import {
   PLAYGROUND_AUTH_STATE_ATOM,
   PLAYGROUND_AUTH_STATE_OAUTH_ATOM,
-  store,
   usePlaygroundEndpointFormState,
 } from "../../atoms";
 import { usePlaygroundSettings } from "../../hooks/usePlaygroundSettings";
@@ -101,7 +101,7 @@ export const PlaygroundEndpoint = ({
       });
       const authHeaders = buildAuthHeaders(
         auth,
-        store.get(PLAYGROUND_AUTH_STATE_ATOM),
+        jotaiStore.get(PLAYGROUND_AUTH_STATE_ATOM),
         {
           redacted: false,
         },

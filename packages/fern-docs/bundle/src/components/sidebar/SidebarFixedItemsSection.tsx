@@ -1,12 +1,10 @@
 import { useMemo } from "react";
 
 import cn from "clsx";
-import { useAtomValue } from "jotai";
 
-import { useThemeSwitchEnabled } from "@/hooks/theme-switch";
+import { useThemeSwitchEnabled } from "@/hooks/use-theme";
 import { SearchV2Trigger } from "@/state/search";
 
-import { DOCS_LAYOUT_ATOM, SEARCHBAR_PLACEMENT_ATOM } from "../atoms";
 import { HeaderLogoSection } from "../header/HeaderLogoSection";
 import { ThemeButton } from "../themes";
 
@@ -23,9 +21,11 @@ export declare namespace SidebarFixedItemsSection {
 export const SidebarFixedItemsSection: React.FC<
   SidebarFixedItemsSection.Props
 > = ({ logo, versionSelect, className, showBorder }) => {
-  const showSearchBar = useAtomValue(SEARCHBAR_PLACEMENT_ATOM) === "SIDEBAR";
+  const showSearchBar = false;
   const themeSwitchEnabled = useThemeSwitchEnabled();
-  const layout = useAtomValue(DOCS_LAYOUT_ATOM);
+  const layout = {
+    disableHeader: false,
+  };
 
   const searchBar = useMemo(() => {
     return showSearchBar ? (

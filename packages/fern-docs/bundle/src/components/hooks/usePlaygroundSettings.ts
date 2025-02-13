@@ -5,18 +5,16 @@ import {
 } from "@fern-api/fdr-sdk/navigation";
 import visitDiscriminatedUnion from "@fern-api/ui-core-utils/visitDiscriminatedUnion";
 
-import {
-  useIsPlaygroundOpen,
-  useNavigationNodes,
-  usePlaygroundNodeId,
-} from "../atoms";
+import { useNodeCollector } from "@/state/navigation";
+
+import { useIsPlaygroundOpen, usePlaygroundNodeId } from "../atoms";
 
 export function usePlaygroundSettings(
   currentNodeId?: NodeId
 ): PlaygroundSettings | undefined {
   const playgroundNodeId = usePlaygroundNodeId();
   const playgroundOpen = useIsPlaygroundOpen();
-  const navigationNodes = useNavigationNodes();
+  const navigationNodes = useNodeCollector();
 
   const nodeIdToUse = playgroundOpen ? playgroundNodeId : currentNodeId;
 

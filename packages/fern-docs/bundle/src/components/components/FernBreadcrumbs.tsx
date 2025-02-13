@@ -5,8 +5,8 @@ import { Fragment, ReactElement } from "react";
 import { NavArrowRight } from "iconoir-react";
 
 import type { FernNavigation } from "@fern-api/fdr-sdk";
+import { addLeadingSlash } from "@fern-docs/utils";
 
-import { useToHref } from "../hooks/useHref";
 import { FernLink } from "./FernLink";
 
 export interface FernBreadcrumbsProps {
@@ -16,7 +16,6 @@ export interface FernBreadcrumbsProps {
 export function FernBreadcrumbs({
   breadcrumb,
 }: FernBreadcrumbsProps): ReactElement<any> | null {
-  const toHref = useToHref();
   const filteredBreadcrumbs = breadcrumb.filter(
     (item) => item.title.trim().length > 0
   );
@@ -32,7 +31,7 @@ export function FernBreadcrumbs({
           {breadcrumb.pointsTo != null ? (
             <FernLink
               className="fern-breadcrumb-item"
-              href={toHref(breadcrumb.pointsTo)}
+              href={addLeadingSlash(breadcrumb.pointsTo)}
             >
               {breadcrumb.title}
             </FernLink>

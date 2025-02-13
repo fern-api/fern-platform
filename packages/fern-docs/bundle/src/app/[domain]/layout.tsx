@@ -1,4 +1,3 @@
-import dynamic from "next/dynamic";
 import { Metadata, Viewport } from "next/types";
 import React from "react";
 
@@ -16,22 +15,23 @@ import {
 import { EdgeFlags } from "@fern-docs/utils";
 
 import { CustomerAnalytics } from "@/components/analytics/CustomerAnalytics";
-import type { LaunchDarklyInfo } from "@/components/atoms/types";
 import { BgImageGradient } from "@/components/components/BgImageGradient";
 import { JavascriptProvider } from "@/components/components/JavascriptProvider";
 import { withJsConfig } from "@/components/components/with-js-config";
 import { FeatureFlagProvider } from "@/components/feature-flags/FeatureFlagProvider";
 import Preload, { type PreloadHref } from "@/components/preload";
+import SearchV2 from "@/components/search";
 import { renderThemeStylesheet } from "@/components/themes/stylesheet/renderThemeStylesheet";
 import { DocsLoader, createCachedDocsLoader } from "@/server/docs-loader";
 import type { RgbaColor } from "@/server/types";
 import { DarkCode } from "@/state/dark-code";
+import { Domain } from "@/state/domain";
+import { LaunchDarklyInfo } from "@/state/feature-flags";
+import { DefaultLanguage } from "@/state/language";
 
 import { GlobalStyles } from "../global-styles";
 import { toImageDescriptor } from "../seo";
 import { ThemeProvider } from "../theme";
-
-const SearchV2 = dynamic(() => import("@/components/search"));
 
 export default async function Layout(props: {
   children: React.ReactNode;
@@ -82,6 +82,11 @@ export default async function Layout(props: {
       hasLight={Boolean(colors.light)}
       hasDark={Boolean(colors.dark)}
     >
+      <Domain value={domain} />
+      {config.defaultLanguage != null && (
+        <DefaultLanguage language={config.defaultLanguage} />
+      )}
+      <DarkCode value={edgeFlags.isDarkCodeEnabled} />
       {preloadHrefs.map((href) => (
         <Preload key={href.href} href={href.href} options={href.options} />
       ))}
@@ -95,11 +100,12 @@ export default async function Layout(props: {
 
         ${stylesheet}
       `}</GlobalStyles>
-      <DarkCode value={edgeFlags.isDarkCodeEnabled} />
       <FeatureFlagProvider featureFlagsConfig={{ launchDarkly }}>
         {children}
       </FeatureFlagProvider>
-      <SearchV2 domain={domain} isAskAiEnabled={edgeFlags.isAskAiEnabled} />
+      <React.Suspense fallback={null}>
+        <SearchV2 domain={domain} isAskAiEnabled={edgeFlags.isAskAiEnabled} />
+      </React.Suspense>
       {jsConfig != null && <JavascriptProvider config={jsConfig} />}
       {VERCEL_ENV === "production" && (
         <CustomerAnalytics

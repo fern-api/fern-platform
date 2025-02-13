@@ -2,11 +2,11 @@ import { Metadata, Viewport } from "next/types";
 import { experimental_taintUniqueValue } from "react";
 
 import { TooltipProvider } from "@radix-ui/react-tooltip";
-import { Provider as JotaiProvider } from "jotai/react";
 
 import { Toaster } from "@fern-docs/components";
 
 import { ConsoleMessage } from "@/components/console-message";
+import { JotaiProvider } from "@/state/jotai-provider";
 
 import "./globals.scss";
 import StyledJsxRegistry from "./registry";

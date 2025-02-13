@@ -9,7 +9,6 @@ import {
   useToggleSidebarNode,
 } from "@/state/navigation";
 
-import { useIsApiReferenceShallowLink } from "../../atoms";
 import { WithFeatureFlags } from "../../feature-flags/WithFeatureFlags";
 import { CollapsibleSidebarGroup } from "../CollapsibleSidebarGroup";
 import { SidebarSlugLink } from "../SidebarLink";
@@ -32,7 +31,7 @@ export function SidebarApiPackageNode({
   const handleToggleExpand = useToggleSidebarNode(node.id);
   const childSelected = useIsChildSelected(node.id);
   const expanded = useIsExpanded(node.id);
-  const shallow = useIsApiReferenceShallowLink(node);
+  const shallow = false;
 
   const renderNode = useCallback(
     (node: FernNavigation.ApiPackageChild) => (

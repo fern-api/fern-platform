@@ -7,6 +7,7 @@ import { StoreApi, UseBoundStore, create } from "zustand";
 
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { CONTINUE, SKIP } from "@fern-api/fdr-sdk/traversers";
+import { addLeadingSlash } from "@fern-docs/utils";
 import { useLazyRef } from "@fern-ui/react-commons";
 
 type SidebarAction =
@@ -73,6 +74,11 @@ export function createRootNodeStore(
   }));
 }
 
+export function useBasePath() {
+  const useStore = React.useContext(RootNodeStoreContext);
+  return useStore((s) => addLeadingSlash(s.root?.slug ?? ""));
+}
+
 const RootNodeStoreContext = React.createContext<
   UseBoundStore<StoreApi<RootNodeState>>
 >(createRootNodeStore());
@@ -117,7 +123,13 @@ export function useCurrentTab() {
 
 export function useTabs() {
   const { parents } = useNode();
-  return parents?.find((parent) => parent.type === "tabbed")?.children;
+  return parents?.find((parent) => parent.type === "tabbed")?.children ?? [];
+}
+
+export function useVersions() {
+  const { parents } = useNode();
+  // TODO: filter out default version that is not the current version
+  return parents?.find((parent) => parent.type === "versioned")?.children ?? [];
 }
 
 export function useCurrentVersion() {

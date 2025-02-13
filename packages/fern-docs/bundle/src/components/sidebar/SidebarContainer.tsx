@@ -3,16 +3,12 @@
 import React from "react";
 
 import clsx from "clsx";
-import { useAtomValue } from "jotai";
 
 import { FernScrollArea, FernTooltipProvider, cn } from "@fern-docs/components";
 
-import {
-  CURRENT_TAB_INDEX_ATOM,
-  DOCS_LAYOUT_ATOM,
-  type NavbarLink,
-  TABS_ATOM,
-} from "../atoms";
+import { useCurrentTab, useTabs } from "@/state/navigation";
+
+import { type NavbarLink } from "../atoms";
 import { useIsScrolled } from "../hooks/useIsScrolled";
 import { MobileSidebarHeaderLinks } from "./MobileSidebarHeaderLinks";
 import { SidebarFixedItemsSection } from "./SidebarFixedItemsSection";
@@ -29,9 +25,9 @@ export const SidebarContainer = React.memo(function SidebarContainer({
   navbarLinks: NavbarLink[];
   children: React.ReactNode;
 }) {
-  const layout = useAtomValue(DOCS_LAYOUT_ATOM);
-  const tabs = useAtomValue(TABS_ATOM);
-  const currentTabIndex = useAtomValue(CURRENT_TAB_INDEX_ATOM);
+  // const layout = useAtomValue(DOCS_LAYOUT_ATOM);
+  const tabs = useTabs();
+  const currentTab = useCurrentTab();
   const ref = React.useRef<HTMLDivElement>(null);
   const isScrolled = useIsScrolled(ref);
   // const isMobileSidebarEnabled = useAtomValue(MOBILE_SIDEBAR_ENABLED_ATOM);
@@ -53,16 +49,14 @@ export const SidebarContainer = React.memo(function SidebarContainer({
         {tabs.length > 0 && (
           <ul
             className={clsx("fern-sidebar-tabs", {
-              "lg:hidden":
-                layout?.disableHeader !== true &&
-                layout?.tabsPlacement === "HEADER",
+              "lg:hidden": true,
             })}
           >
             {tabs.map((tab, idx) => (
               <SidebarTabButton
                 key={idx}
                 tab={tab}
-                selected={tab.index === currentTabIndex}
+                selected={tab.id === currentTab?.id}
               />
             ))}
           </ul>

@@ -17,7 +17,8 @@ import {
 import {
   PLAYGROUND_AUTH_STATE_OAUTH_ATOM,
   usePlaygroundEndpointFormState,
-} from "../../atoms";
+} from "@/components/atoms";
+
 import { Callout } from "../../mdx/components/callout";
 import { PasswordInputGroup } from "../PasswordInputGroup";
 import { PlaygroundEndpointForm } from "../endpoint";

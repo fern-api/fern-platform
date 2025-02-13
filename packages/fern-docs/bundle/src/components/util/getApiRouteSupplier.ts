@@ -2,7 +2,6 @@ import urlJoin from "url-join";
 
 export type FernDocsApiRoute = `/api/fern-docs/${string}`;
 
-// see useHref.ts for a similar pattern
 export function getApiRouteSupplier({
   includeTrailingSlash,
   basepath,

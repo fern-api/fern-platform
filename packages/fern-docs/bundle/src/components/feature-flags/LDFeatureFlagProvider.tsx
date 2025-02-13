@@ -2,7 +2,6 @@
 
 import { FC, PropsWithChildren, ReactNode, useEffect } from "react";
 
-import { useAtomValue } from "jotai";
 import {
   LDContext,
   LDProvider,
@@ -11,8 +10,6 @@ import {
 import useSWR from "swr";
 
 import { useFernUser } from "@/state/fern-user";
-
-import { CURRENT_VERSION_ID_ATOM } from "../atoms";
 
 interface Props extends PropsWithChildren {
   clientSideId: string;
@@ -83,11 +80,9 @@ const IdentifyWrapper = ({
 }) => {
   const ldClient = useLDClient();
   const anonymous = useFernUser() == null;
-  const version = useAtomValue(CURRENT_VERSION_ID_ATOM);
 
   const endpoint = withParams(contextEndpointProp, {
     anonymous,
-    version,
   });
 
   // using SWR to get refresh the LD context
@@ -125,15 +120,11 @@ function withParams(
   endpoint: string,
   opts: {
     anonymous: boolean;
-    version: string | undefined;
   }
 ) {
   try {
     const url = new URL(endpoint);
     url.searchParams.set("anonymous", opts.anonymous.toString());
-    if (opts.version) {
-      url.searchParams.set("version", opts.version);
-    }
     return String(url);
   } catch {
     return endpoint;

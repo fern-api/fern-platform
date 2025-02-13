@@ -7,7 +7,7 @@ import React from "react";
 import { OpenNewWindow } from "iconoir-react";
 import { type UrlObject, format, parse, resolve } from "url";
 
-import { useDomain } from "../atoms";
+import { useDomain } from "@/state/domain";
 
 export const FernLink = React.forwardRef<
   HTMLAnchorElement,

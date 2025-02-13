@@ -14,13 +14,13 @@ import { compact } from "es-toolkit/array";
 import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { AvailabilityBadge } from "@fern-docs/components/badges";
+import { addLeadingSlash } from "@fern-docs/utils";
 
 import { ErrorBoundary } from "@/components/error-boundary";
 
 import { trackInternal } from "../../../analytics";
-import { useIsApiReferencePaginated, useRouteListener } from "../../../atoms";
+import { useRouteListener } from "../../../atoms";
 import { FernAnchor } from "../../../components/FernAnchor";
-import { useHref } from "../../../hooks/useHref";
 import { Markdown } from "../../../mdx/Markdown";
 import { renderTypeShorthandRoot } from "../../../type-shorthand";
 import { getAnchorId } from "../../../util/anchor";
@@ -52,7 +52,7 @@ export const ObjectProperty: React.FC<ObjectProperty.Props> = (props) => {
   const ref = useRef<HTMLDivElement>(null);
 
   const [isActive, setIsActive] = useState(false);
-  const isPaginated = useIsApiReferencePaginated();
+  const isPaginated = true; // TODO: useIsApiReferencePaginated();
   useRouteListener(slug, (anchor) => {
     const isActive = anchor === anchorId;
     setIsActive(isActive);
@@ -113,7 +113,7 @@ const UnmemoizedObjectPropertyInternal = forwardRef<
     [contextValue, jsonPropertyPath]
   );
 
-  const href = useHref(slug, anchorId);
+  const href = `${addLeadingSlash(slug)}#${anchorId}`;
 
   const descriptions = useMemo(() => {
     const unwrapped = ApiDefinition.unwrapReference(property.valueShape, types);

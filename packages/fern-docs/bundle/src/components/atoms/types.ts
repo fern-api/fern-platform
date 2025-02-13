@@ -1,25 +1,4 @@
-import type { LDContext } from "launchdarkly-react-client-sdk";
-
-import type { DocsV1Read, DocsV2Read } from "@fern-api/fdr-sdk/client/types";
-import { ResolvedMdx } from "@fern-api/fdr-sdk/docs";
-import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
-import { SidebarTab, VersionSwitcherInfo } from "@fern-platform/fdr-utils";
-
-import { ColorsThemeConfig, FileData } from "@/server/types";
-
-export interface NavigationProps {
-  currentTabIndex: number | undefined;
-  tabs: SidebarTab[];
-  currentVersionId: FernNavigation.VersionId | undefined;
-  versions: VersionSwitcherInfo[];
-  sidebar: FernNavigation.SidebarRootNode | undefined;
-  trailingSlash: boolean;
-}
-
-export interface AnnouncementConfig {
-  text: string;
-  mdx: ResolvedMdx | undefined;
-}
+import { FileData } from "@/server/types";
 
 export interface DefaultNavbarLink {
   type: "filled" | "outlined" | "minimal" | "primary" | "secondary";
@@ -41,39 +20,6 @@ export interface GithubNavbarLink {
 }
 
 export type NavbarLink = DefaultNavbarLink | GithubNavbarLink;
-
-export interface LaunchDarklyInfo {
-  clientSideId: string;
-  contextEndpoint: string | undefined;
-  context: LDContext | undefined;
-  defaultFlags: object | undefined;
-  options:
-    | {
-        baseUrl: string | undefined;
-        streamUrl: string | undefined;
-        eventsUrl: string | undefined;
-        hash: string | undefined;
-      }
-    | undefined;
-}
-
-export interface FeatureFlagsConfig {
-  launchDarkly: LaunchDarklyInfo | undefined;
-}
-
-export interface DocsProps {
-  baseUrl: DocsV2Read.BaseUrl;
-  navigation: NavigationProps;
-  title: string | undefined;
-  favicon: string | undefined;
-  colors: {
-    light?: ColorsThemeConfig;
-    dark?: ColorsThemeConfig;
-  };
-  layout: DocsV1Read.DocsLayoutConfig | undefined;
-  defaultLang: DocsV1Read.ProgrammingLanguage;
-  featureFlagsConfig: FeatureFlagsConfig | undefined;
-}
 
 export interface LogoConfiguration {
   height: number | undefined;

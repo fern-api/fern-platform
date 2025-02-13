@@ -10,14 +10,14 @@ import {
   FernCard,
 } from "@fern-docs/components";
 
-import { isFileForgeHackEnabledAtom } from "@/state/api-explorer-flags";
-
 import {
   PLAYGROUND_AUTH_STATE_ATOM,
   PLAYGROUND_AUTH_STATE_OAUTH_ATOM,
   PLAYGROUND_REQUEST_TYPE_ATOM,
-  store,
-} from "../../atoms";
+} from "@/components/atoms";
+import { isFileForgeHackEnabledAtom } from "@/state/api-explorer-flags";
+import { jotaiStore } from "@/state/jotai-provider";
+
 import { PlaygroundRequestPreview } from "../PlaygroundRequestPreview";
 import { PlaygroundCodeSnippetResolverBuilder } from "../code-snippets/resolver";
 import { PlaygroundEndpointRequestFormState } from "../types";
@@ -71,7 +71,7 @@ export function PlaygroundEndpointRequestCard({
         </FernButtonGroup>
         <CopyToClipboardButton
           content={() => {
-            const authState = store.get(PLAYGROUND_AUTH_STATE_ATOM);
+            const authState = jotaiStore.get(PLAYGROUND_AUTH_STATE_ATOM);
             const resolver = new PlaygroundCodeSnippetResolverBuilder(
               context,
               true,

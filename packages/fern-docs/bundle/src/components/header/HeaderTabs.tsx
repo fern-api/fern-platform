@@ -2,39 +2,48 @@ import { ReactElement } from "react";
 
 import clsx from "clsx";
 import { Lock } from "iconoir-react";
-import { useAtomValue } from "jotai";
 
+import { TabChild, hasPointsTo } from "@fern-api/fdr-sdk/navigation";
 import { FaIcon } from "@fern-docs/components";
-import { SidebarTab } from "@fern-platform/fdr-utils";
+import { addLeadingSlash } from "@fern-docs/utils";
 
-import { CURRENT_TAB_INDEX_ATOM, TABS_ATOM } from "../atoms";
+import { useCurrentTab, useTabs } from "@/state/navigation";
+
 import { FernLink } from "../components/FernLink";
-import { useSidebarTabHref } from "../hooks/useSidebarTabHref";
 
-export function HeaderTabs(): ReactElement<any> {
-  const tabs = useAtomValue(TABS_ATOM);
+export function HeaderTabs() {
+  const tabs = useTabs();
+  if (tabs.length <= 1) {
+    return null;
+  }
   return (
     <ul className="fern-header-tabs-list">
       {tabs.map((tab) => (
-        <HeaderTab key={tab.index} tab={tab} />
+        <HeaderTab key={tab.id} tab={tab} />
       ))}
     </ul>
   );
 }
 
-export function HeaderTab({ tab }: { tab: SidebarTab }): ReactElement<any> {
-  const currentTabIndex = useAtomValue(CURRENT_TAB_INDEX_ATOM);
+export function HeaderTab({ tab }: { tab: TabChild }): ReactElement<any> {
+  const currentTab = useCurrentTab();
   return (
     <li className="fern-header-tabs-list-item">
       <FernLink
         className={clsx("fern-header-tab-button", {
-          "opacity-50": tab.type !== "tabLink" && tab.hidden,
+          "opacity-50": tab.type !== "link" && tab.hidden,
         })}
-        href={useSidebarTabHref(tab)}
-        data-state={currentTabIndex === tab.index ? "active" : "inactive"}
+        href={
+          tab.type === "link"
+            ? tab.url
+            : addLeadingSlash(
+                (hasPointsTo(tab) ? tab.pointsTo : undefined) ?? tab.slug
+              )
+        }
+        data-state={currentTab?.id === tab.id ? "active" : "inactive"}
       >
         <div className="flex min-w-0 items-center justify-start space-x-2">
-          {tab.type !== "tabLink" && tab.authed ? (
+          {tab.type !== "link" && tab.authed ? (
             <Lock className="size-3.5" />
           ) : (
             tab.icon && <FaIcon icon={tab.icon} className="size-3.5" />

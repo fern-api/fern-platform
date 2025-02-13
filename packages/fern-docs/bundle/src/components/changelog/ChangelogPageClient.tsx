@@ -13,12 +13,7 @@ import { addLeadingSlash } from "@fern-docs/utils";
 
 import { BuiltWithFern, HideBuiltWithFern } from "@/components/built-with-fern";
 
-import {
-  IS_READY_ATOM,
-  LOCATION_ATOM,
-  SCROLL_BODY_ATOM,
-  SIDEBAR_ROOT_NODE_ATOM,
-} from "../atoms";
+import { IS_READY_ATOM, LOCATION_ATOM, SCROLL_BODY_ATOM } from "../atoms";
 import { FernLink } from "../components/FernLink";
 import { ChangelogContentLayout } from "./ChangelogContentLayout";
 
@@ -89,7 +84,7 @@ export default function ChangelogPageClient({
     }, [anchorIds, flattenedEntries, chunkedEntries.length])
   );
 
-  const fullWidth = useAtomValue(SIDEBAR_ROOT_NODE_ATOM) == null;
+  const fullWidth = true;
 
   /**
    * Scroll to the top of the page when navigating to a new page of the changelog

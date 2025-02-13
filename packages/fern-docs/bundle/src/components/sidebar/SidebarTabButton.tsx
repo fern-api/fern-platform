@@ -2,15 +2,15 @@ import { memo } from "react";
 
 import cn, { clsx } from "clsx";
 
+import { TabChild, hasPointsTo } from "@fern-api/fdr-sdk/navigation";
 import { FaIcon } from "@fern-docs/components";
-import { SidebarTab } from "@fern-platform/fdr-utils";
+import { addLeadingSlash } from "@fern-docs/utils";
 
 import { FernLink } from "../components/FernLink";
-import { useSidebarTabHref } from "../hooks/useSidebarTabHref";
 
 export declare namespace SidebarTabButton {
   export interface Props {
-    tab: SidebarTab;
+    tab: TabChild;
     selected: boolean;
   }
 }
@@ -27,12 +27,18 @@ const UnmemoizedSidebarTabButton: React.FC<SidebarTabButton.Props> = ({
           "group/tab-button hover:t-accent flex min-w-0 flex-1 select-none items-center justify-start rounded-lg py-2 text-base group-hover/tab-button:transition lg:px-3 lg:text-sm",
           "data-[state=inactive]:t-muted data-[state=active]:t-accent"
         )}
-        href={useSidebarTabHref(tab)}
+        href={
+          tab.type === "link"
+            ? tab.url
+            : addLeadingSlash(
+                (hasPointsTo(tab) ? tab.pointsTo : undefined) ?? tab.slug
+              )
+        }
         data-state={selected ? "active" : "inactive"}
       >
         <div
           className={clsx("flex min-w-0 items-center justify-start space-x-4", {
-            "opacity-50": tab.type !== "tabLink" && tab.hidden,
+            "opacity-50": tab.type !== "link" && tab.hidden,
           })}
         >
           <div className="min-w-fit">
@@ -41,7 +47,7 @@ const UnmemoizedSidebarTabButton: React.FC<SidebarTabButton.Props> = ({
                 className="text-faded group-hover/tab-button:text-accent group-data-[state=active]/tab-button:text-background group-hover/tab-button:group-data-[state=active]/tab-button:text-background size-4"
                 // TODO: Should we validate that the icon is not undefined in sidebar mode
                 icon={
-                  tab.type !== "tabLink" && tab.authed
+                  tab.type !== "link" && tab.authed
                     ? "lock"
                     : (tab.icon ?? "book-open")
                 }

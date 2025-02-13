@@ -2,8 +2,8 @@ import { ReactNode } from "react";
 
 import { FernNavigation } from "@fern-api/fdr-sdk";
 
-import { useIsApiReferenceShallowLink } from "../../atoms";
-import { WithFeatureFlags } from "../../feature-flags/WithFeatureFlags";
+import { WithFeatureFlags } from "@/components/feature-flags/WithFeatureFlags";
+
 import { SidebarApiPackageChild } from "./SidebarApiPackageChild";
 
 interface SidebarGroupApiReferenceNodeProps {
@@ -15,7 +15,7 @@ export function SidebarGroupApiReferenceNode({
   node,
   depth,
 }: SidebarGroupApiReferenceNodeProps): ReactNode {
-  const shallow = useIsApiReferenceShallowLink(node);
+  const shallow = false;
 
   return (
     <WithFeatureFlags featureFlags={node.featureFlags}>

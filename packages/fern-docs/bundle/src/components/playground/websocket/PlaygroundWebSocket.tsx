@@ -22,9 +22,10 @@ import { usePrevious } from "@fern-ui/react-commons";
 
 import {
   PLAYGROUND_AUTH_STATE_ATOM,
-  store,
   usePlaygroundWebsocketFormState,
-} from "../../atoms";
+} from "@/components/atoms";
+import { jotaiStore } from "@/state/jotai-provider";
+
 import { usePlaygroundSettings } from "../../hooks/usePlaygroundSettings";
 import { PlaygroundEndpointPath } from "../endpoint/PlaygroundEndpointPath";
 import { useWebsocketMessages } from "../hooks/useWebsocketMessages";
@@ -113,7 +114,7 @@ export const PlaygroundWebSocket: FC<PlaygroundWebSocketProps> = ({
       socket.current = new WebSocket(urlJoin(WEBSOCKET_PROXY_URI, url));
 
       socket.current.onopen = () => {
-        const authState = store.get(PLAYGROUND_AUTH_STATE_ATOM);
+        const authState = jotaiStore.get(PLAYGROUND_AUTH_STATE_ATOM);
         const authHeaders = buildAuthHeaders(context.auth, authState, {
           redacted: false,
         });

@@ -4,8 +4,9 @@ import { ReactElement } from "react";
 
 import { ArrowLeft } from "iconoir-react";
 
+import { addLeadingSlash } from "@fern-docs/utils";
+
 import { FernLink } from "../components/FernLink";
-import { useHref } from "../hooks/useHref";
 import { Markdown } from "../mdx/Markdown";
 import { DocsContent } from "../resolver/DocsContent";
 
@@ -33,7 +34,7 @@ export default function ChangelogEntryPageClient({
               <header className="mb-8">
                 <div className="space-y-1">
                   <div className="not-prose">
-                    <FernLink href={useHref(content.changelogSlug)}>
+                    <FernLink href={addLeadingSlash(content.changelogSlug)}>
                       <span className="t-accent inline-flex shrink items-center gap-1 truncate whitespace-nowrap text-sm font-semibold">
                         <ArrowLeft className="size-icon" />
                         Back to {content.changelogTitle}
