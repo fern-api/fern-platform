@@ -1,6 +1,7 @@
 import type { Root } from "hast";
-import { SKIP, visit } from "unist-util-visit";
+import { CONTINUE, visit } from "unist-util-visit";
 
+import { isMdxExpression, isMdxJsxElementHast } from "../mdx-utils";
 import { unknownToMdxJsxAttribute } from "../mdx-utils/unknown-to-mdx-jsx-attr";
 import { Unified } from "../unified";
 
@@ -20,21 +21,28 @@ export const rehypeAcornErrorBoundary: Unified.Plugin<
   return (root) => {
     visit(root, (node, index, parent) => {
       if (index == null || parent == null) {
-        return;
+        return CONTINUE;
       }
-      if (
-        node.type === "mdxFlowExpression" ||
-        node.type === "mdxTextExpression"
-      ) {
+
+      if (isMdxExpression(node)) {
         parent.children[index] = {
           type: "mdxJsxFlowElement",
           name: errorBoundaryComponentName,
           children: [node],
           attributes: [unknownToMdxJsxAttribute("fallback", `{${node.value}}`)],
         };
-        return SKIP;
       }
-      return;
+
+      if (isMdxJsxElementHast(node)) {
+        parent.children[index] = {
+          type: "mdxJsxFlowElement",
+          name: errorBoundaryComponentName,
+          children: [node],
+          attributes: [],
+        };
+      }
+
+      return CONTINUE;
     });
   };
 };

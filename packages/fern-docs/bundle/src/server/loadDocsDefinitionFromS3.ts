@@ -62,7 +62,7 @@ export const loadDocsDefinitionFromS3 = async ({
     });
 
     const response = await fetch(signedUrl, {
-      next: { tags: [domain] },
+      next: { tags: [domain, "loadDocsDefinitionFromS3"] },
     });
 
     if (response.ok) {

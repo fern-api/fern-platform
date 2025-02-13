@@ -16,7 +16,7 @@ import {
 import { FileData } from "@/server/types";
 
 export interface RehypeFilesOptions {
-  replaceSrc?: (src: string) => FileData | undefined;
+  files?: Record<string, FileData>;
 }
 
 /**
@@ -35,8 +35,18 @@ export interface RehypeFilesOptions {
  * @returns a function that will transform the tree
  */
 export const rehypeFiles: Unified.Plugin<[RehypeFilesOptions?], Hast.Root> = ({
-  replaceSrc,
+  files,
 } = {}) => {
+  if (files == null) {
+    return;
+  }
+  function replaceSrc(src: string | undefined): FileData | undefined {
+    if (src == null) {
+      return undefined;
+    }
+
+    return files?.[src.startsWith("file:") ? src.slice(5) : src];
+  }
   return (tree: Hast.Root) => {
     visit(tree, (node) => {
       if (isMdxJsxElementHast(node)) {

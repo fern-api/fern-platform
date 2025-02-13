@@ -3,6 +3,7 @@ import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 
 import { PageHeader } from "@/components/components/PageHeader";
 import { ReferenceLayout } from "@/components/layouts/ReferenceLayout";
+import { DocsLoader } from "@/server/docs-loader";
 
 import { Markdown } from "../../mdx/Markdown";
 import { ApiPageCenter } from "../api-page-center";
@@ -13,21 +14,15 @@ import { WebhookPayloadSection } from "./WebhookPayloadSection";
 import { WebhookResponseSection } from "./WebhookResponseSection";
 import { WebhookExample } from "./webhook-examples/WebhookExample";
 
-export declare namespace WebhookContent {
-  export interface Props {
-    domain: string;
-    context: ApiDefinition.WebhookContext;
-    breadcrumb: readonly FernNavigation.BreadcrumbItem[];
-    last?: boolean;
-  }
-}
-
-export function WebhookContent({
-  domain,
+export async function WebhookContent({
+  loader,
   context,
   breadcrumb,
-  // last = false,
-}: WebhookContent.Props) {
+}: {
+  loader: DocsLoader;
+  context: ApiDefinition.WebhookContext;
+  breadcrumb: readonly FernNavigation.BreadcrumbItem[];
+}) {
   const { node, webhook, types } = context;
 
   const example = webhook.examples?.[0]; // TODO: Need a way to show all the examples
@@ -39,7 +34,7 @@ export function WebhookContent({
       <ReferenceLayout
         header={
           <PageHeader
-            domain={domain}
+            loader={loader}
             breadcrumb={breadcrumb}
             title={node.title}
           />

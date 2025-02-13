@@ -1,5 +1,6 @@
 import type { DocsV1Read } from "@fern-api/fdr-sdk/client/types";
 import { visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
+import { DEFAULT_CONTENT_WIDTH } from "@fern-docs/utils";
 
 const CSS_VARIABLES = {
   SPACING_PAGE_WIDTH: "--spacing-page-width",
@@ -29,11 +30,11 @@ export function getLayoutVariables(
 
   const contentWidthRem =
     layout?.contentWidth == null
-      ? 44 // note: this is also hard-coded in LAYOUT_CONTENT_WIDTH_ATOM
+      ? DEFAULT_CONTENT_WIDTH / 16 // note: this is also hard-coded in LAYOUT_CONTENT_WIDTH_ATOM
       : visitDiscriminatedUnion(layout.contentWidth, "type")._visit({
           px: (px) => px.value / 16,
           rem: (rem) => rem.value,
-          _other: () => 44,
+          _other: () => DEFAULT_CONTENT_WIDTH / 16,
         });
 
   const contentWideWidthRem = (contentWidthRem * 3) / 2 + 0.5; // note: this is also hard-coded in LAYOUT_CONTENT_WIDE_WIDTH_ATOM

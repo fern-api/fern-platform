@@ -3,7 +3,7 @@ export type {
   MdxJsxExpressionAttribute,
 } from "mdast-util-mdx";
 export type { MDXComponents } from "mdx/types";
-export type { PluggableList } from "unified";
+export type { PluggableList, Plugin } from "unified";
 export {
   CONTINUE,
   EXIT,

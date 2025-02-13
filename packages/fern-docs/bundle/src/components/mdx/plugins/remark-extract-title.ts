@@ -1,9 +1,6 @@
-import { FernDocs } from "@fern-api/fdr-sdk";
-import { type Mdast, Unified, mdastToString } from "@fern-docs/mdx";
+import { parse as parseYaml, stringify as stringifyYaml } from "yaml";
 
-interface Options {
-  frontmatter: FernDocs.Frontmatter;
-}
+import { type Mdast, Unified, mdastToString } from "@fern-docs/mdx";
 
 /**
  * Extracts the title from the first content child of the document.
@@ -15,36 +12,35 @@ interface Options {
  * Note: we'll ignore the title if there are any attributes on the <h1> tag. This is to avoid
  * extracting the title from a <h1> that was intentionally inserted.
  */
-export const remarkExtractTitle: Unified.Plugin<[Options?], Mdast.Root> = (
-  options?: Options
-) => {
+export const remarkExtractTitle: Unified.Plugin<[], Mdast.Root> = () => {
   return (tree: Mdast.Root) => {
-    if (options == null) {
-      return;
-    }
-
-    // don't overwrite existing title set inside the frontmatter
-    if (options.frontmatter.title) {
-      return;
-    }
-
-    const firstChild = tree.children.find(
+    const firstHeadingIndex = tree.children.findIndex(
       (child) => child.type !== "mdxjsEsm" && child.type !== "yaml"
     );
-    if (!firstChild) {
+    if (firstHeadingIndex === -1) {
       return;
     }
 
-    if (firstChild.type === "heading" && firstChild.depth === 1) {
-      const extractedTitle = mdastToString(firstChild);
+    const firstHeading = tree.children[firstHeadingIndex];
+    if (firstHeading?.type === "heading" && firstHeading.depth === 1) {
+      const extractedTitle = mdastToString(firstHeading);
 
       if (!extractedTitle) {
         return;
       }
+      tree.children.splice(firstHeadingIndex, 1);
 
-      // set the title and remove the <h1> from the tree
-      options.frontmatter.title = extractedTitle;
-      tree.children = tree.children.slice(1);
+      const yaml = tree.children.find((child) => child.type === "yaml");
+      if (yaml == null) {
+        tree.children.unshift({
+          type: "yaml",
+          value: `title: ${extractedTitle}`,
+        });
+      } else {
+        const parsedYaml = parseYaml(yaml.value);
+        parsedYaml.title = extractedTitle;
+        yaml.value = stringifyYaml(parsedYaml);
+      }
     }
   };
 };

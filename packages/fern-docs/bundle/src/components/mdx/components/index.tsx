@@ -38,7 +38,6 @@ import { Frame } from "./frame";
 import { A, HeadingRenderer, Image, Li, Ol, Strong, Ul } from "./html";
 import { Table } from "./html-table";
 import { If } from "./if";
-import { IFrame } from "./iframe";
 import { Mermaid } from "./mermaid";
 import { ParamField } from "./mintlify";
 import { EndpointRequestSnippet, EndpointResponseSnippet } from "./snippets";
@@ -91,18 +90,10 @@ const FERN_COMPONENTS = {
   LaunchNote: LaunchNoteCallout,
 
   // deprecated, aliased for backwards compatibility
-  Cards: (props: React.ComponentProps<typeof CardGroup>) => (
-    <CardGroup {...props} />
-  ),
-  CodeBlocks: (props: React.ComponentProps<typeof CodeGroup>) => (
-    <CodeGroup {...props} />
-  ),
-  Tabs: (props: React.ComponentProps<typeof TabGroup>) => (
-    <TabGroup {...props} />
-  ),
-  ElevenLabsWaveform: (
-    props: React.ComponentProps<typeof ElevenLabsWaveform>
-  ) => <ElevenLabsWaveform {...props} />,
+  Cards: CardGroup,
+  CodeBlocks: CodeGroup,
+  Tabs: TabGroup,
+  ElevenLabsWaveform,
 };
 
 // internal-use only
@@ -132,39 +123,14 @@ const HTML_COMPONENTS = {
   ul: Ul,
   li: Li,
   a: A,
-  // eslint-disable-next-line jsx-a11y/alt-text
-  img: (props: React.ComponentProps<"img">) => <Image {...props} />,
+  img: Image,
   strong: Strong,
-};
-
-const ALIASED_HTML_COMPONENTS = {
-  Image,
-  IFrame,
-  H1: (props: ComponentProps<"h1">): ReactElement<any> =>
-    HeadingRenderer(1, props),
-  H2: (props: ComponentProps<"h2">): ReactElement<any> =>
-    HeadingRenderer(2, props),
-  H3: (props: ComponentProps<"h3">): ReactElement<any> =>
-    HeadingRenderer(3, props),
-  H4: (props: ComponentProps<"h4">): ReactElement<any> =>
-    HeadingRenderer(4, props),
-  H5: (props: ComponentProps<"h5">): ReactElement<any> =>
-    HeadingRenderer(5, props),
-  H6: (props: ComponentProps<"h6">): ReactElement<any> =>
-    HeadingRenderer(6, props),
-  Ol,
-  Ul,
-  Li,
-  A,
-  Strong,
-  Table,
 };
 
 export const MDX_COMPONENTS = {
   ...FERN_COMPONENTS,
   ...INTERNAL_COMPONENTS,
   ...HTML_COMPONENTS,
-  ...ALIASED_HTML_COMPONENTS,
 } as MDXComponents;
 
 export function createMdxComponents(jsxElements: string[]): MDXComponents {

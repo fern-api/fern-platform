@@ -5,6 +5,7 @@ import { AvailabilityBadge } from "@fern-docs/components/badges";
 import { PageHeader } from "@/components/components/PageHeader";
 import { ReferenceLayout } from "@/components/layouts/ReferenceLayout";
 import { Markdown } from "@/components/mdx/Markdown";
+import { DocsLoader } from "@/server/docs-loader";
 
 import { ApiPageCenter } from "../api-page-center";
 import { EndpointContentCodeSnippets } from "./EndpointContentCodeSnippets";
@@ -12,17 +13,17 @@ import { EndpointContentLeft } from "./EndpointContentLeft";
 import { EndpointContextProvider } from "./EndpointContext";
 import { EndpointUrlWithPlaygroundBaseUrl } from "./EndpointUrlWithPlaygroundBaseUrl";
 
-export function EndpointContent({
-  domain,
+export async function EndpointContent({
+  loader,
   showErrors,
   context,
   breadcrumb,
 }: {
-  domain: string;
+  loader: DocsLoader;
   showErrors: boolean;
   context: EndpointContext;
   breadcrumb: readonly FernNavigation.BreadcrumbItem[];
-  streamToggle?: React.ReactElement;
+  streamToggle?: React.ReactNode;
 }) {
   const { node, endpoint } = context;
 
@@ -32,7 +33,7 @@ export function EndpointContent({
         <ReferenceLayout
           header={
             <PageHeader
-              domain={domain}
+              loader={loader}
               breadcrumb={breadcrumb}
               title={node.title}
               tags={
@@ -56,7 +57,7 @@ export function EndpointContent({
           }
           reference={
             <EndpointContentLeft
-              domain={domain}
+              loader={loader}
               context={context}
               showErrors={showErrors}
             />

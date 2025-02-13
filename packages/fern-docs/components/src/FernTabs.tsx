@@ -17,7 +17,7 @@ export const FernTabs: FC<FernTabsProps> = ({ tabs, ...props }) => {
       <RadixTabs.List className="border-default mb-6 mt-0 flex gap-4 border-b">
         {tabs.map(({ title }, idx) => (
           <RadixTabs.Trigger key={idx} value={idx.toString()} asChild>
-            <h6 className="text-default scroll-mt-content-padded hover:border-default data-[state=active]:t-accent data-[state=active]:border-accent -mb-px flex max-w-max cursor-default whitespace-nowrap border-b border-transparent pb-2.5 pt-3 text-sm font-semibold leading-6">
+            <h6 className="text-default hover:border-default data-[state=active]:t-accent data-[state=active]:border-accent -mb-px flex max-w-max cursor-default scroll-mt-4 whitespace-nowrap border-b border-transparent pb-2.5 pt-3 text-sm font-semibold leading-6">
               {title}
             </h6>
           </RadixTabs.Trigger>

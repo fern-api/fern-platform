@@ -13,7 +13,7 @@ export function TableOfContentsLayout({
   hideTableOfContents,
 }: TableOfContentsLayoutProps) {
   return (
-    <aside className="fern-layout-toc">
+    <aside className="w-sidebar-width sticky top-[var(--header-height)] flex h-fit max-h-[calc(100dvh-var(--header-height))] flex-col pl-1">
       {tableOfContents != null &&
         !hideTableOfContents &&
         tableOfContents.length > 0 && (

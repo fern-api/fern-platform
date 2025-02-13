@@ -2,7 +2,10 @@ import React from "react";
 
 import { cn } from "@fern-docs/components";
 
-import { FernAnchor } from "@/components/components/FernAnchor";
+import {
+  DisableFernAnchor,
+  FernAnchor,
+} from "@/components/components/FernAnchor";
 import { FernLink } from "@/components/components/FernLink";
 
 import { NoZoom, isImageElement } from "./image";
@@ -70,7 +73,9 @@ export function A({
       {...rest}
       showExternalLinkIcon={!hideExternalLinkIcon}
     >
-      <NoZoom>{children}</NoZoom>
+      <NoZoom>
+        <DisableFernAnchor>{children}</DisableFernAnchor>
+      </NoZoom>
     </FernLink>
   );
 }

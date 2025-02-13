@@ -1,6 +1,6 @@
 "use client";
 
-import React, { PropsWithChildren, ReactElement } from "react";
+import React, { PropsWithChildren } from "react";
 import { ErrorBoundary as ReactErrorBoundary } from "react-error-boundary";
 
 import { RefreshCcw } from "lucide-react";
@@ -51,9 +51,24 @@ export function ErrorBoundaryFallback({
 export function ErrorBoundary({
   children,
   onResetAction,
+  fallback,
 }: PropsWithChildren<{
   onResetAction?: () => void;
-}>): ReactElement<any> {
+  fallback?: React.ReactNode;
+}>) {
+  if (fallback != null) {
+    return (
+      <ReactErrorBoundary
+        onError={(error) => {
+          console.error(error);
+        }}
+        fallback={fallback}
+      >
+        {children}
+      </ReactErrorBoundary>
+    );
+  }
+
   return (
     <ReactErrorBoundary
       onReset={onResetAction}

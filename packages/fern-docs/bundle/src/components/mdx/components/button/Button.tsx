@@ -4,6 +4,8 @@ import clsx from "clsx";
 
 import { FernButton } from "@fern-docs/components";
 
+import { DisableFernAnchor } from "@/components/components/FernAnchor";
+
 import { FernLinkButton } from "../../../components/FernLinkButton";
 
 export declare namespace Button {
@@ -39,13 +41,15 @@ export function Button({
   const size = small ? "small" : large ? "large" : "normal";
   if (href != null) {
     return (
-      <FernLinkButton
-        href={href}
-        {...props}
-        variant={variant}
-        size={size}
-        className={clsx(className, "not-prose")}
-      />
+      <DisableFernAnchor>
+        <FernLinkButton
+          href={href}
+          {...props}
+          variant={variant}
+          size={size}
+          className={clsx(className, "not-prose")}
+        />
+      </DisableFernAnchor>
     );
   }
 

@@ -98,14 +98,6 @@
     ) !important;
   }
 
-  .scroll-mt-content {
-    scroll-margin-top: var(--header-offset, 0);
-  }
-
-  .scroll-mt-content-padded {
-    scroll-margin-top: calc(var(--header-offset, 0px) + 1rem);
-  }
-
   .h-content {
     height: var(--content-height, 100vh);
   }

@@ -4,27 +4,28 @@ import React from "react";
 
 import type { FernNavigation } from "@fern-api/fdr-sdk";
 
+import { DocsLoader } from "@/server/docs-loader";
 import { createCachedMdxSerializer } from "@/server/mdx-serializer";
 
 import { MdxContent } from "../mdx/MdxContent";
 import { FernBreadcrumbs } from "./FernBreadcrumbs";
 
-export const PageHeader = async ({
-  domain,
+export async function PageHeader({
+  loader,
   breadcrumb,
   title: titleProp,
   tags,
   subtitle: subtitleProp,
   children,
 }: {
-  domain: string;
+  loader: DocsLoader;
   breadcrumb: readonly FernNavigation.BreadcrumbItem[];
   title: string;
   subtitle?: string;
   tags?: React.ReactNode;
   children?: React.ReactNode;
-}) => {
-  const serialize = createCachedMdxSerializer(domain);
+}) {
+  const serialize = createCachedMdxSerializer(loader);
 
   const [title, subtitle] = await Promise.all([
     serialize(titleProp),
@@ -51,4 +52,4 @@ export const PageHeader = async ({
       {children}
     </header>
   );
-};
+}

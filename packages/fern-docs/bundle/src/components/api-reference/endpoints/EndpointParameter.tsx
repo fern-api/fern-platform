@@ -142,13 +142,10 @@ export const EndpointParameterContent: FC<
     <div
       ref={ref}
       id={href}
-      className={cn(
-        "scroll-mt-content-padded relative flex flex-col gap-2 py-3",
-        {
-          "outline-accent rounded-sm outline outline-1 outline-offset-4":
-            isActive,
-        }
-      )}
+      className={cn("relative flex scroll-mt-4 flex-col gap-2 py-3", {
+        "outline-accent rounded-sm outline outline-1 outline-offset-4":
+          isActive,
+      })}
     >
       <FernAnchor href={href} sideOffset={6}>
         <span className="inline-flex items-baseline gap-2">

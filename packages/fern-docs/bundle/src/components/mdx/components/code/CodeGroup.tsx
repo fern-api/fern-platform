@@ -1,35 +1,27 @@
 import { useEffect, useRef, useState } from "react";
+import React from "react";
 
 import * as Tabs from "@radix-ui/react-tabs";
 import { useAtom } from "jotai";
 
-import { ApiDefinition } from "@fern-api/fdr-sdk";
+import { cleanLanguage } from "@fern-api/fdr-sdk/api-definition";
 import { CopyToClipboardButton, cn } from "@fern-docs/components";
-import {
-  FernSyntaxHighlighter,
-  type FernSyntaxHighlighterProps,
-} from "@fern-docs/syntax-highlighter";
+import { FernSyntaxHighlighter } from "@fern-docs/syntax-highlighter";
 
 import { useIsDarkCode } from "@/state/dark-code";
 
 import { getLanguageDisplayName } from "../../../api-reference/examples/code-example";
 import { FERN_LANGUAGE_ATOM } from "../../../atoms";
 import { HorizontalOverflowMask } from "../../../components/HorizontalOverflowMask";
+import { CodeBlock, toSyntaxHighlighterProps } from "./CodeBlock";
 
-export declare namespace CodeGroup {
-  export interface Item extends FernSyntaxHighlighterProps {
-    title?: string;
-  }
-
-  export interface Props {
-    items: Item[];
-  }
-}
-
-export const CodeGroup: React.FC<React.PropsWithChildren<CodeGroup.Props>> = ({
-  items,
-}) => {
+export function CodeGroup({ children }: { children: React.ReactNode }) {
   const isDarkCode = useIsDarkCode();
+
+  const items = React.Children.toArray(children).filter((child) =>
+    React.isValidElement(child)
+  ) as React.ReactElement<React.ComponentProps<typeof CodeBlock>>[];
+
   const [selectedTabIndex, setSelectedTabIndex] = useState(0);
   const [selectedLanguage, setSelectedLanguage] = useAtom(FERN_LANGUAGE_ATOM);
   const itemsRef = useRef(items);
@@ -38,8 +30,10 @@ export const CodeGroup: React.FC<React.PropsWithChildren<CodeGroup.Props>> = ({
   useEffect(() => {
     if (selectedLanguage) {
       const matchingTab = itemsRef.current.find((item) => {
-        const normalizedLanguage = ApiDefinition.cleanLanguage(item.language);
-        return item.language && normalizedLanguage === selectedLanguage;
+        const normalizedLanguage = cleanLanguage(
+          item.props.language ?? "plaintext"
+        );
+        return normalizedLanguage === selectedLanguage;
       });
 
       if (matchingTab) {
@@ -47,8 +41,8 @@ export const CodeGroup: React.FC<React.PropsWithChildren<CodeGroup.Props>> = ({
         setSelectedTabIndex((prevIndex) => {
           const prevTab = itemsRef.current[prevIndex];
           if (
-            prevTab?.language &&
-            ApiDefinition.cleanLanguage(prevTab.language) === selectedLanguage
+            prevTab?.props.language &&
+            cleanLanguage(prevTab.props.language) === selectedLanguage
           ) {
             return prevIndex;
           }
@@ -58,13 +52,17 @@ export const CodeGroup: React.FC<React.PropsWithChildren<CodeGroup.Props>> = ({
     }
   }, [selectedLanguage]);
 
+  if (items.length === 0) {
+    return null;
+  }
+
   const handleTabChange = (value: string) => {
     const newIndex = parseInt(value, 10);
     setSelectedTabIndex(newIndex);
 
     const tab = itemsRef.current[newIndex];
-    const normalizedLanguage = tab?.language
-      ? ApiDefinition.cleanLanguage(tab.language)
+    const normalizedLanguage = tab?.props.language
+      ? cleanLanguage(tab.props.language)
       : undefined;
 
     if (normalizedLanguage && normalizedLanguage !== selectedLanguage) {
@@ -74,16 +72,15 @@ export const CodeGroup: React.FC<React.PropsWithChildren<CodeGroup.Props>> = ({
 
   const getDisplayNameWithCount = (
     language: string | undefined,
-    items: CodeGroup.Item[],
+    items: React.ReactElement<React.ComponentProps<typeof CodeBlock>>[],
     currentIndex: number
   ): string => {
-    const normalizedLanguage = ApiDefinition.cleanLanguage(language ?? "");
+    const normalizedLanguage = cleanLanguage(language ?? "");
     const displayName = getLanguageDisplayName(normalizedLanguage);
     const sameLanguageCount = items
       .slice(0, currentIndex)
       .filter(
-        (i) =>
-          ApiDefinition.cleanLanguage(i.language ?? "") === normalizedLanguage
+        (i) => cleanLanguage(i.props.language ?? "") === normalizedLanguage
       ).length;
     return sameLanguageCount > 0
       ? `${displayName} ${sameLanguageCount}`
@@ -98,6 +95,10 @@ export const CodeGroup: React.FC<React.PropsWithChildren<CodeGroup.Props>> = ({
   );
 
   if (items.length === 1 && items[0] != null) {
+    const { filename, title = filename, language, code } = items[0].props;
+    if (!title && !language) {
+      return items[0];
+    }
     return (
       <div className={containerClass}>
         <div className="bg-tag-default-soft rounded-t-[inherit]">
@@ -105,18 +106,17 @@ export const CodeGroup: React.FC<React.PropsWithChildren<CodeGroup.Props>> = ({
             <div className="flex min-h-10 overflow-x-auto">
               <div className="flex items-center px-3 py-1.5">
                 <span className="t-muted rounded text-sm font-semibold">
-                  {items[0].title ??
-                    ApiDefinition.cleanLanguage(items[0].language)}
+                  {title ?? language}
                 </span>
               </div>
             </div>
-            <CopyToClipboardButton
-              className="ml-2 mr-1"
-              content={items[0].code}
-            />
+            <CopyToClipboardButton className="ml-2 mr-1" content={code} />
           </div>
         </div>
-        <FernSyntaxHighlighter {...items[0]} className="rounded-b-[inherit]" />
+        <FernSyntaxHighlighter
+          {...toSyntaxHighlighterProps(items[0].props)}
+          className="rounded-b-[inherit]"
+        />
       </div>
     );
   }
@@ -131,24 +131,26 @@ export const CodeGroup: React.FC<React.PropsWithChildren<CodeGroup.Props>> = ({
         <div className="shadow-border-default mx-px flex min-h-10 items-center justify-between shadow-[inset_0_-1px_0_0]">
           <Tabs.List className="flex min-h-10" asChild>
             <HorizontalOverflowMask>
-              {items.map((item, idx) => (
-                <Tabs.Trigger
-                  key={idx}
-                  value={idx.toString()}
-                  className="data-[state=active]:shadow-accent group flex min-h-10 items-center px-2 py-1.5 data-[state=active]:shadow-[inset_0_-2px_0_0_rgba(0,0,0,0.1)]"
-                >
-                  <span className="t-muted group-data-[state=active]:t-default group-hover:bg-tag-default whitespace-nowrap rounded px-2 py-1 text-sm group-data-[state=active]:font-semibold">
-                    {item.title ??
-                      getDisplayNameWithCount(item.language, items, idx)}
-                  </span>
-                </Tabs.Trigger>
-              ))}
+              {items.map((item, idx) => {
+                const { filename, title = filename, language } = item.props;
+                return (
+                  <Tabs.Trigger
+                    key={idx}
+                    value={idx.toString()}
+                    className="data-[state=active]:shadow-accent group flex min-h-10 items-center px-2 py-1.5 data-[state=active]:shadow-[inset_0_-2px_0_0_rgba(0,0,0,0.1)]"
+                  >
+                    <span className="t-muted group-data-[state=active]:t-default group-hover:bg-tag-default whitespace-nowrap rounded px-2 py-1 text-sm group-data-[state=active]:font-semibold">
+                      {title ?? getDisplayNameWithCount(language, items, idx)}
+                    </span>
+                  </Tabs.Trigger>
+                );
+              })}
             </HorizontalOverflowMask>
           </Tabs.List>
 
           <CopyToClipboardButton
             className="ml-2 mr-1"
-            content={items[selectedTabIndex]?.code}
+            content={items[selectedTabIndex]?.props.code ?? ""}
           />
         </div>
       </div>
@@ -159,9 +161,9 @@ export const CodeGroup: React.FC<React.PropsWithChildren<CodeGroup.Props>> = ({
           className="rounded-t-0 rounded-b-[inherit]"
           asChild
         >
-          <FernSyntaxHighlighter {...item} />
+          <FernSyntaxHighlighter {...toSyntaxHighlighterProps(item.props)} />
         </Tabs.Content>
       ))}
     </Tabs.Root>
   );
-};
+}

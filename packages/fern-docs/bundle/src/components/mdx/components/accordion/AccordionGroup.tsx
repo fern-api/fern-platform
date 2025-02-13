@@ -57,12 +57,7 @@ export function AccordionGroup({ items = [] }: AccordionGroupProps) {
       className="m-mdx"
     >
       {items.map(({ title, id, children }) => (
-        <AccordionItem
-          key={id}
-          value={id}
-          id={id}
-          className="scroll-mt-content-padded"
-        >
+        <AccordionItem key={id} value={id} id={id} className="scroll-mt-4">
           <AccordionTrigger>{title}</AccordionTrigger>
           <AccordionContent>
             <div className="m-5">{children}</div>

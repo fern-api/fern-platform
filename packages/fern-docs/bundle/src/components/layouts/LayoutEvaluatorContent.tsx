@@ -6,6 +6,8 @@ import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import type { TableOfContentsItem } from "@fern-docs/mdx";
 
+import { DocsLoader } from "@/server/docs-loader";
+
 import { PageHeader } from "../components/PageHeader";
 import { CustomLayout } from "./CustomLayout";
 import { GuideLayout } from "./GuideLayout";
@@ -14,32 +16,34 @@ import { PageLayout } from "./PageLayout";
 import { ReferenceLayout } from "./ReferenceLayout";
 import { TableOfContentsLayout } from "./TableOfContentsLayout";
 
-interface LayoutEvaluatorProps {
-  domain: string;
-  frontmatter?: Partial<FernDocs.Frontmatter>;
-  title: string;
-  subtitle?: string;
-  breadcrumb: readonly FernNavigation.BreadcrumbItem[];
-  tableOfContents: TableOfContentsItem[];
-  children: React.ReactNode;
-  hasAside: boolean;
-}
-
-export function LayoutEvaluatorContent({
-  domain,
+export async function LayoutEvaluatorContent({
+  loader,
   frontmatter,
   title,
   subtitle,
   breadcrumb,
   tableOfContents,
   children,
-  // hasAside,
-}: LayoutEvaluatorProps) {
-  const layout = frontmatter?.layout ?? "guide";
+  aside,
+}: {
+  loader: DocsLoader;
+  frontmatter?: Partial<FernDocs.Frontmatter>;
+  title: string;
+  subtitle?: string;
+  breadcrumb: readonly FernNavigation.BreadcrumbItem[];
+  tableOfContents: TableOfContentsItem[];
+  children: React.ReactNode;
+  aside?: React.ReactNode;
+}) {
+  let layout = frontmatter?.layout ?? "guide";
+
+  if (aside) {
+    layout = "reference";
+  }
 
   const pageHeader = (
     <PageHeader
-      domain={domain}
+      loader={loader}
       title={title}
       subtitle={subtitle}
       breadcrumb={breadcrumb}
@@ -94,6 +98,7 @@ export function LayoutEvaluatorContent({
       return (
         <ReferenceLayout
           header={pageHeader}
+          aside={aside}
           // PageHeader={PageHeaderComponent}
           // editThisPageUrl={frontmatter["edit-this-page-url"]}
           // hideFeedback={frontmatter["hide-feedback"]}

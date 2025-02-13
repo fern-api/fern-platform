@@ -38,6 +38,10 @@ export function FernHeader({
           :global(:root) {
             --header-height: ${headerHeight}px;
           }
+
+          :global(html, body) {
+            scroll-padding-top: var(--header-height);
+          }
         `}
       </style>
       {props.children}

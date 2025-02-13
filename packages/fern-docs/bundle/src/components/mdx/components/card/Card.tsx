@@ -4,6 +4,8 @@ import cn from "clsx";
 
 import { FaIcon, FernCard } from "@fern-docs/components";
 
+import { DisableFernAnchor } from "@/components/components/FernAnchor";
+
 import { FernLinkCard } from "../../../components/FernLinkCard";
 import { Badge } from "../badge";
 import { NoZoom } from "../html/image";
@@ -86,7 +88,9 @@ export const Card: React.FC<Card.Props> = ({
   if (href != null) {
     return (
       <FernLinkCard className={className} href={href}>
-        <NoZoom>{content}</NoZoom>
+        <NoZoom>
+          <DisableFernAnchor>{content}</DisableFernAnchor>
+        </NoZoom>
       </FernLinkCard>
     );
   }

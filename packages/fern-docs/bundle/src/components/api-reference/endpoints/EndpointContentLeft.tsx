@@ -1,7 +1,8 @@
 import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import { EndpointContext } from "@fern-api/fdr-sdk/api-definition";
 import { visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
-import { getEdgeFlags } from "@fern-docs/edge-config";
+
+import { DocsLoader } from "@/server/docs-loader";
 
 import { TypeComponentSeparator } from "../types/TypeComponentSeparator";
 import { EndpointErrorGroup } from "./EndpointErrorGroup";
@@ -31,15 +32,15 @@ const RESPONSE_BODY = ["response", "body"];
 const RESPONSE_ERROR = ["response", "error"];
 
 export async function EndpointContentLeft({
-  domain,
+  loader,
   context: { node, endpoint, types, auth, globalHeaders },
   showErrors,
 }: {
-  domain: string;
+  loader: DocsLoader;
   context: EndpointContext;
   showErrors: boolean;
 }) {
-  const { isAuthEnabledInDocs } = await getEdgeFlags(domain);
+  const { isAuthEnabledInDocs } = await loader.getEdgeFlags();
 
   let authHeader: ApiDefinition.ObjectProperty | undefined;
   if (auth && isAuthEnabledInDocs) {

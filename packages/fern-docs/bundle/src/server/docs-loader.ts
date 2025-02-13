@@ -199,7 +199,7 @@ const unsafe_getFullRoot = cache(async (domain: string) => {
 
 const unsafe_getRootCached = cache(async (domain: string) => {
   return await unstable_cache(unsafe_getFullRoot, ["unsafe_getRoot"], {
-    tags: [domain],
+    tags: [domain, "unsafe_getRoot"],
   })(domain);
 });
 

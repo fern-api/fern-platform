@@ -11,21 +11,32 @@ import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
 import remarkMdxFrontmatter from "remark-mdx-frontmatter";
 import remarkSmartypants from "remark-smartypants";
+import remarkSqueezeParagraphs from "remark-squeeze-paragraphs";
+import { noop } from "ts-essentials";
 
 import type * as FernDocs from "@fern-api/fdr-sdk/docs";
-import { EMPTY_FRONTMATTER } from "@fern-api/fdr-sdk/docs";
 import {
   type PluggableList,
   customHeadingHandler,
-  getFrontmatter,
   sanitizeBreaks,
   sanitizeMdxExpression,
 } from "@fern-docs/mdx";
 import {
+  rehypeAcornErrorBoundary,
+  rehypeMdxClassStyle,
   rehypeToc,
-  remarkMarkAndUnravel,
+  remarkInjectEsm,
   remarkSanitizeAcorn,
+  remarkUnravel,
 } from "@fern-docs/mdx/plugins";
+
+import { FileData } from "@/server/types";
+
+import { getMDXExport } from "../get-mdx-export";
+import { rehypeCodeBlock } from "../plugins/rehype-code-block";
+import { rehypeExtractAsides } from "../plugins/rehype-extract-asides";
+import { rehypeFiles } from "../plugins/rehype-files";
+import { remarkExtractTitle } from "../plugins/remark-extract-title";
 
 // export type FernSerializeMdxOptions = {
 //   filename?: string;
@@ -54,17 +65,18 @@ async function serializeMdxImpl(
   content: string,
   {
     files,
+    remoteFiles,
     filename,
-    // scope = {},
-    // replaceSrc,
+    scope,
     toc = false,
-    // stripParagraph = false,
   }: {
     files?: Record<string, string>;
+    remoteFiles?: Record<string, FileData>;
+    scope?: Record<string, unknown>;
     filename?: string;
     toc?: boolean;
   } = {}
-): Promise<{ code: string; frontmatter: Partial<FernDocs.Frontmatter> }> {
+): Promise<{ code: string; frontmatter?: Partial<FernDocs.Frontmatter> }> {
   content = sanitizeBreaks(content);
   content = sanitizeMdxExpression(content)[0];
 
@@ -76,12 +88,6 @@ async function serializeMdxImpl(
       console.error("Failed to get cwd from filename", filename);
     }
   }
-
-  const parseFrontmatter = content.trimStart().startsWith("---\n");
-
-  const frontmatter = parseFrontmatter
-    ? getFrontmatter(content).data
-    : { ...EMPTY_FRONTMATTER };
 
   if (process.platform === "win32") {
     process.env.ESBUILD_BINARY_PATH = path.join(
@@ -126,11 +132,11 @@ async function serializeMdxImpl(
 
       const remarkPlugins: PluggableList = [
         remarkFrontmatter,
+        remarkExtractTitle,
         [remarkMdxFrontmatter, { name: "frontmatter" }],
-        remarkMarkAndUnravel,
-        // [remarkExtractTitle, { frontmatter }],
-        // remarkSqueezeParagraphs,
-        // [remarkInjectEsm, { scope }],
+        remarkUnravel,
+        remarkSqueezeParagraphs,
+        [remarkInjectEsm, { scope }],
         [remarkSanitizeAcorn],
         remarkGfm,
         remarkSmartypants,
@@ -140,20 +146,16 @@ async function serializeMdxImpl(
 
       const rehypePlugins: PluggableList = [
         // [rehypeSqueezeParagraphs, { stripParagraph }],
-        // rehypeMdxClassStyle,
-        // [rehypeFiles, { replaceSrc }],
-        // rehypeAcornErrorBoundary,
+        rehypeMdxClassStyle,
+        [rehypeFiles, { files: remoteFiles }],
         rehypeSlug,
         rehypeKatex,
-        // rehypeFernCode,
+        rehypeCodeBlock,
         // rehypeFernComponents,
-        // // always extract asides at the end
-        // rehypeExtractAsides,
+        rehypeExtractAsides,
+        toc ? rehypeToc : noop,
+        rehypeAcornErrorBoundary,
       ];
-
-      if (toc) {
-        rehypePlugins.unshift(rehypeToc);
-      }
 
       o.remarkPlugins = remarkPlugins;
       o.rehypePlugins = rehypePlugins;
@@ -177,6 +179,10 @@ async function serializeMdxImpl(
     console.debug("content", content, "code", bundled.code);
   }
 
+  const frontmatter = getMDXExport(bundled)?.frontmatter as
+    | Partial<FernDocs.Frontmatter>
+    | undefined;
+
   // TODO: this is doing duplicate work; figure out how to combine it with the compiler above.
   // const { jsxElements } = toTree(content, { sanitize: false });
 
@@ -185,11 +191,7 @@ async function serializeMdxImpl(
 
 export async function serializeMdx(
   content: string | undefined,
-  options?: {
-    files?: Record<string, string>;
-    filename?: string;
-    toc?: boolean;
-  }
+  options?: Parameters<typeof serializeMdxImpl>[1]
 ) {
   if (!content?.trimStart().length) {
     return undefined;
@@ -197,7 +199,7 @@ export async function serializeMdx(
   try {
     return await serializeMdxImpl(content, options);
   } catch (error) {
-    console.error(error);
+    console.error(String(error));
     console.debug("Failed to serialize:", content);
     return undefined;
   }

@@ -132,8 +132,8 @@ export const EndpointUrl = React.forwardRef<
               <button
                 className="flex items-center"
                 onClick={onClick}
-                onMouseEnter={() => setIsHovered(true)}
-                onMouseLeave={() => setIsHovered(false)}
+                onPointerEnter={() => setIsHovered(true)}
+                onPointerLeave={() => setIsHovered(false)}
               >
                 <span
                   className={cn("font-mono", {

@@ -6,8 +6,8 @@ import rehypeSlug from "rehype-slug";
 import { customHeadingHandler } from "./handlers/custom-headings";
 import { mdastFromMarkdown } from "./mdast-utils/mdast-from-markdown";
 import { extractJsx } from "./mdx-utils/extract-jsx";
-import { remarkMarkAndUnravel } from "./plugins/remark-mark-and-unravel";
 import { remarkSanitizeAcorn } from "./plugins/remark-sanitize-acorn";
+import { remarkUnravel } from "./plugins/remark-unravel";
 import { sanitizeBreaks } from "./sanitize/sanitize-breaks";
 import { sanitizeMdxExpression } from "./sanitize/sanitize-mdx-expression";
 
@@ -51,7 +51,7 @@ export function toTree(
 
   // this is forked from mdxjs, but we need to run it before we convert to hast
   // so that we can correctly identify explicit JSX nodes
-  (remarkMarkAndUnravel as any)()(mdast);
+  (remarkUnravel as any)()(mdast);
 
   if (sanitize) {
     // sanitize the acorn expressions

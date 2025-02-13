@@ -42,13 +42,18 @@ import { DocsMainContent } from "./main";
 export default async function Page({
   domain,
   slug,
+  static: disableAuth,
 }: {
   domain: string;
   slug: Slug;
+  static?: boolean;
 }) {
   console.debug("/app/[domain]/_page.tsx: starting...");
 
-  const loader = await createCachedDocsLoader(domain, await getFernToken());
+  const loader = await createCachedDocsLoader(
+    domain,
+    disableAuth ? undefined : await getFernToken()
+  );
   const [baseUrl, config, authState, edgeFlags, colors] = await Promise.all([
     loader.getBaseUrl(),
     loader.getConfig(),
@@ -246,7 +251,7 @@ export default async function Page({
     <HydrateAtoms pageProps={props}>
       <FeedbackPopoverProvider>
         <DocsMainContent
-          domain={domain}
+          loader={loader}
           node={found.node}
           parents={found.parents}
           neighbors={neighbors}
@@ -268,11 +273,16 @@ export default async function Page({
 export async function generateMetadata({
   domain,
   slug,
+  static: disableAuth,
 }: {
   domain: string;
   slug: Slug;
+  static?: boolean;
 }): Promise<Metadata> {
-  const loader = await createCachedDocsLoader(domain, await getFernToken());
+  const loader = await createCachedDocsLoader(
+    domain,
+    disableAuth ? undefined : await getFernToken()
+  );
   const findNode = createFindNode(loader);
   const [files, node, config, isSeoDisabled] = await Promise.all([
     loader.getFiles(),

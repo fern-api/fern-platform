@@ -9,6 +9,7 @@ import { AvailabilityBadge } from "@fern-docs/components/badges";
 
 import { PageHeader } from "@/components/components/PageHeader";
 import { ReferenceLayout } from "@/components/layouts/ReferenceLayout";
+import { DocsLoader } from "@/server/docs-loader";
 
 import { Markdown } from "../../mdx/Markdown";
 import { PlaygroundButton } from "../../playground/PlaygroundButton";
@@ -24,27 +25,15 @@ import { CopyWithBaseUrl } from "./CopyWithBaseUrl";
 import { HandshakeExample } from "./HandshakeExample";
 import { WebSocketMessage, WebSocketMessages } from "./WebSocketMessages";
 
-export interface WebSocketProps {
-  node: FernNavigation.WebSocketNode;
-  apiDefinition: ApiDefinition.ApiDefinition;
-  breadcrumb: readonly FernNavigation.BreadcrumbItem[];
-  last?: boolean;
-}
-
-interface WebSocketContentProps {
-  domain: string;
-  context: WebSocketContext;
-  breadcrumb: readonly FernNavigation.BreadcrumbItem[];
-  last?: boolean;
-}
-
-export function WebSocketContent({
-  domain,
+export async function WebSocketContent({
+  loader,
   context,
   breadcrumb,
-
-  // last,
-}: WebSocketContentProps) {
+}: {
+  loader: DocsLoader;
+  context: WebSocketContext;
+  breadcrumb: readonly FernNavigation.BreadcrumbItem[];
+}) {
   const { channel, node, types, globalHeaders } = context;
 
   const publishMessages = channel.messages.filter(
@@ -87,7 +76,7 @@ export function WebSocketContent({
       <ReferenceLayout
         header={
           <PageHeader
-            domain={domain}
+            loader={loader}
             breadcrumb={breadcrumb}
             title={node.title}
             tags={

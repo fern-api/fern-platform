@@ -8,8 +8,7 @@ import { FernNavigation } from "@fern-api/fdr-sdk";
 import { isNonNullish } from "@fern-api/ui-core-utils";
 import { type TableOfContentsItem, makeToc, toTree } from "@fern-docs/mdx";
 
-import { getFernToken } from "@/app/fern-token";
-import { createCachedDocsLoader } from "@/server/docs-loader";
+import { DocsLoader } from "@/server/docs-loader";
 import { createCachedMdxSerializer } from "@/server/mdx-serializer";
 
 import { FernLink } from "../components/FernLink";
@@ -19,15 +18,14 @@ import { MdxContent } from "../mdx/MdxContent";
 import ChangelogPageClient from "./ChangelogPageClient";
 
 export default async function ChangelogPage({
-  domain,
+  loader,
   nodeId,
   breadcrumb,
 }: {
-  domain: string;
+  loader: DocsLoader;
   nodeId: FernNavigation.NodeId;
   breadcrumb: readonly FernNavigation.BreadcrumbItem[];
 }) {
-  const loader = await createCachedDocsLoader(domain, await getFernToken());
   const node = await loader.getNavigationNode(nodeId);
   if (node.type !== "changelog") {
     notFound();
@@ -70,7 +68,7 @@ export default async function ChangelogPage({
       anchorIds={anchorIds}
       overview={
         <ChangelogPageOverview
-          domain={domain}
+          loader={loader}
           node={node}
           breadcrumb={breadcrumb}
         />
@@ -82,7 +80,7 @@ export default async function ChangelogPage({
             <ChangelogPageEntry
               key={entry.pageId}
               node={entry}
-              domain={domain}
+              loader={loader}
             />,
           ] as const;
         })
@@ -92,28 +90,27 @@ export default async function ChangelogPage({
 }
 
 async function ChangelogPageOverview({
-  domain,
+  loader,
   node,
   breadcrumb,
 }: {
-  domain: string;
+  loader: DocsLoader;
   node: FernNavigation.ChangelogNode;
   breadcrumb: readonly FernNavigation.BreadcrumbItem[];
 }) {
-  const loader = await createCachedDocsLoader(domain);
   const page =
     node.overviewPageId != null
       ? await loader.getPage(node.overviewPageId)
       : undefined;
-  const serialize = createCachedMdxSerializer(domain);
+  const serialize = createCachedMdxSerializer(loader);
   const mdx = await serialize(page?.markdown, {
-    filename: node.overviewPageId,
+    filename: page?.filename,
   });
 
   return (
     <>
       <PageHeader
-        domain={domain}
+        loader={loader}
         title={mdx?.frontmatter?.title ?? node.title}
         subtitle={mdx?.frontmatter?.subtitle ?? mdx?.frontmatter?.excerpt}
         breadcrumb={breadcrumb}
@@ -124,15 +121,14 @@ async function ChangelogPageOverview({
 }
 
 async function ChangelogPageEntry({
-  domain,
+  loader,
   node,
 }: {
-  domain: string;
+  loader: DocsLoader;
   node: FernNavigation.ChangelogEntryNode;
 }) {
-  const loader = await createCachedDocsLoader(domain);
   const page = await loader.getPage(node.pageId);
-  const serialize = createCachedMdxSerializer(domain);
+  const serialize = createCachedMdxSerializer(loader);
   const mdx = await serialize(page.markdown, {
     filename: node.pageId,
   });

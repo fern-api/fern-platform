@@ -1,4 +1,7 @@
-import { PropsWithChildren, ReactElement, useEffect, useState } from "react";
+"use client";
+
+import { useEffect, useState } from "react";
+import React from "react";
 
 import * as Tooltip from "@radix-ui/react-tooltip";
 import { Check, Link } from "iconoir-react";
@@ -13,11 +16,26 @@ interface FernAnchorProps {
   sideOffset?: number;
 }
 
+const DisableFernAnchorCtx = React.createContext<boolean>(false);
+
+export function DisableFernAnchor({ children }: { children: React.ReactNode }) {
+  return (
+    <DisableFernAnchorCtx.Provider value={true}>
+      {children}
+    </DisableFernAnchorCtx.Provider>
+  );
+}
+
+export function useIsFernAnchorDisabled() {
+  return React.useContext(DisableFernAnchorCtx);
+}
+
 export function FernAnchor({
   href,
   sideOffset = 12,
   children,
-}: PropsWithChildren<FernAnchorProps>): ReactElement<any> {
+}: React.PropsWithChildren<FernAnchorProps>) {
+  const isDisabled = useIsFernAnchorDisabled();
   const { copyToClipboard, wasJustCopied } = useCopyToClipboard(() =>
     new URL(href, window.location.href).toString()
   );
@@ -25,6 +43,7 @@ export function FernAnchor({
   const [forceMount, setIsMounted] = useState<true | undefined>(
     wasJustCopied ? true : undefined
   );
+
   useEffect(() => {
     if (wasJustCopied) {
       setIsMounted(true);
@@ -34,6 +53,10 @@ export function FernAnchor({
   const handleExitComplete = () => {
     setIsMounted(undefined);
   };
+
+  if (isDisabled) {
+    return <>{children}</>;
+  }
 
   return (
     <Tooltip.Provider>

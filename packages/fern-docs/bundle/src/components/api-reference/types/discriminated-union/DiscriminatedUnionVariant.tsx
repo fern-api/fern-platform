@@ -114,7 +114,7 @@ export const DiscriminatedUnionVariant: React.FC<
     <div
       ref={ref}
       id={href}
-      className={cn("scroll-mt-content-padded flex flex-col gap-2 py-3", {
+      className={cn("flex scroll-mt-4 flex-col gap-2 py-3", {
         "px-3": !isRootTypeDefinition,
         "outline-accent rounded-sm outline outline-1 outline-offset-4":
           isActive,

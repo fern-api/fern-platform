@@ -46,7 +46,7 @@ export const MOBILE_HEADER_HEIGHT_ATOM = atom<number>((get) => {
   return getHeaderHeightPx(get(DOCS_LAYOUT_ATOM));
 });
 
-const SETTABLE_HEADER_TABS_HEIGHT_ATOM = atom<number>(44);
+const SETTABLE_HEADER_TABS_HEIGHT_ATOM = atom<number>(40);
 SETTABLE_HEADER_TABS_HEIGHT_ATOM.debugLabel =
   "SETTABLE_HEADER_TABS_HEIGHT_ATOM";
 
@@ -160,11 +160,11 @@ export const SEARCHBAR_PLACEMENT_ATOM = atom<DocsV1Read.SearchbarPlacement>(
 );
 SEARCHBAR_PLACEMENT_ATOM.debugLabel = "SEARCHBAR_PLACEMENT_ATOM";
 
-// guides are by default 44rem wide (long-form content)
+// guides are by default 40rem wide (long-form content)
 export const LAYOUT_CONTENT_GUIDE_WIDTH_ATOM = atom<number>((get) => {
   const layout = get(DOCS_LAYOUT_ATOM)?.contentWidth;
   if (layout == null) {
-    return 44 * 16; // 44rem (default)
+    return 40 * 16; // 40rem (default)
   }
   return layout.type === "px" ? layout.value : layout.value * 16;
 });

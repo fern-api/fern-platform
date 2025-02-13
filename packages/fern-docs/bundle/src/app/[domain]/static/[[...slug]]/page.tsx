@@ -10,12 +10,12 @@ export default async function StaticPage(props: {
   params: Promise<{ slug?: string[]; domain: string }>;
 }) {
   const { domain, slug } = await props.params;
-  return <Page domain={domain} slug={slugjoin(slug)} />;
+  return <Page domain={domain} slug={slugjoin(slug)} static />;
 }
 
 export async function generateMetadata(props: {
   params: Promise<{ slug?: string[]; domain: string }>;
 }): Promise<Metadata> {
   const { domain, slug } = await props.params;
-  return _generateMetadata({ domain, slug: slugjoin(slug) });
+  return _generateMetadata({ domain, slug: slugjoin(slug), static: true });
 }

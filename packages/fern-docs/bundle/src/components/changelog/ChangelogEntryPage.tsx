@@ -31,11 +31,8 @@ export default async function ChangelogEntryPage({
     notFound();
   }
   const { filename, markdown } = await loader.getPage(node.pageId);
-  const serialize = createCachedMdxSerializer(domain);
-  const page = await serialize(markdown, {
-    filename,
-    toc: true,
-  });
+  const serialize = createCachedMdxSerializer(loader);
+  const page = await serialize(markdown, { filename });
 
   return (
     <ChangelogEntryPageClient

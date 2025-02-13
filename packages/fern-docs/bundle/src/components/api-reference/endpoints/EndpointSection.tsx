@@ -34,7 +34,7 @@ export const EndpointSection: React.FC<EndpointSection.Props> = ({
   const href = useHref(slug, anchorId);
   return (
     <ErrorBoundary>
-      <div ref={ref} id={href} className="scroll-mt-content">
+      <div ref={ref} id={href}>
         <FernAnchor href={href}>
           {createElement(
             headerType,

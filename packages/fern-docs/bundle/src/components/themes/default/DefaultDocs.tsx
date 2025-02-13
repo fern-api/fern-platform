@@ -25,6 +25,7 @@ export function DefaultDocs({
   return (
     <div id="fern-docs" className="fern-container fern-theme-default">
       <HeaderContainer
+        className="z-30"
         header={header}
         announcement={announcement}
         showHeader
@@ -32,8 +33,8 @@ export function DefaultDocs({
         colors={colors}
       />
 
-      <div className="fern-body">
-        <nav className="w-sidebar-width sticky top-[var(--header-height)] mt-[var(--header-height)] flex h-fit max-h-[calc(100dvh-var(--header-height))] flex-col">
+      <div className="fern-body z-0">
+        <nav className="w-sidebar-width sticky top-[var(--header-height)] z-30 mt-[var(--header-height)] flex h-fit max-h-[calc(100dvh-var(--header-height))] shrink-0 flex-col pl-1">
           {sidebar}
         </nav>
         <main className="mt-[var(--header-height)] flex-1">{children}</main>

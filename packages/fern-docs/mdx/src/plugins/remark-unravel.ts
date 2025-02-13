@@ -1,5 +1,4 @@
 import { collapseWhiteSpace } from "collapse-white-space";
-import { walk } from "estree-walker";
 import type { Root } from "mdast";
 import type { Plugin } from "unified";
 import { SKIP, visit } from "unist-util-visit";
@@ -18,7 +17,7 @@ import { Mdast } from "../types";
  * @returns
  *   Transform.
  */
-export const remarkMarkAndUnravel: Plugin<[], Root> = () => {
+export const remarkUnravel: Plugin<[], Root> = () => {
   return (ast) => {
     visit(ast, (node, index, parent) => {
       let offset = -1;
@@ -89,29 +88,29 @@ export const remarkMarkAndUnravel: Plugin<[], Root> = () => {
         }
       }
 
-      if (
-        node.type === "mdxJsxFlowElement" ||
-        node.type === "mdxJsxTextElement"
-      ) {
-        const data = node.data || (node.data = {});
-        data._mdxExplicitJsx = true;
-      }
+      // if (
+      //   node.type === "mdxJsxFlowElement" ||
+      //   node.type === "mdxJsxTextElement"
+      // ) {
+      //   const data = node.data || (node.data = {});
+      //   data._mdxExplicitJsx = true;
+      // }
 
-      if (
-        (node.type === "mdxFlowExpression" ||
-          node.type === "mdxTextExpression" ||
-          node.type === "mdxjsEsm") &&
-        node.data?.estree
-      ) {
-        walk(node.data.estree, {
-          enter(node) {
-            if (node.type === "JSXElement") {
-              const data = node.data || (node.data = {});
-              data._mdxExplicitJsx = true;
-            }
-          },
-        });
-      }
+      // if (
+      //   (node.type === "mdxFlowExpression" ||
+      //     node.type === "mdxTextExpression" ||
+      //     node.type === "mdxjsEsm") &&
+      //   node.data?.estree
+      // ) {
+      //   walk(node.data.estree, {
+      //     enter(node) {
+      //       if (node.type === "JSXElement") {
+      //         const data = node.data || (node.data = {});
+      //         data._mdxExplicitJsx = true;
+      //       }
+      //     },
+      //   });
+      // }
 
       return;
     });

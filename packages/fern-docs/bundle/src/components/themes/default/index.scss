@@ -113,7 +113,7 @@
   }
 
   .fern-endpoint-content {
-    @apply scroll-mt-content mx-4 md:mx-6 lg:mx-8;
+    @apply mx-4 md:mx-6 lg:mx-8;
 
     .fern-endpoint-content-right {
       @apply max-w-content-width;
