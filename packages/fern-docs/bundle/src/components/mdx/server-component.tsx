@@ -7,13 +7,17 @@ import { MdxContent } from "./MdxContent";
 import { Prose } from "./prose";
 
 export async function MdxServerComponent({
-  domain,
+  loader,
   mdx,
 }: {
-  domain: string;
-  mdx: string;
+  loader: DocsLoader;
+  mdx: string | null | undefined;
 }) {
-  const serialize = createCachedMdxSerializer(domain);
+  if (!mdx) {
+    return null;
+  }
+
+  const serialize = createCachedMdxSerializer(loader);
   const parsed_mdx = await serialize(mdx);
 
   return <MdxContent mdx={parsed_mdx} fallback={mdx} />;

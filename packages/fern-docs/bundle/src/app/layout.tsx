@@ -31,6 +31,7 @@ const secrets = [
   "TURBOPUFFER_API_KEY",
   "WORKOS_API_KEY",
   "HIGHLIGHT_PROJECT_ID_FERN_APP",
+  "VERCEL_AUTOMATION_BYPASS_SECRET",
 ];
 
 export default function DashboardLayout({

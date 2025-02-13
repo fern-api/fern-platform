@@ -1,6 +1,5 @@
 import React from "react";
 
-import { BuiltWithFern } from "@/components/built-with-fern";
 import { SetLayout } from "@/state/layout";
 
 interface OverviewLayoutProps {
@@ -28,7 +27,6 @@ export function OverviewLayout({
           {children}
         </div>
         {footer}
-        <BuiltWithFern className="mx-auto my-8 w-fit" />
       </article>
     </div>
   );

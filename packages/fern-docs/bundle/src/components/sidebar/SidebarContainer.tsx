@@ -46,7 +46,7 @@ export const SidebarContainer = React.memo(function SidebarContainer({
       />
       <FernScrollArea
         rootClassName="flex-1"
-        className={cn("group/sidebar overscroll-contain px-4 lg:pl-5")}
+        className={cn("group/sidebar overscroll-contain px-4 pb-12 lg:pl-5")}
         scrollbars="vertical"
         ref={ref}
       >

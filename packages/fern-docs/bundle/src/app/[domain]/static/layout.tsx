@@ -109,7 +109,7 @@ export default async function DocsLayout({
         announcement={
           announcementText && (
             <Announcement announcement={announcementText}>
-              <MdxServerComponent domain={domain} mdx={announcementText} />
+              <MdxServerComponent loader={loader} mdx={announcementText} />
             </Announcement>
           )
         }

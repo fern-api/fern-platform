@@ -19,11 +19,7 @@ import { CONTINUE, SKIP } from "@fern-api/fdr-sdk/traversers";
 import { isPlainObject } from "@fern-api/ui-core-utils";
 import { AuthEdgeConfig } from "@fern-docs/auth";
 import { getAuthEdgeConfig, getEdgeFlags } from "@fern-docs/edge-config";
-import {
-  DEFAULT_LOGO_HEIGHT,
-  EdgeFlags,
-  withoutStaging,
-} from "@fern-docs/utils";
+import { DEFAULT_LOGO_HEIGHT, EdgeFlags } from "@fern-docs/utils";
 
 import { AuthState, createGetAuthState } from "./auth/getAuthState";
 import { getDocsUrlMetadata } from "./getDocsUrlMetadata";
@@ -367,7 +363,6 @@ export const createCachedDocsLoader = async (
   domain: string,
   fern_token?: string
 ): Promise<DocsLoader> => {
-  domain = withoutStaging(domain);
   const authConfig = getAuthConfig(domain);
   const metadata = getDocsUrlMetadata(domain);
 

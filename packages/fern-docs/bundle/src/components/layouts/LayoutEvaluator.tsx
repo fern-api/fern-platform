@@ -16,11 +16,13 @@ export async function LayoutEvaluator({
   fallbackTitle,
   pageId,
   breadcrumb,
+  bottomNavigation,
 }: {
   loader: DocsLoader;
   fallbackTitle: string;
   pageId: FernNavigation.PageId;
   breadcrumb: readonly FernNavigation.BreadcrumbItem[];
+  bottomNavigation?: React.ReactNode;
 }) {
   const { filename, markdown } = await loader.getPage(pageId);
   const serialize = createCachedMdxSerializer(loader);
@@ -47,6 +49,7 @@ export async function LayoutEvaluator({
       breadcrumb={breadcrumb}
       tableOfContents={toc}
       aside={mdx && hasAside && <MdxAsideComponent {...mdx} />}
+      bottomNavigation={bottomNavigation}
     >
       <MdxContent mdx={mdx} fallback={markdown} />
     </LayoutEvaluatorContent>

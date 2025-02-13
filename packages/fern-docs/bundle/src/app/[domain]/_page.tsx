@@ -25,7 +25,6 @@ import { toImageDescriptor } from "@/app/seo";
 import { HydrateAtoms } from "@/components/atoms/docs";
 import type { DocsProps } from "@/components/atoms/types";
 import FeedbackPopover from "@/components/feedback/FeedbackPopover";
-import { DocsContent } from "@/components/resolver/DocsContent";
 import { DocsLoader } from "@/server/docs-loader";
 import { createCachedDocsLoader } from "@/server/docs-loader";
 import { createFindNode } from "@/server/find-node";
@@ -114,6 +113,8 @@ export default async function Page({
   if (found.type === "redirect") {
     redirect(prepareRedirect(found.redirect));
   }
+
+  const neighborsPromise = getNeighbors(found, loader);
 
   // if the current node requires authentication and the user is not authenticated, redirect to the auth page
   if (found.node.authed && !authState.authed) {
@@ -209,10 +210,6 @@ export default async function Page({
       ? undefined
       : filteredTabs.indexOf(found.currentTab);
 
-  const [neighbors] = await Promise.all([
-    getNeighbors({ prev: found.prev, next: found.next }, loader),
-  ]);
-
   const props: DocsProps = {
     baseUrl: baseUrl,
     layout: config.layout,
@@ -250,9 +247,8 @@ export default async function Page({
           loader={loader}
           node={found.node}
           parents={found.parents}
-          neighbors={neighbors}
+          neighbors={await neighborsPromise}
           breadcrumb={found.breadcrumb}
-          // apiReferenceNodes={apiReferenceNodes}
           scope={{
             authed: authState.authed,
             user: authState.authed ? authState.user : undefined,
@@ -366,28 +362,40 @@ function prepareRedirect(destination: string): string {
 async function getNeighbor(
   loader: DocsLoader,
   node: FernNavigation.NavigationNodeNeighbor | undefined
-): Promise<DocsContent.Neighbor | null> {
+): Promise<
+  | {
+      href: string;
+      title: string;
+      excerpt?: string;
+    }
+  | undefined
+> {
   if (node == null) {
-    return null;
+    return undefined;
   }
   const pageId = FernNavigation.getPageId(node);
   if (pageId == null) {
-    return null;
+    return {
+      href: addLeadingSlash(node.slug),
+      title: node.title,
+    };
   }
   try {
     const page = await loader.getPage(pageId);
-    const { data: frontmatter } = getFrontmatter(page.markdown);
-    const excerpt = frontmatter.subtitle ?? frontmatter.excerpt;
     const serialize = createCachedMdxSerializer(loader.domain);
-    const mdx = await serialize(excerpt);
+    const mdx = await serialize(page.markdown);
+    const excerpt = mdx?.frontmatter?.subtitle ?? mdx?.frontmatter?.excerpt;
     return {
-      slug: node.slug,
-      title: node.title,
-      excerpt: mdx ? { code: mdx.code } : excerpt,
+      href: addLeadingSlash(node.slug),
+      title: mdx?.frontmatter?.title ?? node.title,
+      excerpt,
     };
   } catch (error) {
     console.error(error);
-    return null;
+    return {
+      href: addLeadingSlash(node.slug),
+      title: node.title,
+    };
   }
 }
 
@@ -397,7 +405,18 @@ async function getNeighbors(
     next: FernNavigation.NavigationNodeNeighbor | undefined;
   },
   loader: DocsLoader
-): Promise<DocsContent.Neighbors> {
+): Promise<{
+  prev?: {
+    href: string;
+    title: string;
+    excerpt?: string;
+  };
+  next?: {
+    href: string;
+    title: string;
+    excerpt?: string;
+  };
+}> {
   const [prev, next] = await Promise.all([
     getNeighbor(loader, neighbors.prev),
     getNeighbor(loader, neighbors.next),

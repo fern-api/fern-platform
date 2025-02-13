@@ -1,10 +1,7 @@
 "use client";
 
+import { useServerInsertedHTML } from "next/navigation";
 import React from "react";
-
-import { DEFAULT_HEADER_HEIGHT } from "@fern-docs/utils";
-
-import { useTabs } from "@/state/navigation";
 
 export function FernHeader({
   defaultHeight,
@@ -13,19 +10,44 @@ export function FernHeader({
   defaultHeight?: number;
 }) {
   const ref = React.useRef<HTMLDivElement>(null);
-  const tabs = useTabs();
-  const tabsHeight = tabs?.length ? 44 : 0;
 
-  const [headerHeight, setHeaderHeight] = React.useState<number>(
-    () => (defaultHeight ?? DEFAULT_HEADER_HEIGHT) + tabsHeight
-  );
+  const inserted = React.useRef(false);
+  useServerInsertedHTML(() => {
+    if (inserted.current) return null;
+    inserted.current = true;
+    return (
+      <script
+        key="fern-header-height"
+        type="text/javascript"
+        suppressHydrationWarning
+        dangerouslySetInnerHTML={{
+          __html: `(${String(function () {
+            window.requestAnimationFrame(() => {
+              const headerHeight =
+                document.getElementById("fern-header")?.clientHeight;
+              if (headerHeight != null) {
+                document.documentElement.style.setProperty(
+                  "--header-height",
+                  `${String(headerHeight)}px`
+                );
+              }
+            });
+          })})()`,
+        }}
+      />
+    );
+  });
+
   React.useEffect(() => {
     if (!ref.current) return;
 
     const resizeObserver = new ResizeObserver((entries) => {
       const headerHeight = entries[0]?.contentRect.height;
       if (headerHeight) {
-        setHeaderHeight(headerHeight);
+        document.documentElement.style.setProperty(
+          "--header-height",
+          `${headerHeight}px`
+        );
       }
     });
 
@@ -39,10 +61,6 @@ export function FernHeader({
     <header ref={ref} id="fern-header" role="banner" {...props}>
       <style jsx>
         {`
-          :global(:root) {
-            --header-height: ${headerHeight}px;
-          }
-
           :global(html, body) {
             scroll-padding-top: var(--header-height);
           }

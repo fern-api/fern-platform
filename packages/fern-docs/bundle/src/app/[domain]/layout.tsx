@@ -64,14 +64,14 @@ export default async function Layout(props: {
     files,
     edgeFlags
   );
-  const stylesheet = renderThemeStylesheet(
-    colors,
-    config.typographyV2,
-    config.layout,
-    config.css,
+  const stylesheet = renderThemeStylesheet({
+    colorsConfig: colors,
+    typography: config.typographyV2,
+    layoutConfig: config.layout,
+    css: config.css,
     files,
-    true // todo: fix this
-  );
+    hasTabs: true, // todo: fix this
+  });
 
   const { VERCEL_ENV } = getEnv();
 
@@ -87,7 +87,14 @@ export default async function Layout(props: {
       ))}
       {/* <FernUser domain={domain} fern_token={fern_token} /> */}
       <BgImageGradient colors={colors} />
-      <GlobalStyles>{stylesheet}</GlobalStyles>
+      <GlobalStyles>{`
+        :root {
+          --border-radius: ${domain.includes("nominal") ? "0px" : "12px"};
+        }
+
+
+        ${stylesheet}
+      `}</GlobalStyles>
       <DarkCode value={edgeFlags.isDarkCodeEnabled} />
       <FeatureFlagProvider featureFlagsConfig={{ launchDarkly }}>
         {children}

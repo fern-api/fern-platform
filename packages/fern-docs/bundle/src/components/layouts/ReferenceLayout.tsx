@@ -4,7 +4,6 @@ import React, { ComponentPropsWithoutRef } from "react";
 
 import { cn } from "@fern-docs/components";
 
-import { BuiltWithFern } from "@/components/built-with-fern";
 import { SetLayout } from "@/state/layout";
 
 interface ReferenceLayoutProps {
@@ -40,7 +39,6 @@ export const ReferenceLayout = React.forwardRef<
           <section>
             {reference}
             {footer}
-            <BuiltWithFern className="mx-auto my-8 w-fit" />
           </section>
         </div>
         <style jsx>

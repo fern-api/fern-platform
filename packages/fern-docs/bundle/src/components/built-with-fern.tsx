@@ -31,30 +31,31 @@ export const BuiltWithFern: React.FC<{ className?: string }> = ({
    */
   return (
     <>
-      <style>
+      <style jsx>
         {`
-#builtwithfern {
-  display: flex !important;
-  opacity: 100% !important;
-}
+          :global(#builtwithfern) {
+            display: flex !important;
+            opacity: 100% !important;
+          }
 
-#builtwithfern * {
-  display: initial !important;
-  width: unset !important;
-  opacity: 100% !important;
-}
+          :global(#builtwithfern *) {
+            display: initial !important;
+            width: unset !important;
+            opacity: 100% !important;
+          }
 
-#builtwithfern,
-#builtwithfern * {
-  visibility: initial !important;
-  overflow: visible !important;
-  position: relative !important;
-  left: unset !important;
-  top: unset !important;
-  right: unset !important;
-  bottom: unset !important;
-  inset: unset !important;
-}`}
+          :global(#builtwithfern),
+          :global(#builtwithfern *) {
+            visibility: initial !important;
+            overflow: visible !important;
+            position: relative !important;
+            left: unset !important;
+            top: unset !important;
+            right: unset !important;
+            bottom: unset !important;
+            inset: unset !important;
+          }
+        `}
       </style>
       <BuiltWithFernComponent
         ref={component}

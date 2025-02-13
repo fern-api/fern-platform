@@ -1,6 +1,5 @@
 import React from "react";
 
-import { BuiltWithFern } from "@/components/built-with-fern";
 import { SetLayout } from "@/state/layout";
 
 interface PageLayoutProps {
@@ -18,7 +17,6 @@ export function PageLayout({ header, children, footer }: PageLayoutProps) {
         {children}
       </div>
       {footer}
-      <BuiltWithFern className="mx-auto my-8 w-fit" />
     </article>
   );
 }

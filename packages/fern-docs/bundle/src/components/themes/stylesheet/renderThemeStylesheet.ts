@@ -10,17 +10,24 @@ import { CSS_VARIABLES, getColorVariables } from "./getColorVariables";
 import { getFontVariables } from "./getFontVariables";
 import { getLayoutVariables } from "./getLayoutVariables";
 
-export function renderThemeStylesheet(
+export function renderThemeStylesheet({
+  colorsConfig,
+  typography,
+  layoutConfig,
+  css,
+  files,
+  hasTabs,
+}: {
   colorsConfig: {
     light?: ColorsThemeConfig;
     dark?: ColorsThemeConfig;
-  },
-  typography: DocsV1Read.DocsTypographyConfigV2 | undefined,
-  layoutConfig: DocsV1Read.DocsLayoutConfig | undefined,
-  css: DocsV1Read.CssConfig | undefined,
-  files: Record<string, { src: string }>,
-  hasTabs: boolean
-): string {
+  };
+  typography: DocsV1Read.DocsTypographyConfigV2 | undefined;
+  layoutConfig: DocsV1Read.DocsLayoutConfig | undefined;
+  css: DocsV1Read.CssConfig | undefined;
+  files: Record<string, { src: string }>;
+  hasTabs: boolean;
+}): string {
   const {
     fontFaces,
     cssVariables: fonts,

@@ -2,7 +2,6 @@ import type { ReactElement } from "react";
 
 import { cn } from "@fern-docs/components";
 
-import { BuiltWithFern } from "@/components/built-with-fern";
 import { SetLayout } from "@/state/layout";
 
 interface GuideLayoutProps {
@@ -36,7 +35,6 @@ export function GuideLayout({
             {children}
           </div>
           {footer}
-          <BuiltWithFern className="mx-auto my-8 w-fit" />
         </article>
       </div>
     </>

@@ -1,6 +1,8 @@
 import { unstable_cache } from "next/cache";
 import { notFound } from "next/navigation";
 
+import { withoutStaging } from "@fern-docs/utils";
+
 import { fernToken_admin, getFdrOrigin } from "./env-variables";
 
 const uncachedGetDocsUrlMetadata = async (
@@ -19,7 +21,7 @@ const uncachedGetDocsUrlMetadata = async (
           "Content-Type": "application/json",
           Authorization: `Bearer ${fernToken_admin()}`,
         },
-        body: JSON.stringify({ url: domain }),
+        body: JSON.stringify({ url: withoutStaging(domain) }),
       }
     );
 

@@ -74,31 +74,38 @@ export function Announcement({
     (state) => state.announcement === announcement
   );
 
+  const inserted = React.useRef(false);
   useServerInsertedHTML(() => {
-    if (!announcement) {
-      return null;
-    }
+    if (inserted.current) return null;
+    inserted.current = true;
     return (
-      <script
-        suppressHydrationWarning
-        dangerouslySetInnerHTML={{
-          __html: `(${String((announcement: string) => {
-            const dismissed = localStorage.getItem(
-              "fern-announcement-dismissed"
-            );
+      announcement && (
+        <script
+          key="fern-announcement"
+          type="text/javascript"
+          suppressHydrationWarning
+          dangerouslySetInnerHTML={{
+            __html: `(${String((announcement: string) => {
+              const dismissed = localStorage.getItem(
+                "fern-announcement-dismissed"
+              );
 
-            if (
-              dismissed &&
-              JSON.parse(dismissed)?.state?.announcement === announcement
-            ) {
-              const announcement = document.querySelector(".fern-announcement");
-              if (announcement) {
-                announcement.remove();
+              if (
+                dismissed &&
+                JSON.parse(dismissed)?.state?.announcement === announcement
+              ) {
+                requestAnimationFrame(() => {
+                  const announcement =
+                    document.querySelector(".fern-announcement");
+                  if (announcement) {
+                    announcement.remove();
+                  }
+                });
               }
-            }
-          })})(${JSON.stringify(announcement)})`,
-        }}
-      />
+            })})(${JSON.stringify(announcement)})`,
+          }}
+        />
+      )
     );
   });
 
@@ -110,6 +117,7 @@ export function Announcement({
     <AnimatePresence mode="popLayout">
       {!isDismissed && (
         <MotionAnnouncement
+          suppressHydrationWarning
           className={cn("fern-announcement", className)}
           exit={{ height: 0 }}
           dismiss={() => {
