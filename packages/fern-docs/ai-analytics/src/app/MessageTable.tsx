@@ -100,7 +100,13 @@ export function MessageTableClient({
             }}
           />
 
-          <Button variant="outline" onClick={() => exportToCSV(filteredData)}>
+          <Button
+            variant="outline"
+            onClick={() => exportToCSV(filteredData)}
+            style={{
+              marginRight: "10px",
+            }}
+          >
             Export to CSV
           </Button>
 

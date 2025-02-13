@@ -182,6 +182,7 @@ export default async function Home({
           <h6>
             To modify the date range, add <code>?daysBack=X</code> to the URL.
           </h6>
+          <br />
         </div>
         <MessageTableClient initialData={processedData} />
       </div>
