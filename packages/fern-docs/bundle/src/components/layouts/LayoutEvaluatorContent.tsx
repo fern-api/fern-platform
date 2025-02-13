@@ -1,6 +1,5 @@
 import React from "react";
 
-import { Separator } from "@radix-ui/react-separator";
 import { UnreachableCaseError } from "ts-essentials";
 
 import type * as FernDocs from "@fern-api/fdr-sdk/docs";
@@ -127,8 +126,6 @@ function Footer({
       </div>
 
       {!hideNavLinks && bottomNavigation}
-
-      <Separator className="h-px bg-[var(--grayscale-a5)]" />
 
       <BuiltWithFern className="mx-auto w-fit" />
     </footer>

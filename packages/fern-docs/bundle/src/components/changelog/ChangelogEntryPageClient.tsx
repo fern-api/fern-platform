@@ -4,7 +4,6 @@ import { ReactElement } from "react";
 
 import { ArrowLeft } from "iconoir-react";
 
-import { BottomNavigationNeighbors } from "../components/BottomNavigationNeighbors";
 import { FernLink } from "../components/FernLink";
 import { useHref } from "../hooks/useHref";
 import { Markdown } from "../mdx/Markdown";
@@ -16,10 +15,10 @@ export default function ChangelogEntryPageClient({
   content: DocsContent.ChangelogEntryPage;
 }): ReactElement<any> {
   const page = content.page;
-  const title = typeof page !== "string" ? page?.frontmatter.title : undefined;
+  const title = typeof page !== "string" ? page?.frontmatter?.title : undefined;
   const excerpt =
     typeof page !== "string"
-      ? (page?.frontmatter.subtitle ?? page?.frontmatter.excerpt)
+      ? (page?.frontmatter?.subtitle ?? page?.frontmatter?.excerpt)
       : undefined;
   return (
     <div className="flex justify-between px-4 md:px-6 lg:pl-8 lg:pr-16 xl:pr-0">
@@ -56,8 +55,6 @@ export default function ChangelogEntryPageClient({
 
               {/* TODO: alert if the page is null */}
               <Markdown mdx={page} />
-
-              <BottomNavigationNeighbors neighbors={content.neighbors} />
             </div>
             <div className="-mt-2 w-72 pl-4 text-right max-xl:hidden" />
           </section>

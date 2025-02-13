@@ -26,7 +26,7 @@ export function BottomNavigation({
   };
 }) {
   if (neighbors.prev == null && neighbors.next == null) {
-    return null;
+    return <Separator className="h-px bg-[var(--grayscale-a5)]" />;
   }
 
   return (

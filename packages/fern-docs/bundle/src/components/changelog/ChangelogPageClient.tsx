@@ -19,7 +19,6 @@ import {
   SCROLL_BODY_ATOM,
   SIDEBAR_ROOT_NODE_ATOM,
 } from "../atoms";
-import { BottomNavigationButtons } from "../components/BottomNavigationButtons";
 import { FernLink } from "../components/FernLink";
 import { ChangelogContentLayout } from "./ChangelogContentLayout";
 
@@ -114,29 +113,29 @@ export default function ChangelogPageClient({
 
   const visibleEntries = chunkedEntries[page - 1] ?? EMPTY_ARRAY;
 
-  const prev = useMemo(() => {
-    if (page === 1) {
-      return undefined;
-    }
+  // const prev = useMemo(() => {
+  //   if (page === 1) {
+  //     return undefined;
+  //   }
 
-    return {
-      title: "Newer posts",
-      hint: "Next",
-      href: `#page-${page - 1}`,
-    };
-  }, [page]);
+  //   return {
+  //     title: "Newer posts",
+  //     hint: "Next",
+  //     href: `#page-${page - 1}`,
+  //   };
+  // }, [page]);
 
-  const next = useMemo(() => {
-    if (page >= chunkedEntries.length) {
-      return undefined;
-    }
+  // const next = useMemo(() => {
+  //   if (page >= chunkedEntries.length) {
+  //     return undefined;
+  //   }
 
-    return {
-      title: "Older posts",
-      hint: "Previous",
-      href: `#page-${page + 1}`,
-    };
-  }, [chunkedEntries.length, page]);
+  //   return {
+  //     title: "Older posts",
+  //     hint: "Previous",
+  //     href: `#page-${page + 1}`,
+  //   };
+  // }, [chunkedEntries.length, page]);
 
   return (
     <div
@@ -167,15 +166,8 @@ export default function ChangelogPageClient({
             </Fragment>
           );
         })}
-
-        {(prev != null || next != null) && (
-          <ChangelogContentLayout as="div">
-            <BottomNavigationButtons prev={prev} next={next} alwaysShowGrid />
-          </ChangelogContentLayout>
-        )}
       </HideBuiltWithFern>
 
-      <div className="h-48" />
       <BuiltWithFern className="mx-auto my-8 w-fit" />
     </div>
   );

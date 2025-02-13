@@ -35,7 +35,14 @@ export declare namespace DocsContent {
   interface ChangelogEntryPage
     extends Omit<FernNavigation.ChangelogEntryNode, "type"> {
     type: "changelog-entry";
-    page: string | { code: string };
+    page:
+      | string
+      | {
+          code: string;
+          frontmatter?: Partial<FernDocs.Frontmatter>;
+          jsxElements: string[];
+          esmElements: string[];
+        };
     breadcrumb: readonly FernNavigation.BreadcrumbItem[];
     neighbors: Neighbors;
     changelogTitle: string;
