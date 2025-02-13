@@ -23,8 +23,7 @@ import { withJsConfig } from "@/components/components/with-js-config";
 import { FeatureFlagProvider } from "@/components/feature-flags/FeatureFlagProvider";
 import Preload, { type PreloadHref } from "@/components/preload";
 import { renderThemeStylesheet } from "@/components/themes/stylesheet/renderThemeStylesheet";
-import { getOrgMetadataForDomain } from "@/server/auth/metadata-for-url";
-import { createCachedDocsLoader } from "@/server/docs-loader";
+import { DocsLoader, createCachedDocsLoader } from "@/server/docs-loader";
 import type { RgbaColor } from "@/server/types";
 import { DarkCode } from "@/state/dark-code";
 
@@ -57,7 +56,7 @@ export default async function Layout(props: {
     loader.getFiles(),
     loader.getColors(),
     deprecated_getCustomerAnalytics(domain),
-    getLaunchDarklyInfo(domain),
+    getLaunchDarklyInfo(loader),
   ]);
 
   const preloadHrefs = generatePreloadHrefs(
@@ -126,11 +125,11 @@ function mergeCustomerAnalytics(
 }
 
 async function getLaunchDarklyInfo(
-  domain: string
+  loader: DocsLoader
 ): Promise<LaunchDarklyInfo | undefined> {
   const unstable_launchDarklySettings = await getLaunchDarklySettings(
-    domain,
-    getOrgMetadataForDomain(domain).then((metadata) => metadata?.orgId)
+    loader.domain,
+    loader.getMetadata().then((metadata) => metadata.org)
   );
   if (!unstable_launchDarklySettings) {
     return undefined;

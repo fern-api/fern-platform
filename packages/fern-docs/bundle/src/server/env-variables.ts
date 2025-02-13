@@ -1,3 +1,5 @@
+import { withDefaultProtocol } from "@fern-api/ui-core-utils";
+
 export function algoliaAppId(): string {
   return getEnvVariable("ALGOLIA_APP_ID");
 }
@@ -40,6 +42,12 @@ export function anthropicApiKey(): string {
 
 export function openaiApiKey(): string {
   return getEnvVariable("OPENAI_API_KEY");
+}
+
+export function getFdrOrigin(): string {
+  return withDefaultProtocol(
+    process.env.NEXT_PUBLIC_FDR_ORIGIN ?? "https://registry.buildwithfern.com"
+  );
 }
 
 function assertNonNullable<T>(

@@ -39,7 +39,6 @@ const nextConfig: NextConfig = {
     "@fern-api/template-resolver",
     "@fern-api/ui-core-utils",
     "@fern-docs/auth",
-    "@fern-docs/cache",
     "@fern-docs/components",
     "@fern-docs/edge-config",
     "@fern-docs/mdx",
@@ -64,8 +63,8 @@ const nextConfig: NextConfig = {
       "ts-essentials",
       "lucide-react",
     ],
-    optimizeServerReact: true,
-    typedEnv: true,
+    optimizeServerReact: Boolean(process.env.VERCEL),
+    // typedEnv: true,
     newDevOverlay: true,
     authInterrupts: true,
     swcTraceProfiling: true,
@@ -74,6 +73,7 @@ const nextConfig: NextConfig = {
     parallelServerBuildTraces: true,
     webpackMemoryOptimizations: true,
     taint: true,
+    useCache: true,
   },
 
   skipMiddlewareUrlNormalize: true,
@@ -206,7 +206,9 @@ function withVercelEnv(config: NextConfig): NextConfig {
   return {
     ...config,
     deploymentId: process.env.VERCEL_DEPLOYMENT_ID, // skew protection
-    productionBrowserSourceMaps: process.env.VERCEL_ENV === "preview",
+    productionBrowserSourceMaps:
+      process.env.VERCEL_ENV === "preview" ||
+      process.env.NODE_ENV === "development",
     reactProductionProfiling: process.env.VERCEL_ENV !== "production",
   };
 }

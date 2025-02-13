@@ -1,3 +1,5 @@
+import { notFound } from "next/navigation";
+
 import { APIResponse, FdrAPI } from "@fern-api/fdr-sdk/client/types";
 import { withoutStaging } from "@fern-docs/utils";
 
@@ -18,7 +20,7 @@ export type LoadWithUrlResponse = APIResponse<
  */
 export const loadWithUrl = async (
   domain: string
-): Promise<LoadWithUrlResponse> => {
+): Promise<FdrAPI.docs.v2.read.LoadDocsForUrlResponse> => {
   const domainWithoutStaging = withoutStaging(domain);
 
   let response;
@@ -28,18 +30,22 @@ export const loadWithUrl = async (
       docsBucketName: getDocsDefinitionBucketName(),
     });
     if (response != null) {
-      return {
-        ok: true,
-        body: response,
-      };
+      return response;
     }
   } catch (error) {
     console.error("Failed to load docs definition:", error);
   }
 
-  return provideRegistryService().docs.v2.read.getDocsForUrl({
+  response = await provideRegistryService().docs.v2.read.getDocsForUrl({
     url: FdrAPI.Url(domainWithoutStaging),
   });
+  if (response.ok) {
+    return response.body;
+  }
+  console.error("Failed to load docs", {
+    cause: response.error,
+  });
+  notFound();
 };
 
 function getDocsDefinitionBucketName() {

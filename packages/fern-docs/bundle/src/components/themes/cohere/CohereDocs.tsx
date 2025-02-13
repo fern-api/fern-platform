@@ -51,11 +51,13 @@ export default function CohereDocs({
   sidebar,
   children,
   announcement,
+  headerHeight,
 }: {
   header: React.ReactNode;
   sidebar: React.ReactNode;
   children: React.ReactNode;
   announcement?: React.ReactNode;
+  headerHeight?: number;
 }) {
   const showHeader = useAtomValue(SHOW_HEADER_ATOM);
 

@@ -1,5 +1,7 @@
 import type { ReactElement } from "react";
 
+import { cn } from "@fern-docs/components";
+
 import { BuiltWithFern } from "@/components/built-with-fern";
 import { SetLayout } from "@/state/layout";
 
@@ -17,19 +19,26 @@ export function GuideLayout({
   footer,
 }: GuideLayoutProps): ReactElement<any> {
   return (
-    <div className="flex flex-1 flex-row-reverse gap-8 pl-8">
+    <>
       <SetLayout value="guide" />
-      <aside className="w-sidebar-width sticky top-[var(--header-height)] hidden h-fit max-h-[calc(100dvh-var(--header-height))] flex-col xl:flex">
+      <aside
+        className={cn(
+          "sticky top-[var(--header-height)] order-last hidden h-fit max-h-[calc(100dvh-var(--header-height))] flex-col xl:flex",
+          "w-[var(--spacing-sidebar-width)]"
+        )}
+      >
         {toc}
       </aside>
-      <article className="max-w-content-width ml-0 mr-auto min-w-0 shrink xl:mx-auto">
-        {header}
-        <div className="prose dark:prose-invert prose-h1:mt-[1.5em] first:prose-h1:mt-0 max-w-full break-words">
-          {children}
-        </div>
-        {footer}
-        <BuiltWithFern className="mx-auto my-8 w-fit" />
-      </article>
-    </div>
+      <div className="ml-0 mr-auto min-w-0 shrink px-8 xl:mx-auto">
+        <article className="w-content-width max-w-full">
+          {header}
+          <div className="prose dark:prose-invert prose-h1:mt-[1.5em] first:prose-h1:mt-0 max-w-full break-words">
+            {children}
+          </div>
+          {footer}
+          <BuiltWithFern className="mx-auto my-8 w-fit" />
+        </article>
+      </div>
+    </>
   );
 }

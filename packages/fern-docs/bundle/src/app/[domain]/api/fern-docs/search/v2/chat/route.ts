@@ -17,7 +17,7 @@ import { COOKIE_FERN_TOKEN, withoutStaging } from "@fern-docs/utils";
 
 import { track } from "@/server/analytics/posthog";
 import { safeVerifyFernJWTConfig } from "@/server/auth/FernJWT";
-import { getOrgMetadataForDomain } from "@/server/auth/metadata-for-url";
+import { createCachedDocsLoader } from "@/server/docs-loader";
 import { openaiApiKey, turbopufferApiKey } from "@/server/env-variables";
 import { getDocsDomainEdge } from "@/server/xfernhost/edge";
 
@@ -46,12 +46,13 @@ export async function POST(req: NextRequest) {
   const namespace = `${withoutStaging(domain)}_${embeddingModel.modelId}`;
   const { messages } = await req.json();
 
-  const orgMetadata = await getOrgMetadataForDomain(withoutStaging(domain));
-  if (orgMetadata == null) {
+  const loader = await createCachedDocsLoader(domain);
+  const metadata = await loader.getMetadata();
+  if (metadata == null) {
     return NextResponse.json("Not found", { status: 404 });
   }
 
-  if (orgMetadata.isPreviewUrl) {
+  if (metadata.isPreview) {
     return NextResponse.json({
       added: 0,
       updated: 0,

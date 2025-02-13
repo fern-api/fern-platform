@@ -115,6 +115,11 @@ export function useCurrentTab() {
   return parents?.find((parent) => parent.type === "tab");
 }
 
+export function useTabs() {
+  const { parents } = useNode();
+  return parents?.find((parent) => parent.type === "tabbed")?.children;
+}
+
 export function useCurrentVersion() {
   const { parents, current } = useNode();
   if (current?.type === "version") {

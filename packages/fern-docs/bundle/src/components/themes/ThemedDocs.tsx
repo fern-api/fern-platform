@@ -14,6 +14,7 @@ export async function ThemedDocs({
   header,
   sidebar,
   children,
+  headerHeight,
 }: {
   theme?: FernTheme;
   colors: {
@@ -24,6 +25,7 @@ export async function ThemedDocs({
   header?: React.ReactNode;
   sidebar?: React.ReactNode;
   children: React.ReactNode;
+  headerHeight?: number;
 }) {
   const Docs = await THEMES[theme];
   return (
@@ -32,6 +34,7 @@ export async function ThemedDocs({
       colors={colors}
       header={header}
       sidebar={sidebar}
+      headerHeight={headerHeight}
     >
       {children}
     </Docs>

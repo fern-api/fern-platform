@@ -8,7 +8,6 @@ import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 
 import { DocsLoader } from "@/server/docs-loader";
 
-import { ApiPageLayout } from "./api-page-layout";
 import { EndpointContent } from "./endpoints/EndpointContent";
 import { WebhookContent } from "./webhooks/WebhookContent";
 import { WebSocketContent } from "./websockets/WebSocket";
@@ -25,14 +24,12 @@ export default async function ApiEndpointPage({
   const apiDefinition = await loader.getApi(node.apiDefinitionId);
 
   return (
-    <ApiPageLayout>
-      <ApiEndpointContent
-        loader={loader}
-        node={node}
-        apiDefinition={apiDefinition}
-        breadcrumb={breadcrumb}
-      />
-    </ApiPageLayout>
+    <ApiEndpointContent
+      loader={loader}
+      node={node}
+      apiDefinition={apiDefinition}
+      breadcrumb={breadcrumb}
+    />
   );
 }
 

@@ -10,11 +10,10 @@ import {
   getAuthEdgeConfig,
   getPreviewUrlAuthConfig,
 } from "@fern-docs/edge-config";
-import { removeTrailingSlash, withoutStaging } from "@fern-docs/utils";
+import { removeTrailingSlash } from "@fern-docs/utils";
 
 import { safeVerifyFernJWTConfig } from "./FernJWT";
 import { getAllowedRedirectUrls } from "./allowed-redirects";
-import { getOrgMetadataForDomain } from "./metadata-for-url";
 import { preferPreview } from "./origin";
 import { getOryAuthorizationUrl } from "./ory";
 import { getReturnToQueryParam } from "./return-to";
@@ -172,6 +171,10 @@ export async function createGetAuthState(
   domain: string,
   fernToken: string | undefined,
   authConfig?: AuthEdgeConfig,
+  orgMetadata?: {
+    org: string;
+    isPreview: boolean;
+  },
   setFernToken?: (token: string) => void
 ): Promise<
   DomainAndHost & {
@@ -179,7 +182,6 @@ export async function createGetAuthState(
   }
 > {
   authConfig ??= await getAuthEdgeConfig(domain);
-  const orgMetadata = await getOrgMetadataForDomain(withoutStaging(domain));
   const previewAuthConfig =
     orgMetadata != null
       ? await getPreviewUrlAuthConfig(orgMetadata)

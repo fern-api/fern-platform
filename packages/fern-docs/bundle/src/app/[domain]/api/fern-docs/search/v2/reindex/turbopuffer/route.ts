@@ -8,7 +8,7 @@ import { turbopufferUpsertTask } from "@fern-docs/search-server/turbopuffer";
 import { addLeadingSlash, withoutStaging } from "@fern-docs/utils";
 
 import { track } from "@/server/analytics/posthog";
-import { getOrgMetadataForDomain } from "@/server/auth/metadata-for-url";
+import { createCachedDocsLoader } from "@/server/docs-loader";
 import {
   fdrEnvironment,
   fernToken_admin,
@@ -30,13 +30,14 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
   const namespace = `${withoutStaging(domain)}_${embeddingModel.modelId}`;
 
   try {
-    const orgMetadata = await getOrgMetadataForDomain(withoutStaging(domain));
-    if (orgMetadata == null) {
+    const loader = await createCachedDocsLoader(domain);
+    const metadata = await loader.getMetadata();
+    if (metadata == null) {
       return NextResponse.json("Not found", { status: 404 });
     }
 
     // If the domain is a preview URL, we don't want to reindex
-    if (orgMetadata.isPreviewUrl) {
+    if (metadata.isPreview) {
       return NextResponse.json(
         {
           added: 0,

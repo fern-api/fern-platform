@@ -23,16 +23,16 @@ export const ReferenceLayout = React.forwardRef<
   ref
 ) {
   return (
-    <div className="px-4 md:px-6 lg:px-8">
-      <SetLayout value="reference" />
+    <div className="ml-0 mr-auto min-w-0 shrink px-8 xl:mx-auto">
       <article
         {...props}
         className={cn(
-          "max-w-content-width md:max-w-endpoint-width mx-auto w-full lg:ml-0 xl:mx-auto",
+          "w-content-width md:w-endpoint-width max-w-full",
           props.className
         )}
         ref={ref}
       >
+        <SetLayout value="reference" />
         {header}
         <div className="layout">
           <section>{children}</section>
@@ -40,9 +40,9 @@ export const ReferenceLayout = React.forwardRef<
           <section>
             {reference}
             {footer}
+            <BuiltWithFern className="mx-auto my-8 w-fit" />
           </section>
         </div>
-        <BuiltWithFern className="mx-auto my-8 w-fit" />
         <style jsx>
           {`
             article > .layout {
@@ -67,6 +67,7 @@ export const ReferenceLayout = React.forwardRef<
 
             article > .layout > section:last-child {
               grid-area: footer;
+              grid-row-end: none;
             }
 
             article > .layout > section:empty {
@@ -79,7 +80,7 @@ export const ReferenceLayout = React.forwardRef<
 
             @media (min-width: 768px) {
               article > .layout {
-                margin: 2rem 0;
+                margin: 1.5rem 0;
                 gap: 2rem;
                 grid-template-columns: 1fr 1fr;
                 grid-template-areas:

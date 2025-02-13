@@ -31,7 +31,7 @@ export async function EndpointContent({
 
   return (
     <EndpointContextProvider endpoint={endpoint}>
-      <ApiPageCenter slug={node.slug}>
+      <ApiPageCenter slug={node.slug} asChild>
         <ReferenceLayout
           header={
             <PageHeader

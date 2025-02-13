@@ -6,7 +6,7 @@ import { FernNavigation } from "@fern-api/fdr-sdk";
 import { getLaunchDarklySettings } from "@fern-docs/edge-config";
 
 import { AuthState } from "./auth/getAuthState";
-import { getOrgMetadataForDomain } from "./auth/metadata-for-url";
+import { DocsLoader } from "./docs-loader";
 
 async function withLaunchDarklyContext(
   endpoint: string | undefined,
@@ -65,8 +65,7 @@ interface LaunchDarklyInfo {
 }
 
 export async function withLaunchDarkly(
-  domain: string,
-  authState: AuthState,
+  loader: DocsLoader,
   node: FernNavigation.utils.Node,
   rawCookie?: string
 ): Promise<
@@ -76,13 +75,13 @@ export async function withLaunchDarkly(
   ]
 > {
   const launchDarklyConfig = await getLaunchDarklySettings(
-    domain,
-    getOrgMetadataForDomain(domain).then((metadata) => metadata?.orgId)
+    loader.domain,
+    loader.getMetadata().then((metadata) => metadata?.org)
   );
   if (launchDarklyConfig) {
     const context = await withLaunchDarklyContext(
       launchDarklyConfig["context-endpoint"],
-      authState,
+      await loader.getAuthState(),
       node,
       rawCookie
     );

@@ -1,3 +1,4 @@
+import { getFernToken } from "@/app/fern-token";
 import type { NavbarLink } from "@/components/atoms/types";
 import { Header } from "@/components/header/Header";
 import { Announcement } from "@/components/header/announcement";
@@ -19,7 +20,7 @@ export default async function DocsLayout({
 }) {
   const { domain } = await params;
 
-  const loader = await createCachedDocsLoader(domain);
+  const loader = await createCachedDocsLoader(domain, await getFernToken());
   const [{ basePath }, root, config, edgeFlags, files, colors, layout] =
     await Promise.all([
       loader.getBaseUrl(),
@@ -111,7 +112,6 @@ export default async function DocsLayout({
         header={
           <Header
             className="max-w-page-width mx-auto"
-            colors={colors}
             logo={
               <Logo
                 logo={withLogo(config, resolveFileSrc, basePath)}
@@ -119,10 +119,12 @@ export default async function DocsLayout({
               />
             }
             versionSelect={false}
+            showThemeButton={Boolean(colors.dark && colors.light)}
             showSearchBar={layout.searchbarPlacement === "HEADER"}
             navbarLinks={navbarLinks}
           />
         }
+        headerHeight={layout.headerHeight}
         sidebar={
           <Sidebar
             logo={

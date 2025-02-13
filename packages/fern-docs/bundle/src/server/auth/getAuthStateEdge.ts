@@ -15,5 +15,11 @@ export async function createGetAuthStateEdge(
 ): ReturnType<typeof createGetAuthState> {
   const domain = getDocsDomainEdge(request);
   const fern_token = request.cookies.get(COOKIE_FERN_TOKEN)?.value;
-  return createGetAuthState(domain, fern_token, undefined, setFernToken);
+  return createGetAuthState(
+    domain,
+    fern_token,
+    undefined,
+    undefined,
+    setFernToken
+  );
 }

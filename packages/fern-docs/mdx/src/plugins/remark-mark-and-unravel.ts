@@ -1,9 +1,8 @@
 import { collapseWhiteSpace } from "collapse-white-space";
+import { walk } from "estree-walker";
 import type { Root } from "mdast";
 import type { Plugin } from "unified";
-import { SKIP, visit } from "unist-util-visit";
-
-import { Mdast } from "../types";
+import { visit } from "unist-util-visit";
 
 // Forked from https://github.com/mdx-js/mdx/blob/main/packages/mdx/lib/plugin/remark-mark-and-unravel.js
 
@@ -17,9 +16,9 @@ import { Mdast } from "../types";
  * @returns
  *   Transform.
  */
-export const remarkUnravel: Plugin<[], Root> = () => {
-  return (ast) => {
-    visit(ast, (node, index, parent) => {
+export const remarkMarkAndUnravel: Plugin<[], Root> = () => {
+  return (tree) => {
+    visit(tree, (node, index, parent) => {
       let offset = -1;
       let all = true;
       let oneOrMore = false;
@@ -55,7 +54,8 @@ export const remarkUnravel: Plugin<[], Root> = () => {
         if (all && oneOrMore) {
           offset = -1;
 
-          const newChildren: Mdast.RootContent[] = [];
+          /** @type {Array<RootContent>} */
+          const newChildren = [];
 
           while (++offset < children.length) {
             const child = children[offset];
@@ -84,33 +84,33 @@ export const remarkUnravel: Plugin<[], Root> = () => {
           }
 
           parent.children.splice(index, 1, ...newChildren);
-          return [SKIP, index];
+          return index;
         }
       }
 
-      // if (
-      //   node.type === "mdxJsxFlowElement" ||
-      //   node.type === "mdxJsxTextElement"
-      // ) {
-      //   const data = node.data || (node.data = {});
-      //   data._mdxExplicitJsx = true;
-      // }
+      if (
+        node.type === "mdxJsxFlowElement" ||
+        node.type === "mdxJsxTextElement"
+      ) {
+        const data = node.data || (node.data = {});
+        data._mdxExplicitJsx = true;
+      }
 
-      // if (
-      //   (node.type === "mdxFlowExpression" ||
-      //     node.type === "mdxTextExpression" ||
-      //     node.type === "mdxjsEsm") &&
-      //   node.data?.estree
-      // ) {
-      //   walk(node.data.estree, {
-      //     enter(node) {
-      //       if (node.type === "JSXElement") {
-      //         const data = node.data || (node.data = {});
-      //         data._mdxExplicitJsx = true;
-      //       }
-      //     },
-      //   });
-      // }
+      if (
+        (node.type === "mdxFlowExpression" ||
+          node.type === "mdxTextExpression" ||
+          node.type === "mdxjsEsm") &&
+        node.data?.estree
+      ) {
+        walk(node.data.estree, {
+          enter(node) {
+            if (node.type === "JSXElement") {
+              const data = node.data || (node.data = {});
+              data._mdxExplicitJsx = true;
+            }
+          },
+        });
+      }
 
       return;
     });

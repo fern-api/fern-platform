@@ -148,15 +148,16 @@ export const middleware: NextMiddleware = async (request) => {
     return rewrite(withDomain(`/explorer${pathname}`));
   }
 
-  if (request.cookies.has(COOKIE_FERN_TOKEN)) {
-    const dynamicResponse = rewrite(withDomain(`/dynamic${pathname}`));
-    const { getAuthState } = await createGetAuthStateEdge(request, (token) => {
-      dynamicResponse.cookies.set(COOKIE_FERN_TOKEN, token);
-    });
-    const authState = await getAuthState();
-    if (authState.authed) {
-      return dynamicResponse;
-    }
+  const dynamicResponse = rewrite(withDomain(`/dynamic${pathname}`));
+  const { getAuthState } = await createGetAuthStateEdge(request, (token) => {
+    dynamicResponse.cookies.set(COOKIE_FERN_TOKEN, token);
+  });
+  const authState = await getAuthState(pathname);
+  if (authState.authed) {
+    return dynamicResponse;
+  }
+  if (!authState.ok && authState.authorizationUrl) {
+    return NextResponse.redirect(authState.authorizationUrl);
   }
 
   return rewrite(withDomain(`/static${pathname}`));

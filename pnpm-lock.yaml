@@ -725,9 +725,6 @@ importers:
       '@fern-docs/auth':
         specifier: workspace:*
         version: link:../auth
-      '@fern-docs/cache':
-        specifier: workspace:*
-        version: link:../cache
       '@fern-docs/components':
         specifier: workspace:*
         version: link:../components
@@ -1182,52 +1179,6 @@ importers:
       vite:
         specifier: ^6.1.0
         version: 6.1.0(@types/node@18.19.33)(jiti@1.21.7)(less@4.2.0)(sass@1.77.0)(stylus@0.62.0)(terser@5.38.1)(tsx@4.19.2)(yaml@2.7.0)
-      vitest:
-        specifier: ^3.0.5
-        version: 3.0.5(@edge-runtime/vm@5.0.0)(@types/debug@4.1.12)(@types/node@18.19.33)(jiti@1.21.7)(jsdom@24.0.0)(less@4.2.0)(sass@1.77.0)(stylus@0.62.0)(terser@5.38.1)(tsx@4.19.2)(yaml@2.7.0)
-
-  packages/fern-docs/cache:
-    dependencies:
-      '@fern-api/fdr-sdk':
-        specifier: workspace:*
-        version: link:../../fdr-sdk
-      '@fern-api/ui-core-utils':
-        specifier: workspace:*
-        version: link:../../commons/core-utils
-      '@fern-docs/utils':
-        specifier: workspace:*
-        version: link:../utils
-      '@vercel/kv':
-        specifier: ^2.0.0
-        version: 2.0.0
-      httpsnippet-lite:
-        specifier: ^3.0.5
-        version: 3.0.5
-      ts-essentials:
-        specifier: ^10.0.1
-        version: 10.0.1(typescript@5.7.2)
-    devDependencies:
-      '@fern-platform/configs':
-        specifier: workspace:*
-        version: link:../../configs
-      '@types/node':
-        specifier: ^18.7.18
-        version: 18.19.33
-      depcheck:
-        specifier: ^1.4.7
-        version: 1.4.7
-      eslint:
-        specifier: 9.17.0
-        version: 9.17.0(jiti@1.21.7)
-      prettier:
-        specifier: ^3.4.2
-        version: 3.4.2
-      stylelint:
-        specifier: ^16.1.0
-        version: 16.5.0(typescript@5.7.2)
-      typescript:
-        specifier: 5.7.2
-        version: 5.7.2
       vitest:
         specifier: ^3.0.5
         version: 3.0.5(@edge-runtime/vm@5.0.0)(@types/debug@4.1.12)(@types/node@18.19.33)(jiti@1.21.7)(jsdom@24.0.0)(less@4.2.0)(sass@1.77.0)(stylus@0.62.0)(terser@5.38.1)(tsx@4.19.2)(yaml@2.7.0)
@@ -10868,10 +10819,6 @@ packages:
     resolution: {integrity: sha512-wzsgA6WOq+09wrU1tsJ09udeR/YZRaeArL9e1wPbFg3GG2yDnC2ldKpxs4xunpFF9DgqCqOIra3bc1HWrJ37Ww==}
     engines: {node: '>=0.4.x'}
 
-  formdata-node@4.4.1:
-    resolution: {integrity: sha512-0iirZp3uVDjVGt9p49aTaqjk84TrglENEDuqfdlZQ1roC9CWlPk6Avf8EEnZNcAqPonwkG35x4n3ww/1THYAeQ==}
-    engines: {node: '>= 12.20'}
-
   formdata-node@6.0.3:
     resolution: {integrity: sha512-8e1++BCiTzUno9v5IZ2J6bv4RU+3UKDmqWUQD0MIMVCd9AdhWkO1gw57oo1mNEX1dMq2EGI+FbWz4B92pscSQg==}
     engines: {node: '>= 18'}
@@ -11471,10 +11418,6 @@ packages:
   https-proxy-agent@7.0.5:
     resolution: {integrity: sha512-1e4Wqeblerz+tMKPIq2EMGiiWW1dIjZOksyHWSUm1rmuvw/how9hBHZ38lAGj5ID4Ik6EdkOw7NmWPy6LAwalw==}
     engines: {node: '>= 14'}
-
-  httpsnippet-lite@3.0.5:
-    resolution: {integrity: sha512-So4qTXY5iFj5XtFDwyz2PicUu+8NWrI8e8h+ZeZoVtMNcFQp4FFIntBHUE+JPUG6QQU8o1VHCy+X4ETRDwt9CA==}
-    engines: {node: '>=14.13'}
 
   httpsnippet@3.0.1:
     resolution: {integrity: sha512-RJbzVu9Gq97Ti76MPKAb9AknKbRluRbzOqswM2qgEW48QUShVEIuJjl43dZG5q0Upj2SZlKqzR6B6ah1q5znfg==}
@@ -13285,10 +13228,6 @@ packages:
   node-cron@3.0.3:
     resolution: {integrity: sha512-dOal67//nohNgYWb+nWmg5dkFdIwDm8EpeGYMekPMrngV3637lqnX0lbUcCtgibHTz6SEz7DAIjKvKDFYCnO1A==}
     engines: {node: '>=6.0.0'}
-
-  node-domexception@1.0.0:
-    resolution: {integrity: sha512-/jKZoMpw0F8GRwl4/eLROPA3cfcXtLApP0QzLmUT/HuPCZWyB7IY9ZrMeKw2O/nFIqPQB3PVM9aYm0F312AXDQ==}
-    engines: {node: '>=10.5.0'}
 
   node-emoji@2.1.3:
     resolution: {integrity: sha512-E2WEOVsgs7O16zsURJ/eH8BqhF029wGpEOnv7Urwdo2wmQanOACwJQh0devF9D9RhoZru0+9JXIS0dBXIAz+lA==}
@@ -16680,10 +16619,6 @@ packages:
 
   web-namespaces@2.0.1:
     resolution: {integrity: sha512-bKr1DkiNa2krS7qxNtdrtHAmzuYGFQLiQ13TsorsdT6ULTkPLKuu5+GsFpDlg6JFjUTwX2DyhMPG2be8uPrqsQ==}
-
-  web-streams-polyfill@4.0.0-beta.3:
-    resolution: {integrity: sha512-QW95TCTaHmsYfHDybGMwO5IJIM93I/6vTRk+daHTWFPhwh+C8Cg7j7XyKrwrj8Ib6vYXe0ocYNrmzY4xAAN6ug==}
-    engines: {node: '>= 14'}
 
   web-vitals@4.2.3:
     resolution: {integrity: sha512-/CFAm1mNxSmOj6i0Co+iGFJ58OS4NRGVP+AWS/l509uIK5a1bSoIVaHz/ZumpHTfHSZBpgrJ+wjfpAOrTHok5Q==}
@@ -28375,11 +28310,6 @@ snapshots:
 
   format@0.2.2: {}
 
-  formdata-node@4.4.1:
-    dependencies:
-      node-domexception: 1.0.0
-      web-streams-polyfill: 4.0.0-beta.3
-
   formdata-node@6.0.3: {}
 
   forwarded@0.2.0: {}
@@ -29182,12 +29112,6 @@ snapshots:
       debug: 4.4.0
     transitivePeerDependencies:
       - supports-color
-
-  httpsnippet-lite@3.0.5:
-    dependencies:
-      '@types/har-format': 1.2.15
-      formdata-node: 4.4.1
-      stringify-object: 3.3.0
 
   httpsnippet@3.0.1:
     dependencies:
@@ -31606,8 +31530,6 @@ snapshots:
   node-cron@3.0.3:
     dependencies:
       uuid: 8.3.2
-
-  node-domexception@1.0.0: {}
 
   node-emoji@2.1.3:
     dependencies:
@@ -35652,8 +35574,6 @@ snapshots:
       defaults: 1.0.4
 
   web-namespaces@2.0.1: {}
-
-  web-streams-polyfill@4.0.0-beta.3: {}
 
   web-vitals@4.2.3: {}
 

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import { getOrgMetadataForDomain } from "@/server/auth/metadata-for-url";
+import { createCachedDocsLoader } from "@/server/docs-loader";
 import { getDocsDomainEdge } from "@/server/xfernhost/edge";
 
 export const runtime = "edge";
@@ -17,7 +17,8 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
     return NextResponse.json({ error: "Invalid domain" }, { status: 400 });
   }
 
-  const metadata = await getOrgMetadataForDomain(domain);
+  const loader = await createCachedDocsLoader(domain);
+  const metadata = await loader.getMetadata();
 
   if (metadata) {
     return NextResponse.json(metadata, { status: 200 });

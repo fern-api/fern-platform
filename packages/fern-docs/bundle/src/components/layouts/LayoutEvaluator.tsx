@@ -46,7 +46,7 @@ export async function LayoutEvaluator({
       frontmatter={frontmatter}
       breadcrumb={breadcrumb}
       tableOfContents={toc}
-      aside={mdx && hasAside && <MdxAsideComponent code={mdx.code} />}
+      aside={mdx && hasAside && <MdxAsideComponent {...mdx} />}
     >
       <MdxContent mdx={mdx} fallback={markdown} />
     </LayoutEvaluatorContent>

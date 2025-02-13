@@ -1,5 +1,6 @@
 "use client";
 
+import { useServerInsertedHTML } from "next/navigation";
 import React from "react";
 
 import { Xmark } from "iconoir-react";
@@ -35,7 +36,7 @@ const AnnouncementInternal = React.forwardRef<
     <motion.div
       ref={forwardedRef}
       {...props}
-      className={cn("fern-announcement overflow-hidden", className)}
+      className={cn("overflow-hidden", className)}
     >
       <motion.div
         className="bg-accent text-accent-contrast flex min-h-8 items-center"
@@ -73,6 +74,34 @@ export function Announcement({
     (state) => state.announcement === announcement
   );
 
+  useServerInsertedHTML(() => {
+    if (!announcement) {
+      return null;
+    }
+    return (
+      <script
+        suppressHydrationWarning
+        dangerouslySetInnerHTML={{
+          __html: `(${String((announcement: string) => {
+            const dismissed = localStorage.getItem(
+              "fern-announcement-dismissed"
+            );
+
+            if (
+              dismissed &&
+              JSON.parse(dismissed)?.state?.announcement === announcement
+            ) {
+              const announcement = document.querySelector(".fern-announcement");
+              if (announcement) {
+                announcement.remove();
+              }
+            }
+          })})(${JSON.stringify(announcement)})`,
+        }}
+      />
+    );
+  });
+
   if (!announcement) {
     return null;
   }
@@ -81,7 +110,7 @@ export function Announcement({
     <AnimatePresence mode="popLayout">
       {!isDismissed && (
         <MotionAnnouncement
-          className={className}
+          className={cn("fern-announcement", className)}
           exit={{ height: 0 }}
           dismiss={() => {
             useAnnouncementStore.setState({ announcement });

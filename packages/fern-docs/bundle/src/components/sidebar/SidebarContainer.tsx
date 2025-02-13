@@ -5,7 +5,7 @@ import React from "react";
 import clsx from "clsx";
 import { useAtomValue } from "jotai";
 
-import { FernScrollArea, FernTooltipProvider } from "@fern-docs/components";
+import { FernScrollArea, FernTooltipProvider, cn } from "@fern-docs/components";
 
 import {
   CURRENT_TAB_INDEX_ATOM,
@@ -46,9 +46,7 @@ export const SidebarContainer = React.memo(function SidebarContainer({
       />
       <FernScrollArea
         rootClassName="flex-1"
-        className={clsx(
-          "group/sidebar fern-sidebar-content overscroll-contain"
-        )}
+        className={cn("group/sidebar overscroll-contain px-4 lg:pl-5")}
         scrollbars="vertical"
         ref={ref}
       >

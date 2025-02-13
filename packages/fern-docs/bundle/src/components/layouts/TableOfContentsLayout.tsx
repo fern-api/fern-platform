@@ -16,7 +16,7 @@ export function TableOfContentsLayout({
     tableOfContents != null &&
     !hideTableOfContents &&
     tableOfContents.length > 0 && (
-      <FernScrollArea className="px-4 pb-12 pt-8 lg:pr-8">
+      <FernScrollArea className="px-4 pb-12 pt-8 lg:pr-5">
         <TableOfContents tableOfContents={tableOfContents} />
       </FernScrollArea>
     )

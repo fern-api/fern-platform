@@ -27,7 +27,6 @@ import {
   rehypeToc,
   remarkInjectEsm,
   remarkSanitizeAcorn,
-  remarkUnravel,
 } from "@fern-docs/mdx/plugins";
 
 import { FileData } from "@/server/types";
@@ -143,7 +142,6 @@ async function serializeMdxImpl(
         remarkFrontmatter,
         remarkExtractTitle,
         [remarkMdxFrontmatter, { name: "frontmatter" }],
-        remarkUnravel,
         remarkSqueezeParagraphs,
         [remarkInjectEsm, { scope }],
         [remarkSanitizeAcorn],

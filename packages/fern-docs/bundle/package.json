@@ -43,7 +43,6 @@
     "@fern-api/template-resolver": "workspace:*",
     "@fern-api/ui-core-utils": "workspace:*",
     "@fern-docs/auth": "workspace:*",
-    "@fern-docs/cache": "workspace:*",
     "@fern-docs/components": "workspace:*",
     "@fern-docs/edge-config": "workspace:*",
     "@fern-docs/mdx": "workspace:*",

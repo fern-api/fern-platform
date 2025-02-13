@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Dispatch,
   KeyboardEventHandler,
@@ -316,6 +318,7 @@ function InstantSearchWrapper({
           ? { insightsInitParams: { authenticatedUserToken } }
           : undefined
       }
+      routing
     >
       <Configure
         attributesToSnippet={["description:32", "content:32"]}

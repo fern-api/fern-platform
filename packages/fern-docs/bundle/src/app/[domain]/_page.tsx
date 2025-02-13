@@ -132,11 +132,7 @@ export default async function Page({
   }
 
   // TODO: parallelize this with the other edge config calls:
-  const [launchDarkly, flagPredicate] = await withLaunchDarkly(
-    loader.domain,
-    authState,
-    found
-  );
+  const [launchDarkly, flagPredicate] = await withLaunchDarkly(loader, found);
 
   if (
     ![...found.parents, found.node]

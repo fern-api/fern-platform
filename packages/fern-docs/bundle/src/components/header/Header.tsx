@@ -5,13 +5,11 @@ import { CSSProperties, useState } from "react";
 import React from "react";
 
 import cn, { clsx } from "clsx";
-import { ArrowRight, Search } from "iconoir-react";
+import { ArrowRight } from "iconoir-react";
 
-import type { DocsV1Read } from "@fern-api/fdr-sdk/client/types";
-import { FernButton, FernButtonGroup } from "@fern-docs/components";
+import { FernButtonGroup } from "@fern-docs/components";
 
-import { ColorsThemeConfig } from "@/server/types";
-import { SearchV2Trigger, useToggleSearchDialog } from "@/state/search";
+import { SearchV2Trigger } from "@/state/search";
 
 import type { NavbarLink } from "../atoms/types";
 import { FernLinkButton } from "../components/FernLinkButton";
@@ -19,7 +17,6 @@ import { ThemeButton } from "../themes";
 import { getGitHubRepo } from "../util/github";
 import { GitHubWidget } from "./GitHubWidget";
 import { HeaderLogoSection } from "./HeaderLogoSection";
-import { MobileMenuButton } from "./MobileMenuButton";
 
 export declare namespace Header {
   export interface Props {
@@ -27,10 +24,7 @@ export declare namespace Header {
     versionSelect: React.ReactNode;
     className?: string;
     style?: CSSProperties;
-    colors: {
-      light?: ColorsThemeConfig;
-      dark?: ColorsThemeConfig;
-    };
+    showThemeButton?: boolean;
     showSearchBar?: boolean;
     navbarLinks: NavbarLink[];
   }
@@ -41,77 +35,40 @@ export function Header({
   versionSelect,
   className,
   style,
-  colors,
+  showThemeButton,
   showSearchBar,
   navbarLinks,
 }: Header.Props) {
-  const toggleSearchDialog = useToggleSearchDialog();
-
-  const navbarLinksSection = (
-    <div className="lg-menu">
-      <FernButtonGroup>
-        {navbarLinks.map((navbarLink, idx) => (
-          <NavbarLink key={idx} navbarLink={navbarLink} />
-        ))}
-
-        {colors.dark && colors.light && <ThemeButton />}
-      </FernButtonGroup>
-    </div>
-  );
-
-  const githubLink = navbarLinks.find((link) => link.type === "github");
-  const githubRepo = githubLink && getGitHubRepo(githubLink.href);
-
   return (
-    <nav
-      aria-label="primary"
-      className={cn("fern-header-content", className)}
+    <div
+      className={cn(
+        "flex w-full items-center justify-stretch gap-4 px-4 md:px-6 lg:px-8",
+        className
+      )}
       style={style}
     >
       <HeaderLogoSection logo={logo} versionSelect={versionSelect} />
 
       {showSearchBar && (
-        <div className={cn("fern-header-searchbar")}>
-          <SearchV2Trigger />
-        </div>
+        <SearchV2Trigger
+          aria-label="Search"
+          className="max-w-content-width mx-2 hidden w-full min-w-0 shrink lg:inline-flex"
+        />
       )}
 
-      <div
-        className={cn("fern-header-right-menu", {
-          "flex-1": showSearchBar,
-        })}
-      >
-        {navbarLinksSection}
+      <FernButtonGroup asChild>
+        <nav
+          aria-label="Navbar links"
+          className="hidden flex-1 lg:flex lg:items-center lg:justify-end"
+        >
+          {navbarLinks.map((navbarLink, idx) => (
+            <NavbarLink key={idx} navbarLink={navbarLink} />
+          ))}
 
-        <div className="max-lg-menu">
-          {githubRepo && (
-            <GitHubWidget
-              repo={githubRepo}
-              className={githubLink?.className}
-              id={githubLink?.id}
-            />
-          )}
-
-          {colors.dark && colors.light && <ThemeButton size="large" />}
-
-          <FernButton
-            onClickCapture={(e) => {
-              e.stopPropagation();
-              toggleSearchDialog();
-            }}
-            icon={<Search className="!size-icon-md" />}
-            intent="none"
-            variant="minimal"
-            rounded={true}
-            size="large"
-            className="max-sm:hidden"
-            id="fern-search-button"
-          />
-
-          <MobileMenuButton />
-        </div>
-      </div>
-    </nav>
+          {showThemeButton && <ThemeButton />}
+        </nav>
+      </FernButtonGroup>
+    </div>
   );
 }
 
@@ -177,10 +134,4 @@ function NavbarLink({ navbarLink }: { navbarLink: NavbarLink }) {
       {navbarLink.text}
     </FernLinkButton>
   );
-}
-
-export declare namespace HeaderPrimaryLink {
-  export interface Props {
-    navbarLink: DocsV1Read.NavbarLink.Primary;
-  }
 }

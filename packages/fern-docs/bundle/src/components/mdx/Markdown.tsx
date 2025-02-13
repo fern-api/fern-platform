@@ -10,7 +10,14 @@ export declare namespace Markdown {
     title?: ReactNode;
 
     // mdx: string | FernDocs.ResolvedMdx | string | FernDocs.ResolvedMdx[] | undefined;
-    mdx: string | { code: string } | (string | { code: string })[] | undefined;
+    mdx:
+      | string
+      | { code: string; jsxElements: string[]; esmElements: string[] }
+      | (
+          | string
+          | { code: string; jsxElements: string[]; esmElements: string[] }
+        )[]
+      | undefined;
     className?: string;
     size?: "xs" | "sm" | "lg";
 

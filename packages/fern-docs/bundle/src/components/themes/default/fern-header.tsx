@@ -4,6 +4,8 @@ import React from "react";
 
 import { DEFAULT_HEADER_HEIGHT } from "@fern-docs/utils";
 
+import { useTabs } from "@/state/navigation";
+
 export function FernHeader({
   defaultHeight,
   ...props
@@ -11,9 +13,11 @@ export function FernHeader({
   defaultHeight?: number;
 }) {
   const ref = React.useRef<HTMLDivElement>(null);
+  const tabs = useTabs();
+  const tabsHeight = tabs?.length ? 44 : 0;
 
   const [headerHeight, setHeaderHeight] = React.useState<number>(
-    defaultHeight ?? DEFAULT_HEADER_HEIGHT
+    () => (defaultHeight ?? DEFAULT_HEADER_HEIGHT) + tabsHeight
   );
   React.useEffect(() => {
     if (!ref.current) return;

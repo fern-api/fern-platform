@@ -19,9 +19,14 @@ import { CONTINUE, SKIP } from "@fern-api/fdr-sdk/traversers";
 import { isPlainObject } from "@fern-api/ui-core-utils";
 import { AuthEdgeConfig } from "@fern-docs/auth";
 import { getAuthEdgeConfig, getEdgeFlags } from "@fern-docs/edge-config";
-import { DEFAULT_LOGO_HEIGHT, EdgeFlags } from "@fern-docs/utils";
+import {
+  DEFAULT_LOGO_HEIGHT,
+  EdgeFlags,
+  withoutStaging,
+} from "@fern-docs/utils";
 
 import { AuthState, createGetAuthState } from "./auth/getAuthState";
+import { getDocsUrlMetadata } from "./getDocsUrlMetadata";
 import { loadWithUrl as uncachedLoadWithUrl } from "./loadWithUrl";
 import { ColorsThemeConfig, FileData, RgbaColor } from "./types";
 import { pruneWithAuthState } from "./withRbac";
@@ -31,7 +36,6 @@ const loadWithUrl = cache(uncachedLoadWithUrl);
 export interface DocsLoader {
   domain: string;
   fern_token: string | undefined;
-  authConfig: AuthEdgeConfig | undefined;
 
   /**
    * @returns the base url (including base path) of the docs
@@ -39,6 +43,15 @@ export interface DocsLoader {
   getBaseUrl: () => Promise<{
     domain: string;
     basePath: string | undefined;
+  }>;
+
+  /**
+   * @returns the metadata for the given url
+   */
+  getMetadata: () => Promise<{
+    url: string;
+    org: string;
+    isPreview: boolean;
   }>;
 
   /**
@@ -116,12 +129,9 @@ const cachedGetEdgeFlags = cache(async (domain: string) => {
 const getBaseUrl = cache(
   async (domain: string): Promise<DocsV2Read.BaseUrl> => {
     const response = await loadWithUrl(domain);
-    if (!response.ok) {
-      return { domain, basePath: undefined };
-    }
     return {
-      domain: response.body.baseUrl.domain,
-      basePath: response.body.baseUrl.basePath,
+      domain: response.baseUrl.domain,
+      basePath: response.baseUrl.basePath,
     };
   }
 );
@@ -129,10 +139,7 @@ const getBaseUrl = cache(
 const getFiles = cache(
   async (domain: string): Promise<Record<string, FileData>> => {
     const response = await loadWithUrl(domain);
-    if (!response.ok) {
-      return {};
-    }
-    return mapValues(response.body.definition.filesV2, (file) => {
+    return mapValues(response.definition.filesV2, (file) => {
       if (file.type === "url") {
         return {
           src: file.url,
@@ -154,14 +161,11 @@ const getFiles = cache(
 const getApi = cache(
   async (domain: string, id: string): Promise<ApiDefinition.ApiDefinition> => {
     const response = await loadWithUrl(domain);
-    if (!response.ok) {
-      notFound();
-    }
-    const latest = response.body.definition.apisV2[ApiDefinitionId(id)];
+    const latest = response.definition.apisV2[ApiDefinitionId(id)];
     if (latest != null) {
       return latest;
     }
-    const v1 = response.body.definition.apis[ApiDefinitionId(id)];
+    const v1 = response.definition.apis[ApiDefinitionId(id)];
     if (v1 == null) {
       notFound();
     }
@@ -172,10 +176,7 @@ const getApi = cache(
 
 const unsafe_getFullRoot = cache(async (domain: string) => {
   const response = await loadWithUrl(domain);
-  if (!response.ok) {
-    notFound();
-  }
-  const v1 = response.body.definition.config.root;
+  const v1 = response.definition.config.root;
 
   if (!v1) {
     notFound();
@@ -246,19 +247,13 @@ const getNavigationNode = async (
 
 const getConfig = cache(async (domain: string) => {
   const response = await loadWithUrl(domain);
-  if (!response.ok) {
-    notFound();
-  }
-  const { navigation, root, ...config } = response.body.definition.config;
+  const { navigation, root, ...config } = response.definition.config;
   return config;
 });
 
 const getPage = cache(async (domain: string, pageId: string) => {
   const response = await loadWithUrl(domain);
-  if (!response.ok) {
-    notFound();
-  }
-  const page = response.body.definition.pages[pageId as PageId];
+  const page = response.definition.pages[pageId as PageId];
   if (page == null) {
     notFound();
   }
@@ -271,10 +266,7 @@ const getPage = cache(async (domain: string, pageId: string) => {
 
 const getMdxBundlerFiles = cache(async (domain: string) => {
   const response = await loadWithUrl(domain);
-  if (!response.ok) {
-    return {};
-  }
-  return response.body.definition.jsFiles ?? {};
+  return response.definition.jsFiles ?? {};
 });
 
 const getColors = cache(async (domain: string) => {
@@ -375,13 +367,16 @@ export const createCachedDocsLoader = async (
   domain: string,
   fern_token?: string
 ): Promise<DocsLoader> => {
-  const authConfig = await getAuthConfig(domain);
+  domain = withoutStaging(domain);
+  const authConfig = getAuthConfig(domain);
+  const metadata = getDocsUrlMetadata(domain);
 
   const getAuthState = async (pathname?: string) => {
     const { getAuthState } = await createGetAuthState(
       domain,
       fern_token,
-      authConfig
+      await authConfig,
+      await metadata
     );
 
     return await getAuthState(pathname);
@@ -390,10 +385,10 @@ export const createCachedDocsLoader = async (
   return {
     domain,
     fern_token,
-    authConfig,
     getBaseUrl: unstable_cache(() => getBaseUrl(domain), [domain], {
       tags: [domain, "getBaseUrl"],
     }),
+    getMetadata: () => metadata,
     getFiles: unstable_cache(() => getFiles(domain), [domain], {
       tags: [domain, "files"],
     }),
@@ -406,9 +401,9 @@ export const createCachedDocsLoader = async (
       tags: [domain, "api"],
     }),
     getRoot: async () =>
-      getRootCached(domain, await getAuthState(), authConfig),
+      getRootCached(domain, await getAuthState(), await authConfig),
     getNavigationNode: async (id: string) =>
-      getNavigationNode(domain, id, await getAuthState(), authConfig),
+      getNavigationNode(domain, id, await getAuthState(), await authConfig),
     unsafe_getFullRoot: () => unsafe_getRootCached(domain),
     getConfig: unstable_cache(() => getConfig(domain), [domain], {
       tags: [domain, "getConfig"],

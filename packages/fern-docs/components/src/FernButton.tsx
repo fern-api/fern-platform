@@ -10,9 +10,10 @@ import {
   useRef,
 } from "react";
 
+import { Slot } from "@radix-ui/react-slot";
 import cn, { clsx } from "clsx";
 
-import { FernTooltip, FernTooltipProvider } from "./FernTooltip";
+import { FernTooltip } from "./FernTooltip";
 import { SemanticColor } from "./colors";
 import { FaIcon } from "./fa-icon";
 
@@ -122,14 +123,15 @@ export const FernButton = forwardRef<HTMLButtonElement, FernButtonProps>(
 
 export const FernButtonGroup = forwardRef<
   HTMLSpanElement,
-  ComponentProps<"div">
->(function FernButtonGroup({ className, children, ...props }, ref) {
+  ComponentProps<"span"> & {
+    asChild?: boolean;
+  }
+>(function FernButtonGroup({ className, children, asChild, ...props }, ref) {
+  const Comp = asChild ? Slot : "span";
   return (
-    <FernTooltipProvider>
-      <span ref={ref} className={cn(className, "fern-button-group")} {...props}>
-        {children}
-      </span>
-    </FernTooltipProvider>
+    <Comp {...props} ref={ref} className={cn("fern-button-group", className)}>
+      {children}
+    </Comp>
   );
 });
 

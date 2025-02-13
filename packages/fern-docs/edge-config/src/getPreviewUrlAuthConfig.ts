@@ -19,18 +19,18 @@ const PreviewUrlAuthConfigSchema = z.record(PreviewUrlAuthSchema);
 type PreviewUrlAuthConfig = z.infer<typeof PreviewUrlAuthConfigSchema>;
 
 export interface Metadata {
-  isPreviewUrl: boolean;
-  orgId: string;
+  isPreview: boolean;
+  org: string;
 }
 
 export async function getPreviewUrlAuthConfig(
   metadata: Metadata
 ): Promise<PreviewUrlAuth | undefined> {
-  if (!metadata.isPreviewUrl) {
+  if (!metadata.isPreview) {
     return undefined;
   }
   const config = await get<PreviewUrlAuthConfig>("authed-previews");
-  return config?.[metadata.orgId];
+  return config?.[metadata.org];
 }
 
 export function isPreviewDomain(domain: string): boolean {
