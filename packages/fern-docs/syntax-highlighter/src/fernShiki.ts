@@ -39,7 +39,6 @@ export const getHighlighterInstance: (
     const lang = parseLang(language);
 
     if (process.env.NODE_ENV === "development") {
-      // eslint-disable-next-line no-console
       console.debug("Loading language:", lang);
     }
 
@@ -60,7 +59,6 @@ export const getHighlighterInstance: (
             (lang as BundledLanguage | SpecialLanguage)
         );
       } catch (e) {
-        // eslint-disable-next-line no-console
         console.error(`Failed to load language: ${lang}`, e);
       }
     }
@@ -92,7 +90,7 @@ export function highlightTokens(
       light: THEMES.light[lang] ?? THEMES.light[DEFAULT],
       dark: THEMES.dark[lang] ?? THEMES.dark[DEFAULT],
     },
-  }) as Root;
+  });
   return { code, lang, hast };
 }
 

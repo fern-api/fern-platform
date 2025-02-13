@@ -61,7 +61,6 @@ const FERN_COMPONENTS = {
   Card,
   CardGroup,
   ClientLibraries,
-  CodeBlock,
   CodeGroup, // note: alias is handled in rehypeFernCode
   Column,
   ColumnGroup,
@@ -88,27 +87,20 @@ const FERN_COMPONENTS = {
   Tip: TipCallout,
   Check: CheckCallout,
   LaunchNote: LaunchNoteCallout,
-
-  // deprecated, aliased for backwards compatibility
-  Cards: CardGroup,
-  CodeBlocks: CodeGroup,
-  Tabs: TabGroup,
-  ElevenLabsWaveform,
 };
 
 // internal-use only
 const INTERNAL_COMPONENTS: MDXComponents = {
-  // ReferenceLayoutMain: (
-  //   props: React.ComponentProps<typeof ReferenceLayoutMain>
-  // ) => <ReferenceLayoutMain {...props} />,
-  // ReferenceLayoutAside: (
-  //   props: React.ComponentProps<typeof ReferenceLayoutAside>
-  // ) => <ReferenceLayoutAside {...props} />,
+  ErrorBoundary,
+  CodeBlock,
 
-  // error boundary
-  ErrorBoundary: (props: React.ComponentProps<typeof ErrorBoundary>) => (
-    <ErrorBoundary {...props} />
-  ),
+  // deprecated, aliased for backwards compatibility
+  Accordions: AccordionGroup,
+  Cards: CardGroup,
+  CodeBlocks: CodeGroup,
+  ElevenLabsWaveform,
+  Steps: StepGroup,
+  Tabs: TabGroup,
 };
 
 const HTML_COMPONENTS = {
@@ -131,12 +123,12 @@ export const MDX_COMPONENTS = {
   ...FERN_COMPONENTS,
   ...INTERNAL_COMPONENTS,
   ...HTML_COMPONENTS,
-} as MDXComponents;
+} as unknown as MDXComponents;
 
 export function createMdxComponents(jsxElements: string[]): MDXComponents {
   return {
     // spread in jsx elements that may be unsupported
-    ...jsxElements.reduce<Record<string, () => ReactElement<any>>>(
+    ...jsxElements.reduce<Record<string, () => ReactElement>>(
       (acc, jsxElement) => {
         acc[jsxElement] = () => (
           <ErrorBoundaryFallback

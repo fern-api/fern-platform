@@ -34,6 +34,7 @@ import { FileData } from "@/server/types";
 
 import { getMDXExport } from "../get-mdx-export";
 import { rehypeCodeBlock } from "../plugins/rehype-code-block";
+import { rehypeCollectJsx } from "../plugins/rehype-collect-jsx";
 import { rehypeExtractAsides } from "../plugins/rehype-extract-asides";
 import { rehypeFiles } from "../plugins/rehype-files";
 import { remarkExtractTitle } from "../plugins/remark-extract-title";
@@ -76,7 +77,12 @@ async function serializeMdxImpl(
     filename?: string;
     toc?: boolean;
   } = {}
-): Promise<{ code: string; frontmatter?: Partial<FernDocs.Frontmatter> }> {
+): Promise<{
+  code: string;
+  frontmatter?: Partial<FernDocs.Frontmatter>;
+  jsxElements: string[];
+  esmElements: string[];
+}> {
   content = sanitizeBreaks(content);
   content = sanitizeMdxExpression(content)[0];
 
@@ -105,6 +111,9 @@ async function serializeMdxImpl(
       "esbuild"
     );
   }
+
+  const jsxElements: string[] = [];
+  const esmElements: string[] = [];
 
   const bundled = await bundleMDX({
     source: content,
@@ -145,16 +154,26 @@ async function serializeMdxImpl(
       ];
 
       const rehypePlugins: PluggableList = [
-        // [rehypeSqueezeParagraphs, { stripParagraph }],
         rehypeMdxClassStyle,
         [rehypeFiles, { files: remoteFiles }],
         rehypeSlug,
         rehypeKatex,
         rehypeCodeBlock,
-        // rehypeFernComponents,
         rehypeExtractAsides,
         toc ? rehypeToc : noop,
         rehypeAcornErrorBoundary,
+        [
+          rehypeCollectJsx,
+          {
+            collect: (node: {
+              jsxElements: string[];
+              esmElements: string[];
+            }) => {
+              jsxElements.push(...node.jsxElements);
+              esmElements.push(...node.esmElements);
+            },
+          },
+        ],
       ];
 
       o.remarkPlugins = remarkPlugins;
@@ -186,7 +205,7 @@ async function serializeMdxImpl(
   // TODO: this is doing duplicate work; figure out how to combine it with the compiler above.
   // const { jsxElements } = toTree(content, { sanitize: false });
 
-  return { code: bundled.code, frontmatter };
+  return { code: bundled.code, frontmatter, jsxElements, esmElements };
 }
 
 export async function serializeMdx(

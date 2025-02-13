@@ -4,7 +4,9 @@ import { ErrorBoundary } from "@/components/error-boundary";
 
 import { MdxComponent } from "./bundler/component";
 
-type MarkdownText = string | { code: string };
+type MarkdownText =
+  | string
+  | { code: string; jsxElements: string[]; esmElements: string[] };
 
 export declare namespace MdxContent {
   export interface Props {

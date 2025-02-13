@@ -9,15 +9,21 @@ import { ErrorBoundary } from "@/components/error-boundary";
 
 import { createMdxComponents } from "../components";
 
-export const MdxComponent = React.memo<{ code: string }>(
-  function MdxComponent({ code }) {
+export const MdxComponent = React.memo<{
+  code: string;
+  jsxElements: string[];
+  esmElements: string[];
+}>(
+  function MdxComponent({ code, jsxElements, esmElements }) {
     const Component = getMDXComponent(code, {
       // allows us to use MDXProvider to pass components to children
       MdxJsReact: { useMDXComponents },
     });
     return (
       <ErrorBoundary>
-        <MDXProvider components={createMdxComponents([])}>
+        <MDXProvider
+          components={createMdxComponents([...jsxElements, ...esmElements])}
+        >
           <Component />
         </MDXProvider>
       </ErrorBoundary>
@@ -26,8 +32,12 @@ export const MdxComponent = React.memo<{ code: string }>(
   (prev, next) => prev.code === next.code
 );
 
-export const MdxAsideComponent = React.memo<{ code: string }>(
-  function MdxAsideComponent({ code }) {
+export const MdxAsideComponent = React.memo<{
+  code: string;
+  jsxElements: string[];
+  esmElements: string[];
+}>(
+  function MdxAsideComponent({ code, jsxElements, esmElements }) {
     const { aside } =
       getMDXExport(code, {
         // allows us to use MDXProvider to pass components to children
@@ -38,8 +48,13 @@ export const MdxAsideComponent = React.memo<{ code: string }>(
     }
     return (
       <ErrorBoundary>
-        <MDXProvider components={createMdxComponents([])}>{aside}</MDXProvider>
+        <MDXProvider
+          components={createMdxComponents([...jsxElements, ...esmElements])}
+        >
+          {aside}
+        </MDXProvider>
       </ErrorBoundary>
     );
-  }
+  },
+  (prev, next) => prev.code === next.code
 );

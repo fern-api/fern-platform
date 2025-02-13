@@ -10,10 +10,14 @@ export default function ErrorBoundary({
   reset: () => void;
 }) {
   return (
-    <ErrorBoundaryFallback
-      error={error}
-      resetErrorBoundary={reset}
-      className="h-screen"
-    />
+    <html>
+      <body>
+        <ErrorBoundaryFallback
+          error={error}
+          resetErrorBoundary={reset}
+          className="h-screen"
+        />
+      </body>
+    </html>
   );
 }
