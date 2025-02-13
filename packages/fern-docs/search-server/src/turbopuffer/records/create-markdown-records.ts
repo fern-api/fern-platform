@@ -5,12 +5,12 @@ import {
   markdownToString,
   splitMarkdownIntoSections,
 } from "@fern-docs/mdx";
+import { createHash } from "crypto";
 import { compact, flatten } from "es-toolkit/array";
 import { decode } from "html-entities";
 import { maybePrepareMdxContent } from "../../utils/prepare-mdx-content";
 import { FernTurbopufferRecordWithoutVector } from "../types";
 import { BaseRecord } from "./create-base-record";
-import { createHash } from "crypto";
 
 interface CreateMarkdownRecordsOptions {
   base: BaseRecord;
@@ -181,7 +181,9 @@ export async function createMarkdownRecords({
         return chunked_content.map((chunk, i) => {
           const record: FernTurbopufferRecordWithoutVector = {
             ...base_markdown_record,
-            id: createHash("sha256").update(`${base.id}-${heading.id}-chunk:${i}`).digest("hex"),
+            id: createHash("sha256")
+              .update(`${base.id}-${heading.id}-chunk:${i}`)
+              .digest("hex"),
             attributes: {
               ...base_markdown_record.attributes,
               ...hierarchy,
