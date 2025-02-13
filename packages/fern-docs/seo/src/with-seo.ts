@@ -199,12 +199,22 @@ export function withSeo(
       name: "twitter:title",
       content: ogMetadata["twitter:title"],
     });
+  } else if (openGraph.title) {
+    additionalMetaTags.push({
+      name: "twitter:title",
+      content: openGraph.title,
+    });
   }
 
   if (ogMetadata["twitter:description"] != null) {
     additionalMetaTags.push({
       name: "twitter:description",
       content: ogMetadata["twitter:description"],
+    });
+  } else if (openGraph.description) {
+    additionalMetaTags.push({
+      name: "twitter:description",
+      content: openGraph.description,
     });
   }
 
