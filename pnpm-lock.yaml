@@ -15,7 +15,7 @@ overrides:
   eslint: 9.17.0
   eslint-config-next: 15.1.2
   instantsearch.js: 4.75.4
-  jsonpath-plus: 10.0.7
+  jsonpath-plus: 10.2.0
   markdown-to-jsx: 7.4.0
   micromatch: 4.0.8
   postcss: 8.4.31
@@ -5385,14 +5385,14 @@ packages:
   '@jridgewell/trace-mapping@0.3.9':
     resolution: {integrity: sha512-3Belt6tdc8bPgAtbcmdtNJlirVoTmEb5e2gC94PnkwEW9jI6CAHUeoG85tjWP5WquqfavoMtMwiG4P926ZKKuQ==}
 
-  '@jsep-plugin/assignment@1.2.1':
-    resolution: {integrity: sha512-gaHqbubTi29aZpVbBlECRpmdia+L5/lh2BwtIJTmtxdbecEyyX/ejAOg7eQDGNvGOUmPY7Z2Yxdy9ioyH/VJeA==}
+  '@jsep-plugin/assignment@1.3.0':
+    resolution: {integrity: sha512-VVgV+CXrhbMI3aSusQyclHkenWSAm95WaiKrMxRFam3JSUiIaQjoMIw2sEs/OX4XifnqeQUN4DYbJjlA8EfktQ==}
     engines: {node: '>= 10.16.0'}
     peerDependencies:
       jsep: ^0.4.0||^1.0.0
 
-  '@jsep-plugin/regex@1.0.3':
-    resolution: {integrity: sha512-XfZgry4DwEZvSFtS/6Y+R48D7qJYJK6R9/yJFyUFHCIUMEEHuJ4X95TDgJp5QkmzfLYvapMPzskV5HpIDrREug==}
+  '@jsep-plugin/regex@1.0.4':
+    resolution: {integrity: sha512-q7qL4Mgjs1vByCaTnDFcBnV9HS7GVPJX5vyVoCgZHNSC9rjwIlmbXG5sUuorR5ndfHAIlJ8pVStxvjXHbNvtUg==}
     engines: {node: '>= 10.16.0'}
     peerDependencies:
       jsep: ^0.4.0||^1.0.0
@@ -12730,8 +12730,8 @@ packages:
       canvas:
         optional: true
 
-  jsep@1.3.9:
-    resolution: {integrity: sha512-i1rBX5N7VPl0eYb6+mHNp52sEuaS2Wi8CDYx1X5sn9naevL78+265XJqy1qENEk7mRKwS06NHpUqiBwR7qeodw==}
+  jsep@1.4.0:
+    resolution: {integrity: sha512-B7qPcEVE3NVkmSJbaYxvv4cHkVW7DQsZz13pUMrfS8z8Q/BuShN+gcTXrUlPiGqM2/t/EEaI030bpxMqY8gMlw==}
     engines: {node: '>= 10.16.0'}
 
   jsesc@2.5.2:
@@ -12796,8 +12796,8 @@ packages:
   jsonfile@6.1.0:
     resolution: {integrity: sha512-5dgndWOriYSm5cnYaJNhalLNDKOqFwyDB/rr1E9ZsGciGvKPs8R2xYGCacuf3z6K1YKDz182fd+fY3cn3pMqXQ==}
 
-  jsonpath-plus@10.0.7:
-    resolution: {integrity: sha512-GDA8d8fu9+s4QzAzo5LMGiLL/9YjecAX+ytlnqdeXYpU55qME57StDgaHt9R2pA7Dr8U31nwzxNJMJiHkrkRgw==}
+  jsonpath-plus@10.2.0:
+    resolution: {integrity: sha512-T9V+8iNYKFL2n2rF+w02LBOT2JjDnTjioaNFrxRy0Bv1y/hNsqR/EBK7Ojy2ythRHwmz2cRIls+9JitQGZC/sw==}
     engines: {node: '>=18.0.0'}
     hasBin: true
 
@@ -21272,13 +21272,13 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.0
 
-  '@jsep-plugin/assignment@1.2.1(jsep@1.3.9)':
+  '@jsep-plugin/assignment@1.3.0(jsep@1.4.0)':
     dependencies:
-      jsep: 1.3.9
+      jsep: 1.4.0
 
-  '@jsep-plugin/regex@1.0.3(jsep@1.3.9)':
+  '@jsep-plugin/regex@1.0.4(jsep@1.4.0)':
     dependencies:
-      jsep: 1.3.9
+      jsep: 1.4.0
 
   '@kwsites/file-exists@1.1.1':
     dependencies:
@@ -26698,14 +26698,14 @@ snapshots:
 
   asl-path-validator@0.12.0:
     dependencies:
-      jsonpath-plus: 10.0.7
+      jsonpath-plus: 10.2.0
 
   asl-validator@3.8.2:
     dependencies:
       ajv: 8.17.1
       asl-path-validator: 0.12.0
       commander: 10.0.1
-      jsonpath-plus: 10.0.7
+      jsonpath-plus: 10.2.0
       yaml: 2.4.2
 
   asn1.js@4.10.1:
@@ -31166,7 +31166,7 @@ snapshots:
       - supports-color
       - utf-8-validate
 
-  jsep@1.3.9: {}
+  jsep@1.4.0: {}
 
   jsesc@2.5.2: {}
 
@@ -31218,11 +31218,11 @@ snapshots:
     optionalDependencies:
       graceful-fs: 4.2.11
 
-  jsonpath-plus@10.0.7:
+  jsonpath-plus@10.2.0:
     dependencies:
-      '@jsep-plugin/assignment': 1.2.1(jsep@1.3.9)
-      '@jsep-plugin/regex': 1.0.3(jsep@1.3.9)
-      jsep: 1.3.9
+      '@jsep-plugin/assignment': 1.3.0(jsep@1.4.0)
+      '@jsep-plugin/regex': 1.0.4(jsep@1.4.0)
+      jsep: 1.4.0
 
   jsonpath@1.1.1:
     dependencies:
