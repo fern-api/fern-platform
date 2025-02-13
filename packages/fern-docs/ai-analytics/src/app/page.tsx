@@ -1,5 +1,7 @@
 import { MessageTableClient } from "./MessageTable";
 
+export const maxDuration = 300;
+
 interface APIMessage {
   role: string;
   content: string | { text: string; type: string }[];
