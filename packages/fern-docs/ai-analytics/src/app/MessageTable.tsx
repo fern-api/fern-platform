@@ -12,6 +12,7 @@ interface Message {
 interface DomainMessages {
   domain: string;
   content: Message[];
+  created: Date;
 }
 
 const ITEMS_PER_PAGE = 10;
@@ -56,16 +57,14 @@ export function MessageTableClient({
     startIndex + ITEMS_PER_PAGE
   );
 
-  function sanitizeForCSV(str: string) {
-    return str.replace(/"/g, "");
-  }
-
   const exportToCSV = (data: DomainMessages[]) => {
     const csvContent = [];
-    csvContent.push("Domain,Conversation Index,Messages");
+    csvContent.push("Domain,Conversation Index,Messages,Created");
     data.forEach((item) => {
       csvContent.push(
-        `${item.domain},${item.content.map((m) => sanitizeForCSV(m.content)).join(",")}`
+        `${item.domain},` +
+          JSON.stringify(item.content) +
+          `,${item.created.toISOString()}`
       );
     });
     const blob = new Blob([csvContent.join("\n")], {
@@ -136,6 +135,7 @@ export function MessageTableClient({
               <Table.ColumnHeaderCell></Table.ColumnHeaderCell>
               <Table.ColumnHeaderCell>Domain</Table.ColumnHeaderCell>
               <Table.ColumnHeaderCell>Messages</Table.ColumnHeaderCell>
+              <Table.ColumnHeaderCell>Created</Table.ColumnHeaderCell>
             </Table.Row>
           </Table.Header>
           <Table.Body>
@@ -173,6 +173,9 @@ export function MessageTableClient({
                                 ? "bg-green-50"
                                 : "bg-gray-50"
                           }`}
+                          style={{
+                            margin: "10px",
+                          }}
                         >
                           <h6>{message.role}</h6>
                           <div className="whitespace-pre-wrap text-sm">
@@ -189,6 +192,7 @@ export function MessageTableClient({
                     </div>
                   )}
                 </Table.Cell>
+                <Table.Cell>{item.created.toISOString()}</Table.Cell>
               </Table.Row>
             ))}
           </Table.Body>

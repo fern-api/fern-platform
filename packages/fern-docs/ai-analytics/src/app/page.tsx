@@ -15,6 +15,7 @@ interface Message {
 interface DomainMessages {
   domain: string;
   content: Message[];
+  created: Date;
 }
 
 const BRAINTRUST_PROJECT_ID = "9f4a7638-9f59-47f7-8cca-d6c9f4d0e270";
@@ -167,7 +168,11 @@ export default async function Home({
         })
         .filter((msg: Message) => msg.role !== "system" && msg.role !== "tool");
       cleanedInput.push(convo.output.message);
-      processedData.push({ domain, content: cleanedInput });
+      processedData.push({
+        domain,
+        content: cleanedInput,
+        created: new Date(convo.created),
+      });
     }
   }
 
