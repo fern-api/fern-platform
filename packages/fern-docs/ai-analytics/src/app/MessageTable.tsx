@@ -24,7 +24,7 @@ export function MessageTableClient({
   initialData: DomainMessages[];
 }) {
   const [currentPage, setCurrentPage] = useState(1);
-  const [expandedRows, setExpandedRows] = useState<Record<number, boolean>>({});
+  const [expandedRows, setExpandedRows] = useState<Record<string, boolean>>({});
   const [filter, setFilter] = useState("");
   const [domain, setDomain] = useState("show-all-domains");
   const filteredData = initialData.filter((item) => {
@@ -93,7 +93,7 @@ export function MessageTableClient({
     a.click();
   };
 
-  const toggleRow = (index: number) => {
+  const toggleRow = (index: string) => {
     setExpandedRows((prev) => ({
       ...prev,
       [index]: !prev[index],
@@ -160,13 +160,15 @@ export function MessageTableClient({
                 <Table.Cell>
                   <Button
                     color="gray"
-                    onClick={() => toggleRow(index)}
+                    onClick={() => toggleRow(item.conversationId)}
                     className="flex items-center justify-center"
                     aria-label={
-                      expandedRows[index] ? "Collapse row" : "Expand row"
+                      expandedRows[item.conversationId]
+                        ? "Collapse row"
+                        : "Expand row"
                     }
                   >
-                    {expandedRows[index] ? (
+                    {expandedRows[item.conversationId] ? (
                       <ChevronDown className="h-4 w-4" />
                     ) : (
                       <ChevronRight className="h-4 w-4" />
@@ -177,7 +179,7 @@ export function MessageTableClient({
                   {item.domain}
                 </Table.Cell>
                 <Table.Cell className="border border-gray-200 p-4">
-                  {expandedRows[index] ? (
+                  {expandedRows[item.conversationId] ? (
                     <div style={{ padding: "10px" }}>
                       {item.content.map((message, msgIndex) => (
                         <Card
