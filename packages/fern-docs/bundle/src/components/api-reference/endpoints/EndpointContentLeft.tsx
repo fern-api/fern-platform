@@ -133,6 +133,7 @@ export async function EndpointContentLeft({
             <div key={parameter.key}>
               <TypeComponentSeparator />
               <EndpointParameter
+                loader={loader}
                 name={parameter.key}
                 shape={parameter.valueShape}
                 anchorIdParts={[...REQUEST_PATH, parameter.key]}
@@ -176,6 +177,7 @@ export async function EndpointContentLeft({
                 )}
                 <TypeComponentSeparator />
                 <EndpointParameter
+                  loader={loader}
                   name={parameter.key}
                   shape={parameter.valueShape}
                   anchorIdParts={[...REQUEST_HEADER, parameter.key]}
@@ -203,6 +205,7 @@ export async function EndpointContentLeft({
             <div key={parameter.key}>
               <TypeComponentSeparator />
               <EndpointParameter
+                loader={loader}
                 name={parameter.key}
                 shape={parameter.valueShape}
                 anchorIdParts={[...REQUEST_QUERY, parameter.key]}
@@ -227,6 +230,7 @@ export async function EndpointContentLeft({
           slug={node.slug}
         >
           <EndpointRequestSection
+            loader={loader}
             request={endpoint.requests[0]}
             anchorIdParts={REQUEST_BODY}
             slug={node.slug}
@@ -241,6 +245,7 @@ export async function EndpointContentLeft({
           slug={node.slug}
         >
           <EndpointResponseSection
+            loader={loader}
             response={endpoint.responses[0]}
             anchorIdParts={RESPONSE_BODY}
             slug={node.slug}

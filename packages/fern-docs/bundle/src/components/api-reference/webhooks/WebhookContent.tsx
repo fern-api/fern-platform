@@ -53,6 +53,7 @@ export async function WebhookContent({
                     <div className="flex flex-col" key={parameter.key}>
                       <TypeComponentSeparator />
                       <EndpointParameter
+                        loader={loader}
                         name={parameter.key}
                         shape={parameter.valueShape}
                         anchorIdParts={["payload", "header", parameter.key]}

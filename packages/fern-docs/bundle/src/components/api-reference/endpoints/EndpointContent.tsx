@@ -1,10 +1,12 @@
+import React from "react";
+
 import { EndpointContext } from "@fern-api/fdr-sdk/api-definition";
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { AvailabilityBadge } from "@fern-docs/components/badges";
 
 import { PageHeader } from "@/components/components/PageHeader";
 import { ReferenceLayout } from "@/components/layouts/ReferenceLayout";
-import { Markdown } from "@/components/mdx/Markdown";
+import { MdxServerComponentProse } from "@/components/mdx/server-component";
 import { DocsLoader } from "@/server/docs-loader";
 
 import { ApiPageCenter } from "../api-page-center";
@@ -63,10 +65,12 @@ export async function EndpointContent({
             />
           }
         >
-          <Markdown
-            className="text-base leading-6"
-            mdx={endpoint.description}
-          />
+          <React.Suspense>
+            <MdxServerComponentProse
+              loader={loader}
+              mdx={endpoint.description}
+            />
+          </React.Suspense>
         </ReferenceLayout>
       </ApiPageCenter>
     </EndpointContextProvider>

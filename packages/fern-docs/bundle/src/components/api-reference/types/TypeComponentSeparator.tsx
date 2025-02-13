@@ -1,13 +1,5 @@
-import cn from "clsx";
+import { cn } from "@fern-docs/components";
 
-export declare namespace TypeComponentSeparator {
-  export interface Props {
-    className?: string;
-  }
+export function TypeComponentSeparator({ className }: { className?: string }) {
+  return <div className={cn("bg-border-default h-px", className)} />;
 }
-
-export const TypeComponentSeparator: React.FC<TypeComponentSeparator.Props> = ({
-  className,
-}) => {
-  return <div className={cn(className, "bg-border-default h-px")} />;
-};

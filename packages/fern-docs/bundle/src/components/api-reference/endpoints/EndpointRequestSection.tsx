@@ -6,6 +6,8 @@ import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
 
+import { DocsLoader } from "@/server/docs-loader";
+
 import { Markdown } from "../../mdx/Markdown";
 import { renderTypeShorthand } from "../../type-shorthand";
 import { TypeComponentSeparator } from "../types/TypeComponentSeparator";
@@ -17,6 +19,7 @@ import {
 
 export declare namespace EndpointRequestSection {
   export interface Props {
+    loader: DocsLoader;
     request: ApiDefinition.HttpRequest;
     anchorIdParts: readonly string[];
     slug: FernNavigation.Slug;
@@ -25,6 +28,7 @@ export declare namespace EndpointRequestSection {
 }
 
 export const EndpointRequestSection: React.FC<EndpointRequestSection.Props> = ({
+  loader,
   request,
   anchorIdParts,
   slug,
@@ -66,6 +70,7 @@ export const EndpointRequestSection: React.FC<EndpointRequestSection.Props> = ({
               {visitDiscriminatedUnion(p, "type")._visit<ReactNode | null>({
                 file: (file) => (
                   <EndpointParameterContent
+                    loader={loader}
                     name={file.key}
                     description={file.description}
                     typeShorthand={renderTypeShorthandFormDataField(file)}
@@ -77,6 +82,7 @@ export const EndpointRequestSection: React.FC<EndpointRequestSection.Props> = ({
                 ),
                 files: (files) => (
                   <EndpointParameterContent
+                    loader={loader}
                     name={files.key}
                     description={files.description}
                     typeShorthand={renderTypeShorthandFormDataField(files)}
@@ -88,6 +94,7 @@ export const EndpointRequestSection: React.FC<EndpointRequestSection.Props> = ({
                 ),
                 property: (property) => (
                   <EndpointParameter
+                    loader={loader}
                     name={property.key}
                     description={property.description}
                     additionalDescriptions={

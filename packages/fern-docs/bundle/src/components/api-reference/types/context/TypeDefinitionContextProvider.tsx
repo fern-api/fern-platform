@@ -1,3 +1,5 @@
+"use client";
+
 import { PropsWithChildren, useCallback } from "react";
 
 import {

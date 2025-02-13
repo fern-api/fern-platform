@@ -2,9 +2,8 @@
 
 import { type ReactNode, memo } from "react";
 
-import clsx from "clsx";
-
 import { MdxContent } from "./MdxContent";
+import { Prose } from "./prose";
 
 export declare namespace Markdown {
   export interface Props {
@@ -33,22 +32,10 @@ export const Markdown = memo<Markdown.Props>(
     }
 
     return (
-      <div
-        className={clsx(
-          className,
-          "prose dark:prose-invert max-w-none break-words",
-          {
-            "whitespace-pre-wrap": typeof mdx === "string",
-            "prose-base": size == null,
-            "prose-sm dark:prose-invert-sm !text-xs": size === "xs",
-            "prose-sm dark:prose-invert-sm": size === "sm",
-            "prose-lg": size === "lg",
-          }
-        )}
-      >
+      <Prose className={className} size={size} pre={typeof mdx === "string"}>
         {title}
         <MdxContent mdx={mdx} fallback={fallback} />
-      </div>
+      </Prose>
     );
   }
 );

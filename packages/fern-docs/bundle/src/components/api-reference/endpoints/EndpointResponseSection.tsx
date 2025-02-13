@@ -1,41 +1,35 @@
-"use client";
+import "server-only";
 
 import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 
-import { Markdown } from "../../mdx/Markdown";
-import { renderTypeShorthand } from "../../type-shorthand";
+import { MdxServerComponentProse } from "@/components/mdx/server-component";
+import { DocsLoader } from "@/server/docs-loader";
+
 import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";
-import { useEndpointContext } from "./EndpointContext";
+import { ResponseSummaryFallback } from "./response-summary-fallback";
 
-export declare namespace EndpointResponseSection {
-  export interface Props {
-    response: ApiDefinition.HttpResponse;
-    anchorIdParts: readonly string[];
-    slug: FernNavigation.Slug;
-    types: Record<ApiDefinition.TypeId, ApiDefinition.TypeDefinition>;
-  }
-}
-
-export const EndpointResponseSection: React.FC<
-  EndpointResponseSection.Props
-> = ({ response, anchorIdParts, slug, types }) => {
-  const isAudioFileDownloadSpanSummary = false;
-  const { selectedExample } = useEndpointContext();
-  const exampleResponseBody = selectedExample?.exampleCall.responseBody;
-
+export function EndpointResponseSection({
+  loader,
+  response,
+  anchorIdParts,
+  slug,
+  types,
+}: {
+  loader: DocsLoader;
+  response: ApiDefinition.HttpResponse;
+  anchorIdParts: readonly string[];
+  slug: FernNavigation.Slug;
+  types: Record<ApiDefinition.TypeId, ApiDefinition.TypeDefinition>;
+}) {
   return (
-    <div>
-      <Markdown
+    <>
+      <MdxServerComponentProse
+        loader={loader}
         size="sm"
         className="!t-muted border-default border-b pb-5 leading-6"
         mdx={response.description}
-        fallback={getResponseSummary({
-          response,
-          exampleResponseBody,
-          types,
-          isAudioFileDownloadSpanSummary,
-        })}
+        fallback={<ResponseSummaryFallback response={response} types={types} />}
       />
       <EndpointResponseSectionContent
         body={response.body}
@@ -43,9 +37,9 @@ export const EndpointResponseSection: React.FC<
         slug={slug}
         types={types}
       />
-    </div>
+    </>
   );
-};
+}
 
 interface EndpointResponseSectionContentProps {
   body: ApiDefinition.HttpResponseBodyShape;
@@ -89,38 +83,5 @@ function EndpointResponseSectionContent({
           isResponse={true}
         />
       );
-  }
-}
-
-function getResponseSummary({
-  response,
-  exampleResponseBody,
-  types,
-  isAudioFileDownloadSpanSummary,
-}: {
-  response: ApiDefinition.HttpResponse;
-  exampleResponseBody: ApiDefinition.ExampleEndpointResponse | undefined;
-  types: Record<string, ApiDefinition.TypeDefinition>;
-  isAudioFileDownloadSpanSummary: boolean;
-}) {
-  switch (response.body.type) {
-    case "empty":
-      return "This endpoint returns nothing.";
-    case "fileDownload": {
-      if (isAudioFileDownloadSpanSummary) {
-        return (
-          <span>
-            This endpoint returns an <code>audio/mpeg</code> file.
-          </span>
-        );
-      }
-      return "This endpoint returns a file.";
-    }
-    case "streamingText":
-      return "This endpoint sends text responses over a long-lived HTTP connection.";
-    case "stream":
-      return `This endpoint returns a stream of ${exampleResponseBody?.type === "sse" ? "server sent events" : renderTypeShorthand(response.body.shape, { withArticle: false }, types)}.`;
-    default:
-      return `This endpoint returns ${renderTypeShorthand(response.body, { withArticle: true }, types)}.`;
   }
 }

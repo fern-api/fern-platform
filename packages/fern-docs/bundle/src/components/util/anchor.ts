@@ -1,5 +1,7 @@
 export function getAnchorId(anchorIdParts: readonly string[]): string {
-  return anchorIdParts.map((anchorId) => encodeURI(anchorId)).join(".");
+  return anchorIdParts
+    .map((anchorId) => encodeURIComponent(anchorId))
+    .join(".");
 }
 
 export function getRouteNode(route: string): HTMLElement | undefined {

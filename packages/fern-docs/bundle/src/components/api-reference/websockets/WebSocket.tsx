@@ -150,6 +150,7 @@ export async function WebSocketContent({
                       <div className="flex flex-col" key={parameter.key}>
                         <TypeComponentSeparator />
                         <EndpointParameter
+                          loader={loader}
                           name={parameter.key}
                           shape={parameter.valueShape}
                           anchorIdParts={["request", "headers", parameter.key]}
@@ -180,6 +181,7 @@ export async function WebSocketContent({
                       <div className="flex flex-col" key={parameter.key}>
                         <TypeComponentSeparator />
                         <EndpointParameter
+                          loader={loader}
                           name={parameter.key}
                           shape={parameter.valueShape}
                           anchorIdParts={["request", "path", parameter.key]}
@@ -212,6 +214,7 @@ export async function WebSocketContent({
                           <div className="flex flex-col" key={parameter.key}>
                             <TypeComponentSeparator />
                             <EndpointParameter
+                              loader={loader}
                               name={parameter.key}
                               shape={parameter.valueShape}
                               anchorIdParts={[
