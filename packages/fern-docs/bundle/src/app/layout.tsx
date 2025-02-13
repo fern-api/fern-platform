@@ -1,4 +1,5 @@
 import { Metadata, Viewport } from "next/types";
+import { experimental_taintUniqueValue } from "react";
 
 import { TooltipProvider } from "@radix-ui/react-tooltip";
 import { Provider as JotaiProvider } from "jotai/react";
@@ -10,11 +11,44 @@ import { ConsoleMessage } from "@/components/console-message";
 import "./globals.scss";
 import StyledJsxRegistry from "./registry";
 
+const secrets = [
+  "BRAINTRUST_API_KEY",
+  "ALGOLIA_API_KEY",
+  "ALGOLIA_SEARCH_API_KEY",
+  "ALGOLIA_WRITE_API_KEY",
+  "ANTHROPIC_API_KEY",
+  "AWS_SECRET_ACCESS_KEY",
+  "COHERE_API_KEY",
+  "EDGE_CONFIG",
+  "FERN_TOKEN",
+  "JWT_SECRET_KEY",
+  "KV_REST_API_READ_ONLY_TOKEN",
+  "KV_REST_API_TOKEN",
+  "OPENAI_API_KEY",
+  "QSTASH_CURRENT_SIGNING_KEY",
+  "QSTASH_NEXT_SIGNING_KEY",
+  "QSTASH_TOKEN",
+  "TURBOPUFFER_API_KEY",
+  "WORKOS_API_KEY",
+  "HIGHLIGHT_PROJECT_ID_FERN_APP",
+];
+
 export default function DashboardLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  for (const secret of secrets) {
+    const secretValue = process.env[secret];
+    if (secretValue != null) {
+      experimental_taintUniqueValue(
+        `Do not pass ${secret} to the client.`,
+        process.env,
+        secretValue
+      );
+    }
+  }
+
   return (
     <html lang="en" suppressHydrationWarning>
       <head>

@@ -64,6 +64,8 @@ const nextConfig: NextConfig = {
       "ts-essentials",
       "lucide-react",
     ],
+    optimizeServerReact: true,
+    typedEnv: true,
     newDevOverlay: true,
     authInterrupts: true,
     swcTraceProfiling: true,
@@ -71,6 +73,7 @@ const nextConfig: NextConfig = {
     parallelServerCompiles: true,
     parallelServerBuildTraces: true,
     webpackMemoryOptimizations: true,
+    taint: true,
   },
 
   skipMiddlewareUrlNormalize: true,
@@ -96,6 +99,13 @@ const nextConfig: NextConfig = {
     removeConsole:
       process.env.VERCEL_ENV === "production" ? { exclude: ["error"] } : false,
     styledJsx: true,
+  },
+  logging: {
+    fetches: {
+      fullUrl: true,
+      hmrRefreshes: true,
+    },
+    incomingRequests: true,
   },
   headers: async () => {
     const AccessControlHeaders = [

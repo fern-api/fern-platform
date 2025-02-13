@@ -75,7 +75,6 @@
         "KV_REST_API_TOKEN",
         "KV_REST_API_URL",
         "KV_URL",
-        "NODE_ENV",
         "OPENAI_API_KEY",
         "QSTASH_CURRENT_SIGNING_KEY",
         "QSTASH_NEXT_SIGNING_KEY",
@@ -90,6 +89,7 @@
         "DOCS_DEFINITION_S3_BUCKET_NAME"
       ],
       "passThroughEnv": [
+        "NODE_ENV",
         "ESBUILD_BINARY_PATH",
         "VERCEL",
         "VERCEL_AUTOMATION_BYPASS_SECRET",
