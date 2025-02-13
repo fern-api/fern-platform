@@ -129,6 +129,10 @@ export default async function Home({
     process.env.BRAINTRUST_API_KEY || "",
     thresholdDate
   );
+
+  chatLogs.sort((a, b) => {
+    return new Date(b.created).getTime() - new Date(a.created).getTime();
+  });
   // const counts = await fetchCountsByDomainAfterThreshold(thresholdDate);
 
   const data = chatLogs;
