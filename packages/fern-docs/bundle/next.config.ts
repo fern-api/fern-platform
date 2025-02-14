@@ -73,6 +73,10 @@ const nextConfig: NextConfig = {
     webpackMemoryOptimizations: true,
     taint: true,
     useCache: true,
+    staleTimes: {
+      dynamic: 180,
+      static: 180,
+    },
   },
 
   skipMiddlewareUrlNormalize: true,

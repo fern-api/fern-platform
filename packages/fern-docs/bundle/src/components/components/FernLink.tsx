@@ -47,7 +47,7 @@ const FernRelativeLink = React.forwardRef<
 >((props, ref) => {
   const pathname = usePathname();
   const href = resolveRelativeUrl(pathname, formatUrlString(props.href));
-  return <Link ref={ref} {...props} href={href} />;
+  return <Link ref={ref} prefetch={true} {...props} href={href} />;
 });
 
 FernRelativeLink.displayName = "FernRelativeLink";
