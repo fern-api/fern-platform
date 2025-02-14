@@ -111,7 +111,9 @@ export async function createMarkdownRecords({
   const rootRecords = chunked_code_snippets.map((chunk, i) => {
     return {
       ...base_root_markdown_record,
-      id: `${base_root_markdown_record.id}-chunk:${i}`,
+      id: createHash("sha256")
+        .update(`${base_root_markdown_record.id}-chunk:${i}`)
+        .digest("hex"),
       attributes: {
         ...base_root_markdown_record.attributes,
         chunk,
