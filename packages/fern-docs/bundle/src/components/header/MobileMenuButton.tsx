@@ -14,6 +14,7 @@ export function MobileMenuButton() {
   const toggleDismissableSidebar = useToggleDismissableSidebar();
   return (
     <FernButton
+      className="lg:hidden"
       onClick={toggleDismissableSidebar}
       icon={isDismissableSidebarOpen ? <X /> : <Menu />}
       intent={isDismissableSidebarOpen ? "primary" : "none"}

@@ -17,7 +17,7 @@ export function HeaderTabsRoot({
     return null;
   }
   return (
-    <Tabs.Root value={currentTab?.id} className="select-none">
+    <Tabs.Root value={currentTab?.id} className="hidden select-none lg:block">
       {children}
     </Tabs.Root>
   );

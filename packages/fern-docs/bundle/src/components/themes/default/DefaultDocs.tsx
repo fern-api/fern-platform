@@ -36,7 +36,7 @@ export default function DefaultDocs({
 
       <main className="max-w-page-width relative z-0 mx-auto mt-[var(--header-height)] flex flex-row">
         <div
-          className="bg-background/50 pointer-events-none fixed inset-0 top-[var(--header-height)] z-20 hidden data-[mobile-state=open]:pointer-events-auto data-[mobile-state=open]:block"
+          className="bg-background/50 pointer-events-none fixed inset-0 top-[var(--header-height)] z-20 hidden data-[mobile-state=open]:pointer-events-auto data-[mobile-state=open]:block lg:hidden"
           onClick={closeDismissableSidebar}
           data-mobile-state={isDismissableSidebarOpen ? "open" : "closed"}
         />
