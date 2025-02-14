@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 
 import { withoutStaging } from "@fern-docs/utils";
 
+import { cacheSeed } from "./cache-seed";
 import { fernToken_admin, getFdrOrigin } from "./env-variables";
 
 const uncachedGetDocsUrlMetadata = async (
@@ -62,7 +63,7 @@ const uncachedGetDocsUrlMetadata = async (
 export const getDocsUrlMetadata = (domain: string) => {
   const get = unstable_cache(
     () => uncachedGetDocsUrlMetadata(domain),
-    [domain, "docs-url-metadata"],
+    [domain, "docs-url-metadata", cacheSeed()],
     { tags: [domain, "getDocsUrlMetadata"] }
   );
   return get();

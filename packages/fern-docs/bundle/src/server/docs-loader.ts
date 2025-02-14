@@ -22,6 +22,7 @@ import { getAuthEdgeConfig, getEdgeFlags } from "@fern-docs/edge-config";
 import { DEFAULT_LOGO_HEIGHT, EdgeFlags } from "@fern-docs/utils";
 
 import { AuthState, createGetAuthState } from "./auth/getAuthState";
+import { cacheSeed } from "./cache-seed";
 import { getDocsUrlMetadata } from "./getDocsUrlMetadata";
 import { loadWithUrl as uncachedLoadWithUrl } from "./loadWithUrl";
 import { ColorsThemeConfig, FileData, RgbaColor } from "./types";
@@ -197,9 +198,11 @@ const unsafe_getFullRoot = cache(async (domain: string) => {
 });
 
 const unsafe_getRootCached = cache(async (domain: string) => {
-  return await unstable_cache(unsafe_getFullRoot, ["unsafe_getRoot"], {
-    tags: [domain, "unsafe_getRoot"],
-  })(domain);
+  return await unstable_cache(
+    unsafe_getFullRoot,
+    ["unsafe_getRoot", cacheSeed()],
+    { tags: [domain, "unsafe_getRoot"] }
+  )(domain);
 });
 
 const getRoot = async (
@@ -223,8 +226,8 @@ const getRootCached = async (
   authState: AuthState,
   authConfig: AuthEdgeConfig | undefined
 ) => {
-  return await unstable_cache(getRoot, [], {
-    tags: [!authState.authed ? domain : `${domain}_authed`],
+  return await unstable_cache(getRoot, [cacheSeed()], {
+    tags: [domain],
   })(domain, authState, authConfig);
 };
 
@@ -383,44 +386,52 @@ export const createCachedDocsLoader = async (
     domain,
     fern_token,
     getAuthConfig: () => authConfig,
-    getBaseUrl: unstable_cache(() => getBaseUrl(domain), [domain], {
-      tags: [domain, "getBaseUrl"],
-    }),
+    getBaseUrl: unstable_cache(
+      () => getBaseUrl(domain),
+      [domain, cacheSeed()],
+      {
+        tags: [domain, "getBaseUrl"],
+      }
+    ),
     getMetadata: () => metadata,
-    getFiles: unstable_cache(() => getFiles(domain), [domain], {
+    getFiles: unstable_cache(() => getFiles(domain), [domain, cacheSeed()], {
       tags: [domain, "files"],
     }),
     getMdxBundlerFiles: unstable_cache(
       () => getMdxBundlerFiles(domain),
-      [domain],
+      [domain, cacheSeed()],
       { tags: [domain, "mdxBundlerFiles"] }
     ),
-    getApi: unstable_cache((id: string) => getApi(domain, id), [domain], {
-      tags: [domain, "api"],
-    }),
+    getApi: unstable_cache(
+      (id: string) => getApi(domain, id),
+      [domain, cacheSeed()],
+      { tags: [domain, "api"] }
+    ),
     getRoot: async () =>
       getRootCached(domain, await getAuthState(), await authConfig),
     getNavigationNode: async (id: string) =>
       getNavigationNode(domain, id, await getAuthState(), await authConfig),
     unsafe_getFullRoot: () => unsafe_getRootCached(domain),
-    getConfig: unstable_cache(() => getConfig(domain), [domain], {
+    getConfig: unstable_cache(() => getConfig(domain), [domain, cacheSeed()], {
       tags: [domain, "getConfig"],
     }),
     getPage: unstable_cache(
       (pageId: string) => getPage(domain, pageId),
-      [domain],
+      [domain, cacheSeed()],
       { tags: [domain, "getPage"] }
     ),
-    getColors: unstable_cache(() => getColors(domain), [domain], {
+    getColors: unstable_cache(() => getColors(domain), [domain, cacheSeed()], {
       tags: [domain, "getColors"],
     }),
-    getLayout: unstable_cache(() => getLayout(domain), [domain], {
+    getLayout: unstable_cache(() => getLayout(domain), [domain, cacheSeed()], {
       tags: [domain, "getLayout"],
     }),
     getAuthState,
-    getEdgeFlags: unstable_cache(() => cachedGetEdgeFlags(domain), [domain], {
-      tags: [domain, "getEdgeFlags"],
-    }),
+    getEdgeFlags: unstable_cache(
+      () => cachedGetEdgeFlags(domain),
+      [domain, cacheSeed()],
+      { tags: [domain, "getEdgeFlags"] }
+    ),
   };
 };
 

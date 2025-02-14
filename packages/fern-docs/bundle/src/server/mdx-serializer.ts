@@ -2,12 +2,12 @@ import "server-only";
 
 import { unstable_cache } from "next/cache";
 
-import { getEnv } from "@vercel/functions";
 import crypto from "node:crypto";
 
 import { serializeMdx as internalSerializeMdx } from "@/components/mdx/bundler/serialize";
 import { createCachedDocsLoader } from "@/server/docs-loader";
 
+import { cacheSeed } from "./cache-seed";
 import { FileData } from "./types";
 
 function hash(id: string): string {
@@ -28,12 +28,6 @@ export type MdxSerializerOptions = {
    */
   scope?: Record<string, unknown>;
 };
-
-/**
- * creates a unique key for the mdx serializer
- */
-const { VERCEL_GIT_COMMIT_SHA } = getEnv();
-const sha = VERCEL_GIT_COMMIT_SHA ?? crypto.randomUUID();
 
 export function createCachedMdxSerializer(
   loader: string | Awaited<ReturnType<typeof createCachedDocsLoader>>
@@ -77,8 +71,8 @@ export function createCachedMdxSerializer(
           },
         });
       },
-      [domain, key, sha],
-      { tags: [domain, "serializeMdx", key, sha] }
+      [domain, key, cacheSeed()],
+      { tags: [domain, "serializeMdx", key] }
     );
 
     return await cachedSerializer(options);

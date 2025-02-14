@@ -38,29 +38,6 @@ import { rehypeExtractAsides } from "../plugins/rehype-extract-asides";
 import { rehypeFiles } from "../plugins/rehype-files";
 import { remarkExtractTitle } from "../plugins/remark-extract-title";
 
-// export type FernSerializeMdxOptions = {
-//   filename?: string;
-//   files?: Record<string, string>;
-//   scope?: Record<string, unknown>;
-//   replaceSrc?: RehypeFilesOptions["replaceSrc"];
-//   /**
-//    * @default false
-//    */
-//   showError?: boolean;
-//   /**
-//    * @default false
-//    */
-//   stripParagraph?: boolean;
-//   /**
-//    * @default false
-//    */
-//   toc?: boolean;
-// };
-
-/**
- * Should only be invoked server-side.
- */
-
 async function serializeMdxImpl(
   content: string,
   {
