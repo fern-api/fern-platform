@@ -127,10 +127,15 @@ export class OpenApiDocumentConverterNode extends BaseOpenApiV3_1ConverterNode<
 
     const { webhookEndpoints, endpoints } = this.paths?.convert() ?? {};
 
+    const webhooks = {
+      ...(this.webhooks?.convert() ?? {}),
+      ...(webhookEndpoints ?? {}),
+    };
+
     const subpackages: Record<
       FernRegistry.api.v1.SubpackageId,
       FernRegistry.api.latest.SubpackageMetadata
-    > = computeSubpackages({ endpoints, webhookEndpoints });
+    > = computeSubpackages({ endpoints, webhookEndpoints: webhooks });
 
     const { types, auths } = this.components?.convert() ?? {};
 
@@ -139,10 +144,7 @@ export class OpenApiDocumentConverterNode extends BaseOpenApiV3_1ConverterNode<
       endpoints: endpoints ?? {},
       // Websockets are not implemented in OAS, but are in AsyncAPI
       websockets: {},
-      webhooks: {
-        ...(this.webhooks?.convert() ?? {}),
-        ...(webhookEndpoints ?? {}),
-      },
+      webhooks,
       types:
         types != null
           ? {
