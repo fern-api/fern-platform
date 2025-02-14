@@ -40,7 +40,7 @@ export function BottomNavigation({
           className="flex h-16 shrink-0 items-center gap-1 px-3 pr-6"
         >
           <ChevronLeft className="size-icon text-[var(--grayscale-a9)]" />
-          <span className="text-sm font-medium text-[var(--grayscale-a11)]">
+          <span className="hidden text-sm font-medium text-[var(--grayscale-a11)] sm:block">
             Previous
           </span>
         </MaybeFernLink>
@@ -65,10 +65,10 @@ export function BottomNavigation({
           </div>
           <Separator
             orientation="vertical"
-            className="h-8 w-px bg-[var(--grayscale-a5)]"
+            className="hidden h-8 w-px bg-[var(--grayscale-a5)] sm:block"
           />
           <span className="inline-flex items-center gap-1">
-            <span className="text-sm font-medium text-[var(--grayscale-a11)]">
+            <span className="hidden text-sm font-medium text-[var(--grayscale-a11)] sm:block">
               Next
             </span>
             <ChevronRight className="size-icon text-[var(--grayscale-a9)]" />

@@ -44,7 +44,7 @@ export default function DefaultDocs({
           className={cn(
             "top-[var(--header-height)] z-30",
             "lg:sticky lg:flex lg:h-fit lg:max-h-[calc(100vh-var(--header-height))] lg:shrink-0 lg:translate-x-0 lg:flex-col lg:border-r-0 lg:opacity-100 lg:transition-none",
-            "sm:ease-shift sm:-translate-x-full sm:opacity-0 sm:transition-[transform,opacity] sm:duration-150 sm:will-change-auto sm:data-[mobile-state=open]:translate-x-0 sm:data-[mobile-state=open]:opacity-100",
+            "sm:ease-shift data-[mobile-state=closed]:!transition-none sm:-translate-x-full sm:opacity-0 sm:transition-[transform,opacity] sm:duration-150 sm:will-change-auto sm:data-[mobile-state=open]:translate-x-0 sm:data-[mobile-state=open]:opacity-100",
             "sm:border-concealed sm:flex sm:w-[var(--spacing-sidebar-width)] sm:border-r",
             "bg-background/70 fixed hidden h-[calc(100vh-var(--header-height))] w-screen backdrop-blur-xl data-[mobile-state=open]:flex",
             { "lg:hidden": layout === "page" }

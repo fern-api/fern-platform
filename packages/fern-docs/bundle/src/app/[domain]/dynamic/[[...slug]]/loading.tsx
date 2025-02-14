@@ -1,3 +1,5 @@
+import LoadingDocs from "../../_loading-docs";
+
 export default function Loading() {
-  return <div>Loading...</div>;
+  return <LoadingDocs />;
 }
