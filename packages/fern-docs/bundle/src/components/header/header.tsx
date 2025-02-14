@@ -1,14 +1,12 @@
-"use client";
-
 import { CSSProperties } from "react";
 import React from "react";
 
-import { cn } from "@fern-docs/components";
-import { FernButtonGroup } from "@fern-docs/components";
+import { FernButtonGroup, cn } from "@fern-docs/components";
 
 import { SearchV2Trigger } from "@/state/search";
 
 import { ThemeButton } from "../themes";
+import { MobileMenuButton } from "./MobileMenuButton";
 
 export function Header({
   logo,
@@ -37,6 +35,7 @@ export function Header({
     >
       <div className="relative flex h-full min-w-fit flex-1 shrink-0 items-center gap-2 py-1">
         <div className="flex items-center gap-2">
+          <MobileMenuButton />
           {logo}
           {versionSelect}
         </div>

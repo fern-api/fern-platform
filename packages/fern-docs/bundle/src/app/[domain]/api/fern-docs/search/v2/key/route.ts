@@ -10,23 +10,20 @@ import {
 import { COOKIE_FERN_TOKEN, withoutStaging } from "@fern-docs/utils";
 
 import { safeVerifyFernJWTConfig } from "@/server/auth/FernJWT";
-import { createCachedDocsLoader } from "@/server/docs-loader";
 import { algoliaAppId, algoliaSearchApikey } from "@/server/env-variables";
+import { getDocsUrlMetadata } from "@/server/getDocsUrlMetadata";
 import { selectFirst } from "@/server/utils/selectFirst";
-import { getDocsDomainEdge } from "@/server/xfernhost/edge";
 
 export const runtime = "edge";
 export const maxDuration = 10;
 
-export async function GET(req: NextRequest): Promise<NextResponse> {
-  const domain = getDocsDomainEdge(req);
+export async function GET(
+  req: NextRequest,
+  { params }: { params: Promise<{ domain: string }> }
+): Promise<NextResponse> {
+  const { domain } = await params;
 
-  const loader = await createCachedDocsLoader(domain);
-  const metadata = await loader.getMetadata();
-  if (metadata == null) {
-    return NextResponse.json("Not found", { status: 404 });
-  }
-
+  const metadata = await getDocsUrlMetadata(domain);
   if (metadata.isPreview) {
     return NextResponse.json("Search is not supported for preview URLs", {
       status: 400,

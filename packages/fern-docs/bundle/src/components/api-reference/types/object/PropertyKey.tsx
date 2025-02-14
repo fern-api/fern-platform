@@ -1,5 +1,7 @@
 "use client";
 
+import { composeEventHandlers } from "@radix-ui/primitive";
+
 import { addLeadingSlash } from "@fern-docs/utils";
 
 import { FernAnchor } from "@/components/components/FernAnchor";
@@ -10,30 +12,31 @@ export function PropertyKey({
   slug,
   anchorId,
   children,
+  ...props
 }: {
   slug: string;
   anchorId: string;
-  children: React.ReactNode;
-}) {
+} & React.ComponentPropsWithoutRef<"span">) {
   const { jsonPropertyPath } = useTypeDefinitionContext();
   const href = `${addLeadingSlash(slug)}#${anchorId}`;
   return (
     <FernAnchor href={href} sideOffset={6}>
       <span
-        onPointerEnter={() => {
+        {...props}
+        onPointerEnter={composeEventHandlers(props.onPointerEnter, () => {
           window.dispatchEvent(
             new CustomEvent(`property-hover-on:${slug}`, {
               detail: jsonPropertyPath,
             })
           );
-        }}
-        onPointerOut={() => {
+        })}
+        onPointerOut={composeEventHandlers(props.onPointerOut, () => {
           window.dispatchEvent(
             new CustomEvent(`property-hover-off:${slug}`, {
               detail: jsonPropertyPath,
             })
           );
-        }}
+        })}
       >
         {children}
       </span>

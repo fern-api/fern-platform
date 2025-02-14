@@ -5,7 +5,6 @@ import { cn } from "@fern-docs/components";
 import { useThemeSwitchEnabled } from "@/hooks/use-theme";
 import { SearchV2Trigger } from "@/state/search";
 
-import { HeaderLogoSection } from "../header/HeaderLogoSection";
 import { ThemeButton } from "../themes";
 
 export declare namespace SidebarFixedItemsSection {
@@ -41,7 +40,12 @@ export const SidebarFixedItemsSection: React.FC<
 
   const header = layout?.disableHeader && (
     <div className="fern-sidebar-header">
-      <HeaderLogoSection logo={logo} versionSelect={versionSelect} />
+      <div className="relative flex h-full min-w-fit flex-1 shrink-0 items-center gap-2 py-1">
+        <div className="flex items-center gap-2">
+          {logo}
+          {versionSelect}
+        </div>
+      </div>
       <div className="-mr-3">
         {themeSwitchEnabled && <ThemeButton size="large" />}
       </div>

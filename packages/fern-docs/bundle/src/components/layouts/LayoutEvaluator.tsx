@@ -24,7 +24,7 @@ export async function LayoutEvaluator({
   breadcrumb: readonly FernNavigation.BreadcrumbItem[];
   bottomNavigation?: React.ReactNode;
 }) {
-  const { filename, markdown } = await loader.getPage(pageId);
+  const { filename, markdown, editThisPageUrl } = await loader.getPage(pageId);
   const serialize = createCachedMdxSerializer(loader);
   const mdx = await serialize(markdown, {
     filename,
@@ -37,6 +37,8 @@ export async function LayoutEvaluator({
     mdx?.frontmatter ??
     (exports?.frontmatter as Partial<FernDocs.Frontmatter> | undefined) ??
     {};
+
+  frontmatter["edit-this-page-url"] ??= editThisPageUrl;
 
   const hasAside = exports?.aside != null;
 

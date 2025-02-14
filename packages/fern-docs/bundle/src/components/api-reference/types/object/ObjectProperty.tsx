@@ -51,7 +51,11 @@ export function ObjectProperty({
         part={{ type: "objectProperty", propertyName: property.key }}
       >
         <div className="fern-api-property-header">
-          <PropertyKey slug={slug} anchorId={anchorId}>
+          <PropertyKey
+            className="fern-api-property-key"
+            slug={slug}
+            anchorId={anchorId}
+          >
             {property.key}
           </PropertyKey>
           <TypeShorthand shape={property.valueShape} />

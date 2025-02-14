@@ -1,7 +1,12 @@
+import { TabbedNode, traverseBF } from "@fern-api/fdr-sdk/navigation";
+import { CONTINUE, SKIP } from "@fern-docs/mdx";
+
 import { getFernToken } from "@/app/fern-token";
 import type { NavbarLink } from "@/components/atoms/types";
-import { Header } from "@/components/header/Header";
 import { Announcement } from "@/components/header/announcement";
+import { Header } from "@/components/header/header";
+import { HeaderNavbarLink } from "@/components/header/header-navbar-link";
+import { HeaderTabs } from "@/components/header/header-tabs";
 import { Logo } from "@/components/logo";
 import { MdxServerComponent } from "@/components/mdx/server-component";
 import { Sidebar } from "@/components/sidebar/Sidebar";
@@ -97,11 +102,23 @@ export default async function DocsLayout({
   //   });
   // }
 
+  const tabbedNodes: TabbedNode[] = [];
+
+  traverseBF(root, (node) => {
+    if (node.type === "tabbed") {
+      tabbedNodes.push(node);
+      return SKIP;
+    }
+    if (node.type === "sidebarRoot") {
+      return SKIP;
+    }
+    return CONTINUE;
+  });
+
   return (
     <RootNodeProvider root={root}>
       <ThemedDocs
         theme={theme}
-        colors={colors}
         announcement={
           announcementText && (
             <Announcement announcement={announcementText}>
@@ -121,10 +138,24 @@ export default async function DocsLayout({
             versionSelect={false}
             showThemeButton={Boolean(colors.dark && colors.light)}
             showSearchBar={layout.searchbarPlacement === "HEADER"}
-            navbarLinks={navbarLinks}
+            navbarLinks={
+              <>
+                {navbarLinks.map((navbarLink, idx) => (
+                  <HeaderNavbarLink key={idx} navbarLink={navbarLink} />
+                ))}
+              </>
+            }
           />
         }
-        headerHeight={layout.headerHeight}
+        tabs={
+          tabbedNodes.length > 0 && (
+            <>
+              {tabbedNodes.map((node) => (
+                <HeaderTabs key={node.id} node={node} />
+              ))}
+            </>
+          )
+        }
         sidebar={
           <Sidebar
             logo={

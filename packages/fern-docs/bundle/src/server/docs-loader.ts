@@ -33,6 +33,8 @@ export interface DocsLoader {
   domain: string;
   fern_token: string | undefined;
 
+  getAuthConfig: () => Promise<AuthEdgeConfig | undefined>;
+
   /**
    * @returns the base url (including base path) of the docs
    */
@@ -380,6 +382,7 @@ export const createCachedDocsLoader = async (
   return {
     domain,
     fern_token,
+    getAuthConfig: () => authConfig,
     getBaseUrl: unstable_cache(() => getBaseUrl(domain), [domain], {
       tags: [domain, "getBaseUrl"],
     }),

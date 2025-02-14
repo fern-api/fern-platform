@@ -1,10 +1,8 @@
 import { ReactElement, ReactNode, useRef, useState } from "react";
 
-import { useAtomValue } from "jotai";
-
+import { useIsMobile } from "@fern-docs/search-ui";
 import { useResizeObserver } from "@fern-ui/react-commons";
 
-import { IS_MOBILE_SCREEN_ATOM } from "../../atoms";
 import { PlaygroundSendRequestButton } from "../PlaygroundSendRequestButton";
 import { PlaygroundEndpointDesktopLayout } from "./PlaygroundEndpointDesktopLayout";
 import { PlaygroundEndpointMobileLayout } from "./PlaygroundEndpointMobileLayout";
@@ -24,7 +22,7 @@ export function PlaygroundEndpointContentLayout({
   responseCard,
   endpointId,
 }: PlaygroundEndpointContentLayoutProps): ReactElement<any> {
-  const isMobileScreen = useAtomValue(IS_MOBILE_SCREEN_ATOM);
+  const isMobileScreen = useIsMobile();
 
   const scrollAreaRef = useRef<HTMLDivElement>(null);
   const [scrollAreaHeight, setScrollAreaHeight] = useState(0);

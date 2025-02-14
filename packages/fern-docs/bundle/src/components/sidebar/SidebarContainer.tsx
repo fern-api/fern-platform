@@ -23,13 +23,10 @@ export const SidebarContainer = React.memo(function SidebarContainer({
   navbarLinks: NavbarLink[];
   children: React.ReactNode;
 }) {
-  // const layout = useAtomValue(DOCS_LAYOUT_ATOM);
   const tabs = useTabs();
   const currentTab = useCurrentTab();
   const ref = React.useRef<HTMLDivElement>(null);
   const isScrolled = useIsScrolled(ref);
-  // const isMobileSidebarEnabled = useAtomValue(MOBILE_SIDEBAR_ENABLED_ATOM);
-  // const isMobileSidebarOpen = useIsMobileSidebarOpen();
 
   return (
     <>

@@ -1,11 +1,11 @@
 import { ReactElement } from "react";
 
 import { ArrowRight } from "iconoir-react";
-import { useAtomValue } from "jotai";
 
 import { cn } from "@fern-docs/components";
+import { useIsMobile } from "@fern-docs/search-ui";
 
-import { MOBILE_SIDEBAR_ENABLED_ATOM, type NavbarLink } from "../atoms";
+import { type NavbarLink } from "../atoms";
 import { FernLinkButton } from "../components/FernLinkButton";
 
 export function MobileSidebarHeaderLinks({
@@ -13,7 +13,7 @@ export function MobileSidebarHeaderLinks({
 }: {
   navbarLinks: NavbarLink[];
 }): ReactElement<any> | null {
-  const isMobileSidebarEnabled = useAtomValue(MOBILE_SIDEBAR_ENABLED_ATOM);
+  const isMobile = useIsMobile();
   if (navbarLinks == null || navbarLinks.length === 0) {
     return null;
   }
@@ -60,7 +60,7 @@ export function MobileSidebarHeaderLinks({
                 ? "primary"
                 : "none"
             }
-            size={isMobileSidebarEnabled ? "large" : "normal"}
+            size={isMobile ? "large" : "normal"}
           />
         )
       )}

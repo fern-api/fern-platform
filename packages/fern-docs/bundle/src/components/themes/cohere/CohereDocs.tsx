@@ -10,7 +10,7 @@ import { FernScrollArea } from "@fern-docs/components";
 
 import { SCROLL_BODY_ATOM } from "@/components/atoms";
 
-import { HeaderContainer } from "./HeaderContainer";
+import { HeaderContainer } from "./header-container";
 
 const CohereDocsStyle = () => {
   return (
@@ -43,11 +43,13 @@ export default function CohereDocs({
   sidebar,
   children,
   announcement,
+  tabs,
 }: {
   header: React.ReactNode;
   sidebar: React.ReactNode;
   children: React.ReactNode;
   announcement?: React.ReactNode;
+  tabs?: React.ReactNode;
 }) {
   const showDismissableSidebar = false;
 
@@ -67,7 +69,7 @@ export default function CohereDocs({
     <div id="fern-docs" className="fern-container fern-theme-cohere">
       <CohereDocsStyle />
       {announcement}
-      <HeaderContainer header={header} showHeaderTabs showSearchBar={false} />
+      <HeaderContainer header={header} tabs={tabs} />
       <div className="fern-body">
         {sidebar}
         <FernScrollArea

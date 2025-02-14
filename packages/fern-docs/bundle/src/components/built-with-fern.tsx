@@ -35,17 +35,16 @@ export const BuiltWithFern: React.FC<{ className?: string }> = ({
         {`
           :global(#builtwithfern) {
             display: flex !important;
-            opacity: 100% !important;
           }
 
           :global(#builtwithfern *) {
             display: initial !important;
             width: unset !important;
-            opacity: 100% !important;
           }
 
           :global(#builtwithfern),
           :global(#builtwithfern *) {
+            opacity: 100% !important;
             visibility: initial !important;
             overflow: visible !important;
             position: relative !important;

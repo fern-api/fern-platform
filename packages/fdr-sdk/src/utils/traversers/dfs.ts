@@ -8,9 +8,12 @@ export function dfs<N, P extends N = N>(
 ): void {
   const stack: [N, P[]][] = [[root, []]];
   while (stack.length > 0) {
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    const [node, parents] = stack.pop()!;
-    const next = visit(node, parents);
+    const [node, parents] = stack.pop() ?? [];
+    if (!node) {
+      continue;
+    }
+    const next = visit(node, parents ?? []);
+
     if (next === SKIP) {
       continue;
     } else if (next === STOP) {
@@ -19,7 +22,7 @@ export function dfs<N, P extends N = N>(
 
     if (isParent(node)) {
       for (const child of [...getChildren(node)].reverse()) {
-        stack.push([child, [...parents, node]]);
+        stack.push([child, [...(parents ?? []), node]]);
       }
     }
   }

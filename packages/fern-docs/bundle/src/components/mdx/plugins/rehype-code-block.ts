@@ -1,6 +1,7 @@
 // inspired by https://github.com/remcohaszing/hast-util-properties-to-mdx-jsx-attributes
+import { compact, flatten } from "es-toolkit/array";
 import { propertiesToMdxJsxAttributes } from "hast-util-properties-to-mdx-jsx-attributes";
-import rangeParser from "parse-numeric-range";
+import parseNumericRange from "parse-numeric-range";
 
 import {
   Hast,
@@ -46,17 +47,18 @@ export const rehypeCodeBlock: Unified.Plugin<[], Hast.Root> = () => {
         ...propertiesToMdxJsxAttributes(codeNode.properties)
       );
 
-      const className =
-        node.properties?.class ??
-        node.properties?.className ??
-        codeNode.properties?.class ??
-        codeNode.properties?.className;
+      const language = compact(flatten([codeNode.properties?.className]))
+        .find(
+          (className): className is string =>
+            typeof className === "string" && className.startsWith("language-")
+        )
+        ?.replace("language-", "");
 
-      if (typeof className === "string" && className.startsWith("language-")) {
+      if (language) {
         replacement.attributes.unshift({
           type: "mdxJsxAttribute",
           name: "language",
-          value: className.replace("language-", ""),
+          value: language,
         });
       }
 
@@ -98,62 +100,56 @@ export const rehypeCodeBlock: Unified.Plugin<[], Hast.Root> = () => {
   };
 };
 
-function migrateMeta(metastring: string): string {
+export function migrateMeta(metastring: string): string {
   metastring = metastring.trim();
 
   if (metastring === "") {
     return metastring;
   }
 
-  // migrate {1-3} to highlight={[1, 2, 3]}
+  // migrate {1-3} to {[1, 2, 3]}
   // but do NOT migrate {1} to {[1]}
-  while (true) {
-    const match = metastring.match(/\{([0-9,-]+)\}/g);
-    if (match?.index == null) {
-      break;
+  metastring = metastring.replaceAll(/\{([0-9,-]+)\}/g, (original, expr) => {
+    if (expr?.includes(",") || expr?.includes("-")) {
+      return `{[${parseNumericRange(expr ?? "")}]}`;
     }
-    const [full, expr] = match;
-    if (!expr?.includes(",") && !expr?.includes("-")) {
-      break;
+    return original;
+  });
+
+  // if matches {[, it must be preceded by a `=` otherwise prefix with `highlight=`
+  const match = metastring.search(/\{[^}]+\}/);
+  if (match !== -1 && metastring.slice(match + 1, match + 3) !== "...") {
+    if (match === 0 || metastring[match - 1] !== "=") {
+      metastring =
+        metastring.slice(0, match) + "highlight=" + metastring.slice(match);
     }
-
-    const start = match.index;
-    const end = start + full.length;
-    const range = rangeParser(expr ?? "");
-
-    let prepend = "";
-    if (start === 0 || metastring[start - 1] === " ") {
-      prepend = "highlight=";
-    }
-
-    metastring =
-      metastring.slice(0, start) +
-      `${prepend}{[${range.join(",")}]}` +
-      metastring.slice(end);
   }
 
-  // migrate title=123 to title={123}
-  while (true) {
-    const match = metastring.match(/=([0-9]+)/g);
-    if (match?.index == null) {
-      break;
-    }
-    const [full, expr] = match;
-    const start = match.index;
-    const end = start + full.length;
+  // migrate test=123 to test={123}
+  metastring = metastring.replaceAll(/=([0-9]+)/g, (_original, expr) => {
+    return `={${expr}}`;
+  });
 
-    metastring =
-      metastring.slice(0, start) + `title={${expr}}` + metastring.slice(end);
-  }
+  metastring = metastring.replaceAll(/=([a-zA-Z]+)/g, (_original, expr) => {
+    return `="${expr}"`;
+  });
 
   // migrate "abcd" to title="abcd"
   if (metastring.startsWith('"') && metastring.endsWith('"')) {
     return `title=${metastring}`;
   }
 
+  if (metastring.startsWith("'") && metastring.endsWith("'")) {
+    return `title="${metastring.slice(1, -1).replace(/"/g, '\\"')}"`;
+  }
+
   // migrate abcd to title="abcd"
-  if (!metastring.includes("=") && !metastring.includes("{")) {
-    return `title="${metastring}"`;
+  if (
+    !metastring.includes("={") &&
+    !metastring.includes('="') &&
+    !metastring.includes("{...")
+  ) {
+    return `title="${metastring.replace(/"/g, '\\"')}"`;
   }
 
   return metastring;

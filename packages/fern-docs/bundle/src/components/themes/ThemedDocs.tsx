@@ -1,40 +1,34 @@
-import { ColorsThemeConfig } from "@/server/types";
+import dynamic from "next/dynamic";
 
 const THEMES = {
-  default: import("./default/DefaultDocs").then((mod) => mod.default),
-  cohere: import("./cohere/CohereDocs").then((mod) => mod.default),
+  default: dynamic(() => import("./default/DefaultDocs"), { ssr: true }),
+  cohere: dynamic(() => import("./cohere/CohereDocs"), { ssr: true }),
 };
 
 export type FernTheme = keyof typeof THEMES;
 
-export async function ThemedDocs({
+export function ThemedDocs({
   theme = "default",
-  colors,
   announcement,
   header,
   sidebar,
   children,
-  headerHeight,
+  tabs,
 }: {
   theme?: FernTheme;
-  colors: {
-    light?: ColorsThemeConfig;
-    dark?: ColorsThemeConfig;
-  };
   announcement?: React.ReactNode;
   header?: React.ReactNode;
   sidebar?: React.ReactNode;
   children: React.ReactNode;
-  headerHeight?: number;
+  tabs?: React.ReactNode;
 }) {
-  const Docs = await THEMES[theme];
+  const Docs = THEMES[theme];
   return (
     <Docs
       announcement={announcement}
-      colors={colors}
       header={header}
       sidebar={sidebar}
-      headerHeight={headerHeight}
+      tabs={tabs}
     >
       {children}
     </Docs>

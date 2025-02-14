@@ -30,3 +30,4 @@ export * from "./FernToast";
 export * from "./FernTooltip";
 export * from "./kbd";
 export * from "./util/shared-component-types";
+export * from "./fa-icon-server";

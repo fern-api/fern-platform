@@ -101,7 +101,6 @@ export const ReferenceLayout = React.forwardRef<
 
             @media (min-width: 1024px) {
               article > .layout {
-                margin: 3rem 0;
                 gap: 3rem;
               }
             }

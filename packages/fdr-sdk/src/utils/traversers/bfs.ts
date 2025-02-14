@@ -8,9 +8,11 @@ export function bfs<N, P extends N = N>(
 ): void {
   const queue: [N, P[]][] = [[root, []]];
   while (queue.length > 0) {
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    const [node, parents] = queue.shift()!;
-    const next = visit(node, parents);
+    const [node, parents] = queue.shift() ?? [];
+    if (!node) {
+      continue;
+    }
+    const next = visit(node, parents ?? []);
 
     if (next === SKIP) {
       continue;
@@ -20,7 +22,7 @@ export function bfs<N, P extends N = N>(
 
     if (isParent(node)) {
       for (const child of [...getChildren(node)]) {
-        queue.push([child, [...parents, node]]);
+        queue.push([child, [...(parents ?? []), node]]);
       }
     }
   }

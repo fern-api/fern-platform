@@ -60,7 +60,7 @@ export const DesktopSearchDialog = memo(
         </DesktopCommandAfterInput>
 
         <Dialog.Portal>
-          <Dialog.Overlay className="fixed inset-0 bg-[var(--white-a3)] backdrop-blur-md dark:bg-[var(--black-a3)]" />
+          <Dialog.Overlay className="fixed inset-0 z-40 bg-[var(--white-a3)] backdrop-blur-md dark:bg-[var(--black-a3)]" />
 
           <VisuallyHidden>
             <Dialog.Title>Search</Dialog.Title>
@@ -69,7 +69,7 @@ export const DesktopSearchDialog = memo(
 
           <Dialog.Content
             className={cn(
-              "fixed left-1/2 top-[15%] w-[640px] origin-center -translate-x-1/2 outline-none"
+              "fixed left-1/2 top-[15%] z-50 w-[640px] origin-center -translate-x-1/2 outline-none"
             )}
             asChild={asChild}
             onEscapeKeyDown={(e) => {

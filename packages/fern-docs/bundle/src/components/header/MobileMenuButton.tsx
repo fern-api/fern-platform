@@ -1,32 +1,25 @@
-// import {
-//   useCloseMobileSidebar,
-//   useIsMobileSidebarOpen,
-//   useOpenMobileSidebar,
-// } from "../atoms";
+"use client";
+
+import { Menu, X } from "lucide-react";
+
+import { FernButton } from "@fern-docs/components";
+
+import {
+  useIsDismissableSidebarOpen,
+  useToggleDismissableSidebar,
+} from "@/state/mobile";
 
 export function MobileMenuButton() {
-  return null;
-  // const isMobileSidebarOpen = useIsMobileSidebarOpen();
-  // const closeMobileSidebar = useCloseMobileSidebar();
-  // const openMobileSidebar = useOpenMobileSidebar();
-  // return (
-  //   <FernButton
-  //     onClickCapture={(e) => {
-  //       e.stopPropagation();
-  //       e.preventDefault();
-  //       if (isMobileSidebarOpen) {
-  //         closeMobileSidebar();
-  //       } else {
-  //         openMobileSidebar();
-  //       }
-  //     }}
-  //     icon={
-  //       isMobileSidebarOpen ? <Xmark /> : <Menu className="!size-icon-md" />
-  //     }
-  //     intent={isMobileSidebarOpen ? "primary" : "none"}
-  //     variant={isMobileSidebarOpen ? "filled" : "minimal"}
-  //     rounded={true}
-  //     size="large"
-  //   />
-  // );
+  const isDismissableSidebarOpen = useIsDismissableSidebarOpen();
+  const toggleDismissableSidebar = useToggleDismissableSidebar();
+  return (
+    <FernButton
+      onClick={toggleDismissableSidebar}
+      icon={isDismissableSidebarOpen ? <X /> : <Menu />}
+      intent={isDismissableSidebarOpen ? "primary" : "none"}
+      variant={isDismissableSidebarOpen ? "filled" : "minimal"}
+      rounded={true}
+      size="large"
+    />
+  );
 }

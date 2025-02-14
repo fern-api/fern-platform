@@ -3,7 +3,7 @@
 import { usePathname } from "next/navigation";
 import { FC, useCallback, useEffect, useRef, useState } from "react";
 
-import { ThumbsDown, ThumbsUp } from "iconoir-react";
+import { ThumbsDown, ThumbsUp } from "lucide-react";
 
 import { cn } from "@fern-docs/components";
 import { FernButton, FernButtonGroup, toast } from "@fern-docs/components";
@@ -19,6 +19,7 @@ export interface FeedbackProps {
   type?: string;
   feedbackQuestion?: string;
   metadata?: Record<string, unknown> | (() => Record<string, unknown>);
+  pathname?: string;
 }
 
 export const Feedback: FC<FeedbackProps> = ({
@@ -26,6 +27,7 @@ export const Feedback: FC<FeedbackProps> = ({
   feedbackQuestion = "Was this page helpful?",
   type = "on-page-feedback",
   metadata,
+  pathname: pathnameProp,
 }) => {
   const [sent, setSent] = useState(false);
   const [isHelpful, setIsHelpful] = useState<"yes" | "no" | undefined>();
@@ -34,7 +36,9 @@ export const Feedback: FC<FeedbackProps> = ({
   const ref = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-  const pathname = usePathname();
+  const currentPathname = usePathname();
+  const pathname = pathnameProp ?? currentPathname;
+
   useEffect(() => {
     setSent(false);
     setIsHelpful(undefined);

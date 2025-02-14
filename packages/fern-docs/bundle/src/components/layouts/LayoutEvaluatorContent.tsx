@@ -9,10 +9,9 @@ import type { TableOfContentsItem } from "@fern-docs/mdx";
 import { DocsLoader } from "@/server/docs-loader";
 
 import { BuiltWithFern } from "../built-with-fern";
-import { EditThisPageButton } from "../components/EditThisPage";
 import { PageHeader } from "../components/PageHeader";
-import { Feedback } from "../feedback/Feedback";
 import { CustomLayout } from "./CustomLayout";
+import { FooterLayout } from "./FooterLayout";
 import { GuideLayout } from "./GuideLayout";
 import { OverviewLayout } from "./OverviewLayout";
 import { PageLayout } from "./PageLayout";
@@ -63,7 +62,7 @@ export async function LayoutEvaluatorContent({
   );
 
   const footer = (
-    <Footer
+    <FooterLayout
       hideFeedback={frontmatter?.["hide-feedback"]}
       hideNavLinks={frontmatter?.["hide-nav-links"]}
       editThisPageUrl={frontmatter?.["edit-this-page-url"]}
@@ -105,29 +104,4 @@ export async function LayoutEvaluatorContent({
     default:
       throw new UnreachableCaseError(layout);
   }
-}
-
-function Footer({
-  hideFeedback,
-  hideNavLinks,
-  editThisPageUrl,
-  bottomNavigation,
-}: {
-  hideFeedback?: boolean;
-  hideNavLinks?: boolean;
-  editThisPageUrl?: string;
-  bottomNavigation?: React.ReactNode;
-}) {
-  return (
-    <footer className="my-12 space-y-8">
-      <div className="flex gap-4 max-sm:flex-col sm:justify-between">
-        <div>{!hideFeedback && <Feedback />}</div>
-        <EditThisPageButton editThisPageUrl={editThisPageUrl} />
-      </div>
-
-      {!hideNavLinks && bottomNavigation}
-
-      <BuiltWithFern className="mx-auto w-fit" />
-    </footer>
-  );
 }

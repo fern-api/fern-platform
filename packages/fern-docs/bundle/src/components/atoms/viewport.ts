@@ -128,23 +128,3 @@ export function useLayoutBreakpoint(): LayoutBreakpointValue {
     [layoutBreakpoint]
   );
 }
-
-export const MOBILE_SIDEBAR_ENABLED_ATOM = atom((get) => {
-  const breakpoint = get(BREAKPOINT_ATOM);
-  switch (breakpoint) {
-    // sidebar is hidden by default on tablet-sized screens or smaller
-    case "mobile":
-    case "sm":
-    case "md":
-      return true;
-    default:
-      return false;
-  }
-});
-MOBILE_SIDEBAR_ENABLED_ATOM.debugLabel = "MOBILE_SIDEBAR_ENABLED_ATOM";
-
-export const IS_MOBILE_SCREEN_ATOM = atom((get) => {
-  const breakpoint = get(BREAKPOINT_ATOM);
-  return breakpoint === "mobile";
-});
-IS_MOBILE_SCREEN_ATOM.debugLabel = "IS_MOBILE_SCREEN_ATOM";

@@ -7,6 +7,7 @@ import { StoreApi, UseBoundStore, create } from "zustand";
 
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { CONTINUE, SKIP } from "@fern-api/fdr-sdk/traversers";
+import { EMPTY_ARRAY } from "@fern-api/ui-core-utils";
 import { addLeadingSlash } from "@fern-docs/utils";
 import { useLazyRef } from "@fern-ui/react-commons";
 
@@ -121,9 +122,13 @@ export function useCurrentTab() {
   return parents?.find((parent) => parent.type === "tab");
 }
 
-export function useTabs() {
+export function useCurrentTabbedNode() {
   const { parents } = useNode();
-  return parents?.find((parent) => parent.type === "tabbed")?.children ?? [];
+  return parents?.find((parent) => parent.type === "tabbed");
+}
+
+export function useTabs() {
+  return useCurrentTabbedNode()?.children ?? EMPTY_ARRAY;
 }
 
 export function useVersions() {

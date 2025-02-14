@@ -1,31 +1,66 @@
-import React from "react";
+"use client";
 
-import { GitFork, GithubCircle, Star } from "iconoir-react";
-import useSWR from "swr";
+import React from "react";
+import { preload } from "react-dom";
+
+import { GitFork, Github, Star } from "lucide-react";
+import useSWRImmutable from "swr/immutable";
 
 import { cn } from "@fern-docs/components";
 
-import { FernLinkButton } from "../components/FernLinkButton";
-import { GitHubInfo, getGitHubInfo } from "../util/github";
+import { FernLinkButton } from "@/components/components/FernLinkButton";
 
-const GitHubStat: React.FC<{
-  icon: React.ElementType;
+/* eslint-disable @typescript-eslint/no-deprecated */
+
+type GitHubInfo = {
+  repo: string;
+  stars: number;
+  forks: number;
+};
+
+function GitHubStat({
+  icon: Icon,
+  value,
+}: {
+  icon: React.FunctionComponent<React.SVGProps<SVGSVGElement>>;
   value: number;
-}> = ({ icon: Icon, value }) => {
+}) {
   return (
     <div className="flex items-center gap-1">
       <Icon className="size-icon-sm" />
       {value}
     </div>
   );
-};
+}
 
-export const GitHubWidget: React.FC<{
+export function GitHubWidget({
+  repo,
+  className,
+  id,
+}: {
   repo: string;
   className?: string;
   id?: string;
-}> = ({ repo, className, id }) => {
-  const { data } = useSWR<GitHubInfo | null>(repo, getGitHubInfo);
+}) {
+  const href = `https://api.github.com/repos/${repo}`;
+  preload(href);
+
+  const { data } = useSWRImmutable<GitHubInfo | null>(
+    href,
+    async () => {
+      const res = await fetch(href, { cache: "force-cache" });
+      if (!res.ok) {
+        return null;
+      }
+      const result = await res.json();
+      return {
+        repo: result.full_name,
+        stars: result.stargazers_count,
+        forks: result.forks,
+      };
+    },
+    { revalidateOnFocus: false }
+  );
 
   if (!data) {
     return null;
@@ -34,7 +69,7 @@ export const GitHubWidget: React.FC<{
   return (
     <FernLinkButton
       href={`https://github.com/${repo}`}
-      icon={<GithubCircle className="!size-icon-lg" strokeWidth={1} />}
+      icon={<Github className="!size-icon-lg" strokeWidth={1} />}
       variant="minimal"
       id={id}
       className={cn("h-10", className)}
@@ -45,5 +80,12 @@ export const GitHubWidget: React.FC<{
         <GitHubStat icon={GitFork} value={data.forks} />
       </div>
     </FernLinkButton>
+  );
+}
+
+export const getGitHubRepo = (url: string): string | null => {
+  return (
+    url.match(/^https:\/\/(www\.)?github\.com\/([\w-]+\/[\w-]+)\/?$/)?.[2] ??
+    null
   );
 };

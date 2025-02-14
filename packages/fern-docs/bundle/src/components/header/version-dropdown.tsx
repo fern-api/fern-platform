@@ -1,4 +1,4 @@
-import { Lock, NavArrowDown } from "iconoir-react";
+import { ChevronDown, Lock } from "lucide-react";
 
 import { FernButton } from "@fern-docs/components";
 import { addLeadingSlash } from "@fern-docs/utils";
@@ -59,7 +59,7 @@ export const VersionDropdown: React.FC<VersionDropdown.Props> = () => {
           variant="outlined"
           text={currentVersion?.title ?? currentVersion?.versionId}
           rightIcon={
-            <NavArrowDown className="transition-transform data-[state=open]:rotate-180" />
+            <ChevronDown className="transition-transform data-[state=open]:rotate-180" />
           }
           disableAutomaticTooltip
         />

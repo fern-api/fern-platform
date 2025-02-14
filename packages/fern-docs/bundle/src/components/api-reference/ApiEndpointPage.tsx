@@ -5,6 +5,7 @@ import {
   createEndpointContext,
   createWebSocketContext,
   createWebhookContext,
+  prune,
 } from "@fern-api/fdr-sdk/api-definition";
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 
@@ -18,10 +19,12 @@ export default async function ApiEndpointPage({
   loader,
   node,
   breadcrumb,
+  bottomNavigation,
 }: {
   loader: DocsLoader;
   node: FernNavigation.NavigationNodeApiLeaf;
   breadcrumb: readonly FernNavigation.BreadcrumbItem[];
+  bottomNavigation?: React.ReactNode;
 }) {
   const apiDefinition = await loader.getApi(node.apiDefinitionId);
 
@@ -31,6 +34,7 @@ export default async function ApiEndpointPage({
       node={node}
       apiDefinition={apiDefinition}
       breadcrumb={breadcrumb}
+      bottomNavigation={bottomNavigation}
     />
   );
 }
@@ -40,15 +44,17 @@ async function ApiEndpointContent({
   node,
   apiDefinition,
   breadcrumb,
+  bottomNavigation,
 }: {
   loader: DocsLoader;
   node: FernNavigation.NavigationNodeApiLeaf;
   apiDefinition: ApiDefinition;
   breadcrumb: readonly FernNavigation.BreadcrumbItem[];
+  bottomNavigation?: React.ReactNode;
 }) {
   switch (node.type) {
     case "endpoint": {
-      const context = createEndpointContext(node, apiDefinition);
+      const context = createEndpointContext(node, prune(apiDefinition, node));
       if (!context) {
         throw new Error(
           `[${loader.domain}] Could not create endpoint context for ${node.id}`
@@ -60,11 +66,12 @@ async function ApiEndpointContent({
           breadcrumb={breadcrumb}
           context={context}
           showErrors
+          bottomNavigation={bottomNavigation}
         />
       );
     }
     case "webSocket": {
-      const context = createWebSocketContext(node, apiDefinition);
+      const context = createWebSocketContext(node, prune(apiDefinition, node));
       if (!context) {
         throw new Error(
           `[${loader.domain}] Could not create web socket context for ${node.id}`
@@ -79,7 +86,7 @@ async function ApiEndpointContent({
       );
     }
     case "webhook": {
-      const context = createWebhookContext(node, apiDefinition);
+      const context = createWebhookContext(node, prune(apiDefinition, node));
       if (!context) {
         throw new Error(
           `[${loader.domain}] Could not create web hook context for ${node.id}`

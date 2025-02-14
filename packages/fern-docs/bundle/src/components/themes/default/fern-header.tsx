@@ -3,12 +3,7 @@
 import { useServerInsertedHTML } from "next/navigation";
 import React from "react";
 
-export function FernHeader({
-  defaultHeight,
-  ...props
-}: React.ComponentPropsWithoutRef<"header"> & {
-  defaultHeight?: number;
-}) {
+export function FernHeader(props: React.ComponentPropsWithoutRef<"header">) {
   const ref = React.useRef<HTMLDivElement>(null);
 
   const inserted = React.useRef(false);

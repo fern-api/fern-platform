@@ -36,6 +36,10 @@ export async function DocsMainContent({
   breadcrumb: readonly FernNavigation.BreadcrumbItem[];
   scope?: Record<string, unknown>;
 }) {
+  const bottomNavigation = neighbors && (
+    <BottomNavigation neighbors={neighbors} loader={loader} />
+  );
+
   if (node.type === "changelog") {
     return (
       <ChangelogPage loader={loader} nodeId={node.id} breadcrumb={breadcrumb} />
@@ -59,7 +63,12 @@ export async function DocsMainContent({
 
   if (FernNavigation.isApiLeaf(node)) {
     return (
-      <ApiEndpointPage loader={loader} node={node} breadcrumb={breadcrumb} />
+      <ApiEndpointPage
+        loader={loader}
+        node={node}
+        breadcrumb={breadcrumb}
+        bottomNavigation={bottomNavigation}
+      />
     );
   }
 
@@ -71,11 +80,7 @@ export async function DocsMainContent({
         fallbackTitle={node.title}
         pageId={pageId}
         breadcrumb={breadcrumb}
-        bottomNavigation={
-          neighbors && (
-            <BottomNavigation neighbors={neighbors} loader={loader} />
-          )
-        }
+        bottomNavigation={bottomNavigation}
       />
     );
   }
