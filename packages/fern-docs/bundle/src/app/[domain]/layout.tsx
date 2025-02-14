@@ -1,25 +1,25 @@
 import { Metadata, Viewport } from "next/types";
 import React from "react";
+import { preload } from "react-dom";
 
 import { getEnv } from "@vercel/functions";
-import { compact, uniqBy } from "es-toolkit/array";
+import { compact } from "es-toolkit/array";
 import tinycolor from "tinycolor2";
 
 import { DocsV1Read, DocsV2Read } from "@fern-api/fdr-sdk/client/types";
+import { isNonNullish } from "@fern-api/ui-core-utils";
 import {
   getCustomerAnalytics as deprecated_getCustomerAnalytics,
   getEdgeFlags,
   getLaunchDarklySettings,
   getSeoDisabled,
 } from "@fern-docs/edge-config";
-import { EdgeFlags } from "@fern-docs/utils";
 
 import { CustomerAnalytics } from "@/components/analytics/CustomerAnalytics";
 import { BgImageGradient } from "@/components/components/BgImageGradient";
 import { JavascriptProvider } from "@/components/components/JavascriptProvider";
 import { withJsConfig } from "@/components/components/with-js-config";
 import { FeatureFlagProvider } from "@/components/feature-flags/FeatureFlagProvider";
-import Preload, { type PreloadHref } from "@/components/preload";
 import SearchV2 from "@/components/search";
 import { renderThemeStylesheet } from "@/components/themes/stylesheet/renderThemeStylesheet";
 import { DocsLoader, createCachedDocsLoader } from "@/server/docs-loader";
@@ -59,11 +59,7 @@ export default async function Layout(props: {
     getLaunchDarklyInfo(loader),
   ]);
 
-  const preloadHrefs = generatePreloadHrefs(
-    config.typographyV2,
-    files,
-    edgeFlags
-  );
+  generatePreloadHrefs(config.typographyV2, files);
   const stylesheet = renderThemeStylesheet({
     colorsConfig: colors,
     typography: config.typographyV2,
@@ -87,9 +83,6 @@ export default async function Layout(props: {
         <DefaultLanguage language={config.defaultLanguage} />
       )}
       <DarkCode value={edgeFlags.isDarkCodeEnabled} />
-      {preloadHrefs.map((href) => (
-        <Preload key={href.href} href={href.href} options={href.options} />
-      ))}
       {/* <FernUser domain={domain} fern_token={fern_token} /> */}
       <BgImageGradient colors={colors} />
       <GlobalStyles>{`
@@ -251,46 +244,26 @@ export async function generateMetadata(props: {
 
 function generatePreloadHrefs(
   typography: DocsV2Read.LoadDocsForUrlResponse["definition"]["config"]["typographyV2"],
-  files: Record<string, { src: string }>,
-  edgeFlags: EdgeFlags
-): PreloadHref[] {
-  const toReturn: PreloadHref[] = [];
-
-  const fontVariants = compact([
+  files: Record<string, { src: string }>
+): void {
+  compact([
     typography?.bodyFont?.variants,
     typography?.headingsFont?.variants,
     typography?.codeFont?.variants,
-  ]).flat();
-
-  fontVariants.forEach((variant) => {
-    try {
-      const file = files[variant.fontFile];
-      if (file != null) {
-        toReturn.push({
-          href: file.src,
-          options: {
-            as: "font",
-            crossOrigin: "anonymous",
-            type: `font/${getFontExtension(file.src)}`,
-          },
+  ])
+    .flat()
+    .map((variant) => files[variant.fontFile]?.src)
+    .filter(isNonNullish)
+    .forEach((src) => {
+      try {
+        preload(src, {
+          as: "font",
+          crossOrigin: "anonymous",
+          type: `font/${getFontExtension(src)}`,
+          fetchPriority: "high",
         });
-      }
-    } catch {}
-  });
-
-  if (edgeFlags.isApiPlaygroundEnabled) {
-    toReturn.push({
-      href: "/api/fern-docs/auth/api-key-injection",
-      options: { as: "fetch" },
+      } catch {}
     });
-  }
-
-  toReturn.push({
-    href: "/api/fern-docs/search/v2/key",
-    options: { as: "fetch" },
-  });
-
-  return uniqBy(toReturn, (href) => href.href);
 }
 
 function getFontExtension(url: string): string {

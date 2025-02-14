@@ -10,6 +10,7 @@ export function useApiKeyInjectionConfig(): APIKeyInjectionConfig {
     {
       refreshInterval: (latestData) =>
         latestData?.enabled ? 1000 * 60 * 5 : 0, // refresh every 5 minutes
+      preload: true,
     }
   );
   return data ?? DEFAULT;

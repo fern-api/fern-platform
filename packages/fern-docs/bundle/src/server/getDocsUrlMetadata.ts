@@ -61,9 +61,9 @@ const uncachedGetDocsUrlMetadata = async (
 
 export const getDocsUrlMetadata = (domain: string) => {
   const get = unstable_cache(
-    uncachedGetDocsUrlMetadata,
-    ["docs-url-metadata"],
+    () => uncachedGetDocsUrlMetadata(domain),
+    [domain, "docs-url-metadata"],
     { tags: [domain, "getDocsUrlMetadata"] }
   );
-  return get(domain);
+  return get();
 };

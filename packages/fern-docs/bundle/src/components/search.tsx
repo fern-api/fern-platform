@@ -76,6 +76,7 @@ export const SearchV2 = React.memo(function SearchV2({
     validate: ApiKeySchema,
     // api key expires 24 hours, so we refresh it every hour
     refreshInterval: 60 * 60 * 1000,
+    preload: true,
   });
 
   const facetApiEndpoint = useApiRoute("/api/fern-docs/search/v2/facet");

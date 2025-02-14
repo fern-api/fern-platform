@@ -1,3 +1,5 @@
+import { preload } from "react-dom";
+
 import useSWR, { Fetcher, SWRConfiguration, SWRResponse } from "swr";
 import useSWRImmutable from "swr/immutable";
 import { z } from "zod";
@@ -9,6 +11,7 @@ interface Options<T> extends SWRConfiguration<T, Error, Fetcher<T>> {
   disabled?: boolean;
   request?: RequestInit & { headers?: Record<string, string> };
   validate?: z.ZodType<T>;
+  preload?: boolean;
 }
 
 function createFetcher<T>(
@@ -28,9 +31,22 @@ function createFetcher<T>(
 
 export function useApiRouteSWR<T>(
   route: FernDocsApiRoute,
-  { disabled, request, validate, ...options }: Options<T> = {}
+  {
+    disabled,
+    request,
+    validate,
+    preload: shouldPreload,
+    ...options
+  }: Options<T> = {}
 ): SWRResponse<T> {
   const key = useApiRoute(route);
+  if (
+    !disabled &&
+    shouldPreload &&
+    (request?.method == null || request?.method === "GET")
+  ) {
+    preload(key, { as: "fetch", crossOrigin: "anonymous" });
+  }
   return useSWR(
     disabled ? null : key,
     createFetcher(request, validate),
@@ -40,9 +56,22 @@ export function useApiRouteSWR<T>(
 
 export function useApiRouteSWRImmutable<T>(
   route: FernDocsApiRoute,
-  { disabled, request, validate, ...options }: Options<T> = {}
+  {
+    disabled,
+    request,
+    validate,
+    preload: shouldPreload,
+    ...options
+  }: Options<T> = {}
 ): SWRResponse<T> {
   const key = useApiRoute(route);
+  if (
+    !disabled &&
+    shouldPreload &&
+    (request?.method == null || request?.method === "GET")
+  ) {
+    preload(key, { as: "fetch", crossOrigin: "anonymous" });
+  }
   return useSWRImmutable(
     disabled ? null : key,
     createFetcher(request, validate),
