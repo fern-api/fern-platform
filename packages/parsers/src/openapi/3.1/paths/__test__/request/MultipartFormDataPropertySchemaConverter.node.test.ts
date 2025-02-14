@@ -18,6 +18,8 @@ describe("MultipartFormDataPropertySchemaConverterNode", () => {
       accessPath: [],
       pathId: "test",
       seenSchemas: new Set(),
+      nullable: undefined,
+      schemaName: undefined,
     });
 
     expect(converter.multipartType).toBe("file");
@@ -40,6 +42,8 @@ describe("MultipartFormDataPropertySchemaConverterNode", () => {
       accessPath: [],
       pathId: "test",
       seenSchemas: new Set(),
+      nullable: undefined,
+      schemaName: undefined,
     });
 
     expect(converter.multipartType).toBe("files");
@@ -58,6 +62,8 @@ describe("MultipartFormDataPropertySchemaConverterNode", () => {
       accessPath: [],
       pathId: "test",
       seenSchemas: new Set(),
+      nullable: undefined,
+      schemaName: undefined,
     });
 
     expect(converter.multipartType).toBe("property");
@@ -84,6 +90,8 @@ describe("MultipartFormDataPropertySchemaConverterNode", () => {
       accessPath: [],
       pathId: "test",
       seenSchemas: new Set(),
+      nullable: undefined,
+      schemaName: undefined,
     });
 
     expect(converter.multipartType).toBe("file");
@@ -104,6 +112,8 @@ describe("MultipartFormDataPropertySchemaConverterNode", () => {
       accessPath: [],
       pathId: "test",
       seenSchemas: new Set(),
+      nullable: undefined,
+      schemaName: undefined,
     });
 
     expect(converter.multipartType).toBeUndefined();
@@ -124,6 +134,8 @@ describe("MultipartFormDataPropertySchemaConverterNode", () => {
       accessPath: [],
       pathId: "test",
       seenSchemas: new Set(),
+      nullable: undefined,
+      schemaName: undefined,
     });
 
     const result = converter.convert();

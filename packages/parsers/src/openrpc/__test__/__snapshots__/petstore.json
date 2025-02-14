@@ -429,8 +429,8 @@
   "websockets": {},
   "webhooks": {},
   "subpackages": {
-    "subpackage_pets": {
-      "id": "subpackage_pets",
+    "pets": {
+      "id": "pets",
       "name": "pets",
       "displayName": "Pets"
     }

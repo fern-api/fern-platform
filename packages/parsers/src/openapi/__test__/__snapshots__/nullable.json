@@ -298,9 +298,15 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
                 }
               }
             }
@@ -310,9 +316,15 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
                 }
               }
             }
@@ -322,12 +334,18 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "nullable",
+                "type": "optional",
                 "shape": {
                   "type": "alias",
                   "value": {
-                    "type": "id",
-                    "id": "UserSettings"
+                    "type": "nullable",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "id",
+                        "id": "UserSettings"
+                      }
+                    }
                   }
                 }
               }
@@ -347,19 +365,7 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          },
-          {
-            "key": "email",
-            "valueShape": {
-              "type": "alias",
-              "value": {
-                "type": "nullable",
+                "type": "optional",
                 "shape": {
                   "type": "alias",
                   "value": {
@@ -373,16 +379,46 @@
             }
           },
           {
+            "key": "email",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "nullable",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          {
             "key": "settings",
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "nullable",
+                "type": "optional",
                 "shape": {
                   "type": "alias",
                   "value": {
-                    "type": "id",
-                    "id": "UserSettings"
+                    "type": "nullable",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "id",
+                        "id": "UserSettings"
+                      }
+                    }
                   }
                 }
               }
@@ -402,9 +438,15 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
                 }
               }
             }
@@ -414,9 +456,15 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
                 }
               }
             }
@@ -426,9 +474,15 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
                 }
               }
             }
@@ -438,13 +492,19 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "nullable",
+                "type": "optional",
                 "shape": {
                   "type": "alias",
                   "value": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "datetime"
+                    "type": "nullable",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "datetime"
+                        }
+                      }
                     }
                   }
                 }
@@ -456,12 +516,18 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "nullable",
+                "type": "optional",
                 "shape": {
                   "type": "alias",
                   "value": {
-                    "type": "id",
-                    "id": "UserSettings"
+                    "type": "nullable",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "id",
+                        "id": "UserSettings"
+                      }
+                    }
                   }
                 }
               }
@@ -472,12 +538,18 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "nullable",
+                "type": "optional",
                 "shape": {
                   "type": "alias",
                   "value": {
-                    "type": "id",
-                    "id": "UserStats"
+                    "type": "nullable",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "id",
+                        "id": "UserStats"
+                      }
+                    }
                   }
                 }
               }
@@ -497,9 +569,15 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
                 }
               }
             }
@@ -509,9 +587,15 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "boolean"
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "boolean"
+                    }
+                  }
                 }
               }
             }
@@ -521,13 +605,19 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "nullable",
+                "type": "optional",
                 "shape": {
                   "type": "alias",
                   "value": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "datetime"
+                    "type": "nullable",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "datetime"
+                        }
+                      }
                     }
                   }
                 }
@@ -548,13 +638,19 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "nullable",
+                "type": "optional",
                 "shape": {
                   "type": "alias",
                   "value": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "integer"
+                    "type": "nullable",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "integer"
+                        }
+                      }
                     }
                   }
                 }
@@ -566,13 +662,19 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "nullable",
+                "type": "optional",
                 "shape": {
                   "type": "alias",
                   "value": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "datetime"
+                    "type": "nullable",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "datetime"
+                        }
+                      }
                     }
                   }
                 }
@@ -584,20 +686,26 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "nullable",
+                "type": "optional",
                 "shape": {
-                  "type": "enum",
-                  "values": [
-                    {
-                      "value": "active"
-                    },
-                    {
-                      "value": "suspended"
-                    },
-                    {
-                      "value": "deleted"
+                  "type": "alias",
+                  "value": {
+                    "type": "nullable",
+                    "shape": {
+                      "type": "enum",
+                      "values": [
+                        {
+                          "value": "active"
+                        },
+                        {
+                          "value": "suspended"
+                        },
+                        {
+                          "value": "deleted"
+                        }
+                      ]
                     }
-                  ]
+                  }
                 }
               }
             }

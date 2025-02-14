@@ -32,11 +32,15 @@ export class ObjectConverterNode extends BaseOpenApiV3_1ConverterNodeWithTrackin
   properties: Record<string, SchemaConverterNode> | undefined;
   extraProperties: string | SchemaConverterNode | undefined;
   requiredProperties: string[] | undefined;
+  schemaName: string | undefined;
 
   constructor(
-    args: BaseOpenApiV3_1ConverterNodeWithTrackingConstructorArgs<ObjectConverterNode.Input>
+    args: BaseOpenApiV3_1ConverterNodeWithTrackingConstructorArgs<ObjectConverterNode.Input> & {
+      schemaName: string | undefined;
+    }
   ) {
     super(args);
+    this.schemaName = args.schemaName;
     this.safeParse();
   }
 
@@ -54,6 +58,8 @@ export class ObjectConverterNode extends BaseOpenApiV3_1ConverterNodeWithTrackin
             accessPath: this.accessPath,
             pathId: ["properties", key],
             seenSchemas: this.seenSchemas,
+            nullable: undefined,
+            schemaName: this.schemaName,
           }),
         ];
       })
@@ -71,6 +77,8 @@ export class ObjectConverterNode extends BaseOpenApiV3_1ConverterNodeWithTrackin
               accessPath: this.accessPath,
               pathId: ["additionalProperties"],
               seenSchemas: this.seenSchemas,
+              nullable: undefined,
+              schemaName: this.schemaName,
             })
         : undefined;
 
@@ -99,6 +107,8 @@ export class ObjectConverterNode extends BaseOpenApiV3_1ConverterNodeWithTrackin
                             key,
                           ],
                           seenSchemas: this.seenSchemas,
+                          nullable: undefined,
+                          schemaName: this.schemaName,
                         }),
                       ];
                     }
@@ -133,8 +143,28 @@ export class ObjectConverterNode extends BaseOpenApiV3_1ConverterNodeWithTrackin
     if (typeof this.extraProperties === "string") {
       return [
         {
-          type: "unknown",
-          displayName: this.extraProperties,
+          type: "map",
+          keyShape: {
+            type: "alias",
+            value: {
+              type: "primitive",
+              value: {
+                type: "string",
+                format: undefined,
+                regex: undefined,
+                minLength: undefined,
+                maxLength: undefined,
+                default: undefined,
+              },
+            },
+          },
+          valueShape: {
+            type: "alias",
+            value: {
+              type: "unknown",
+              displayName: this.extraProperties,
+            },
+          },
         },
       ];
     }
@@ -144,7 +174,24 @@ export class ObjectConverterNode extends BaseOpenApiV3_1ConverterNodeWithTrackin
     );
 
     return maybeConvertedShapes
-      ?.map((shape) => (shape.type === "alias" ? shape.value : undefined))
+      ?.map((shape) => ({
+        type: "map" as const,
+        keyShape: {
+          type: "alias" as const,
+          value: {
+            type: "primitive" as const,
+            value: {
+              type: "string" as const,
+              format: undefined,
+              regex: undefined,
+              minLength: undefined,
+              maxLength: undefined,
+              default: undefined,
+            },
+          },
+        },
+        valueShape: shape,
+      }))
       .filter(isNonNullish);
   }
 
@@ -172,27 +219,7 @@ export class ObjectConverterNode extends BaseOpenApiV3_1ConverterNodeWithTrackin
         ) {
           return {
             type: "alias",
-            value: {
-              type: "map",
-              keyShape: {
-                type: "alias",
-                value: {
-                  type: "primitive",
-                  value: {
-                    type: "string",
-                    format: undefined,
-                    regex: undefined,
-                    minLength: undefined,
-                    maxLength: undefined,
-                    default: undefined,
-                  },
-                },
-              },
-              valueShape: {
-                type: "alias",
-                value: extraProperties,
-              },
-            },
+            value: extraProperties,
           };
         }
         return {
@@ -229,6 +256,8 @@ export class ObjectConverterNode extends BaseOpenApiV3_1ConverterNodeWithTrackin
                   accessPath: this.accessPath,
                   pathId: this.pathId,
                   seenSchemas: this.seenSchemas,
+                  nullable: undefined,
+                  schemaName: this.schemaName,
                 }),
               ];
             }

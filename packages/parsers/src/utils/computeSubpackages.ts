@@ -32,10 +32,11 @@ export function computeSubpackages({
   }).forEach((endpoint) => {
     const qualifiedPath: string[] = [];
     return endpoint.namespace?.forEach((subpackage) => {
-      const prunedSubpackage = subpackage.replace(/subpackage_/, "");
+      const prunedSubpackage = subpackage;
+      // subpackage.replace(/subpackage_/, "");
       const qualifiedSubpackagePath = [...qualifiedPath, prunedSubpackage];
       const fullyQualifiedSubpackageId = FernRegistry.api.v1.SubpackageId(
-        `subpackage_${qualifiedSubpackagePath.join(".")}`
+        qualifiedSubpackagePath.join(".")
       );
       subpackages[fullyQualifiedSubpackageId] = {
         id: fullyQualifiedSubpackageId,

@@ -38,8 +38,14 @@
                 "valueShape": {
                   "type": "alias",
                   "value": {
-                    "type": "id",
-                    "id": "StorageProofKey"
+                    "type": "optional",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "id",
+                        "id": "StorageProofKey"
+                      }
+                    }
                   }
                 }
               },
@@ -48,8 +54,14 @@
                 "valueShape": {
                   "type": "alias",
                   "value": {
-                    "type": "id",
-                    "id": "Integer"
+                    "type": "optional",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "id",
+                        "id": "Integer"
+                      }
+                    }
                   }
                 },
                 "description": "The value of the storage slot in its account tree"
@@ -59,8 +71,14 @@
                 "valueShape": {
                   "type": "alias",
                   "value": {
-                    "type": "id",
-                    "id": "ProofNodes"
+                    "type": "optional",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "id",
+                        "id": "ProofNodes"
+                      }
+                    }
                   }
                 }
               }
@@ -425,8 +443,14 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "id",
-                "id": "Address"
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "Address"
+                  }
+                }
               }
             },
             "description": "Sender of the transaction"
@@ -436,8 +460,14 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "id",
-                "id": "BlockHash"
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "BlockHash"
+                  }
+                }
               }
             }
           },
@@ -446,8 +476,14 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "id",
-                "id": "BlockNumber"
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "BlockNumber"
+                  }
+                }
               }
             }
           },
@@ -456,8 +492,14 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "id",
-                "id": "Bytes"
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "Bytes"
+                  }
+                }
               }
             },
             "description": "The data/input string sent along with the transaction"
@@ -467,8 +509,14 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "id",
-                "id": "Integer"
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "Integer"
+                  }
+                }
               }
             },
             "description": "The index of the event within its transaction, null when its pending"
@@ -478,9 +526,15 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "boolean"
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "boolean"
+                    }
+                  }
                 }
               }
             },
@@ -491,8 +545,14 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "id",
-                "id": "Topics"
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "Topics"
+                  }
+                }
               }
             }
           },
@@ -501,8 +561,14 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "id",
-                "id": "TransactionHash"
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "TransactionHash"
+                  }
+                }
               }
             }
           },
@@ -511,8 +577,14 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "id",
-                "id": "TransactionIndex"
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "TransactionIndex"
+                  }
+                }
               }
             }
           }
@@ -643,8 +715,14 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "id",
-                "id": "BlockNumberOrNull"
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "BlockNumberOrNull"
+                  }
+                }
               }
             }
           },
@@ -653,8 +731,14 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "id",
-                "id": "BlockHashOrNull"
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "BlockHashOrNull"
+                  }
+                }
               }
             }
           },
@@ -663,8 +747,14 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "id",
-                "id": "BlockHash"
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "BlockHash"
+                  }
+                }
               }
             }
           },
@@ -673,8 +763,14 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "id",
-                "id": "NonceOrNull"
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "NonceOrNull"
+                  }
+                }
               }
             }
           },
@@ -683,8 +779,14 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "id",
-                "id": "Keccak"
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "Keccak"
+                  }
+                }
               }
             },
             "description": "Keccak hash of the uncles data in the block"
@@ -694,10 +796,16 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "regex": "^0x[a-fA-F\\d]+$"
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "regex": "^0x[a-fA-F\\d]+$"
+                    }
+                  }
                 }
               }
             },
@@ -708,8 +816,14 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "id",
-                "id": "Keccak"
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "Keccak"
+                  }
+                }
               }
             },
             "description": "The root of the transactions trie of the block."
@@ -719,8 +833,14 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "id",
-                "id": "Keccak"
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "Keccak"
+                  }
+                }
               }
             },
             "description": "The root of the final state trie of the block"
@@ -730,8 +850,14 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "id",
-                "id": "Keccak"
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "Keccak"
+                  }
+                }
               }
             },
             "description": "The root of the receipts trie of the block"
@@ -741,8 +867,14 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "id",
-                "id": "AddressOrNull"
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "AddressOrNull"
+                  }
+                }
               }
             }
           },
@@ -751,9 +883,15 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
                 }
               }
             },
@@ -764,8 +902,14 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "id",
-                "id": "IntegerOrNull"
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "IntegerOrNull"
+                  }
+                }
               }
             },
             "description": "Integer of the total difficulty of the chain until this block"
@@ -775,9 +919,15 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
                 }
               }
             },
@@ -788,9 +938,15 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
                 }
               }
             },
@@ -801,9 +957,15 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
                 }
               }
             },
@@ -814,9 +976,15 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
                 }
               }
             },
@@ -827,9 +995,15 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
                 }
               }
             },
@@ -840,31 +1014,37 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "list",
-                "itemShape": {
-                  "type": "undiscriminatedUnion",
-                  "variants": [
-                    {
-                      "displayName": "Transaction",
-                      "shape": {
-                        "type": "alias",
-                        "value": {
-                          "type": "id",
-                          "id": "Transaction"
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "list",
+                    "itemShape": {
+                      "type": "undiscriminatedUnion",
+                      "variants": [
+                        {
+                          "displayName": "Transaction",
+                          "shape": {
+                            "type": "alias",
+                            "value": {
+                              "type": "id",
+                              "id": "Transaction"
+                            }
+                          }
+                        },
+                        {
+                          "displayName": "Transaction Hash",
+                          "shape": {
+                            "type": "alias",
+                            "value": {
+                              "type": "id",
+                              "id": "TransactionHash"
+                            }
+                          }
                         }
-                      }
-                    },
-                    {
-                      "displayName": "Transaction Hash",
-                      "shape": {
-                        "type": "alias",
-                        "value": {
-                          "type": "id",
-                          "id": "TransactionHash"
-                        }
-                      }
+                      ]
                     }
-                  ]
+                  }
                 }
               }
             },
@@ -875,12 +1055,18 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "list",
-                "itemShape": {
+                "type": "optional",
+                "shape": {
                   "type": "alias",
                   "value": {
-                    "type": "id",
-                    "id": "Keccak"
+                    "type": "list",
+                    "itemShape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "id",
+                        "id": "Keccak"
+                      }
+                    }
                   }
                 }
               }
@@ -3286,8 +3472,14 @@
                       "valueShape": {
                         "type": "alias",
                         "value": {
-                          "type": "id",
-                          "id": "BlockNumber"
+                          "type": "optional",
+                          "shape": {
+                            "type": "alias",
+                            "value": {
+                              "type": "id",
+                              "id": "BlockNumber"
+                            }
+                          }
                         }
                       }
                     },
@@ -3296,37 +3488,49 @@
                       "valueShape": {
                         "type": "alias",
                         "value": {
-                          "type": "id",
-                          "id": "BlockNumber"
+                          "type": "optional",
+                          "shape": {
+                            "type": "alias",
+                            "value": {
+                              "type": "id",
+                              "id": "BlockNumber"
+                            }
+                          }
                         }
                       }
                     },
                     {
                       "key": "address",
                       "valueShape": {
-                        "type": "undiscriminatedUnion",
-                        "variants": [
-                          {
-                            "displayName": "Address",
-                            "shape": {
-                              "type": "alias",
-                              "value": {
-                                "type": "id",
-                                "id": "Address"
+                        "type": "alias",
+                        "value": {
+                          "type": "optional",
+                          "shape": {
+                            "type": "undiscriminatedUnion",
+                            "variants": [
+                              {
+                                "displayName": "Address",
+                                "shape": {
+                                  "type": "alias",
+                                  "value": {
+                                    "type": "id",
+                                    "id": "Address"
+                                  }
+                                }
+                              },
+                              {
+                                "displayName": "Addresses",
+                                "shape": {
+                                  "type": "alias",
+                                  "value": {
+                                    "type": "id",
+                                    "id": "Addresses"
+                                  }
+                                }
                               }
-                            }
-                          },
-                          {
-                            "displayName": "Addresses",
-                            "shape": {
-                              "type": "alias",
-                              "value": {
-                                "type": "id",
-                                "id": "Addresses"
-                              }
-                            }
+                            ]
                           }
-                        ]
+                        }
                       }
                     },
                     {
@@ -3334,8 +3538,14 @@
                       "valueShape": {
                         "type": "alias",
                         "value": {
-                          "type": "id",
-                          "id": "Topics"
+                          "type": "optional",
+                          "shape": {
+                            "type": "alias",
+                            "value": {
+                              "type": "id",
+                              "id": "Topics"
+                            }
+                          }
                         }
                       }
                     }
@@ -4548,8 +4758,14 @@
                     "valueShape": {
                       "type": "alias",
                       "value": {
-                        "type": "id",
-                        "id": "Address"
+                        "type": "optional",
+                        "shape": {
+                          "type": "alias",
+                          "value": {
+                            "type": "id",
+                            "id": "Address"
+                          }
+                        }
                       }
                     },
                     "description": "The address of the account or contract of the request"
@@ -4559,8 +4775,14 @@
                     "valueShape": {
                       "type": "alias",
                       "value": {
-                        "type": "id",
-                        "id": "ProofNodes"
+                        "type": "optional",
+                        "shape": {
+                          "type": "alias",
+                          "value": {
+                            "type": "id",
+                            "id": "ProofNodes"
+                          }
+                        }
                       }
                     }
                   },
@@ -4569,8 +4791,14 @@
                     "valueShape": {
                       "type": "alias",
                       "value": {
-                        "type": "id",
-                        "id": "Integer"
+                        "type": "optional",
+                        "shape": {
+                          "type": "alias",
+                          "value": {
+                            "type": "id",
+                            "id": "Integer"
+                          }
+                        }
                       }
                     },
                     "description": "The Ether balance of the account or contract of the request"
@@ -4580,8 +4808,14 @@
                     "valueShape": {
                       "type": "alias",
                       "value": {
-                        "type": "id",
-                        "id": "Keccak"
+                        "type": "optional",
+                        "shape": {
+                          "type": "alias",
+                          "value": {
+                            "type": "id",
+                            "id": "Keccak"
+                          }
+                        }
                       }
                     },
                     "description": "The code hash of the contract of the request (keccak(NULL) if external account)"
@@ -4591,8 +4825,14 @@
                     "valueShape": {
                       "type": "alias",
                       "value": {
-                        "type": "id",
-                        "id": "Nonce"
+                        "type": "optional",
+                        "shape": {
+                          "type": "alias",
+                          "value": {
+                            "type": "id",
+                            "id": "Nonce"
+                          }
+                        }
                       }
                     },
                     "description": "The transaction count of the account or contract of the request"
@@ -4602,8 +4842,14 @@
                     "valueShape": {
                       "type": "alias",
                       "value": {
-                        "type": "id",
-                        "id": "Keccak"
+                        "type": "optional",
+                        "shape": {
+                          "type": "alias",
+                          "value": {
+                            "type": "id",
+                            "id": "Keccak"
+                          }
+                        }
                       }
                     },
                     "description": "The storage hash of the contract of the request (keccak(rlp(NULL)) if external account)"
@@ -4613,8 +4859,14 @@
                     "valueShape": {
                       "type": "alias",
                       "value": {
-                        "type": "id",
-                        "id": "StorageProof"
+                        "type": "optional",
+                        "shape": {
+                          "type": "alias",
+                          "value": {
+                            "type": "id",
+                            "id": "StorageProof"
+                          }
+                        }
                       }
                     }
                   }
@@ -4995,8 +5247,14 @@
                       "valueShape": {
                         "type": "alias",
                         "value": {
-                          "type": "id",
-                          "id": "BlockNumber"
+                          "type": "optional",
+                          "shape": {
+                            "type": "alias",
+                            "value": {
+                              "type": "id",
+                              "id": "BlockNumber"
+                            }
+                          }
                         }
                       }
                     },
@@ -5005,37 +5263,49 @@
                       "valueShape": {
                         "type": "alias",
                         "value": {
-                          "type": "id",
-                          "id": "BlockNumber"
+                          "type": "optional",
+                          "shape": {
+                            "type": "alias",
+                            "value": {
+                              "type": "id",
+                              "id": "BlockNumber"
+                            }
+                          }
                         }
                       }
                     },
                     {
                       "key": "address",
                       "valueShape": {
-                        "type": "undiscriminatedUnion",
-                        "variants": [
-                          {
-                            "displayName": "Address",
-                            "shape": {
-                              "type": "alias",
-                              "value": {
-                                "type": "id",
-                                "id": "Address"
+                        "type": "alias",
+                        "value": {
+                          "type": "optional",
+                          "shape": {
+                            "type": "undiscriminatedUnion",
+                            "variants": [
+                              {
+                                "displayName": "Address",
+                                "shape": {
+                                  "type": "alias",
+                                  "value": {
+                                    "type": "id",
+                                    "id": "Address"
+                                  }
+                                }
+                              },
+                              {
+                                "displayName": "Addresses",
+                                "shape": {
+                                  "type": "alias",
+                                  "value": {
+                                    "type": "id",
+                                    "id": "Addresses"
+                                  }
+                                }
                               }
-                            }
-                          },
-                          {
-                            "displayName": "Addresses",
-                            "shape": {
-                              "type": "alias",
-                              "value": {
-                                "type": "id",
-                                "id": "Addresses"
-                              }
-                            }
+                            ]
                           }
-                        ]
+                        }
                       }
                     },
                     {
@@ -5043,8 +5313,14 @@
                       "valueShape": {
                         "type": "alias",
                         "value": {
-                          "type": "id",
-                          "id": "Topics"
+                          "type": "optional",
+                          "shape": {
+                            "type": "alias",
+                            "value": {
+                              "type": "id",
+                              "id": "Topics"
+                            }
+                          }
                         }
                       }
                     }

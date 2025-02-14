@@ -4,7 +4,7 @@
     "endpoint_chatCompletions.create": {
       "id": "endpoint_chatCompletions.create",
       "namespace": [
-        "subpackage_chatCompletions"
+        "chatCompletions"
       ],
       "method": "POST",
       "path": [
@@ -129,9 +129,15 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
                 }
               }
             }
@@ -150,9 +156,15 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
                 }
               }
             }
@@ -162,8 +174,8 @@
     }
   },
   "subpackages": {
-    "subpackage_chatCompletions": {
-      "id": "subpackage_chatCompletions",
+    "chatCompletions": {
+      "id": "chatCompletions",
       "name": "chatCompletions",
       "displayName": "Chat Completions"
     }

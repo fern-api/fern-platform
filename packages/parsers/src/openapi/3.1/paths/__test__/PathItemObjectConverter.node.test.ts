@@ -34,18 +34,16 @@ describe("PathItemObjectConverterNode", () => {
         },
       };
 
-      const node = new PathItemObjectConverterNode(
-        {
-          input,
-          context: mockContext,
-          accessPath: [],
-          pathId: "/pets/{petId}",
-        },
-        undefined,
-        undefined,
-        undefined,
-        undefined
-      );
+      const node = new PathItemObjectConverterNode({
+        input,
+        context: mockContext,
+        accessPath: [],
+        pathId: "/pets/{petId}",
+        servers: undefined,
+        globalAuth: undefined,
+        basePath: undefined,
+        isWebhook: undefined,
+      });
 
       const result = node.convert();
 
@@ -182,18 +180,16 @@ describe("PathItemObjectConverterNode", () => {
         description: "Empty path",
       };
 
-      const node = new PathItemObjectConverterNode(
-        {
-          input,
-          context: mockContext,
-          accessPath: [],
-          pathId: "/empty",
-        },
-        undefined,
-        undefined,
-        undefined,
-        undefined
-      );
+      const node = new PathItemObjectConverterNode({
+        input,
+        context: mockContext,
+        accessPath: [],
+        pathId: "/empty",
+        servers: undefined,
+        globalAuth: undefined,
+        basePath: undefined,
+        isWebhook: undefined,
+      });
 
       const result = node.convert();
       expect(result).toEqual([]);
@@ -216,18 +212,16 @@ describe("PathItemObjectConverterNode", () => {
         },
       };
 
-      const node = new PathItemObjectConverterNode(
-        {
-          input,
-          context: mockContext,
-          accessPath: [],
-          pathId: "/test",
-        },
-        undefined,
-        undefined,
-        undefined,
-        undefined
-      );
+      const node = new PathItemObjectConverterNode({
+        input,
+        context: mockContext,
+        accessPath: [],
+        pathId: "/test",
+        servers: undefined,
+        globalAuth: undefined,
+        basePath: undefined,
+        isWebhook: undefined,
+      });
 
       const result = node.convert();
       expect(result).toHaveLength(1);

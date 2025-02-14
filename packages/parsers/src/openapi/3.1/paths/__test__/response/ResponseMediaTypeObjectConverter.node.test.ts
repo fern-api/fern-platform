@@ -26,6 +26,7 @@ describe("ResponseMediaTypeObjectConverterNode", () => {
       "application/json",
       undefined,
       "test",
+      undefined,
       200,
       [],
       {}
@@ -54,6 +55,7 @@ describe("ResponseMediaTypeObjectConverterNode", () => {
       "application/octet-stream",
       undefined,
       "test",
+      undefined,
       200,
       [],
       {}
@@ -83,6 +85,7 @@ describe("ResponseMediaTypeObjectConverterNode", () => {
       "application/json",
       "json",
       "test",
+      undefined,
       200,
       [],
       {}
@@ -106,6 +109,7 @@ describe("ResponseMediaTypeObjectConverterNode", () => {
       "text/event-stream",
       "sse",
       "test",
+      undefined,
       200,
       [],
       {}
@@ -128,6 +132,7 @@ describe("ResponseMediaTypeObjectConverterNode", () => {
       "application/json",
       undefined,
       "test",
+      undefined,
       200,
       [],
       {}
@@ -166,6 +171,7 @@ describe("ResponseMediaTypeObjectConverterNode", () => {
       "application/json",
       undefined,
       "test",
+      undefined,
       200,
       [],
       {}

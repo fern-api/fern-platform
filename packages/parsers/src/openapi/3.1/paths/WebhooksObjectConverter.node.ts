@@ -13,27 +13,33 @@ import { isWebhookDefinition } from "../guards/isWebhookDefinition";
 import { PathItemObjectConverterNode } from "./PathItemObjectConverter.node";
 import { ServerObjectConverterNode } from "./ServerObjectConverter.node";
 
+export declare namespace WebhooksObjectConverterNode {
+  export interface ConstructorArgs
+    extends BaseOpenApiV3_1ConverterNodeConstructorArgs<
+      OpenAPIV3_1.Document["webhooks"]
+    > {
+    servers: ServerObjectConverterNode[] | undefined;
+    globalAuth: SecurityRequirementObjectConverterNode | undefined;
+    basePath: XFernBasePathConverterNode | undefined;
+  }
+}
+
 export class WebhooksObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
   OpenAPIV3_1.Document["webhooks"],
   FernRegistry.api.latest.ApiDefinition["webhooks"]
 > {
   webhooks: PathItemObjectConverterNode[] | undefined;
 
-  constructor(
-    args: BaseOpenApiV3_1ConverterNodeConstructorArgs<
-      OpenAPIV3_1.Document["webhooks"]
-    >,
-    protected readonly basePath: XFernBasePathConverterNode | undefined,
-    protected readonly servers: ServerObjectConverterNode[] | undefined,
-    protected readonly globalAuth:
-      | SecurityRequirementObjectConverterNode
-      | undefined
-  ) {
+  constructor(args: WebhooksObjectConverterNode.ConstructorArgs) {
     super(args);
-    this.safeParse();
+    this.safeParse(args);
   }
 
-  parse(): void {
+  parse({
+    servers,
+    globalAuth,
+    basePath,
+  }: WebhooksObjectConverterNode.ConstructorArgs): void {
     this.webhooks = Object.entries(this.input ?? {})
       .map(([operation, operationItem]) => {
         const resolvedOperationItem = resolveWebhookReference(
@@ -43,18 +49,16 @@ export class WebhooksObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
         if (resolvedOperationItem == null) {
           return undefined;
         }
-        return new PathItemObjectConverterNode(
-          {
-            input: resolvedOperationItem,
-            context: this.context,
-            accessPath: this.accessPath,
-            pathId: operation,
-          },
-          this.servers,
-          this.globalAuth,
-          this.basePath,
-          true
-        );
+        return new PathItemObjectConverterNode({
+          input: resolvedOperationItem,
+          context: this.context,
+          accessPath: this.accessPath,
+          pathId: operation,
+          servers,
+          globalAuth,
+          basePath,
+          isWebhook: true,
+        });
       })
       .filter(isNonNullish);
   }

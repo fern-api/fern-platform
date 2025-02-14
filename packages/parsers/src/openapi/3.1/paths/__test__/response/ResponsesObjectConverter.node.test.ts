@@ -30,6 +30,7 @@ describe("ResponsesObjectConverterNode", () => {
         pathId: "test",
       },
       "test",
+      undefined,
       [],
       {}
     );
@@ -65,6 +66,7 @@ describe("ResponsesObjectConverterNode", () => {
         pathId: "test",
       },
       "testpath",
+      undefined,
       [],
       {}
     );
@@ -104,6 +106,7 @@ describe("ResponsesObjectConverterNode", () => {
         pathId: "test",
       },
       "test",
+      undefined,
       [],
       {}
     );
@@ -137,6 +140,7 @@ describe("ResponsesObjectConverterNode", () => {
         pathId: "test",
       },
       "test",
+      undefined,
       [],
       {}
     );
@@ -156,6 +160,7 @@ describe("ResponsesObjectConverterNode", () => {
         pathId: "test",
       },
       "test",
+      undefined,
       [],
       {}
     );

@@ -144,13 +144,19 @@
                 "valueShape": {
                   "type": "alias",
                   "value": {
-                    "type": "list",
-                    "itemShape": {
+                    "type": "optional",
+                    "shape": {
                       "type": "alias",
                       "value": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string"
+                        "type": "list",
+                        "itemShape": {
+                          "type": "alias",
+                          "value": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string"
+                            }
+                          }
                         }
                       }
                     }
@@ -192,7 +198,7 @@
       "id": "endpoint_organizations.Search",
       "description": "",
       "namespace": [
-        "subpackage_organizations"
+        "organizations"
       ],
       "displayName": "Search an organization",
       "operationId": "Search",
@@ -248,15 +254,21 @@
               {
                 "key": "access",
                 "valueShape": {
-                  "type": "enum",
-                  "values": [
-                    {
-                      "value": "private"
-                    },
-                    {
-                      "value": "public"
+                  "type": "alias",
+                  "value": {
+                    "type": "optional",
+                    "shape": {
+                      "type": "enum",
+                      "values": [
+                        {
+                          "value": "private"
+                        },
+                        {
+                          "value": "public"
+                        }
+                      ]
                     }
-                  ]
+                  }
                 },
                 "description": "Access level"
               }
@@ -276,13 +288,19 @@
                 "valueShape": {
                   "type": "alias",
                   "value": {
-                    "type": "list",
-                    "itemShape": {
+                    "type": "optional",
+                    "shape": {
                       "type": "alias",
                       "value": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string"
+                        "type": "list",
+                        "itemShape": {
+                          "type": "alias",
+                          "value": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string"
+                            }
+                          }
                         }
                       }
                     }
@@ -327,8 +345,8 @@
   "webhooks": {},
   "types": {},
   "subpackages": {
-    "subpackage_organizations": {
-      "id": "subpackage_organizations",
+    "organizations": {
+      "id": "organizations",
       "name": "organizations",
       "displayName": "Organizations"
     }

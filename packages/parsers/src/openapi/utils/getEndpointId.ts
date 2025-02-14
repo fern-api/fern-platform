@@ -32,7 +32,7 @@ export function getEndpointId({
 }
 
 function getPrefix(isWebhook: boolean | undefined): string {
-  return isWebhook ? "subpackage_" : "endpoint_";
+  return isWebhook ? "webhook_" : "endpoint_";
 }
 
 function getFullyQualifiedNamespace(

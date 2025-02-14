@@ -17,18 +17,22 @@ export class OneOfConverterNode extends BaseOpenApiV3_1ConverterNodeWithTracking
   | [FernRegistry.api.latest.TypeShape.UndiscriminatedUnion]
   | FernRegistry.api.latest.TypeShape[]
 > {
-  isUnionOfContainers: boolean | undefined;
+  // isUnionOfContainers: boolean | undefined;
   isNullable: boolean | undefined;
   discriminated: boolean | undefined;
   discriminant: string | undefined;
   discriminatedMapping: Record<string, SchemaConverterNode> | undefined;
 
   undiscriminatedMapping: SchemaConverterNode[] | undefined;
+  schemaName: string | undefined;
 
   constructor(
-    args: BaseOpenApiV3_1ConverterNodeWithTrackingConstructorArgs<OpenAPIV3_1.NonArraySchemaObject>
+    args: BaseOpenApiV3_1ConverterNodeWithTrackingConstructorArgs<OpenAPIV3_1.NonArraySchemaObject> & {
+      schemaName: string | undefined;
+    }
   ) {
     super(args);
+    this.schemaName = args.schemaName;
     this.safeParse();
   }
 
@@ -63,6 +67,8 @@ export class OneOfConverterNode extends BaseOpenApiV3_1ConverterNodeWithTracking
                   accessPath: this.accessPath,
                   pathId: this.pathId,
                   seenSchemas: this.seenSchemas,
+                  nullable: undefined,
+                  schemaName: this.schemaName,
                 })
               : undefined;
           })
@@ -95,6 +101,8 @@ export class OneOfConverterNode extends BaseOpenApiV3_1ConverterNodeWithTracking
               accessPath: [...this.accessPath, "discriminator", "mapping", key],
               pathId: key,
               seenSchemas: this.seenSchemas,
+              nullable: undefined,
+              schemaName: this.schemaName,
             });
           });
         }
@@ -118,6 +126,7 @@ export class OneOfConverterNode extends BaseOpenApiV3_1ConverterNodeWithTracking
         : convertedNodes;
     }
 
+    let index = 0;
     const union =
       this.discriminated &&
       this.discriminant != null &&
@@ -160,14 +169,21 @@ export class OneOfConverterNode extends BaseOpenApiV3_1ConverterNodeWithTracking
                       if (shape == null) {
                         return undefined;
                       }
+                      index += 1;
+                      const fallbackTitle =
+                        shape.type === "object"
+                          ? titleCase(
+                              `${this.schemaName ?? "Variant"} ${index}`
+                            )
+                          : undefined;
                       return {
                         displayName:
                           node.name ??
                           (shape.type === "alias"
                             ? shape.value.type === "id"
                               ? titleCase(shape.value.id)
-                              : undefined
-                            : undefined),
+                              : fallbackTitle
+                            : fallbackTitle),
                         shape,
                         description: node.description,
                         availability: node.availability?.convert(),

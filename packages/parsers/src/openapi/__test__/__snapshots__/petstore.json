@@ -5,7 +5,7 @@
       "id": "endpoint_pet.addPet",
       "description": "Add a new pet to the store",
       "namespace": [
-        "subpackage_pet"
+        "pet"
       ],
       "displayName": "Add a new pet to the store",
       "operationId": "addPet",
@@ -369,7 +369,7 @@
       "id": "endpoint_pet.updatePet",
       "description": "Update an existing pet by Id",
       "namespace": [
-        "subpackage_pet"
+        "pet"
       ],
       "displayName": "Update an existing pet",
       "operationId": "updatePet",
@@ -733,7 +733,7 @@
       "id": "endpoint_pets.getPetById",
       "description": "Returns a pet when 0 < ID <= 10.  ID > 10 or nonintegers will simulate API error conditions",
       "namespace": [
-        "subpackage_pets"
+        "pets"
       ],
       "displayName": "Find pet by ID",
       "operationId": "getPetById",
@@ -779,30 +779,7 @@
           "description": "ID of pet that needs to be fetched"
         }
       ],
-      "responses": [
-        {
-          "statusCode": null,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "Pet"
-            }
-          },
-          "description": "The pet"
-        },
-        {
-          "statusCode": null,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "Pet"
-            }
-          },
-          "description": "The pet"
-        }
-      ],
+      "responses": [],
       "errors": [
         {
           "statusCode": 400,
@@ -953,120 +930,7 @@
           ]
         }
       ],
-      "examples": [
-        {
-          "path": "/pet/0",
-          "responseStatusCode": null,
-          "pathParameters": {
-            "petId": 0
-          },
-          "responseBody": {
-            "type": "json",
-            "value": {
-              "id": 10,
-              "name": "doggie",
-              "category": {
-                "id": 1,
-                "name": "Dogs"
-              },
-              "photoUrls": [
-                "photoUrls"
-              ],
-              "tags": [
-                {
-                  "id": 0,
-                  "name": "name"
-                }
-              ],
-              "status": "available"
-            }
-          }
-        },
-        {
-          "path": "/pet/0",
-          "responseStatusCode": null,
-          "pathParameters": {
-            "petId": 0
-          },
-          "responseBody": {
-            "type": "json",
-            "value": {
-              "id": 10,
-              "name": "doggie",
-              "category": {
-                "id": 1,
-                "name": "Dogs"
-              },
-              "photoUrls": [
-                "photoUrls"
-              ],
-              "tags": [
-                {
-                  "id": 0,
-                  "name": "name"
-                }
-              ],
-              "status": "available"
-            }
-          }
-        },
-        {
-          "path": "/pet/0",
-          "responseStatusCode": null,
-          "pathParameters": {
-            "petId": 0
-          },
-          "responseBody": {
-            "type": "json",
-            "value": {
-              "id": 10,
-              "name": "doggie",
-              "category": {
-                "id": 1,
-                "name": "Dogs"
-              },
-              "photoUrls": [
-                "photoUrls"
-              ],
-              "tags": [
-                {
-                  "id": 0,
-                  "name": "name"
-                }
-              ],
-              "status": "available"
-            }
-          }
-        },
-        {
-          "path": "/pet/0",
-          "responseStatusCode": null,
-          "pathParameters": {
-            "petId": 0
-          },
-          "responseBody": {
-            "type": "json",
-            "value": {
-              "id": 10,
-              "name": "doggie",
-              "category": {
-                "id": 1,
-                "name": "Dogs"
-              },
-              "photoUrls": [
-                "photoUrls"
-              ],
-              "tags": [
-                {
-                  "id": 0,
-                  "name": "name"
-                }
-              ],
-              "status": "available"
-            }
-          }
-        }
-      ],
+      "examples": [],
       "protocol": {
         "type": "rest"
       }
@@ -1086,9 +950,15 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "long"
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "long"
+                    }
+                  }
                 }
               }
             }
@@ -1098,9 +968,15 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "long"
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "long"
+                    }
+                  }
                 }
               }
             }
@@ -1110,9 +986,15 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "integer"
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "integer"
+                    }
+                  }
                 }
               }
             }
@@ -1122,9 +1004,15 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "datetime"
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "datetime"
+                    }
+                  }
                 }
               }
             }
@@ -1132,18 +1020,24 @@
           {
             "key": "status",
             "valueShape": {
-              "type": "enum",
-              "values": [
-                {
-                  "value": "placed"
-                },
-                {
-                  "value": "approved"
-                },
-                {
-                  "value": "delivered"
+              "type": "alias",
+              "value": {
+                "type": "optional",
+                "shape": {
+                  "type": "enum",
+                  "values": [
+                    {
+                      "value": "placed"
+                    },
+                    {
+                      "value": "approved"
+                    },
+                    {
+                      "value": "delivered"
+                    }
+                  ]
                 }
-              ]
+              }
             },
             "description": "Order Status"
           },
@@ -1152,9 +1046,15 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "boolean"
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "boolean"
+                    }
+                  }
                 }
               }
             }
@@ -1173,9 +1073,15 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "long"
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "long"
+                    }
+                  }
                 }
               }
             }
@@ -1185,9 +1091,15 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
                 }
               }
             }
@@ -1197,12 +1109,18 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "list",
-                "itemShape": {
+                "type": "optional",
+                "shape": {
                   "type": "alias",
                   "value": {
-                    "type": "id",
-                    "id": "Address"
+                    "type": "list",
+                    "itemShape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "id",
+                        "id": "Address"
+                      }
+                    }
                   }
                 }
               }
@@ -1222,9 +1140,15 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
                 }
               }
             }
@@ -1234,9 +1158,15 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
                 }
               }
             }
@@ -1246,9 +1176,15 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
                 }
               }
             }
@@ -1258,9 +1194,15 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
                 }
               }
             }
@@ -1279,9 +1221,15 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "long"
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "long"
+                    }
+                  }
                 }
               }
             }
@@ -1291,9 +1239,15 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
                 }
               }
             }
@@ -1312,9 +1266,15 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "long"
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "long"
+                    }
+                  }
                 }
               }
             }
@@ -1324,9 +1284,15 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
                 }
               }
             }
@@ -1336,9 +1302,15 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
                 }
               }
             }
@@ -1348,9 +1320,15 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
                 }
               }
             }
@@ -1360,9 +1338,15 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
                 }
               }
             }
@@ -1372,9 +1356,15 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
                 }
               }
             }
@@ -1384,9 +1374,15 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
                 }
               }
             }
@@ -1396,9 +1392,15 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "integer"
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "integer"
+                    }
+                  }
                 }
               }
             },
@@ -1418,9 +1420,15 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "long"
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "long"
+                    }
+                  }
                 }
               }
             }
@@ -1430,9 +1438,15 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
                 }
               }
             }
@@ -1570,9 +1584,15 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "integer"
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "integer"
+                    }
+                  }
                 }
               }
             }
@@ -1582,9 +1602,15 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
                 }
               }
             }
@@ -1594,9 +1620,15 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
                 }
               }
             }
@@ -1606,13 +1638,13 @@
     }
   },
   "subpackages": {
-    "subpackage_pet": {
-      "id": "subpackage_pet",
+    "pet": {
+      "id": "pet",
       "name": "pet",
       "displayName": "Pet"
     },
-    "subpackage_pets": {
-      "id": "subpackage_pets",
+    "pets": {
+      "id": "pets",
       "name": "pets",
       "displayName": "Pets"
     }

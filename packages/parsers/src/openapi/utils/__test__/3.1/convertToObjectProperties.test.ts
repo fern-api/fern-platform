@@ -15,14 +15,22 @@ describe("convertToObjectProperties", () => {
     const mockTypeShape: FernRegistry.api.latest.TypeShape = {
       type: "alias",
       value: {
-        type: "primitive",
-        value: {
-          type: "string",
-          regex: undefined,
-          minLength: undefined,
-          maxLength: undefined,
-          default: undefined,
+        type: "optional",
+        shape: {
+          type: "alias",
+          value: {
+            type: "primitive",
+            value: {
+              type: "string",
+              regex: undefined,
+              format: undefined,
+              minLength: undefined,
+              maxLength: undefined,
+              default: undefined,
+            },
+          },
         },
+        default: undefined,
       },
     };
 
@@ -37,6 +45,8 @@ describe("convertToObjectProperties", () => {
       accessPath: [],
       pathId: "",
       seenSchemas: new Set(),
+      nullable: undefined,
+      schemaName: undefined,
     });
     nameSchemaConverterNode.availability = new AvailabilityConverterNode({
       input: {
@@ -57,6 +67,8 @@ describe("convertToObjectProperties", () => {
         accessPath: [],
         pathId: "",
         seenSchemas: new Set(),
+        nullable: undefined,
+        schemaName: undefined,
       }),
     };
 
@@ -84,14 +96,22 @@ describe("convertToObjectProperties", () => {
     const mockTypeShape: FernRegistry.api.latest.TypeShape = {
       type: "alias",
       value: {
-        type: "primitive",
-        value: {
-          type: "string",
-          regex: undefined,
-          minLength: undefined,
-          maxLength: undefined,
-          default: undefined,
+        type: "optional",
+        shape: {
+          type: "alias",
+          value: {
+            type: "primitive",
+            value: {
+              type: "string",
+              format: undefined,
+              regex: undefined,
+              minLength: undefined,
+              maxLength: undefined,
+              default: undefined,
+            },
+          },
         },
+        default: undefined,
       },
     };
 
@@ -103,6 +123,8 @@ describe("convertToObjectProperties", () => {
       accessPath: [],
       pathId: "",
       seenSchemas: new Set(),
+      nullable: undefined,
+      schemaName: undefined,
     });
 
     const properties = {

@@ -78,8 +78,14 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "id",
-                "id": "DocumentIDSeparators"
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "DocumentIDSeparators"
+                  }
+                }
               }
             }
           }

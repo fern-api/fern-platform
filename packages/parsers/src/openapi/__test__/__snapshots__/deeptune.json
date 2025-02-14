@@ -5,7 +5,7 @@
       "id": "endpoint_textToSpeech.generate",
       "description": "API that converts text into lifelike speech with best-in-class latency & uses the most advanced AI audio model ever. Create voiceovers for your videos, audiobooks, or create AI chatbots for free.",
       "namespace": [
-        "subpackage_textToSpeech"
+        "textToSpeech"
       ],
       "displayName": "Text to Speech",
       "operationId": "textToSpeech",
@@ -90,7 +90,7 @@
       "id": "endpoint_textToSpeech.generateFromPrompt",
       "description": "If you prefer to manage voices on your own, you can use your own audio file as a reference for the voice clone.x",
       "namespace": [
-        "subpackage_textToSpeech"
+        "textToSpeech"
       ],
       "displayName": "Text to Speech (via prompt audio)",
       "operationId": "textToSpeechFromPrompt",
@@ -183,7 +183,7 @@
       "id": "endpoint_voices.list",
       "description": "Retrieve all voices associated with the current workspace.",
       "namespace": [
-        "subpackage_voices"
+        "voices"
       ],
       "displayName": "List voices in workspace",
       "operationId": "listVoices",
@@ -252,7 +252,7 @@
       "id": "endpoint_voices.create",
       "description": "Create a new voice with a name, optional description, and audio file.",
       "namespace": [
-        "subpackage_voices"
+        "voices"
       ],
       "displayName": "Create a cloned voice",
       "operationId": "createVoice",
@@ -348,7 +348,7 @@
       "id": "endpoint_voices.get",
       "description": "Retrieve a specific voice by its ID.",
       "namespace": [
-        "subpackage_voices"
+        "voices"
       ],
       "displayName": "Get an existing voice",
       "operationId": "getVoiceById",
@@ -441,7 +441,7 @@
       "id": "endpoint_voices.update",
       "description": "Update an existing voice with new name, description, or audio file.",
       "namespace": [
-        "subpackage_voices"
+        "voices"
       ],
       "displayName": "Update an existing voice",
       "operationId": "updateVoice",
@@ -563,7 +563,7 @@
       "id": "endpoint_voices.delete",
       "description": "Delete an existing voice by its ID.",
       "namespace": [
-        "subpackage_voices"
+        "voices"
       ],
       "displayName": "Delete a voice",
       "operationId": "deleteVoice",
@@ -1007,9 +1007,15 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
                 }
               }
             },
@@ -1020,9 +1026,15 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "base64"
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "base64"
+                    }
+                  }
                 }
               }
             },
@@ -1033,9 +1045,15 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
                 }
               }
             },
@@ -1056,13 +1074,13 @@
     }
   },
   "subpackages": {
-    "subpackage_textToSpeech": {
-      "id": "subpackage_textToSpeech",
+    "textToSpeech": {
+      "id": "textToSpeech",
       "name": "textToSpeech",
       "displayName": "Text to Speech"
     },
-    "subpackage_voices": {
-      "id": "subpackage_voices",
+    "voices": {
+      "id": "voices",
       "name": "voices",
       "displayName": "Voices"
     }

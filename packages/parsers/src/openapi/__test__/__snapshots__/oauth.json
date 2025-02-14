@@ -5,7 +5,7 @@
       "id": "endpoint_auth.getToken",
       "description": "Exchange credentials or refresh token for an access token",
       "namespace": [
-        "subpackage_auth"
+        "auth"
       ],
       "displayName": "Request an access token",
       "method": "POST",
@@ -158,9 +158,15 @@
                 "valueShape": {
                   "type": "alias",
                   "value": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string"
+                    "type": "optional",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string"
+                        }
+                      }
                     }
                   }
                 }
@@ -170,9 +176,15 @@
                 "valueShape": {
                   "type": "alias",
                   "value": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string"
+                    "type": "optional",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string"
+                        }
+                      }
                     }
                   }
                 }
@@ -182,9 +194,15 @@
                 "valueShape": {
                   "type": "alias",
                   "value": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "integer"
+                    "type": "optional",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "integer"
+                        }
+                      }
                     }
                   }
                 },
@@ -195,9 +213,15 @@
                 "valueShape": {
                   "type": "alias",
                   "value": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string"
+                    "type": "optional",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string"
+                        }
+                      }
                     }
                   }
                 }
@@ -243,8 +267,8 @@
   "webhooks": {},
   "types": {},
   "subpackages": {
-    "subpackage_auth": {
-      "id": "subpackage_auth",
+    "auth": {
+      "id": "auth",
       "name": "auth",
       "displayName": "Auth"
     }

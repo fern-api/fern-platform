@@ -72,6 +72,8 @@ export class MethodConverterNode extends BaseOpenrpcConverterNode<
             accessPath: this.accessPath,
             pathId: "result",
             seenSchemas: new Set(),
+            nullable: undefined,
+            schemaName: "Result",
           }).convert()
         : undefined;
 
@@ -91,6 +93,8 @@ export class MethodConverterNode extends BaseOpenrpcConverterNode<
               accessPath: this.accessPath,
               pathId: ["params", param.name],
               seenSchemas: new Set(),
+              nullable: undefined,
+              schemaName: param.name,
             }).convert();
 
             if (!schema) return undefined;

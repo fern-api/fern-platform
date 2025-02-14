@@ -19,19 +19,18 @@ describe("OperationObjectConverterNode", () => {
         ],
       };
 
-      const node = new OperationObjectConverterNode(
-        {
-          input,
-          context: mockContext,
-          accessPath: [],
-          pathId: "test",
-        },
-        undefined,
-        undefined,
-        "/pets/{petId}",
-        "GET",
-        undefined
-      );
+      const node = new OperationObjectConverterNode({
+        input,
+        context: mockContext,
+        accessPath: [],
+        pathId: "test",
+        path: "/pets/{petId}",
+        method: "GET",
+        servers: undefined,
+        globalAuth: undefined,
+        basePath: undefined,
+        isWebhook: undefined,
+      });
 
       const result = node.convert();
 
@@ -110,20 +109,18 @@ describe("OperationObjectConverterNode", () => {
       };
 
       const path = undefined as unknown as string;
-      const node = new OperationObjectConverterNode(
-        {
-          input,
-          context: mockContext,
-          accessPath: [],
-          pathId: "test",
-        },
-        undefined,
-        undefined,
+      const node = new OperationObjectConverterNode({
+        input,
+        context: mockContext,
+        accessPath: [],
+        pathId: "test",
+        method: "GET",
         path,
-        "GET",
-        undefined,
-        undefined
-      );
+        servers: undefined,
+        globalAuth: undefined,
+        basePath: undefined,
+        isWebhook: undefined,
+      });
 
       const result = node.convert();
       expect(result).toBeUndefined();
@@ -132,19 +129,18 @@ describe("OperationObjectConverterNode", () => {
 
   describe("convertPathToPathParts", () => {
     it("should convert path with parameters", () => {
-      const node = new OperationObjectConverterNode(
-        {
-          input: {},
-          context: mockContext,
-          accessPath: [],
-          pathId: "test",
-        },
-        undefined,
-        undefined,
-        "/users/{userId}/posts/{postId}",
-        "GET",
-        undefined
-      );
+      const node = new OperationObjectConverterNode({
+        input: {},
+        context: mockContext,
+        accessPath: [],
+        pathId: "test",
+        path: "/users/{userId}/posts/{postId}",
+        method: "GET",
+        servers: undefined,
+        globalAuth: undefined,
+        basePath: undefined,
+        isWebhook: undefined,
+      });
 
       const result = node.convertPathToPathParts();
 

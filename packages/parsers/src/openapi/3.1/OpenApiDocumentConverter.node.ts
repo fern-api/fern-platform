@@ -10,10 +10,7 @@ import { coalesceServers } from "../utils/3.1/coalesceServers";
 import { SecurityRequirementObjectConverterNode } from "./auth/SecurityRequirementObjectConverter.node";
 import { XFernBasePathConverterNode } from "./extensions/XFernBasePathConverter.node";
 import { XFernGlobalHeadersConverterNode } from "./extensions/XFernGlobalHeadersConverter.node";
-import { XFernGroupsConverterNode } from "./extensions/XFernGroupsConverter.node";
 import { PathsObjectConverterNode } from "./paths/PathsObjectConverter.node";
-import { ServerObjectConverterNode } from "./paths/ServerObjectConverter.node";
-import { TagObjectConverterNode } from "./paths/TagsObjectConverter.node";
 import { WebhooksObjectConverterNode } from "./paths/WebhooksObjectConverter.node";
 import { ComponentsConverterNode } from "./schemas/ComponentsConverter.node";
 
@@ -24,11 +21,7 @@ export class OpenApiDocumentConverterNode extends BaseOpenApiV3_1ConverterNode<
   paths: PathsObjectConverterNode | undefined;
   webhooks: WebhooksObjectConverterNode | undefined;
   components: ComponentsConverterNode | undefined;
-  servers: ServerObjectConverterNode[] | undefined;
   auth: SecurityRequirementObjectConverterNode | undefined;
-  basePath: XFernBasePathConverterNode | undefined;
-  fernGroups: XFernGroupsConverterNode | undefined;
-  tags: TagObjectConverterNode[] | undefined;
   globalHeaders: XFernGlobalHeadersConverterNode | undefined;
 
   constructor(
@@ -39,8 +32,8 @@ export class OpenApiDocumentConverterNode extends BaseOpenApiV3_1ConverterNode<
   }
 
   parse(): void {
-    this.servers = coalesceServers(
-      this.servers,
+    const servers = coalesceServers(
+      undefined,
       this.input.servers,
       this.context,
       this.accessPath
@@ -55,31 +48,31 @@ export class OpenApiDocumentConverterNode extends BaseOpenApiV3_1ConverterNode<
       });
     }
 
-    this.basePath = new XFernBasePathConverterNode({
+    const basePath = new XFernBasePathConverterNode({
       input: this.input,
       context: this.context,
       accessPath: this.accessPath,
       pathId: this.pathId,
     });
 
-    if (this.input.tags != null) {
-      this.tags = this.input.tags.map(
-        (tag, index) =>
-          new TagObjectConverterNode({
-            input: tag,
-            context: this.context,
-            accessPath: this.accessPath,
-            pathId: ["tags", `${index}`],
-          })
-      );
-    }
+    // if (this.input.tags != null) {
+    //   const tags = this.input.tags.map(
+    //     (tag, index) =>
+    //       new TagObjectConverterNode({
+    //         input: tag,
+    //         context: this.context,
+    //         accessPath: this.accessPath,
+    //         pathId: ["tags", `${index}`],
+    //       })
+    //   );
+    // }
 
-    this.fernGroups = new XFernGroupsConverterNode({
-      input: this.input,
-      context: this.context,
-      accessPath: this.accessPath,
-      pathId: "x-fern-groups",
-    });
+    // const fernGroups = new XFernGroupsConverterNode({
+    //   input: this.input,
+    //   context: this.context,
+    //   accessPath: this.accessPath,
+    //   pathId: "x-fern-groups",
+    // });
 
     if (this.input.paths == null && this.input.webhooks == null) {
       this.context.errors.warning({
@@ -89,31 +82,27 @@ export class OpenApiDocumentConverterNode extends BaseOpenApiV3_1ConverterNode<
     }
 
     if (this.input.paths != null) {
-      this.paths = new PathsObjectConverterNode(
-        {
-          input: this.input.paths,
-          context: this.context,
-          accessPath: this.accessPath,
-          pathId: "paths",
-        },
-        this.servers,
-        this.auth,
-        this.basePath
-      );
+      this.paths = new PathsObjectConverterNode({
+        input: this.input.paths,
+        context: this.context,
+        accessPath: this.accessPath,
+        pathId: "paths",
+        basePath,
+        servers,
+        globalAuth: this.auth,
+      });
     }
 
     if (this.input.webhooks != null) {
-      this.webhooks = new WebhooksObjectConverterNode(
-        {
-          input: this.input.webhooks,
-          context: this.context,
-          accessPath: this.accessPath,
-          pathId: "webhooks",
-        },
-        this.basePath,
-        this.servers,
-        this.auth
-      );
+      this.webhooks = new WebhooksObjectConverterNode({
+        input: this.input.webhooks,
+        context: this.context,
+        accessPath: this.accessPath,
+        pathId: "webhooks",
+        basePath,
+        servers,
+        globalAuth: this.auth,
+      });
     }
 
     if (this.input.components != null) {

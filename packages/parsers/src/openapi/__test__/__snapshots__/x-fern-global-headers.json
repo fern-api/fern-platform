@@ -4,7 +4,7 @@
     "endpoint_user.get": {
       "id": "endpoint_user.get",
       "namespace": [
-        "subpackage_user"
+        "user"
       ],
       "operationId": "get",
       "method": "POST",
@@ -103,9 +103,15 @@
                 "valueShape": {
                   "type": "alias",
                   "value": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "boolean"
+                    "type": "optional",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "boolean"
+                        }
+                      }
                     }
                   }
                 }
@@ -174,9 +180,15 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "uuid"
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "uuid"
+                    }
+                  }
                 }
               }
             }
@@ -186,9 +198,15 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "boolean"
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "boolean"
+                    }
+                  }
                 }
               }
             }
@@ -207,9 +225,15 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "uuid"
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "uuid"
+                    }
+                  }
                 }
               }
             }
@@ -219,9 +243,15 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "boolean"
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "boolean"
+                    }
+                  }
                 }
               }
             }
@@ -231,8 +261,8 @@
     }
   },
   "subpackages": {
-    "subpackage_user": {
-      "id": "subpackage_user",
+    "user": {
+      "id": "user",
       "name": "user",
       "displayName": "User"
     }

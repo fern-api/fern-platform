@@ -28,6 +28,7 @@ describe("ResponseObjectConverterNode", () => {
         pathId: "test",
       },
       "test",
+      undefined,
       200,
       [],
       {}
@@ -58,6 +59,7 @@ describe("ResponseObjectConverterNode", () => {
         pathId: "test",
       },
       "test",
+      undefined,
       200,
       [],
       {}
@@ -94,6 +96,7 @@ describe("ResponseObjectConverterNode", () => {
         pathId: "test",
       },
       "test",
+      undefined,
       200,
       [],
       {}
@@ -116,6 +119,7 @@ describe("ResponseObjectConverterNode", () => {
         pathId: "test",
       },
       "test",
+      undefined,
       200,
       [],
       {}
@@ -156,6 +160,7 @@ describe("ResponseObjectConverterNode", () => {
         pathId: "test",
       },
       "test",
+      undefined,
       200,
       [],
       {}

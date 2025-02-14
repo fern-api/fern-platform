@@ -24,6 +24,8 @@ describe("RequestBodyObjectConverterNode", () => {
       context: mockContext,
       accessPath: [],
       pathId: "test",
+      method: undefined,
+      path: undefined,
     });
 
     expect(converter.requestBodiesByContentType).toBeDefined();
@@ -48,6 +50,8 @@ describe("RequestBodyObjectConverterNode", () => {
       context: mockContext,
       accessPath: [],
       pathId: "test",
+      method: undefined,
+      path: undefined,
     });
 
     expect(converter.requestBodiesByContentType).toBeDefined();
@@ -73,6 +77,8 @@ describe("RequestBodyObjectConverterNode", () => {
       context: mockContext,
       accessPath: [],
       pathId: "test",
+      method: undefined,
+      path: undefined,
     });
 
     expect(
@@ -100,6 +106,8 @@ describe("RequestBodyObjectConverterNode", () => {
       context: mockContext,
       accessPath: [],
       pathId: "test",
+      method: undefined,
+      path: undefined,
     });
 
     const result = converter.convert();
@@ -115,9 +123,15 @@ describe("RequestBodyObjectConverterNode", () => {
             valueShape: {
               type: "alias",
               value: {
-                type: "primitive",
-                value: {
-                  type: "string",
+                type: "optional",
+                shape: {
+                  type: "alias",
+                  value: {
+                    type: "primitive",
+                    value: {
+                      type: "string",
+                    },
+                  },
                 },
               },
             },
@@ -135,6 +149,8 @@ describe("RequestBodyObjectConverterNode", () => {
       context: mockContext,
       accessPath: [],
       pathId: "test",
+      method: undefined,
+      path: undefined,
     });
 
     expect(converter.requestBodiesByContentType).toBeUndefined();

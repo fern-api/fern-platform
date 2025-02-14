@@ -32,9 +32,15 @@
                     "valueShape": {
                       "type": "alias",
                       "value": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string"
+                        "type": "optional",
+                        "shape": {
+                          "type": "alias",
+                          "value": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string"
+                            }
+                          }
                         }
                       }
                     }
@@ -44,9 +50,15 @@
                     "valueShape": {
                       "type": "alias",
                       "value": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "integer"
+                        "type": "optional",
+                        "shape": {
+                          "type": "alias",
+                          "value": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "integer"
+                            }
+                          }
                         }
                       }
                     }
@@ -54,67 +66,103 @@
                   {
                     "key": "location",
                     "valueShape": {
-                      "type": "object",
-                      "extends": [],
-                      "properties": [
-                        {
-                          "key": "city",
-                          "valueShape": {
-                            "type": "alias",
-                            "value": {
-                              "type": "primitive",
-                              "value": {
-                                "type": "string"
-                              }
-                            }
-                          }
-                        },
-                        {
-                          "key": "country",
-                          "valueShape": {
-                            "type": "alias",
-                            "value": {
-                              "type": "primitive",
-                              "value": {
-                                "type": "string"
-                              }
-                            }
-                          }
-                        },
-                        {
-                          "key": "coordinates",
-                          "valueShape": {
-                            "type": "object",
-                            "extends": [],
-                            "properties": [
-                              {
-                                "key": "latitude",
-                                "valueShape": {
-                                  "type": "alias",
-                                  "value": {
-                                    "type": "primitive",
+                      "type": "alias",
+                      "value": {
+                        "type": "optional",
+                        "shape": {
+                          "type": "object",
+                          "extends": [],
+                          "properties": [
+                            {
+                              "key": "city",
+                              "valueShape": {
+                                "type": "alias",
+                                "value": {
+                                  "type": "optional",
+                                  "shape": {
+                                    "type": "alias",
                                     "value": {
-                                      "type": "double"
-                                    }
-                                  }
-                                }
-                              },
-                              {
-                                "key": "longitude",
-                                "valueShape": {
-                                  "type": "alias",
-                                  "value": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "double"
+                                      "type": "primitive",
+                                      "value": {
+                                        "type": "string"
+                                      }
                                     }
                                   }
                                 }
                               }
-                            ]
-                          }
+                            },
+                            {
+                              "key": "country",
+                              "valueShape": {
+                                "type": "alias",
+                                "value": {
+                                  "type": "optional",
+                                  "shape": {
+                                    "type": "alias",
+                                    "value": {
+                                      "type": "primitive",
+                                      "value": {
+                                        "type": "string"
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            {
+                              "key": "coordinates",
+                              "valueShape": {
+                                "type": "alias",
+                                "value": {
+                                  "type": "optional",
+                                  "shape": {
+                                    "type": "object",
+                                    "extends": [],
+                                    "properties": [
+                                      {
+                                        "key": "latitude",
+                                        "valueShape": {
+                                          "type": "alias",
+                                          "value": {
+                                            "type": "optional",
+                                            "shape": {
+                                              "type": "alias",
+                                              "value": {
+                                                "type": "primitive",
+                                                "value": {
+                                                  "type": "double"
+                                                }
+                                              }
+                                            }
+                                          }
+                                        }
+                                      },
+                                      {
+                                        "key": "longitude",
+                                        "valueShape": {
+                                          "type": "alias",
+                                          "value": {
+                                            "type": "optional",
+                                            "shape": {
+                                              "type": "alias",
+                                              "value": {
+                                                "type": "primitive",
+                                                "value": {
+                                                  "type": "double"
+                                                }
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    ]
+                                  }
+                                }
+                              }
+                            }
+                          ]
                         }
-                      ]
+                      }
                     }
                   }
                 ]
@@ -199,13 +247,19 @@
                 "valueShape": {
                   "type": "alias",
                   "value": {
-                    "type": "list",
-                    "itemShape": {
+                    "type": "optional",
+                    "shape": {
                       "type": "alias",
                       "value": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string"
+                        "type": "list",
+                        "itemShape": {
+                          "type": "alias",
+                          "value": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string"
+                            }
+                          }
                         }
                       }
                     }
