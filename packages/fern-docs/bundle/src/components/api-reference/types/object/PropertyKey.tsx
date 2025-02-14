@@ -1,6 +1,8 @@
 "use client";
 
-import { FernAnchor } from "@fern-docs/components";
+import { addLeadingSlash } from "@fern-docs/utils";
+
+import { FernAnchor } from "@/components/components/FernAnchor";
 
 import { useTypeDefinitionContext } from "../context/TypeDefinitionContext";
 

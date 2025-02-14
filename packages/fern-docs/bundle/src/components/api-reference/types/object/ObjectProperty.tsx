@@ -21,16 +21,6 @@ import { PropertyKey } from "./PropertyKey";
 import { PropertyWrapper } from "./PropertyWrapper";
 import { TypeShorthand } from "./TypeShorthand";
 
-export declare namespace ObjectProperty {
-  export interface Props {
-    property: ApiDefinition.ObjectProperty;
-    anchorIdParts: readonly string[];
-    slug: FernNavigation.Slug;
-    applyErrorStyles: boolean;
-    types: Record<ApiDefinition.TypeId, ApiDefinition.TypeDefinition>;
-  }
-}
-
 export function ObjectProperty({
   loader,
   property,
