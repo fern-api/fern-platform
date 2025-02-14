@@ -1,5 +1,7 @@
 import "server-only";
 
+import React from "react";
+
 import { compact } from "es-toolkit/array";
 
 import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
@@ -8,7 +10,7 @@ import titleCase from "@fern-api/ui-core-utils/titleCase";
 import { AvailabilityBadge } from "@fern-docs/components/badges";
 import { addLeadingSlash } from "@fern-docs/utils";
 
-import { MdxServerComponentProse } from "@/components/mdx/server-component";
+import { MdxServerComponentProseSuspense } from "@/components/mdx/server-component";
 import { DocsLoader } from "@/server/docs-loader";
 
 import { FernAnchor } from "../../../components/FernAnchor";
@@ -109,7 +111,7 @@ export function DiscriminatedUnionVariant({
           />
         )}
         <div className="flex flex-col">
-          <MdxServerComponentProse
+          <MdxServerComponentProseSuspense
             loader={loader}
             mdx={descriptions[0]}
             size="sm"

@@ -1,3 +1,5 @@
+import React from "react";
+
 import { TabbedNode, traverseBF } from "@fern-api/fdr-sdk/navigation";
 import { CONTINUE, SKIP } from "@fern-api/fdr-sdk/traversers";
 import { withDefaultProtocol } from "@fern-api/ui-core-utils";
@@ -5,11 +7,11 @@ import { isTrailingSlashEnabled } from "@fern-docs/utils";
 
 import type { NavbarLink } from "@/components/atoms/types";
 import { Announcement } from "@/components/header/announcement";
-import { Header } from "@/components/header/header";
+import { HeaderContent } from "@/components/header/header-content";
 import { HeaderNavbarLink } from "@/components/header/header-navbar-link";
 import { HeaderTabs } from "@/components/header/header-tabs";
 import { Logo } from "@/components/logo";
-import { MdxServerComponent } from "@/components/mdx/server-component";
+import { MdxServerComponentSuspense } from "@/components/mdx/server-component";
 import { Sidebar } from "@/components/sidebar/Sidebar";
 import { ThemedDocs } from "@/components/themes/ThemedDocs";
 import { getApiRouteSupplier } from "@/components/util/getApiRouteSupplier";
@@ -140,12 +142,15 @@ export default async function DocsLayout({
         announcement={
           announcementText && (
             <Announcement announcement={announcementText}>
-              <MdxServerComponent loader={loader} mdx={announcementText} />
+              <MdxServerComponentSuspense
+                loader={loader}
+                mdx={announcementText}
+              />
             </Announcement>
           )
         }
         header={
-          <Header
+          <HeaderContent
             className="max-w-page-width mx-auto"
             logo={
               <Logo

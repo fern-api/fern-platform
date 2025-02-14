@@ -9,7 +9,7 @@ import { ErrorBoundary } from "../error-boundary";
 import { ThemeButton } from "../themes";
 import { MobileMenuButton, MobileSearchButton } from "./mobile-buttons";
 
-export function Header({
+export function HeaderContent({
   logo,
   versionSelect,
   className,

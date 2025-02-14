@@ -1,9 +1,11 @@
 import "server-only";
 
+import React from "react";
+
 import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 
-import { MdxServerComponentProse } from "@/components/mdx/server-component";
+import { MdxServerComponentProseSuspense } from "@/components/mdx/server-component";
 import { DocsLoader } from "@/server/docs-loader";
 
 import { TypeDefinitionResponse } from "../types/context/TypeDefinitionContext";
@@ -25,7 +27,7 @@ export function EndpointResponseSection({
 }) {
   return (
     <TypeDefinitionResponse>
-      <MdxServerComponentProse
+      <MdxServerComponentProseSuspense
         loader={loader}
         size="sm"
         className="!t-muted border-default border-b pb-5 leading-6"

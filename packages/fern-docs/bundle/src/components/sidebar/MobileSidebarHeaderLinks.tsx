@@ -3,7 +3,7 @@ import { ReactElement } from "react";
 import { ArrowRight } from "iconoir-react";
 
 import { cn } from "@fern-docs/components";
-import { useIsMobile } from "@fern-docs/search-ui";
+import { useIsMobile } from "@fern-ui/react-commons";
 
 import { type NavbarLink } from "../atoms";
 import { FernLinkButton } from "../components/FernLinkButton";

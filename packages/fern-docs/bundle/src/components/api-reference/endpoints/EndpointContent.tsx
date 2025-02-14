@@ -7,7 +7,7 @@ import { AvailabilityBadge } from "@fern-docs/components/badges";
 import { PageHeader } from "@/components/components/PageHeader";
 import { FooterLayout } from "@/components/layouts/FooterLayout";
 import { ReferenceLayout } from "@/components/layouts/ReferenceLayout";
-import { MdxServerComponentProse } from "@/components/mdx/server-component";
+import { MdxServerComponentProseSuspense } from "@/components/mdx/server-component";
 import { DocsLoader } from "@/server/docs-loader";
 
 import { TypeDefinitionRoot } from "../types/context/TypeDefinitionContext";
@@ -73,9 +73,10 @@ export async function EndpointContent({
         }
         footer={<FooterLayout bottomNavigation={bottomNavigation} />}
       >
-        <React.Suspense>
-          <MdxServerComponentProse loader={loader} mdx={endpoint.description} />
-        </React.Suspense>
+        <MdxServerComponentProseSuspense
+          loader={loader}
+          mdx={endpoint.description}
+        />
       </ReferenceLayout>
     </EndpointContextProvider>
   );

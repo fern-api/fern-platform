@@ -1,10 +1,12 @@
 import "server-only";
 
+import React from "react";
+
 import { Separator } from "@radix-ui/react-separator";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 import { MaybeFernLink } from "@/components/components/FernLink";
-import { MdxServerComponent } from "@/components/mdx/server-component";
+import { MdxServerComponentSuspense } from "@/components/mdx/server-component";
 import { DocsLoader } from "@/server/docs-loader";
 
 export function BottomNavigation({
@@ -52,15 +54,20 @@ export function BottomNavigation({
         >
           <div className="min-w-0 shrink space-y-2 pl-4">
             <h4 className="truncate text-base font-bold text-[var(--grayscale-a12)]">
-              <MdxServerComponent loader={loader} mdx={neighbors.next.title} />
+              <MdxServerComponentSuspense
+                loader={loader}
+                mdx={neighbors.next.title}
+                fallback={neighbors.next.title}
+              />
             </h4>
             {neighbors.next.excerpt && (
-              <p className="truncate text-sm text-[var(--grayscale-a11)]">
-                <MdxServerComponent
+              <div className="truncate text-sm text-[var(--grayscale-a11)]">
+                <MdxServerComponentSuspense
                   loader={loader}
                   mdx={neighbors.next.excerpt}
+                  fallback={neighbors.next.excerpt}
                 />
-              </p>
+              </div>
             )}
           </div>
           <Separator

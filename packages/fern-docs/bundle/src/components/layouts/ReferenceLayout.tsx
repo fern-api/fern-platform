@@ -3,8 +3,7 @@
 import React, { ComponentPropsWithoutRef } from "react";
 
 import { cn } from "@fern-docs/components";
-import { useIsMobile } from "@fern-docs/search-ui";
-import { tunnel, useLazyRef } from "@fern-ui/react-commons";
+import { tunnel, useIsMobile, useLazyRef } from "@fern-ui/react-commons";
 
 import { SetLayout } from "@/state/layout";
 
@@ -27,7 +26,7 @@ export const ReferenceLayout = React.forwardRef<
   const slot = useLazyRef(() => tunnel()).current;
   return (
     <div className="mx-auto min-w-0 shrink px-4 md:px-6 lg:ml-0 lg:px-8 xl:ml-auto">
-      <slot.In>
+      <slot.In only>
         <aside className="order-last flex max-h-[calc(100svh-var(--header-height)-3rem)] md:sticky md:top-[calc(var(--header-height)+1.5rem)] md:h-fit md:max-h-[calc(100vh-var(--header-height)-3rem)]">
           {aside}
         </aside>

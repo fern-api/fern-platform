@@ -1,6 +1,7 @@
 import "server-only";
 
 import { ReactElement } from "react";
+import React from "react";
 
 import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
@@ -8,7 +9,7 @@ import { visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
 import { AvailabilityBadge } from "@fern-docs/components/badges";
 import { addLeadingSlash } from "@fern-docs/utils";
 
-import { MdxServerComponentProse } from "@/components/mdx/server-component";
+import { MdxServerComponentProseSuspense } from "@/components/mdx/server-component";
 import { getAnchorId } from "@/components/util/anchor";
 import { DocsLoader } from "@/server/docs-loader";
 
@@ -126,7 +127,7 @@ export function UndiscriminatedUnionVariant({
             />
           )}
         </div>
-        <MdxServerComponentProse
+        <MdxServerComponentProseSuspense
           loader={loader}
           mdx={unionVariant.description}
           size="sm"

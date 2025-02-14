@@ -19,10 +19,13 @@ import {
   DesktopSearchDialog,
   SEARCH_INDEX,
   SearchClientRoot,
-  useIsMobile,
 } from "@fern-docs/search-ui";
 import { VersionSwitcherInfo } from "@fern-platform/fdr-utils";
-import { useEventCallback, useLazyRef } from "@fern-ui/react-commons";
+import {
+  useEventCallback,
+  useIsMobile,
+  useLazyRef,
+} from "@fern-ui/react-commons";
 
 import { Feedback } from "@/components/feedback/Feedback";
 import { useApiRoute } from "@/components/hooks/useApiRoute";

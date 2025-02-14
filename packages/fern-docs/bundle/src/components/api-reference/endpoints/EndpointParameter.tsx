@@ -11,7 +11,7 @@ import { cn } from "@fern-docs/components";
 import { AvailabilityBadge } from "@fern-docs/components/badges";
 import { addLeadingSlash, conformTrailingSlash } from "@fern-docs/utils";
 
-import { MdxServerComponentProse } from "@/components/mdx/server-component";
+import { MdxServerComponentProseSuspense } from "@/components/mdx/server-component";
 import { DocsLoader } from "@/server/docs-loader";
 
 import { FernAnchor } from "../../components/FernAnchor";
@@ -108,7 +108,13 @@ export function EndpointParameterContent({
           )}
         </span>
       </FernAnchor>
-      <MdxServerComponentProse loader={loader} mdx={description} size="sm" />
+
+      <MdxServerComponentProseSuspense
+        loader={loader}
+        mdx={description}
+        size="sm"
+      />
+
       {children}
     </div>
   );

@@ -1,11 +1,13 @@
 import "server-only";
 
+import React from "react";
+
 import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
 
-import { MdxServerComponentProse } from "@/components/mdx/server-component";
+import { MdxServerComponentProseSuspense } from "@/components/mdx/server-component";
 import { DocsLoader } from "@/server/docs-loader";
 
 import { renderTypeShorthand } from "../../type-shorthand";
@@ -32,7 +34,7 @@ export function EndpointError({
   return (
     <div className="space-y-2 pt-2">
       <div className="t-muted w-full text-start text-sm leading-7">
-        <MdxServerComponentProse
+        <MdxServerComponentProseSuspense
           loader={loader}
           mdx={error.description}
           fallback={`This error returns ${renderTypeShorthand(error.shape, { withArticle: true }, types)}.`}

@@ -1,5 +1,7 @@
 import "server-only";
 
+import React from "react";
+
 import { compact } from "es-toolkit/array";
 
 import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
@@ -7,7 +9,7 @@ import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { AvailabilityBadge } from "@fern-docs/components/badges";
 import { addLeadingSlash } from "@fern-docs/utils";
 
-import { MdxServerComponentProse } from "@/components/mdx/server-component";
+import { MdxServerComponentProseSuspense } from "@/components/mdx/server-component";
 import { DocsLoader } from "@/server/docs-loader";
 
 import { getAnchorId } from "../../../util/anchor";
@@ -78,11 +80,13 @@ export function ObjectProperty({
             types={types}
           />
         )}
-        <MdxServerComponentProse
+
+        <MdxServerComponentProseSuspense
           loader={loader}
           mdx={descriptions[0]}
           size="sm"
         />
+
         {hasInternalTypeReference(property.valueShape, types) &&
           !hasInlineEnum(property.valueShape, types) && (
             <TypeReferenceDefinitions

@@ -1,7 +1,9 @@
+import React from "react";
+
 import type * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 
 import { Chip } from "@/components/components/Chip";
-import { MdxServerComponentProse } from "@/components/mdx/server-component";
+import { MdxServerComponentProseSuspense } from "@/components/mdx/server-component";
 import { DocsLoader } from "@/server/docs-loader";
 
 export function EnumValue({
@@ -15,7 +17,7 @@ export function EnumValue({
     <Chip
       name={enumValue.value}
       description={
-        <MdxServerComponentProse
+        <MdxServerComponentProseSuspense
           loader={loader}
           mdx={enumValue.description}
           size="xs"

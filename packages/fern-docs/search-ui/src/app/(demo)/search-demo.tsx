@@ -9,6 +9,7 @@ import useSWR from "swr";
 import { z } from "zod";
 
 import { FacetsResponse, SEARCH_INDEX } from "@fern-docs/search-server/algolia";
+import { useIsMobile } from "@fern-ui/react-commons";
 
 import {
   CommandActions,
@@ -25,7 +26,6 @@ import {
 import { ChatbotModelSelect } from "@/components/chatbot/model-select";
 import { DesktopCommandWithAskAI } from "@/components/desktop/desktop-ask-ai";
 import { DialogTrigger } from "@/components/ui/dialog";
-import { useIsMobile } from "@/hooks/use-mobile";
 
 const USER_TOKEN_KEY = "user-token";
 
