@@ -685,7 +685,39 @@ import * as FernRegistry from "../../../../../../../../index";
  *                     },
  *                     description: "string",
  *                     availability: "Stable"
- *                 }]
+ *                 }],
+ *             snippetsConfiguration: {
+ *                 typescriptSdk: {
+ *                     package: "string",
+ *                     version: {
+ *                         "key": "value"
+ *                     }
+ *                 },
+ *                 pythonSdk: {
+ *                     package: "string",
+ *                     version: {
+ *                         "key": "value"
+ *                     }
+ *                 },
+ *                 goSdk: {
+ *                     githubRepo: "string",
+ *                     version: {
+ *                         "key": "value"
+ *                     }
+ *                 },
+ *                 javaSdk: {
+ *                     coordinate: "string",
+ *                     version: {
+ *                         "key": "value"
+ *                     }
+ *                 },
+ *                 rubySdk: {
+ *                     gem: "string",
+ *                     version: {
+ *                         "key": "value"
+ *                     }
+ *                 }
+ *             }
  *         },
  *         sources: {
  *             "string": {
