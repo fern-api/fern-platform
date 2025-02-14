@@ -1,6 +1,7 @@
-"use server";
+import "server-only";
 
 import { getEnv } from "@vercel/functions";
+import crypto from "node:crypto";
 
 const seed = crypto.randomUUID();
 
