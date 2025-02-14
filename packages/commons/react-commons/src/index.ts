@@ -24,3 +24,4 @@ export { useResizeObserver } from "./useResizeObserver";
 export { useTimeout } from "./useTimeout";
 export { useWhyDidYouUpdate } from "./useWhyDidYouUpdate";
 export { useLazyRef } from "./useLazyRef";
+export { tunnel } from "./tunnel-rat";

@@ -120,7 +120,7 @@ export async function WebSocketContent({
           </div>
         }
         reference={
-          <div className="space-y-12">
+          <>
             <CardedSection
               number={1}
               title={
@@ -291,7 +291,7 @@ export async function WebSocketContent({
                 />
               </EndpointSection>
             )}
-          </div>
+          </>
         }
       >
         <Markdown className="mt-4 leading-6" mdx={channel.description} />

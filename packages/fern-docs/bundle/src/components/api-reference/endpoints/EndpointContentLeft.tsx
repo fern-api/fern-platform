@@ -122,7 +122,7 @@ export async function EndpointContentLeft({
   ];
 
   return (
-    <div className="space-y-12">
+    <>
       {endpoint.pathParameters && endpoint.pathParameters.length > 0 && (
         <EndpointSection
           title="Path parameters"
@@ -268,6 +268,6 @@ export async function EndpointContentLeft({
           />
         </EndpointSection>
       )}
-    </div>
+    </>
   );
 }

@@ -1,7 +1,9 @@
 import React, { ReactNode } from "react";
 
-import { useIsomorphicLayoutEffect } from "swr/_internal";
 import { StoreApi, create } from "zustand";
+
+const useIsomorphicLayoutEffect =
+  typeof window !== "undefined" ? React.useLayoutEffect : React.useEffect;
 
 type Props = {
   children: React.ReactNode;
@@ -15,7 +17,7 @@ type State = {
   set: StoreApi<State>["setState"];
 };
 
-export default function tunnel(): {
+export function tunnel(): {
   In: (props: Props) => null;
   Out: () => ReactNode;
   useHasChildren: () => boolean;
@@ -60,10 +62,7 @@ export default function tunnel(): {
       return null;
     },
 
-    Out: () => {
-      const current = useStore((state) => state.only || state.current);
-      return <>{current}</>;
-    },
+    Out: () => useStore((state) => state.only || state.current),
 
     useHasChildren: () =>
       useStore((state) => !!state.only || state.current.length > 0),

@@ -29,7 +29,7 @@ export function GuideLayout({
       >
         {toc}
       </aside>
-      <div className="ml-0 mr-auto min-w-0 shrink px-8 xl:mx-auto">
+      <div className="mx-auto mb-12 min-w-0 shrink px-4 md:px-6 lg:ml-0 lg:px-8 xl:ml-auto">
         <article className="w-content-width max-w-full">
           {header}
           <div className="prose dark:prose-invert prose-h1:mt-[1.5em] first:prose-h1:mt-0 max-w-full break-words">

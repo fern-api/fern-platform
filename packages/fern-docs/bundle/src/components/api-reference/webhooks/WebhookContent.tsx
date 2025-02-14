@@ -41,7 +41,7 @@ export async function WebhookContent({
         }
         aside={webhookExample}
         reference={
-          <div className="space-y-12">
+          <>
             {webhook.headers && webhook.headers.length > 0 && (
               <EndpointSection
                 title="Headers"
@@ -96,7 +96,7 @@ export async function WebhookContent({
             >
               <WebhookResponseSection />
             </EndpointSection>
-          </div>
+          </>
         }
       >
         <Markdown className="leading-6" mdx={webhook.description} />

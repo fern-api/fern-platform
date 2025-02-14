@@ -8,11 +8,13 @@ import {
 import { usePlaygroundBaseUrl } from "../../playground/utils/select-environment";
 import { EndpointUrlWithOverflow } from "./EndpointUrlWithOverflow";
 
-export const EndpointUrlWithPlaygroundBaseUrl = ({
+export function EndpointUrlWithPlaygroundBaseUrl({
   endpoint,
+  className,
 }: {
   endpoint: WebSocketChannel | EndpointDefinition;
-}) => {
+  className?: string;
+}) {
   const [baseUrl, environmentId] = usePlaygroundBaseUrl(endpoint);
   return (
     <EndpointUrlWithOverflow
@@ -23,6 +25,7 @@ export const EndpointUrlWithPlaygroundBaseUrl = ({
       options={endpoint.environments}
       showEnvironment
       large
+      className={className}
     />
   );
-};
+}

@@ -16,11 +16,10 @@ import { ArrowLeft } from "lucide-react";
 
 import { Button } from "@fern-docs/components/button";
 import { Kbd } from "@fern-docs/components/kbd";
-import { usePlatformKbdShortcut } from "@fern-ui/react-commons";
+import { tunnel, usePlatformKbdShortcut } from "@fern-ui/react-commons";
 
 import * as Command from "../cmdk";
 import { useFacetFilters } from "../search-client";
-import tunnel from "../tunnel-rat";
 import {
   Tooltip,
   TooltipContent,

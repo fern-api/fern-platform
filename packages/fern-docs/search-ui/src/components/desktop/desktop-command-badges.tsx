@@ -1,7 +1,8 @@
 import { ComponentPropsWithoutRef, forwardRef } from "react";
 
+import { tunnel } from "@fern-ui/react-commons";
+
 import { useFacetFilters } from "../search-client";
-import tunnel from "../tunnel-rat";
 import { DesktopFilterDropdownMenu } from "./desktop-filter-dropdown-menu";
 
 interface DesktopCommandBadgesProps {

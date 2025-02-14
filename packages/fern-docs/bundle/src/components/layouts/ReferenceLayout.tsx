@@ -3,6 +3,8 @@
 import React, { ComponentPropsWithoutRef } from "react";
 
 import { cn } from "@fern-docs/components";
+import { useIsMobile } from "@fern-docs/search-ui";
+import { tunnel, useLazyRef } from "@fern-ui/react-commons";
 
 import { SetLayout } from "@/state/layout";
 
@@ -21,8 +23,15 @@ export const ReferenceLayout = React.forwardRef<
   { header, aside, children, footer, reference, ...props },
   ref
 ) {
+  const isMobile = useIsMobile();
+  const slot = useLazyRef(() => tunnel()).current;
   return (
-    <div className="ml-0 mr-auto min-w-0 shrink px-8 xl:mx-auto">
+    <div className="mx-auto min-w-0 shrink px-4 md:px-6 lg:ml-0 lg:px-8 xl:ml-auto">
+      <slot.In>
+        <aside className="order-last flex max-h-[calc(100svh-var(--header-height)-3rem)] md:sticky md:top-[calc(var(--header-height)+1.5rem)] md:h-fit md:max-h-[calc(100vh-var(--header-height)-3rem)]">
+          {aside}
+        </aside>
+      </slot.In>
       <article
         {...props}
         className={cn(
@@ -33,79 +42,15 @@ export const ReferenceLayout = React.forwardRef<
       >
         <SetLayout value="reference" />
         {header}
-        <div className="layout">
-          <section>{children}</section>
-          <aside>{aside}</aside>
-          <section>
+        <div className="mt-12 md:grid md:grid-cols-[1fr_1fr] md:gap-8 lg:gap-12">
+          {!isMobile && <slot.Out />}
+          <div className="mb-12 space-y-12">
+            {children}
+            {isMobile && <slot.Out />}
             {reference}
             {footer}
-          </section>
+          </div>
         </div>
-        <style jsx>
-          {`
-            article > .layout {
-              margin: 3rem 0;
-              gap: 3rem;
-              display: grid;
-              position: relative;
-              grid-template-areas:
-                "content"
-                "aside"
-                "footer";
-            }
-
-            article > .layout > section:first-child {
-              grid-area: content;
-            }
-
-            article > .layout > aside {
-              grid-area: aside;
-              display: flex;
-            }
-
-            article > .layout > section:last-child {
-              grid-area: footer;
-              grid-row-end: none;
-            }
-
-            article > .layout > section:empty {
-              display: none;
-            }
-
-            article > .layout:has(> section:first-child:empty) {
-              grid-template-areas: "aside" "footer";
-            }
-
-            @media (min-width: 768px) {
-              article > .layout {
-                margin: 1.5rem 0;
-                gap: 2rem;
-                grid-template-columns: 1fr 1fr;
-                grid-template-areas:
-                  "content aside"
-                  "footer aside";
-                grid-template-rows: fit-content(100%) fit-content(100%);
-              }
-
-              article > .layout:has(> section:first-child:empty) {
-                grid-template-areas: "footer aside";
-              }
-
-              article > .layout > aside {
-                max-height: calc(100vh - var(--header-height) - 3rem);
-                height: fit-content;
-                position: sticky;
-                top: calc(var(--header-height) + 1.5rem);
-              }
-            }
-
-            @media (min-width: 1024px) {
-              article > .layout {
-                gap: 3rem;
-              }
-            }
-          `}
-        </style>
       </article>
     </div>
   );

@@ -49,7 +49,10 @@ export async function EndpointContent({
               )
             }
           >
-            <EndpointUrlWithPlaygroundBaseUrl endpoint={endpoint} />
+            <EndpointUrlWithPlaygroundBaseUrl
+              endpoint={endpoint}
+              className="hidden lg:flex"
+            />
           </PageHeader>
         }
         aside={

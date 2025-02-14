@@ -33,7 +33,11 @@ import { useIsomorphicLayoutEffect } from "swr/_internal";
 
 import { Badge } from "@fern-docs/components/badges";
 import { Button } from "@fern-docs/components/button";
-import { useDebouncedCallback, useEventCallback } from "@fern-ui/react-commons";
+import {
+  tunnel,
+  useDebouncedCallback,
+  useEventCallback,
+} from "@fern-ui/react-commons";
 
 import { FootnoteSup, FootnotesSection } from "../chatbot/footnote";
 import {
@@ -51,7 +55,6 @@ import { MarkdownContent } from "../md-content";
 import { useFacetFilters } from "../search-client";
 import { CommandAskAIGroup } from "../shared";
 import { CommandLink } from "../shared/command-link";
-import tunnel from "../tunnel-rat";
 import { cn } from "../ui/cn";
 import { TextArea } from "../ui/textarea";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
