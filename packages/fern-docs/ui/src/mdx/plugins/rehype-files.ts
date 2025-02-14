@@ -123,11 +123,25 @@ export function rehypeFiles(
           node.properties.src = newSrc;
         }
 
-        if (height != null && !node.properties.height) {
+        if (height != null) {
+          if (node.properties.height != null) {
+            node.properties.style = {
+              ...node.properties.style,
+              height: node.properties.height,
+            };
+          }
+
           node.properties.height = height;
         }
 
-        if (width != null && !node.properties.width) {
+        if (width != null) {
+          if (node.properties.width != null) {
+            node.properties.style = {
+              ...node.properties.style,
+              width: node.properties.width,
+            };
+          }
+
           node.properties.width = width;
         }
       }
