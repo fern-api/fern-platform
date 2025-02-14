@@ -364,6 +364,8 @@ export class ResponseMediaTypeObjectConverterNode extends BaseOpenApiV3_1Convert
             accessPath: this.accessPath,
             pathId: "type",
             seenSchemas: new Set(),
+            nullable: undefined,
+            schemaName: "Response Body",
           });
         }
       } else if (mediaType?.isOctetStream()) {
@@ -388,6 +390,8 @@ export class ResponseMediaTypeObjectConverterNode extends BaseOpenApiV3_1Convert
             accessPath: this.accessPath,
             pathId: this.pathId,
             seenSchemas: new Set(),
+            nullable: undefined,
+            schemaName: "Response Body",
           });
         }
       }

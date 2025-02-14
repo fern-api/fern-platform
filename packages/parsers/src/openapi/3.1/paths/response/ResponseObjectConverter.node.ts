@@ -59,6 +59,7 @@ export class ResponseObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
         context: this.context,
         accessPath: this.accessPath,
         pathId: "headers",
+        parameterName: headerName,
       });
     });
 

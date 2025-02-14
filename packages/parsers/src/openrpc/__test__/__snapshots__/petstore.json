@@ -432,7 +432,7 @@
     "pets": {
       "id": "pets",
       "name": "pets",
-      "displayName": "pets"
+      "displayName": "Pets"
     }
   },
   "auths": {},

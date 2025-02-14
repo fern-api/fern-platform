@@ -79,13 +79,19 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "nullable",
+                "type": "optional",
                 "shape": {
                   "type": "alias",
                   "value": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string"
+                    "type": "nullable",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string"
+                        }
+                      }
                     }
                   }
                 }
@@ -108,13 +114,19 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "nullable",
+                "type": "optional",
                 "shape": {
                   "type": "alias",
                   "value": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "double"
+                    "type": "nullable",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "double"
+                        }
+                      }
                     }
                   }
                 }
@@ -144,13 +156,19 @@
                 "valueShape": {
                   "type": "alias",
                   "value": {
-                    "type": "nullable",
+                    "type": "optional",
                     "shape": {
                       "type": "alias",
                       "value": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string"
+                        "type": "nullable",
+                        "shape": {
+                          "type": "alias",
+                          "value": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string"
+                            }
+                          }
                         }
                       }
                     }
@@ -172,13 +190,19 @@
                 "valueShape": {
                   "type": "alias",
                   "value": {
-                    "type": "nullable",
+                    "type": "optional",
                     "shape": {
                       "type": "alias",
                       "value": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double"
+                        "type": "nullable",
+                        "shape": {
+                          "type": "alias",
+                          "value": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "double"
+                            }
+                          }
                         }
                       }
                     }

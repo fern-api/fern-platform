@@ -23,6 +23,13 @@ export declare namespace PathsObjectConverterNode {
       FernRegistry.api.latest.WebhookDefinition
     >;
   }
+
+  export interface ConstructorArgs
+    extends BaseOpenApiV3_1ConverterNodeConstructorArgs<OpenAPIV3_1.PathsObject> {
+    servers: ServerObjectConverterNode[] | undefined;
+    globalAuth: SecurityRequirementObjectConverterNode | undefined;
+    basePath: XFernBasePathConverterNode | undefined;
+  }
 }
 
 export class PathsObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
@@ -31,41 +38,36 @@ export class PathsObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
 > {
   paths: PathItemObjectConverterNode[] | undefined;
 
-  constructor(
-    args: BaseOpenApiV3_1ConverterNodeConstructorArgs<OpenAPIV3_1.PathsObject>,
-    protected readonly servers: ServerObjectConverterNode[] | undefined,
-    protected readonly globalAuth:
-      | SecurityRequirementObjectConverterNode
-      | undefined,
-    protected readonly basePath: XFernBasePathConverterNode | undefined
-  ) {
+  constructor(args: PathsObjectConverterNode.ConstructorArgs) {
     super(args);
-    this.safeParse();
+    this.safeParse(args);
   }
 
-  parse(): void {
+  parse({
+    servers,
+    globalAuth,
+    basePath,
+  }: PathsObjectConverterNode.ConstructorArgs): void {
     this.paths = Object.entries(this.input)
       .map(([path, pathItem]) => {
         if (pathItem == null) {
           return undefined;
         }
-        return new PathItemObjectConverterNode(
-          {
-            input: pathItem,
-            context: this.context,
-            accessPath: this.accessPath,
-            pathId: path,
-          },
-          coalesceServers(
-            this.servers,
+        return new PathItemObjectConverterNode({
+          input: pathItem,
+          context: this.context,
+          accessPath: this.accessPath,
+          pathId: path,
+          servers: coalesceServers(
+            servers,
             pathItem.servers,
             this.context,
             this.accessPath
           ),
-          this.globalAuth,
-          this.basePath,
-          undefined
-        );
+          globalAuth,
+          basePath,
+          isWebhook: undefined,
+        });
       })
       .filter(isNonNullish);
   }

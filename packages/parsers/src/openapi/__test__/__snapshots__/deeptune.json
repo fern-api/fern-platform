@@ -5,7 +5,7 @@
       "id": "endpoint_textToSpeech.generate",
       "description": "API that converts text into lifelike speech with best-in-class latency & uses the most advanced AI audio model ever. Create voiceovers for your videos, audiobooks, or create AI chatbots for free.",
       "namespace": [
-        "text_to_speech"
+        "textToSpeech"
       ],
       "displayName": "Text to Speech",
       "operationId": "textToSpeech",
@@ -90,7 +90,7 @@
       "id": "endpoint_textToSpeech.generateFromPrompt",
       "description": "If you prefer to manage voices on your own, you can use your own audio file as a reference for the voice clone.x",
       "namespace": [
-        "text_to_speech"
+        "textToSpeech"
       ],
       "displayName": "Text to Speech (via prompt audio)",
       "operationId": "textToSpeechFromPrompt",
@@ -1007,9 +1007,15 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
                 }
               }
             },
@@ -1020,9 +1026,15 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "base64"
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "base64"
+                    }
+                  }
                 }
               }
             },
@@ -1033,9 +1045,15 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
                 }
               }
             },
@@ -1058,13 +1076,13 @@
   "subpackages": {
     "textToSpeech": {
       "id": "textToSpeech",
-      "name": "text_to_speech",
-      "displayName": "text_to_speech"
+      "name": "textToSpeech",
+      "displayName": "Text to Speech"
     },
     "voices": {
       "id": "voices",
       "name": "voices",
-      "displayName": "voices"
+      "displayName": "Voices"
     }
   },
   "auths": {

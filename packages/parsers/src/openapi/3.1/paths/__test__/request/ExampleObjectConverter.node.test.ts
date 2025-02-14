@@ -195,6 +195,7 @@ describe("ExampleObjectConverterNode", () => {
             "application/json",
             undefined,
             "testpath",
+            undefined,
             200,
             [],
             undefined

@@ -1,4 +1,4 @@
-import { camelCase } from "es-toolkit";
+import { titleCase } from "@fern-api/ui-core-utils";
 import { FernRegistry } from "../client/generated";
 
 export declare namespace ComputeSubpackages {
@@ -26,33 +26,26 @@ export function computeSubpackages({
     FernRegistry.api.latest.SubpackageMetadata
   > = {};
 
-  if (endpoints != null) {
-    Object.values(endpoints).forEach((endpoint) =>
-      endpoint.namespace?.forEach((subpackage) => {
-        const qualifiedPath: string[] = [];
-        subpackages[FernRegistry.api.v1.SubpackageId(camelCase(subpackage))] = {
-          id: FernRegistry.api.v1.SubpackageId(camelCase(subpackage)),
-          name: [...qualifiedPath, subpackage].join("/"),
-          displayName: subpackage,
-        };
-        qualifiedPath.push(subpackage);
-      })
-    );
-  }
-
-  if (webhookEndpoints != null) {
-    Object.values(webhookEndpoints).forEach((webhook) =>
-      webhook.namespace?.forEach((subpackage) => {
-        const qualifiedPath: string[] = [];
-        subpackages[FernRegistry.api.v1.SubpackageId(camelCase(subpackage))] = {
-          id: FernRegistry.api.v1.SubpackageId(camelCase(subpackage)),
-          name: [...qualifiedPath, subpackage].join("/"),
-          displayName: subpackage,
-        };
-        qualifiedPath.push(subpackage);
-      })
-    );
-  }
+  Object.values({
+    ...endpoints,
+    ...webhookEndpoints,
+  }).forEach((endpoint) => {
+    const qualifiedPath: string[] = [];
+    return endpoint.namespace?.forEach((subpackage) => {
+      const prunedSubpackage = subpackage;
+      // subpackage.replace(/subpackage_/, "");
+      const qualifiedSubpackagePath = [...qualifiedPath, prunedSubpackage];
+      const fullyQualifiedSubpackageId = FernRegistry.api.v1.SubpackageId(
+        qualifiedSubpackagePath.join(".")
+      );
+      subpackages[fullyQualifiedSubpackageId] = {
+        id: fullyQualifiedSubpackageId,
+        name: qualifiedSubpackagePath.join("/"),
+        displayName: titleCase(prunedSubpackage),
+      };
+      qualifiedPath.push(prunedSubpackage);
+    });
+  });
 
   return subpackages;
 }

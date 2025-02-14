@@ -33,6 +33,8 @@ export class RequestMediaTypeObjectConverterNode extends BaseOpenApiV3_1Converte
   | FernRegistry.api.latest.HttpRequestBodyShape[]
 > {
   description: string | undefined;
+  method: HttpMethod;
+  path: string;
 
   // application/json
   schema: ReferenceConverterNode | SchemaConverterNode | undefined;
@@ -53,16 +55,19 @@ export class RequestMediaTypeObjectConverterNode extends BaseOpenApiV3_1Converte
     | undefined;
 
   constructor(
-    args: BaseOpenApiV3_1ConverterNodeConstructorArgs<OpenAPIV3_1.MediaTypeObject>,
-    contentType: string | undefined,
-    protected method: HttpMethod,
-    protected path: string
+    args: BaseOpenApiV3_1ConverterNodeConstructorArgs<OpenAPIV3_1.MediaTypeObject> & {
+      contentType: string | undefined;
+      method: HttpMethod;
+      path: string;
+    }
   ) {
     super(args);
-    this.safeParse(contentType);
+    this.method = args.method;
+    this.path = args.path;
+    this.safeParse(args);
   }
 
-  parse(contentType: string | undefined): void {
+  parse({ contentType }: { contentType: string | undefined }): void {
     if (this.input.schema != null) {
       const resolvedSchema = resolveSchemaReference(
         this.input.schema,
@@ -76,18 +81,17 @@ export class RequestMediaTypeObjectConverterNode extends BaseOpenApiV3_1Converte
       });
 
       this.schema = isReferenceObject(this.input.schema)
-        ? new ReferenceConverterNode(
-            {
-              input: this.input.schema,
-              context: this.context,
-              accessPath: this.accessPath,
-              pathId: "schema",
-              seenSchemas: new Set(),
-            },
-            false,
-            this.input.schema.description,
-            this.availability
-          )
+        ? new ReferenceConverterNode({
+            input: this.input.schema,
+            context: this.context,
+            accessPath: this.accessPath,
+            pathId: "schema",
+            seenSchemas: new Set(),
+            nullable: false,
+            schemaName: "Request Body",
+            description: this.input.schema.description,
+            availability: this.availability,
+          })
         : undefined;
 
       const mediaType = MediaType.parse(contentType);
@@ -102,6 +106,8 @@ export class RequestMediaTypeObjectConverterNode extends BaseOpenApiV3_1Converte
             accessPath: this.accessPath,
             pathId: "schema",
             seenSchemas: new Set(),
+            nullable: undefined,
+            schemaName: "Request Body",
           });
       } else if (mediaType?.isOctetStream()) {
         this.contentType = "bytes" as const;
@@ -124,6 +130,8 @@ export class RequestMediaTypeObjectConverterNode extends BaseOpenApiV3_1Converte
                   accessPath: this.accessPath,
                   pathId: `schema.${key}`,
                   seenSchemas: new Set(),
+                  nullable: undefined,
+                  schemaName: key,
                 }),
               ];
             })

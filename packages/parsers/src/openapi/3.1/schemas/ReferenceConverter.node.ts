@@ -16,16 +16,27 @@ export class ReferenceConverterNode extends BaseOpenApiV3_1ConverterNodeWithTrac
   OpenAPIV3_1.ReferenceObject,
   FernRegistry.api.latest.TypeShape.Alias
 > {
+  description: string | undefined;
+  availability: AvailabilityConverterNode | undefined;
+
   schemaId: string | undefined;
   maybeEnumConverterNode: EnumConverterNode | undefined;
+  nullable: boolean | undefined;
+  schemaName: string | undefined;
 
   constructor(
-    args: BaseOpenApiV3_1ConverterNodeWithTrackingConstructorArgs<OpenAPIV3_1.ReferenceObject>,
-    protected nullable: boolean | undefined,
-    public description: string | undefined,
-    public availability: AvailabilityConverterNode | undefined
+    args: BaseOpenApiV3_1ConverterNodeWithTrackingConstructorArgs<OpenAPIV3_1.ReferenceObject> & {
+      nullable: boolean | undefined;
+      schemaName: string | undefined;
+      description: string | undefined;
+      availability: AvailabilityConverterNode | undefined;
+    }
   ) {
     super(args);
+    this.nullable = args.nullable;
+    this.schemaName = args.schemaName;
+    this.description = args.description;
+    this.availability = args.availability;
     this.safeParse();
   }
 
@@ -87,6 +98,7 @@ export class ReferenceConverterNode extends BaseOpenApiV3_1ConverterNodeWithTrac
       pathId: this.schemaId ?? "",
       seenSchemas: this.seenSchemas,
       nullable: this.nullable,
+      schemaName: this.schemaName,
     }).example(exampleArgs);
   }
 }

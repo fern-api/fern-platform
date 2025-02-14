@@ -23,11 +23,15 @@ export class ArrayConverterNode extends BaseOpenApiV3_1ConverterNodeWithTracking
   ArrayConverterNode.Output[] | undefined
 > {
   item: SchemaConverterNode | undefined;
+  schemaName: string | undefined;
 
   constructor(
-    args: BaseOpenApiV3_1ConverterNodeWithTrackingConstructorArgs<ArrayConverterNode.Input>
+    args: BaseOpenApiV3_1ConverterNodeWithTrackingConstructorArgs<ArrayConverterNode.Input> & {
+      schemaName: string | undefined;
+    }
   ) {
     super(args);
+    this.schemaName = args.schemaName;
     this.safeParse();
   }
 
@@ -38,6 +42,8 @@ export class ArrayConverterNode extends BaseOpenApiV3_1ConverterNodeWithTracking
       accessPath: this.accessPath,
       pathId: "items",
       seenSchemas: this.seenSchemas,
+      nullable: undefined,
+      schemaName: this.schemaName,
     });
 
     if (this.input.items == null) {

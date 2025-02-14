@@ -22,6 +22,7 @@ describe("MixedSchemaConverterNode", () => {
         accessPath: [],
         pathId: "test",
         seenSchemas: new Set(),
+        schemaName: undefined,
       });
 
       expect(node.nullable).toBe(true);
@@ -40,6 +41,7 @@ describe("MixedSchemaConverterNode", () => {
         accessPath: [],
         pathId: "test",
         seenSchemas: new Set(),
+        schemaName: undefined,
       });
 
       expect(node.nullable).toBeUndefined();
@@ -60,6 +62,7 @@ describe("MixedSchemaConverterNode", () => {
         accessPath: [],
         pathId: "test",
         seenSchemas: new Set(),
+        schemaName: undefined,
       });
 
       const result = node.convert()[0];
@@ -82,6 +85,7 @@ describe("MixedSchemaConverterNode", () => {
         accessPath: [],
         pathId: "test",
         seenSchemas: new Set(),
+        schemaName: undefined,
       });
 
       const result = node.convert()[0];
@@ -100,6 +104,7 @@ describe("MixedSchemaConverterNode", () => {
         accessPath: [],
         pathId: "test",
         seenSchemas: new Set(),
+        schemaName: undefined,
       });
 
       node.typeNodes = undefined;

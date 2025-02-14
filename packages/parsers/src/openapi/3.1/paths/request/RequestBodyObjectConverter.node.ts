@@ -22,15 +22,13 @@ export class RequestBodyObjectConverterNode extends BaseOpenApiV3_1ConverterNode
   constructor(
     args: BaseOpenApiV3_1ConverterNodeConstructorArgs<
       OpenAPIV3_1.RequestBodyObject | OpenAPIV3_1.ReferenceObject
-    >,
-    protected method: HttpMethod,
-    protected path: string
+    > & { method: HttpMethod; path: string }
   ) {
     super(args);
-    this.safeParse();
+    this.safeParse(args);
   }
 
-  parse(): void {
+  parse({ method, path }: { method: HttpMethod; path: string }): void {
     const requestBody = resolveRequestReference(
       this.input,
       this.context.document
@@ -48,17 +46,15 @@ export class RequestBodyObjectConverterNode extends BaseOpenApiV3_1ConverterNode
       ([contentType, contentTypeObject]) => {
         this.requestBodiesByContentType ??= {};
         this.requestBodiesByContentType[contentType] =
-          new RequestMediaTypeObjectConverterNode(
-            {
-              input: contentTypeObject,
-              context: this.context,
-              accessPath: this.accessPath,
-              pathId: "content",
-            },
+          new RequestMediaTypeObjectConverterNode({
+            input: contentTypeObject,
+            context: this.context,
+            accessPath: this.accessPath,
+            pathId: "content",
             contentType,
-            this.method,
-            this.path
-          );
+            method,
+            path,
+          });
       }
     );
   }

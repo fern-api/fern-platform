@@ -17,7 +17,10 @@ export class MultipartFormDataPropertySchemaConverterNode extends SchemaConverte
   contentType: string | undefined;
 
   constructor(
-    args: BaseOpenApiV3_1ConverterNodeWithTrackingConstructorArgs<OpenAPIV3_1.SchemaObject>
+    args: BaseOpenApiV3_1ConverterNodeWithTrackingConstructorArgs<OpenAPIV3_1.SchemaObject> & {
+      nullable: boolean | undefined;
+      schemaName: string | undefined;
+    }
   ) {
     super(args);
     this.safeParse();

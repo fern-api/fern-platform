@@ -55,6 +55,8 @@ export class ComponentsConverterNode extends BaseOpenApiV3_1ConverterNode<
               accessPath: this.accessPath,
               pathId: key,
               seenSchemas: new Set(),
+              nullable: undefined,
+              schemaName: key,
             }),
           ];
         })

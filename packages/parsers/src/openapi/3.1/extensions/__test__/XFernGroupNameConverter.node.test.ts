@@ -34,7 +34,7 @@ describe("XFernGroupNameConverterNode", () => {
         accessPath: [],
         pathId: "",
       });
-      expect(converter.convert()).toEqual(["test-group"]);
+      expect(converter.convert()).toEqual(["testGroup"]);
     });
 
     it("returns undefined when groupName is not set", () => {

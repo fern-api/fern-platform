@@ -20,6 +20,10 @@ describe("ReferenceConverterNode", () => {
         accessPath: [],
         pathId: "test",
         seenSchemas: new Set(),
+        nullable: undefined,
+        schemaName: undefined,
+        description: undefined,
+        availability: undefined,
       });
       expect(node.schemaId).toBe("Pet");
     });
@@ -34,6 +38,10 @@ describe("ReferenceConverterNode", () => {
         accessPath: [],
         pathId: "test",
         seenSchemas: new Set(),
+        schemaName: undefined,
+        nullable: undefined,
+        description: undefined,
+        availability: undefined,
       });
       expect(node.schemaId).toBeUndefined();
       expect(mockContext.errors.error).toHaveBeenCalledWith({
@@ -54,6 +62,10 @@ describe("ReferenceConverterNode", () => {
         accessPath: [],
         pathId: "test",
         seenSchemas: new Set(),
+        nullable: undefined,
+        schemaName: undefined,
+        description: undefined,
+        availability: undefined,
       });
       expect(node.convert()).toEqual({
         type: "alias",
@@ -75,6 +87,10 @@ describe("ReferenceConverterNode", () => {
         accessPath: [],
         pathId: "test",
         seenSchemas: new Set(),
+        nullable: undefined,
+        schemaName: undefined,
+        description: undefined,
+        availability: undefined,
       });
       expect(node.convert()).toBeUndefined();
     });

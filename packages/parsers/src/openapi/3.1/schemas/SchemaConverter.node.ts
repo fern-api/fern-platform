@@ -61,15 +61,17 @@ export class SchemaConverterNode extends BaseOpenApiV3_1ConverterNodeWithTrackin
   name: string | undefined;
   examples: unknown | undefined;
   availability: AvailabilityConverterNode | undefined;
-  nullable?: boolean | undefined;
+  nullable: boolean | undefined;
+  schemaName: string | undefined;
 
   constructor(
     args: BaseOpenApiV3_1ConverterNodeWithTrackingConstructorArgs<
       OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject
-    > & { nullable?: boolean | undefined }
+    > & { nullable: boolean | undefined; schemaName: string | undefined }
   ) {
     super(args);
     this.nullable = args.nullable;
+    this.schemaName = args.schemaName;
     this.safeParse();
   }
 
@@ -106,18 +108,17 @@ export class SchemaConverterNode extends BaseOpenApiV3_1ConverterNodeWithTrackin
       }
       this.seenSchemas.add(refPath);
 
-      this.typeShapeNode = new ReferenceConverterNode(
-        {
-          input: this.input,
-          context: this.context,
-          accessPath: this.accessPath,
-          pathId: refPath,
-          seenSchemas: this.seenSchemas,
-        },
-        this.nullable,
-        this.description,
-        this.availability
-      );
+      this.typeShapeNode = new ReferenceConverterNode({
+        input: this.input,
+        context: this.context,
+        accessPath: this.accessPath,
+        pathId: refPath,
+        seenSchemas: this.seenSchemas,
+        nullable: this.nullable,
+        schemaName: this.schemaName,
+        description: this.description,
+        availability: this.availability,
+      });
     } else {
       // If the object is not a reference object, then it is a schema object, gather all appropriate variables
       this.name = this.input.title;
@@ -136,6 +137,7 @@ export class SchemaConverterNode extends BaseOpenApiV3_1ConverterNodeWithTrackin
           accessPath: this.accessPath,
           pathId: this.pathId,
           seenSchemas: this.seenSchemas,
+          schemaName: this.schemaName,
         });
       } else if (
         isNonArraySchema(this.input) &&
@@ -147,6 +149,7 @@ export class SchemaConverterNode extends BaseOpenApiV3_1ConverterNodeWithTrackin
           accessPath: this.accessPath,
           pathId: this.pathId,
           seenSchemas: this.seenSchemas,
+          schemaName: this.schemaName,
         });
         // here, isObjectSchema also supports null type
       } else if (isObjectSchema(this.input) && this.input.allOf != null) {
@@ -157,6 +160,7 @@ export class SchemaConverterNode extends BaseOpenApiV3_1ConverterNodeWithTrackin
           accessPath: this.accessPath,
           pathId: this.pathId,
           seenSchemas: this.seenSchemas,
+          schemaName: this.schemaName,
         });
       } else if (isNonArraySchema(this.input) && this.input.enum != null) {
         this.typeShapeNode = new EnumConverterNode({
@@ -178,6 +182,7 @@ export class SchemaConverterNode extends BaseOpenApiV3_1ConverterNodeWithTrackin
                 accessPath: this.accessPath,
                 pathId: this.pathId,
                 seenSchemas: this.seenSchemas,
+                schemaName: this.schemaName,
               });
             }
             break;
@@ -189,6 +194,7 @@ export class SchemaConverterNode extends BaseOpenApiV3_1ConverterNodeWithTrackin
                 accessPath: this.accessPath,
                 pathId: this.pathId,
                 seenSchemas: this.seenSchemas,
+                schemaName: this.schemaName,
               });
             }
             break;
@@ -268,6 +274,7 @@ export class SchemaConverterNode extends BaseOpenApiV3_1ConverterNodeWithTrackin
             pathId: this.pathId,
             seenSchemas: this.seenSchemas,
             nullable: true,
+            schemaName: this.schemaName,
           });
         }
       } else if (this.input.properties != null) {
@@ -277,6 +284,7 @@ export class SchemaConverterNode extends BaseOpenApiV3_1ConverterNodeWithTrackin
           accessPath: this.accessPath,
           pathId: this.pathId,
           seenSchemas: this.seenSchemas,
+          schemaName: this.schemaName,
         });
       }
     }
