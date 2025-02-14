@@ -240,6 +240,7 @@ export class Transformer {
       globalHeaders,
       auths: api.auths,
       subpackages: api.subpackages,
+      snippetsConfiguration: api.snippetsConfiguration,
     };
   };
 

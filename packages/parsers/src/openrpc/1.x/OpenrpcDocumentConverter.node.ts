@@ -94,6 +94,7 @@ export class OpenrpcDocumentConverterNode extends BaseOpenrpcConverterNode<
       subpackages,
       auths: {},
       globalHeaders: [],
+      snippetsConfiguration: undefined,
     };
   }
 }

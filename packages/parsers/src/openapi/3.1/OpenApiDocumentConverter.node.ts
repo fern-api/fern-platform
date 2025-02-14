@@ -154,6 +154,7 @@ export class OpenApiDocumentConverterNode extends BaseOpenApiV3_1ConverterNode<
       subpackages,
       auths: { ...auths, ...(this.auth?.convert() ?? {}) },
       globalHeaders: this.globalHeaders?.convert(),
+      snippetsConfiguration: undefined,
     };
   }
 }
