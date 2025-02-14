@@ -13,11 +13,11 @@ import {
 
 import { composeEventHandlers } from "@radix-ui/primitive";
 import { composeRefs } from "@radix-ui/react-compose-refs";
-import cn, { clsx } from "clsx";
 import { range } from "es-toolkit/math";
 import { Lock, NavArrowDown } from "iconoir-react";
 
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
+import { cn } from "@fern-docs/components";
 import { FaIcon, FernTooltip } from "@fern-docs/components";
 import { addLeadingSlash } from "@fern-docs/utils";
 
@@ -147,7 +147,7 @@ const SidebarLinkInternal = forwardRef<HTMLDivElement, SidebarLinkProps>(
 
     const expandButton = (expandable || expanded) && (
       <span
-        className={clsx("fern-sidebar-link-expand", {
+        className={cn("fern-sidebar-link-expand", {
           "opacity-50 transition-opacity group-hover:opacity-80":
             !showIndicator,
         })}

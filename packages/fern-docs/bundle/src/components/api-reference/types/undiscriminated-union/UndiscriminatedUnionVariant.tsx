@@ -1,20 +1,20 @@
-import { ReactElement, useCallback } from "react";
+import "server-only";
 
-import cn from "clsx";
+import { ReactElement } from "react";
 
 import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
 import { AvailabilityBadge } from "@fern-docs/components/badges";
+import { addLeadingSlash } from "@fern-docs/utils";
 
-import { Markdown } from "../../../mdx/Markdown";
-import { renderTypeShorthand } from "../../../type-shorthand";
-import {
-  TypeDefinitionContext,
-  TypeDefinitionContextValue,
-  useTypeDefinitionContext,
-} from "../context/TypeDefinitionContext";
-import { InternalTypeReferenceDefinitions } from "../type-reference/InternalTypeReferenceDefinitions";
+import { MdxServerComponentProse } from "@/components/mdx/server-component";
+import { getAnchorId } from "@/components/util/anchor";
+import { DocsLoader } from "@/server/docs-loader";
+
+import { PropertyWrapper } from "../object/PropertyWrapper";
+import { TypeShorthand } from "../object/TypeShorthand";
+import { TypeReferenceDefinitions } from "../type-reference/TypeReferenceDefinitions";
 
 type IconInfo = {
   content: string;
@@ -87,25 +87,26 @@ export declare namespace UndiscriminatedUnionVariant {
   }
 }
 
-export const UndiscriminatedUnionVariant: React.FC<
-  UndiscriminatedUnionVariant.Props
-> = ({ unionVariant, anchorIdParts, applyErrorStyles, slug, types }) => {
-  const { isRootTypeDefinition } = useTypeDefinitionContext();
-  const contextValue = useTypeDefinitionContext();
-  const newContextValue = useCallback(
-    (): TypeDefinitionContextValue => ({
-      ...contextValue,
-      jsonPropertyPath: [...contextValue.jsonPropertyPath],
-    }),
-    [contextValue]
-  );
+export function UndiscriminatedUnionVariant({
+  loader,
+  unionVariant,
+  anchorIdParts,
+  applyErrorStyles,
+  slug,
+  types,
+}: {
+  loader: DocsLoader;
+  unionVariant: ApiDefinition.UndiscriminatedUnionVariant;
+  anchorIdParts: readonly string[];
+  applyErrorStyles: boolean;
+  slug: FernNavigation.Slug;
+  idx: number;
+  types: Record<ApiDefinition.TypeId, ApiDefinition.TypeDefinition>;
+}) {
+  const href = `${addLeadingSlash(slug)}#${getAnchorId(anchorIdParts)}`;
 
   return (
-    <div
-      className={cn("flex flex-col py-3", {
-        "px-3": !isRootTypeDefinition,
-      })}
-    >
+    <PropertyWrapper id={href} className="flex flex-col py-3">
       <div className="flex flex-col gap-2">
         <div className="t-muted flex items-center gap-2">
           {getIconForTypeReference(unionVariant.shape, types)}
@@ -115,11 +116,7 @@ export const UndiscriminatedUnionVariant: React.FC<
             </span>
           )}
           <span className="t-muted inline-flex items-baseline gap-2 text-xs">
-            {renderTypeShorthand(
-              unionVariant.shape,
-              { nullable: contextValue.isResponse },
-              types
-            )}
+            <TypeShorthand shape={unionVariant.shape} />
           </span>
           {unionVariant.availability != null && (
             <AvailabilityBadge
@@ -129,18 +126,21 @@ export const UndiscriminatedUnionVariant: React.FC<
             />
           )}
         </div>
-        <Markdown mdx={unionVariant.description} size="sm" />
-        <TypeDefinitionContext.Provider value={newContextValue}>
-          <InternalTypeReferenceDefinitions
-            shape={unionVariant.shape}
-            anchorIdParts={anchorIdParts}
-            isCollapsible
-            applyErrorStyles={applyErrorStyles}
-            slug={slug}
-            types={types}
-          />
-        </TypeDefinitionContext.Provider>
+        <MdxServerComponentProse
+          loader={loader}
+          mdx={unionVariant.description}
+          size="sm"
+        />
+        <TypeReferenceDefinitions
+          loader={loader}
+          shape={unionVariant.shape}
+          anchorIdParts={anchorIdParts}
+          isCollapsible
+          applyErrorStyles={applyErrorStyles}
+          slug={slug}
+          types={types}
+        />
       </div>
-    </div>
+    </PropertyWrapper>
   );
-};
+}

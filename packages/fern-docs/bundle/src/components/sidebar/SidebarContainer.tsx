@@ -2,8 +2,6 @@
 
 import React from "react";
 
-import clsx from "clsx";
-
 import { FernScrollArea, FernTooltipProvider, cn } from "@fern-docs/components";
 
 import { useCurrentTab, useTabs } from "@/state/navigation";
@@ -48,7 +46,7 @@ export const SidebarContainer = React.memo(function SidebarContainer({
       >
         {tabs.length > 0 && (
           <ul
-            className={clsx("fern-sidebar-tabs", {
+            className={cn("fern-sidebar-tabs", {
               "lg:hidden": true,
             })}
           >

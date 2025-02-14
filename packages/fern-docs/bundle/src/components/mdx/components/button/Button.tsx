@@ -1,7 +1,6 @@
 import { ReactElement, ReactNode } from "react";
 
-import clsx from "clsx";
-
+import { cn } from "@fern-docs/components";
 import { FernButton } from "@fern-docs/components";
 
 import { DisableFernAnchor } from "@/components/components/FernAnchor";
@@ -47,7 +46,7 @@ export function Button({
           {...props}
           variant={variant}
           size={size}
-          className={clsx(className, "not-prose")}
+          className={cn(className, "not-prose")}
         />
       </DisableFernAnchor>
     );
@@ -58,7 +57,7 @@ export function Button({
       {...props}
       variant={variant}
       size={size}
-      className={clsx(className, "not-prose")}
+      className={cn(className, "not-prose")}
     />
   );
 }

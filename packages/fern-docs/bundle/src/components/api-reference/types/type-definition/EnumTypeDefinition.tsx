@@ -1,8 +1,10 @@
-import React, { ReactElement, useState } from "react";
+"use client";
 
-import cn from "clsx";
+import React, { useState } from "react";
+
 import { Search, Xmark } from "iconoir-react";
 
+import { cn } from "@fern-docs/components";
 import {
   FernButton,
   FernInput,
@@ -10,36 +12,24 @@ import {
 } from "@fern-docs/components";
 import { useBooleanState } from "@fern-ui/react-commons";
 
-import {
-  TypeDefinitionContext,
-  TypeDefinitionContextValue,
-} from "../context/TypeDefinitionContext";
 import { EnumDefinitionDetails } from "./EnumDefinitionDetails";
 import { FernCollapseWithButton } from "./FernCollapseWithButton";
 
-type EnumTypeDefinitionProps = {
-  elements: ReactElement<any>[];
-  isCollapsed: boolean;
-  toggleIsCollapsed: () => void;
-  collapsibleContentContextValue: () => TypeDefinitionContextValue;
-  showText: string;
-};
-
 export type Ref = React.Dispatch<React.SetStateAction<HTMLDivElement | null>>;
 
-export const EnumTypeDefinition = ({
+export function EnumTypeDefinition({
   elements,
-  isCollapsed,
-  toggleIsCollapsed,
-  collapsibleContentContextValue,
   showText,
-}: EnumTypeDefinitionProps): ReactElement<any> => {
+}: {
+  elements: React.ReactNode[];
+  showText: string;
+}) {
+  const collapse = useBooleanState(false);
   const autofocus = useBooleanState(false);
   const [searchInput, setSearchInput] = useState("");
   const hideText = (
     <div className="-mx-1 py-1">
       <FernInput
-        autoFocus={autofocus.value}
         type="search"
         placeholder="Search..."
         value={searchInput}
@@ -55,7 +45,7 @@ export const EnumTypeDefinition = ({
             icon={
               <Xmark
                 className={cn("transition", {
-                  "rotate-45": isCollapsed,
+                  "rotate-45": collapse.value,
                 })}
               />
             }
@@ -77,31 +67,26 @@ export const EnumTypeDefinition = ({
         </div>
       ) : (
         <FernCollapseWithButton
-          isOpen={!isCollapsed}
-          toggleIsOpen={toggleIsCollapsed}
+          isOpen={collapse.value}
+          toggleIsOpen={collapse.toggleValue}
           showText={showText}
           hideText={hideText}
           buttonProps={{
-            className: !isCollapsed ? "multiline" : undefined,
+            className: !collapse.value ? "multiline" : undefined,
             disableAutomaticTooltip: true,
             onClickCapture: () => {
-              if (isCollapsed) {
+              if (collapse.value) {
                 autofocus.setTrue();
               }
             },
           }}
-          onClose={autofocus.setFalse}
         >
-          <TypeDefinitionContext.Provider
-            value={collapsibleContentContextValue}
-          >
-            <EnumDefinitionDetails
-              elements={elements}
-              searchInput={searchInput}
-            />
-          </TypeDefinitionContext.Provider>
+          <EnumDefinitionDetails
+            elements={elements}
+            searchInput={searchInput}
+          />
         </FernCollapseWithButton>
       )}
     </>
   );
-};
+}

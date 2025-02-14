@@ -3,9 +3,9 @@
 import { memo, useState } from "react";
 
 import * as Popover from "@radix-ui/react-popover";
-import cn from "clsx";
 import { Monitor, Moon, Sun } from "lucide-react";
 
+import { cn } from "@fern-docs/components";
 import { FernButton, FernButtonProps } from "@fern-docs/components";
 import { useMounted } from "@fern-ui/react-commons";
 

@@ -52,6 +52,7 @@ export function EndpointParameter({
       availability={availability}
     >
       <TypeReferenceDefinitions
+        loader={loader}
         shape={shape}
         isCollapsible={true}
         anchorIdParts={anchorIdParts}

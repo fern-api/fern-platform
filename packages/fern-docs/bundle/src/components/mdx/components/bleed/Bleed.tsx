@@ -1,6 +1,6 @@
 import { PropsWithChildren, ReactElement } from "react";
 
-import cn from "clsx";
+import { cn } from "@fern-docs/components";
 
 interface BleedProps {
   full?: boolean;

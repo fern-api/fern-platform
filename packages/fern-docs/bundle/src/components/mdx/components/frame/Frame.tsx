@@ -1,6 +1,6 @@
 import { FC, PropsWithChildren } from "react";
 
-import clsx from "clsx";
+import { cn } from "@fern-docs/components";
 
 export declare namespace Frame {
   export interface Props {
@@ -16,7 +16,7 @@ export const Frame: FC<PropsWithChildren<Frame.Props>> = ({
 }) => {
   return (
     <figure
-      className={clsx(
+      className={cn(
         "not-prose fern-card relative mb-6 mt-4 overflow-hidden rounded-xl p-2 first:mt-0",
         {
           "bg-tag-default-soft": background === "subtle",

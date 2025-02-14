@@ -1,6 +1,5 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import "server-only";
 
-import cn from "clsx";
 import { compact } from "es-toolkit/array";
 
 import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
@@ -9,145 +8,122 @@ import titleCase from "@fern-api/ui-core-utils/titleCase";
 import { AvailabilityBadge } from "@fern-docs/components/badges";
 import { addLeadingSlash } from "@fern-docs/utils";
 
-import { trackInternal } from "../../../analytics";
-import { useRouteListener } from "../../../atoms";
+import { MdxServerComponentProse } from "@/components/mdx/server-component";
+import { DocsLoader } from "@/server/docs-loader";
+
 import { FernAnchor } from "../../../components/FernAnchor";
-import { Markdown } from "../../../mdx/Markdown";
 import { getAnchorId } from "../../../util/anchor";
-import {
-  TypeDefinitionContext,
-  TypeDefinitionContextValue,
-  useTypeDefinitionContext,
-} from "../context/TypeDefinitionContext";
+import { TypeDefinitionPathPart } from "../context/TypeDefinitionContext";
+import { PropertyWrapper } from "../object/PropertyWrapper";
 import { InternalTypeDefinition } from "../type-definition/InternalTypeDefinition";
 
-export declare namespace DiscriminatedUnionVariant {
-  export interface Props {
-    discriminant: ApiDefinition.PropertyKey;
-    unionVariant: ApiDefinition.DiscriminatedUnionVariant;
-    anchorIdParts: readonly string[];
-    slug: FernNavigation.Slug;
-    types: Record<string, ApiDefinition.TypeDefinition>;
-  }
-}
-
-export const DiscriminatedUnionVariant: React.FC<
-  DiscriminatedUnionVariant.Props
-> = ({ discriminant, unionVariant, anchorIdParts, slug, types }) => {
-  const { isRootTypeDefinition } = useTypeDefinitionContext();
-
+export function DiscriminatedUnionVariant({
+  loader,
+  discriminant,
+  unionVariant,
+  anchorIdParts,
+  slug,
+  types,
+}: {
+  loader: DocsLoader;
+  discriminant: ApiDefinition.PropertyKey;
+  unionVariant: ApiDefinition.DiscriminatedUnionVariant;
+  anchorIdParts: readonly string[];
+  slug: FernNavigation.Slug;
+  types: Record<string, ApiDefinition.TypeDefinition>;
+}) {
   const anchorId = getAnchorId(anchorIdParts);
-  const ref = useRef<HTMLDivElement>(null);
 
-  const [isActive, setIsActive] = useState(false);
-  const isPaginated = true; // TODO: useIsApiReferencePaginated();
-  useRouteListener(slug, (anchor) => {
-    const isActive = anchor === anchorId;
-    setIsActive(isActive);
-    if (isActive) {
-      setTimeout(() => {
-        ref.current?.scrollIntoView({
-          block: "start",
-          behavior: isPaginated ? "smooth" : "instant",
-        });
-      }, 450);
-    }
-  });
+  // const [isActive, setIsActive] = useState(false);
+  // const isPaginated = true; // TODO: useIsApiReferencePaginated();
+  // useRouteListener(slug, (anchor) => {
+  //   const isActive = anchor === anchorId;
+  //   setIsActive(isActive);
+  //   if (isActive) {
+  //     setTimeout(() => {
+  //       ref.current?.scrollIntoView({
+  //         block: "start",
+  //         behavior: isPaginated ? "smooth" : "instant",
+  //       });
+  //     }, 450);
+  //   }
+  // });
 
-  const [shape, additionalDescriptions] = useMemo((): [
-    ApiDefinition.TypeShape.Object_,
-    string[],
-  ] => {
-    const unwrapped = ApiDefinition.unwrapDiscriminatedUnionVariant(
-      { discriminant },
-      unionVariant,
-      types
-    );
-    return [
-      {
-        type: "object",
-        properties: unwrapped.properties,
-        extends: [],
-        extraProperties: unwrapped.extraProperties,
-      },
-      unwrapped.descriptions,
-    ];
-  }, [discriminant, types, unionVariant]);
-
-  const contextValue = useTypeDefinitionContext();
-  const newContextValue = useCallback(
-    (): TypeDefinitionContextValue => ({
-      ...contextValue,
-      jsonPropertyPath: [
-        ...contextValue.jsonPropertyPath,
-        {
-          type: "objectFilter",
-          propertyName: discriminant,
-          requiredStringValue: unionVariant.discriminantValue,
-        },
-      ],
-    }),
-    [contextValue, discriminant, unionVariant.discriminantValue]
+  const unwrapped = ApiDefinition.unwrapDiscriminatedUnionVariant(
+    { discriminant },
+    unionVariant,
+    types
   );
+
+  const shape = {
+    type: "object" as const,
+    properties: unwrapped.properties,
+    extends: [],
+    extraProperties: unwrapped.extraProperties,
+  };
+
+  // const contextValue = useTypeDefinitionContext();
+  // const newContextValue = useCallback(
+  //   (): TypeDefinitionContextValue => ({
+  //     ...contextValue,
+  //     jsonPropertyPath: [
+  //       ...contextValue.jsonPropertyPath,
+  //       {
+  //         type: "objectFilter",
+  //         propertyName: discriminant,
+  //         requiredStringValue: unionVariant.discriminantValue,
+  //       },
+  //     ],
+  //   }),
+  //   [contextValue, discriminant, unionVariant.discriminantValue]
+  // );
 
   const href = `${addLeadingSlash(slug)}#${anchorId}`;
   const descriptions = compact([
     unionVariant.description,
-    ...additionalDescriptions,
+    ...unwrapped.descriptions,
   ]);
-
-  useEffect(() => {
-    if (descriptions.length > 0) {
-      trackInternal("api_reference_multiple_descriptions", {
-        slug,
-        anchorIdParts,
-        discriminant,
-        discriminantValue: unionVariant.discriminantValue,
-        count: descriptions.length,
-        descriptions,
-      });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [descriptions]);
-
   return (
-    <div
-      ref={ref}
-      id={href}
-      className={cn("flex scroll-mt-4 flex-col gap-2 py-3", {
-        "px-3": !isRootTypeDefinition,
-        "outline-accent rounded-sm outline outline-1 outline-offset-4":
-          isActive,
-      })}
-    >
-      <div className="fern-api-property-header">
-        <FernAnchor href={href} sideOffset={6}>
-          <span className="fern-api-property-key">
-            {unionVariant.displayName ??
-              titleCase(unionVariant.discriminantValue)}
-          </span>
-        </FernAnchor>
-      </div>
+    <PropertyWrapper id={href} className="flex flex-col gap-2 py-3">
+      <TypeDefinitionPathPart
+        part={{
+          type: "objectFilter",
+          propertyName: discriminant,
+          requiredStringValue: unionVariant.discriminantValue,
+        }}
+      >
+        <div className="fern-api-property-header">
+          <FernAnchor href={href} sideOffset={6}>
+            <span className="fern-api-property-key">
+              {unionVariant.displayName ??
+                titleCase(unionVariant.discriminantValue)}
+            </span>
+          </FernAnchor>
+        </div>
 
-      {unionVariant.availability != null && (
-        <AvailabilityBadge
-          availability={unionVariant.availability}
-          size="sm"
-          rounded
-        />
-      )}
-      <div className="flex flex-col">
-        <Markdown mdx={descriptions[0]} size="sm" />
-        <TypeDefinitionContext.Provider value={newContextValue}>
+        {unionVariant.availability != null && (
+          <AvailabilityBadge
+            availability={unionVariant.availability}
+            size="sm"
+            rounded
+          />
+        )}
+        <div className="flex flex-col">
+          <MdxServerComponentProse
+            loader={loader}
+            mdx={descriptions[0]}
+            size="sm"
+          />
           <InternalTypeDefinition
+            loader={loader}
             shape={shape}
             isCollapsible={true}
             anchorIdParts={anchorIdParts}
             slug={slug}
             types={types}
           />
-        </TypeDefinitionContext.Provider>
-      </div>
-    </div>
+        </div>
+      </TypeDefinitionPathPart>
+    </PropertyWrapper>
   );
-};
+}

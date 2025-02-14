@@ -1,8 +1,7 @@
 import { ReactElement } from "react";
 
-import clsx from "clsx";
-
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
+import { cn } from "@fern-docs/components";
 
 import { useIsChildSelected } from "@/state/navigation";
 
@@ -43,7 +42,7 @@ export function SidebarRootApiPackageNode({
     <WithFeatureFlags featureFlags={node.featureFlags}>
       <SidebarRootHeading node={node} className={className} shallow={shallow} />
 
-      <ul className={clsx("fern-sidebar-group")}>
+      <ul className={cn("fern-sidebar-group")}>
         {node.children.map((child) => (
           <li key={child.id}>
             <SidebarApiPackageChild node={child} depth={1} shallow={shallow} />

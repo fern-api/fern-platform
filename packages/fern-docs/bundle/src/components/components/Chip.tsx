@@ -1,15 +1,14 @@
+"use client";
+
 import { ReactElement } from "react";
 
-import cn from "clsx";
-
+import { cn } from "@fern-docs/components";
 import { FernTooltip } from "@fern-docs/components";
 import { useCopyToClipboard } from "@fern-ui/react-commons";
 
-import { Markdown } from "../mdx/Markdown";
-
 type ChipProps = {
   name: string;
-  description?: string | undefined;
+  description?: React.ReactNode;
   small?: boolean;
 };
 
@@ -21,14 +20,8 @@ export const Chip = ({
   const { copyToClipboard, wasJustCopied } = useCopyToClipboard(name);
   return (
     <FernTooltip
-      open={wasJustCopied ? true : description == null ? false : undefined}
-      content={
-        wasJustCopied ? (
-          "Copied!"
-        ) : description != null ? (
-          <Markdown mdx={description} className="text-xs" />
-        ) : undefined
-      }
+      open={wasJustCopied ? true : !description ? false : undefined}
+      content={wasJustCopied ? "Copied!" : description}
     >
       <span
         className={cn(

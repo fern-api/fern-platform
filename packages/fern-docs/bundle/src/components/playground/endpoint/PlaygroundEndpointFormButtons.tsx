@@ -5,7 +5,6 @@ import { ArrowUpRight } from "iconoir-react";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { FernButton, FernButtonGroup } from "@fern-docs/components";
 
-import { useClosePlayground } from "@/components/atoms";
 import { useNode } from "@/state/navigation";
 
 import { FernLink } from "../../components/FernLink";
@@ -26,7 +25,6 @@ export function PlaygroundEndpointFormButtons({
 }: PlaygroundEndpointFormButtonsProps): ReactElement<any> {
   const { current } = useNode();
   const apiReferenceId = FernNavigation.utils.getApiReferenceId(current);
-  const closePlayground = useClosePlayground();
   return (
     <div className="flex items-center justify-between">
       <FernButtonGroup>
@@ -46,7 +44,6 @@ export function PlaygroundEndpointFormButtons({
         href={`/${node.slug}`}
         shallow={apiReferenceId === node.apiDefinitionId}
         className="t-muted hover:t-accent inline-flex items-center gap-1 text-sm font-semibold underline decoration-1 underline-offset-4 hover:decoration-2"
-        onClick={closePlayground}
       >
         <span>View in API Reference</span>
         <ArrowUpRight className="size-icon" />

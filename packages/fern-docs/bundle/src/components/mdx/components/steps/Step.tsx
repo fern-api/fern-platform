@@ -1,9 +1,9 @@
 import { ComponentProps, ReactElement, useState } from "react";
 
-import cn from "clsx";
 import { Check, Link } from "iconoir-react";
 import { AnimatePresence, motion } from "motion/react";
 
+import { cn } from "@fern-docs/components";
 import { useCopyToClipboard } from "@fern-ui/react-commons";
 
 import { useIsFernAnchorDisabled } from "@/components/components/FernAnchor";

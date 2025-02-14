@@ -1,8 +1,9 @@
 import { ReactElement } from "react";
 
-import cn from "clsx";
 import { ArrowRight } from "iconoir-react";
 import { useAtomValue } from "jotai";
+
+import { cn } from "@fern-docs/components";
 
 import { MOBILE_SIDEBAR_ENABLED_ATOM, type NavbarLink } from "../atoms";
 import { FernLinkButton } from "../components/FernLinkButton";

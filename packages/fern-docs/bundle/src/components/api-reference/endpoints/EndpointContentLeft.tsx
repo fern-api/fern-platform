@@ -260,6 +260,7 @@ export async function EndpointContentLeft({
           slug={node.slug}
         >
           <EndpointErrorGroup
+            loader={loader}
             anchorIdParts={RESPONSE_ERROR}
             slug={node.slug}
             errors={endpoint.errors}

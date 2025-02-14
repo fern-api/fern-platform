@@ -2,11 +2,11 @@
 
 import { forwardRef, useCallback, useMemo, useState } from "react";
 
-import clsx from "clsx";
 import { Check, ThumbsDown, ThumbsUp } from "iconoir-react";
 import { motion } from "motion/react";
 import * as Selection from "selection-popover";
 
+import { cn } from "@fern-docs/components";
 import { FernButton, FernButtonGroup } from "@fern-docs/components";
 
 import { track } from "../analytics";
@@ -140,7 +140,7 @@ const FeedbackPopover = forwardRef<
           layoutId="thumbs-up"
           icon={
             <ThumbsUp
-              className={clsx("opacity-60", {
+              className={cn("opacity-60", {
                 "animate-thumb-rock": isHelpful === "yes",
               })}
             />
@@ -149,7 +149,7 @@ const FeedbackPopover = forwardRef<
           intent={isHelpful === "yes" ? "success" : "none"}
           active={isHelpful === "yes"}
           onClick={handleThumbsUp}
-          className={clsx({ "w-full": isHelpful !== undefined })}
+          className={cn({ "w-full": isHelpful !== undefined })}
           transition={{ type: "spring", duration: 0.3, bounce: 0 }}
         >
           Helpful
@@ -158,7 +158,7 @@ const FeedbackPopover = forwardRef<
           layoutId="thumbs-down"
           icon={
             <ThumbsDown
-              className={clsx("opacity-60", {
+              className={cn("opacity-60", {
                 "animate-thumb-rock": isHelpful === "no",
               })}
             />
@@ -167,7 +167,7 @@ const FeedbackPopover = forwardRef<
           intent={isHelpful === "no" ? "danger" : "none"}
           active={isHelpful === "no"}
           onClick={handleThumbsDown}
-          className={clsx({ "w-full": isHelpful !== undefined })}
+          className={cn({ "w-full": isHelpful !== undefined })}
           transition={{ type: "spring", duration: 0.3, bounce: 0 }}
         >
           Not Helpful
@@ -185,7 +185,7 @@ const FeedbackPopover = forwardRef<
           layout
           transition={{ type: "spring", duration: 0.4, bounce: 0 }}
           sideOffset={8}
-          className={clsx(
+          className={cn(
             "border-default dark:bg-background/50 z-50 rounded-lg border bg-white/50 p-1 shadow-xl backdrop-blur-xl",
             {
               "min-w-80 space-y-2 p-2": isHelpful !== undefined,

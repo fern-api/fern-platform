@@ -2,13 +2,13 @@
 
 import React, { Fragment, ReactElement, useEffect, useMemo } from "react";
 
-import clsx from "clsx";
 import { chunk } from "es-toolkit/array";
 import { atom, useAtomValue } from "jotai";
 import { useMemoOne } from "use-memo-one";
 
 import type { FernNavigation } from "@fern-api/fdr-sdk";
 import { EMPTY_ARRAY } from "@fern-api/ui-core-utils";
+import { cn } from "@fern-docs/components";
 import { addLeadingSlash } from "@fern-docs/utils";
 
 import { BuiltWithFern, HideBuiltWithFern } from "@/components/built-with-fern";
@@ -134,7 +134,7 @@ export default function ChangelogPageClient({
 
   return (
     <div
-      className={clsx("fern-changelog", {
+      className={cn("fern-changelog", {
         "full-width": fullWidth,
       })}
     >

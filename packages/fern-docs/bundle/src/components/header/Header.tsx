@@ -4,9 +4,9 @@ import { usePathname } from "next/navigation";
 import { CSSProperties, useState } from "react";
 import React from "react";
 
-import cn, { clsx } from "clsx";
 import { ArrowRight } from "iconoir-react";
 
+import { cn } from "@fern-docs/components";
 import { FernButtonGroup } from "@fern-docs/components";
 
 import { SearchV2Trigger } from "@/state/search";
@@ -107,7 +107,7 @@ function NavbarLink({ navbarLink }: { navbarLink: NavbarLink }) {
   return (
     <FernLinkButton
       id={navbarLink.id}
-      className={clsx("group cursor-pointer", navbarLink.className)}
+      className={cn("group cursor-pointer", navbarLink.className)}
       href={href}
       icon={navbarLink.icon}
       intent={

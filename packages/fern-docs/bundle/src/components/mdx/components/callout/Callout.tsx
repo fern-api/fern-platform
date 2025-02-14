@@ -1,6 +1,5 @@
 import { FC, PropsWithChildren, ReactElement, isValidElement } from "react";
 
-import cn from "clsx";
 import {
   Bell,
   Check,
@@ -13,6 +12,7 @@ import {
 } from "iconoir-react";
 
 import { visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
+import { cn } from "@fern-docs/components";
 import { FaIcon } from "@fern-docs/components";
 
 type Intent =

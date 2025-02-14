@@ -1,5 +1,7 @@
 import React from "react";
 
+import { cn } from "@fern-docs/components";
+
 import { SetLayout } from "@/state/layout";
 
 interface OverviewLayoutProps {
@@ -16,9 +18,15 @@ export function OverviewLayout({
   footer,
 }: OverviewLayoutProps) {
   return (
-    <div className="flex flex-1 flex-row-reverse gap-8 pl-8">
+    <>
       <SetLayout value="overview" />
-      <aside className="w-sidebar-width sticky top-[var(--header-height)] hidden h-fit max-h-[calc(100dvh-var(--header-height))] flex-col xl:flex">
+      <aside
+        role="directory"
+        className={cn(
+          "sticky top-[var(--header-height)] order-last hidden h-fit max-h-[calc(100dvh-var(--header-height))] flex-col xl:flex",
+          "w-[var(--spacing-sidebar-width)]"
+        )}
+      >
         {toc}
       </aside>
       <article className="max-w-content-wide-width ml-0 mr-auto min-w-0 shrink xl:mx-auto">
@@ -28,6 +36,6 @@ export function OverviewLayout({
         </div>
         {footer}
       </article>
-    </div>
+    </>
   );
 }

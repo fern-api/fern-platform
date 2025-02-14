@@ -6,6 +6,7 @@ import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { MdxServerComponentProse } from "@/components/mdx/server-component";
 import { DocsLoader } from "@/server/docs-loader";
 
+import { TypeDefinitionResponse } from "../types/context/TypeDefinitionContext";
 import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";
 import { ResponseSummaryFallback } from "./response-summary-fallback";
 
@@ -23,7 +24,7 @@ export function EndpointResponseSection({
   types: Record<ApiDefinition.TypeId, ApiDefinition.TypeDefinition>;
 }) {
   return (
-    <>
+    <TypeDefinitionResponse>
       <MdxServerComponentProse
         loader={loader}
         size="sm"
@@ -32,28 +33,29 @@ export function EndpointResponseSection({
         fallback={<ResponseSummaryFallback response={response} types={types} />}
       />
       <EndpointResponseSectionContent
+        loader={loader}
         body={response.body}
         anchorIdParts={anchorIdParts}
         slug={slug}
         types={types}
       />
-    </>
+    </TypeDefinitionResponse>
   );
 }
 
-interface EndpointResponseSectionContentProps {
-  body: ApiDefinition.HttpResponseBodyShape;
-  anchorIdParts: readonly string[];
-  slug: FernNavigation.Slug;
-  types: Record<ApiDefinition.TypeId, ApiDefinition.TypeDefinition>;
-}
-
 function EndpointResponseSectionContent({
+  loader,
   body,
   anchorIdParts,
   slug,
   types,
-}: EndpointResponseSectionContentProps) {
+}: {
+  loader: DocsLoader;
+  body: ApiDefinition.HttpResponseBodyShape;
+  anchorIdParts: readonly string[];
+  slug: FernNavigation.Slug;
+  types: Record<ApiDefinition.TypeId, ApiDefinition.TypeDefinition>;
+}) {
   switch (body.type) {
     case "empty":
     case "fileDownload":
@@ -62,25 +64,25 @@ function EndpointResponseSectionContent({
     case "stream":
       return (
         <TypeReferenceDefinitions
+          loader={loader}
           shape={body.shape}
           isCollapsible={false}
           anchorIdParts={anchorIdParts}
           slug={slug}
           applyErrorStyles={false}
           types={types}
-          isResponse={true}
         />
       );
     default:
       return (
         <TypeReferenceDefinitions
+          loader={loader}
           shape={body}
           isCollapsible={false}
           anchorIdParts={anchorIdParts}
           slug={slug}
           applyErrorStyles={false}
           types={types}
-          isResponse={true}
         />
       );
   }

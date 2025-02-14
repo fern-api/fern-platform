@@ -256,6 +256,7 @@ export async function WebSocketContent({
                 headerType="h2"
               >
                 <TypeReferenceDefinitions
+                  loader={loader}
                   shape={publishMessageShape}
                   isCollapsible={false}
                   anchorIdParts={["send"]}
@@ -280,6 +281,7 @@ export async function WebSocketContent({
                 headerType="h2"
               >
                 <TypeReferenceDefinitions
+                  loader={loader}
                   shape={subscribeMessageShape}
                   isCollapsible={false}
                   anchorIdParts={["receive"]}

@@ -1,10 +1,11 @@
-import { Fragment, ReactNode } from "react";
+import "server-only";
 
-import cn from "clsx";
+import { Fragment, ReactNode } from "react";
 
 import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
+import { cn } from "@fern-docs/components";
 
 import { DocsLoader } from "@/server/docs-loader";
 
@@ -17,23 +18,19 @@ import {
   EndpointParameterContent,
 } from "./EndpointParameter";
 
-export declare namespace EndpointRequestSection {
-  export interface Props {
-    loader: DocsLoader;
-    request: ApiDefinition.HttpRequest;
-    anchorIdParts: readonly string[];
-    slug: FernNavigation.Slug;
-    types: Record<ApiDefinition.TypeId, ApiDefinition.TypeDefinition>;
-  }
-}
-
-export const EndpointRequestSection: React.FC<EndpointRequestSection.Props> = ({
+export function EndpointRequestSection({
   loader,
   request,
   anchorIdParts,
   slug,
   types,
-}) => {
+}: {
+  loader: DocsLoader;
+  request: ApiDefinition.HttpRequest;
+  anchorIdParts: readonly string[];
+  slug: FernNavigation.Slug;
+  types: Record<ApiDefinition.TypeId, ApiDefinition.TypeDefinition>;
+}) {
   return (
     <div className="flex flex-col">
       <Markdown
@@ -115,6 +112,7 @@ export const EndpointRequestSection: React.FC<EndpointRequestSection.Props> = ({
         bytes: () => null,
         object: (obj) => (
           <TypeReferenceDefinitions
+            loader={loader}
             shape={obj}
             isCollapsible={false}
             anchorIdParts={anchorIdParts}
@@ -125,6 +123,7 @@ export const EndpointRequestSection: React.FC<EndpointRequestSection.Props> = ({
         ),
         alias: (alias) => (
           <TypeReferenceDefinitions
+            loader={loader}
             shape={alias}
             isCollapsible={false}
             anchorIdParts={anchorIdParts}
@@ -136,7 +135,7 @@ export const EndpointRequestSection: React.FC<EndpointRequestSection.Props> = ({
       })}
     </div>
   );
-};
+}
 
 function renderTypeShorthandFormDataField(
   property: Exclude<

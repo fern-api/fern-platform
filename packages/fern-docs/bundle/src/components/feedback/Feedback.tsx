@@ -3,9 +3,9 @@
 import { usePathname } from "next/navigation";
 import { FC, useCallback, useEffect, useRef, useState } from "react";
 
-import clsx from "clsx";
 import { ThumbsDown, ThumbsUp } from "iconoir-react";
 
+import { cn } from "@fern-docs/components";
 import { FernButton, FernButtonGroup, toast } from "@fern-docs/components";
 import { useKeyboardPress } from "@fern-ui/react-commons";
 
@@ -125,7 +125,7 @@ export const Feedback: FC<FeedbackProps> = ({
                 <FernButton
                   icon={
                     <ThumbsUp
-                      className={clsx({
+                      className={cn({
                         "animate-thumb-rock": isHelpful === "yes",
                       })}
                     />
@@ -152,7 +152,7 @@ export const Feedback: FC<FeedbackProps> = ({
                 <FernButton
                   icon={
                     <ThumbsDown
-                      className={clsx({
+                      className={cn({
                         "animate-thumb-rock": isHelpful === "no",
                       })}
                     />

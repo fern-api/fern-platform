@@ -1,10 +1,10 @@
 import { ReactElement, useEffect, useState } from "react";
 
-import cn from "clsx";
 import { useAtom } from "jotai";
 import { parse } from "url";
 
 import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
+import { cn } from "@fern-docs/components";
 import { FernButton, FernDropdown, FernInput } from "@fern-docs/components";
 import { useBooleanState } from "@fern-ui/react-commons";
 

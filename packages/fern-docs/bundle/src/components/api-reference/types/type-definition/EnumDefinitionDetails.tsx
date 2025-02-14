@@ -1,28 +1,39 @@
-import { ReactElement, useEffect, useState } from "react";
+"use client";
 
+import React from "react";
+
+import { isPlainObject } from "@fern-api/ui-core-utils";
 import { Empty } from "@fern-docs/components";
 
 export interface EnumDefinitionDetailsProps {
-  elements: ReactElement<any>[];
+  elements: React.ReactNode[];
   searchInput: string;
 }
 
-export const EnumDefinitionDetails = ({
+export function EnumDefinitionDetails({
   elements,
   searchInput,
-}: EnumDefinitionDetailsProps): ReactElement<any> => {
-  const [filteredElements, setFilteredElements] = useState<ReactElement<any>[]>(
-    []
-  );
+}: EnumDefinitionDetailsProps) {
+  const [filteredElements, setFilteredElements] = React.useState<
+    React.ReactNode[]
+  >([]);
 
-  useEffect(() => {
-    const temp = elements.filter(
-      (element) =>
-        element.props.name.toLowerCase().includes(searchInput.toLowerCase()) ||
-        element.props?.description
-          ?.toLowerCase()
-          .includes(searchInput.toLowerCase())
-    );
+  React.useEffect(() => {
+    const temp = elements.filter(React.isValidElement).filter((element) => {
+      if (!isPlainObject(element.props)) {
+        return false;
+      }
+      return (
+        (typeof element.props.name === "string" &&
+          element.props.name
+            .toLowerCase()
+            .includes(searchInput.toLowerCase())) ||
+        (typeof element.props.description === "string" &&
+          element.props.description
+            .toLowerCase()
+            .includes(searchInput.toLowerCase()))
+      );
+    });
     setFilteredElements(temp);
   }, [elements, searchInput]);
 
@@ -36,4 +47,4 @@ export const EnumDefinitionDetails = ({
       )}
     </div>
   );
-};
+}

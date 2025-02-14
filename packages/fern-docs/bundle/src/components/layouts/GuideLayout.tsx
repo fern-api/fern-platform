@@ -21,6 +21,7 @@ export function GuideLayout({
     <>
       <SetLayout value="guide" />
       <aside
+        role="directory"
         className={cn(
           "sticky top-[var(--header-height)] order-last hidden h-fit max-h-[calc(100dvh-var(--header-height))] flex-col xl:flex",
           "w-[var(--spacing-sidebar-width)]"

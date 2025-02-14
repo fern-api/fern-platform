@@ -1,8 +1,7 @@
 import { ReactElement } from "react";
 
-import clsx from "clsx";
-
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
+import { cn } from "@fern-docs/components";
 import { FaIcon } from "@fern-docs/components";
 
 import { SidebarPageNode } from "./SidebarPageNode";
@@ -31,7 +30,7 @@ export function SidebarRootHeading({
   }
 
   return (
-    <div className={clsx("fern-sidebar-heading", className)}>
+    <div className={cn("fern-sidebar-heading", className)}>
       {node.icon != null && <FaIcon icon={node.icon} />}
       <span className="fern-sidebar-heading-content">{node.title}</span>
     </div>

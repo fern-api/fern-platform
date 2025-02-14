@@ -56,7 +56,7 @@ export function DismissableSidebar(_: {
   //       <SidebarContainerMotion
   //         key="sidebar"
   //         ref={sidebarRef}
-  //         className={clsx("dismissable z-50", className)}
+  //         className={cn("dismissable z-50", className)}
   //         initial={{ x: "-100%" }}
   //         animate={{ x: 0 }}
   //         exit={{ x: "-100%" }}

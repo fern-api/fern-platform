@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 
-import cn from "clsx";
+import { cn } from "@fern-docs/components";
 
 import { useThemeSwitchEnabled } from "@/hooks/use-theme";
 import { SearchV2Trigger } from "@/state/search";

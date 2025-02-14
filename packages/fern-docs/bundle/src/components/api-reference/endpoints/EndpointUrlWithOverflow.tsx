@@ -1,4 +1,4 @@
-import cn from "clsx";
+import { cn } from "@fern-docs/components";
 
 import { HorizontalOverflowMask } from "../../components/HorizontalOverflowMask";
 import { EndpointUrl } from "./EndpointUrl";

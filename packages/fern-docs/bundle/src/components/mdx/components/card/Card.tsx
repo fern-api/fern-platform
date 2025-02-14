@@ -1,7 +1,6 @@
 import { isValidElement } from "react";
 
-import cn from "clsx";
-
+import { cn } from "@fern-docs/components";
 import { FaIcon, FernCard } from "@fern-docs/components";
 
 import { DisableFernAnchor } from "@/components/components/FernAnchor";

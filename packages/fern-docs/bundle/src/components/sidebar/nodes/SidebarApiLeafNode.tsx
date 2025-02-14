@@ -1,8 +1,7 @@
 import { ReactNode } from "react";
 
-import clsx from "clsx";
-
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
+import { cn } from "@fern-docs/components";
 import { HttpMethodBadge } from "@fern-docs/components/badges";
 
 import { useIsSelectedSidebarNode } from "@/state/navigation";
@@ -45,7 +44,7 @@ export function SidebarApiLeafNode({
             method={node.method}
             size="sm"
             variant={selected ? "solid" : "subtle"}
-            className={clsx({
+            className={cn({
               "tracking-tighter": node.isResponseStream,
             })}
           >
@@ -78,7 +77,7 @@ export function SidebarApiLeafNode({
         slug={node.slug}
         title={
           <span
-            className={clsx({
+            className={cn({
               "line-through opacity-70": node.availability === "Deprecated",
             })}
           >

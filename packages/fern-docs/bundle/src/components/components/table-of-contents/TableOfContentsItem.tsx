@@ -1,6 +1,6 @@
 import { ReactElement, memo, useEffect, useRef } from "react";
 
-import clsx from "clsx";
+import { cn } from "@fern-docs/components";
 
 import { FernLink } from "../FernLink";
 
@@ -26,7 +26,7 @@ export const TableOfContentsItem = memo<TableOfContentsItemProps>(
     return (
       <li className="mb-2 last:mb-0" ref={ref} data-depth={depth}>
         <FernLink
-          className={clsx(
+          className={cn(
             "block hyphens-auto break-words text-sm transition-colors hover:transition-none",
             {
               "text-grayscale-a11 hover:text-grayscale-a12": !active,

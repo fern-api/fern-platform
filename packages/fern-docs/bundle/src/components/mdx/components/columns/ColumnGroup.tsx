@@ -1,6 +1,6 @@
 import { FC, type PropsWithChildren } from "react";
 
-import cn from "clsx";
+import { cn } from "@fern-docs/components";
 
 export declare namespace ColumnGroup {
   export interface ItemProps {

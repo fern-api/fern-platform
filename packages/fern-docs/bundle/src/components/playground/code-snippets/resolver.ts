@@ -1,5 +1,3 @@
-import { UnreachableCaseError } from "ts-essentials";
-
 import type { EndpointContext } from "@fern-api/fdr-sdk/api-definition";
 import { toCurlyBraceEndpointPathLiteral } from "@fern-api/fdr-sdk/api-definition";
 import { type APIV1Read, FdrAPI } from "@fern-api/fdr-sdk/client/types";
@@ -69,7 +67,7 @@ export class PlaygroundCodeSnippetResolver {
   private pythonRequestsResolver: SnippetTemplateResolver | undefined;
 
   public resolve(
-    lang: "curl" | "python" | "typescript" | "javascript",
+    lang: string,
     apiDefinition?: APIV1Read.ApiDefinition
   ): string {
     if (lang === "curl") {
@@ -81,7 +79,7 @@ export class PlaygroundCodeSnippetResolver {
     } else if (lang === "python") {
       return this.toPythonSdkSnippet(apiDefinition) ?? this.toPythonRequests();
     } else {
-      throw new UnreachableCaseError(lang);
+      return "";
     }
   }
 

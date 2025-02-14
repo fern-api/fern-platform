@@ -1,7 +1,6 @@
 import { FC, createRef, useCallback, useEffect, useMemo } from "react";
 
-import clsx from "clsx";
-
+import { cn } from "@fern-docs/components";
 import {
   FernSyntaxHighlighter,
   type ScrollToHandle,
@@ -83,7 +82,7 @@ const CodeSnippetExampleInternal: FC<CodeSnippetExample.Props> = ({
     <TitledExample
       copyToClipboardText={useCallback(() => code, [code])}
       {...props}
-      className={clsx(className, {
+      className={cn(className, {
         "bg-card-solid dark": isDarkCode,
       })}
     >

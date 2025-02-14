@@ -1,9 +1,9 @@
 import { ReactElement } from "react";
 
-import clsx from "clsx";
 import { Lock } from "iconoir-react";
 
 import { TabChild, hasPointsTo } from "@fern-api/fdr-sdk/navigation";
+import { cn } from "@fern-docs/components";
 import { FaIcon } from "@fern-docs/components";
 import { addLeadingSlash } from "@fern-docs/utils";
 
@@ -30,7 +30,7 @@ export function HeaderTab({ tab }: { tab: TabChild }): ReactElement<any> {
   return (
     <li className="fern-header-tabs-list-item">
       <FernLink
-        className={clsx("fern-header-tab-button", {
+        className={cn("fern-header-tab-button", {
           "opacity-50": tab.type !== "link" && tab.hidden,
         })}
         href={

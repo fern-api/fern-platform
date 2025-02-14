@@ -3,28 +3,20 @@
 import { usePathname } from "next/navigation";
 import React, { useEffect, useRef } from "react";
 
-import clsx from "clsx";
-import { useAtomValue, useSetAtom } from "jotai";
+import { useSetAtom } from "jotai";
 
+import { cn } from "@fern-docs/components";
 import { FernScrollArea } from "@fern-docs/components";
-import { useResizeObserver } from "@fern-ui/react-commons";
 
-import {
-  CONTENT_HEIGHT_ATOM,
-  SCROLL_BODY_ATOM,
-  SHOW_HEADER_ATOM,
-  // SIDEBAR_DISMISSABLE_ATOM,
-} from "@/components/atoms";
+import { SCROLL_BODY_ATOM } from "@/components/atoms";
 
 import { HeaderContainer } from "./HeaderContainer";
 
 const CohereDocsStyle = () => {
-  const contentHeight = useAtomValue(CONTENT_HEIGHT_ATOM);
   return (
     <style jsx global>
       {`
         :root {
-          ${contentHeight > 0 ? `--content-height: ${contentHeight}px;` : ""}
           --header-offset: 0px;
           --border-color-card: #d8cfc1;
           --bg-color-search-dialog: #fafafa;
@@ -51,16 +43,12 @@ export default function CohereDocs({
   sidebar,
   children,
   announcement,
-  headerHeight,
 }: {
   header: React.ReactNode;
   sidebar: React.ReactNode;
   children: React.ReactNode;
   announcement?: React.ReactNode;
-  headerHeight?: number;
 }) {
-  const showHeader = useAtomValue(SHOW_HEADER_ATOM);
-
   const showDismissableSidebar = false;
 
   const mainRef = useRef<HTMLDivElement>(null);
@@ -69,13 +57,6 @@ export default function CohereDocs({
   useEffect(() => {
     setScrollBody(mainRef.current);
   }, [setScrollBody]);
-
-  const setContentHeight = useSetAtom(CONTENT_HEIGHT_ATOM);
-  useResizeObserver(mainRef, ([entry]) => {
-    if (entry != null) {
-      setContentHeight(entry.contentRect.height);
-    }
-  });
 
   const pathname = usePathname();
   useEffect(() => {
@@ -86,14 +67,12 @@ export default function CohereDocs({
     <div id="fern-docs" className="fern-container fern-theme-cohere">
       <CohereDocsStyle />
       {announcement}
-      {showHeader && (
-        <HeaderContainer header={header} showHeaderTabs showSearchBar={false} />
-      )}
+      <HeaderContainer header={header} showHeaderTabs showSearchBar={false} />
       <div className="fern-body">
         {sidebar}
         <FernScrollArea
           rootClassName="fern-main"
-          className={clsx({
+          className={cn({
             "fern-sidebar-hidden": showDismissableSidebar,
           })}
           ref={mainRef}

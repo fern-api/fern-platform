@@ -1,28 +1,26 @@
-import cn from "clsx";
-
 import type * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 
-import { MonospaceText } from "../../../components/MonospaceText";
-import { Markdown } from "../../../mdx/Markdown";
-import { useTypeDefinitionContext } from "../context/TypeDefinitionContext";
+import { Chip } from "@/components/components/Chip";
+import { MdxServerComponentProse } from "@/components/mdx/server-component";
+import { DocsLoader } from "@/server/docs-loader";
 
-export declare namespace EnumValue {
-  export interface Props {
-    enumValue: ApiDefinition.EnumValue;
-  }
-}
-
-export const EnumValue: React.FC<EnumValue.Props> = ({ enumValue }) => {
-  const { isRootTypeDefinition } = useTypeDefinitionContext();
-
+export function EnumValue({
+  loader,
+  enumValue,
+}: {
+  loader: DocsLoader;
+  enumValue: ApiDefinition.EnumValue;
+}) {
   return (
-    <div
-      className={cn("flex flex-col gap-2 py-2", {
-        "px-2": !isRootTypeDefinition,
-      })}
-    >
-      <MonospaceText className="t-default text-sm">{`"${enumValue.value}"`}</MonospaceText>
-      <Markdown size="sm" mdx={enumValue.description} />
-    </div>
+    <Chip
+      name={enumValue.value}
+      description={
+        <MdxServerComponentProse
+          loader={loader}
+          mdx={enumValue.description}
+          size="xs"
+        />
+      }
+    />
   );
-};
+}

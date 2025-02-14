@@ -1,6 +1,6 @@
 import { ComponentProps, PropsWithChildren, forwardRef } from "react";
 
-import cn from "clsx";
+import { cn } from "@fern-docs/components";
 
 export declare namespace MonospaceText {
   export type Props = PropsWithChildren<{

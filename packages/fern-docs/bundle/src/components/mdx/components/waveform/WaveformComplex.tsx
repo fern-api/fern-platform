@@ -9,9 +9,10 @@ import {
 
 import { OrthographicCamera } from "@react-three/drei";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import cn from "clsx";
 import { motion, useMotionValueEvent, useSpring } from "motion/react";
 import * as THREE from "three";
+
+import { cn } from "@fern-docs/components";
 
 import fragmentShader from "./WaveformComplexShader.frag";
 import vertexShader from "./WaveformComplexShader.vert";

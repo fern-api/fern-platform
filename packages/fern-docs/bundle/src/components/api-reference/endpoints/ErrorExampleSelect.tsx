@@ -1,9 +1,9 @@
 import { FC, Fragment, PropsWithChildren, ReactNode, forwardRef } from "react";
 
 import * as Select from "@radix-ui/react-select";
-import clsx from "clsx";
 import { NavArrowDown, NavArrowUp } from "iconoir-react";
 
+import { cn } from "@fern-docs/components";
 import {
   FernButton,
   SemanticColor,
@@ -120,7 +120,7 @@ export const FernSelectItem = forwardRef<
 ) {
   return (
     <Select.Item
-      className={clsx(
+      className={cn(
         "text-text-default data-[disabled]:text-text-disabled relative flex h-8 select-none items-center rounded-[3px] pl-2 pr-4 text-sm leading-none data-[disabled]:pointer-events-none data-[highlighted]:outline-none",
         {
           "data-[highlighted]:bg-tag-default":

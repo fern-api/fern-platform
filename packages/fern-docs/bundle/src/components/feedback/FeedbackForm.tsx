@@ -1,10 +1,10 @@
 import { FC, FormEvent, useCallback, useMemo, useRef, useState } from "react";
 
-import clsx from "clsx";
 import { useAtom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 import { motion } from "motion/react";
 
+import { cn } from "@fern-docs/components";
 import {
   FernButton,
   FernCheckbox,
@@ -127,7 +127,7 @@ export const FeedbackForm: FC<FeedbackFormProps> = ({
     <form onSubmit={handleSubmitFeedback} className="p-0">
       <label
         htmlFor="feedbackReason"
-        className={clsx({
+        className={cn({
           "text-lg font-semibold": layoutDensity === "verbose",
           "t-muted text-sm font-medium": layoutDensity === "condensed",
         })}

@@ -1,8 +1,9 @@
 import React from "react";
 
-import clsx from "clsx";
 import { GitFork, GithubCircle, Star } from "iconoir-react";
 import useSWR from "swr";
+
+import { cn } from "@fern-docs/components";
 
 import { FernLinkButton } from "../components/FernLinkButton";
 import { GitHubInfo, getGitHubInfo } from "../util/github";
@@ -36,7 +37,7 @@ export const GitHubWidget: React.FC<{
       icon={<GithubCircle className="!size-icon-lg" strokeWidth={1} />}
       variant="minimal"
       id={id}
-      className={clsx("h-10", className)}
+      className={cn("h-10", className)}
     >
       <div className="font-medium">{repo}</div>
       <div className="flex gap-2 text-xs">

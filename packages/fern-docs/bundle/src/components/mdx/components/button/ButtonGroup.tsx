@@ -1,7 +1,6 @@
 import { ComponentProps, ReactElement } from "react";
 
-import clsx from "clsx";
-
+import { cn } from "@fern-docs/components";
 import { FernButtonGroup } from "@fern-docs/components";
 
 export function ButtonGroup(
@@ -10,7 +9,7 @@ export function ButtonGroup(
   return (
     <FernButtonGroup
       {...props}
-      className={clsx(props.className, "m-mdx flex-wrap")}
+      className={cn(props.className, "m-mdx flex-wrap")}
     />
   );
 }

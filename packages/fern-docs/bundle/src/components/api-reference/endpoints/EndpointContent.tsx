@@ -10,6 +10,7 @@ import { MdxServerComponentProse } from "@/components/mdx/server-component";
 import { DocsLoader } from "@/server/docs-loader";
 
 import { ApiPageCenter } from "../api-page-center";
+import { TypeDefinitionRoot } from "../types/context/TypeDefinitionContext";
 import { EndpointContentCodeSnippets } from "./EndpointContentCodeSnippets";
 import { EndpointContentLeft } from "./EndpointContentLeft";
 import { EndpointContextProvider } from "./EndpointContext";
@@ -27,7 +28,7 @@ export async function EndpointContent({
   breadcrumb: readonly FernNavigation.BreadcrumbItem[];
   streamToggle?: React.ReactNode;
 }) {
-  const { node, endpoint } = context;
+  const { node, endpoint, types } = context;
 
   return (
     <EndpointContextProvider endpoint={endpoint}>
@@ -58,11 +59,13 @@ export async function EndpointContent({
             />
           }
           reference={
-            <EndpointContentLeft
-              loader={loader}
-              context={context}
-              showErrors={showErrors}
-            />
+            <TypeDefinitionRoot types={types}>
+              <EndpointContentLeft
+                loader={loader}
+                context={context}
+                showErrors={showErrors}
+              />
+            </TypeDefinitionRoot>
           }
         >
           <React.Suspense>

@@ -1,6 +1,6 @@
 import { ComponentPropsWithoutRef, ReactElement, ReactNode } from "react";
 
-import clsx from "clsx";
+import { cn } from "@fern-docs/components";
 
 interface ChangelogContentLayoutProps extends ComponentPropsWithoutRef<"div"> {
   as: "div" | "section" | "article";
@@ -20,7 +20,7 @@ export function ChangelogContentLayout({
   return (
     <Component
       {...props}
-      className={clsx("fern-changelog-entry", props.className)}
+      className={cn("fern-changelog-entry", props.className)}
     >
       <aside>{asideContent}</aside>
       <div className="fern-changelog-content">

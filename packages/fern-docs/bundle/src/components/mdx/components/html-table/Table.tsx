@@ -4,9 +4,9 @@ import { ComponentProps, useState } from "react";
 
 import * as Dialog from "@radix-ui/react-dialog";
 import * as Tooltip from "@radix-ui/react-tooltip";
-import clsx from "clsx";
 import { Expand } from "iconoir-react";
 
+import { cn } from "@fern-docs/components";
 import { FernButton, FernScrollArea } from "@fern-docs/components";
 
 export function Table({ className, ...rest }: ComponentProps<"table">) {
@@ -19,7 +19,7 @@ export function Table({ className, ...rest }: ComponentProps<"table">) {
           <Tooltip.Trigger asChild>
             <div className="fern-table-root not-prose">
               <FernScrollArea>
-                <table {...rest} className={clsx("fern-table", className)} />
+                <table {...rest} className={cn("fern-table", className)} />
               </FernScrollArea>
             </div>
           </Tooltip.Trigger>
@@ -48,7 +48,7 @@ export function Table({ className, ...rest }: ComponentProps<"table">) {
           >
             <div className="fern-table-root not-prose fullscreen">
               <FernScrollArea>
-                <table {...rest} className={clsx("fern-table", className)} />
+                <table {...rest} className={cn("fern-table", className)} />
               </FernScrollArea>
             </div>
           </Dialog.Content>

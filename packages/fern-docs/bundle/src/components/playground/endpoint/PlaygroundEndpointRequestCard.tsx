@@ -1,6 +1,6 @@
 import { ReactElement } from "react";
 
-import { useAtom, useAtomValue, useSetAtom } from "jotai";
+import { useAtomValue, useSetAtom } from "jotai";
 
 import type { EndpointContext } from "@fern-api/fdr-sdk/api-definition";
 import {
@@ -13,10 +13,10 @@ import {
 import {
   PLAYGROUND_AUTH_STATE_ATOM,
   PLAYGROUND_AUTH_STATE_OAUTH_ATOM,
-  PLAYGROUND_REQUEST_TYPE_ATOM,
 } from "@/components/atoms";
 import { isFileForgeHackEnabledAtom } from "@/state/api-explorer-flags";
 import { jotaiStore } from "@/state/jotai-provider";
+import { useProgrammingLanguage } from "@/state/language";
 
 import { PlaygroundRequestPreview } from "../PlaygroundRequestPreview";
 import { PlaygroundCodeSnippetResolverBuilder } from "../code-snippets/resolver";
@@ -28,12 +28,27 @@ interface PlaygroundEndpointRequestCardProps {
   formState: PlaygroundEndpointRequestFormState;
 }
 
+function useRequestType(): [
+  "curl" | "typescript" | "python",
+  (requestType: string) => void,
+] {
+  const [lang, setLang] = useProgrammingLanguage();
+  return [
+    lang === "typescript" || lang === "javascript"
+      ? "typescript"
+      : lang === "python"
+        ? "python"
+        : "curl",
+    setLang,
+  ];
+}
+
 export function PlaygroundEndpointRequestCard({
   context,
   formState,
 }: PlaygroundEndpointRequestCardProps): ReactElement<any> | null {
   const isFileForgeHackEnabled = useAtomValue(isFileForgeHackEnabledAtom);
-  const [requestType, setRequestType] = useAtom(PLAYGROUND_REQUEST_TYPE_ATOM);
+  const [requestType, setRequestType] = useRequestType();
   const setOAuthValue = useSetAtom(PLAYGROUND_AUTH_STATE_OAUTH_ATOM);
   const [baseUrl] = usePlaygroundBaseUrl(context.endpoint);
   return (

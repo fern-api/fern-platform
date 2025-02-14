@@ -9,10 +9,10 @@ import {
   useState,
 } from "react";
 
-import { clsx } from "clsx";
 import fastdom from "fastdom";
 import { useCallbackOne } from "use-memo-one";
 
+import { cn } from "@fern-docs/components";
 import type { TableOfContentsItem as TableOfContentsItemType } from "@fern-docs/mdx";
 
 import { ANCHOR_ATOM, useAtomEffect } from "../../atoms";
@@ -133,7 +133,7 @@ export const TableOfContents: React.FC<TableOfContents.Props> = ({
       )}
       {tableOfContents.length > 0 && (
         <ul
-          className={clsx("toc-root not-prose", className)}
+          className={cn("toc-root not-prose", className)}
           style={
             {
               ...style,

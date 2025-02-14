@@ -1,9 +1,9 @@
 import { ReactNode } from "react";
 
-import clsx from "clsx";
 import { UnreachableCaseError } from "ts-essentials";
 
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
+import { cn } from "@fern-docs/components";
 
 import { SidebarApiPackageNode } from "./SidebarApiPackageNode";
 import { SidebarChangelogNode } from "./SidebarChangelogNode";
@@ -30,7 +30,7 @@ export function SidebarNavigationChild({
         <SidebarSectionNode
           node={node}
           depth={depth}
-          className={clsx({
+          className={cn({
             "!text-text-default font-semibold": root,
           })}
         />

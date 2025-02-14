@@ -1,9 +1,7 @@
 import { memo } from "react";
 
-import cn, { clsx } from "clsx";
-
 import { TabChild, hasPointsTo } from "@fern-api/fdr-sdk/navigation";
-import { FaIcon } from "@fern-docs/components";
+import { FaIcon, cn } from "@fern-docs/components";
 import { addLeadingSlash } from "@fern-docs/utils";
 
 import { FernLink } from "../components/FernLink";
@@ -37,7 +35,7 @@ const UnmemoizedSidebarTabButton: React.FC<SidebarTabButton.Props> = ({
         data-state={selected ? "active" : "inactive"}
       >
         <div
-          className={clsx("flex min-w-0 items-center justify-start space-x-4", {
+          className={cn("flex min-w-0 items-center justify-start space-x-4", {
             "opacity-50": tab.type !== "link" && tab.hidden,
           })}
         >
