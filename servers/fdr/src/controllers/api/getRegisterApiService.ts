@@ -1,6 +1,7 @@
 import {
   APIV1Db,
   APIV1Write,
+  convertAPIDefinitionToDb,
   FdrAPI,
   SDKSnippetHolder,
 } from "@fern-api/fdr-sdk";
@@ -105,6 +106,17 @@ export function getRegisterApiService(app: FdrApplication): APIV1WriteService {
         snippetTemplatesByEndpoint,
         snippetTemplatesByEndpointId,
       });
+
+      if (
+        req.body.definition != null &&
+        Object.keys(req.body.definition).length > 0
+      ) {
+        transformedApiDefinition = convertAPIDefinitionToDb(
+          req.body.definition,
+          apiDefinitionId,
+          snippetHolder
+        );
+      }
 
       let isLatest = false;
       if (transformedApiDefinition == null) {
