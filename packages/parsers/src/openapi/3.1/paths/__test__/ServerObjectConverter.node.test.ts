@@ -38,5 +38,26 @@ describe("ServerObjectConverterNode", () => {
         baseUrl: "https://api.example.com",
       });
     });
+
+    it("should replace variables in url", () => {
+      const input: OpenAPIV3_1.ServerObject = {
+        url: "https://api.example.com/{foo}/{bar}",
+        variables: {
+          foo: { default: "bar" },
+          bar: { default: "baz" },
+        },
+      };
+      const node = new ServerObjectConverterNode({
+        input,
+        context: mockContext,
+        accessPath: [],
+        pathId: "test",
+      });
+      const result = node.convert();
+      expect(result).toEqual({
+        id: FernRegistry.EnvironmentId("https://api.example.com/bar/baz"),
+        baseUrl: "https://api.example.com/bar/baz",
+      });
+    });
   });
 });
