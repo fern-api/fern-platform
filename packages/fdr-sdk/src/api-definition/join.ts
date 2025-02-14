@@ -24,6 +24,9 @@ export function joiner(
       subpackages: { ...first.subpackages },
       auths: { ...first.auths },
       globalHeaders: first.globalHeaders ? [...first.globalHeaders] : undefined,
+      snippetsConfiguration: first.snippetsConfiguration
+        ? { ...first.snippetsConfiguration }
+        : undefined,
     };
 
     let isJoined = false;

@@ -96,6 +96,7 @@ describe("curl snippet generation", () => {
     const apiDefinition = await loader
       .withApiDefinition({
         id: ApiDefinitionId("id"),
+        snippetsConfiguration: undefined,
         webhooks: {},
         websockets: {},
         types: {},

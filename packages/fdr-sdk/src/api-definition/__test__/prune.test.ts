@@ -226,6 +226,7 @@ const api: Latest.ApiDefinition = {
       availability: undefined,
     },
   ],
+  snippetsConfiguration: undefined,
 };
 
 describe("prune", () => {

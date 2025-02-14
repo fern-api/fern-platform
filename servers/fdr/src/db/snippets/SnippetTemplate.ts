@@ -42,14 +42,14 @@ export interface SnippetTemplateDao {
     orgId: FdrAPI.OrgId;
     apiId: FdrAPI.ApiId;
     sdkRequests: FdrAPI.SdkRequest[];
-    definition: APIV1Write.ApiDefinition;
+    definition: APIV1Write.ApiDefinition | FdrAPI.api.latest.ApiDefinition;
   }): Promise<SnippetTemplatesByEndpoint>;
 
   loadSnippetTemplatesByEndpointIdentifier(opts: {
     orgId: FdrAPI.OrgId;
     apiId: FdrAPI.ApiId;
     sdkRequests: FdrAPI.SdkRequest[];
-    definition: APIV1Write.ApiDefinition;
+    definition: APIV1Write.ApiDefinition | FdrAPI.api.latest.ApiDefinition;
   }): Promise<SnippetTemplatesByEndpointIdentifier>;
 
   storeSnippetTemplate({
@@ -70,16 +70,34 @@ export class SnippetTemplateDaoImpl implements SnippetTemplateDao {
     orgId: FdrAPI.OrgId;
     apiId: FdrAPI.ApiId;
     sdkRequests: FdrAPI.SdkRequest[];
-    definition: APIV1Write.ApiDefinition;
+    definition: APIV1Write.ApiDefinition | FdrAPI.api.latest.ApiDefinition;
   }): Promise<SnippetTemplatesByEndpointIdentifier> {
-    const endpoints: APIV1Write.EndpointDefinition[] = [];
-    for (const endpoint of definition.rootPackage.endpoints) {
-      endpoints.push(endpoint);
-    }
+    const endpoints: {
+      path: APIV1Write.EndpointPathPart[];
+      method: FdrAPI.HttpMethod;
+    }[] = [];
+    if (typeof definition === "object" && "rootPackage" in definition) {
+      for (const endpoint of definition.rootPackage.endpoints) {
+        endpoints.push({
+          path: endpoint.path.parts,
+          method: endpoint.method,
+        });
+      }
 
-    for (const subpackage of Object.values(definition.subpackages)) {
-      for (const endpoint of subpackage.endpoints) {
-        endpoints.push(endpoint);
+      for (const subpackage of Object.values(definition.subpackages)) {
+        for (const endpoint of subpackage.endpoints) {
+          endpoints.push({
+            path: endpoint.path.parts,
+            method: endpoint.method,
+          });
+        }
+      }
+    } else {
+      for (const endpoint of Object.values(definition.endpoints)) {
+        endpoints.push({
+          path: endpoint.path,
+          method: endpoint.method,
+        });
       }
     }
 
@@ -95,7 +113,7 @@ export class SnippetTemplateDaoImpl implements SnippetTemplateDao {
             orgId,
             apiId,
             endpointId: {
-              path: getEndpointPathAsString(endpoint),
+              path: getEndpointPathAsString(endpoint.path),
               method: endpoint.method,
               identifierOverride: undefined,
             },
@@ -325,21 +343,40 @@ export class SnippetTemplateDaoImpl implements SnippetTemplateDao {
     orgId: FdrAPI.OrgId;
     apiId: FdrAPI.ApiId;
     sdkRequests: FdrAPI.SdkRequest[];
-    definition: APIV1Write.ApiDefinition;
+    definition: APIV1Write.ApiDefinition | FdrAPI.api.latest.ApiDefinition;
   }): Promise<
     Record<
       FdrAPI.EndpointPathLiteral,
       Record<FdrAPI.HttpMethod, APIV1Read.EndpointSnippetTemplates>
     >
   > {
-    const endpoints: APIV1Write.EndpointDefinition[] = [];
-    for (const endpoint of definition.rootPackage.endpoints) {
-      endpoints.push(endpoint);
-    }
+    const endpoints: {
+      path: APIV1Write.EndpointPathPart[];
+      method: FdrAPI.HttpMethod;
+    }[] = [];
 
-    for (const subpackage of Object.values(definition.subpackages)) {
-      for (const endpoint of subpackage.endpoints) {
-        endpoints.push(endpoint);
+    if (typeof definition === "object" && "rootPackage" in definition) {
+      for (const endpoint of definition.rootPackage.endpoints) {
+        endpoints.push({
+          path: endpoint.path.parts,
+          method: endpoint.method,
+        });
+      }
+
+      for (const subpackage of Object.values(definition.subpackages)) {
+        for (const endpoint of subpackage.endpoints) {
+          endpoints.push({
+            path: endpoint.path.parts,
+            method: endpoint.method,
+          });
+        }
+      }
+    } else {
+      for (const endpoint of Object.values(definition.endpoints)) {
+        endpoints.push({
+          path: endpoint.path,
+          method: endpoint.method,
+        });
       }
     }
 
@@ -358,7 +395,7 @@ export class SnippetTemplateDaoImpl implements SnippetTemplateDao {
             orgId,
             apiId,
             endpointId: {
-              path: getEndpointPathAsString(endpoint),
+              path: getEndpointPathAsString(endpoint.path),
               method: endpoint.method,
               identifierOverride: undefined,
             },
@@ -384,9 +421,11 @@ export class SnippetTemplateDaoImpl implements SnippetTemplateDao {
   }
 }
 
-function getEndpointPathAsString(endpoint: APIV1Write.EndpointDefinition) {
+function getEndpointPathAsString(
+  endpointPathParts: APIV1Write.EndpointPathPart[]
+) {
   let endpointPath = "";
-  for (const part of endpoint.path.parts) {
+  for (const part of endpointPathParts) {
     if (part.type === "literal") {
       endpointPath += part.value;
     } else {
