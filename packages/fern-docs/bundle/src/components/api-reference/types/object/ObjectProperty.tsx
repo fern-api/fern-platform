@@ -27,7 +27,6 @@ export function ObjectProperty({
   loader,
   property,
   slug,
-  applyErrorStyles,
   types,
   anchorIdParts,
 }: {
@@ -35,7 +34,6 @@ export function ObjectProperty({
   property: ApiDefinition.ObjectProperty;
   anchorIdParts: readonly string[];
   slug: FernNavigation.Slug;
-  applyErrorStyles: boolean;
   types: Record<ApiDefinition.TypeId, ApiDefinition.TypeDefinition>;
 }) {
   const anchorId = getAnchorId(anchorIdParts);
@@ -74,7 +72,6 @@ export function ObjectProperty({
             loader={loader}
             shape={property.valueShape}
             isCollapsible
-            applyErrorStyles={applyErrorStyles}
             anchorIdParts={anchorIdParts}
             slug={slug}
             types={types}
@@ -93,7 +90,6 @@ export function ObjectProperty({
               loader={loader}
               shape={property.valueShape}
               isCollapsible
-              applyErrorStyles={applyErrorStyles}
               anchorIdParts={anchorIdParts}
               slug={slug}
               types={types}

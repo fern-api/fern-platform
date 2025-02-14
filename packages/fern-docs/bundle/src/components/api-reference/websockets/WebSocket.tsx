@@ -261,7 +261,6 @@ export async function WebSocketContent({
                   isCollapsible={false}
                   anchorIdParts={["send"]}
                   slug={node.slug}
-                  applyErrorStyles={false}
                   types={types}
                 />
               </EndpointSection>
@@ -286,7 +285,6 @@ export async function WebSocketContent({
                   isCollapsible={false}
                   anchorIdParts={["receive"]}
                   slug={node.slug}
-                  applyErrorStyles={false}
                   types={types}
                 />
               </EndpointSection>

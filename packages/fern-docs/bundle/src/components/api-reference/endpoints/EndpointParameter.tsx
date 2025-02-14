@@ -57,7 +57,6 @@ export function EndpointParameter({
         isCollapsible={true}
         anchorIdParts={anchorIdParts}
         slug={slug}
-        applyErrorStyles={false}
         types={types}
       />
     </EndpointParameterContent>

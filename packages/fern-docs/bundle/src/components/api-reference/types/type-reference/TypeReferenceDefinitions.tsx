@@ -10,7 +10,10 @@ import { visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
 
 import { DocsLoader } from "@/server/docs-loader";
 
-import { TypeDefinitionPathPart } from "../context/TypeDefinitionContext";
+import {
+  TypeDefinitionPathPart,
+  TypeDefinitionSlot,
+} from "../context/TypeDefinitionContext";
 import { InternalTypeDefinition } from "../type-definition/InternalTypeDefinition";
 
 // HACHACK: this is a hack to render inlined enums above the description
@@ -61,7 +64,6 @@ export function hasInternalTypeReference(
 export function TypeReferenceDefinitions({
   loader,
   shape,
-  applyErrorStyles,
   isCollapsible,
   className,
   anchorIdParts,
@@ -69,7 +71,6 @@ export function TypeReferenceDefinitions({
   types,
 }: {
   loader: DocsLoader;
-  applyErrorStyles: boolean;
   isCollapsible: boolean;
   className?: string;
   anchorIdParts: readonly string[];
@@ -77,15 +78,14 @@ export function TypeReferenceDefinitions({
   shape: ApiDefinition.TypeShapeOrReference;
   types: Record<ApiDefinition.TypeId, ApiDefinition.TypeDefinition>;
 }) {
-  const unwrapped = ApiDefinition.unwrapReference(shape, types);
-  switch (unwrapped.shape.type) {
+  switch (shape.type) {
     case "object": {
-      if (unwrapped.shape.extraProperties != null) {
+      if (shape.extraProperties != null) {
         // TODO: (rohin) Refactor this
         return (
           <InternalTypeDefinition
             loader={loader}
-            shape={unwrapped.shape}
+            shape={shape}
             isCollapsible={isCollapsible}
             anchorIdParts={anchorIdParts}
             slug={slug}
@@ -96,7 +96,7 @@ export function TypeReferenceDefinitions({
       return (
         <InternalTypeDefinition
           loader={loader}
-          shape={unwrapped.shape}
+          shape={shape}
           isCollapsible={isCollapsible}
           anchorIdParts={anchorIdParts}
           slug={slug}
@@ -110,7 +110,7 @@ export function TypeReferenceDefinitions({
       return (
         <InternalTypeDefinition
           loader={loader}
-          shape={unwrapped.shape}
+          shape={shape}
           isCollapsible={isCollapsible}
           anchorIdParts={anchorIdParts}
           slug={slug}
@@ -119,11 +119,10 @@ export function TypeReferenceDefinitions({
       );
     }
     case "discriminatedUnion": {
-      const union = unwrapped.shape;
       return (
         <InternalTypeDefinition
           loader={loader}
-          shape={union}
+          shape={shape}
           isCollapsible={isCollapsible}
           anchorIdParts={anchorIdParts}
           slug={slug}
@@ -137,9 +136,8 @@ export function TypeReferenceDefinitions({
         <TypeDefinitionPathPart part={{ type: "listItem" }}>
           <TypeReferenceDefinitions
             loader={loader}
-            shape={unwrapped.shape.itemShape}
+            shape={shape.itemShape}
             isCollapsible={isCollapsible}
-            applyErrorStyles={applyErrorStyles}
             className={className}
             anchorIdParts={anchorIdParts}
             slug={slug}
@@ -153,9 +151,8 @@ export function TypeReferenceDefinitions({
         <TypeDefinitionPathPart part={{ type: "objectProperty" }}>
           <TypeReferenceDefinitions
             loader={loader}
-            shape={unwrapped.shape.keyShape}
+            shape={shape.keyShape}
             isCollapsible={isCollapsible}
-            applyErrorStyles={applyErrorStyles}
             className={className}
             anchorIdParts={anchorIdParts}
             slug={slug}
@@ -163,9 +160,8 @@ export function TypeReferenceDefinitions({
           />
           <TypeReferenceDefinitions
             loader={loader}
-            shape={unwrapped.shape.valueShape}
+            shape={shape.valueShape}
             isCollapsible={isCollapsible}
-            applyErrorStyles={applyErrorStyles}
             className={className}
             anchorIdParts={anchorIdParts}
             slug={slug}
@@ -177,7 +173,36 @@ export function TypeReferenceDefinitions({
     case "literal":
     case "unknown":
       return null;
+    case "alias": {
+      return (
+        <TypeReferenceDefinitions
+          loader={loader}
+          shape={shape.value}
+          isCollapsible={isCollapsible}
+          className={className}
+          anchorIdParts={anchorIdParts}
+          slug={slug}
+          types={types}
+        />
+      );
+    }
+    case "id":
+      return <TypeDefinitionSlot id={shape.id} isCollapsible={isCollapsible} />;
+    case "optional":
+    case "nullable": {
+      return (
+        <TypeReferenceDefinitions
+          loader={loader}
+          shape={shape.shape}
+          isCollapsible={isCollapsible}
+          className={className}
+          anchorIdParts={anchorIdParts}
+          slug={slug}
+          types={types}
+        />
+      );
+    }
     default:
-      throw new UnreachableCaseError(unwrapped.shape);
+      throw new UnreachableCaseError(shape);
   }
 }

@@ -1,6 +1,9 @@
 import React from "react";
 
-import { EndpointContext } from "@fern-api/fdr-sdk/api-definition";
+import {
+  EndpointContext,
+  TypeDefinition,
+} from "@fern-api/fdr-sdk/api-definition";
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { AvailabilityBadge } from "@fern-docs/components/badges";
 
@@ -10,7 +13,11 @@ import { ReferenceLayout } from "@/components/layouts/ReferenceLayout";
 import { MdxServerComponentProseSuspense } from "@/components/mdx/server-component";
 import { DocsLoader } from "@/server/docs-loader";
 
-import { TypeDefinitionRoot } from "../types/context/TypeDefinitionContext";
+import {
+  SetTypeDefinitionSlots,
+  TypeDefinitionRoot,
+} from "../types/context/TypeDefinitionContext";
+import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";
 import { EndpointContentCodeSnippets } from "./EndpointContentCodeSnippets";
 import { EndpointContentLeft } from "./EndpointContentLeft";
 import { EndpointContextProvider } from "./EndpointContext";
@@ -64,11 +71,15 @@ export async function EndpointContent({
         }
         reference={
           <TypeDefinitionRoot types={types}>
-            <EndpointContentLeft
-              loader={loader}
-              context={context}
-              showErrors={showErrors}
-            />
+            <SetTypeDefinitionSlots
+              slots={createTypeDefinitionSlots(types, loader, node.slug)}
+            >
+              <EndpointContentLeft
+                loader={loader}
+                context={context}
+                showErrors={showErrors}
+              />
+            </SetTypeDefinitionSlots>
           </TypeDefinitionRoot>
         }
         footer={<FooterLayout bottomNavigation={bottomNavigation} />}
@@ -79,5 +90,26 @@ export async function EndpointContent({
         />
       </ReferenceLayout>
     </EndpointContextProvider>
+  );
+}
+
+function createTypeDefinitionSlots(
+  types: Record<string, TypeDefinition>,
+  loader: DocsLoader,
+  slug: FernNavigation.Slug
+) {
+  return Object.fromEntries(
+    Object.entries(types).map(([id, type]) => [
+      id,
+      <TypeReferenceDefinitions
+        key={id}
+        loader={loader}
+        shape={type.shape}
+        isCollapsible={true}
+        anchorIdParts={[]}
+        slug={slug}
+        types={types}
+      />,
+    ])
   );
 }

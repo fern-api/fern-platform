@@ -31,7 +31,6 @@ export function WebhookPayloadSection({
         shape={payload.shape}
         isCollapsible={false}
         anchorIdParts={anchorIdParts}
-        applyErrorStyles={false}
         slug={slug}
         types={types}
       />

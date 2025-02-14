@@ -117,7 +117,6 @@ export function EndpointRequestSection({
             isCollapsible={false}
             anchorIdParts={anchorIdParts}
             slug={slug}
-            applyErrorStyles={false}
             types={types}
           />
         ),
@@ -128,7 +127,6 @@ export function EndpointRequestSection({
             isCollapsible={false}
             anchorIdParts={anchorIdParts}
             slug={slug}
-            applyErrorStyles={false}
             types={types}
           />
         ),

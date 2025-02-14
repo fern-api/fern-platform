@@ -77,7 +77,6 @@ export function createCollapsibleContent(
             property={property}
             anchorIdParts={[...anchorIdParts, property.key]}
             slug={slug}
-            applyErrorStyles
             types={types}
           />
         )),
@@ -96,7 +95,6 @@ export function createCollapsibleContent(
               ...anchorIdParts,
               variant.displayName ?? variantIdx.toString(),
             ]}
-            applyErrorStyles={false}
             slug={slug}
             idx={variantIdx}
             types={types}

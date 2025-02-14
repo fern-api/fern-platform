@@ -81,7 +81,6 @@ export declare namespace UndiscriminatedUnionVariant {
   export interface Props {
     unionVariant: ApiDefinition.UndiscriminatedUnionVariant;
     anchorIdParts: readonly string[];
-    applyErrorStyles: boolean;
     slug: FernNavigation.Slug;
     idx: number;
     types: Record<ApiDefinition.TypeId, ApiDefinition.TypeDefinition>;
@@ -92,14 +91,12 @@ export function UndiscriminatedUnionVariant({
   loader,
   unionVariant,
   anchorIdParts,
-  applyErrorStyles,
   slug,
   types,
 }: {
   loader: DocsLoader;
   unionVariant: ApiDefinition.UndiscriminatedUnionVariant;
   anchorIdParts: readonly string[];
-  applyErrorStyles: boolean;
   slug: FernNavigation.Slug;
   idx: number;
   types: Record<ApiDefinition.TypeId, ApiDefinition.TypeDefinition>;
@@ -137,7 +134,6 @@ export function UndiscriminatedUnionVariant({
           shape={unionVariant.shape}
           anchorIdParts={anchorIdParts}
           isCollapsible
-          applyErrorStyles={applyErrorStyles}
           slug={slug}
           types={types}
         />

@@ -7,5 +7,9 @@ export default function Layout({
   children: React.ReactNode;
   params: Promise<{ domain: string }>;
 }) {
-  return <DocsLayout params={params}>{children}</DocsLayout>;
+  return (
+    <DocsLayout params={params} authed>
+      {children}
+    </DocsLayout>
+  );
 }

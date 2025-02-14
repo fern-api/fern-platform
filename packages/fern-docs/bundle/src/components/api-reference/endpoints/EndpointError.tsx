@@ -46,7 +46,6 @@ export function EndpointError({
             <TypeReferenceDefinitions
               loader={loader}
               isCollapsible
-              applyErrorStyles
               shape={error.shape}
               anchorIdParts={anchorIdParts}
               slug={slug}

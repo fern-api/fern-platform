@@ -2,7 +2,6 @@ import "server-only";
 
 import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
-import { cn } from "@fern-docs/components";
 
 import { DocsLoader } from "@/server/docs-loader";
 
@@ -44,46 +43,8 @@ export function InternalTypeDefinition({
     slug
   );
 
-  // const anchorIdSoFar = getAnchorId(anchorIdParts);
-  // const {
-  //   value: isCollapsed,
-  //   toggleValue: toggleIsCollapsed,
-  //   setValue: setCollapsed,
-  // } = useBooleanState(true);
-
-  // useRouteListener(slug, (anchor) => {
-  //   const isActive = anchor?.startsWith(anchorIdSoFar + ".") ?? false;
-  //   if (isActive) {
-  //     setCollapsed(false);
-  //   }
-  // });
-
-  // const { isHovering, ...containerCallbacks } = useIsHovering();
-
-  // const contextValue = useTypeDefinitionContext();
-  // const collapsibleContentContextValue = useCallback(
-  //   (): TypeDefinitionContextValue => ({
-  //     ...contextValue,
-  //     isRootTypeDefinition: false,
-  //   }),
-  //   [contextValue]
-  // );
-
   if (collapsableContent == null || collapsableContent.elements.length === 0) {
     return null;
-  }
-
-  if (!isCollapsible) {
-    // TODO: (rohin) Refactor this
-    // if (collapsableContent.elementNameSingular === "literal") {
-    //     return null;
-    // }
-    return (
-      <TypeDefinitionDetails
-        elements={collapsableContent.elements}
-        separatorText={collapsableContent.separatorText}
-      />
-    );
   }
 
   const showText =
@@ -96,32 +57,22 @@ export function InternalTypeDefinition({
       : `Hide ${collapsableContent.elements.length} ${collapsableContent.elementNamePlural}`;
 
   return (
-    <div
-      className={cn(
-        "internal-type-definition-container text-sm",
-        collapsableContent.elementNameSingular === "enum value"
-          ? "enum-container"
-          : undefined
-      )}
+    <FernCollapseWithButtonUncontrolled
+      isCollapsible={isCollapsible}
+      showText={showText}
+      hideText={hideText}
     >
-      {collapsableContent.elementNameSingular !== "enum value" ? (
-        collapsableContent.elements.length === 0 ? null : (
-          <FernCollapseWithButtonUncontrolled
-            showText={showText}
-            hideText={hideText}
-          >
-            <TypeDefinitionDetails
-              elements={collapsableContent.elements}
-              separatorText={collapsableContent.separatorText}
-            />
-          </FernCollapseWithButtonUncontrolled>
-        )
-      ) : (
+      {collapsableContent.elementNameSingular?.includes("enum") ? (
         <EnumTypeDefinition
           elements={collapsableContent.elements}
           showText={showText}
         />
+      ) : (
+        <TypeDefinitionDetails
+          elements={collapsableContent.elements}
+          separatorText={collapsableContent.separatorText}
+        />
       )}
-    </div>
+    </FernCollapseWithButtonUncontrolled>
   );
 }

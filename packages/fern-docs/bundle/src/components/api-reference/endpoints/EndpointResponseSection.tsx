@@ -71,7 +71,6 @@ function EndpointResponseSectionContent({
           isCollapsible={false}
           anchorIdParts={anchorIdParts}
           slug={slug}
-          applyErrorStyles={false}
           types={types}
         />
       );
@@ -83,7 +82,6 @@ function EndpointResponseSectionContent({
           isCollapsible={false}
           anchorIdParts={anchorIdParts}
           slug={slug}
-          applyErrorStyles={false}
           types={types}
         />
       );
