@@ -9,6 +9,7 @@ import {
   SHOW_HEADER_ATOM,
   SIDEBAR_DISMISSABLE_ATOM,
   useColors,
+  useIsMobileSidebarOpen,
   useTheme,
 } from "../../atoms";
 import { DocsMainContent } from "../../docs/DocsMainContent";
@@ -51,6 +52,7 @@ function UnmemoizedDefaultDocs({
     layout?.disableHeader || colors[theme]?.sidebarBackground != null;
 
   const isSidebarDismissable = useAtomValue(SIDEBAR_DISMISSABLE_ATOM);
+  const isMobileSidebarOpen = useIsMobileSidebarOpen();
 
   return (
     <div id="fern-docs" className="fern-container fern-theme-default">
@@ -71,7 +73,11 @@ function UnmemoizedDefaultDocs({
                     `}
       </style>
 
-      <div className="fern-body">
+      <div
+        className={clsx("fern-body", {
+          "fern-sidebar-open": isMobileSidebarOpen,
+        })}
+      >
         <Sidebar
           className={isSidebarFixed ? "fern-sidebar-fixed" : undefined}
         />

@@ -116,6 +116,10 @@
     @apply max-lg:hidden;
   }
 
+  .fern-body.fern-sidebar-open {
+    @apply fixed overflow-hidden;
+  }
+
   .fern-body {
     @apply max-w-page-width relative mx-auto flex min-h-0 w-full min-w-0 flex-1;
   }
