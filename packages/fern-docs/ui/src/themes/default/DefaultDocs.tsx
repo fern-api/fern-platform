@@ -54,8 +54,6 @@ function UnmemoizedDefaultDocs({
   const isSidebarDismissable = useAtomValue(SIDEBAR_DISMISSABLE_ATOM);
   const isMobileSidebarOpen = useIsMobileSidebarOpen();
 
-  console.log("isMobileSidebarOpen: ", isMobileSidebarOpen);
-
   return (
     <div id="fern-docs" className="fern-container fern-theme-default">
       <DefaultDocsStyle />
