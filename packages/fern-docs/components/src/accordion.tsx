@@ -12,7 +12,7 @@ const Accordion = React.forwardRef<
   return (
     <AccordionPrimitive.Root
       ref={ref}
-      className={cn("fern-accordion", className)}
+      className={cn("fern-accordion fern-card", className)}
       {...props}
     >
       {props.children}
@@ -58,7 +58,7 @@ const AccordionContent = React.forwardRef<
 >(({ className, children, asChild, ...props }, ref) => (
   <AccordionPrimitive.Content
     ref={ref}
-    className={cn("fern-accordion-content", className)}
+    className={cn("fern-collapsible", className)}
     {...props}
   >
     {children}

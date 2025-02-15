@@ -10,7 +10,7 @@ interface SidebarGroupNodeProps {
 
 export function SidebarGroupNode({ node }: SidebarGroupNodeProps): ReactNode {
   return (
-    <ul className="fern-sidebar-group">
+    <ul className="fern-sidebar-group fern-collapsible">
       {node.children.map((child) => (
         <li key={child.id}>
           <SidebarNavigationChild node={child} depth={1} root />

@@ -16,9 +16,11 @@
     > div {
       display: block !important;
 
-      // TODO: this seems to be causing a bug where the scroll area always shrinks the content
-      // but i'm not sure why this was introduced in the first place.
-      // width: fit-content;
+      /*
+      TODO: this seems to be causing a bug where the scroll area always shrinks the content
+      but i'm not sure why this was introduced in the first place.
+      width: fit-content;
+      */
       flex-grow: 1;
     }
 
@@ -28,7 +30,7 @@
   }
 
   .fern-scroll-area-scrollbar {
-    @apply z-10 m-1 flex touch-none select-none rounded-full transition-all ease-out;
+    @apply z-10 m-1 flex touch-none rounded-full transition-all ease-out select-none;
     @apply bg-tag-default;
   }
 

@@ -1,18 +1,15 @@
 import "server-only";
 
-import { unstable_cache } from "next/cache";
+import { revalidateTag, unstable_cache } from "next/cache";
 
-import crypto from "node:crypto";
+import { Frontmatter } from "@fern-api/fdr-sdk/docs";
 
 import { serializeMdx as internalSerializeMdx } from "@/components/mdx/bundler/serialize";
 import { createCachedDocsLoader } from "@/server/docs-loader";
 
 import { cacheSeed } from "./cache-seed";
+import { hash } from "./hash";
 import { FileData } from "./types";
-
-function hash(id: string): string {
-  return crypto.createHash("sha256").update(id).digest("hex");
-}
 
 export type MdxSerializerOptions = {
   /**
@@ -27,10 +24,32 @@ export type MdxSerializerOptions = {
    * The scope to inject into the mdx.
    */
   scope?: Record<string, unknown>;
+  /**
+   * The hash of the content to use for caching.
+   */
+  hash?: string;
 };
 
+export type MdxSerializer = (
+  content: string | undefined,
+  options?: MdxSerializerOptions
+) => Promise<
+  | {
+      code: string;
+      frontmatter?: Partial<Frontmatter>;
+      jsxElements: string[];
+      esmElements: string[];
+    }
+  | undefined
+>;
+
 export function createCachedMdxSerializer(
-  loader: string | Awaited<ReturnType<typeof createCachedDocsLoader>>
+  loader: string | Awaited<ReturnType<typeof createCachedDocsLoader>>,
+  {
+    scope,
+  }: {
+    scope?: Record<string, unknown>;
+  } = {}
 ) {
   const domain = typeof loader === "string" ? loader : loader.domain;
   return async (
@@ -40,7 +59,7 @@ export function createCachedMdxSerializer(
     if (content == null) {
       return;
     }
-    const key = `${domain}:${hash(content)}`;
+    const key = `${domain}:${options.hash ?? hash(content)}`;
     const cachedSerializer = unstable_cache(
       async ({ filename, toc, scope }: MdxSerializerOptions) => {
         let files: Record<string, string> | undefined;
@@ -75,6 +94,17 @@ export function createCachedMdxSerializer(
       { tags: [domain, "serializeMdx", key] }
     );
 
-    return await cachedSerializer(options);
+    // merge the scope from the page with the scope from the serializer
+    const result = await cachedSerializer({
+      ...options,
+      scope: { ...options.scope, ...scope },
+    });
+
+    // if the result is undefined, we need to revalidate the cache
+    if (result == null) {
+      revalidateTag(key);
+    }
+
+    return result;
   };
 }

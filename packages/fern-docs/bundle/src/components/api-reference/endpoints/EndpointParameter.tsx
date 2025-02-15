@@ -12,7 +12,7 @@ import { AvailabilityBadge } from "@fern-docs/components/badges";
 import { addLeadingSlash, conformTrailingSlash } from "@fern-docs/utils";
 
 import { MdxServerComponentProseSuspense } from "@/components/mdx/server-component";
-import { DocsLoader } from "@/server/docs-loader";
+import { MdxSerializer } from "@/server/mdx-serializer";
 
 import { FernAnchor } from "../../components/FernAnchor";
 import { renderTypeShorthandRoot } from "../../type-shorthand";
@@ -20,7 +20,7 @@ import { getAnchorId } from "../../util/anchor";
 import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";
 
 export function EndpointParameter({
-  loader,
+  serialize,
   name,
   description,
   additionalDescriptions,
@@ -30,7 +30,7 @@ export function EndpointParameter({
   availability,
   types,
 }: {
-  loader: DocsLoader;
+  serialize: MdxSerializer;
   name: string;
   description: string | undefined;
   additionalDescriptions: readonly string[] | undefined;
@@ -42,7 +42,7 @@ export function EndpointParameter({
 }) {
   return (
     <EndpointParameterContent
-      loader={loader}
+      serialize={serialize}
       name={name}
       description={description}
       additionalDescriptions={additionalDescriptions}
@@ -52,7 +52,7 @@ export function EndpointParameter({
       availability={availability}
     >
       <TypeReferenceDefinitions
-        loader={loader}
+        serialize={serialize}
         shape={shape}
         isCollapsible={true}
         anchorIdParts={anchorIdParts}
@@ -64,7 +64,7 @@ export function EndpointParameter({
 }
 
 export function EndpointParameterContent({
-  loader,
+  serialize,
   name,
   anchorIdParts,
   slug,
@@ -81,7 +81,7 @@ export function EndpointParameterContent({
   anchorIdParts: readonly string[];
   slug: FernNavigation.Slug;
   availability: ApiDefinition.Availability | null | undefined;
-  loader: DocsLoader;
+  serialize: MdxSerializer;
   children?: React.ReactNode;
 }) {
   const href =
@@ -109,7 +109,7 @@ export function EndpointParameterContent({
       </FernAnchor>
 
       <MdxServerComponentProseSuspense
-        loader={loader}
+        serialize={serialize}
         mdx={description}
         size="sm"
       />

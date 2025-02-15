@@ -8,7 +8,7 @@ import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
 
-import { DocsLoader } from "@/server/docs-loader";
+import { MdxSerializer } from "@/server/mdx-serializer";
 
 import {
   TypeDefinitionPathPart,
@@ -62,7 +62,7 @@ export function hasInternalTypeReference(
 }
 
 export function TypeReferenceDefinitions({
-  loader,
+  serialize,
   shape,
   isCollapsible,
   className,
@@ -70,7 +70,7 @@ export function TypeReferenceDefinitions({
   slug,
   types,
 }: {
-  loader: DocsLoader;
+  serialize: MdxSerializer;
   isCollapsible: boolean;
   className?: string;
   anchorIdParts: readonly string[];
@@ -84,7 +84,7 @@ export function TypeReferenceDefinitions({
         // TODO: (rohin) Refactor this
         return (
           <InternalTypeDefinition
-            loader={loader}
+            serialize={serialize}
             shape={shape}
             isCollapsible={isCollapsible}
             anchorIdParts={anchorIdParts}
@@ -95,7 +95,7 @@ export function TypeReferenceDefinitions({
       }
       return (
         <InternalTypeDefinition
-          loader={loader}
+          serialize={serialize}
           shape={shape}
           isCollapsible={isCollapsible}
           anchorIdParts={anchorIdParts}
@@ -109,7 +109,7 @@ export function TypeReferenceDefinitions({
     case "undiscriminatedUnion": {
       return (
         <InternalTypeDefinition
-          loader={loader}
+          serialize={serialize}
           shape={shape}
           isCollapsible={isCollapsible}
           anchorIdParts={anchorIdParts}
@@ -121,7 +121,7 @@ export function TypeReferenceDefinitions({
     case "discriminatedUnion": {
       return (
         <InternalTypeDefinition
-          loader={loader}
+          serialize={serialize}
           shape={shape}
           isCollapsible={isCollapsible}
           anchorIdParts={anchorIdParts}
@@ -135,7 +135,7 @@ export function TypeReferenceDefinitions({
       return (
         <TypeDefinitionPathPart part={{ type: "listItem" }}>
           <TypeReferenceDefinitions
-            loader={loader}
+            serialize={serialize}
             shape={shape.itemShape}
             isCollapsible={isCollapsible}
             className={className}
@@ -150,7 +150,7 @@ export function TypeReferenceDefinitions({
       return (
         <TypeDefinitionPathPart part={{ type: "objectProperty" }}>
           <TypeReferenceDefinitions
-            loader={loader}
+            serialize={serialize}
             shape={shape.keyShape}
             isCollapsible={isCollapsible}
             className={className}
@@ -159,7 +159,7 @@ export function TypeReferenceDefinitions({
             types={types}
           />
           <TypeReferenceDefinitions
-            loader={loader}
+            serialize={serialize}
             shape={shape.valueShape}
             isCollapsible={isCollapsible}
             className={className}
@@ -176,7 +176,7 @@ export function TypeReferenceDefinitions({
     case "alias": {
       return (
         <TypeReferenceDefinitions
-          loader={loader}
+          serialize={serialize}
           shape={shape.value}
           isCollapsible={isCollapsible}
           className={className}
@@ -192,7 +192,7 @@ export function TypeReferenceDefinitions({
     case "nullable": {
       return (
         <TypeReferenceDefinitions
-          loader={loader}
+          serialize={serialize}
           shape={shape.shape}
           isCollapsible={isCollapsible}
           className={className}

@@ -2,13 +2,13 @@
   .fern-dropdown {
     @apply relative z-50;
     @apply animate-popover;
-    @apply min-w-[var(--radix-dropdown-menu-trigger-width)];
+    @apply min-w-(--radix-dropdown-menu-trigger-width);
     @apply bg-background-translucent border-default flex max-h-[300px] flex-col rounded-lg border backdrop-blur will-change-[opacity,transform];
     @apply shadow-xl;
 
     .fern-dropdown-item {
       @apply flex w-full cursor-default items-center justify-start rounded px-2 py-1 text-left text-sm;
-      @apply data-[highlighted]:t-accent-contrast data-[highlighted]:bg-accent will-change-[background-color,color];
+      @apply data-[highlighted]:text-accent-contrast data-[highlighted]:bg-accent will-change-[background-color,color];
 
       .fern-dropdown-item-indicator {
         @apply mr-1 flex h-full w-4 flex-none items-center justify-center;

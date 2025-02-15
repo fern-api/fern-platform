@@ -31,7 +31,7 @@ export function SidebarNavigationChild({
           node={node}
           depth={depth}
           className={cn({
-            "!text-text-default font-semibold": root,
+            "!text-body font-semibold": root,
           })}
         />
       );

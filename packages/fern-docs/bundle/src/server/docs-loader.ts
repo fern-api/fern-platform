@@ -24,6 +24,7 @@ import { DEFAULT_LOGO_HEIGHT, EdgeFlags } from "@fern-docs/utils";
 import { AuthState, createGetAuthState } from "./auth/getAuthState";
 import { cacheSeed } from "./cache-seed";
 import { getDocsUrlMetadata } from "./getDocsUrlMetadata";
+import { hash } from "./hash";
 import { loadWithUrl as uncachedLoadWithUrl } from "./loadWithUrl";
 import { ColorsThemeConfig, FileData, RgbaColor } from "./types";
 import { pruneWithAuthState } from "./withRbac";
@@ -98,6 +99,7 @@ export interface DocsLoader {
   getPage: (pageId: string) => Promise<{
     filename: string;
     markdown: string;
+    hash: string;
     editThisPageUrl?: string;
   }>;
 
@@ -261,6 +263,7 @@ const getPage = cache(async (domain: string, pageId: string) => {
   return {
     filename: pageId,
     markdown: page.markdown,
+    hash: hash(page.markdown),
     editThisPageUrl: page.editThisPageUrl,
   };
 });

@@ -11,9 +11,9 @@ export default function LoadingDocs() {
       {layout === "guide" ||
         (layout === "overview" && (
           <aside className="w-sidebar-width shink-0 flex flex-col gap-2">
-            <div className="h-4 w-32 rounded-md bg-[var(--grayscale-a3)]" />
-            <div className="h-4 w-32 rounded-md bg-[var(--grayscale-a3)]" />
-            <div className="h-4 w-32 rounded-md bg-[var(--grayscale-a3)]" />
+            <div className="h-4 w-32 rounded-md bg-(--grayscale-a3)" />
+            <div className="h-4 w-32 rounded-md bg-(--grayscale-a3)" />
+            <div className="h-4 w-32 rounded-md bg-(--grayscale-a3)" />
           </aside>
         ))}
       <article
@@ -25,12 +25,12 @@ export default function LoadingDocs() {
         })}
       >
         <header className="my-8">
-          <div className="h-6 w-64 rounded-md bg-[var(--grayscale-a3)]" />
+          <div className="h-6 w-64 rounded-md bg-(--grayscale-a3)" />
         </header>
         <section className="my-8 space-y-2">
-          <div className="h-4 w-80 rounded-md bg-[var(--grayscale-a3)]" />
-          <div className="h-4 w-80 rounded-md bg-[var(--grayscale-a3)]" />
-          <div className="h-4 w-80 rounded-md bg-[var(--grayscale-a3)]" />
+          <div className="h-4 w-80 rounded-md bg-(--grayscale-a3)" />
+          <div className="h-4 w-80 rounded-md bg-(--grayscale-a3)" />
+          <div className="h-4 w-80 rounded-md bg-(--grayscale-a3)" />
         </section>
       </article>
     </div>

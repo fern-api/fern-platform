@@ -23,7 +23,7 @@ export function SidebarRootHeading({
         node={node}
         depth={0}
         className={className}
-        linkClassName="font-semibold !text-text-default"
+        linkClassName="font-semibold !text-body"
         shallow={shallow}
       />
     );

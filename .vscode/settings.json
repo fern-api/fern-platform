@@ -21,22 +21,17 @@
   },
   "typescript.enablePromptUseWorkspaceTsdk": true,
   "editor.formatOnSave": true,
-  "editor.codeActionsOnSave": [
-    "source.fixAll",
-    "source.sortMembers",
-  ],
+  "editor.codeActionsOnSave": ["source.fixAll", "source.sortMembers"],
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "[ignore]": {
-    "editor.defaultFormatter": "foxundermoon.shell-format"
-  },
   "scss.validate": false,
+  "css.validate": false,
   "typescript.tsdk": "node_modules/typescript/lib",
   "[json]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "vitest.commandLine": "pnpm test",
   "vitest.disableWorkspaceWarning": true,
-  "[shellscript]": {
-    "editor.defaultFormatter": "foxundermoon.shell-format"
+  "files.associations": {
+    "*.css": "tailwindcss",
+    "*.scss": "tailwindcss"
   }
 }

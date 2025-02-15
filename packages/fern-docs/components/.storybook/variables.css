@@ -36,7 +36,6 @@
   --border: var(--grayscale-a5);
   --border-color-card: var(--border);
   --border-concealed: var(--grayscale-a3);
-  --body-text: 0, 0, 0;
 }
 
 @media (width <= 1024px) {
@@ -70,7 +69,6 @@
   --header-background: transparent;
   --border: var(--grayscale-a5);
   --border-concealed: var(--grayscale-a3);
-  --body-text: 255, 255, 255;
 }
 
 html {

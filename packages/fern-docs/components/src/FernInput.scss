@@ -1,25 +1,21 @@
 @layer components {
-  .fern-input-focus {
-    @apply ring-border-primary outline-none ring-2;
-  }
-
   .fern-input {
     @apply form-input w-full;
-    @apply border-none bg-transparent #{!important};
-    @apply outline-none ring-0 #{!important};
+    @apply border-none bg-transparent;
+    @apply ring-0 outline-none;
   }
 
   .fern-textarea {
     @apply form-textarea w-full resize-none;
-    @apply border-none bg-transparent outline-none ring-0 #{!important};
+    @apply border-none bg-transparent ring-0 outline-none;
   }
 
   .fern-textarea-group,
   .fern-input-group,
   .fern-numeric-input-group {
     @apply flex items-center overflow-hidden;
-    @apply focus-within:fern-input-focus;
-    @apply ring-default dark:bg-tag-default-soft rounded-lg bg-white shadow-inner ring-1 ring-inset;
+    @apply focus-within:ring-border-primary focus-within:ring-2 focus-within:outline-none;
+    @apply ring-default dark:bg-tag-default-soft rounded-lg bg-white ring-1 shadow-inner ring-inset;
   }
 
   .fern-input-icon {
@@ -47,7 +43,7 @@
 
   .fern-numeric-input-group:focus-within
     .fern-numeric-input-step:not(:disabled) {
-    @apply t-accent border-primary ring-accent hover:t-accent hover:bg-tag-primary;
+    @apply text-accent border-primary ring-accent hover:text-accent hover:bg-tag-primary;
   }
 
   .fern-numeric-input-group .fern-numeric-input-step:first-child {

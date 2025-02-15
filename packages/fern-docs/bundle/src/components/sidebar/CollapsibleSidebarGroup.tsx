@@ -23,7 +23,7 @@ export function CollapsibleSidebarGroup<
     <Collapsible.Root open={open}>
       <Collapsible.Trigger asChild>{children}</Collapsible.Trigger>
       <Collapsible.Content asChild>
-        <ul className="fern-sidebar-group">
+        <ul className="fern-sidebar-group fern-collapsible">
           {nodes.map((node) => (
             <li key={node.id}>{renderNode(node)}</li>
           ))}

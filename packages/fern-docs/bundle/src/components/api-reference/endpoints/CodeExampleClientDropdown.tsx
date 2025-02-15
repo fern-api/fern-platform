@@ -25,7 +25,7 @@ export const CodeExampleClientDropdown: React.FC<
     className: "group/option",
     icon: (
       <FaIcon
-        className="size-icon-sm text-intent-default group-data-[highlighted]/option:text-accent-contrast"
+        className="size-icon-sm text-body group-data-[highlighted]/option:text-accent-contrast"
         icon={getIconForClient(language)}
       />
     ),

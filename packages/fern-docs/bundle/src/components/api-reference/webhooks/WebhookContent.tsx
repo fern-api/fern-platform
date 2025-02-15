@@ -3,7 +3,7 @@ import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 
 import { PageHeader } from "@/components/components/PageHeader";
 import { ReferenceLayout } from "@/components/layouts/ReferenceLayout";
-import { DocsLoader } from "@/server/docs-loader";
+import { MdxSerializer } from "@/server/mdx-serializer";
 
 import { Markdown } from "../../mdx/Markdown";
 import { ApiPageCenter } from "../api-page-center";
@@ -15,11 +15,11 @@ import { WebhookResponseSection } from "./WebhookResponseSection";
 import { WebhookExample } from "./webhook-examples/WebhookExample";
 
 export async function WebhookContent({
-  loader,
+  serialize,
   context,
   breadcrumb,
 }: {
-  loader: DocsLoader;
+  serialize: MdxSerializer;
   context: ApiDefinition.WebhookContext;
   breadcrumb: readonly FernNavigation.BreadcrumbItem[];
 }) {
@@ -34,7 +34,7 @@ export async function WebhookContent({
       <ReferenceLayout
         header={
           <PageHeader
-            loader={loader}
+            serialize={serialize}
             breadcrumb={breadcrumb}
             title={node.title}
           />
@@ -53,7 +53,7 @@ export async function WebhookContent({
                     <div className="flex flex-col" key={parameter.key}>
                       <TypeComponentSeparator />
                       <EndpointParameter
-                        loader={loader}
+                        serialize={serialize}
                         name={parameter.key}
                         shape={parameter.valueShape}
                         anchorIdParts={["payload", "header", parameter.key]}
@@ -81,6 +81,7 @@ export async function WebhookContent({
                 slug={node.slug}
               >
                 <WebhookPayloadSection
+                  serialize={serialize}
                   payload={webhook.payloads?.[0]}
                   anchorIdParts={["payload", "body"]}
                   slug={node.slug}

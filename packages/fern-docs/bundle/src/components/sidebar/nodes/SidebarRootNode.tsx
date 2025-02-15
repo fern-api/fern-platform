@@ -61,7 +61,7 @@ export const SidebarRootNode = memo(function SidebarRootNode() {
   );
 
   return (
-    <ul className="fern-sidebar-group">
+    <ul className="fern-sidebar-group fern-collapsible">
       {children.map((child) => (
         <li key={child.id} className="mt-6">
           <SidebarRootChild node={child} />

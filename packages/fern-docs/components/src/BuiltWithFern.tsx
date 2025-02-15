@@ -65,7 +65,7 @@ export const BuiltWithFern = forwardRef<HTMLAnchorElement, BuiltWithFernProps>(
               onPointerMove
             )}
           >
-            <span className="t-muted whitespace-nowrap text-xs">
+            <span className="text-muted text-xs whitespace-nowrap">
               Built with
             </span>
             <FernLogo

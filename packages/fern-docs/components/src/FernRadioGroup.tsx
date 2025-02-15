@@ -45,7 +45,9 @@ export const FernRadioGroup = forwardRef<HTMLDivElement, FernRadioGroupProps>(
                       {item.label}
                     </div>
                     {item.helperText && (
-                      <p className="t-muted mb-0 text-sm">{item.helperText}</p>
+                      <p className="text-muted mb-0 text-sm">
+                        {item.helperText}
+                      </p>
                     )}
                     {typeof item.children === "function"
                       ? item.children(props.value === item.value)

@@ -118,33 +118,32 @@
     }
 
     &[disabled] {
-      @apply text-text-default/40 hover:text-text-default/40 cursor-not-allowed bg-black/20;
-      @apply dark:text-text-default/50 dark:hover:text-text-default/50 dark:bg-white/10;
+      @apply text-body/40 hover:text-body/40 cursor-not-allowed bg-black/20;
+      @apply dark:text-body/50 dark:hover:text-body/50 dark:bg-white/10;
     }
 
     &:not([disabled]) {
       &.minimal {
-        @apply t-muted bg-transparent;
+        @apply text-muted bg-transparent;
 
         &:hover {
-          @apply t-default;
+          @apply text-body;
         }
 
-        // @apply t-muted hover:t-default;
         @apply hover:bg-tag-default data-[selected=true]:bg-tag-default data-[state=checked]:bg-tag-default data-[state=on]:bg-tag-default data-[state=open]:bg-tag-default data-[state=opening]:bg-tag-default;
 
         svg {
-          @apply text-text-default/60;
+          @apply text-body/60;
         }
 
         &:not(.primary, .success, .warning, .danger) {
           svg {
-            @apply dark:text-text-default/70;
+            @apply dark:text-body/70;
           }
         }
 
         &.primary {
-          @apply t-accent hover:t-accent;
+          @apply text-accent hover:text-accent;
           @apply hover:bg-tag-primary data-[selected=true]:bg-tag-primary data-[state=checked]:bg-tag-primary data-[state=on]:bg-tag-primary data-[state=open]:bg-tag-primary data-[state=opening]:bg-tag-primary;
 
           svg {
@@ -153,7 +152,7 @@
         }
 
         &.success {
-          @apply t-success hover:t-success;
+          @apply text-intent-success hover:text-intent-success;
           @apply hover:bg-tag-success data-[selected=true]:bg-tag-success data-[state=checked]:bg-tag-success data-[state=on]:bg-tag-success data-[state=open]:bg-tag-success data-[state=opening]:bg-tag-success;
 
           svg {
@@ -162,7 +161,7 @@
         }
 
         &.warning {
-          @apply t-warning hover:t-warning;
+          @apply text-intent-warning hover:text-intent-warning;
           @apply hover:bg-tag-warning data-[selected=true]:bg-tag-warning data-[state=checked]:bg-tag-warning data-[state=on]:bg-tag-warning data-[state=open]:bg-tag-warning data-[state=opening]:bg-tag-warning;
 
           svg {
@@ -171,7 +170,7 @@
         }
 
         &.danger {
-          @apply t-danger hover:t-danger;
+          @apply text-intent-danger hover:text-intent-danger;
           @apply hover:bg-tag-danger data-[selected=true]:bg-tag-danger data-[state=checked]:bg-tag-danger data-[state=on]:bg-tag-danger data-[state=open]:bg-tag-danger data-[state=opening]:bg-tag-danger;
 
           svg {
@@ -181,29 +180,29 @@
       }
 
       &.filled {
-        @apply t-default bg-text-default/60;
+        @apply bg-black/60 text-black dark:bg-white/60 dark:text-white;
 
         &:hover,
         &[data-state="on"],
         &[data-state="checked"],
         &[data-state="open"],
         &[data-state="opening"] {
-          @apply t-default bg-text-default/60;
+          @apply bg-black/60 text-black dark:bg-white/60 dark:text-white;
         }
 
         svg {
-          @apply text-text-default/60;
+          @apply text-body/60;
         }
 
         &.primary {
-          @apply t-accent-contrast bg-accent hover:bg-accent;
+          @apply text-accent-contrast bg-accent hover:bg-accent;
 
           &:hover,
           &[data-state="on"],
           &[data-state="checked"],
           &[data-state="open"],
           &[data-state="opening"] {
-            @apply t-accent-contrast bg-accent-tinted;
+            @apply text-accent-contrast bg-accent-tinted;
           }
 
           svg {
@@ -257,23 +256,23 @@
       }
 
       &.outlined {
-        @apply ring-1 ring-inset transition-[box-shadow,background] hover:transition-none;
-        @apply t-default ring-default;
+        @apply ring-1 transition-[box-shadow,background] ring-inset hover:transition-none;
+        @apply text-body ring-default;
 
         &:hover,
         &[data-state="on"],
         &[data-state="checked"],
         &[data-state="open"],
         &[data-state="opening"] {
-          @apply t-default bg-tag-default;
+          @apply text-body bg-tag-default;
         }
 
         svg {
-          @apply text-text-default/60;
+          @apply text-body/60;
         }
 
         &.primary {
-          @apply t-accent ring-border-primary;
+          @apply text-accent ring-border-primary;
 
           svg {
             @apply text-accent-aa;
@@ -284,7 +283,7 @@
           &[data-state="checked"],
           &[data-state="open"],
           &[data-state="opening"] {
-            @apply t-accent-aaa bg-tag-primary;
+            @apply text-accent-aaa bg-tag-primary;
 
             svg {
               @apply text-accent-aaa;

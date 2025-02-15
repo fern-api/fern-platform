@@ -11,7 +11,7 @@ import { PageHeader } from "@/components/components/PageHeader";
 import { FooterLayout } from "@/components/layouts/FooterLayout";
 import { ReferenceLayout } from "@/components/layouts/ReferenceLayout";
 import { MdxServerComponentProseSuspense } from "@/components/mdx/server-component";
-import { DocsLoader } from "@/server/docs-loader";
+import { MdxSerializer } from "@/server/mdx-serializer";
 
 import {
   SetTypeDefinitionSlots,
@@ -24,14 +24,16 @@ import { EndpointContextProvider } from "./EndpointContext";
 import { EndpointUrlWithPlaygroundBaseUrl } from "./EndpointUrlWithPlaygroundBaseUrl";
 
 export async function EndpointContent({
-  loader,
+  serialize,
   showErrors,
+  showAuth,
   context,
   breadcrumb,
   bottomNavigation,
 }: {
-  loader: DocsLoader;
+  serialize: MdxSerializer;
   showErrors: boolean;
+  showAuth: boolean;
   context: EndpointContext;
   breadcrumb: readonly FernNavigation.BreadcrumbItem[];
   streamToggle?: React.ReactNode;
@@ -44,7 +46,7 @@ export async function EndpointContent({
       <ReferenceLayout
         header={
           <PageHeader
-            loader={loader}
+            serialize={serialize}
             breadcrumb={breadcrumb}
             title={node.title}
             tags={
@@ -72,11 +74,12 @@ export async function EndpointContent({
         reference={
           <TypeDefinitionRoot types={types}>
             <SetTypeDefinitionSlots
-              slots={createTypeDefinitionSlots(types, loader, node.slug)}
+              slots={createTypeDefinitionSlots(types, serialize, node.slug)}
             >
               <EndpointContentLeft
-                loader={loader}
+                serialize={serialize}
                 context={context}
+                showAuth={showAuth}
                 showErrors={showErrors}
               />
             </SetTypeDefinitionSlots>
@@ -85,7 +88,7 @@ export async function EndpointContent({
         footer={<FooterLayout bottomNavigation={bottomNavigation} />}
       >
         <MdxServerComponentProseSuspense
-          loader={loader}
+          serialize={serialize}
           mdx={endpoint.description}
         />
       </ReferenceLayout>
@@ -95,7 +98,7 @@ export async function EndpointContent({
 
 function createTypeDefinitionSlots(
   types: Record<string, TypeDefinition>,
-  loader: DocsLoader,
+  serialize: MdxSerializer,
   slug: FernNavigation.Slug
 ) {
   return Object.fromEntries(
@@ -103,7 +106,7 @@ function createTypeDefinitionSlots(
       id,
       <TypeReferenceDefinitions
         key={id}
-        loader={loader}
+        serialize={serialize}
         shape={type.shape}
         isCollapsible={true}
         anchorIdParts={[]}

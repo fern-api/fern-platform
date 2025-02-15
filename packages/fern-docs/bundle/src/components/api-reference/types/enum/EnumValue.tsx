@@ -4,13 +4,13 @@ import type * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 
 import { Chip } from "@/components/components/Chip";
 import { MdxServerComponentProseSuspense } from "@/components/mdx/server-component";
-import { DocsLoader } from "@/server/docs-loader";
+import { MdxSerializer } from "@/server/mdx-serializer";
 
 export function EnumValue({
-  loader,
+  serialize,
   enumValue,
 }: {
-  loader: DocsLoader;
+  serialize: MdxSerializer;
   enumValue: ApiDefinition.EnumValue;
 }) {
   return (
@@ -18,7 +18,7 @@ export function EnumValue({
       name={enumValue.value}
       description={
         <MdxServerComponentProseSuspense
-          loader={loader}
+          serialize={serialize}
           mdx={enumValue.description}
           size="xs"
         />

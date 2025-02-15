@@ -1,15 +1,19 @@
-const plugin = require("tailwindcss/plugin");
+import forms from "@tailwindcss/forms";
+import typography from "@tailwindcss/typography";
+import type { Config } from "tailwindcss";
+import plugin from "tailwindcss/plugin";
 
-const round = (num) =>
+const round = (num: number): string =>
   num
     .toFixed(7)
     .replace(/(\.[0-9]+?)0+$/, "$1")
     .replace(/\.0$/, "");
-const em = (px, base) => `${round(px / base)}em`;
 
-const generateScale = (name) => {
-  let scale = Array.from({ length: 12 }, (_, i) => {
-    let id = i + 1;
+const em = (px: number, base: number): string => `${round(px / base)}em`;
+
+const generateScale = (name: string): Record<string, string> => {
+  const scale = Array.from({ length: 12 }, (_, i) => {
+    const id = i + 1;
     return [
       [id, `var(--${name}-${id})`],
       [`a${id}`, `var(--${name}-a${id})`],
@@ -19,8 +23,7 @@ const generateScale = (name) => {
   return Object.fromEntries(scale);
 };
 
-/** @type {import('tailwindcss').Config} */
-module.exports = {
+export default {
   darkMode: "class",
   theme: {
     extend: {
@@ -96,16 +99,6 @@ module.exports = {
         accented: generateScale("accent"),
 
         /* Tokens */
-        accent: withOpacity("--accent"),
-        "accent-aa": withOpacity("--accent-aa"),
-        "accent-aaa": withOpacity("--accent-aaa"),
-        "accent-tinted": "var(--accent-10)",
-        "accent-contrast": "var(--accent-contrast)",
-        "accent-muted": `var(--accent-6)`,
-        "accent-highlight": "var(--accent-3)",
-        "accent-highlight-faded": "var(--accent-2)",
-        background: withOpacity("--background"),
-
         "method-get": "var(--green-a10)",
         "method-post": "var(--blue-a10)",
         "method-delete": "var(--red-a10)",
@@ -121,17 +114,6 @@ module.exports = {
         "tag-method-delete": "var(--red-a3)",
         "tag-method-put": "var(--amber-a3)",
         "tag-method-patch": "var(--amber-a3)",
-
-        "intent-default": "var(--grayscale-a11)",
-        "intent-default-lightened": "var(--grayscale-a12)",
-        "intent-warning": "var(--amber-a11)",
-        "intent-warning-lightened": "var(--amber-a12)",
-        "intent-success": "var(--green-a11)",
-        "intent-success-lightened": "var(--green-a12)",
-        "intent-danger": "var(--red-a11)",
-        "intent-danger-lightened": "var(--red-a12)",
-        "intent-info": "var(--blue-a11)",
-        "intent-info-lightened": "var(--blue-a12)",
 
         "background-primary": {
           light: "rgb(3, 7, 18)",
@@ -151,11 +133,6 @@ module.exports = {
           dark: "rgba(151, 90, 90, 0.05)",
         },
 
-        "card-background": "var(--bg-color-card)",
-        "card-solid": "var(--bg-color-card-solid)",
-        "sidebar-background": "var(--sidebar-background)",
-        "header-background": "var(--header-background)",
-
         // "border-default": "var(--grayscale-a5)",
         "border-default": "var(--border)",
         "border-concealed": "var(--border-concealed)",
@@ -173,8 +150,6 @@ module.exports = {
         "border-danger-soft": "var(--red-a6)",
         "border-info-soft": "var(--blue-a6)",
 
-        "text-default": withOpacity("--body-text"),
-        "text-default-inverted": withOpacity("--body-text-inverted"),
         "text-muted": "var(--grayscale-a11)",
         "text-disabled": "var(--grayscale-a10)",
         faded: "var(--grayscale-a9)",
@@ -336,11 +311,11 @@ module.exports = {
         },
         "content-show-from-left": {
           from: { opacity: "0", transform: "translate(-100%, 0)" },
-          to: { opacity: "1", transform: "translate(0, 0)" },
+          to: { opacity: 1, transform: "translate(0, 0)" },
         },
         "content-dismiss-to-left": {
-          from: { opacity: "1", transform: "translate(0, 0)" },
-          to: { opacity: "0", transform: "translate(-100%, 0)" },
+          from: { opacity: 1, transform: "translate(0, 0)" },
+          to: { opacity: 0, transform: "translate(-100%, 0)" },
         },
       },
       transitionTimingFunction: {
@@ -371,8 +346,8 @@ module.exports = {
     },
   },
   plugins: [
-    require("@tailwindcss/typography"),
-    require("@tailwindcss/forms"),
+    typography,
+    forms,
     // require("tailwindcss-animate"),
     // Defining the classes here to get proper intellisense
     // https://github.com/tailwindlabs/tailwindcss-intellisense/issues/227#issuecomment-1269592872
@@ -392,57 +367,6 @@ module.exports = {
         },
       });
       addComponents({
-        // Text
-        ".t-default": {
-          "@apply text-text-default": {},
-        },
-        ".t-muted": {
-          "@apply text-text-muted dark:text-text-muted dark:[text-shadow:_0_1px_3px_rgb(0_0_0_/_40%)]":
-            {},
-        },
-        ".t-accent": {
-          "@apply text-accent-aa": {},
-        },
-        ".t-accent-aaa": {
-          "@apply text-accent-aaa": {},
-        },
-        ".t-accent-contrast": {
-          "@apply text-accent-contrast": {},
-        },
-        ".t-success": {
-          "@apply text-intent-success": {},
-        },
-        ".t-warning": {
-          "@apply text-intent-warning": {},
-        },
-        ".t-danger": {
-          "@apply text-intent-danger": {},
-        },
-        ".text-intent-default": {
-          "@apply text-text-default": {},
-        },
-        ".text-intent-none": {
-          "@apply text-text-default": {},
-        },
-        // Background
-        // ".bg-background": {
-        //     "@apply bg-background-light dark:bg-background-dark": {},
-        // },
-        ".bg-background-translucent": {
-          "@apply bg-background/70": {},
-        },
-        ".bg-sidebar": {
-          "@apply bg-sidebar-background": {},
-        },
-        ".bg-header": {
-          "@apply bg-header-background": {},
-        },
-        ".bg-card": {
-          "@apply bg-card-background": {},
-        },
-        ".bg-card-surface": {
-          "@apply bg-card dark:bg-white/5": {},
-        },
         ".bg-border-primary": {
           "@apply bg-border-accent-muted": {},
         },
@@ -554,14 +478,4 @@ module.exports = {
   future: {
     hoverOnlyWhenSupported: true,
   },
-};
-
-// https://stackoverflow.com/a/72831219/4238485
-function withOpacity(variableName) {
-  return ({ opacityValue }) => {
-    if (opacityValue !== undefined) {
-      return `rgba(var(${variableName}), ${opacityValue})`;
-    }
-    return `rgb(var(${variableName}))`;
-  };
-}
+} satisfies Config;

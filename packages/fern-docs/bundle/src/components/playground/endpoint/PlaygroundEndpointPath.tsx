@@ -103,9 +103,9 @@ export const PlaygroundEndpointPath: FC<PlaygroundEndpointPathProps> = ({
                   <span
                     key={idx}
                     className={cn({
-                      "t-accent bg-accent-highlight rounded px-1 before:content-[':']":
+                      "text-accent bg-accent-highlight rounded px-1 before:content-[':']":
                         stateValue.length === 0,
-                      "t-accent font-semibold": stateValue.length > 0,
+                      "text-accent font-semibold": stateValue.length > 0,
                     })}
                   >
                     {stateValue.length > 0
@@ -144,7 +144,7 @@ export const PlaygroundEndpointPath: FC<PlaygroundEndpointPathProps> = ({
 
                     <span>{queryParameter.key}</span>
                     <span>{"="}</span>
-                    <span className={"t-accent font-semibold"}>
+                    <span className={"text-accent font-semibold"}>
                       {encodeURI(stateValue)}
                     </span>
                   </Fragment>

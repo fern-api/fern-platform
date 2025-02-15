@@ -87,7 +87,7 @@ export function CodeGroup({ children }: { children: React.ReactNode }) {
   };
 
   const containerClass = cn(
-    "bg-card after:ring-card-border relative mb-6 mt-4 flex w-full min-w-0 max-w-full flex-col rounded-lg shadow-sm after:pointer-events-none after:absolute after:inset-0 after:rounded-[inherit] after:ring-1 after:ring-inset after:content-[''] first:mt-0",
+    "bg-card-background after:ring-card-border relative mt-4 mb-6 flex w-full max-w-full min-w-0 flex-col rounded-lg shadow-sm after:pointer-events-none after:absolute after:inset-0 after:rounded-[inherit] after:ring-1 after:content-[''] after:ring-inset first:mt-0",
     {
       "bg-card-solid dark": isDarkCode,
     }
@@ -109,7 +109,7 @@ export function CodeGroup({ children }: { children: React.ReactNode }) {
                 </span>
               </div>
             </div>
-            <CopyToClipboardButton className="ml-2 mr-1" content={code} />
+            <CopyToClipboardButton className="mr-1 ml-2" content={code} />
           </div>
         </div>
         <FernSyntaxHighlighter
@@ -138,7 +138,7 @@ export function CodeGroup({ children }: { children: React.ReactNode }) {
                     value={idx.toString()}
                     className="data-[state=active]:shadow-accent group flex min-h-10 items-center px-2 py-1.5 data-[state=active]:shadow-[inset_0_-2px_0_0_rgba(0,0,0,0.1)]"
                   >
-                    <span className="t-muted group-data-[state=active]:t-default group-hover:bg-tag-default whitespace-nowrap rounded px-2 py-1 text-sm group-data-[state=active]:font-semibold">
+                    <span className="t-muted group-data-[state=active]:t-default group-hover:bg-tag-default rounded px-2 py-1 text-sm whitespace-nowrap group-data-[state=active]:font-semibold">
                       {title ?? getDisplayNameWithCount(language, items, idx)}
                     </span>
                   </Tabs.Trigger>
@@ -148,7 +148,7 @@ export function CodeGroup({ children }: { children: React.ReactNode }) {
           </Tabs.List>
 
           <CopyToClipboardButton
-            className="ml-2 mr-1"
+            className="mr-1 ml-2"
             content={items[selectedTabIndex]?.props.code ?? ""}
           />
         </div>

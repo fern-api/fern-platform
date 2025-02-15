@@ -9,7 +9,7 @@ import { isNonNullish } from "@fern-api/ui-core-utils";
 import { type TableOfContentsItem, makeToc, toTree } from "@fern-docs/mdx";
 
 import { DocsLoader } from "@/server/docs-loader";
-import { createCachedMdxSerializer } from "@/server/mdx-serializer";
+import { MdxSerializer } from "@/server/mdx-serializer";
 
 import { FernLink } from "../components/FernLink";
 import { PageHeader } from "../components/PageHeader";
@@ -19,10 +19,12 @@ import ChangelogPageClient from "./ChangelogPageClient";
 
 export default async function ChangelogPage({
   loader,
+  serialize,
   nodeId,
   breadcrumb,
 }: {
   loader: DocsLoader;
+  serialize: MdxSerializer;
   nodeId: FernNavigation.NodeId;
   breadcrumb: readonly FernNavigation.BreadcrumbItem[];
 }) {
@@ -69,6 +71,7 @@ export default async function ChangelogPage({
       overview={
         <ChangelogPageOverview
           loader={loader}
+          serialize={serialize}
           node={node}
           breadcrumb={breadcrumb}
         />
@@ -79,8 +82,9 @@ export default async function ChangelogPage({
             entry.pageId,
             <ChangelogPageEntry
               key={entry.pageId}
-              node={entry}
               loader={loader}
+              node={entry}
+              serialize={serialize}
             />,
           ] as const;
         })
@@ -91,10 +95,12 @@ export default async function ChangelogPage({
 
 async function ChangelogPageOverview({
   loader,
+  serialize,
   node,
   breadcrumb,
 }: {
   loader: DocsLoader;
+  serialize: MdxSerializer;
   node: FernNavigation.ChangelogNode;
   breadcrumb: readonly FernNavigation.BreadcrumbItem[];
 }) {
@@ -102,7 +108,6 @@ async function ChangelogPageOverview({
     node.overviewPageId != null
       ? await loader.getPage(node.overviewPageId)
       : undefined;
-  const serialize = createCachedMdxSerializer(loader);
   const mdx = await serialize(page?.markdown, {
     filename: page?.filename,
   });
@@ -110,7 +115,7 @@ async function ChangelogPageOverview({
   return (
     <>
       <PageHeader
-        loader={loader}
+        serialize={serialize}
         title={mdx?.frontmatter?.title ?? node.title}
         subtitle={mdx?.frontmatter?.subtitle ?? mdx?.frontmatter?.excerpt}
         breadcrumb={breadcrumb}
@@ -122,13 +127,14 @@ async function ChangelogPageOverview({
 
 async function ChangelogPageEntry({
   loader,
+  serialize,
   node,
 }: {
   loader: DocsLoader;
+  serialize: MdxSerializer;
   node: FernNavigation.ChangelogEntryNode;
 }) {
   const page = await loader.getPage(node.pageId);
-  const serialize = createCachedMdxSerializer(loader);
   const mdx = await serialize(page.markdown, {
     filename: node.pageId,
   });

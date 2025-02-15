@@ -1,0 +1,16 @@
+@import "tailwindcss";
+@source "../../components";
+@import "@fern-docs/components/src/colors.css";
+@import "@fern-docs/components/src/fern-accent.scss";
+@import "@fern-docs/components/src/kbd.scss";
+@import "@fern-docs/components/src/badges/index.scss";
+@import "@fern-docs/syntax-highlighter/src/index.css";
+@plugin "@tailwindcss/typography";
+@plugin "tailwindcss-animate";
+@import "./components/shared/reset.css";
+
+@theme {
+  --radius-sm: var(--radius);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: calc(var(--radius) - 4px);
+}

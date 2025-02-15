@@ -4,26 +4,27 @@ import { notFound } from "next/navigation";
 
 import type { FernNavigation } from "@fern-api/fdr-sdk";
 
-import { createCachedDocsLoader } from "@/server/docs-loader";
-import { createCachedMdxSerializer } from "@/server/mdx-serializer";
+import { DocsLoader } from "@/server/docs-loader";
+import { MdxSerializer } from "@/server/mdx-serializer";
 
 import type { DocsContent } from "../resolver/DocsContent";
 import ChangelogEntryPageClient from "./ChangelogEntryPageClient";
 
 export default async function ChangelogEntryPage({
   parents,
-  domain,
+  loader,
+  serialize,
   node,
   breadcrumb,
   neighbors,
 }: {
   parents: readonly FernNavigation.NavigationNodeParent[];
-  domain: string;
+  loader: DocsLoader;
+  serialize: MdxSerializer;
   node: FernNavigation.ChangelogEntryNode;
   breadcrumb: readonly FernNavigation.BreadcrumbItem[];
   neighbors: DocsContent.Neighbors;
 }) {
-  const loader = await createCachedDocsLoader(domain);
   const changelogNode = [...parents]
     .reverse()
     .find((n): n is FernNavigation.ChangelogNode => n.type === "changelog");
@@ -31,7 +32,6 @@ export default async function ChangelogEntryPage({
     notFound();
   }
   const { filename, markdown } = await loader.getPage(node.pageId);
-  const serialize = createCachedMdxSerializer(loader);
   const page = await serialize(markdown, { filename });
 
   return (

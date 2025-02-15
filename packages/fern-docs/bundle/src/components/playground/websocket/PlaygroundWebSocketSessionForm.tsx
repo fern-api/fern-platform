@@ -130,7 +130,7 @@ export const PlaygroundWebSocketSessionForm: FC<
                 className={cn(
                   "-mr-1 inline-flex items-center gap-2 rounded-lg px-2 py-0.5",
                   {
-                    "t-accent bg-tag-primary": connected,
+                    "text-accent bg-tag-primary": connected,
                     "bg-tag-danger text-intent-danger": !connected,
                   }
                 )}

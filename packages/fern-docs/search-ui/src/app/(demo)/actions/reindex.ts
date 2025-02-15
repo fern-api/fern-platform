@@ -1,3 +1,5 @@
+"use server";
+
 import { Client } from "@upstash/qstash";
 
 import { qstashToken } from "@/server/env-variables";

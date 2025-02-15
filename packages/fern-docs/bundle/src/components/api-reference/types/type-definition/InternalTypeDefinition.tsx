@@ -3,12 +3,12 @@ import "server-only";
 import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 
-import { DocsLoader } from "@/server/docs-loader";
 
 import { EnumTypeDefinition } from "./EnumTypeDefinition";
 import { FernCollapseWithButtonUncontrolled } from "./FernCollapseWithButtonUncontrolled";
 import { TypeDefinitionDetails } from "./TypeDefinitionDetails";
 import { createCollapsibleContent } from "./createCollapsibleContent";
+import { MdxSerializer } from "@/server/mdx-serializer";
 
 export declare namespace InternalTypeDefinition {
   export interface Props {
@@ -21,14 +21,14 @@ export declare namespace InternalTypeDefinition {
 }
 
 export function InternalTypeDefinition({
-  loader,
+  serialize,
   shape,
   isCollapsible,
   anchorIdParts,
   slug,
   types,
 }: {
-  loader: DocsLoader;
+  serialize: MdxSerializer;
   shape: ApiDefinition.TypeShapeOrReference;
   isCollapsible: boolean;
   anchorIdParts: readonly string[];
@@ -36,7 +36,7 @@ export function InternalTypeDefinition({
   types: Record<ApiDefinition.TypeId, ApiDefinition.TypeDefinition>;
 }) {
   const collapsableContent = createCollapsibleContent(
-    loader,
+    serialize,
     shape,
     types,
     anchorIdParts,

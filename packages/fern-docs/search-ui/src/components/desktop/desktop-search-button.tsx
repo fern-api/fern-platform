@@ -4,18 +4,16 @@ import { VariantProps, cva } from "class-variance-authority";
 import { SearchIcon } from "lucide-react";
 
 import { Kbd } from "@fern-docs/components";
-
-import { cn } from "../ui/cn";
+import { cn } from "@fern-docs/components";
 
 const buttonVariants = cva(
-  "inline-flex h-9 w-full cursor-text items-center justify-start gap-2 whitespace-nowrap rounded-md p-2 text-sm font-medium transition-colors hover:transition-none focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--accent-6)] disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
+  "inline-flex h-9 w-full cursor-text items-center justify-start gap-2 rounded-md p-2 text-sm font-medium whitespace-nowrap transition-colors hover:transition-none focus-visible:ring-1 focus-visible:ring-(--accent-6) focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
   {
     variants: {
       variant: {
         default:
-          "bg-[var(--grayscale-a3)] text-[var(--grayscale-a10)] hover:bg-[var(--grayscale-a4)]",
-        loading:
-          "cursor-default bg-[var(--grayscale-a3)] text-[var(--grayscale-a10)]",
+          "bg-(--grayscale-a3) text-(--grayscale-a10) hover:bg-(--grayscale-a4)",
+        loading: "cursor-default bg-(--grayscale-a3) text-(--grayscale-a10)",
       },
     },
     defaultVariants: {

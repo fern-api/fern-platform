@@ -12,14 +12,14 @@
   }
 
   .fern-anchor-icon:not(.copied) {
-    @apply t-muted bg-card ring-card-border ring-1 backdrop-blur;
+    @apply t-muted bg-card-background ring-card-border ring-1 backdrop-blur;
   }
 
   .fern-anchor-icon.copied {
     @apply bg-tag-primary ring-border-accent-muted ring-1 backdrop-blur;
 
     > svg {
-      @apply t-accent;
+      @apply text-accent;
     }
   }
 }

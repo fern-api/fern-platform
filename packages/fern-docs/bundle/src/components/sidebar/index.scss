@@ -4,12 +4,12 @@
     @apply inline-flex items-center px-4 lg:px-3;
 
     .fern-sidebar-heading-content {
-      @apply m-0 text-base font-semibold leading-6 lg:text-sm lg:leading-5;
+      @apply m-0 text-base leading-6 font-semibold lg:text-sm lg:leading-5;
     }
   }
 
   .fern-sidebar-group {
-    @apply fern-collapsible list-none overflow-hidden;
+    @apply list-none overflow-hidden;
     @apply max-lg:-mx-4;
 
     .fern-sidebar-group {
@@ -103,11 +103,11 @@
   }
 
   .fern-sidebar-link-expand[data-state="active"] {
-    @apply t-accent after:bg-tag-primary after:pointer-events-none after:absolute after:inset-1 after:rounded-xl after:content-[''] lg:after:rounded-md;
+    @apply text-accent after:bg-tag-primary after:pointer-events-none after:absolute after:inset-1 after:rounded-xl after:content-[''] lg:after:rounded-md;
   }
 
   .fern-sidebar-tabs {
-    @apply mb-6 mt-5 flex list-none flex-col;
+    @apply mt-5 mb-6 flex list-none flex-col;
   }
 
   .fern-sidebar-searchbar-container {

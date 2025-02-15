@@ -10,6 +10,7 @@ import {
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 
 import { DocsLoader } from "@/server/docs-loader";
+import { MdxSerializer } from "@/server/mdx-serializer";
 
 import { EndpointContent } from "./endpoints/EndpointContent";
 import { WebhookContent } from "./webhooks/WebhookContent";
@@ -17,11 +18,13 @@ import { WebSocketContent } from "./websockets/WebSocket";
 
 export default async function ApiEndpointPage({
   loader,
+  serialize,
   node,
   breadcrumb,
   bottomNavigation,
 }: {
   loader: DocsLoader;
+  serialize: MdxSerializer;
   node: FernNavigation.NavigationNodeApiLeaf;
   breadcrumb: readonly FernNavigation.BreadcrumbItem[];
   bottomNavigation?: React.ReactNode;
@@ -30,7 +33,7 @@ export default async function ApiEndpointPage({
 
   return (
     <ApiEndpointContent
-      loader={loader}
+      serialize={serialize}
       node={node}
       apiDefinition={apiDefinition}
       breadcrumb={breadcrumb}
@@ -40,13 +43,13 @@ export default async function ApiEndpointPage({
 }
 
 async function ApiEndpointContent({
-  loader,
+  serialize,
   node,
   apiDefinition,
   breadcrumb,
   bottomNavigation,
 }: {
-  loader: DocsLoader;
+  serialize: MdxSerializer;
   node: FernNavigation.NavigationNodeApiLeaf;
   apiDefinition: ApiDefinition;
   breadcrumb: readonly FernNavigation.BreadcrumbItem[];
@@ -56,13 +59,11 @@ async function ApiEndpointContent({
     case "endpoint": {
       const context = createEndpointContext(node, prune(apiDefinition, node));
       if (!context) {
-        throw new Error(
-          `[${loader.domain}] Could not create endpoint context for ${node.id}`
-        );
+        throw new Error(`Could not create endpoint context for ${node.id}`);
       }
       return (
         <EndpointContent
-          loader={loader}
+          serialize={serialize}
           breadcrumb={breadcrumb}
           context={context}
           showErrors
@@ -73,13 +74,11 @@ async function ApiEndpointContent({
     case "webSocket": {
       const context = createWebSocketContext(node, prune(apiDefinition, node));
       if (!context) {
-        throw new Error(
-          `[${loader.domain}] Could not create web socket context for ${node.id}`
-        );
+        throw new Error(`Could not create web socket context for ${node.id}`);
       }
       return (
         <WebSocketContent
-          loader={loader}
+          serialize={serialize}
           breadcrumb={breadcrumb}
           context={context}
         />
@@ -88,13 +87,11 @@ async function ApiEndpointContent({
     case "webhook": {
       const context = createWebhookContext(node, prune(apiDefinition, node));
       if (!context) {
-        throw new Error(
-          `[${loader.domain}] Could not create web hook context for ${node.id}`
-        );
+        throw new Error(`Could not create web hook context for ${node.id}`);
       }
       return (
         <WebhookContent
-          loader={loader}
+          serialize={serialize}
           breadcrumb={breadcrumb}
           context={context}
         />

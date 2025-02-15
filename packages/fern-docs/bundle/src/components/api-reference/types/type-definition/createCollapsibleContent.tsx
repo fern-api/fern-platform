@@ -11,7 +11,7 @@ import {
 } from "@fern-api/fdr-sdk/api-definition";
 import { Slug } from "@fern-api/fdr-sdk/navigation";
 
-import { DocsLoader } from "@/server/docs-loader";
+import { MdxSerializer } from "@/server/mdx-serializer";
 
 import { DiscriminatedUnionVariant } from "../discriminated-union/DiscriminatedUnionVariant";
 import { EnumValue } from "../enum/EnumValue";
@@ -26,7 +26,7 @@ interface CollapsibleContent {
 }
 
 export function createCollapsibleContent(
-  loader: DocsLoader,
+  serialize: MdxSerializer,
   shape: TypeShapeOrReference,
   types: Record<TypeId, TypeDefinition>,
   anchorIdParts: readonly string[],
@@ -40,7 +40,7 @@ export function createCollapsibleContent(
       return {
         elements: union.variants.map((variant) => (
           <DiscriminatedUnionVariant
-            loader={loader}
+            serialize={serialize}
             key={variant.discriminantValue}
             discriminant={union.discriminant}
             unionVariant={variant}
@@ -59,7 +59,7 @@ export function createCollapsibleContent(
         elements: unwrapped.shape.values.map((enumValue) => (
           <EnumValue
             key={enumValue.value}
-            loader={loader}
+            serialize={serialize}
             enumValue={enumValue}
           />
         )),
@@ -72,7 +72,7 @@ export function createCollapsibleContent(
       return {
         elements: properties.map((property) => (
           <ObjectProperty
-            loader={loader}
+            serialize={serialize}
             key={property.key}
             property={property}
             anchorIdParts={[...anchorIdParts, property.key]}
@@ -88,7 +88,7 @@ export function createCollapsibleContent(
       return {
         elements: unwrapped.shape.variants.map((variant, variantIdx) => (
           <UndiscriminatedUnionVariant
-            loader={loader}
+            serialize={serialize}
             key={variantIdx}
             unionVariant={variant}
             anchorIdParts={[

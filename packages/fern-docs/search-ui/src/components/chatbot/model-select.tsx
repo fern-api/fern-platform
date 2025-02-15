@@ -6,10 +6,11 @@ import {
   useContext,
 } from "react";
 
+import { cn } from "@fern-docs/components";
+
 import { Anthropic } from "../icons/anthropic";
 import { Cohere } from "../icons/cohere";
 import { OpenAI } from "../icons/openai";
-import { cn } from "../ui/cn";
 import {
   Select,
   SelectContent,

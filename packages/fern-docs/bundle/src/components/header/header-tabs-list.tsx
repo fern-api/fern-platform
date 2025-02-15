@@ -23,8 +23,8 @@ export function HeaderTabsList({
           <FernLink
             className={cn(
               "relative flex h-11 min-w-0 items-center justify-start space-x-2 px-3",
-              "after:absolute after:inset-x-3 after:-bottom-px after:h-0.5 after:bg-[var(--accent-11)] after:opacity-0 after:content-['']",
-              "data-[state=active]:font-semibold data-[state=active]:text-[var(--accent-11)] data-[state=active]:after:opacity-100",
+              "after:absolute after:inset-x-3 after:-bottom-px after:h-0.5 after:bg-(--accent-11) after:opacity-0 after:content-['']",
+              "data-[state=active]:font-semibold data-[state=active]:text-(--accent-11) data-[state=active]:after:opacity-100",
               "data-[state=inactive]:t-muted data-[state=inactive]:hover:t-default",
               {
                 "opacity-50": tab.type !== "link" && tab.hidden,

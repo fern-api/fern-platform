@@ -13,7 +13,6 @@ bundle.c?js
 ../tests/**/*
 .circleci
 .github
-.vscode
 **/fern/**
 out
 pnpm-lock.yaml

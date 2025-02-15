@@ -5,12 +5,5 @@
     "noEmit": true,
     "allowJs": true
   },
-  "include": [
-    "src/**/*",
-    ".storybook/**/*",
-    "postcss.config.cjs",
-    "tailwind.config.cjs",
-    "vite.config.ts",
-    "vitest.config.ts"
-  ]
+  "include": ["**/*.{ts,tsx,mjs}"]
 }

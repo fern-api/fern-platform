@@ -34,7 +34,7 @@ export function SidebarRootSectionNode({
     <WithFeatureFlags featureFlags={node.featureFlags}>
       <SidebarRootHeading node={node} className={className} />
 
-      <ul className={cn("fern-sidebar-group")}>
+      <ul className={cn("fern-sidebar-group fern-collapsible")}>
         {node.children.map((child) => (
           <li key={child.id}>
             <SidebarNavigationChild node={child} depth={1} />

@@ -1,0 +1,119 @@
+@import "tailwindcss";
+@import "./colors.css";
+@import "./base.css";
+@import "./FernButton.scss";
+@import "./FernCard.scss";
+@import "./FernCheckbox.scss";
+@import "./FernDropdown.scss";
+@import "./FernInput.scss";
+@import "./FernRadioGroup.scss";
+@import "./FernScrollArea.scss";
+@import "./FernSegmentedControl.scss";
+@import "./FernHighlight.scss";
+@import "./badges/index.scss";
+@import "./kbd.css";
+@import "./accordion.scss";
+@import "./utilities.scss";
+
+@config "../tailwind.config.ts";
+
+@custom-variant dark (&:where(.dark, .dark *));
+@custom-variant light (&:where(.light, .light *));
+@custom-variant pointer-coarse (@media (pointer: coarse));
+
+@theme {
+  --font-mono: var(
+    --typography-code-font-family,
+    ui-monospace,
+    SFMono-Regular,
+    Menlo,
+    Monaco,
+    Consolas,
+    "Liberation Mono",
+    "Courier New",
+    monospace
+  );
+  --font-body: var(--typography-body-font-family, var(--font-sans));
+  --font-heading: var(
+    --typography-heading-font-family,
+    var(--font-body, var(--font-sans))
+  );
+
+  --collapse-ease: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --color-accent: rgba(var(--accent), 1);
+  --color-accent-aa: var(--accent-a11, rgba(var(--accent-aa), 1));
+  --color-accent-aaa: var(--accent-a12, rgba(var(--accent-aaa), 1));
+  --color-accent-tinted: var(--accent-10);
+  --color-accent-contrast: var(--accent-contrast);
+  --color-accent-muted: var(--accent-6);
+  --color-accent-highlight: var(--accent-3);
+  --color-accent-highlight-faded: var(--accent-2);
+  --color-background: rgba(var(--background), 1);
+  --color-background-translucent: rgba(var(--background), 0.7);
+  --color-sidebar-background: var(--sidebar-background);
+  --color-header-background: var(--header-background);
+  --color-card-background: var(--bg-color-card);
+  --color-card-solid: var(--bg-color-card-solid);
+  --color-body: black;
+  --color-muted: var(--grayscale-a11);
+
+  --color-method-get-a3: var(--green-a3);
+  --color-method-post-a3: var(--blue-a3);
+  --color-method-delete-a3: var(--red-a3);
+  --color-method-put-a3: var(--amber-a3);
+  --color-method-patch-a3: var(--amber-a3);
+  --color-method-get-a10: var(--green-a10);
+  --color-method-post-a10: var(--blue-a10);
+  --color-method-delete-a10: var(--red-a10);
+  --color-method-put-a10: var(--amber-a10);
+  --color-method-patch-a10: var(--amber-a10);
+  --color-method-get-a11: var(--green-a11);
+  --color-method-post-a11: var(--blue-a11);
+  --color-method-delete-a11: var(--red-a11);
+  --color-method-put-a11: var(--amber-a11);
+  --color-method-patch-a11: var(--amber-a11);
+
+  --color-intent-default: var(--grayscale-a11);
+  --color-intent-default-lightened: var(--grayscale-a12);
+  --color-intent-warning: var(--amber-a11);
+  --color-intent-warning-lightened: var(--amber-a12);
+  --color-intent-success: var(--green-a11);
+  --color-intent-success-lightened: var(--green-a12);
+  --color-intent-danger: var(--red-a11);
+  --color-intent-danger-lightened: var(--red-a12);
+  --color-intent-info: var(--blue-a11);
+  --color-intent-info-lightened: var(--blue-a12);
+
+  --spacing-content-height: var(--content-height, 100vh);
+  --spacing-content-height-padded: calc(
+    var(--spacing-content-height-padded) - 1rem
+  );
+}
+
+@support (height: 100dvh) {
+  @theme {
+    --spacing-content-height: var(--content-height, 100dvh);
+  }
+}
+
+@variant dark {
+  @theme {
+    --color-body: white;
+  }
+}
+
+@layer utilities {
+  .text-muted {
+    color: var(--grayscale-a11);
+  }
+
+  .bg-card-surface {
+    @apply bg-card-background;
+  }
+
+  @variant dark {
+    .bg-card-surface {
+      @apply bg-white/5;
+    }
+  }
+}

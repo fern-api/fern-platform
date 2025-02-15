@@ -9,7 +9,7 @@ import { AvailabilityBadge } from "@fern-docs/components/badges";
 
 import { PageHeader } from "@/components/components/PageHeader";
 import { ReferenceLayout } from "@/components/layouts/ReferenceLayout";
-import { DocsLoader } from "@/server/docs-loader";
+import { MdxSerializer } from "@/server/mdx-serializer";
 
 import { Markdown } from "../../mdx/Markdown";
 import { PlaygroundButton } from "../../playground/PlaygroundButton";
@@ -26,11 +26,11 @@ import { HandshakeExample } from "./HandshakeExample";
 import { WebSocketMessage, WebSocketMessages } from "./WebSocketMessages";
 
 export async function WebSocketContent({
-  loader,
+  serialize,
   context,
   breadcrumb,
 }: {
-  loader: DocsLoader;
+  serialize: MdxSerializer;
   context: WebSocketContext;
   breadcrumb: readonly FernNavigation.BreadcrumbItem[];
 }) {
@@ -76,7 +76,7 @@ export async function WebSocketContent({
       <ReferenceLayout
         header={
           <PageHeader
-            loader={loader}
+            serialize={serialize}
             breadcrumb={breadcrumb}
             title={node.title}
             tags={
@@ -150,7 +150,7 @@ export async function WebSocketContent({
                       <div className="flex flex-col" key={parameter.key}>
                         <TypeComponentSeparator />
                         <EndpointParameter
-                          loader={loader}
+                          serialize={serialize}
                           name={parameter.key}
                           shape={parameter.valueShape}
                           anchorIdParts={["request", "headers", parameter.key]}
@@ -181,7 +181,7 @@ export async function WebSocketContent({
                       <div className="flex flex-col" key={parameter.key}>
                         <TypeComponentSeparator />
                         <EndpointParameter
-                          loader={loader}
+                          serialize={serialize}
                           name={parameter.key}
                           shape={parameter.valueShape}
                           anchorIdParts={["request", "path", parameter.key]}
@@ -214,7 +214,7 @@ export async function WebSocketContent({
                           <div className="flex flex-col" key={parameter.key}>
                             <TypeComponentSeparator />
                             <EndpointParameter
-                              loader={loader}
+                              serialize={serialize}
                               name={parameter.key}
                               shape={parameter.valueShape}
                               anchorIdParts={[
@@ -246,7 +246,7 @@ export async function WebSocketContent({
                 title={
                   <span className="inline-flex items-center gap-2">
                     {"Send"}
-                    <span className="t-success bg-tag-success inline-block rounded-full p-1">
+                    <span className="text-intent-success bg-tag-success inline-block rounded-full p-1">
                       <ArrowUp className="size-icon" />
                     </span>
                   </span>
@@ -256,7 +256,7 @@ export async function WebSocketContent({
                 headerType="h2"
               >
                 <TypeReferenceDefinitions
-                  loader={loader}
+                  serialize={serialize}
                   shape={publishMessageShape}
                   isCollapsible={false}
                   anchorIdParts={["send"]}
@@ -270,7 +270,7 @@ export async function WebSocketContent({
                 title={
                   <span className="inline-flex items-center gap-2">
                     {"Receive"}
-                    <span className="t-accent-aaa bg-tag-primary inline-block rounded-full p-1">
+                    <span className="text-accent-aaa bg-tag-primary inline-block rounded-full p-1">
                       <ArrowDown className="size-icon" />
                     </span>
                   </span>
@@ -280,7 +280,7 @@ export async function WebSocketContent({
                 headerType="h2"
               >
                 <TypeReferenceDefinitions
-                  loader={loader}
+                  serialize={serialize}
                   shape={subscribeMessageShape}
                   isCollapsible={false}
                   anchorIdParts={["receive"]}

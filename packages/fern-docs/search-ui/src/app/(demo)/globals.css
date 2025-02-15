@@ -1,0 +1,66 @@
+@import "../../index.css";
+@config "./tailwind.config.ts";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --grayscale-1: var(--olive-1);
+  --grayscale-2: var(--olive-2);
+  --grayscale-3: var(--olive-3);
+  --grayscale-4: var(--olive-4);
+  --grayscale-5: var(--olive-5);
+  --grayscale-6: var(--olive-6);
+  --grayscale-7: var(--olive-7);
+  --grayscale-8: var(--olive-8);
+  --grayscale-9: var(--olive-9);
+  --grayscale-10: var(--olive-10);
+  --grayscale-11: var(--olive-11);
+  --grayscale-12: var(--olive-12);
+  --grayscale-a1: var(--olive-a1);
+  --grayscale-a2: var(--olive-a2);
+  --grayscale-a3: var(--olive-a3);
+  --grayscale-a4: var(--olive-a4);
+  --grayscale-a5: var(--olive-a5);
+  --grayscale-a6: var(--olive-a6);
+  --grayscale-a7: var(--olive-a7);
+  --grayscale-a8: var(--olive-a8);
+  --grayscale-a9: var(--olive-a9);
+  --grayscale-a10: var(--olive-a10);
+  --grayscale-a11: var(--olive-a11);
+  --grayscale-a12: var(--olive-a12);
+
+  --spacing: 0.25rem;
+  --radius: 0.5rem;
+}
+
+@layer base {
+  body {
+    font-family:
+      -apple-system,
+      blinkmacsystemfont,
+      segoe ui,
+      roboto,
+      oxygen,
+      ubuntu,
+      cantarell,
+      open sans,
+      helvetica neue,
+      sans-serif;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-(--grayscale-a6);
+  }
+  body {
+    @apply text-(--grayscale-12);
+    background-color: var(--color-background);
+  }
+}
+
+@layer utilities {
+  .mask-grad-top-3 {
+    mask-image: linear-gradient(to bottom, transparent 0, black 12px);
+  }
+}

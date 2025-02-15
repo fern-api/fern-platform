@@ -3,7 +3,7 @@
     @apply inline-flex items-center font-semibold;
 
     .fern-breadcrumb-item {
-      @apply t-accent shrink truncate whitespace-nowrap text-sm;
+      @apply text-accent shrink truncate text-sm whitespace-nowrap;
     }
 
     .fern-breadcrumb-arrow {

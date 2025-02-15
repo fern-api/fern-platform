@@ -1,12 +1,12 @@
 import { Fragment, ReactElement, ReactNode } from "react";
 import { Highlight, Snippet } from "react-instantsearch";
 
-import clsx from "clsx";
 import { uniq } from "es-toolkit/array";
 import { ChevronRight } from "lucide-react";
 import { MarkRequired, UnreachableCaseError } from "ts-essentials";
 
 import { formatUtc } from "@fern-api/ui-core-utils";
+import { cn } from "@fern-docs/components";
 import {
   AvailabilityBadge,
   HttpMethodBadge,
@@ -69,7 +69,7 @@ function HitContentWithTitle({
     <div className="min-w-0 flex-1 shrink">
       <div className="flex items-baseline justify-between gap-1">
         <span
-          className={clsx("fern-search-hit-title", {
+          className={cn("fern-search-hit-title", {
             deprecated:
               hit.availability === "Deprecated" ||
               hit.availability === "Sunset" ||
@@ -93,7 +93,7 @@ function HitContentWithTitle({
             />
           )}
         </span>
-        <span className="text-sm text-[var(--grayscale-a10)]">
+        <span className="text-sm text-(--grayscale-a10)">
           {
             SEGMENT_DISPLAY_NAMES[
               hit.type === "api-reference" ? hit.api_type : hit.type

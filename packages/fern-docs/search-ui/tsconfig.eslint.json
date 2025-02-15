@@ -4,11 +4,5 @@
     "rootDir": ".",
     "noEmit": true
   },
-  "include": [
-    "src/**/*",
-    "vitest.config.ts",
-    "tailwind.config.ts",
-    "postcss.config.mjs",
-    "next.config.mjs"
-  ]
+  "include": ["**/*.{ts,tsx,mjs}"]
 }

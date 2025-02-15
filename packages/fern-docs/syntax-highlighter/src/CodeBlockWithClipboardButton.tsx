@@ -13,7 +13,7 @@ export const CodeBlockWithClipboardButton: React.FC<
   return (
     <div
       className={cn(
-        "not-prose group/cb-container bg-card relative mb-6 mt-4 flex w-full rounded-lg border border-[var(--grayscale-a5)] shadow-sm",
+        "not-prose group/cb-container bg-card-background relative mt-4 mb-6 flex w-full rounded-lg border border-(--grayscale-a5) shadow-sm",
         className
       )}
     >
@@ -22,7 +22,7 @@ export const CodeBlockWithClipboardButton: React.FC<
         className={cn(
           "fern-copy-button absolute z-20",
           "opacity-0 backdrop-blur transition group-hover/cb-container:opacity-100",
-          "right-3 top-2"
+          "top-2 right-3"
         )}
         content={code}
       />

@@ -1,14 +1,8 @@
 import process from "process";
 
-/** @type {import('postcss-load-config').Config} */
-const config = {
+export default {
   plugins: {
-    "postcss-import": {},
-    "tailwindcss/nesting": {},
-    tailwindcss: {},
-    autoprefixer: {},
+    "@tailwindcss/postcss": {},
     ...(process.env.NODE_ENV === "production" ? { cssnano: {} } : {}),
   },
 };
-
-export default config;

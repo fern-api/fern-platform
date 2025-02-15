@@ -88,7 +88,7 @@ export const FernChip = forwardRef<HTMLButtonElement, FernChipProps>(
             // Accent
             "bg-accent/20 text-accent-aaa hover:bg-accent/25":
               colorScheme === "accent" && variant === "subtle",
-            "t-accent-contrast bg-accent hover:bg-accent-tinted":
+            "text-accent-contrast bg-accent hover:bg-accent-tinted":
               colorScheme === "accent" && variant === "solid",
           },
           className

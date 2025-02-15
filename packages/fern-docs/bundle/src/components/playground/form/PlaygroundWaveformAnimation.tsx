@@ -7,7 +7,7 @@ export function WaveformAnimation({ volume }: { volume: number }) {
       {Array.from({ length: 20 }).map((_, i) => (
         <motion.div
           key={i}
-          className="bg-text-default h-full w-0.5"
+          className="h-full w-0.5 bg-black dark:bg-white"
           animate={{
             scaleY: [0.2, Math.max(0.4, Math.min(volume, 1)), 0.2],
           }}

@@ -11,7 +11,7 @@ import { addLeadingSlash } from "@fern-docs/utils";
 
 import { MdxServerComponentProseSuspense } from "@/components/mdx/server-component";
 import { getAnchorId } from "@/components/util/anchor";
-import { DocsLoader } from "@/server/docs-loader";
+import { MdxSerializer } from "@/server/mdx-serializer";
 
 import { PropertyWrapper } from "../object/PropertyWrapper";
 import { TypeShorthand } from "../object/TypeShorthand";
@@ -88,13 +88,13 @@ export declare namespace UndiscriminatedUnionVariant {
 }
 
 export function UndiscriminatedUnionVariant({
-  loader,
+  serialize,
   unionVariant,
   anchorIdParts,
   slug,
   types,
 }: {
-  loader: DocsLoader;
+  serialize: MdxSerializer;
   unionVariant: ApiDefinition.UndiscriminatedUnionVariant;
   anchorIdParts: readonly string[];
   slug: FernNavigation.Slug;
@@ -109,7 +109,7 @@ export function UndiscriminatedUnionVariant({
         <div className="t-muted flex items-center gap-2">
           {getIconForTypeReference(unionVariant.shape, types)}
           {unionVariant.displayName == null ? null : (
-            <span className="t-default font-mono text-sm">
+            <span className="text-body font-mono text-sm">
               {unionVariant.displayName}
             </span>
           )}
@@ -125,12 +125,12 @@ export function UndiscriminatedUnionVariant({
           )}
         </div>
         <MdxServerComponentProseSuspense
-          loader={loader}
+          serialize={serialize}
           mdx={unionVariant.description}
           size="sm"
         />
         <TypeReferenceDefinitions
-          loader={loader}
+          serialize={serialize}
           shape={unionVariant.shape}
           anchorIdParts={anchorIdParts}
           isCollapsible

@@ -28,7 +28,7 @@ export function SidebarRootApiPackageNode({
         node={node}
         depth={0}
         className={className}
-        linkClassName="font-semibold !text-text-default"
+        linkClassName="font-semibold !text-body"
         shallow={shallow}
       />
     );
@@ -42,7 +42,7 @@ export function SidebarRootApiPackageNode({
     <WithFeatureFlags featureFlags={node.featureFlags}>
       <SidebarRootHeading node={node} className={className} shallow={shallow} />
 
-      <ul className={cn("fern-sidebar-group")}>
+      <ul className={cn("fern-sidebar-group fern-collapsible")}>
         {node.children.map((child) => (
           <li key={child.id}>
             <SidebarApiPackageChild node={child} depth={1} shallow={shallow} />

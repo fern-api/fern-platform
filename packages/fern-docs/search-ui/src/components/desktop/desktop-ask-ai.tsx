@@ -31,6 +31,7 @@ import {
 } from "lucide-react";
 import { useIsomorphicLayoutEffect } from "swr/_internal";
 
+import { cn } from "@fern-docs/components";
 import { Badge } from "@fern-docs/components/badges";
 import { Button } from "@fern-docs/components/button";
 import {
@@ -55,7 +56,6 @@ import { MarkdownContent } from "../md-content";
 import { useFacetFilters } from "../search-client";
 import { CommandAskAIGroup } from "../shared";
 import { CommandLink } from "../shared/command-link";
-import { cn } from "../ui/cn";
 import { TextArea } from "../ui/textarea";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
 import { DesktopCommandContent, afterInput } from "./desktop-command";
@@ -442,7 +442,7 @@ const DesktopAskAIChat = ({
               }: PropsWithElement<React.ComponentProps<"a">>) => (
                 <a
                   {...props}
-                  className="font-semibold decoration-[var(--accent-a10)] hover:text-[var(--accent-a10)] hover:decoration-2"
+                  className="font-semibold decoration-(--accent-a10) hover:text-(--accent-a10) hover:decoration-2"
                   target="_blank"
                   rel="noreferrer"
                 >
@@ -505,7 +505,7 @@ const AskAIComposer = forwardRef<
     const inputRef = useRef<HTMLTextAreaElement>(null);
     return (
       <div
-        className="cursor-text border-t border-[var(--grayscale-a6)] p-2"
+        className="cursor-text border-t border-(--grayscale-a6) p-2"
         onClick={() => inputRef.current?.focus()}
       >
         <DesktopCommandInput asChild>
@@ -670,7 +670,7 @@ const AskAICommandItems = memo<{
                   scrollLogicalPosition="start"
                 >
                   <article>
-                    <div className="relative mb-2 ml-auto w-fit max-w-[70%] whitespace-pre-wrap rounded-3xl bg-[var(--grayscale-a3)] px-5 py-2">
+                    <div className="relative mb-2 ml-auto w-fit max-w-[70%] rounded-3xl bg-(--grayscale-a3) px-5 py-2 whitespace-pre-wrap">
                       <section className="prose prose-sm dark:prose-invert cursor-auto">
                         <MarkdownContent components={components}>
                           {message.user?.content ?? "_No user message_"}
@@ -729,7 +729,7 @@ const AskAICommandItems = memo<{
                             message.toolInvocations.some(
                               (invocation) => invocation.state !== "result"
                             )) && (
-                            <p className="text-[var(--grayscale-a10)]">
+                            <p className="text-(--grayscale-a10)">
                               Thinking...
                             </p>
                           )}
@@ -779,9 +779,7 @@ function FootnoteCommands({
           <Badge rounded>{String(idx + 1)}</Badge>
           <div>
             <div className="text-sm font-semibold">{footnote.title}</div>
-            <div className="text-xs text-[var(--grayscale-a9)]">
-              {footnote.url}
-            </div>
+            <div className="text-xs text-(--grayscale-a9)">{footnote.url}</div>
           </div>
         </CommandLink>
       ))}

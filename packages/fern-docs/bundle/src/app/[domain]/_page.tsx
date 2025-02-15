@@ -24,7 +24,10 @@ import { DocsLoader } from "@/server/docs-loader";
 import { createCachedDocsLoader } from "@/server/docs-loader";
 import { createFindNode } from "@/server/find-node";
 import { withLaunchDarkly } from "@/server/ld-adapter";
-import { createCachedMdxSerializer } from "@/server/mdx-serializer";
+import {
+  MdxSerializer,
+  createCachedMdxSerializer,
+} from "@/server/mdx-serializer";
 
 import { DocsMainContent } from "./main";
 
@@ -43,11 +46,19 @@ export default async function Page({
     domain,
     disableAuth ? undefined : await getFernToken()
   );
-  const [baseUrl, config, authState, edgeFlags] = await Promise.all([
-    loader.getBaseUrl(),
-    loader.getConfig(),
-    loader.getAuthState(conformTrailingSlash(addLeadingSlash(slug))),
-    loader.getEdgeFlags(),
+  // start loading the root node early
+  const rootPromise = loader.getRoot();
+  const baseUrlPromise = loader.getBaseUrl();
+  const configPromise = loader.getConfig();
+  const authStatePromise = loader.getAuthState(
+    conformTrailingSlash(addLeadingSlash(slug))
+  );
+  const edgeFlagsPromise = loader.getEdgeFlags();
+  const [baseUrl, config] = await Promise.all([
+    baseUrlPromise,
+    configPromise,
+    authStatePromise,
+    edgeFlagsPromise,
   ]);
 
   // check for redirects
@@ -65,7 +76,7 @@ export default async function Page({
   }
 
   // get the root node
-  const root = await loader.getRoot();
+  const root = await rootPromise;
 
   // always match the basepath of the root node
   if (!slug.startsWith(root.slug)) {
@@ -74,6 +85,8 @@ export default async function Page({
 
   // find the node that is currently being viewed
   const found = FernNavigation.utils.findNode(root, slug);
+
+  const authState = await authStatePromise;
 
   // this is a special case for when the user is not authenticated, but the not-found status originates from an authed node
   if (
@@ -87,6 +100,8 @@ export default async function Page({
 
   if (found.type === "notFound") {
     console.error(`[${domain}] Not found: ${slug}`);
+
+    const edgeFlags = await edgeFlagsPromise;
 
     // TODO: returning "notFound: true" here will render vercel's default 404 page
     // this is better than following redirects, since it will signal a proper 404 status code.
@@ -103,7 +118,14 @@ export default async function Page({
     redirect(prepareRedirect(found.redirect));
   }
 
-  const neighborsPromise = getNeighbors(found, loader);
+  const serialize = createCachedMdxSerializer(loader, {
+    scope: {
+      version: found?.currentVersion?.versionId,
+      tab: found?.currentTab?.title,
+    },
+  });
+
+  const neighborsPromise = getNeighbors(loader, serialize, found);
 
   // if the current node requires authentication and the user is not authenticated, redirect to the auth page
   if (found.node.authed && !authState.authed) {
@@ -139,7 +161,8 @@ export default async function Page({
   //   found.currentVersion ?? found.node
   // );
 
-  const FeedbackPopoverProvider = edgeFlags.isInlineFeedbackEnabled
+  const { isInlineFeedbackEnabled } = await edgeFlagsPromise;
+  const FeedbackPopoverProvider = isInlineFeedbackEnabled
     ? FeedbackPopover
     : React.Fragment;
 
@@ -147,17 +170,11 @@ export default async function Page({
     <FeedbackPopoverProvider>
       <DocsMainContent
         loader={loader}
+        serialize={serialize}
         node={found.node}
         parents={found.parents}
         neighbors={await neighborsPromise}
         breadcrumb={found.breadcrumb}
-        scope={{
-          authed: authState.authed,
-          user: authState.authed ? authState.user : undefined,
-          version: found?.currentVersion?.versionId,
-          tab: found?.currentTab?.title,
-          slug: slug,
-        }}
       />
     </FeedbackPopoverProvider>
   );
@@ -262,6 +279,7 @@ function prepareRedirect(destination: string): string {
 
 async function getNeighbor(
   loader: DocsLoader,
+  serialize: MdxSerializer,
   node: FernNavigation.NavigationNodeNeighbor | undefined
 ): Promise<
   | {
@@ -283,7 +301,6 @@ async function getNeighbor(
   }
   try {
     const page = await loader.getPage(pageId);
-    const serialize = createCachedMdxSerializer(loader.domain);
     const mdx = await serialize(page.markdown);
     const excerpt = mdx?.frontmatter?.subtitle ?? mdx?.frontmatter?.excerpt;
     return {
@@ -301,11 +318,12 @@ async function getNeighbor(
 }
 
 async function getNeighbors(
+  loader: DocsLoader,
+  serialize: MdxSerializer,
   neighbors: {
     prev: FernNavigation.NavigationNodeNeighbor | undefined;
     next: FernNavigation.NavigationNodeNeighbor | undefined;
-  },
-  loader: DocsLoader
+  }
 ): Promise<{
   prev?: {
     href: string;
@@ -319,8 +337,8 @@ async function getNeighbors(
   };
 }> {
   const [prev, next] = await Promise.all([
-    getNeighbor(loader, neighbors.prev),
-    getNeighbor(loader, neighbors.next),
+    getNeighbor(loader, serialize, neighbors.prev),
+    getNeighbor(loader, serialize, neighbors.next),
   ]);
   return { prev, next };
 }

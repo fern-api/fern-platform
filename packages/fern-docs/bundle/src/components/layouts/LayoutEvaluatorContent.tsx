@@ -6,7 +6,7 @@ import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import type { TableOfContentsItem } from "@fern-docs/mdx";
 
-import { DocsLoader } from "@/server/docs-loader";
+import { MdxSerializer } from "@/server/mdx-serializer";
 
 import { BuiltWithFern } from "../built-with-fern";
 import { PageHeader } from "../components/PageHeader";
@@ -19,7 +19,7 @@ import { ReferenceLayout } from "./ReferenceLayout";
 import { TableOfContentsLayout } from "./TableOfContentsLayout";
 
 export async function LayoutEvaluatorContent({
-  loader,
+  serialize,
   frontmatter,
   title,
   subtitle,
@@ -29,7 +29,7 @@ export async function LayoutEvaluatorContent({
   aside,
   bottomNavigation,
 }: {
-  loader: DocsLoader;
+  serialize: MdxSerializer;
   frontmatter?: Partial<FernDocs.Frontmatter>;
   title: string;
   subtitle?: string;
@@ -47,7 +47,7 @@ export async function LayoutEvaluatorContent({
 
   const pageHeader = (
     <PageHeader
-      loader={loader}
+      serialize={serialize}
       title={title}
       subtitle={subtitle}
       breadcrumb={breadcrumb}

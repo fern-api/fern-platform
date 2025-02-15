@@ -67,7 +67,7 @@ export const WebsocketMessageAccordionItem: FC<
           aria-hidden
         />
       </Accordion.Trigger>
-      <Accordion.Content className="fern-web-socket-content">
+      <Accordion.Content className="fern-web-socket-content fern-collapsible">
         <div className="group/cb-container relative">
           <FernSyntaxHighlighter
             className="w-0 min-w-full overflow-y-auto"
@@ -79,7 +79,7 @@ export const WebsocketMessageAccordionItem: FC<
       </Accordion.Content>
       <div
         className={cn(
-          "pointer-events-none absolute inset-0 z-auto mx-px rounded-[inherit] ring-inset ring-transparent group-focus-within:ring-1",
+          "pointer-events-none absolute inset-0 z-auto mx-px rounded-[inherit] ring-transparent ring-inset group-focus-within:ring-1",
           {
             "group-focus-within:ring-border-success":
               message.origin === APIV1Read.WebSocketMessageOrigin.Client,

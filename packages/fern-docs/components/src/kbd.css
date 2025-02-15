@@ -9,6 +9,6 @@
 
 @layer components {
   .fern-kbd {
-    @apply rounded-md border border-[var(--grayscale-a6)] bg-[var(--grayscale-1)] px-1.5 py-0.5 text-xs text-[var(--grayscale-a12)];
+    @apply rounded-md border border-(--grayscale-a6) bg-(--grayscale-1) px-1.5 py-0.5 text-xs text-(--grayscale-a12);
   }
 }

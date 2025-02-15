@@ -2,56 +2,54 @@ import "server-only";
 
 import React from "react";
 
-import { DocsLoader } from "@/server/docs-loader";
-import { createCachedMdxSerializer } from "@/server/mdx-serializer";
+import { MdxSerializer } from "@/server/mdx-serializer";
 
 import { ErrorBoundary } from "../error-boundary";
 import { MdxContent } from "./MdxContent";
 import { Prose } from "./prose";
 
 export async function MdxServerComponent({
-  loader,
+  serialize,
   mdx,
 }: {
-  loader: DocsLoader;
+  serialize: MdxSerializer;
   mdx: string | null | undefined;
 }) {
   if (!mdx) {
     return null;
   }
 
-  const serialize = createCachedMdxSerializer(loader);
   const parsed_mdx = await serialize(mdx);
 
   return <MdxContent mdx={parsed_mdx} fallback={mdx} />;
 }
 
 export function MdxServerComponentSuspense({
-  loader,
+  serialize,
   mdx,
   fallback,
 }: {
-  loader: DocsLoader;
+  serialize: MdxSerializer;
   mdx: string | null | undefined;
   fallback?: React.ReactNode;
 }) {
   return (
     <ErrorBoundary fallback={mdx ?? fallback}>
       <React.Suspense fallback={fallback}>
-        <MdxServerComponent mdx={mdx} loader={loader} />
+        <MdxServerComponent mdx={mdx} serialize={serialize} />
       </React.Suspense>
     </ErrorBoundary>
   );
 }
 
 export function MdxServerComponentProse({
-  loader,
+  serialize,
   mdx,
   size,
   className,
   fallback,
 }: {
-  loader: DocsLoader;
+  serialize: MdxSerializer;
   mdx: string | null | undefined;
   size?: "xs" | "sm" | "lg";
   className?: string;
@@ -63,19 +61,19 @@ export function MdxServerComponentProse({
 
   return (
     <Prose size={size} pre={!mdx} className={className}>
-      <MdxServerComponent mdx={mdx} loader={loader} />
+      <MdxServerComponent mdx={mdx} serialize={serialize} />
     </Prose>
   );
 }
 
 export function MdxServerComponentProseSuspense({
-  loader,
+  serialize,
   mdx,
   size,
   className,
   fallback,
 }: {
-  loader: DocsLoader;
+  serialize: MdxSerializer;
   mdx: string | null | undefined;
   size?: "xs" | "sm" | "lg";
   className?: string;
@@ -85,7 +83,7 @@ export function MdxServerComponentProseSuspense({
     <ErrorBoundary fallback={mdx ?? fallback}>
       <React.Suspense fallback={fallback}>
         <MdxServerComponentProse
-          loader={loader}
+          serialize={serialize}
           mdx={mdx}
           size={size}
           className={className}

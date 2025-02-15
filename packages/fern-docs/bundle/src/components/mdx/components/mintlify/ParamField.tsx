@@ -40,8 +40,10 @@ export const ParamField: React.FC<
         <div className="fern-api-property-meta">
           <span>{type}</span>
           {defaultProp && <span>Defaults to {defaultProp}</span>}
-          {deprecated && <span className="t-warning">Deprecated</span>}
-          {required && <span className="t-danger">Required</span>}
+          {deprecated && (
+            <span className="text-intent-warning">Deprecated</span>
+          )}
+          {required && <span className="text-intent-danger">Required</span>}
         </div>
       </div>
       {children && (

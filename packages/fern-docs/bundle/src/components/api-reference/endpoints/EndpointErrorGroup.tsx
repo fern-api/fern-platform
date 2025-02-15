@@ -8,19 +8,19 @@ import { ApiDefinition } from "@fern-api/fdr-sdk";
 import { ErrorResponse } from "@fern-api/fdr-sdk/api-definition";
 import { Slug } from "@fern-api/fdr-sdk/navigation";
 
-import { DocsLoader } from "@/server/docs-loader";
+import { MdxSerializer } from "@/server/mdx-serializer";
 
 import { EndpointError } from "./EndpointError";
 import { EndpointErrorGroupClient } from "./EndpointErrorGroupClient";
 
 export function EndpointErrorGroup({
-  loader,
+  serialize,
   anchorIdParts,
   slug,
   errors,
   types,
 }: {
-  loader: DocsLoader;
+  serialize: MdxSerializer;
   anchorIdParts: string[];
   slug: Slug;
   errors: ErrorResponse[];
@@ -32,7 +32,7 @@ export function EndpointErrorGroup({
         (error) => ({
           children: (
             <EndpointError
-              loader={loader}
+              serialize={serialize}
               error={error}
               anchorIdParts={anchorIdParts}
               slug={slug}

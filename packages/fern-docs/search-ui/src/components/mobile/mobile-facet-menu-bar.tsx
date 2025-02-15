@@ -9,6 +9,7 @@ import * as Menubar from "@radix-ui/react-menubar";
 import { Check, ChevronDown, Minus } from "lucide-react";
 
 import { EMPTY_ARRAY } from "@fern-api/ui-core-utils";
+import { cn } from "@fern-docs/components";
 import {
   AvailabilityBadge,
   AvailabilityDisplayNames,
@@ -22,7 +23,6 @@ import { FacetName } from "@fern-docs/search-server/algolia/types";
 import { FacetFilter } from "../../types";
 import { getFacetDisplay, toFilterLabel } from "../../utils/facet-display";
 import { useFacetFilters, useFacets } from "../search-client";
-import { cn } from "../ui/cn";
 
 export function MobileFacetMenuBar({
   onUpdateFilters,
@@ -104,14 +104,14 @@ function MobileFacetMenu({
           side="bottom"
           avoidCollisions
           align="start"
-          className="absolute z-50 min-w-[220px] overflow-hidden rounded-lg border border-[var(--grayscale-a5)] bg-[var(--grayscale-a1)] p-0 shadow-lg backdrop-blur-lg"
+          className="absolute z-50 min-w-[220px] overflow-hidden rounded-lg border border-(--grayscale-a5) bg-(--grayscale-a1) p-0 shadow-lg backdrop-blur-lg"
           hidden={isLoading || optionsWithCurrent.length === 0}
         >
           <Menubar.RadioGroup value={value} onValueChange={updateFilter}>
             {optionsWithCurrent.map(({ value, count }, idx) => (
               <Fragment key={value}>
                 {idx > 0 && (
-                  <Menubar.Separator className="h-px bg-[var(--grayscale-a5)]" />
+                  <Menubar.Separator className="h-px bg-(--grayscale-a5)" />
                 )}
                 <Menubar.RadioItem
                   value={value}
@@ -129,7 +129,7 @@ function MobileFacetMenu({
                     </span>
 
                     <Menubar.ItemIndicator>
-                      <Check className="size-4 text-[var(--accent-a9)]" />
+                      <Check className="size-4 text-(--accent-a9)" />
                     </Menubar.ItemIndicator>
                   </MenubarItem>
                 </Menubar.RadioItem>
@@ -137,11 +137,11 @@ function MobileFacetMenu({
             ))}
             {value != null && (
               <Menubar.Group>
-                <Menubar.Separator className="h-px bg-[var(--grayscale-a5)]" />
+                <Menubar.Separator className="h-px bg-(--grayscale-a5)" />
                 <Menubar.Item onClick={removeFilter} asChild>
                   <MenubarItem>
                     Remove filter
-                    <Minus className="size-4 text-[var(--grayscale-a9)]" />
+                    <Minus className="size-4 text-(--grayscale-a9)" />
                   </MenubarItem>
                 </Menubar.Item>
               </Menubar.Group>
@@ -218,7 +218,7 @@ const MenubarItem = forwardRef<HTMLDivElement, Menubar.MenubarItemProps>(
         ref={ref}
         {...props}
         className={cn(
-          "flex cursor-pointer items-center justify-between px-4 py-2 focus:bg-[var(--accent-a3)] focus:outline-none",
+          "flex cursor-pointer items-center justify-between px-4 py-2 focus:bg-(--accent-a3) focus:outline-none",
           props.className
         )}
       />

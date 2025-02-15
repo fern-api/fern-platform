@@ -2,7 +2,7 @@ import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import { EndpointContext } from "@fern-api/fdr-sdk/api-definition";
 import { visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
 
-import { DocsLoader } from "@/server/docs-loader";
+import { MdxSerializer } from "@/server/mdx-serializer";
 
 import { TypeComponentSeparator } from "../types/TypeComponentSeparator";
 import { EndpointErrorGroup } from "./EndpointErrorGroup";
@@ -32,18 +32,18 @@ const RESPONSE_BODY = ["response", "body"];
 const RESPONSE_ERROR = ["response", "error"];
 
 export async function EndpointContentLeft({
-  loader,
+  serialize,
   context: { node, endpoint, types, auth, globalHeaders },
+  showAuth,
   showErrors,
 }: {
-  loader: DocsLoader;
+  serialize: MdxSerializer;
   context: EndpointContext;
+  showAuth: boolean;
   showErrors: boolean;
 }) {
-  const { isAuthEnabledInDocs } = await loader.getEdgeFlags();
-
   let authHeader: ApiDefinition.ObjectProperty | undefined;
-  if (auth && isAuthEnabledInDocs) {
+  if (auth && showAuth) {
     const stringShape: ApiDefinition.TypeShape = {
       type: "alias",
       value: {
@@ -133,7 +133,7 @@ export async function EndpointContentLeft({
             <div key={parameter.key}>
               <TypeComponentSeparator />
               <EndpointParameter
-                loader={loader}
+                serialize={serialize}
                 name={parameter.key}
                 shape={parameter.valueShape}
                 anchorIdParts={[...REQUEST_PATH, parameter.key]}
@@ -169,15 +169,15 @@ export async function EndpointContentLeft({
             return (
               <div key={parameter.key} className="relative">
                 {isAuth && (
-                  <div className="absolute right-0 top-3">
+                  <div className="absolute top-3 right-0">
                     <div className="bg-tag-danger flex h-5 items-center rounded-xl px-2">
-                      <span className="t-danger text-xs">Auth</span>
+                      <span className="text-intent-danger text-xs">Auth</span>
                     </div>
                   </div>
                 )}
                 <TypeComponentSeparator />
                 <EndpointParameter
-                  loader={loader}
+                  serialize={serialize}
                   name={parameter.key}
                   shape={parameter.valueShape}
                   anchorIdParts={[...REQUEST_HEADER, parameter.key]}
@@ -205,7 +205,7 @@ export async function EndpointContentLeft({
             <div key={parameter.key}>
               <TypeComponentSeparator />
               <EndpointParameter
-                loader={loader}
+                serialize={serialize}
                 name={parameter.key}
                 shape={parameter.valueShape}
                 anchorIdParts={[...REQUEST_QUERY, parameter.key]}
@@ -230,7 +230,7 @@ export async function EndpointContentLeft({
           slug={node.slug}
         >
           <EndpointRequestSection
-            loader={loader}
+            serialize={serialize}
             request={endpoint.requests[0]}
             anchorIdParts={REQUEST_BODY}
             slug={node.slug}
@@ -245,7 +245,7 @@ export async function EndpointContentLeft({
           slug={node.slug}
         >
           <EndpointResponseSection
-            loader={loader}
+            serialize={serialize}
             response={endpoint.responses[0]}
             anchorIdParts={RESPONSE_BODY}
             slug={node.slug}
@@ -260,7 +260,7 @@ export async function EndpointContentLeft({
           slug={node.slug}
         >
           <EndpointErrorGroup
-            loader={loader}
+            serialize={serialize}
             anchorIdParts={RESPONSE_ERROR}
             slug={node.slug}
             errors={endpoint.errors}

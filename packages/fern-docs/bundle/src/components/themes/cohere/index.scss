@@ -18,7 +18,7 @@
   }
 
   .fern-sidebar-container {
-    @apply bg-sidebar w-sidebar-width shrink-0;
+    @apply bg-sidebar-background w-sidebar-width shrink-0;
     @apply flex flex-col;
   }
 
@@ -39,7 +39,7 @@
   }
 
   .fern-main {
-    @apply bg-sidebar min-w-0 flex-1;
+    @apply bg-sidebar-background min-w-0 flex-1;
   }
 
   .fern-header-container {
@@ -48,7 +48,7 @@
 
   .fern-header,
   .fern-header-tabs {
-    @apply bg-header;
+    @apply bg-header-background;
   }
 
   .fern-header-content {
@@ -72,11 +72,11 @@
     }
 
     .fern-header-tab-button {
-      @apply flex h-[40px] select-none items-center rounded-lg border px-3 text-sm;
+      @apply flex h-[40px] items-center rounded-lg border px-3 text-sm select-none;
     }
 
     .fern-header-tab-button[data-state="inactive"] {
-      @apply t-default border-default;
+      @apply text-body border-default;
 
       &:hover {
         background-color: var(--bg-color-header-tab-inactive-hover);
@@ -100,11 +100,11 @@
       @apply max-w-content-width;
       @apply md:sticky md:top-0 md:flex-1 md:self-start;
 
-      // the 4rem is the same as the h-10 as the Header
-      @apply max-h-content;
+      /* the 4rem is the same as the h-10 as the Header */
+      @apply max-h-content-height;
       @apply flex;
 
-      // header offset
+      /* header offset */
       @apply py-8;
 
       @media (screen(md)) {
@@ -114,7 +114,7 @@
   }
 
   .fern-layout-toc {
-    @apply h-content top-header-offset w-sidebar-width sticky shrink-0 max-xl:hidden;
+    @apply h-content-height top-header-offset w-sidebar-width sticky shrink-0 max-xl:hidden;
   }
 
   .fern-guide-layout,
@@ -146,7 +146,7 @@
 
     .fern-guide-layout,
     .fern-overview-layout {
-      @apply lg:max-xl:mx-auto xl:pl-3 xl:pr-0;
+      @apply lg:max-xl:mx-auto xl:pr-0 xl:pl-3;
     }
   }
 }

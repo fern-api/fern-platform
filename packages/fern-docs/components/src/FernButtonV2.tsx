@@ -6,20 +6,19 @@ import { type VariantProps, cva } from "class-variance-authority";
 import { cn } from "./cn";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors hover:transition-none focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--accent-6)] disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
+  "inline-flex items-center justify-center gap-2 rounded-md text-sm font-medium whitespace-nowrap transition-colors hover:transition-none focus-visible:ring-1 focus-visible:ring-(--accent-6) focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
   {
     variants: {
       variant: {
         default:
-          "bg-[var(--accent-10)] text-[var(--accent-contrast,var(--accent-1))] hover:bg-[var(--accent-9)]",
-        destructive:
-          "bg-[var(--red-10)] text-[var(--red-12)] hover:bg-[var(--red-11)]",
+          "bg-(--accent-10) text-[var(--accent-contrast,var(--accent-1))] hover:bg-(--accent-9)",
+        destructive: "bg-(--red-10) text-(--red-12) hover:bg-(--red-11)",
         outline:
-          "border border-[var(--grayscale-a6)] bg-[var(--grayscale-2)] text-[var(--grayscale-12)] hover:bg-[var(--grayscale-4)] hover:text-[var(--accent-12)]",
+          "border border-(--grayscale-a6) bg-(--grayscale-2) text-(--grayscale-12) hover:bg-(--grayscale-4) hover:text-(--accent-12)",
         secondary:
-          "bg-[var(--grayscale-a3)] text-[var(--accent-12)] hover:bg-[var(--grayscale-a4)]",
-        ghost: "hover:bg-[var(--accent-a3)] hover:text-[var(--accent-12)]",
-        link: "text-[var(--accent-6)] underline-offset-4 hover:underline",
+          "bg-(--grayscale-a3) text-(--accent-12) hover:bg-(--grayscale-a4)",
+        ghost: "hover:bg-(--accent-a3) hover:text-(--accent-12)",
+        link: "text-(--accent-6) underline-offset-4 hover:underline",
       },
       size: {
         default: "h-9 px-4 py-2",

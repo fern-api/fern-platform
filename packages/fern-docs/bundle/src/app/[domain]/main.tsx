@@ -7,18 +7,20 @@ import ChangelogEntryPage from "@/components/changelog/ChangelogEntryPage";
 import ChangelogPage from "@/components/changelog/ChangelogPage";
 import { LayoutEvaluator } from "@/components/layouts/LayoutEvaluator";
 import { DocsLoader } from "@/server/docs-loader";
+import { MdxSerializer } from "@/server/mdx-serializer";
 
 import { BottomNavigation } from "./bottom-nav";
 
 export async function DocsMainContent({
   loader,
+  serialize,
   node,
   parents,
   neighbors,
   breadcrumb,
-  // scope,
 }: {
   loader: DocsLoader;
+  serialize: MdxSerializer;
   node: FernNavigation.NavigationNodePage;
   parents: readonly FernNavigation.NavigationNodeParent[];
   neighbors?: {
@@ -34,15 +36,19 @@ export async function DocsMainContent({
     };
   };
   breadcrumb: readonly FernNavigation.BreadcrumbItem[];
-  scope?: Record<string, unknown>;
 }) {
   const bottomNavigation = neighbors && (
-    <BottomNavigation neighbors={neighbors} loader={loader} />
+    <BottomNavigation neighbors={neighbors} serialize={serialize} />
   );
 
   if (node.type === "changelog") {
     return (
-      <ChangelogPage loader={loader} nodeId={node.id} breadcrumb={breadcrumb} />
+      <ChangelogPage
+        loader={loader}
+        serialize={serialize}
+        nodeId={node.id}
+        breadcrumb={breadcrumb}
+      />
     );
   }
 
@@ -51,7 +57,8 @@ export async function DocsMainContent({
       <ChangelogEntryPage
         node={node}
         parents={parents}
-        domain={loader.domain}
+        loader={loader}
+        serialize={serialize}
         breadcrumb={breadcrumb}
         neighbors={{
           prev: null,
@@ -65,6 +72,7 @@ export async function DocsMainContent({
     return (
       <ApiEndpointPage
         loader={loader}
+        serialize={serialize}
         node={node}
         breadcrumb={breadcrumb}
         bottomNavigation={bottomNavigation}
@@ -77,6 +85,7 @@ export async function DocsMainContent({
     return (
       <LayoutEvaluator
         loader={loader}
+        serialize={serialize}
         fallbackTitle={node.title}
         pageId={pageId}
         breadcrumb={breadcrumb}

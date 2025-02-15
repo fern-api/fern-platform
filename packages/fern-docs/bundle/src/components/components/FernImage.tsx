@@ -24,7 +24,7 @@ export const FernImage = forwardRef<
     width,
     height,
     fill,
-    loader,
+    serialize,
     quality,
     priority,
     loading,
@@ -88,7 +88,7 @@ export const FernImage = forwardRef<
       width={width}
       height={height}
       fill={fill}
-      loader={loader}
+      serialize={serialize}
       quality={quality}
       priority={priority}
       loading={loading}

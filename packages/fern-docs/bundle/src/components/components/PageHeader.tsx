@@ -4,34 +4,29 @@ import React from "react";
 
 import type { FernNavigation } from "@fern-api/fdr-sdk";
 
-import { DocsLoader } from "@/server/docs-loader";
-import { createCachedMdxSerializer } from "@/server/mdx-serializer";
+import { MdxSerializer } from "@/server/mdx-serializer";
 
-import { MdxContent } from "../mdx/MdxContent";
+import {
+  MdxServerComponent,
+  MdxServerComponentSuspense,
+} from "../mdx/server-component";
 import { FernBreadcrumbs } from "./FernBreadcrumbs";
 
-export async function PageHeader({
-  loader,
+export function PageHeader({
+  serialize,
   breadcrumb,
-  title: titleProp,
+  title,
   tags,
-  subtitle: subtitleProp,
+  subtitle,
   children,
 }: {
-  loader: DocsLoader;
+  serialize: MdxSerializer;
   breadcrumb: readonly FernNavigation.BreadcrumbItem[];
   title: string;
   subtitle?: string;
   tags?: React.ReactNode;
   children?: React.ReactNode;
 }) {
-  const serialize = createCachedMdxSerializer(loader);
-
-  const [title, subtitle] = await Promise.all([
-    serialize(titleProp),
-    serialize(subtitleProp),
-  ]);
-
   return (
     <header className="my-8 space-y-2">
       <div className="flex justify-between">
@@ -40,12 +35,16 @@ export async function PageHeader({
       </div>
 
       <h1 className="text-balance break-words">
-        <MdxContent mdx={title} fallback={titleProp} />
+        <MdxServerComponent serialize={serialize} mdx={title} />
       </h1>
 
-      {subtitleProp && (
+      {subtitle && (
         <div className="prose-p:t-muted mt-2 leading-7">
-          <MdxContent mdx={subtitle} fallback={subtitleProp} />
+          <MdxServerComponentSuspense
+            serialize={serialize}
+            mdx={subtitle}
+            fallback={subtitle}
+          />
         </div>
       )}
 

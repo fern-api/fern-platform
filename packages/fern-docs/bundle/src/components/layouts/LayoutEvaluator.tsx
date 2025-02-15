@@ -4,7 +4,7 @@ import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 
 import { DocsLoader } from "@/server/docs-loader";
-import { createCachedMdxSerializer } from "@/server/mdx-serializer";
+import { MdxSerializer } from "@/server/mdx-serializer";
 
 import { MdxContent } from "../mdx/MdxContent";
 import { MdxAsideComponent } from "../mdx/bundler/component";
@@ -13,19 +13,20 @@ import { LayoutEvaluatorContent } from "./LayoutEvaluatorContent";
 
 export async function LayoutEvaluator({
   loader,
+  serialize,
   fallbackTitle,
   pageId,
   breadcrumb,
   bottomNavigation,
 }: {
   loader: DocsLoader;
+  serialize: MdxSerializer;
   fallbackTitle: string;
   pageId: FernNavigation.PageId;
   breadcrumb: readonly FernNavigation.BreadcrumbItem[];
   bottomNavigation?: React.ReactNode;
 }) {
   const { filename, markdown, editThisPageUrl } = await loader.getPage(pageId);
-  const serialize = createCachedMdxSerializer(loader);
   const mdx = await serialize(markdown, {
     filename,
     toc: true,
@@ -44,7 +45,7 @@ export async function LayoutEvaluator({
 
   return (
     <LayoutEvaluatorContent
-      loader={loader}
+      serialize={serialize}
       title={frontmatter?.title ?? fallbackTitle}
       subtitle={frontmatter?.subtitle ?? frontmatter?.excerpt}
       frontmatter={frontmatter}

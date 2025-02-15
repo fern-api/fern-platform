@@ -1,15 +1,16 @@
 import { ComponentPropsWithoutRef, forwardRef, useRef, useState } from "react";
 import { useSearchBox } from "react-instantsearch";
 
+import { cn } from "@fern-docs/components";
 import { Button } from "@fern-docs/components/button";
 
 import { FacetFilter } from "../../types";
 import { FACET_DISPLAY_NAME_MAP } from "../../utils/facet-display";
 import * as Command from "../cmdk";
 import { useFacetFilters } from "../search-client";
-import { cn } from "../ui/cn";
 import { Input } from "../ui/input";
 import { MobileFacetMenuBar } from "./mobile-facet-menu-bar";
+import "./mobile.scss";
 
 export interface MobileCommandProps {
   open?: boolean;

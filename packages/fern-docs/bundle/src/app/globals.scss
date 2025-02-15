@@ -1,10 +1,8 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 @import "../components/css/rmiz.scss";
 @import "../components/css/base.scss";
 @import "@fern-docs/components/src/index.scss";
-@import "@fern-docs/syntax-highlighter/src/index.scss";
+@import "@fern-docs/syntax-highlighter/src/index.css";
 @import "@fern-docs/search-ui/src/index.scss";
 @import "../components/css/components.scss";
 @import "../components/api-reference/index.scss";

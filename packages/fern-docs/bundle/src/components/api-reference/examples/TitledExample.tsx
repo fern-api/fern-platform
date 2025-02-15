@@ -44,8 +44,8 @@ export const TitledExample = forwardRef<
   return (
     <div
       className={cn(
-        "bg-card after:ring-card-border relative flex flex-col overflow-hidden rounded-xl shadow-sm after:pointer-events-none after:absolute after:inset-0 after:rounded-[inherit] after:ring-1 after:ring-inset after:content-['']",
-        "max-md:max-h-content-padded",
+        "bg-card-background after:ring-card-border relative flex flex-col overflow-hidden rounded-xl shadow-sm after:pointer-events-none after:absolute after:inset-0 after:rounded-[inherit] after:ring-1 after:content-[''] after:ring-inset",
+        "max-md:max-h-content-height-padded",
         className
       )}
       onClick={onClick}
@@ -64,9 +64,9 @@ export const TitledExample = forwardRef<
             <div
               className={cn("px-1 text-sm", {
                 "t-muted": intent === "none" || intent === "primary",
-                "t-warning": intent === "warning",
-                "t-success": intent === "success",
-                "t-danger": intent === "danger",
+                "text-intent-warning": intent === "warning",
+                "text-intent-success": intent === "success",
+                "text-intent-danger": intent === "danger",
               })}
             >
               {title}

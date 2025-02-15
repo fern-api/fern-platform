@@ -6,20 +6,20 @@ import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 
 import { MdxServerComponentProseSuspense } from "@/components/mdx/server-component";
-import { DocsLoader } from "@/server/docs-loader";
+import { MdxSerializer } from "@/server/mdx-serializer";
 
 import { TypeDefinitionResponse } from "../types/context/TypeDefinitionContext";
 import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";
 import { ResponseSummaryFallback } from "./response-summary-fallback";
 
 export function EndpointResponseSection({
-  loader,
+  serialize,
   response,
   anchorIdParts,
   slug,
   types,
 }: {
-  loader: DocsLoader;
+  serialize: MdxSerializer;
   response: ApiDefinition.HttpResponse;
   anchorIdParts: readonly string[];
   slug: FernNavigation.Slug;
@@ -28,14 +28,14 @@ export function EndpointResponseSection({
   return (
     <TypeDefinitionResponse>
       <MdxServerComponentProseSuspense
-        loader={loader}
+        serialize={serialize}
         size="sm"
         className="!t-muted border-default border-b pb-5 leading-6"
         mdx={response.description}
         fallback={<ResponseSummaryFallback response={response} types={types} />}
       />
       <EndpointResponseSectionContent
-        loader={loader}
+        serialize={serialize}
         body={response.body}
         anchorIdParts={anchorIdParts}
         slug={slug}
@@ -46,13 +46,13 @@ export function EndpointResponseSection({
 }
 
 function EndpointResponseSectionContent({
-  loader,
+  serialize,
   body,
   anchorIdParts,
   slug,
   types,
 }: {
-  loader: DocsLoader;
+  serialize: MdxSerializer;
   body: ApiDefinition.HttpResponseBodyShape;
   anchorIdParts: readonly string[];
   slug: FernNavigation.Slug;
@@ -66,7 +66,7 @@ function EndpointResponseSectionContent({
     case "stream":
       return (
         <TypeReferenceDefinitions
-          loader={loader}
+          serialize={serialize}
           shape={body.shape}
           isCollapsible={false}
           anchorIdParts={anchorIdParts}
@@ -77,7 +77,7 @@ function EndpointResponseSectionContent({
     default:
       return (
         <TypeReferenceDefinitions
-          loader={loader}
+          serialize={serialize}
           shape={body}
           isCollapsible={false}
           anchorIdParts={anchorIdParts}

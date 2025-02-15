@@ -7,7 +7,7 @@ import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
 import { cn } from "@fern-docs/components";
 
-import { DocsLoader } from "@/server/docs-loader";
+import { MdxSerializer } from "@/server/mdx-serializer";
 
 import { Markdown } from "../../mdx/Markdown";
 import { renderTypeShorthand } from "../../type-shorthand";
@@ -19,13 +19,13 @@ import {
 } from "./EndpointParameter";
 
 export function EndpointRequestSection({
-  loader,
+  serialize,
   request,
   anchorIdParts,
   slug,
   types,
 }: {
-  loader: DocsLoader;
+  serialize: MdxSerializer;
   request: ApiDefinition.HttpRequest;
   anchorIdParts: readonly string[];
   slug: FernNavigation.Slug;
@@ -67,7 +67,7 @@ export function EndpointRequestSection({
               {visitDiscriminatedUnion(p, "type")._visit<ReactNode | null>({
                 file: (file) => (
                   <EndpointParameterContent
-                    loader={loader}
+                    serialize={serialize}
                     name={file.key}
                     description={file.description}
                     typeShorthand={renderTypeShorthandFormDataField(file)}
@@ -79,7 +79,7 @@ export function EndpointRequestSection({
                 ),
                 files: (files) => (
                   <EndpointParameterContent
-                    loader={loader}
+                    serialize={serialize}
                     name={files.key}
                     description={files.description}
                     typeShorthand={renderTypeShorthandFormDataField(files)}
@@ -91,7 +91,7 @@ export function EndpointRequestSection({
                 ),
                 property: (property) => (
                   <EndpointParameter
-                    loader={loader}
+                    serialize={serialize}
                     name={property.key}
                     description={property.description}
                     additionalDescriptions={
@@ -112,7 +112,7 @@ export function EndpointRequestSection({
         bytes: () => null,
         object: (obj) => (
           <TypeReferenceDefinitions
-            loader={loader}
+            serialize={serialize}
             shape={obj}
             isCollapsible={false}
             anchorIdParts={anchorIdParts}
@@ -122,7 +122,7 @@ export function EndpointRequestSection({
         ),
         alias: (alias) => (
           <TypeReferenceDefinitions
-            loader={loader}
+            serialize={serialize}
             shape={alias}
             isCollapsible={false}
             anchorIdParts={anchorIdParts}
@@ -147,7 +147,7 @@ function renderTypeShorthandFormDataField(
       {property.isOptional ? (
         <span>Optional</span>
       ) : (
-        <span className="t-danger">Required</span>
+        <span className="text-intent-danger">Required</span>
       )}
     </span>
   );

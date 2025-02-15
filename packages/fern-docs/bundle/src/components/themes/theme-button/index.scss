@@ -1,14 +1,12 @@
 @layer components {
   .fern-theme-button {
-    // @apply ml-3;
-
     .fern-theme-button-icon {
-      @apply text-intent-default transition-colors;
+      @apply text-body transition-colors;
     }
 
     &:hover {
       .fern-theme-button-icon {
-        @apply t-accent;
+        @apply text-accent;
       }
     }
   }

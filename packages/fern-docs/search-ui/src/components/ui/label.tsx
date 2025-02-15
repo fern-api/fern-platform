@@ -3,10 +3,10 @@ import React from "react";
 import * as LabelPrimitive from "@radix-ui/react-label";
 import { type VariantProps, cva } from "class-variance-authority";
 
-import { cn } from "./cn";
+import { cn } from "@fern-docs/components";
 
 const labelVariants = cva(
-  "text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+  "text-sm leading-none font-medium peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
 );
 
 const Label = React.forwardRef<

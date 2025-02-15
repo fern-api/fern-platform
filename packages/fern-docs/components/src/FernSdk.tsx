@@ -79,11 +79,11 @@ const FernSdkInstallCommand: React.FC<{
     <>
       <pre>
         <code>
-          <span className="t-muted">$</span> {command}
+          <span className="text-muted">$</span> {command}
         </code>
       </pre>
       <CopyToClipboardButton
-        className="absolute right-2.5 top-2.5"
+        className="absolute top-2.5 right-2.5"
         content={command}
       />
     </>

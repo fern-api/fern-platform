@@ -114,8 +114,6 @@ export const CSS_VARIABLES = {
   ACCENT_A12: "--accent-a12",
   ACCENT_SURFACE: "--accent-surface",
   GRAY_SURFACE: "--gray-surface",
-  BODY_TEXT: "--body-text",
-  BODY_TEXT_INVERTED: "--body-text-inverted",
   BACKGROUND_IMAGE: "--docs-background-image",
 } as const;
 
@@ -380,8 +378,6 @@ export function getColorVariables(colors: {
         borderLight?.toRgbString() ?? "var(--grayscale-a4)",
       [CSS_VARIABLES.BORDER_CONCEALED]:
         borderLight?.toRgbString() ?? "var(--grayscale-a2)",
-      [CSS_VARIABLES.BODY_TEXT]: "0, 0, 0",
-      [CSS_VARIABLES.BODY_TEXT_INVERTED]: "255, 255, 255",
       [CSS_VARIABLES.BACKGROUND_IMAGE]: colors.light?.backgroundImage?.src
         ? `url(${colors.light.backgroundImage.src})`
         : undefined,
@@ -467,8 +463,6 @@ export function getColorVariables(colors: {
         borderDark?.toRgbString() ?? "var(--grayscale-a4)",
       [CSS_VARIABLES.BORDER_CONCEALED]:
         borderDark?.toRgbString() ?? "var(--grayscale-a2)",
-      [CSS_VARIABLES.BODY_TEXT]: "255, 255, 255",
-      [CSS_VARIABLES.BODY_TEXT_INVERTED]: "0, 0, 0",
       [CSS_VARIABLES.BACKGROUND_IMAGE]: colors.dark?.backgroundImage?.src
         ? `url(${colors.dark.backgroundImage.src})`
         : undefined,

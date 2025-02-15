@@ -17,7 +17,7 @@
 
     .keyboard-shortcut-hint {
       @apply t-muted size-icon-md shadow-card-light ring-card-border inline-flex items-center justify-center rounded font-mono text-xs leading-none ring-1;
-      @apply bg-card dark:shadow-card-dark;
+      @apply bg-card-background dark:shadow-card-dark;
     }
 
     &:hover .keyboard-shortcut-hint {
@@ -30,7 +30,7 @@
   }
 
   .fern-mdx-link {
-    @apply t-accent-aaa decoration-accent-aa underline decoration-1 underline-offset-4 hover:decoration-2;
+    @apply text-accent-aaa decoration-accent-aa underline decoration-1 underline-offset-4 hover:decoration-2;
     @apply font-semibold;
 
     h1 &,
@@ -45,7 +45,7 @@
     h1 &,
     h2 &,
     h3 & {
-      @apply t-accent; // WCAG AA
+      @apply text-accent-aa; /* WCAG AA */
     }
 
     svg.external-link-icon {
@@ -54,7 +54,7 @@
 
     &:hover {
       svg.external-link-icon {
-        @apply t-accent;
+        @apply text-accent;
       }
     }
   }
@@ -72,7 +72,7 @@
   }
 
   .fern-api-property-key {
-    @apply t-default font-mono text-sm font-semibold;
+    @apply text-body font-mono text-sm font-semibold;
   }
 
   .fern-api-property-meta {
@@ -80,7 +80,11 @@
   }
 
   .custom-backdrop [data-rmiz-modal-overlay="visible"] {
-    @apply bg-text-default/20;
+    @apply bg-black/20;
+
+    @variant dark {
+      @apply bg-white/20;
+    }
   }
 
   .fern-page-heading {

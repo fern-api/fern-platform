@@ -25,7 +25,7 @@ export const Chip = ({
     >
       <span
         className={cn(
-          "t-default bg-tag-default hover:bg-tag-default-hover flex cursor-default items-center font-mono text-xs",
+          "text-body bg-tag-default hover:bg-tag-default-hover flex cursor-default items-center font-mono text-xs",
           {
             ["h-5 rounded-md px-1.5 py-1"]: small,
             ["h-6 rounded-lg px-2 py-1"]: !small,

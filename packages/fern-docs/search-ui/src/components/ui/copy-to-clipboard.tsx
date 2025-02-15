@@ -26,7 +26,7 @@ export const CopyToClipboard = forwardRef<
     duration?: number;
   }
 >(({ asChild, content, duration = 2_000, ...props }, ref) => {
-  const interval = useRef<number>();
+  const interval = useRef<number | null>(null);
   const [copied, setCopied] = useState(false);
   const Comp = asChild ? Slot : "button";
   useEffect(() => {

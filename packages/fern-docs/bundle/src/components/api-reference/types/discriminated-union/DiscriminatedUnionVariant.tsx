@@ -11,7 +11,7 @@ import { AvailabilityBadge } from "@fern-docs/components/badges";
 import { addLeadingSlash } from "@fern-docs/utils";
 
 import { MdxServerComponentProseSuspense } from "@/components/mdx/server-component";
-import { DocsLoader } from "@/server/docs-loader";
+import { MdxSerializer } from "@/server/mdx-serializer";
 
 import { FernAnchor } from "../../../components/FernAnchor";
 import { getAnchorId } from "../../../util/anchor";
@@ -20,14 +20,14 @@ import { PropertyWrapper } from "../object/PropertyWrapper";
 import { InternalTypeDefinition } from "../type-definition/InternalTypeDefinition";
 
 export function DiscriminatedUnionVariant({
-  loader,
+  serialize,
   discriminant,
   unionVariant,
   anchorIdParts,
   slug,
   types,
 }: {
-  loader: DocsLoader;
+  serialize: MdxSerializer;
   discriminant: ApiDefinition.PropertyKey;
   unionVariant: ApiDefinition.DiscriminatedUnionVariant;
   anchorIdParts: readonly string[];
@@ -112,12 +112,12 @@ export function DiscriminatedUnionVariant({
         )}
         <div className="flex flex-col">
           <MdxServerComponentProseSuspense
-            loader={loader}
+            serialize={serialize}
             mdx={descriptions[0]}
             size="sm"
           />
           <InternalTypeDefinition
-            loader={loader}
+            serialize={serialize}
             shape={shape}
             isCollapsible={true}
             anchorIdParts={anchorIdParts}

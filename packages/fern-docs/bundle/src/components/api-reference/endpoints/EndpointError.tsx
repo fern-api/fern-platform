@@ -8,20 +8,20 @@ import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
 
 import { MdxServerComponentProseSuspense } from "@/components/mdx/server-component";
-import { DocsLoader } from "@/server/docs-loader";
+import { MdxSerializer } from "@/server/mdx-serializer";
 
 import { renderTypeShorthand } from "../../type-shorthand";
 import { TypeDefinitionResponse } from "../types/context/TypeDefinitionContext";
 import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";
 
 export function EndpointError({
-  loader,
+  serialize,
   error,
   anchorIdParts,
   slug,
   types,
 }: {
-  loader: DocsLoader;
+  serialize: MdxSerializer;
   error: ApiDefinition.ErrorResponse;
   anchorIdParts: readonly string[];
   slug: FernNavigation.Slug;
@@ -35,7 +35,7 @@ export function EndpointError({
     <div className="space-y-2 pt-2">
       <div className="t-muted w-full text-start text-sm leading-7">
         <MdxServerComponentProseSuspense
-          loader={loader}
+          serialize={serialize}
           mdx={error.description}
           fallback={`This error returns ${renderTypeShorthand(error.shape, { withArticle: true }, types)}.`}
         />
@@ -44,7 +44,7 @@ export function EndpointError({
         <div className="w-full text-start">
           <TypeDefinitionResponse>
             <TypeReferenceDefinitions
-              loader={loader}
+              serialize={serialize}
               isCollapsible
               shape={error.shape}
               anchorIdParts={anchorIdParts}

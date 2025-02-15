@@ -1,3 +1,5 @@
+import "server-only";
+
 import {
   AlgoliaIndexerTaskResponse,
   SEARCH_INDEX,

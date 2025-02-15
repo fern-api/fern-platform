@@ -143,7 +143,7 @@ export default async function DocsLayout({
           announcementText && (
             <Announcement announcement={announcementText}>
               <MdxServerComponentSuspense
-                loader={loader}
+                serialize={serialize}
                 mdx={announcementText}
               />
             </Announcement>

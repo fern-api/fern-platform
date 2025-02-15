@@ -3,19 +3,19 @@ import "server-only";
 import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 
-import { DocsLoader } from "@/server/docs-loader";
+import { MdxSerializer } from "@/server/mdx-serializer";
 
 import { renderTypeShorthand } from "../../type-shorthand";
 import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";
 
 export function WebhookPayloadSection({
-  loader,
+  serialize,
   payload,
   anchorIdParts,
   slug,
   types,
 }: {
-  loader: DocsLoader;
+  serialize: MdxSerializer;
   payload: ApiDefinition.WebhookPayload;
   anchorIdParts: readonly string[];
   slug: FernNavigation.Slug;
@@ -27,7 +27,7 @@ export function WebhookPayloadSection({
         {`The payload of this webhook request is ${renderTypeShorthand(payload.shape, { withArticle: true }, types)}.`}
       </div>
       <TypeReferenceDefinitions
-        loader={loader}
+        serialize={serialize}
         shape={payload.shape}
         isCollapsible={false}
         anchorIdParts={anchorIdParts}

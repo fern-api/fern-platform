@@ -1,9 +1,4 @@
 @layer base {
-  :root {
-    --font-mono: ui-monospace, sfmono-regular, menlo, monaco, consolas,
-      "Liberation Mono", "Courier New", monospace;
-  }
-
   html {
     box-sizing: border-box;
     -webkit-tap-highlight-color: transparent;
@@ -24,7 +19,7 @@
 
   html,
   body {
-    @apply t-default;
+    @apply text-body;
 
     font-size: 16px !important;
   }
@@ -34,19 +29,19 @@
   }
 
   h1 {
-    @apply text-[2.25rem] font-extrabold leading-tight;
+    @apply text-[2.25rem] leading-tight font-extrabold;
   }
 
   h2 {
-    @apply text-[1.5rem] font-bold leading-tight;
+    @apply text-[1.5rem] leading-tight font-bold;
   }
 
   h3 {
-    @apply text-[1.25rem] font-semibold leading-tight;
+    @apply text-[1.25rem] leading-tight font-semibold;
   }
 
   h4 {
-    @apply text-[1.125rem] font-semibold leading-tight;
+    @apply text-[1.125rem] leading-tight font-semibold;
   }
 
   h5 {

@@ -8,11 +8,11 @@ import { useAtom, useAtomValue } from "jotai";
 import { CONTINUE, EXIT, visit } from "unist-util-visit";
 
 import { isNonNullish } from "@fern-api/ui-core-utils";
+import { cn } from "@fern-docs/components";
 import { Badge } from "@fern-docs/components/badges";
 
 import { AlgoliaRecordHit } from "../../types";
 import { PageIcon } from "../icons/page";
-import { cn } from "../ui/cn";
 import {
   Tooltip,
   TooltipContent,
@@ -56,7 +56,7 @@ export function FootnoteSup({ node }: { node?: HastElement }) {
             size="sm"
           >
             <a href={fn?.url} target="_blank" rel="noreferrer" className="ms-1">
-              <span className="text-xs text-[var(--grayscale-a9)]">
+              <span className="text-xs text-(--grayscale-a9)">
                 {String(index + 1)}
               </span>
             </a>
@@ -65,7 +65,7 @@ export function FootnoteSup({ node }: { node?: HastElement }) {
 
         <TooltipPortal>
           <TooltipContent className="not-prose">
-            <h5 className="flex items-center gap-2 font-semibold text-[var(--grayscale-12)]">
+            <h5 className="flex items-center gap-2 font-semibold text-(--grayscale-12)">
               <PageIcon
                 icon={fn.icon}
                 type={fn.api_type ?? fn.type}
@@ -76,12 +76,12 @@ export function FootnoteSup({ node }: { node?: HastElement }) {
                 {fn.title}
               </a>
             </h5>
-            <p className="max-w-xs break-all text-xs leading-snug text-[var(--grayscale-a9)]">
+            <p className="max-w-xs text-xs leading-snug break-all text-(--grayscale-a9)">
               <a
                 href={fn.url}
                 target="_blank"
                 rel="noreferrer"
-                className="hover:text-[var(--grayscale-a10)] hover:underline"
+                className="hover:text-(--grayscale-a10) hover:underline"
               >
                 {fn.url}
               </a>
@@ -134,6 +134,7 @@ export function FootnotesSection({
   searchResults: AlgoliaRecordHit[];
   className?: string;
 }) {
+  const { footnotesAtom } = useChatbotTurnContext();
   const [footnotes, setFootnotes] = useAtom(footnotesAtom);
 
   useEffect(() => {
@@ -171,7 +172,7 @@ export function FootnotesSection({
                 isSubPage={url.includes("#")}
               />
               {title}
-              <span className="text-xs text-[var(--grayscale-a9)]">
+              <span className="text-xs text-(--grayscale-a9)">
                 {String(index + 1)}
               </span>
             </a>

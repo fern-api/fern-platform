@@ -52,14 +52,14 @@ export function FernAudioPlayer(props: FernAudioPlayerProps): ReactElement {
       <div className="relative flex flex-1 flex-col justify-center gap-1">
         <p className="m-0 inline-flex justify-center gap-2 text-center">
           {props.title != null && (
-            <span className="t-accent max-w-[40vw] truncate">
+            <span className="text-accent max-w-[40vw] truncate">
               {props.title}
             </span>
           )}
           {props.author && (
             <>
               <span>&mdash;</span>
-              <span className="t-muted max-w-[20vw] truncate">
+              <span className="text-muted max-w-[20vw] truncate">
                 {props.author}
               </span>
             </>
@@ -176,7 +176,7 @@ function FernAudioProgress({
   return (
     <div className="flex items-center gap-3">
       <time
-        className="select-none text-end font-mono text-xs"
+        className="text-end font-mono text-xs select-none"
         style={{
           width: `${from.length}ch`,
         }}
@@ -202,7 +202,7 @@ function FernAudioProgress({
         ></div>
       </div>
       <time
-        className="select-none text-start font-mono text-xs"
+        className="text-start font-mono text-xs select-none"
         style={{
           width: `${to.length}ch`,
         }}

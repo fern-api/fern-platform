@@ -79,7 +79,7 @@ export const PlaygroundEndpointSelectorContent = forwardRef<
                 {idx > 0 && (
                   <Slash className="size-icon-sm text-faded mx-0.5" />
                 )}
-                <span className="t-accent shrink truncate whitespace-nowrap text-xs">
+                <span className="text-accent shrink truncate text-xs whitespace-nowrap">
                   {breadcrumb}
                 </span>
               </Fragment>
@@ -115,7 +115,7 @@ export const PlaygroundEndpointSelectorContent = forwardRef<
         className={clsx("relative flex size-full flex-col", className)}
         ref={forwardedRef}
       >
-        <div className={cn("relative z-20 px-3 pb-0 pt-3")}>
+        <div className={cn("relative z-20 px-3 pt-3 pb-0")}>
           <FernInput
             leftIcon={<Search className="size-icon" />}
             data-1p-ignore="true"

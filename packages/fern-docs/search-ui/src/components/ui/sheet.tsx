@@ -5,7 +5,7 @@ import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { type VariantProps, cva } from "class-variance-authority";
 import { X } from "lucide-react";
 
-import { cn } from "./cn";
+import { cn } from "@fern-docs/components";
 
 const Sheet = SheetPrimitive.Root;
 
@@ -31,7 +31,7 @@ const SheetOverlay = React.forwardRef<
 SheetOverlay.displayName = SheetPrimitive.Overlay.displayName;
 
 const sheetVariants = cva(
-  "data-[state=open]:animate-in data-[state=closed]:animate-out fixed z-50 gap-4 bg-[var(--grayscale-1)] p-6 shadow-lg transition ease-in-out data-[state=closed]:duration-300 data-[state=open]:duration-500",
+  "data-[state=open]:animate-in data-[state=closed]:animate-out fixed z-50 gap-4 bg-(--grayscale-1) p-6 shadow-lg transition ease-in-out data-[state=closed]:duration-300 data-[state=open]:duration-500",
   {
     variants: {
       side: {
@@ -64,7 +64,7 @@ const SheetContent = React.forwardRef<
       className={cn(sheetVariants({ side }), className)}
       {...props}
     >
-      <SheetPrimitive.Close className="ring-offset-background absolute right-4 top-4 rounded-sm opacity-70 transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-[var(--accent-6)] focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-[var(--grayscale-a3)]">
+      <SheetPrimitive.Close className="ring-offset-background absolute top-4 right-4 rounded-sm opacity-70 transition-opacity hover:opacity-100 focus:ring-2 focus:ring-(--accent-6) focus:ring-offset-2 focus:outline-none disabled:pointer-events-none data-[state=open]:bg-(--grayscale-a3)">
         <X className="size-4" />
         <VisuallyHidden>Close</VisuallyHidden>
       </SheetPrimitive.Close>
@@ -108,10 +108,7 @@ const SheetTitle = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <SheetPrimitive.Title
     ref={ref}
-    className={cn(
-      "text-lg font-semibold text-[var(--grayscale-12)]",
-      className
-    )}
+    className={cn("text-lg font-semibold text-(--grayscale-12)", className)}
     {...props}
   />
 ));
@@ -123,7 +120,7 @@ const SheetDescription = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <SheetPrimitive.Description
     ref={ref}
-    className={cn("text-sm text-[var(--accent-12)]", className)}
+    className={cn("text-sm text-(--accent-12)", className)}
     {...props}
   />
 ));

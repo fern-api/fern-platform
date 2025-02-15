@@ -119,7 +119,7 @@ function renderTextWithHighlight(
   const parts = text.split(new RegExp(`(${highlight})`, "gi"));
   return parts.map((part, idx) =>
     part.toLowerCase() === highlight.toLowerCase() ? (
-      <mark className="t-default bg-accent-highlight" key={idx}>
+      <mark className="text-body bg-accent-highlight" key={idx}>
         {part}
       </mark>
     ) : (

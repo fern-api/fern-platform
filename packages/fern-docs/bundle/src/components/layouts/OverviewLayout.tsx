@@ -23,13 +23,13 @@ export function OverviewLayout({
       <aside
         role="directory"
         className={cn(
-          "sticky top-[var(--header-height)] order-last hidden h-fit max-h-[calc(100dvh-var(--header-height))] flex-col xl:flex",
-          "w-[var(--spacing-sidebar-width)]"
+          "sticky top-(--header-height) order-last hidden h-fit max-h-[calc(100dvh-var(--header-height))] flex-col xl:flex",
+          "w-(--spacing-sidebar-width)"
         )}
       >
         {toc}
       </aside>
-      <article className="max-w-content-wide-width ml-0 mr-auto min-w-0 shrink xl:mx-auto">
+      <article className="max-w-content-wide-width mr-auto ml-0 min-w-0 shrink xl:mx-auto">
         {header}
         <div className="prose dark:prose-invert prose-h1:mt-[1.5em] first:prose-h1:mt-0 max-w-full break-words">
           {children}

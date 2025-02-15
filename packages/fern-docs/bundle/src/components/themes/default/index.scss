@@ -17,7 +17,7 @@
 
   .fern-header,
   .fern-header-tabs {
-    @apply bg-header border-concealed relative border-b;
+    @apply bg-header-background border-concealed relative border-b;
   }
 
   .fern-header-content {
@@ -36,17 +36,17 @@
     }
 
     .fern-header-tab-button {
-      @apply relative flex h-full min-w-0 flex-1 select-none items-center justify-start p-3 text-base;
+      @apply relative flex h-full min-w-0 flex-1 items-center justify-start p-3 text-base select-none;
       @apply lg:text-sm;
     }
 
     .fern-header-tab-button[data-state="active"] {
-      @apply font-semibold text-[var(--accent-11)];
+      @apply font-semibold text-(--accent-11);
 
       &::after {
         content: "";
 
-        @apply absolute inset-x-3 bottom-0 h-0.5 bg-[var(--accent-11)];
+        @apply absolute inset-x-3 bottom-0 h-0.5 bg-(--accent-11);
       }
     }
 
@@ -54,13 +54,13 @@
       @apply t-muted;
 
       &:hover {
-        @apply t-default;
+        @apply text-body;
       }
     }
   }
 
   .fern-sidebar-container {
-    @apply bg-sidebar border-concealed top-header-offset mt-header-offset max-h-vh-minus-header w-sidebar-width sticky hidden lg:block;
+    @apply bg-sidebar-background border-concealed top-header-offset mt-header-offset max-h-vh-minus-header w-sidebar-width sticky hidden lg:block;
     @apply flex flex-col;
 
     &.fern-sidebar-fixed {
@@ -119,12 +119,12 @@
       @apply max-w-content-width;
       @apply md:top-header-offset md:sticky md:flex-1 md:self-start;
 
-      // the 4rem is the same as the h-10 as the Header
-      @apply max-h-content flex py-8;
+      /* the 4rem is the same as the h-10 as the Header */
+      @apply max-h-content-height flex py-8;
     }
   }
 
-  // guide and overview layouts are centered using .fern-layout-toc
+  /* guide and overview layouts are centered using .fern-layout-toc */
   .fern-sidebar-disabled:has(.fern-overview-layout, .fern-guide-layout):has(
       .fern-layout-toc
     ) {
@@ -170,6 +170,6 @@
   }
 
   .fern-layout-toc {
-    @apply h-content top-header-offset w-sidebar-width sticky shrink-0 max-xl:hidden;
+    @apply h-content-height top-header-offset w-sidebar-width sticky shrink-0 max-xl:hidden;
   }
 }

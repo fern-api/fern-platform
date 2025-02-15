@@ -21,7 +21,7 @@ export function MarkdownContent({
       remarkPlugins={[remarkGfm, remarkTest]}
       // rehypePlugins={[rehypeThinking]}
       remarkRehypeOptions={{}}
-      // className={clsx("prose dark:prose-invert", className, small && "prose-sm")}
+      // className={cn("prose dark:prose-invert", className, small && "prose-sm")}
     >
       {children.replaceAll("```[^", "```\n[^")}
     </Markdown>

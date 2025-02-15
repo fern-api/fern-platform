@@ -10,7 +10,7 @@ import { AvailabilityBadge } from "@fern-docs/components/badges";
 import { addLeadingSlash } from "@fern-docs/utils";
 
 import { MdxServerComponentProseSuspense } from "@/components/mdx/server-component";
-import { DocsLoader } from "@/server/docs-loader";
+import { MdxSerializer } from "@/server/mdx-serializer";
 
 import { getAnchorId } from "../../../util/anchor";
 import { TypeDefinitionPathPart } from "../context/TypeDefinitionContext";
@@ -24,13 +24,13 @@ import { PropertyWrapper } from "./PropertyWrapper";
 import { TypeShorthand } from "./TypeShorthand";
 
 export function ObjectProperty({
-  loader,
+  serialize,
   property,
   slug,
   types,
   anchorIdParts,
 }: {
-  loader: DocsLoader;
+  serialize: MdxSerializer;
   property: ApiDefinition.ObjectProperty;
   anchorIdParts: readonly string[];
   slug: FernNavigation.Slug;
@@ -69,7 +69,7 @@ export function ObjectProperty({
         </div>
         {hasInlineEnum(property.valueShape, types) && (
           <TypeReferenceDefinitions
-            loader={loader}
+            serialize={serialize}
             shape={property.valueShape}
             isCollapsible
             anchorIdParts={anchorIdParts}
@@ -79,7 +79,7 @@ export function ObjectProperty({
         )}
 
         <MdxServerComponentProseSuspense
-          loader={loader}
+          serialize={serialize}
           mdx={descriptions[0]}
           size="sm"
         />
@@ -87,7 +87,7 @@ export function ObjectProperty({
         {hasInternalTypeReference(property.valueShape, types) &&
           !hasInlineEnum(property.valueShape, types) && (
             <TypeReferenceDefinitions
-              loader={loader}
+              serialize={serialize}
               shape={property.valueShape}
               isCollapsible
               anchorIdParts={anchorIdParts}

@@ -51,7 +51,7 @@ export const Callout: FC<PropsWithChildren<Callout.Props>> = ({
   return (
     <div
       className={cn(
-        "mb-6 mt-4 rounded-lg p-4 first:mt-0", // pb-0 to compensate for the ::after margin
+        "mt-4 mb-6 rounded-lg p-4 first:mt-0", // pb-0 to compensate for the ::after margin
         visitDiscriminatedUnion({ intent }, "intent")._visit({
           info: () => "callout-outlined",
           warning: () => "callout-outlined-warning",
@@ -70,7 +70,7 @@ export const Callout: FC<PropsWithChildren<Callout.Props>> = ({
           {typeof icon === "string" ? (
             <FaIcon
               className={cn("card-icon size-icon-md", {
-                "text-intent-default": intent === "info",
+                "text-body": intent === "info",
                 "text-intent-warning": intent === "warning",
                 "text-intent-success": intent === "success",
                 "text-intent-danger": intent === "error",
@@ -83,9 +83,7 @@ export const Callout: FC<PropsWithChildren<Callout.Props>> = ({
             <span className="callout-icon">{icon}</span>
           ) : (
             visitDiscriminatedUnion({ intent }, "intent")._visit({
-              info: () => (
-                <InfoCircle className="text-intent-default size-icon-md" />
-              ),
+              info: () => <InfoCircle className="text-body size-icon-md" />,
               warning: () => (
                 <Bell className="size-icon-md text-intent-warning" />
               ),
@@ -96,14 +94,12 @@ export const Callout: FC<PropsWithChildren<Callout.Props>> = ({
                 <WarningTriangle className="size-icon-md text-intent-danger" />
               ),
               note: () => <Pin className="size-icon-md text-intent-info" />,
-              launch: () => <Rocket className="t-accent size-icon-md" />,
+              launch: () => <Rocket className="text-accent size-icon-md" />,
               tip: () => <Star className="size-icon-md text-intent-success" />,
               check: () => (
                 <Check className="size-icon-md text-intent-success" />
               ),
-              _other: () => (
-                <InfoCircle className="text-intent-default size-icon-md" />
-              ),
+              _other: () => <InfoCircle className="text-body size-icon-md" />,
             })
           )}
         </div>
@@ -115,15 +111,15 @@ export const Callout: FC<PropsWithChildren<Callout.Props>> = ({
         >
           <div
             className={visitDiscriminatedUnion({ intent }, "intent")._visit({
-              info: () => "text-intent-default",
+              info: () => "text-body",
               warning: () => "text-intent-warning",
               success: () => "text-intent-success",
               error: () => "text-intent-danger",
               note: () => "text-intent-info",
-              launch: () => "t-accent",
+              launch: () => "text-accent",
               tip: () => "text-intent-success",
               check: () => "text-intent-success",
-              _other: () => "text-intent-default",
+              _other: () => "text-body",
             })}
           >
             <h5 className="leading-snug">{title}</h5>
