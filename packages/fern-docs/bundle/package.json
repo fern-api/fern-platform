@@ -128,7 +128,6 @@
     "react-virtuoso": "^4.12.5",
     "rehype-katex": "^7.0.1",
     "rehype-mdx-code-props": "^3.0.1",
-    "rehype-slug": "^6.0.0",
     "remark-frontmatter": "^5.0.0",
     "remark-gemoji": "^8.0.0",
     "remark-gfm": "^4.0.1",

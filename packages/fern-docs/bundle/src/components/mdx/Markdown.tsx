@@ -12,11 +12,8 @@ export declare namespace Markdown {
     // mdx: string | FernDocs.ResolvedMdx | string | FernDocs.ResolvedMdx[] | undefined;
     mdx:
       | string
-      | { code: string; jsxElements: string[]; esmElements: string[] }
-      | (
-          | string
-          | { code: string; jsxElements: string[]; esmElements: string[] }
-        )[]
+      | { code: string; jsxElements: string[] }
+      | (string | { code: string; jsxElements: string[] })[]
       | undefined;
     className?: string;
     size?: "xs" | "sm" | "lg";

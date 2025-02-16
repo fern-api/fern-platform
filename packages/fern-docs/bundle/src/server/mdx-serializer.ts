@@ -38,7 +38,6 @@ export type MdxSerializer = (
       code: string;
       frontmatter?: Partial<Frontmatter>;
       jsxElements: string[];
-      esmElements: string[];
     }
   | undefined
 >;

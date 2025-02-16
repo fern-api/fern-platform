@@ -1,34 +1,27 @@
-import { ReactNode, useCallback, useEffect, useState } from "react";
+import React from "react";
 
 import { useAtom } from "jotai";
 
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@fern-docs/components";
+import * as AccordionComponent from "@fern-docs/components";
 
 import { ANCHOR_ATOM } from "@/components/atoms";
 
-export interface AccordionItemProps {
-  title: string;
-  id: string;
-  toc?: boolean;
-  children: ReactNode;
-}
-
 export interface AccordionGroupProps {
-  items: AccordionItemProps[];
+  children: React.ReactNode;
   toc?: boolean;
 }
 
-export function AccordionGroup({ items = [] }: AccordionGroupProps) {
-  const [activeTabs, setActiveTabs] = useState<string[]>([]);
+export function AccordionGroup({ children }: AccordionGroupProps) {
+  const [activeTabs, setActiveTabs] = React.useState<string[]>([]);
   const [anchor, setAnchor] = useAtom(ANCHOR_ATOM);
-  useEffect(() => {
+
+  const items = React.Children.toArray(children).filter(
+    (child) => React.isValidElement(child) && child.type === Accordion
+  ) as React.ReactElement<React.ComponentProps<typeof Accordion>>[];
+
+  React.useEffect(() => {
     if (anchor != null) {
-      if (items.some((tab) => tab.id === anchor)) {
+      if (items.some((tab) => tab.props.id === anchor)) {
         setActiveTabs((prev) =>
           prev.includes(anchor) ? prev : [...prev, anchor]
         );
@@ -36,7 +29,7 @@ export function AccordionGroup({ items = [] }: AccordionGroupProps) {
     }
   }, [anchor, items]);
 
-  const handleValueChange = useCallback(
+  const handleValueChange = React.useCallback(
     (nextActiveTabs: string[]) => {
       setActiveTabs((prev) => {
         const added = nextActiveTabs.filter((tab) => !prev.includes(tab));
@@ -50,20 +43,56 @@ export function AccordionGroup({ items = [] }: AccordionGroupProps) {
   );
 
   return (
-    <Accordion
+    <AccordionComponent.Accordion
       type="multiple"
       value={activeTabs}
       onValueChange={handleValueChange}
       className="m-mdx"
     >
-      {items.map(({ title, id, children }) => (
-        <AccordionItem key={id} value={id} id={id} className="scroll-mt-4">
-          <AccordionTrigger>{title}</AccordionTrigger>
-          <AccordionContent>
-            <div className="m-5">{children}</div>
-          </AccordionContent>
-        </AccordionItem>
-      ))}
-    </Accordion>
+      {children}
+    </AccordionComponent.Accordion>
+  );
+}
+
+export function Accordion({
+  title = "Untitled",
+  id = "",
+  children,
+}: {
+  /**
+   * the title of the accordion
+   * @default "Untitled"
+   */
+  title?: string;
+  /**
+   * he id of the accordion. this must be unique, and should have been set using the rehypeSlug plugin
+   * @default ""
+   */
+  id?: string;
+  /**
+   * whether to show the table of contents (this is used only in the rehype-toc plugin)
+   */
+  toc?: boolean;
+  /**
+   * the children of the accordion
+   */
+  children?: React.ReactNode;
+}) {
+  if (!children) {
+    return null;
+  }
+  return (
+    <AccordionComponent.AccordionItem
+      id={id}
+      value={id}
+      className="scroll-mt-4"
+    >
+      <AccordionComponent.AccordionTrigger>
+        {title}
+      </AccordionComponent.AccordionTrigger>
+      <AccordionComponent.AccordionContent>
+        <div className="m-5">{children}</div>
+      </AccordionComponent.AccordionContent>
+    </AccordionComponent.AccordionItem>
   );
 }

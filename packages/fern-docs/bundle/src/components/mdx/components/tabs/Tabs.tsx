@@ -1,4 +1,5 @@
 import { FC, ReactNode, useEffect, useState } from "react";
+import React from "react";
 
 import * as RadixTabs from "@radix-ui/react-tabs";
 import { useAtomValue } from "jotai";
@@ -22,13 +23,22 @@ export interface TabGroupProps {
   toc?: boolean;
 }
 
-export const TabGroup: FC<TabGroupProps> = ({ tabs }) => {
-  const [activeTab, setActiveTab] = useState(() => tabs[0]?.id);
+export function TabGroup({
+  children,
+}: {
+  toc?: boolean;
+  children?: ReactNode;
+}) {
+  const tabs = React.Children.toArray(children).filter(
+    (child) => React.isValidElement(child) && child.type === Tab
+  ) as React.ReactElement<React.ComponentProps<typeof Tab>>[];
+
+  const [activeTab, setActiveTab] = useState(() => tabs[0]?.props.id);
   const anchor = useAtomValue(ANCHOR_ATOM);
   const [selectedLanguage, setSelectedLanguage] = useProgrammingLanguage();
   useEffect(() => {
     if (anchor != null) {
-      if (tabs.some((tab) => tab.id === anchor)) {
+      if (tabs.some((tab) => tab.props.id === anchor)) {
         setActiveTab(anchor);
       }
     }
@@ -38,19 +48,20 @@ export const TabGroup: FC<TabGroupProps> = ({ tabs }) => {
     if (selectedLanguage) {
       const matchingTab = tabs.find(
         (tab) =>
-          tab.language &&
-          ApiDefinition.cleanLanguage(tab.language) === selectedLanguage
+          tab.props.language &&
+          ApiDefinition.cleanLanguage(tab.props.language) === selectedLanguage
       );
       if (matchingTab) {
         setActiveTab((prevActiveTab) => {
-          const prevTab = tabs.find((tab) => tab.id === prevActiveTab);
+          const prevTab = tabs.find((tab) => tab.props.id === prevActiveTab);
           if (
-            prevTab?.language &&
-            ApiDefinition.cleanLanguage(prevTab.language) === selectedLanguage
+            prevTab?.props.language &&
+            ApiDefinition.cleanLanguage(prevTab.props.language) ===
+              selectedLanguage
           ) {
             return prevActiveTab;
           }
-          return matchingTab.id;
+          return matchingTab.props.id;
         });
       }
     }
@@ -58,9 +69,9 @@ export const TabGroup: FC<TabGroupProps> = ({ tabs }) => {
 
   const handleTabChange = (tabId: string) => {
     setActiveTab(tabId);
-    const selectedTab = tabs.find((tab) => tab.id === tabId);
-    const cleanedLanguage = selectedTab?.language
-      ? ApiDefinition.cleanLanguage(selectedTab.language)
+    const selectedTab = tabs.find((tab) => tab.props.id === tabId);
+    const cleanedLanguage = selectedTab?.props.language
+      ? ApiDefinition.cleanLanguage(selectedTab.props.language)
       : undefined;
     if (cleanedLanguage && cleanedLanguage !== selectedLanguage) {
       setSelectedLanguage(cleanedLanguage);
@@ -69,11 +80,11 @@ export const TabGroup: FC<TabGroupProps> = ({ tabs }) => {
 
   return (
     <RadixTabs.Root value={activeTab} onValueChange={handleTabChange}>
-      <RadixTabs.List className="border-default mt-4 mb-6 flex gap-4 border-b first:-mt-3">
-        {tabs.map(({ title, id }) => (
+      <RadixTabs.List className="border-default mb-6 mt-4 flex gap-4 border-b first:-mt-3">
+        {tabs.map(({ props: { title = "Untitled", id = "" } }) => (
           <RadixTabs.Trigger key={id} value={id} asChild>
             <h6
-              className="text-body hover:border-default data-[state=active]:t-accent data-[state=active]:border-accent -mb-px flex max-w-max cursor-pointer scroll-mt-4 border-b border-transparent pt-3 pb-2.5 text-sm leading-6 font-semibold whitespace-nowrap"
+              className="text-body hover:border-default data-[state=active]:t-accent data-[state=active]:border-accent -mb-px flex max-w-max cursor-pointer scroll-mt-4 whitespace-nowrap border-b border-transparent pb-2.5 pt-3 text-sm font-semibold leading-6"
               id={id}
             >
               {title}
@@ -81,15 +92,47 @@ export const TabGroup: FC<TabGroupProps> = ({ tabs }) => {
           </RadixTabs.Trigger>
         ))}
       </RadixTabs.List>
-      {tabs.map((tab) => (
-        <RadixTabs.Content
-          key={tab.id}
-          value={tab.id}
-          className="border:content-[''] before:mb-4 before:block"
-        >
-          {tab.children}
-        </RadixTabs.Content>
-      ))}
+      {children}
     </RadixTabs.Root>
   );
-};
+}
+
+export function Tab({
+  title = "Untitled",
+  id = "",
+  language,
+  children,
+}: {
+  /**
+   * the title of the tab
+   * @default "Untitled"
+   */
+  title?: string;
+  /**
+   * the id of the tab (this must be unique, and should have been set using the rehypeSlug plugin)
+   * @default ""
+   */
+  id?: string;
+  /**
+   * whether to show the table of contents (this is used only in the rehype-toc plugin)
+   */
+  toc?: boolean;
+  /**
+   * the language of the tab (sets the global language state)
+   */
+  language?: string;
+  /**
+   * the children of the tab
+   */
+  children?: ReactNode;
+}) {
+  return (
+    <RadixTabs.Content
+      key={id}
+      value={id}
+      className="border:content-[''] before:mb-4 before:block"
+    >
+      {children}
+    </RadixTabs.Content>
+  );
+}

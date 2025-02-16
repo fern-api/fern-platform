@@ -12,7 +12,7 @@ import {
 } from "@/components/error-boundary";
 import { SearchV2Trigger } from "@/state/search";
 
-import { AccordionGroup } from "./accordion";
+import { Accordion, AccordionGroup } from "./accordion";
 import { Availability } from "./availability";
 import { Badge } from "./badge";
 import { Bleed } from "./bleed";
@@ -42,7 +42,7 @@ import { Mermaid } from "./mermaid";
 import { ParamField } from "./mintlify";
 import { EndpointRequestSnippet, EndpointResponseSnippet } from "./snippets";
 import { Step, StepGroup } from "./steps";
-import { TabGroup } from "./tabs";
+import { Tab, TabGroup } from "./tabs";
 import { Tooltip } from "./tooltip";
 
 const ElevenLabsWaveform = dynamic(
@@ -51,6 +51,7 @@ const ElevenLabsWaveform = dynamic(
 );
 
 const FERN_COMPONENTS = {
+  Accordion,
   AccordionGroup,
   Availability,
   Badge,
@@ -61,7 +62,8 @@ const FERN_COMPONENTS = {
   Card,
   CardGroup,
   ClientLibraries,
-  CodeGroup, // note: alias is handled in rehypeFernCode
+  CodeBlock,
+  CodeGroup,
   Column,
   ColumnGroup,
   EndpointRequestSnippet,
@@ -75,6 +77,7 @@ const FERN_COMPONENTS = {
   SearchBar: SearchV2Trigger,
   Step,
   StepGroup,
+  Tab,
   TabGroup,
   Tooltip,
 
@@ -90,39 +93,48 @@ const FERN_COMPONENTS = {
 };
 
 // internal-use only
-const INTERNAL_COMPONENTS: MDXComponents = {
+const INTERNAL_COMPONENTS = {
   ErrorBoundary,
-  CodeBlock,
-
-  // deprecated, aliased for backwards compatibility
-  Accordions: AccordionGroup,
-  Cards: CardGroup,
-  CodeBlocks: CodeGroup,
   ElevenLabsWaveform,
-  Steps: StepGroup,
-  Tabs: TabGroup,
 };
 
 const HTML_COMPONENTS = {
-  table: Table,
+  a: A,
   h1: (props: ComponentProps<"h1">) => HeadingRenderer(1, props),
   h2: (props: ComponentProps<"h2">) => HeadingRenderer(2, props),
   h3: (props: ComponentProps<"h3">) => HeadingRenderer(3, props),
   h4: (props: ComponentProps<"h4">) => HeadingRenderer(4, props),
   h5: (props: ComponentProps<"h5">) => HeadingRenderer(5, props),
   h6: (props: ComponentProps<"h6">) => HeadingRenderer(6, props),
-  ol: Ol,
-  ul: Ul,
-  li: Li,
-  a: A,
   img: Image,
+  li: Li,
+  ol: Ol,
   strong: Strong,
+  table: Table,
+  ul: Ul,
+};
+
+const ALIASED_HTML_COMPONENTS = {
+  A,
+  H1: (props: ComponentProps<"h1">) => HeadingRenderer(1, props),
+  H2: (props: ComponentProps<"h2">) => HeadingRenderer(2, props),
+  H3: (props: ComponentProps<"h3">) => HeadingRenderer(3, props),
+  H4: (props: ComponentProps<"h4">) => HeadingRenderer(4, props),
+  H5: (props: ComponentProps<"h5">) => HeadingRenderer(5, props),
+  H6: (props: ComponentProps<"h6">) => HeadingRenderer(6, props),
+  Image,
+  Li,
+  Ol,
+  Strong,
+  Table,
+  Ul,
 };
 
 export const MDX_COMPONENTS = {
   ...FERN_COMPONENTS,
   ...INTERNAL_COMPONENTS,
   ...HTML_COMPONENTS,
+  ...ALIASED_HTML_COMPONENTS,
 } as unknown as MDXComponents;
 
 export function createMdxComponents(jsxElements: string[]): MDXComponents {

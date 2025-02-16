@@ -48,6 +48,7 @@ export default async function Layout(props: {
     edgeFlags,
     files,
     colors,
+    layout,
     deprecated_customerAnalytics,
     launchDarkly,
   ] = await Promise.all([
@@ -55,6 +56,7 @@ export default async function Layout(props: {
     getEdgeFlags(domain),
     loader.getFiles(),
     loader.getColors(),
+    loader.getLayout(),
     deprecated_getCustomerAnalytics(domain),
     getLaunchDarklyInfo(loader),
   ]);
@@ -88,6 +90,7 @@ export default async function Layout(props: {
       <GlobalStyles>{`
         :root {
           ${domain.includes("nominal") ? "--radius: 0px;" : ""}
+          ${layout.headerHeight ? `--header-height-real: ${layout.headerHeight}px;` : ""}
         }
 
 

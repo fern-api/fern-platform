@@ -190,6 +190,7 @@
 :root {
   --color-body: var(--color-black);
   --radius: 0.5rem;
+  --header-height-real: 4rem;
 }
 
 @variant dark {
@@ -205,6 +206,9 @@
     --typography-heading-font-family,
     var(--font-body, var(--font-sans))
   );
+
+  /** typography */
+  --tw-prose-links: var(--color-accent-a11);
 
   /** Radius */
   --radius: 0.5rem;
@@ -350,8 +354,11 @@
   );
   --spacing-endpoint-width: calc(var(--spacing-content-width) * 2 + 3rem);
 
-  --spacing-header-height-real: 4rem;
-  --spacing-header-height: var(--spacing-header-height-real, 4rem);
+  --spacing-header-height-real: var(--header-height-real);
+  --spacing-header-height: var(
+    --header-height,
+    var(--spacing-header-height-real)
+  );
   --spacing-header-height-padded: calc(var(--spacing-header-height) + 1rem);
   --spacing-content-height: calc(100vh - var(--spacing-header-height));
   --spacing-content-height-padded: calc(var(--spacing-content-height) - 1rem);

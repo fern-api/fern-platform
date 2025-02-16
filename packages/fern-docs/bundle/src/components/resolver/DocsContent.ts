@@ -41,7 +41,6 @@ export declare namespace DocsContent {
           code: string;
           frontmatter?: Partial<FernDocs.Frontmatter>;
           jsxElements: string[];
-          esmElements: string[];
         };
     breadcrumb: readonly FernNavigation.BreadcrumbItem[];
     neighbors: Neighbors;

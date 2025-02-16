@@ -14,6 +14,16 @@ import {
 
 export const rehypeCodeBlock: Unified.Plugin<[], Hast.Root> = () => {
   return (tree) => {
+    visit(tree, (node) => {
+      if (!isMdxJsxElementHast(node)) {
+        return;
+      }
+
+      if (node.name === "CodeBlocks") {
+        node.name = "CodeGroup";
+      }
+    });
+
     /**
      * Convert <pre><code>...</code></pre> to <CodeBlock>...</CodeBlock>
      */

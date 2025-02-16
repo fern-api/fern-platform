@@ -34,6 +34,7 @@ const AnnouncementInternal = React.forwardRef<
 >(({ dismiss, className, children, ...props }, forwardedRef) => {
   return (
     <motion.div
+      suppressHydrationWarning
       ref={forwardedRef}
       {...props}
       className={cn("overflow-hidden", className)}

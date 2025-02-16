@@ -4,7 +4,6 @@ import { mapKeys } from "es-toolkit/object";
 import { bundleMDX } from "mdx-bundler";
 import path from "path";
 import rehypeKatex from "rehype-katex";
-import rehypeSlug from "rehype-slug";
 import remarkFrontmatter from "remark-frontmatter";
 import remarkGemoji from "remark-gemoji";
 import remarkGfm from "remark-gfm";
@@ -24,6 +23,7 @@ import {
 import {
   rehypeAcornErrorBoundary,
   rehypeMdxClassStyle,
+  rehypeSlug,
   rehypeToc,
   remarkInjectEsm,
   remarkSanitizeAcorn,
@@ -35,7 +35,16 @@ import { getMDXExport } from "../get-mdx-export";
 import { rehypeCodeBlock } from "../plugins/rehype-code-block";
 import { rehypeCollectJsx } from "../plugins/rehype-collect-jsx";
 import { rehypeExtractAsides } from "../plugins/rehype-extract-asides";
+import {
+  rehypeAccordions,
+  rehypeButtons,
+  rehypeCards,
+  rehypeEndpointSnippets,
+  rehypeSteps,
+  rehypeTabs,
+} from "../plugins/rehype-fern-components";
 import { rehypeFiles } from "../plugins/rehype-files";
+import { rehypeMigrateJsx } from "../plugins/rehype-migrate-jsx";
 import { remarkExtractTitle } from "../plugins/remark-extract-title";
 
 async function serializeMdxImpl(
@@ -57,7 +66,6 @@ async function serializeMdxImpl(
   code: string;
   frontmatter?: Partial<FernDocs.Frontmatter>;
   jsxElements: string[];
-  esmElements: string[];
 }> {
   content = sanitizeBreaks(content);
   content = sanitizeMdxExpression(content)[0];
@@ -89,7 +97,6 @@ async function serializeMdxImpl(
   }
 
   const jsxElements: string[] = [];
-  const esmElements: string[] = [];
 
   const bundled = await bundleMDX({
     source: content,
@@ -129,23 +136,43 @@ async function serializeMdxImpl(
       ];
 
       const rehypePlugins: PluggableList = [
-        rehypeMdxClassStyle,
-        [rehypeFiles, { files: remoteFiles }],
-        rehypeSlug,
         rehypeKatex,
+        [rehypeFiles, { files: remoteFiles }],
+        rehypeMdxClassStyle,
+        rehypeSlug,
         rehypeCodeBlock,
+        rehypeSteps,
+        rehypeAccordions,
+        rehypeTabs,
+        rehypeCards,
+        rehypeButtons,
+        rehypeEndpointSnippets,
+        [
+          rehypeMigrateJsx,
+          {
+            a: "A",
+            h1: "H1",
+            h2: "H2",
+            h3: "H3",
+            h4: "H4",
+            h5: "H5",
+            h6: "H6",
+            img: "Image",
+            li: "Li",
+            ol: "Ol",
+            strong: "Strong",
+            // table: "Table",
+            ul: "Ul",
+          },
+        ],
         rehypeExtractAsides,
         toc ? rehypeToc : noop,
         rehypeAcornErrorBoundary,
         [
           rehypeCollectJsx,
           {
-            collect: (node: {
-              jsxElements: string[];
-              esmElements: string[];
-            }) => {
-              jsxElements.push(...node.jsxElements);
-              esmElements.push(...node.esmElements);
+            collect: (jsxElements_: string[]) => {
+              jsxElements.push(...jsxElements_);
             },
           },
         ],
@@ -180,7 +207,7 @@ async function serializeMdxImpl(
   // TODO: this is doing duplicate work; figure out how to combine it with the compiler above.
   // const { jsxElements } = toTree(content, { sanitize: false });
 
-  return { code: bundled.code, frontmatter, jsxElements, esmElements };
+  return { code: bundled.code, frontmatter, jsxElements };
 }
 
 export async function serializeMdx(
