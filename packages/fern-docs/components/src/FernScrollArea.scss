@@ -48,7 +48,7 @@
 
   .fern-scroll-area-thumb {
     @apply relative z-auto flex;
-    @apply bg-border-accent-muted flex-1 rounded-full;
+    @apply bg-border-primary flex-1 rounded-full;
   }
 
   /* increase target size for touch devices https://www.w3.org/WAI/WCAG21/Understanding/target-size.html */

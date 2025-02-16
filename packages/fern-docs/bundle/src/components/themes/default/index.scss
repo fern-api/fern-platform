@@ -12,7 +12,7 @@
   .fern-header-container:is(.light *):not(.has-background-light),
   .fern-header-container:is(.dark *):not(.has-background-dark) {
     @apply backdrop-blur-lg lg:backdrop-blur;
-    @apply data-[border=show]:dark:shadow-header-dark transition-shadow;
+    @apply data-[border=show]:dark:shadow-header transition-shadow;
   }
 
   .fern-header,
@@ -51,7 +51,7 @@
     }
 
     .fern-header-tab-button[data-state="inactive"] {
-      @apply t-muted;
+      @apply text-muted;
 
       &:hover {
         @apply text-body;
@@ -60,17 +60,11 @@
   }
 
   .fern-sidebar-container {
-    @apply bg-sidebar-background border-concealed top-header-offset mt-header-offset max-h-vh-minus-header w-sidebar-width sticky hidden lg:block;
+    @apply bg-sidebar-background border-concealed top-header-height mt-header-height max-h-content-height w-sidebar-width sticky hidden lg:block;
     @apply flex flex-col;
 
     &.fern-sidebar-fixed {
-      @apply h-vh-minus-header fixed z-30 mt-0;
-    }
-
-    @supports (height: 100dvh) {
-      &.fern-sidebar-fixed {
-        @apply h-dvh-minus-header;
-      }
+      @apply h-content-height fixed z-30 mt-0;
     }
 
     &:not(.fern-sidebar-fixed) {
@@ -83,17 +77,11 @@
   }
 
   .fern-sidebar-container.dismissable {
-    @apply top-header-offset fixed bottom-0 left-0 mt-0;
+    @apply top-header-height fixed bottom-0 left-0 mt-0;
     @apply bg-background-translucent backdrop-blur-lg;
     @apply sm:border-concealed sm:border-r;
     @apply max-sm:inset-x-0 max-sm:w-full;
-    @apply h-vh-minus-header;
-  }
-
-  @supports (height: 100dvh) {
-    .fern-sidebar-container.dismissable {
-      @apply h-dvh-minus-header;
-    }
+    @apply h-content-height;
   }
 
   .fern-sidebar-container:not(.dismissable) {
@@ -105,7 +93,7 @@
   }
 
   .fern-main {
-    @apply mt-header-offset relative min-w-0 flex-1;
+    @apply mt-header-height relative min-w-0 flex-1;
   }
 
   .fern-sidebar-content {
@@ -117,7 +105,7 @@
 
     .fern-endpoint-content-right {
       @apply max-w-content-width;
-      @apply md:top-header-offset md:sticky md:flex-1 md:self-start;
+      @apply md:top-header-height md:sticky md:flex-1 md:self-start;
 
       /* the 4rem is the same as the h-10 as the Header */
       @apply max-h-content-height flex py-8;
@@ -170,6 +158,6 @@
   }
 
   .fern-layout-toc {
-    @apply h-content-height top-header-offset w-sidebar-width sticky shrink-0 max-xl:hidden;
+    @apply h-content-height top-header-height w-sidebar-width sticky shrink-0 max-xl:hidden;
   }
 }

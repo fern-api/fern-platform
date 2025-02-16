@@ -23,7 +23,7 @@
 
   .fern-sidebar-link-container {
     @apply relative flex min-h-[36px] items-stretch;
-    @apply data-[state=active]:text-accented-a11;
+    @apply data-[state=active]:text-accent-a11;
 
     &:not(.top-level) {
       @apply data-[state=inactive]:text-grayscale-a11;
@@ -44,13 +44,13 @@
 
   .fern-sidebar-link-container[data-state="active"] {
     .fern-sidebar-link-indent::after {
-      @apply border-accented-a7 absolute inset-y-1 -left-px border-l;
+      @apply border-accent-a7 absolute inset-y-1 -left-px border-l;
 
       content: "";
     }
 
     .fern-sidebar-icon {
-      @apply text-accented-a10;
+      @apply text-accent-a10;
     }
   }
 
@@ -67,7 +67,7 @@
   }
 
   .fern-sidebar-link-container[data-state="active"] .fern-sidebar-link {
-    @apply bg-accented-a5;
+    @apply bg-accent-a5;
   }
 
   .fern-sidebar-link-container[data-state="inactive"] .fern-sidebar-link {

@@ -9,7 +9,6 @@
     "@radix-ui/colors",
     "postcss",
     "@tailwindcss/typography",
-    "@tailwindcss/forms",
     "tailwindcss",
     "cssnano",
     "unist-util-visit",

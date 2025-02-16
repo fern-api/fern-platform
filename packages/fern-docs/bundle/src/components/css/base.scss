@@ -1,10 +1,7 @@
 @layer base {
   html,
   body {
-    font-family: var(
-      --typography-body-font-family,
-      var(--body-font-fallback)
-    ) !important;
+    @apply font-body text-body text-base;
   }
 
   code,
@@ -26,5 +23,65 @@
     &:first-child {
       @apply mt-0;
     }
+  }
+
+  html {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: inherit;
+
+    @apply outline-transparent;
+    @apply focus:outline-border-primary focus-visible:outline-border-primary;
+  }
+
+  ::selection {
+    @apply bg-accent-highlight;
+  }
+
+  code.inline-code {
+    @apply text-[0.875em];
+  }
+
+  h1 {
+    @apply font-extrabold leading-tight;
+    @apply text-4xl;
+  }
+
+  h2 {
+    @apply font-bold leading-tight;
+    @apply text-2xl;
+  }
+
+  h3 {
+    @apply font-semibold leading-tight;
+    @apply text-xl;
+  }
+
+  h4 {
+    @apply font-semibold leading-tight;
+    @apply text-lg;
+  }
+
+  h5 {
+    @apply font-semibold;
+    @apply text-base;
+  }
+
+  h6 {
+    @apply font-semibold;
+    @apply text-sm;
+  }
+
+  input[type="search"]::-webkit-search-cancel-button {
+    display: none;
+  }
+
+  hr {
+    @apply border-default;
   }
 }

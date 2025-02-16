@@ -6,7 +6,6 @@
     "@types/react-dom",
     "postcss",
     "@tailwindcss/typography",
-    "@tailwindcss/forms",
     "tailwindcss",
     "cssnano",
     "esbuild",

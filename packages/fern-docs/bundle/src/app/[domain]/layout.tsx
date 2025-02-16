@@ -87,7 +87,7 @@ export default async function Layout(props: {
       <BgImageGradient colors={colors} />
       <GlobalStyles>{`
         :root {
-          --border-radius: ${domain.includes("nominal") ? "0px" : "12px"};
+          ${domain.includes("nominal") ? "--radius: 0px;" : ""}
         }
 
 

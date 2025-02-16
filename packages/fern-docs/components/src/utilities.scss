@@ -43,6 +43,14 @@
   @apply mt-4 mb-6 first:mt-0;
 }
 
+@utility text-body {
+  @apply text-black;
+
+  @variant dark {
+    @apply text-white;
+  }
+}
+
 @layer utilities {
   @keyframes collapsible-closed {
     0% {
@@ -92,19 +100,19 @@
     overflow: hidden;
 
     &[data-state="open"] {
-      animation: collapsible-open 0.18s var(--collapse-ease) none;
+      animation: collapsible-open 0.18s var(--ease-collapse) none;
 
       .fern-collapsible-child {
-        animation: slide-down 0.18s var(--collapse-ease) none;
+        animation: slide-down 0.18s var(--ease-collapse) none;
         width: var(--radix-collapsible-content-width);
       }
     }
 
     &[data-state="closed"] {
-      animation: collapsible-closed 0.18s var(--collapse-ease) none;
+      animation: collapsible-closed 0.18s var(--ease-collapse) none;
 
       .fern-collapsible-child {
-        animation: slide-up 0.18s var(--collapse-ease) none;
+        animation: slide-up 0.18s var(--ease-collapse) none;
         width: var(--radix-collapsible-content-width);
       }
     }

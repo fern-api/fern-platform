@@ -1,3 +1,4 @@
+@import "tailwindcss";
 @import "../../index.css";
 @config "./tailwind.config.ts";
 
@@ -46,21 +47,12 @@
       open sans,
       helvetica neue,
       sans-serif;
-  }
-}
 
-@layer base {
-  * {
-    @apply border-(--grayscale-a6);
-  }
-  body {
     @apply text-(--grayscale-12);
     background-color: var(--color-background);
   }
-}
 
-@layer utilities {
-  .mask-grad-top-3 {
-    mask-image: linear-gradient(to bottom, transparent 0, black 12px);
+  * {
+    @apply border-(--grayscale-a6);
   }
 }

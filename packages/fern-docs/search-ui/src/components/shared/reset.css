@@ -5,9 +5,7 @@
   [type="search"]::-webkit-search-results-decoration {
     display: none;
   }
-}
 
-@layer base {
   .ais-Breadcrumb-list,
   .ais-Carousel-list,
   .ais-CurrentRefinements-list,

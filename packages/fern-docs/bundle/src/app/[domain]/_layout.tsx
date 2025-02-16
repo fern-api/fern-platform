@@ -18,6 +18,7 @@ import { getApiRouteSupplier } from "@/components/util/getApiRouteSupplier";
 import { getReturnToQueryParam } from "@/server/auth/return-to";
 import { createCachedDocsLoader } from "@/server/docs-loader";
 import { createFileResolver } from "@/server/file-resolver";
+import { createCachedMdxSerializer } from "@/server/mdx-serializer";
 import { withLogo } from "@/server/withLogo";
 import { RootNodeProvider } from "@/state/navigation";
 
@@ -38,6 +39,7 @@ export default async function DocsLayout({
     domain,
     authed ? await getFernToken() : undefined
   );
+  const serialize = createCachedMdxSerializer(loader);
   const [
     { basePath },
     root,

@@ -1,7 +1,7 @@
 @layer components {
   .fern-search-bar {
     @apply cursor-pointer;
-    @apply t-muted border-default flex items-center rounded-lg border-none px-2.5 py-2 text-sm;
+    @apply text-muted border-default flex items-center rounded-lg border-none px-2.5 py-2 text-sm;
     @apply bg-tag-default;
     @apply hover:bg-tag-default-hover transition-[background,shadow];
     @apply ring-default hover:ring-default ring-1 ring-inset;
@@ -16,7 +16,7 @@
     }
 
     .keyboard-shortcut-hint {
-      @apply t-muted size-icon-md shadow-card-light ring-card-border inline-flex items-center justify-center rounded font-mono text-xs leading-none ring-1;
+      @apply text-muted size-icon-md shadow-card-light ring-card-border inline-flex items-center justify-center rounded font-mono text-xs leading-none ring-1;
       @apply bg-card-background dark:shadow-card-dark;
     }
 
@@ -49,7 +49,7 @@
     }
 
     svg.external-link-icon {
-      @apply text-text-muted ml-0.5 inline-block size-3.5;
+      @apply text-muted ml-0.5 inline-block size-3.5;
     }
 
     &:hover {
@@ -76,7 +76,7 @@
   }
 
   .fern-api-property-meta {
-    @apply t-muted inline-flex items-baseline gap-2 text-xs;
+    @apply text-muted inline-flex items-baseline gap-2 text-xs;
   }
 
   .custom-backdrop [data-rmiz-modal-overlay="visible"] {

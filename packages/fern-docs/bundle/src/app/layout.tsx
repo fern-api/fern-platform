@@ -8,7 +8,7 @@ import { Toaster } from "@fern-docs/components";
 import { ConsoleMessage } from "@/components/console-message";
 import { JotaiProvider } from "@/state/jotai-provider";
 
-import "./globals.scss";
+import "./globals.css";
 import StyledJsxRegistry from "./registry";
 
 const secrets = [

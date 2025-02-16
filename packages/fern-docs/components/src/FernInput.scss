@@ -1,12 +1,12 @@
 @layer components {
   .fern-input {
-    @apply form-input w-full;
+    @apply w-full;
     @apply border-none bg-transparent;
     @apply ring-0 outline-none;
   }
 
   .fern-textarea {
-    @apply form-textarea w-full resize-none;
+    @apply w-full resize-none;
     @apply border-none bg-transparent ring-0 outline-none;
   }
 

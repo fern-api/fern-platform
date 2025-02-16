@@ -118,8 +118,17 @@
     }
 
     &[disabled] {
-      @apply text-body/40 hover:text-body/40 cursor-not-allowed bg-black/20;
-      @apply dark:text-body/50 dark:hover:text-body/50 dark:bg-white/10;
+      @apply cursor-not-allowed bg-black/20;
+
+      color: --alpha(var(--color-black) / 40%);
+      background-color: --alpha(var(--color-black) / 20%);
+    }
+
+    @variant dark {
+      &[disabled] {
+        color: --alpha(var(--color-white) / 50%);
+        background-color: --alpha(var(--color-white) / 10%);
+      }
     }
 
     &:not([disabled]) {
@@ -133,12 +142,12 @@
         @apply hover:bg-tag-default data-[selected=true]:bg-tag-default data-[state=checked]:bg-tag-default data-[state=on]:bg-tag-default data-[state=open]:bg-tag-default data-[state=opening]:bg-tag-default;
 
         svg {
-          @apply text-body/60;
+          color: --alpha(var(--color-body) / 60%);
         }
 
         &:not(.primary, .success, .warning, .danger) {
           svg {
-            @apply dark:text-body/70;
+            color: --alpha(var(--color-body) / 70%);
           }
         }
 
@@ -191,7 +200,7 @@
         }
 
         svg {
-          @apply text-body/60;
+          color: --alpha(var(--color-body) / 60%);
         }
 
         &.primary {
@@ -268,7 +277,7 @@
         }
 
         svg {
-          @apply text-body/60;
+          color: --alpha(var(--color-body) / 60%);
         }
 
         &.primary {

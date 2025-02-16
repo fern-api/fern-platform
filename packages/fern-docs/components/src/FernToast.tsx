@@ -40,12 +40,12 @@ export const Toaster: React.FC<ToasterProps> = ({
         },
       }}
       icons={{
-        success: <CheckCircle className="size-icon text-text-muted" />,
-        info: <InfoCircle className="size-icon text-text-muted" />,
-        warning: <WarningCircle className="size-icon text-text-muted" />,
-        error: <XmarkCircle className="size-icon text-text-muted" />,
+        success: <CheckCircle className="size-icon text-muted" />,
+        info: <InfoCircle className="size-icon text-muted" />,
+        warning: <WarningCircle className="size-icon text-muted" />,
+        error: <XmarkCircle className="size-icon text-muted" />,
         loading: (
-          <SystemRestart className="size-icon text-text-muted animate-spin" />
+          <SystemRestart className="size-icon text-muted animate-spin" />
         ),
       }}
     />

@@ -25,7 +25,7 @@
       @apply inline-flex flex-1 justify-end;
 
       .fern-web-socket-badge {
-        @apply t-muted bg-tag-default h-5 rounded-md px-1.5 py-1 text-xs leading-none whitespace-nowrap;
+        @apply text-muted bg-tag-default h-5 rounded-md px-1.5 py-1 text-xs leading-none whitespace-nowrap;
       }
     }
 
@@ -38,7 +38,7 @@
     }
 
     .fern-web-socket-chevron {
-      @apply t-muted size-icon shrink-0 transition-transform duration-300 ease-[cubic-bezier(0.87,_0,_0.13,_1)];
+      @apply text-muted size-icon shrink-0 transition-transform duration-300 ease-[cubic-bezier(0.87,_0,_0.13,_1)];
     }
   }
 

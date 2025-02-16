@@ -1,9 +1,9 @@
 @import "tailwindcss";
 @import "../components/css/rmiz.scss";
 @import "../components/css/base.scss";
-@import "@fern-docs/components/src/index.scss";
+@import "@fern-docs/components/src/index.css";
 @import "@fern-docs/syntax-highlighter/src/index.css";
-@import "@fern-docs/search-ui/src/index.scss";
+@import "@fern-docs/search-ui/src/index.css";
 @import "../components/css/components.scss";
 @import "../components/api-reference/index.scss";
 @import "../components/playground/index.scss";
@@ -12,3 +12,10 @@
 @import "../components/changelog/index.scss";
 @import "../components/themes/index.scss";
 @import "../components/sidebar/index.scss";
+
+@plugin "@tailwindcss/typography";
+@config "../../../components/tailwind.config.ts";
+
+@source "../components";
+@source "../../../components/src";
+@source "../../../search-ui/src/components";

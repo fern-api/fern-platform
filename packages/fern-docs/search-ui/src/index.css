@@ -1,8 +1,7 @@
-@import "tailwindcss";
 @source "../../components";
 @import "@fern-docs/components/src/colors.css";
 @import "@fern-docs/components/src/fern-accent.scss";
-@import "@fern-docs/components/src/kbd.scss";
+@import "@fern-docs/components/src/kbd.css";
 @import "@fern-docs/components/src/badges/index.scss";
 @import "@fern-docs/syntax-highlighter/src/index.css";
 @plugin "@tailwindcss/typography";

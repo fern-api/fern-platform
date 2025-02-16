@@ -5,12 +5,12 @@
   }
 
   .playground-endpoint-url {
-    @apply truncate break-all font-mono text-xs;
+    @apply truncate font-mono text-xs break-all;
     @apply py-1;
   }
 
   .playground-endpoint-url-with-switcher {
-    @apply truncate break-all font-mono text-xs;
+    @apply truncate font-mono text-xs break-all;
   }
 
   /* .playground-endpoint:hover .playground-endpoint-url {
@@ -18,7 +18,7 @@
     } */
 
   .playground-endpoint-copy-button {
-    @apply -mr-3 -mt-1 ml-auto;
+    @apply -mt-1 -mr-3 ml-auto;
   }
 
   .playground-endpoint-baseurl {
@@ -26,6 +26,6 @@
   }
 
   .playground-endpoint:hover .playground-endpoint-baseurl {
-    @apply t-muted;
+    @apply text-muted;
   }
 }

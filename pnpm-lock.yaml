@@ -60,12 +60,6 @@ importers:
       '@playwright/test':
         specifier: ^1.47.1
         version: 1.47.1
-      '@tailwindcss/forms':
-        specifier: ^0.5.10
-        version: 0.5.10(tailwindcss@4.0.6)
-      '@tailwindcss/typography':
-        specifier: ^0.5.16
-        version: 0.5.16(tailwindcss@4.0.6)
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.2
         version: 5.2.2(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)(svelte@5.19.2)
@@ -126,9 +120,6 @@ importers:
       eslint-plugin-react-hooks:
         specifier: ^5.1.0
         version: 5.1.0(eslint@9.17.0(jiti@2.4.2))
-      eslint-plugin-tailwindcss:
-        specifier: ^3.18.0
-        version: 3.18.0(tailwindcss@4.0.6)
       eslint-plugin-unused-imports:
         specifier: ^4.1.4
         version: 4.1.4(@typescript-eslint/eslint-plugin@8.18.1(@typescript-eslint/parser@8.18.1(eslint@9.17.0(jiti@2.4.2))(typescript@5.7.2))(eslint@9.17.0(jiti@2.4.2))(typescript@5.7.2))(eslint@9.17.0(jiti@2.4.2))
@@ -201,9 +192,6 @@ importers:
       stylelint-scss:
         specifier: ^6.0.0
         version: 6.3.0(stylelint@16.5.0(typescript@5.7.2))
-      tailwindcss:
-        specifier: ^4.0.6
-        version: 4.0.6
       ts-node:
         specifier: ^10.9.2
         version: 10.9.2(@swc/core@1.5.7)(@types/node@18.19.33)(typescript@5.7.2)
@@ -1081,9 +1069,6 @@ importers:
       '@storybook/test':
         specifier: ^8.5.6
         version: 8.5.6(storybook@8.5.6(prettier@3.4.2))
-      '@tailwindcss/forms':
-        specifier: ^0.5.10
-        version: 0.5.10(tailwindcss@4.0.6)
       '@tailwindcss/postcss':
         specifier: ^4.0.6
         version: 4.0.6
@@ -1322,9 +1307,6 @@ importers:
       '@storybook/test':
         specifier: ^8.5.6
         version: 8.5.6(storybook@8.5.6(prettier@3.4.2))
-      '@tailwindcss/forms':
-        specifier: ^0.5.10
-        version: 0.5.10(tailwindcss@4.0.6)
       '@tailwindcss/postcss':
         specifier: ^4.0.6
         version: 4.0.6
@@ -7006,11 +6988,6 @@ packages:
     resolution: {integrity: sha512-4BAffykYOgO+5nzBWYwE3W90sBgLJoUPRWWcL8wlyiM8IB8ipJz3UMJ9KXQd1RKQXpKp8Tutn80HZtWsu2u76w==}
     engines: {node: '>=10'}
 
-  '@tailwindcss/forms@0.5.10':
-    resolution: {integrity: sha512-utI1ONF6uf/pPNO68kmN1b8rEwNXv3czukalo8VtJH8ksIkZXr3Q3VYudZLkCsDd4Wku120uF02hYK25XGPorw==}
-    peerDependencies:
-      tailwindcss: '>=3.0.0 || >= 3.0.0-alpha.1 || >= 4.0.0-alpha.20 || >= 4.0.0-beta.1'
-
   '@tailwindcss/node@4.0.6':
     resolution: {integrity: sha512-jb6E0WeSq7OQbVYcIJ6LxnZTeC4HjMvbzFBMCrQff4R50HBlo/obmYNk6V2GCUXDeqiXtvtrQgcIbT+/boB03Q==}
 
@@ -10311,12 +10288,6 @@ packages:
     peerDependencies:
       eslint: 9.17.0
 
-  eslint-plugin-tailwindcss@3.18.0:
-    resolution: {integrity: sha512-PQDU4ZMzFH0eb2DrfHPpbgo87Zgg2EXSMOj1NSfzdZm+aJzpuwGerfowMIaVehSREEa0idbf/eoNYAOHSJoDAQ==}
-    engines: {node: '>=18.12.0'}
-    peerDependencies:
-      tailwindcss: ^3.4.0
-
   eslint-plugin-turbo@2.3.3:
     resolution: {integrity: sha512-j8UEA0Z+NNCsjZep9G5u5soDQHcXq/x4amrwulk6eHF1U91H2qAjp5I4jQcvJewmccCJbVp734PkHHTRnosjpg==}
     peerDependencies:
@@ -13044,10 +13015,6 @@ packages:
     resolution: {integrity: sha512-I9jwMn07Sy/IwOj3zVkVik2JTvgpaykDZEigL6Rx6N9LbMywwUSMtxET+7lVoDLLd3O3IXwJwvuuns8UB/HeAg==}
     engines: {node: '>=4'}
 
-  mini-svg-data-uri@1.4.4:
-    resolution: {integrity: sha512-r9deDe9p5FJUPZAk3A59wGH7Ii9YrjjWw0jmw/liSbHl2CHiyXj6FcDXDu2K3TjVAXqiJdaw3xxwlZZr9E6nHg==}
-    hasBin: true
-
   miniflare@3.20250129.0:
     resolution: {integrity: sha512-qYlGEjMl/2kJdgNaztj4hpA64d6Dl79Lx/NL61p/v5XZRiWanBOTgkQqdPxCKZOj6KQnioqhC7lfd6jDXKSs2A==}
     engines: {node: '>=16.13'}
@@ -15613,7 +15580,7 @@ packages:
   tailwindcss-animate@1.0.7:
     resolution: {integrity: sha512-bl6mpH3T7I3UFxuvDEXLxy/VuFxBk5bbzplh7tXI68mwMokNYd1t9qPBHlnyTwfa4JGC4zP516I1hYYtQ/vspA==}
     peerDependencies:
-      tailwindcss: 3.4.17
+      tailwindcss: '>=3.0.0 || insiders'
 
   tailwindcss@4.0.6:
     resolution: {integrity: sha512-mysewHYJKaXgNOW6pp5xon/emCsfAMnO8WMaGKZZ35fomnR/T5gYnRg2/yRTTrtXiEl1tiVkeRt0eMO6HxEZqw==}
@@ -22947,11 +22914,6 @@ snapshots:
     dependencies:
       defer-to-connect: 2.0.1
 
-  '@tailwindcss/forms@0.5.10(tailwindcss@4.0.6)':
-    dependencies:
-      mini-svg-data-uri: 1.4.4
-      tailwindcss: 4.0.6
-
   '@tailwindcss/node@4.0.6':
     dependencies:
       enhanced-resolve: 5.18.1
@@ -23868,7 +23830,7 @@ snapshots:
       '@vue/shared': 3.4.27
       estree-walker: 2.0.2
       magic-string: 0.30.10
-      postcss: 8.4.31
+      postcss: 8.5.2
       source-map-js: 1.2.0
 
   '@vue/compiler-sfc@3.5.13':
@@ -27541,12 +27503,6 @@ snapshots:
       - supports-color
       - typescript
 
-  eslint-plugin-tailwindcss@3.18.0(tailwindcss@4.0.6):
-    dependencies:
-      fast-glob: 3.3.3
-      postcss: 8.5.2
-      tailwindcss: 4.0.6
-
   eslint-plugin-turbo@2.3.3(eslint@9.17.0(jiti@2.4.2)):
     dependencies:
       dotenv: 16.0.3
@@ -31169,8 +31125,6 @@ snapshots:
   mimic-response@3.1.0: {}
 
   min-indent@1.0.1: {}
-
-  mini-svg-data-uri@1.4.4: {}
 
   miniflare@3.20250129.0:
     dependencies:

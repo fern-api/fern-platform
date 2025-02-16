@@ -13,7 +13,6 @@
 
     &.interactive:not(:disabled):hover,
     &[data-state="open"]:not(:disabled) {
-      cursor: pointer;
       transition: background-color 150ms ease-in-out;
     }
 
@@ -23,18 +22,18 @@
     }
 
     &.rounded {
-      border-radius: 9999px !important;
+      border-radius: var(--radius-full) !important;
     }
 
     &.small {
-      border-radius: 0.25rem;
+      border-radius: var(--radius-sm);
       font-size: 0.75rem;
       height: 1rem;
       padding: 0 0.375rem;
     }
 
     &.large {
-      border-radius: calc(0.5rem - 2px);
+      border-radius: var(--radius-md);
       font-size: 0.875rem;
       height: 1.5rem;
       padding: 0.25rem 0.5rem;
