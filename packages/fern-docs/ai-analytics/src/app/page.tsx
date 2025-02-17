@@ -17,6 +17,10 @@ interface DomainMessages {
   content: Message[];
   created: Date;
   conversationId: string;
+  timeToFirstToken: number;
+  conversationDuration: number;
+  promptTokens: number;
+  completionTokens: number;
 }
 
 const BRAINTRUST_PROJECT_ID = "9f4a7638-9f59-47f7-8cca-d6c9f4d0e270";
@@ -178,6 +182,10 @@ export default async function Home({
         content: cleanedInput,
         created: new Date(convo.created),
         conversationId: convo.id,
+        timeToFirstToken: convo.metrics.time_to_first_token,
+        conversationDuration: convo.metrics.end - convo.metrics.start,
+        promptTokens: convo.metrics.prompt_tokens,
+        completionTokens: convo.metrics.completion_tokens,
       });
     }
   }

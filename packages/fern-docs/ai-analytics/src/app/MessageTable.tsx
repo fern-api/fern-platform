@@ -14,6 +14,10 @@ interface DomainMessages {
   content: Message[];
   created: Date;
   conversationId: string;
+  timeToFirstToken: number;
+  conversationDuration: number;
+  promptTokens: number;
+  completionTokens: number;
 }
 
 const ITEMS_PER_PAGE = 10;
@@ -139,7 +143,9 @@ export function MessageTableClient({
 
   const exportToCSV = (data: DomainMessages[]) => {
     const csvContent = [];
-    csvContent.push("Domain,Conversation Id,Input,Output,Created");
+    csvContent.push(
+      "Domain,Conversation Id,Input,Output,Created,Time to First Token,Conversation Duration,Prompt Tokens,Completion Tokens"
+    );
     data.forEach((item) => {
       for (let i = 0; i < item.content.length - 1; i++) {
         const message = item.content[i];
@@ -153,7 +159,7 @@ export function MessageTableClient({
             i++;
           }
           csvContent.push(
-            `${item.domain},${item.conversationId},${removeCommas(JSON.stringify(message.content))},${removeCommas(JSON.stringify(assistantMessage))},${item.created.toISOString()}`
+            `${item.domain},${item.conversationId},${removeCommas(JSON.stringify(message.content))},${removeCommas(JSON.stringify(assistantMessage))},${item.created.toISOString()},${item.timeToFirstToken},${item.conversationDuration},${item.promptTokens},${item.completionTokens}`
           );
         }
       }
@@ -227,6 +233,14 @@ export function MessageTableClient({
               <Table.ColumnHeaderCell>Domain</Table.ColumnHeaderCell>
               <Table.ColumnHeaderCell>Messages</Table.ColumnHeaderCell>
               <Table.ColumnHeaderCell>Created</Table.ColumnHeaderCell>
+              <Table.ColumnHeaderCell>
+                Time to First Token
+              </Table.ColumnHeaderCell>
+              <Table.ColumnHeaderCell>
+                Conversation Duration
+              </Table.ColumnHeaderCell>
+              <Table.ColumnHeaderCell>Prompt Tokens</Table.ColumnHeaderCell>
+              <Table.ColumnHeaderCell>Completion Tokens</Table.ColumnHeaderCell>
             </Table.Row>
           </Table.Header>
           <Table.Body>
@@ -286,6 +300,10 @@ export function MessageTableClient({
                   )}
                 </Table.Cell>
                 <Table.Cell>{item.created.toISOString()}</Table.Cell>
+                <Table.Cell>{item.timeToFirstToken}</Table.Cell>
+                <Table.Cell>{item.conversationDuration}</Table.Cell>
+                <Table.Cell>{item.promptTokens}</Table.Cell>
+                <Table.Cell>{item.completionTokens}</Table.Cell>
               </Table.Row>
             ))}
           </Table.Body>
