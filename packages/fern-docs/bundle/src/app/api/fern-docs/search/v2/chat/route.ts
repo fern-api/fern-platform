@@ -1,4 +1,5 @@
 import { track } from "@/server/analytics/posthog";
+import { WebClient } from "@slack/web-api";
 import { safeVerifyFernJWTConfig } from "@/server/auth/FernJWT";
 import { getOrgMetadataForDomain } from "@/server/auth/metadata-for-url";
 import { openaiApiKey, turbopufferApiKey } from "@/server/env-variables";
@@ -12,11 +13,12 @@ import {
   toDocuments,
 } from "@fern-docs/search-server/turbopuffer";
 import { COOKIE_FERN_TOKEN, withoutStaging } from "@fern-docs/utils";
-import { embed, EmbeddingModel, streamText, tool } from "ai";
+import { embed, EmbeddingModel, InvalidToolArgumentsError, NoSuchToolError, streamText, tool, ToolExecutionError } from "ai";
 import { initLogger, wrapAISDKModel } from "braintrust";
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
+import { v4 as uuid } from "uuid";
 
 export const maxDuration = 60;
 export const revalidate = 0;
@@ -132,7 +134,44 @@ export async function POST(req: NextRequest) {
     },
   });
 
-  const response = result.toDataStreamResponse();
+  const response = result.toDataStreamResponse({
+    getErrorMessage: error => {
+      if (error == null) {
+        return ""
+      }
+
+      let errorKind = "Unknown"
+      if (NoSuchToolError.isInstance(error)) {
+        errorKind = "NoSuchToolError"
+      }
+      else if (InvalidToolArgumentsError.isInstance(error)) {
+        errorKind = "InvalidToolArgumentsError"
+      }
+      else if (ToolExecutionError.isInstance(error)) {
+        errorKind = "ToolExecutionError"
+      }
+      const logId = uuid()
+      const basicMsg  = `An internal error occurred. Log ID: ${ logId }`;
+      console.error(basicMsg)
+
+      const slackToken = process.env.SLACK_TOKEN;
+      if (slackToken) {
+        const slackMsg = basicMsg + `${errorKind} ${error}`
+        const webClient = new WebClient(slackToken);
+        webClient.chat.postMessage({
+          channel: "#engineering-notifs",
+          text: slackMsg,
+        });
+      } else {
+        // if we can't post to slack, just log the full error to the console
+        // TODO: revisit; we may not want to show the user this error in the console
+        console.error(error)
+      }
+
+      return basicMsg
+    },
+  });
+
   response.headers.set("Access-Control-Allow-Origin", "*");
   response.headers.set("Access-Control-Allow-Methods", "POST, OPTIONS");
   response.headers.set("Access-Control-Allow-Headers", "Content-Type");
