@@ -34,14 +34,6 @@ const FILE_DOWNLOAD_SHAPE: ApiDefinition.TypeShape = {
   },
 };
 
-export const NO_CONTENT_SHAPE: ApiDefinition.TypeShape = {
-  type: "alias",
-  value: {
-    type: "unknown",
-    displayName: "No Content",
-  },
-};
-
 export declare namespace EndpointResponseSection {
   export interface Props {
     response: ApiDefinition.HttpResponse;
@@ -112,15 +104,9 @@ function EndpointResponseSectionContent({
   switch (body.type) {
     case "empty":
       return (
-        <TypeReferenceDefinitions
-          shape={maybeWrapTypeWithUndiscriminatedUnion(NO_CONTENT_SHAPE, types)}
-          isCollapsible={false}
-          onHoverProperty={onHoverProperty}
-          anchorIdParts={anchorIdParts}
-          slug={slug}
-          applyErrorStyles={false}
-          types={types}
-        />
+        <span className="t-muted my-4 inline-flex items-baseline gap-2 text-xs">
+          No content
+        </span>
       );
     case "fileDownload":
       return (
