@@ -22,6 +22,11 @@ interface DomainMessages {
 
 const ITEMS_PER_PAGE = 10;
 
+// cost functions, taken from braintrust
+// https://github.com/braintrustdata/braintrust-proxy/blob/43d55b2c7755c8e332a3e0bc957d1c137a2a0a98/packages/proxy/schema/models.ts#L54
+const SONNET35_INPUT_COST_PER_MIL_TOKENS = 3;
+const SONNET35_OUTPUT_COST_PER_MIL_TOKENS = 15;
+
 export function MessageTableClient({
   initialData,
 }: {
@@ -121,6 +126,7 @@ export function MessageTableClient({
       return found;
     })
   );
+  filteredData.sort((a, b) => b.created.getTime() - a.created.getTime());
 
   const countByDomain: Record<string, number> = initialData.reduce(
     (acc, item) => {
@@ -241,6 +247,7 @@ export function MessageTableClient({
               </Table.ColumnHeaderCell>
               <Table.ColumnHeaderCell>Prompt Tokens</Table.ColumnHeaderCell>
               <Table.ColumnHeaderCell>Completion Tokens</Table.ColumnHeaderCell>
+              <Table.ColumnHeaderCell>Cost</Table.ColumnHeaderCell>
             </Table.Row>
           </Table.Header>
           <Table.Body>
@@ -304,6 +311,13 @@ export function MessageTableClient({
                 <Table.Cell>{item.conversationDuration}</Table.Cell>
                 <Table.Cell>{item.promptTokens}</Table.Cell>
                 <Table.Cell>{item.completionTokens}</Table.Cell>
+                <Table.Cell>
+                  {(SONNET35_INPUT_COST_PER_MIL_TOKENS * item.promptTokens) /
+                    1000000.0 +
+                    (SONNET35_OUTPUT_COST_PER_MIL_TOKENS *
+                      item.completionTokens) /
+                      1000000.0}
+                </Table.Cell>
               </Table.Row>
             ))}
           </Table.Body>
