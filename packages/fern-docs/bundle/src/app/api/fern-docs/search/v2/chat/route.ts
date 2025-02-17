@@ -13,13 +13,35 @@ import {
 } from "@fern-docs/search-server/turbopuffer";
 import { COOKIE_FERN_TOKEN, withoutStaging } from "@fern-docs/utils";
 import { embed, EmbeddingModel, streamText, tool } from "ai";
-import { initLogger, wrapAISDKModel } from "braintrust";
+import { initLogger, traced, wrapAISDKModel } from "braintrust";
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 
 export const maxDuration = 60;
 export const revalidate = 0;
+
+const logToBraintrust = (
+  input: string,
+  output: string,
+  start: Date,
+  end: Date
+) => {
+  traced((span) => {
+    span.log({
+      input,
+      output,
+      metrics: {
+        duration: (end.getTime() - start.getTime()) / 1000.0,
+        start,
+        end,
+      },
+      metadata: {
+        custom_metadata: "this_is_custom_metadata",
+      },
+    });
+  });
+};
 
 export async function POST(req: NextRequest) {
   const _logger = initLogger({
@@ -129,6 +151,7 @@ export async function POST(req: NextRequest) {
       e.warnings?.forEach((warning) => {
         console.warn(warning);
       });
+      logToBraintrust(lastUserMessage || "", e.text, start, end);
     },
   });
 

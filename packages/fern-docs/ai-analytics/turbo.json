@@ -1,0 +1,27 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "extends": ["//"],
+  "globalEnv": ["BRAINTRUST_API_KEY"],
+  "tasks": {
+    "demo:build": {
+      "outputs": [".next/**", "!.next/cache/**"],
+      "inputs": ["$TURBO_DEFAULT$", ".env*"],
+      "dependsOn": ["^build", "^compile"],
+      "env": ["BRAINTRUST_API_KEY"]
+    },
+    "demo:dev": {
+      "dependsOn": ["^build", "^compile"],
+      "persistent": true,
+      "env": ["BRAINTRUST_API_KEY"]
+    },
+    "demo:start": {
+      "dependsOn": ["demo:build"],
+      "persistent": true,
+      "env": ["BRAINTRUST_API_KEY"]
+    },
+    "demo:lint": {
+      "dependsOn": ["^build", "^compile"],
+      "env": ["BRAINTRUST_API_KEY"]
+    }
+  }
+}
