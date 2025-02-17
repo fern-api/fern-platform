@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Conversation, Message } from "../../utils/types";
 import { MessageTableClient } from "./MessageTable";
 
