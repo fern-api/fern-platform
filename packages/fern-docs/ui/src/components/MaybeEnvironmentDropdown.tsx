@@ -83,16 +83,21 @@ export function MaybeEnvironmentDropdown({
 
   // convert the empty string to null for ease of conditionals
   const urlProtocol = typeof url === "string" ? null : url?.protocol;
-  const fullyQualifiedDomainAndBasePath =
-    typeof url === "string"
-      ? null
-      : url
-        ? url.pathname != null && url.pathname !== "/"
-          ? url.host
-            ? `${url.host}${url.pathname}`
-            : url.pathname
-          : url.host
-        : null;
+  const fullyQualifiedDomainAndBasePath = (() => {
+    if (typeof url === "string") {
+      return null;
+    }
+    if (!url) {
+      return null;
+    }
+
+    const hasValidPath = url.pathname != null && url.pathname !== "/";
+    if (hasValidPath) {
+      return url.host ? `${url.host}${url.pathname}` : url.pathname;
+    }
+
+    return url.host ?? null;
+  })();
 
   return (
     <>
