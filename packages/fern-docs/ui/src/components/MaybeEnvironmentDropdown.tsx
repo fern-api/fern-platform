@@ -81,12 +81,18 @@ export function MaybeEnvironmentDropdown({
     parse(inputValue).host != null &&
     parse(inputValue).protocol != null;
 
-  const urlProtocol = url ? url.protocol : "";
-  const fullyQualifiedDomainAndBasePath = url
-    ? url.pathname != null && url.pathname !== "/"
-      ? `${url.host}${url.pathname}`
-      : url.host
-    : "";
+  // convert the empty string to null for ease of conditionals
+  const urlProtocol = typeof url === "string" ? null : url?.protocol;
+  const fullyQualifiedDomainAndBasePath =
+    typeof url === "string"
+      ? null
+      : url
+        ? url.pathname != null && url.pathname !== "/"
+          ? url.host
+            ? `${url.host}${url.pathname}`
+            : url.pathname
+          : url.host
+        : null;
 
   return (
     <>
@@ -183,12 +189,16 @@ export function MaybeEnvironmentDropdown({
                       key="protocol"
                       className="whitespace-nowrap max-sm:hidden"
                     >
-                      <span
-                        className={protocolTextStyle}
-                      >{`${urlProtocol}//`}</span>
-                      <span className={urlTextStyle}>
-                        {fullyQualifiedDomainAndBasePath ?? ""}
-                      </span>
+                      {urlProtocol && (
+                        <span
+                          className={protocolTextStyle}
+                        >{`${urlProtocol}//`}</span>
+                      )}
+                      {fullyQualifiedDomainAndBasePath && (
+                        <span className={urlTextStyle}>
+                          {fullyQualifiedDomainAndBasePath}
+                        </span>
+                      )}
                     </span>
                   }
                   size={small ? "small" : "normal"}
@@ -226,7 +236,8 @@ export function MaybeEnvironmentDropdown({
                         : () => undefined
                     }
                   >
-                    {`${urlProtocol}//${fullyQualifiedDomainAndBasePath}`}
+                    {urlProtocol && `${urlProtocol}//`}
+                    {fullyQualifiedDomainAndBasePath}
                   </span>
                 ) : (
                   <>
@@ -236,10 +247,10 @@ export function MaybeEnvironmentDropdown({
                         small ? "text-xs" : "text-sm"
                       )}
                     >
-                      {`${urlProtocol}//`}
+                      {urlProtocol && `${urlProtocol}//`}
                     </span>
                     <span className={urlTextStyle}>
-                      {fullyQualifiedDomainAndBasePath}
+                      {fullyQualifiedDomainAndBasePath ?? ""}
                     </span>
                   </>
                 )}
