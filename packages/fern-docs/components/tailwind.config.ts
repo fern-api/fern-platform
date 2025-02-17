@@ -99,9 +99,6 @@ export default {
         ".border-primary": {
           "@apply border-border-primary": {},
         },
-        ".border-concealed": {
-          "@apply border-border-concealed": {},
-        },
         ".border-default": {
           "@apply border-border-default": {},
         },
@@ -119,9 +116,6 @@ export default {
         },
         ".ring-default": {
           "@apply ring-border-default": {},
-        },
-        ".ring-concealed": {
-          "@apply ring-border-concealed": {},
         },
         ".animate-popover": {
           "@apply data-[side=top]:animate-slide-down-and-fade data-[side=right]:animate-slide-left-and-fade data-[side=bottom]:animate-slide-up-and-fade data-[side=left]:animate-slide-right-and-fade":

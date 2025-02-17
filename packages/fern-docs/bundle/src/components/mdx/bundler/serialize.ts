@@ -29,35 +29,32 @@ import {
   remarkSanitizeAcorn,
 } from "@fern-docs/mdx/plugins";
 
+import { DocsLoader } from "@/server/docs-loader";
 import { FileData } from "@/server/types";
 
 import { getMDXExport } from "../get-mdx-export";
+import { rehypeAccordions } from "../plugins/rehype-accordions";
+import { rehypeButtons } from "../plugins/rehype-buttons";
+import { rehypeCards } from "../plugins/rehype-cards";
 import { rehypeCodeBlock } from "../plugins/rehype-code-block";
 import { rehypeCollectJsx } from "../plugins/rehype-collect-jsx";
+import { rehypeEndpointSnippets } from "../plugins/rehype-endpoint-snippets";
 import { rehypeExtractAsides } from "../plugins/rehype-extract-asides";
-import {
-  rehypeAccordions,
-  rehypeButtons,
-  rehypeCards,
-  rehypeEndpointSnippets,
-  rehypeSteps,
-  rehypeTabs,
-} from "../plugins/rehype-fern-components";
 import { rehypeFiles } from "../plugins/rehype-files";
 import { rehypeMigrateJsx } from "../plugins/rehype-migrate-jsx";
+import { rehypeSteps } from "../plugins/rehype-steps";
+import { rehypeTabs } from "../plugins/rehype-tabs";
 import { remarkExtractTitle } from "../plugins/remark-extract-title";
 
 async function serializeMdxImpl(
   content: string,
   {
-    files,
-    remoteFiles,
+    loader,
     filename,
     scope,
     toc = false,
   }: {
-    files?: Record<string, string>;
-    remoteFiles?: Record<string, FileData>;
+    loader?: DocsLoader;
     scope?: Record<string, unknown>;
     filename?: string;
     toc?: boolean;
@@ -96,7 +93,17 @@ async function serializeMdxImpl(
     );
   }
 
+  let files: Record<string, string> = {};
+  let remoteFiles: Record<string, FileData> = {};
   const jsxElements: string[] = [];
+
+  if (loader != null) {
+    remoteFiles = await loader.getFiles();
+
+    if (filename != null) {
+      files = await loader.getMdxBundlerFiles();
+    }
+  }
 
   const bundled = await bundleMDX({
     source: content,
@@ -146,7 +153,7 @@ async function serializeMdxImpl(
         rehypeTabs,
         rehypeCards,
         rehypeButtons,
-        rehypeEndpointSnippets,
+        [rehypeEndpointSnippets, { loader }],
         [
           rehypeMigrateJsx,
           {

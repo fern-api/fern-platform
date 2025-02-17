@@ -101,6 +101,15 @@ export function Announcement({
                   if (announcement) {
                     announcement.remove();
                   }
+
+                  const headerHeight =
+                    document.getElementById("fern-header")?.clientHeight;
+                  if (headerHeight != null) {
+                    document.documentElement.style.setProperty(
+                      "--header-height",
+                      `${String(headerHeight)}px`
+                    );
+                  }
                 });
               }
             })})(${JSON.stringify(announcement)})`,

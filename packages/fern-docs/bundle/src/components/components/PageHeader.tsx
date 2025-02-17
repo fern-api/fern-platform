@@ -39,7 +39,7 @@ export function PageHeader({
       </h1>
 
       {subtitle && (
-        <div className="prose-p:t-muted mt-2 leading-7">
+        <div className="prose-p:text-muted mt-2 leading-7">
           <MdxServerComponentSuspense
             serialize={serialize}
             mdx={subtitle}

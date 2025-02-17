@@ -1,53 +1,39 @@
-import {
-  EndpointDefinition,
-  HttpMethod,
-} from "@fern-api/fdr-sdk/api-definition";
+import { ApiDefinition } from "@fern-api/fdr-sdk";
+import { EndpointDefinition } from "@fern-api/fdr-sdk/api-definition";
 
 import { useExampleSelection } from "../../../api-reference/endpoints/useExampleSelection";
 import { CodeSnippetExample } from "../../../api-reference/examples/CodeSnippetExample";
-import { RequestSnippet } from "./types";
-import { useFindEndpoint } from "./useFindEndpoint";
-import { extractEndpointPathAndMethod } from "./utils";
 
-export const EndpointResponseSnippet: React.FC<
-  React.PropsWithChildren<RequestSnippet.Props>
-> = ({ endpoint: endpointLocator, example }) => {
-  const [method, path] = extractEndpointPathAndMethod(endpointLocator);
-
-  if (method == null || path == null) {
+export function EndpointRequestSnippet({
+  example,
+  endpointDefinition,
+}: {
+  /**
+   * The endpoint locator to use for the request snippet.
+   */
+  endpoint?: string;
+  /**
+   * The example to use for the request snippet.
+   */
+  example?: string | undefined;
+  /**
+   * @internal the rehype-endpoint-snippets plugin will set this
+   */
+  endpointDefinition?: ApiDefinition.EndpointDefinition;
+}) {
+  if (endpointDefinition == null) {
     return null;
   }
 
   return (
-    <EndpointResponseSnippetInternal
-      method={method}
-      path={path}
+    <EndpointRequestSnippetInternal
+      endpoint={endpointDefinition}
       example={example}
     />
   );
-};
-
-function EndpointResponseSnippetInternal({
-  path,
-  method,
-  example,
-}: {
-  path: string;
-  method: HttpMethod;
-  example: string | undefined;
-}) {
-  const endpoint = useFindEndpoint(method, path, example);
-
-  if (endpoint == null) {
-    return null;
-  }
-
-  return (
-    <EndpointResponseSnippetRenderer endpoint={endpoint} example={example} />
-  );
 }
 
-function EndpointResponseSnippetRenderer({
+function EndpointRequestSnippetInternal({
   endpoint,
   example,
 }: {

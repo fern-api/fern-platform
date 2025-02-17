@@ -23,7 +23,7 @@ const UnmemoizedSidebarTabButton: React.FC<SidebarTabButton.Props> = ({
         className={cn(
           "min-h-[32px] lg:min-h-[36px]",
           "group/tab-button hover:t-accent flex min-w-0 flex-1 select-none items-center justify-start rounded-lg py-2 text-base group-hover/tab-button:transition lg:px-3 lg:text-sm",
-          "data-[state=inactive]:t-muted data-[state=active]:t-accent"
+          "data-[state=inactive]:text-muted data-[state=active]:t-accent"
         )}
         href={
           tab.type === "link"

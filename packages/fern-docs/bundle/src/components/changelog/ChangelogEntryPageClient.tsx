@@ -22,7 +22,7 @@ export default function ChangelogEntryPageClient({
       ? (page?.frontmatter?.subtitle ?? page?.frontmatter?.excerpt)
       : undefined;
   return (
-    <div className="flex justify-between px-4 md:px-6 lg:pr-16 lg:pl-8 xl:pr-0">
+    <div className="flex justify-between px-4 md:px-6 lg:pl-8 lg:pr-16 xl:pr-0">
       <div className="w-full min-w-0 pt-8">
         <article className="mx-auto break-words lg:ml-0 xl:mx-auto">
           <section
@@ -35,7 +35,7 @@ export default function ChangelogEntryPageClient({
                 <div className="space-y-1">
                   <div className="not-prose">
                     <FernLink href={addLeadingSlash(content.changelogSlug)}>
-                      <span className="text-accent inline-flex shrink items-center gap-1 truncate text-sm font-semibold whitespace-nowrap">
+                      <span className="text-accent inline-flex shrink items-center gap-1 truncate whitespace-nowrap text-sm font-semibold">
                         <ArrowLeft className="size-icon" />
                         Back to {content.changelogTitle}
                       </span>
@@ -50,7 +50,7 @@ export default function ChangelogEntryPageClient({
                 <Markdown
                   mdx={excerpt}
                   size="lg"
-                  className="prose-p:t-muted mt-2 leading-7"
+                  className="prose-p:text-muted mt-2 leading-7"
                 />
               </header>
 

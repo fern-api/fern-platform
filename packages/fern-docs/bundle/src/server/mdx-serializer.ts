@@ -61,26 +61,16 @@ export function createCachedMdxSerializer(
     const key = `${domain}:${options.hash ?? hash(content)}`;
     const cachedSerializer = unstable_cache(
       async ({ filename, toc, scope }: MdxSerializerOptions) => {
-        let files: Record<string, string> | undefined;
-        let remoteFiles: Record<string, FileData> | undefined;
-
         const loader_ =
           typeof loader === "string"
             ? await createCachedDocsLoader(domain)
             : loader;
 
-        // if we're serializing a page, we may need to get the files for mdx-bundler
-        if (filename != null) {
-          files = await loader_.getMdxBundlerFiles();
-          remoteFiles = await loader_.getFiles();
-        }
-
         const authState = await loader_.getAuthState();
 
         return await internalSerializeMdx(content, {
           filename,
-          files,
-          remoteFiles,
+          loader: loader_,
           toc,
           scope: {
             authed: authState.authed,

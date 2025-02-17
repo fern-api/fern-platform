@@ -41,7 +41,7 @@ export const ReferenceLayout = React.forwardRef<
       >
         <SetLayout value="reference" />
         {header}
-        <div className="mt-12 md:grid md:grid-cols-[1fr_1fr] md:gap-8 lg:gap-12">
+        <div className="my-6 md:grid md:grid-cols-[1fr_1fr] md:gap-8 lg:gap-12">
           {!isMobile && <slot.Out />}
           <div className="mb-12 space-y-12">
             {children}

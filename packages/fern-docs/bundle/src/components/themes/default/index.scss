@@ -17,7 +17,7 @@
 
   .fern-header,
   .fern-header-tabs {
-    @apply bg-header-background border-concealed relative border-b;
+    @apply bg-header-background border-default relative border-b;
   }
 
   .fern-header-content {
@@ -36,17 +36,17 @@
     }
 
     .fern-header-tab-button {
-      @apply relative flex h-full min-w-0 flex-1 items-center justify-start p-3 text-base select-none;
+      @apply relative flex h-full min-w-0 flex-1 select-none items-center justify-start p-3 text-base;
       @apply lg:text-sm;
     }
 
     .fern-header-tab-button[data-state="active"] {
-      @apply font-semibold text-(--accent-11);
+      @apply text-(--accent-11) font-semibold;
 
       &::after {
         content: "";
 
-        @apply absolute inset-x-3 bottom-0 h-0.5 bg-(--accent-11);
+        @apply bg-(--accent-11) absolute inset-x-3 bottom-0 h-0.5;
       }
     }
 
@@ -60,7 +60,7 @@
   }
 
   .fern-sidebar-container {
-    @apply bg-sidebar-background border-concealed top-header-height mt-header-height max-h-content-height w-sidebar-width sticky hidden lg:block;
+    @apply bg-sidebar-background border-default top-header-height mt-header-height max-h-content-height w-sidebar-width sticky hidden lg:block;
     @apply flex flex-col;
 
     &.fern-sidebar-fixed {
@@ -79,7 +79,7 @@
   .fern-sidebar-container.dismissable {
     @apply top-header-height fixed bottom-0 left-0 mt-0;
     @apply bg-background-translucent backdrop-blur-lg;
-    @apply sm:border-concealed sm:border-r;
+    @apply sm:border-default sm:border-r;
     @apply max-sm:inset-x-0 max-sm:w-full;
     @apply h-content-height;
   }

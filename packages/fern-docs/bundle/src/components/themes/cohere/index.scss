@@ -14,7 +14,7 @@
   .fern-header,
   .fern-header-tabs,
   .fern-sidebar-container {
-    @apply border-concealed rounded-lg border;
+    @apply border-default rounded-lg border;
   }
 
   .fern-sidebar-container {
@@ -72,7 +72,7 @@
     }
 
     .fern-header-tab-button {
-      @apply flex h-[40px] items-center rounded-lg border px-3 text-sm select-none;
+      @apply flex h-[40px] select-none items-center rounded-lg border px-3 text-sm;
     }
 
     .fern-header-tab-button[data-state="inactive"] {
@@ -146,7 +146,7 @@
 
     .fern-guide-layout,
     .fern-overview-layout {
-      @apply lg:max-xl:mx-auto xl:pr-0 xl:pl-3;
+      @apply lg:max-xl:mx-auto xl:pl-3 xl:pr-0;
     }
   }
 }

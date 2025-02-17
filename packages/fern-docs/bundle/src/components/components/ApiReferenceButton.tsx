@@ -1,14 +1,11 @@
 import { ArrowUpRight } from "iconoir-react";
 
-import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { FernTooltip, FernTooltipProvider } from "@fern-docs/components";
 import { addLeadingSlash } from "@fern-docs/utils";
 
 import { FernLinkButton } from "./FernLinkButton";
 
-export const ApiReferenceButton: React.FC<{ slug: FernNavigation.Slug }> = ({
-  slug,
-}) => {
+export const ApiReferenceButton: React.FC<{ slug: string }> = ({ slug }) => {
   const href = addLeadingSlash(slug);
   return (
     <FernTooltipProvider>
