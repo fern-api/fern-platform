@@ -96,49 +96,55 @@ export default async function Home({
 
   for (const convo of chatLogs) {
     if (convo.input !== null && convo.output !== null) {
-      let domain = "";
-      convo.input.forEach((msg: APIMessage) => {
-        // find domain from preamble
-        if (msg.role === "system") {
-          if (typeof msg.content === "string") {
-            if (msg.content && msg.content.includes("elevenlabs.io")) {
-              domain = "elevenlabs.io";
-            } else {
-              domain = "buildwithfern.com";
+      try {
+        let domain = "";
+        convo.input.forEach((msg: APIMessage) => {
+          // find domain from preamble
+          if (msg.role === "system") {
+            if (typeof msg.content === "string") {
+              if (msg.content && msg.content.includes("elevenlabs.io")) {
+                domain = "elevenlabs.io";
+              } else {
+                domain = "buildwithfern.com";
+              }
             }
           }
-        }
-      });
+        });
 
-      const cleanedInput = convo.input
-        .map((msg: APIMessage) => {
-          if (msg.role === "user") {
-            if (typeof msg.content === "string") {
+        const cleanedInput = convo.input
+          .map((msg: APIMessage) => {
+            if (msg.role === "user") {
+              if (typeof msg.content === "string") {
+                return {
+                  role: "user",
+                  content: msg.content,
+                };
+              }
               return {
                 role: "user",
-                content: msg.content,
+                content: msg.content[0].text,
               };
+            } else {
+              return msg;
             }
-            return {
-              role: "user",
-              content: msg.content[0].text,
-            };
-          } else {
-            return msg;
-          }
-        })
-        .filter((msg: Message) => msg.role !== "system" && msg.role !== "tool");
-      cleanedInput.push(convo.output.message);
-      processedData.push({
-        domain,
-        content: cleanedInput,
-        created: new Date(convo.created),
-        conversationId: convo.id,
-        timeToFirstToken: convo.metrics.time_to_first_token,
-        conversationDuration: convo.metrics.end - convo.metrics.start,
-        promptTokens: convo.metrics.prompt_tokens,
-        completionTokens: convo.metrics.completion_tokens,
-      });
+          })
+          .filter(
+            (msg: Message) => msg.role !== "system" && msg.role !== "tool"
+          );
+        cleanedInput.push(convo.output.message);
+        processedData.push({
+          domain,
+          content: cleanedInput,
+          created: new Date(convo.created),
+          conversationId: convo.id,
+          timeToFirstToken: convo.metrics.time_to_first_token,
+          conversationDuration: convo.metrics.end - convo.metrics.start,
+          promptTokens: convo.metrics.prompt_tokens,
+          completionTokens: convo.metrics.completion_tokens,
+        });
+      } catch (e) {
+        console.error(e);
+      }
     }
   }
 
