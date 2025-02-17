@@ -24,7 +24,7 @@ describe("getEndpointId", () => {
         operationId: undefined,
         isWebhook: undefined,
       })
-    ).toBe("endpoint_pets.getByIdPetsGet");
+    ).toBe("endpoint_pets.get-by-id-pets-get");
   });
 
   it("handles array namespace", () => {
@@ -37,7 +37,7 @@ describe("getEndpointId", () => {
         operationId: undefined,
         isWebhook: undefined,
       })
-    ).toBe("endpoint_pets.v1.getByIdPetsGet");
+    ).toBe("endpoint_pets/v1.get-by-id-pets-get");
   });
 
   it("handles undefined namespace", () => {
@@ -50,7 +50,7 @@ describe("getEndpointId", () => {
         operationId: undefined,
         isWebhook: undefined,
       })
-    ).toBe("endpoint_.getByIdPetsGet");
+    ).toBe("endpoint_.get-by-id-pets-get");
   });
 
   it("uses operationId when sdkMethodName is undefined", () => {
@@ -76,7 +76,7 @@ describe("getEndpointId", () => {
         operationId: undefined,
         isWebhook: undefined,
       })
-    ).toBe("endpoint_pets.petsGet");
+    ).toBe("endpoint_pets.pets-get");
   });
 
   it("handles complex paths", () => {
@@ -89,6 +89,6 @@ describe("getEndpointId", () => {
         operationId: undefined,
         isWebhook: undefined,
       })
-    ).toBe("endpoint_pets.getDetailsApiV1PetsPetIdDetails");
+    ).toBe("endpoint_pets.get-details-api-v-1-pets-pet-id-details");
   });
 });

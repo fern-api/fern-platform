@@ -1,4 +1,4 @@
-import { camelCase } from "es-toolkit";
+import { camelCase, kebabCase } from "es-toolkit";
 import { maybeSingleValueToArray } from "./maybeSingleValueToArray";
 
 export function getEndpointId({
@@ -41,7 +41,7 @@ function getFullyQualifiedNamespace(
   return namespace != null
     ? maybeSingleValueToArray(namespace)
         ?.map((member) => camelCase(member))
-        .join(".")
+        .join("/")
     : "";
 }
 
@@ -51,6 +51,6 @@ function getEndpointName(
   endpointName: string
 ): string | undefined {
   return (
-    camelCase(sdkMethodName ?? "") || operationId || camelCase(endpointName)
+    kebabCase(sdkMethodName ?? "") || operationId || kebabCase(endpointName)
   );
 }

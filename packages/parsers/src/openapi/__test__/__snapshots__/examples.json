@@ -1,8 +1,8 @@
 {
   "id": "test-uuid-replacement",
   "endpoints": {
-    "endpoint_.postMatchingExamples": {
-      "id": "endpoint_.postMatchingExamples",
+    "endpoint_.post-matching-examples": {
+      "id": "endpoint_.post-matching-examples",
       "method": "POST",
       "path": [
         {
@@ -103,8 +103,8 @@
         "type": "rest"
       }
     },
-    "endpoint_.postNonMatchingExamples": {
-      "id": "endpoint_.postNonMatchingExamples",
+    "endpoint_.post-non-matching-examples": {
+      "id": "endpoint_.post-non-matching-examples",
       "method": "POST",
       "path": [
         {
@@ -205,8 +205,8 @@
         "type": "rest"
       }
     },
-    "endpoint_.postMoreRequests": {
-      "id": "endpoint_.postMoreRequests",
+    "endpoint_.post-more-requests": {
+      "id": "endpoint_.post-more-requests",
       "method": "POST",
       "path": [
         {
@@ -307,8 +307,8 @@
         "type": "rest"
       }
     },
-    "endpoint_.postMoreResponses": {
-      "id": "endpoint_.postMoreResponses",
+    "endpoint_.post-more-responses": {
+      "id": "endpoint_.post-more-responses",
       "method": "POST",
       "path": [
         {
@@ -409,8 +409,8 @@
         "type": "rest"
       }
     },
-    "endpoint_.postPostEmptyResponse": {
-      "id": "endpoint_.postPostEmptyResponse",
+    "endpoint_.post-post-empty-response": {
+      "id": "endpoint_.post-post-empty-response",
       "description": "empty response",
       "method": "POST",
       "path": [
@@ -464,8 +464,8 @@
         "type": "rest"
       }
     },
-    "endpoint_.postSingleExample": {
-      "id": "endpoint_.postSingleExample",
+    "endpoint_.post-single-example": {
+      "id": "endpoint_.post-single-example",
       "method": "POST",
       "path": [
         {
@@ -548,8 +548,8 @@
         "type": "rest"
       }
     },
-    "endpoint_.postRequestBodyReference": {
-      "id": "endpoint_.postRequestBodyReference",
+    "endpoint_.post-request-body-reference": {
+      "id": "endpoint_.post-request-body-reference",
       "method": "POST",
       "path": [
         {
