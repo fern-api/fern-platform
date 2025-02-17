@@ -8,10 +8,26 @@ import { renderTypeShorthand } from "../../type-shorthand";
 import { JsonPropertyPath } from "../examples/JsonPropertyPath";
 import { TypeComponentSeparator } from "../types/TypeComponentSeparator";
 import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";
+import { maybeWrapTypeWithUndiscriminatedUnion } from "../utils/maybeWrapTypeWithUndiscriminatedUnion";
 import {
   EndpointParameter,
   EndpointParameterContent,
 } from "./EndpointParameter";
+
+const FORM_DATA_BYTES_SHAPE: ApiDefinition.TypeShape = {
+  type: "alias",
+  value: {
+    type: "primitive",
+    value: {
+      type: "string",
+      format: "binary",
+      regex: undefined,
+      minLength: undefined,
+      maxLength: undefined,
+      default: undefined,
+    },
+  },
+};
 
 export declare namespace EndpointRequestSection {
   export interface Props {
@@ -108,7 +124,21 @@ export const EndpointRequestSection: React.FC<EndpointRequestSection.Props> = ({
               })}
             </Fragment>
           )),
-        bytes: () => null,
+        bytes: () => (
+          <TypeReferenceDefinitions
+            shape={maybeWrapTypeWithUndiscriminatedUnion(
+              FORM_DATA_BYTES_SHAPE,
+              types,
+              "Binary"
+            )}
+            isCollapsible={false}
+            onHoverProperty={onHoverProperty}
+            anchorIdParts={anchorIdParts}
+            slug={slug}
+            applyErrorStyles={false}
+            types={types}
+          />
+        ),
         object: (obj) => (
           <TypeReferenceDefinitions
             shape={obj}
@@ -122,7 +152,7 @@ export const EndpointRequestSection: React.FC<EndpointRequestSection.Props> = ({
         ),
         alias: (alias) => (
           <TypeReferenceDefinitions
-            shape={alias}
+            shape={maybeWrapTypeWithUndiscriminatedUnion(alias, types)}
             isCollapsible={false}
             onHoverProperty={onHoverProperty}
             anchorIdParts={anchorIdParts}
