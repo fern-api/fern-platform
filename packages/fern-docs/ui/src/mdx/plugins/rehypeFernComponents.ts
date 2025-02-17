@@ -200,6 +200,30 @@ function transformAccordionGroup(
   items.forEach((tab, index) => {
     const title = getTitle(tab) ?? `Untitled ${index + 1}`;
     applyGeneratedId(tab, title);
+
+    const anchorIds: string[] = [];
+    visit(tab, (child) => {
+      if (
+        child.type === "element" &&
+        (child.tagName === "h1" ||
+          child.tagName === "h2" ||
+          child.tagName === "h3" ||
+          child.tagName === "h4" ||
+          child.tagName === "h5" ||
+          child.tagName === "h6")
+      ) {
+        const headingId = child.properties?.id;
+        if (typeof headingId === "string") {
+          anchorIds.push(headingId);
+        }
+      }
+    });
+
+    // Add anchorIds attribute if we found any
+    if (anchorIds.length > 0) {
+      tab.attributes.push(unknownToMdxJsxAttribute("anchorIds", anchorIds));
+    }
+
     visit(tab, visitor);
   });
 

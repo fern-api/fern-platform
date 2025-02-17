@@ -14,6 +14,7 @@ export interface AccordionItemProps {
   id: string;
   toc?: boolean;
   children: ReactNode;
+  anchorIds?: string[];
 }
 
 export interface AccordionGroupProps {
@@ -28,9 +29,13 @@ export const AccordionGroup = forwardRef<HTMLDivElement, AccordionGroupProps>(
     const [anchor, setAnchor] = useAtom(ANCHOR_ATOM);
     useEffect(() => {
       if (anchor != null) {
-        if (items.some((tab) => tab.id === anchor)) {
+        const accordionItem = items.find(
+          (item) => item.id === anchor || item.anchorIds?.includes(anchor)
+        );
+
+        if (accordionItem) {
           setActiveTabs((prev) =>
-            prev.includes(anchor) ? prev : [...prev, anchor]
+            prev.includes(accordionItem.id) ? prev : [...prev, accordionItem.id]
           );
         }
       }
