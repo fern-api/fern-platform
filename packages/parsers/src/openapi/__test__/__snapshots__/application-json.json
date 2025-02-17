@@ -1,8 +1,8 @@
 {
   "id": "test-uuid-replacement",
   "endpoints": {
-    "endpoint_.getVndFernUserJsonVersion1": {
-      "id": "endpoint_.getVndFernUserJsonVersion1",
+    "endpoint_.get-vnd-fern-user-json-version-1": {
+      "id": "endpoint_.get-vnd-fern-user-json-version-1",
       "method": "GET",
       "path": [
         {
@@ -46,8 +46,8 @@
         "type": "rest"
       }
     },
-    "endpoint_.getApplicationJson": {
-      "id": "endpoint_.getApplicationJson",
+    "endpoint_.get-application-json": {
+      "id": "endpoint_.get-application-json",
       "method": "GET",
       "path": [
         {

@@ -86,8 +86,8 @@
         "type": "rest"
       }
     },
-    "endpoint_textToSpeech.generateFromPrompt": {
-      "id": "endpoint_textToSpeech.generateFromPrompt",
+    "endpoint_textToSpeech.generate-from-prompt": {
+      "id": "endpoint_textToSpeech.generate-from-prompt",
       "description": "If you prefer to manage voices on your own, you can use your own audio file as a reference for the voice clone.x",
       "namespace": [
         "textToSpeech"

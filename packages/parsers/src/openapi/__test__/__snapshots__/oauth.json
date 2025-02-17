@@ -1,8 +1,8 @@
 {
   "id": "test-uuid-replacement",
   "endpoints": {
-    "endpoint_auth.getToken": {
-      "id": "endpoint_auth.getToken",
+    "endpoint_auth.get-token": {
+      "id": "endpoint_auth.get-token",
       "description": "Exchange credentials or refresh token for an access token",
       "namespace": [
         "auth"

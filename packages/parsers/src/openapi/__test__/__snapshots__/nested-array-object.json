@@ -1,8 +1,8 @@
 {
   "id": "test-uuid-replacement",
   "endpoints": {
-    "endpoint_.postTestNestedArrayObject": {
-      "id": "endpoint_.postTestNestedArrayObject",
+    "endpoint_.post-test-nested-array-object": {
+      "id": "endpoint_.post-test-nested-array-object",
       "method": "POST",
       "path": [
         {

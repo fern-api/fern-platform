@@ -5,8 +5,8 @@ import {
   FdrAPI,
   SDKSnippetHolder,
 } from "@fern-api/fdr-sdk";
+import urlJoin from "url-join";
 import { v4 as uuidv4 } from "uuid";
-import { stringifyEndpointPathParts } from "../../../../../packages/fdr-sdk/src/navigation/utils/stringifyEndpointPathParts";
 import { APIV1WriteService } from "../../api";
 import { SdkRequest } from "../../api/generated/api";
 import type { FdrApplication } from "../../app";
@@ -181,6 +181,16 @@ export function getRegisterApiService(app: FdrApplication): APIV1WriteService {
   });
 }
 
+function stringifyEndpointPathParts(
+  path: FdrAPI.api.latest.PathPart[]
+): string {
+  return urlJoin(
+    ...path.map((part) =>
+      part.type === "literal" ? part.value : `{${part.value}}`
+    )
+  );
+}
+
 function enrichApiLatestDefinitionWithSnippets(
   definition: FdrAPI.api.latest.ApiDefinition,
   snippetHolder: SDKSnippetHolder
@@ -191,45 +201,44 @@ function enrichApiLatestDefinitionWithSnippets(
         stringifyEndpointPathParts(endpoint.path)
       ),
       endpointMethod: endpoint.method,
-      endpointId: undefined,
+      endpointId: endpoint.id,
     });
 
-    const goSnippet = snippetHolder.getGoCodeSnippetForEndpoint({
-      endpointPath: FdrAPI.EndpointPathLiteral(
-        stringifyEndpointPathParts(endpoint.path)
-      ),
-      endpointMethod: endpoint.method,
-      endpointId: undefined,
-      exampleId: undefined,
-    });
-    const pythonSnippet = snippetHolder.getPythonCodeSnippetForEndpoint({
-      endpointPath: FdrAPI.EndpointPathLiteral(
-        stringifyEndpointPathParts(endpoint.path)
-      ),
-      endpointMethod: endpoint.method,
-      endpointId: undefined,
-      exampleId: undefined,
-    });
-    const rubySnippet = snippetHolder.getRubyCodeSnippetForEndpoint({
-      endpointPath: FdrAPI.EndpointPathLiteral(
-        stringifyEndpointPathParts(endpoint.path)
-      ),
-      endpointMethod: endpoint.method,
-      endpointId: undefined,
-      exampleId: undefined,
-    });
-    const typescriptSnippet = snippetHolder.getTypeScriptCodeSnippetForEndpoint(
-      {
+    endpoint.examples?.forEach((example) => {
+      const goSnippet = snippetHolder.getGoCodeSnippetForEndpoint({
         endpointPath: FdrAPI.EndpointPathLiteral(
           stringifyEndpointPathParts(endpoint.path)
         ),
         endpointMethod: endpoint.method,
-        endpointId: undefined,
-        exampleId: undefined,
-      }
-    );
+        endpointId: endpoint.id,
+        exampleId: example.name,
+      });
+      const pythonSnippet = snippetHolder.getPythonCodeSnippetForEndpoint({
+        endpointPath: FdrAPI.EndpointPathLiteral(
+          stringifyEndpointPathParts(endpoint.path)
+        ),
+        endpointMethod: endpoint.method,
+        endpointId: endpoint.id,
+        exampleId: example.name,
+      });
+      const rubySnippet = snippetHolder.getRubyCodeSnippetForEndpoint({
+        endpointPath: FdrAPI.EndpointPathLiteral(
+          stringifyEndpointPathParts(endpoint.path)
+        ),
+        endpointMethod: endpoint.method,
+        endpointId: endpoint.id,
+        exampleId: example.name,
+      });
+      const typescriptSnippet =
+        snippetHolder.getTypeScriptCodeSnippetForEndpoint({
+          endpointPath: FdrAPI.EndpointPathLiteral(
+            stringifyEndpointPathParts(endpoint.path)
+          ),
+          endpointMethod: endpoint.method,
+          endpointId: endpoint.id,
+          exampleId: example.name,
+        });
 
-    endpoint.examples?.forEach((example) => {
       if (goSnippet != null) {
         example.snippets ??= {};
         example.snippets.go ??= [];
