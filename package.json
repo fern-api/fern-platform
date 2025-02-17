@@ -40,7 +40,7 @@
     "colorjs.io": "^0.5.2",
     "cookie": "0.7.0",
     "cross-spawn": "7.0.5",
-    "elliptic": "6.6.0",
+    "elliptic": "6.6.1",
     "esbuild": "0.24.2",
     "eslint": "9.17.0",
     "eslint-config-next": "15.1.2",
