@@ -1,11 +1,9 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
 import { Theme } from "@radix-ui/themes";
 import "@radix-ui/themes/styles.css";
-import { NextThemeProvider } from "./components/ThemeProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -32,9 +30,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <NextThemeProvider>
-          <Theme>{children}</Theme>
-        </NextThemeProvider>
+        <Theme>{children}</Theme>
       </body>
     </html>
   );

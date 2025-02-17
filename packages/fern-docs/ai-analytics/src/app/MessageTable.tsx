@@ -3,119 +3,32 @@
 import { Button, Card, Select, Table, TextField } from "@radix-ui/themes";
 import { ChevronDown, ChevronRight } from "lucide-react";
 import { useState } from "react";
-
-interface Message {
-  role: string;
-  content: string;
-}
-
-interface DomainMessages {
-  domain: string;
-  content: Message[];
-  created: Date;
-  conversationId: string;
-  timeToFirstToken: number;
-  conversationDuration: number;
-  promptTokens: number;
-  completionTokens: number;
-}
-
+import {
+  SONNET35_INPUT_COST_PER_MIL_TOKENS,
+  SONNET35_OUTPUT_COST_PER_MIL_TOKENS,
+} from "../../utils/constants";
+import { deduplicateConversation } from "../../utils/dedupeConversations";
+import { exportToCSV } from "../../utils/exportToCSV";
+import { Conversation, Message } from "../../utils/types";
 const ITEMS_PER_PAGE = 10;
-
-// cost functions, taken from braintrust
-// https://github.com/braintrustdata/braintrust-proxy/blob/43d55b2c7755c8e332a3e0bc957d1c137a2a0a98/packages/proxy/schema/models.ts#L54
-const SONNET35_INPUT_COST_PER_MIL_TOKENS = 3;
-const SONNET35_OUTPUT_COST_PER_MIL_TOKENS = 15;
 
 export function MessageTableClient({
   initialData,
 }: {
-  initialData: DomainMessages[];
+  initialData: Conversation[];
 }) {
   const [currentPage, setCurrentPage] = useState(1);
   const [expandedRows, setExpandedRows] = useState<Record<string, boolean>>({});
   const [filter, setFilter] = useState("");
   const [domain, setDomain] = useState("show-all-domains");
 
-  function deduplicateDomainMessages(
-    messages: DomainMessages[]
-  ): DomainMessages[] {
-    // Sort messages by length (descending) to process longer conversations first
-    const sortedMessages = [...messages].sort(
-      (a, b) => b.content.length - a.content.length
-    );
-
-    // Keep track of which messages to retain
-    const retainedMessages: DomainMessages[] = [];
-
-    sortedMessages.forEach((currentMsg) => {
-      const currentSignature = createConversationSignature(currentMsg.content);
-
-      // Check if this conversation is contained within any retained message
-      const isContained = retainedMessages.some((retained) => {
-        // Only compare if within 5 minute window
-        const timeDiff = Math.abs(
-          retained.created.getTime() - currentMsg.created.getTime()
-        );
-        const fiveMinutesInMs = 5 * 60 * 1000;
-
-        if (timeDiff > fiveMinutesInMs) {
-          return false;
-        }
-
-        // Check if the current message's signature is contained within the retained message
-        const retainedSignature = createConversationSignature(retained.content);
-        return isSignatureContained(currentSignature, retainedSignature);
-      });
-
-      if (!isContained) {
-        retainedMessages.push(currentMsg);
-      }
-    });
-
-    return retainedMessages;
-  }
-
-  function createConversationSignature(messages: Message[]): string[] {
-    // Instead of creating a single string signature, return array of message signatures
-    return messages.map((msg) => {
-      if (!msg.content) return "";
-      const normalizedContent = msg.content.toLowerCase().trim();
-      const contentHash = hashString(normalizedContent);
-      return `${msg.role}:${contentHash}`;
-    });
-  }
-
-  function isSignatureContained(
-    shorterSig: string[],
-    longerSig: string[]
-  ): boolean {
-    // Check if shorter signature appears at the start of longer signature
-    if (shorterSig.length > longerSig.length) {
-      return false;
-    }
-
-    // Check if all elements in shorter signature match the beginning of longer signature
-    return shorterSig.every((sig, index) => sig === longerSig[index]);
-  }
-
-  function hashString(str: string): string {
-    let hash = 0;
-    for (let i = 0; i < str.length; i++) {
-      const char = str.charCodeAt(i);
-      hash = (hash << 5) - hash + char;
-      hash = hash & hash;
-    }
-    return hash.toString(36);
-  }
-
-  const filteredData = deduplicateDomainMessages(
+  const filteredData = deduplicateConversation(
     initialData.filter((item) => {
       if (domain !== "show-all-domains" && item.domain !== domain) {
         return false;
       }
       let found = false;
-      item.content.forEach((message) => {
+      item.content.forEach((message: Message) => {
         if (
           message.content &&
           message.content.toLowerCase().includes(filter.toLowerCase())
@@ -143,41 +56,8 @@ export function MessageTableClient({
     startIndex + ITEMS_PER_PAGE
   );
 
-  const removeCommas = (str: string) => {
-    return str.replace(/,/g, "");
-  };
-
-  const exportToCSV = (data: DomainMessages[]) => {
-    const csvContent = [];
-    csvContent.push(
-      "Domain,Conversation Id,Input,Output,Created,Time to First Token,Conversation Duration,Prompt Tokens,Completion Tokens,Cost"
-    );
-    data.forEach((item) => {
-      for (let i = 0; i < item.content.length - 1; i++) {
-        const message = item.content[i];
-        if (message.role === "user") {
-          let assistantMessage = item.content[i + 1].content;
-          while (
-            item.content[i + 1] &&
-            item.content[i + 1].role == "assistant"
-          ) {
-            assistantMessage += item.content[i + 1].content;
-            i++;
-          }
-          csvContent.push(
-            `${item.domain},${item.conversationId},${removeCommas(JSON.stringify(message.content))},${removeCommas(JSON.stringify(assistantMessage))},${item.created.toISOString()},${item.timeToFirstToken},${item.conversationDuration},${item.promptTokens},${item.completionTokens},${(SONNET35_INPUT_COST_PER_MIL_TOKENS * item.promptTokens) / 1000000.0 + (SONNET35_OUTPUT_COST_PER_MIL_TOKENS * item.completionTokens) / 1000000.0}`
-          );
-        }
-      }
-    });
-    const blob = new Blob([csvContent.join("\n")], {
-      type: "text/csv;charset=utf-8;",
-    });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "messages.csv";
-    a.click();
+  const roundToHundredths = (num: number) => {
+    return (Math.round(num * 100) / 100).toFixed(2);
   };
 
   const toggleRow = (index: string) => {
@@ -307,16 +187,23 @@ export function MessageTableClient({
                   )}
                 </Table.Cell>
                 <Table.Cell>{item.created.toISOString()}</Table.Cell>
-                <Table.Cell>{item.timeToFirstToken}</Table.Cell>
-                <Table.Cell>{item.conversationDuration}</Table.Cell>
+                <Table.Cell>
+                  {roundToHundredths(item.timeToFirstToken)}
+                </Table.Cell>
+                <Table.Cell>
+                  {roundToHundredths(item.conversationDuration)}
+                </Table.Cell>
                 <Table.Cell>{item.promptTokens}</Table.Cell>
                 <Table.Cell>{item.completionTokens}</Table.Cell>
                 <Table.Cell>
-                  {(SONNET35_INPUT_COST_PER_MIL_TOKENS * item.promptTokens) /
-                    1000000.0 +
-                    (SONNET35_OUTPUT_COST_PER_MIL_TOKENS *
-                      item.completionTokens) /
-                      1000000.0}
+                  {"$" +
+                    roundToHundredths(
+                      (SONNET35_INPUT_COST_PER_MIL_TOKENS * item.promptTokens) /
+                        1000000.0 +
+                        (SONNET35_OUTPUT_COST_PER_MIL_TOKENS *
+                          item.completionTokens) /
+                          1000000.0
+                    )}
                 </Table.Cell>
               </Table.Row>
             ))}

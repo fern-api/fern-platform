@@ -1,3 +1,4 @@
+import { Conversation, Message } from "../../utils/types";
 import { MessageTableClient } from "./MessageTable";
 
 export const maxDuration = 300;
@@ -7,55 +8,12 @@ interface APIMessage {
   content: string | { text: string; type: string }[];
 }
 
-interface Message {
-  role: string;
-  content: string;
-}
-
-interface DomainMessages {
-  domain: string;
-  content: Message[];
-  created: Date;
-  conversationId: string;
-  timeToFirstToken: number;
-  conversationDuration: number;
-  promptTokens: number;
-  completionTokens: number;
-}
-
 const BRAINTRUST_PROJECT_ID = "9f4a7638-9f59-47f7-8cca-d6c9f4d0e270";
 
 interface ChatLog {
   created: string;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [key: string]: any;
 }
-
-// async function fetchCountsByDomainAfterThreshold(thresholdDate: Date) {
-//   const url = "https://api.braintrust.dev/btql";
-//   const headers = {
-//     Authorization: `Bearer ${process.env.BRAINTRUST_API_KEY}`,
-//     "Content-Type": "application/json",
-//   };
-
-//   const domains = ["elevenlabs.io", "buildwithfern.com"];
-//   const counts: { [key: string]: number } = {};
-//   for (const domain of domains) {
-//     const body = {
-//       query: `measures: count(1) as count | from: project_logs('${BRAINTRUST_PROJECT_ID}') |
-//         filter: created > '${thresholdDate.toISOString()}' and input LIKE '%${domain}%'
-//         `,
-//     };
-//     const response = await fetch(url, {
-//       method: "POST",
-//       headers: headers,
-//       body: JSON.stringify(body),
-//     });
-//     const jsonData = await response.json();
-//     counts[domain] = jsonData.data[0].count;
-//   }
-//   return counts;
-// }
 
 async function fetchChatLogs(
   projectId: string,
@@ -134,19 +92,13 @@ export default async function Home({
     thresholdDate
   );
 
-  chatLogs.sort((a, b) => {
-    return new Date(b.created).getTime() - new Date(a.created).getTime();
-  });
-  // const counts = await fetchCountsByDomainAfterThreshold(thresholdDate);
+  const processedData: Conversation[] = [];
 
-  const data = chatLogs;
-
-  const processedData: DomainMessages[] = [];
-
-  for (const convo of data) {
+  for (const convo of chatLogs) {
     if (convo.input !== null && convo.output !== null) {
       let domain = "";
       convo.input.forEach((msg: APIMessage) => {
+        // find domain from preamble
         if (msg.role === "system") {
           if (typeof msg.content === "string") {
             if (msg.content && msg.content.includes("elevenlabs.io")) {
