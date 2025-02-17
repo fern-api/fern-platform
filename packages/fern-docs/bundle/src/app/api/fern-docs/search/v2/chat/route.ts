@@ -18,10 +18,10 @@ import { initLogger, wrapAISDKModel } from "braintrust";
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
-import { v4 as uuid } from "uuid";
 
 export const maxDuration = 60;
 export const revalidate = 0;
+const engNotifsSlackChannel = "#engineering-notifs"
 
 export async function POST(req: NextRequest) {
   const _logger = initLogger({
@@ -150,25 +150,18 @@ export async function POST(req: NextRequest) {
       else if (ToolExecutionError.isInstance(error)) {
         errorKind = "ToolExecutionError"
       }
-      const logId = uuid()
-      const basicMsg  = `An internal error occurred. Log ID: ${ logId }`;
-      console.error(basicMsg)
+      const msg  = `An internal error occurred. ${errorKind} ${error}`;
+      console.error(msg)
 
       const slackToken = process.env.SLACK_TOKEN;
       if (slackToken) {
-        const slackMsg = basicMsg + `${errorKind} ${error}`
         const webClient = new WebClient(slackToken);
         webClient.chat.postMessage({
-          channel: "#engineering-notifs",
-          text: slackMsg,
+          channel: engNotifsSlackChannel,
+          text: msg,
         });
-      } else {
-        // if we can't post to slack, just log the full error to the console
-        // TODO: revisit; we may not want to show the user this error in the console
-        console.error(error)
       }
-
-      return basicMsg
+      return msg
     },
   });
 

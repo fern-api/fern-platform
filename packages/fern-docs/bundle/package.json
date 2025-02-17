@@ -54,6 +54,7 @@
     "@opentelemetry/api-logs": "^0.57.0",
     "@opentelemetry/instrumentation": "^0.57.0",
     "@opentelemetry/sdk-logs": "^0.57.0",
+    "@slack/web-api": "^6.9.0",
     "@types/qs": "6.9.14",
     "@upstash/qstash": "^2.7.16",
     "@vercel/kv": "^2.0.0",
