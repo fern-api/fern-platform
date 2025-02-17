@@ -4,7 +4,7 @@
     @apply inline-flex items-center px-4 lg:px-3;
 
     .fern-sidebar-heading-content {
-      @apply m-0 text-base leading-6 font-semibold lg:text-sm lg:leading-5;
+      @apply m-0 text-base font-semibold leading-6 lg:text-sm lg:leading-5;
     }
   }
 
@@ -31,7 +31,7 @@
   }
 
   .fern-sidebar-link-indent {
-    @apply border-default relative w-4 flex-none shrink-0 border-l lg:w-3;
+    @apply border-border-default relative w-4 flex-none shrink-0 border-l lg:w-3;
   }
 
   .fern-sidebar-icon {
@@ -107,7 +107,7 @@
   }
 
   .fern-sidebar-tabs {
-    @apply mt-5 mb-6 flex list-none flex-col;
+    @apply mb-6 mt-5 flex list-none flex-col;
   }
 
   .fern-sidebar-searchbar-container {

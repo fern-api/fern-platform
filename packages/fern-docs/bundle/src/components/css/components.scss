@@ -1,10 +1,10 @@
 @layer components {
   .fern-search-bar {
     @apply cursor-pointer;
-    @apply text-muted border-default flex items-center rounded-lg border-none px-2.5 py-2 text-sm;
+    @apply text-muted border-border-default flex items-center rounded-lg border-none px-2.5 py-2 text-sm;
     @apply bg-tag-default;
     @apply hover:bg-tag-default-hover transition-[background,shadow];
-    @apply ring-default hover:ring-default ring-1 ring-inset;
+    @apply ring-border-default hover:ring-border-default ring-1 ring-inset;
     @apply max-sm:h-10 max-sm:text-base;
 
     .search-placeholder {

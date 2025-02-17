@@ -56,7 +56,7 @@ export const PlaygroundListForm = memo<PlaygroundListFormProps>(
     return (
       <>
         {valueAsList.length > 0 && (
-          <ul className="border-default divide-default w-full max-w-full list-none divide-y divide-dashed border-t border-dashed">
+          <ul className="border-default divide-border-default w-full max-w-full list-none divide-y divide-dashed border-t border-dashed">
             {valueAsList.map((item, idx) => (
               <PlaygroundListItemForm
                 key={idx}

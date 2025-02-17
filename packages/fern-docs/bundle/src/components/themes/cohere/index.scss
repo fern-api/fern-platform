@@ -14,7 +14,7 @@
   .fern-header,
   .fern-header-tabs,
   .fern-sidebar-container {
-    @apply border-default rounded-lg border;
+    @apply border-border-default rounded-lg border;
   }
 
   .fern-sidebar-container {
@@ -76,7 +76,7 @@
     }
 
     .fern-header-tab-button[data-state="inactive"] {
-      @apply text-body border-default;
+      @apply text-body border-border-default;
 
       &:hover {
         background-color: var(--bg-color-header-tab-inactive-hover);

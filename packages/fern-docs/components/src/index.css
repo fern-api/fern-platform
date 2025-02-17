@@ -363,23 +363,20 @@
   --spacing-content-height: calc(100vh - var(--spacing-header-height));
   --spacing-content-height-padded: calc(var(--spacing-content-height) - 1rem);
 
-  --shadow-header: 0px 4px 24px 0px rgba(var(--accent), 10%);
-  --shadow-card-light: 0 1px 2px rgba(17, 20, 24, 0.06);
-  --shadow-card-light-elevated: 0 1px 2px rgba(17, 20, 24, 0.2),
-    0 3px 6px rgba(17, 20, 24, 0.06);
-  --shadow-card-dark: 0 2px 4px rgba(221, 243, 255, 0.07);
-  --shadow-card-dark-elevated: 0 2px 4px rgba(221, 243, 255, 0.05),
-    0 2px 24px rgba(221, 243, 255, 0.05);
+  --shadow-header: 0px 4px 24px 0px var(--color-accent-a3);
+
+  --shadow-card-light: 0 1px 2px var(--grayscale-a6);
+  --shadow-card-light-elevated: 0 1px 2px var(--grayscale-a6),
+    0 3px 6px var(--grayscale-a6);
+  --shadow-card-dark: 0 2px 4px var(--grayscale-a6);
+  --shadow-card-dark-elevated: 0 2px 4px var(--grayscale-a6),
+    0 2px 24px var(--grayscale-a6);
 }
 
 @support (height: 100dvh) {
   @theme inline {
     --spacing-content-height: calc(100dvh - var(--spacing-header-height));
   }
-}
-
-@utility text-muted {
-  color: var(--grayscale-a11);
 }
 
 @layer utilities {

@@ -186,7 +186,7 @@ export const PlaygroundFileUploadForm = memo<PlaygroundFileUploadFormProps>(
               </div>
             </div>
           ) : (
-            <div className="divide-default divide-y">
+            <div className="divide-border-default divide-y">
               {value.map((file) => (
                 <div key={file.name} className="flex justify-between px-4 py-2">
                   <div className="flex min-w-0 shrink items-center gap-2">

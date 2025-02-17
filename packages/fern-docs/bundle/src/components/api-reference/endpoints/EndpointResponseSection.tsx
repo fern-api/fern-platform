@@ -30,7 +30,7 @@ export function EndpointResponseSection({
       <MdxServerComponentProseSuspense
         serialize={serialize}
         size="sm"
-        className="!t-muted border-default border-b pb-5 leading-6"
+        className="!t-muted border-border-default border-b pb-5 leading-6"
         mdx={response.description}
         fallback={<ResponseSummaryFallback response={response} types={types} />}
       />

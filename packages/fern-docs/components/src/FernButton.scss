@@ -265,8 +265,8 @@
       }
 
       &.outlined {
-        @apply ring-1 transition-[box-shadow,background] ring-inset hover:transition-none;
-        @apply text-body ring-default;
+        @apply ring-1 ring-inset transition-[box-shadow,background] hover:transition-none;
+        @apply text-body ring-border-default;
 
         &:hover,
         &[data-state="on"],

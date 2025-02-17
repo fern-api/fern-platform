@@ -12,7 +12,7 @@
   }
 
   .fern-radio-item {
-    @apply ring-default relative mt-0.5 inline-block size-4 rounded-full ring-1 ring-inset;
+    @apply ring-border-default relative mt-0.5 inline-block size-4 rounded-full ring-1 ring-inset;
   }
 
   .fern-radio-item:hover {

@@ -95,28 +95,6 @@ export default {
     // https://github.com/tailwindlabs/tailwindcss-intellisense/issues/227#issuecomment-1269592872
     plugin(({ addComponents }) => {
       addComponents({
-        // Border
-        ".border-primary": {
-          "@apply border-border-primary": {},
-        },
-        ".border-default": {
-          "@apply border-border-default": {},
-        },
-        ".border-success": {
-          "@apply border-border-success": {},
-        },
-        ".border-warning": {
-          "@apply border-border-warning": {},
-        },
-        ".border-danger": {
-          "@apply border-border-danger": {},
-        },
-        ".divide-default": {
-          "@apply divide-border-default": {},
-        },
-        ".ring-default": {
-          "@apply ring-border-default": {},
-        },
         ".animate-popover": {
           "@apply data-[side=top]:animate-slide-down-and-fade data-[side=right]:animate-slide-left-and-fade data-[side=bottom]:animate-slide-up-and-fade data-[side=left]:animate-slide-right-and-fade":
             {},
@@ -171,16 +149,6 @@ export default {
         },
         ".callout-outlined-ghost-danger": {
           "@apply ring-1 ring-inset ring-border-danger-soft": {},
-        },
-        ".shadow-default": {
-          "@apply shadow-border-default": {},
-        },
-        ".shadow-card": {
-          "@apply shadow-card-light": {},
-        },
-        ".shadow-card-elevated": {
-          "@apply shadow-card-light-elevated dark:shadow-card-dark-elevated":
-            {},
         },
       });
     }),

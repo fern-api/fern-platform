@@ -74,7 +74,7 @@ export const ErrorExampleSelect: FC<
         </FernButton>
       </Select.Trigger>
       <Select.Portal>
-        <Select.Content className="bg-card-background ring-default z-50 overflow-hidden rounded-md ring-1 shadow-2xl backdrop-blur ring-inset">
+        <Select.Content className="bg-card-background ring-border-default z-50 overflow-hidden rounded-md shadow-2xl ring-1 ring-inset backdrop-blur">
           <Select.ScrollUpButton className="text-accent bg-card-background flex h-8 cursor-default items-center justify-center">
             <NavArrowUp className="size-icon" />
           </Select.ScrollUpButton>
@@ -121,7 +121,7 @@ export const FernSelectItem = forwardRef<
   return (
     <Select.Item
       className={cn(
-        "text-body data-[disabled]:text-disabled relative flex h-8 items-center rounded-[3px] pr-4 pl-2 text-sm leading-none select-none data-[disabled]:pointer-events-none data-[highlighted]:outline-none",
+        "text-body data-[disabled]:text-disabled relative flex h-8 select-none items-center rounded-[3px] pl-2 pr-4 text-sm leading-none data-[disabled]:pointer-events-none data-[highlighted]:outline-none",
         {
           "data-[highlighted]:bg-tag-default":
             intent === "none" || intent === "primary",

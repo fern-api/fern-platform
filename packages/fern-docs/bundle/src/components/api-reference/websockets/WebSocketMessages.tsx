@@ -30,7 +30,7 @@ export const WebSocketMessages: FC<WebSocketMessagesProps> = ({
   return (
     <Accordion.Root
       type="multiple"
-      className="divide-default relative z-0 table size-full table-fixed divide-y"
+      className="divide-border-default relative z-0 table size-full table-fixed divide-y"
     >
       {messages.length === 0 && (
         <div className="absolute inset-0 flex size-full items-center justify-center">

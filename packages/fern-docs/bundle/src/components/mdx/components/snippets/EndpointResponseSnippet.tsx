@@ -4,7 +4,7 @@ import { EndpointDefinition } from "@fern-api/fdr-sdk/api-definition";
 import { useExampleSelection } from "../../../api-reference/endpoints/useExampleSelection";
 import { CodeSnippetExample } from "../../../api-reference/examples/CodeSnippetExample";
 
-export function EndpointRequestSnippet({
+export function EndpointResponseSnippet({
   example,
   endpointDefinition,
 }: {
@@ -26,14 +26,14 @@ export function EndpointRequestSnippet({
   }
 
   return (
-    <EndpointRequestSnippetInternal
+    <EndpointResponseSnippetInternal
       endpoint={endpointDefinition}
       example={example}
     />
   );
 }
 
-function EndpointRequestSnippetInternal({
+function EndpointResponseSnippetInternal({
   endpoint,
   example,
 }: {

@@ -4,7 +4,7 @@
   }
 
   .fern-checkbox-item {
-    @apply ring-default relative mt-0.5 inline-block size-4 rounded-sm ring-1 ring-inset;
+    @apply ring-border-default relative mt-0.5 inline-block size-4 rounded-sm ring-1 ring-inset;
   }
 
   .fern-checkbox-item:hover {

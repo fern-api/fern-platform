@@ -23,7 +23,7 @@ export function WebhookPayloadSection({
 }) {
   return (
     <div className="flex flex-col">
-      <div className="t-muted border-default border-b pb-5 text-sm leading-6">
+      <div className="t-muted border-border-default border-b pb-5 text-sm leading-6">
         {`The payload of this webhook request is ${renderTypeShorthand(payload.shape, { withArticle: true }, types)}.`}
       </div>
       <TypeReferenceDefinitions

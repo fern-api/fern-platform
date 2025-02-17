@@ -17,7 +17,7 @@
 
   .fern-header,
   .fern-header-tabs {
-    @apply bg-header-background border-default relative border-b;
+    @apply bg-header-background border-border-default relative border-b;
   }
 
   .fern-header-content {
@@ -60,7 +60,7 @@
   }
 
   .fern-sidebar-container {
-    @apply bg-sidebar-background border-default top-header-height mt-header-height max-h-content-height w-sidebar-width sticky hidden lg:block;
+    @apply bg-sidebar-background border-border-default top-header-height mt-header-height max-h-content-height w-sidebar-width sticky hidden lg:block;
     @apply flex flex-col;
 
     &.fern-sidebar-fixed {
@@ -79,7 +79,7 @@
   .fern-sidebar-container.dismissable {
     @apply top-header-height fixed bottom-0 left-0 mt-0;
     @apply bg-background-translucent backdrop-blur-lg;
-    @apply sm:border-default sm:border-r;
+    @apply sm:border-border-default sm:border-r;
     @apply max-sm:inset-x-0 max-sm:w-full;
     @apply h-content-height;
   }

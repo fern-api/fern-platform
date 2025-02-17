@@ -79,13 +79,13 @@ export const WebsocketMessageAccordionItem: FC<
       </Accordion.Content>
       <div
         className={cn(
-          "pointer-events-none absolute inset-0 z-auto mx-px rounded-[inherit] ring-transparent ring-inset group-focus-within:ring-1",
+          "pointer-events-none absolute inset-0 z-auto mx-px rounded-[inherit] ring-inset ring-transparent group-focus-within:ring-1",
           {
             "group-focus-within:ring-border-success":
               message.origin === APIV1Read.WebSocketMessageOrigin.Client,
             "group-focus-within:ring-border-primary":
               message.origin === APIV1Read.WebSocketMessageOrigin.Server,
-            "group-focus-within:ring-default": message.origin == null,
+            "group-focus-within:ring-border-default": message.origin == null,
             "mb-px rounded-b-xl": index === messagesLength,
           }
         )}

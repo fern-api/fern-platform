@@ -3,17 +3,17 @@
     @apply text-body bg-card-background border-card-border hover:text-body border transition-all hover:transition-none;
 
     &.interactive {
-      @apply shadow-card cursor-pointer;
-      @apply hover:shadow-card-elevated hover:border-accent;
-      @apply active:border-primary active:shadow-card-elevated;
+      @apply shadow-card-light cursor-pointer;
+      @apply hover:shadow-card-elevated-light dark:hover:shadow-card-elevated-dark hover:border-accent;
+      @apply active:border-border-primary active:shadow-card-elevated-light dark:active:shadow-card-elevated-dark;
 
       &.active {
-        @apply border-primary shadow-card-elevated;
+        @apply border-border-primary shadow-card-elevated-light dark:shadow-card-elevated-dark;
       }
     }
 
     &.elevated {
-      @apply border-primary shadow-card-elevated;
+      @apply border-border-primary shadow-card-elevated-light dark:shadow-card-elevated-dark;
     }
 
     ul:not(.list-none) {

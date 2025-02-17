@@ -8,7 +8,7 @@ export function FernSwitch(props: Switch.SwitchProps): ReactElement {
     <Switch.Root
       {...props}
       className={cn(
-        "ring-default bg-tag-default data-[state=checked]:bg-accent relative h-[25px] w-[42px] cursor-default rounded-full ring-1 ring-inset",
+        "ring-border-default bg-tag-default data-[state=checked]:bg-accent relative h-[25px] w-[42px] cursor-default rounded-full ring-1 ring-inset",
         props.className
       )}
       style={{

@@ -1,6 +1,6 @@
 @layer components {
   .fern-accordion {
-    @apply divide-default divide-y rounded-lg;
+    @apply divide-border-default divide-y rounded-lg;
 
     li {
       @apply list-outside;

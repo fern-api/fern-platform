@@ -33,7 +33,7 @@ export const Toaster: React.FC<ToasterProps> = ({
         unstyled: true,
         classNames: {
           toast:
-            "rounded-lg border border-default bg-background w-full flex items-start p-2 pl-3 shadow-xl",
+            "rounded-lg border border-border-default bg-background w-full flex items-start p-2 pl-3 shadow-xl",
           title: "text-body-text text-sm font-medium",
           description: "text-muted text-sm",
           icon: "flex items-center justify-center mt-[2px]",
