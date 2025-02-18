@@ -11,7 +11,10 @@ import {
 } from "@fern-docs/components";
 
 import { CodeExample } from "../examples/code-example";
-import { ExamplesByStatusCode, StatusCode } from "../types/EndpointContent";
+import {
+  ExamplesByStatusCode,
+  StatusCode,
+} from "../type-definitions/EndpointContent";
 
 export declare namespace ErrorExampleSelect {
   export interface Props {

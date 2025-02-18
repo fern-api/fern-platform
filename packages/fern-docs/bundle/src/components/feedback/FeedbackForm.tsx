@@ -129,7 +129,7 @@ export const FeedbackForm: FC<FeedbackFormProps> = ({
         htmlFor="feedbackReason"
         className={cn({
           "text-lg font-semibold": layoutDensity === "verbose",
-          "t-muted text-sm font-medium": layoutDensity === "condensed",
+          "text-muted text-sm font-medium": layoutDensity === "condensed",
         })}
       >
         {legend}

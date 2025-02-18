@@ -6,7 +6,7 @@ import { addLeadingSlash } from "@fern-docs/utils";
 
 import { FernAnchor } from "@/components/components/FernAnchor";
 
-import { useTypeDefinitionContext } from "../context/TypeDefinitionContext";
+import { useTypeDefinitionContext } from "./TypeDefinitionContext";
 
 export function PropertyKey({
   slug,

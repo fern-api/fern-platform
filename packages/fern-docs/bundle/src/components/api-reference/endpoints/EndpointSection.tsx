@@ -1,50 +1,35 @@
-"use client";
+import "server-only";
 
-import { ReactNode, createElement, useRef } from "react";
+import React from "react";
 
-import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
-import { addLeadingSlash } from "@fern-docs/utils";
+import { Separator } from "@radix-ui/react-separator";
 
 import { ErrorBoundary } from "@/components/error-boundary";
-import { Markdown } from "@/components/mdx/Markdown";
 
-import { FernAnchor } from "../../components/FernAnchor";
-import { getAnchorId } from "../../util/anchor";
+import { SectionContainer, TypeDefinitionAnchor } from "./TypeDefinitionAnchor";
 
-export declare namespace EndpointSection {
-  export type Props = React.PropsWithChildren<{
-    headerType?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
-    title: ReactNode;
-    description?: string | undefined;
-    anchorIdParts: readonly string[];
-    slug: FernNavigation.Slug;
-  }>;
-}
-
-export const EndpointSection: React.FC<EndpointSection.Props> = ({
-  headerType = "h3",
+export function EndpointSection({
   title,
   description,
-  anchorIdParts,
-  slug,
   children,
-}) => {
-  const ref = useRef<HTMLDivElement>(null);
-  const anchorId = getAnchorId(anchorIdParts);
-  const href = `${addLeadingSlash(slug)}#${anchorId}`;
+}: {
+  title: React.ReactNode;
+  description?: React.ReactNode;
+  children: React.ReactNode;
+}) {
   return (
     <ErrorBoundary>
-      <div ref={ref} id={href}>
-        <FernAnchor href={href}>
-          {createElement(
-            headerType,
-            { className: "relative mt-0 flex items-center mb-3" },
-            title
-          )}
-        </FernAnchor>
-        <Markdown className="mb-2 text-base" mdx={description} />
+      <SectionContainer className="space-y-3">
+        <TypeDefinitionAnchor>
+          <h3 className="mt-0">{title}</h3>
+        </TypeDefinitionAnchor>
+        {description}
+        <Separator
+          orientation="horizontal"
+          className="bg-border-default my-3 h-px"
+        />
         {children}
-      </div>
+      </SectionContainer>
     </ErrorBoundary>
   );
-};
+}

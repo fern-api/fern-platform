@@ -27,7 +27,7 @@ export const Frame: FC<PropsWithChildren<Frame.Props>> = ({
         {children}
       </div>
       {caption && (
-        <figcaption className="t-muted relative mt-3 flex justify-center px-8 pb-2 pt-0 text-sm">
+        <figcaption className="text-muted relative mt-3 flex justify-center px-8 pb-2 pt-0 text-sm">
           {caption}
         </figcaption>
       )}

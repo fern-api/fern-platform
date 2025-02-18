@@ -47,7 +47,9 @@ export function PlaygroundBasicAuthForm({
             onValueChange={setUsername}
             value={username}
             leftIcon={<User className="size-icon" />}
-            rightElement={<span className="t-muted text-xs">{"string"}</span>}
+            rightElement={
+              <span className="text-muted text-xs">{"string"}</span>
+            }
             disabled={disabled}
             resettable={isUsernameResettable}
             onClickReset={() => setUsername(RESET)}

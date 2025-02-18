@@ -6,16 +6,10 @@ import React from "react";
 import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
-import { AvailabilityBadge } from "@fern-docs/components/badges";
-import { addLeadingSlash } from "@fern-docs/utils";
 
-import { MdxServerComponentProseSuspense } from "@/components/mdx/server-component";
-import { getAnchorId } from "@/components/util/anchor";
 import { MdxSerializer } from "@/server/mdx-serializer";
 
-import { PropertyWrapper } from "../object/PropertyWrapper";
-import { TypeShorthand } from "../object/TypeShorthand";
-import { TypeReferenceDefinitions } from "../type-reference/TypeReferenceDefinitions";
+import { PropertyWithShape } from "./ObjectProperty";
 
 type IconInfo = {
   content: string;
@@ -69,7 +63,7 @@ function getIconForTypeReference(
   const { content, size } = info;
   return (
     <div
-      className="border-default flex size-6 items-center justify-center rounded border"
+      className="border-default flex size-6 items-center justify-center self-center rounded border"
       style={{ fontSize: size }}
     >
       {content}
@@ -90,54 +84,22 @@ export declare namespace UndiscriminatedUnionVariant {
 export function UndiscriminatedUnionVariant({
   serialize,
   unionVariant,
-  anchorIdParts,
-  slug,
   types,
 }: {
   serialize: MdxSerializer;
   unionVariant: ApiDefinition.UndiscriminatedUnionVariant;
-  anchorIdParts: readonly string[];
-  slug: FernNavigation.Slug;
   idx: number;
   types: Record<ApiDefinition.TypeId, ApiDefinition.TypeDefinition>;
 }) {
-  const href = `${addLeadingSlash(slug)}#${getAnchorId(anchorIdParts)}`;
-
   return (
-    <PropertyWrapper id={href} className="flex flex-col py-3">
-      <div className="flex flex-col gap-2">
-        <div className="t-muted flex items-center gap-2">
-          {getIconForTypeReference(unionVariant.shape, types)}
-          {unionVariant.displayName == null ? null : (
-            <span className="text-body font-mono text-sm">
-              {unionVariant.displayName}
-            </span>
-          )}
-          <span className="t-muted inline-flex items-baseline gap-2 text-xs">
-            <TypeShorthand shape={unionVariant.shape} />
-          </span>
-          {unionVariant.availability != null && (
-            <AvailabilityBadge
-              availability={unionVariant.availability}
-              size="sm"
-              rounded
-            />
-          )}
-        </div>
-        <MdxServerComponentProseSuspense
-          serialize={serialize}
-          mdx={unionVariant.description}
-          size="sm"
-        />
-        <TypeReferenceDefinitions
-          serialize={serialize}
-          shape={unionVariant.shape}
-          anchorIdParts={anchorIdParts}
-          isCollapsible
-          slug={slug}
-          types={types}
-        />
-      </div>
-    </PropertyWrapper>
+    <PropertyWithShape
+      serialize={serialize}
+      icon={getIconForTypeReference(unionVariant.shape, types)}
+      name={unionVariant.displayName}
+      availability={unionVariant.availability}
+      description={unionVariant.description}
+      shape={unionVariant.shape}
+      types={types}
+    />
   );
 }

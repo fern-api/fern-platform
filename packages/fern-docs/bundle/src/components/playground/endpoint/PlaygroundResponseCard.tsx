@@ -38,7 +38,7 @@ export function PlaygroundResponseCard({
   return (
     <FernCard className="flex min-w-0 flex-1 shrink flex-col overflow-hidden rounded-xl shadow-sm">
       <div className="border-default flex h-10 w-full shrink-0 items-center justify-between border-b px-3 py-2">
-        <span className="t-muted text-xs uppercase">Response</span>
+        <span className="text-muted text-xs uppercase">Response</span>
 
         {response.type === "loaded" && (
           <div className="flex items-center gap-2 text-xs">
@@ -46,10 +46,10 @@ export function PlaygroundResponseCard({
               className={clsx(
                 "flex h-5 items-center rounded-md px-1.5 py-1 font-mono",
                 {
-                  ["bg-method-get/10 dark:bg-method-get-dark/10 dark:text-method-get-dark text-method-get"]:
+                  ["bg-(--accent-a3) text-(--accent-a11)"]:
                     response.value.response.status >= 200 &&
                     response.value.response.status < 300,
-                  ["bg-method-delete/10 dark:bg-method-delete-dark/10 dark:text-method-delete-dark text-method-delete"]:
+                  ["bg-(--red-a3) text-(--red-a11)"]:
                     response.value.response.status > 300,
                 }
               )}

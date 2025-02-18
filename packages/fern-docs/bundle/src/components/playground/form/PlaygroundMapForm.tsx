@@ -174,14 +174,14 @@ function PlaygroundMapItemForm({
     <li key={idx} className="flex min-h-12 flex-row items-start gap-1 py-2">
       {/* <div className="flex min-w-0 shrink items-center justify-between gap-2">
                 <label className="inline-flex flex-wrap items-baseline">
-                    <span className="t-muted bg-tag-default min-w-6 rounded-xl p-1 text-center text-xs font-semibold uppercase">
+                    <span className="text-muted bg-tag-default min-w-6 rounded-xl p-1 text-center text-xs font-semibold uppercase">
                         {idx + 1}
                     </span>
                 </label>
             </div> */}
 
       <div className="min-w-0 flex-1 shrink">
-        <span className="t-muted text-xs">{"key"}</span>
+        <span className="text-muted text-xs">{"key"}</span>
         <PlaygroundTypeReferenceForm
           id={`${id}[${idx}].key`}
           shape={keyShape}
@@ -191,7 +191,7 @@ function PlaygroundMapItemForm({
         />
       </div>
       <div className="min-w-0 flex-1 shrink">
-        <span className="t-muted text-xs">{"value"}</span>
+        <span className="text-muted text-xs">{"value"}</span>
         <PlaygroundTypeReferenceForm
           id={`${id}[${idx}].value`}
           shape={valueShape}

@@ -51,16 +51,20 @@ export function MdxServerComponentProse({
 }: {
   serialize: MdxSerializer;
   mdx: string | null | undefined;
-  size?: "xs" | "sm" | "lg";
+  size?: "xs" | "sm" | "base" | "lg";
   className?: string;
   fallback?: React.ReactNode;
 }) {
-  if (mdx == null) {
-    return fallback;
+  if (!mdx) {
+    return (
+      <Prose size={size} className={className}>
+        {fallback}
+      </Prose>
+    );
   }
 
   return (
-    <Prose size={size} pre={!mdx} className={className}>
+    <Prose size={size} className={className}>
       <MdxServerComponent mdx={mdx} serialize={serialize} />
     </Prose>
   );
@@ -75,13 +79,25 @@ export function MdxServerComponentProseSuspense({
 }: {
   serialize: MdxSerializer;
   mdx: string | null | undefined;
-  size?: "xs" | "sm" | "lg";
+  size?: "xs" | "sm" | "base" | "lg";
   className?: string;
   fallback?: React.ReactNode;
 }) {
   return (
-    <ErrorBoundary fallback={mdx ?? fallback}>
-      <React.Suspense fallback={fallback}>
+    <ErrorBoundary
+      fallback={
+        <Prose size={size} pre={mdx != null} className={className}>
+          {mdx ?? fallback}
+        </Prose>
+      }
+    >
+      <React.Suspense
+        fallback={
+          <Prose size={size} className={className}>
+            {fallback}
+          </Prose>
+        }
+      >
         <MdxServerComponentProse
           serialize={serialize}
           mdx={mdx}

@@ -139,7 +139,7 @@ export function PlaygroundCardTriggerApiKeyInjected({
     <FernCard className="mb-2 rounded-xl p-4 shadow-sm">
       {error && <Callout intent="error">{errorDescription ?? error}</Callout>}
 
-      <h5 className="t-muted m-0">Login to send a real request</h5>
+      <h5 className="text-muted m-0">Login to send a real request</h5>
       <div className="my-5 flex justify-center gap-2">
         <FernButton
           size="normal"

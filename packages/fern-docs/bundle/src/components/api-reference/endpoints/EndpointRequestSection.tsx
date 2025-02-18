@@ -1,138 +1,123 @@
 import "server-only";
 
-import { Fragment, ReactNode } from "react";
+import { ReactNode } from "react";
+
+import { compact } from "es-toolkit/array";
 
 import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
-import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
-import { cn } from "@fern-docs/components";
 
 import { MdxSerializer } from "@/server/mdx-serializer";
 
-import { Markdown } from "../../mdx/Markdown";
 import { renderTypeShorthand } from "../../type-shorthand";
-import { TypeComponentSeparator } from "../types/TypeComponentSeparator";
-import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";
 import {
-  EndpointParameter,
-  EndpointParameterContent,
-} from "./EndpointParameter";
+  PropertyRenderer,
+  PropertyWithShape,
+} from "../type-definitions/ObjectProperty";
+import { TypeDefinitionAnchorPart } from "../type-definitions/TypeDefinitionContext";
+import { WithSeparator } from "../type-definitions/TypeDefinitionDetails";
+import { TypeReferenceDefinitions } from "../type-definitions/TypeReferenceDefinitions";
 
 export function EndpointRequestSection({
   serialize,
   request,
-  anchorIdParts,
-  slug,
   types,
 }: {
   serialize: MdxSerializer;
   request: ApiDefinition.HttpRequest;
-  anchorIdParts: readonly string[];
-  slug: FernNavigation.Slug;
   types: Record<ApiDefinition.TypeId, ApiDefinition.TypeDefinition>;
 }) {
-  return (
-    <div className="flex flex-col">
-      <Markdown
-        size="sm"
-        className={cn("t-muted pb-5 leading-6", {
-          "border-default border-b": request.body.type !== "formData",
-        })}
-        mdx={request.description}
-        fallback={`This endpoint expects ${visitDiscriminatedUnion(
-          request.body
-        )._visit<string>({
-          formData: (formData) => {
-            const fileArrays = formData.fields.filter(
-              (p): p is ApiDefinition.FormDataField.Files => p.type === "files"
-            );
-            const files = formData.fields.filter(
-              (p): p is ApiDefinition.FormDataField.File_ => p.type === "file"
-            );
-            return `a multipart form${fileArrays.length > 0 || files.length > 1 ? " with multiple files" : files[0] != null ? ` containing ${files[0].isOptional ? "an optional" : "a"} file` : ""}`;
-          },
-          bytes: (bytes) =>
-            `binary data${bytes.contentType != null ? ` of type ${bytes.contentType}` : ""}`,
-          object: (obj) =>
-            renderTypeShorthand(obj, { withArticle: true }, types),
-          alias: (alias) =>
-            renderTypeShorthand(alias, { withArticle: true }, types),
-        })}.`}
+  return visitDiscriminatedUnion(request.body)._visit({
+    formData: (formData) => (
+      <WithSeparator>
+        {formData.fields.map((p) =>
+          visitDiscriminatedUnion(p, "type")._visit({
+            file: (file) => (
+              <TypeDefinitionAnchorPart part={file.key} key={file.key}>
+                <PropertyRenderer
+                  serialize={serialize}
+                  name={file.key}
+                  description={file.description}
+                  typeShorthand={renderTypeShorthandFormDataField(file)}
+                  availability={file.availability}
+                />
+              </TypeDefinitionAnchorPart>
+            ),
+            files: (files) => (
+              <TypeDefinitionAnchorPart part={files.key} key={files.key}>
+                <PropertyRenderer
+                  serialize={serialize}
+                  name={files.key}
+                  description={files.description}
+                  typeShorthand={renderTypeShorthandFormDataField(files)}
+                  availability={files.availability}
+                />
+              </TypeDefinitionAnchorPart>
+            ),
+            property: (property) => (
+              <TypeDefinitionAnchorPart part={property.key} key={property.key}>
+                <PropertyWithShape
+                  serialize={serialize}
+                  name={property.key}
+                  description={
+                    compact([
+                      property.description,
+                      ...ApiDefinition.unwrapReference(
+                        property.valueShape,
+                        types
+                      ).descriptions,
+                    ])[0]
+                  }
+                  shape={property.valueShape}
+                  availability={property.availability}
+                  types={types}
+                />
+              </TypeDefinitionAnchorPart>
+            ),
+            _other: () => null,
+          })
+        )}
+      </WithSeparator>
+    ),
+    bytes: () => null,
+    object: (obj) => (
+      <TypeReferenceDefinitions
+        serialize={serialize}
+        shape={obj}
+        types={types}
       />
-      {visitDiscriminatedUnion(request.body)._visit<ReactNode | null>({
-        formData: (formData) =>
-          formData.fields.map((p) => (
-            <Fragment key={p.key}>
-              <TypeComponentSeparator />
-              {visitDiscriminatedUnion(p, "type")._visit<ReactNode | null>({
-                file: (file) => (
-                  <EndpointParameterContent
-                    serialize={serialize}
-                    name={file.key}
-                    description={file.description}
-                    typeShorthand={renderTypeShorthandFormDataField(file)}
-                    anchorIdParts={[...anchorIdParts, file.key]}
-                    slug={slug}
-                    availability={file.availability}
-                    additionalDescriptions={undefined}
-                  />
-                ),
-                files: (files) => (
-                  <EndpointParameterContent
-                    serialize={serialize}
-                    name={files.key}
-                    description={files.description}
-                    typeShorthand={renderTypeShorthandFormDataField(files)}
-                    anchorIdParts={[...anchorIdParts, files.key]}
-                    slug={slug}
-                    availability={files.availability}
-                    additionalDescriptions={undefined}
-                  />
-                ),
-                property: (property) => (
-                  <EndpointParameter
-                    serialize={serialize}
-                    name={property.key}
-                    description={property.description}
-                    additionalDescriptions={
-                      ApiDefinition.unwrapReference(property.valueShape, types)
-                        .descriptions
-                    }
-                    shape={property.valueShape}
-                    anchorIdParts={[...anchorIdParts, property.key]}
-                    slug={slug}
-                    availability={property.availability}
-                    types={types}
-                  />
-                ),
-                _other: () => null,
-              })}
-            </Fragment>
-          )),
-        bytes: () => null,
-        object: (obj) => (
-          <TypeReferenceDefinitions
-            serialize={serialize}
-            shape={obj}
-            isCollapsible={false}
-            anchorIdParts={anchorIdParts}
-            slug={slug}
-            types={types}
-          />
-        ),
-        alias: (alias) => (
-          <TypeReferenceDefinitions
-            serialize={serialize}
-            shape={alias}
-            isCollapsible={false}
-            anchorIdParts={anchorIdParts}
-            slug={slug}
-            types={types}
-          />
-        ),
-      })}
-    </div>
-  );
+    ),
+    alias: (obj) => (
+      <TypeReferenceDefinitions
+        serialize={serialize}
+        shape={obj}
+        types={types}
+      />
+    ),
+  });
+}
+
+export function createEndpointRequestDescriptionFallback(
+  request: ApiDefinition.HttpRequest,
+  types: Record<ApiDefinition.TypeId, ApiDefinition.TypeDefinition>
+) {
+  return `This endpoint expects ${visitDiscriminatedUnion(
+    request.body
+  )._visit<string>({
+    formData: (formData) => {
+      const fileArrays = formData.fields.filter(
+        (p): p is ApiDefinition.FormDataField.Files => p.type === "files"
+      );
+      const files = formData.fields.filter(
+        (p): p is ApiDefinition.FormDataField.File_ => p.type === "file"
+      );
+      return `a multipart form${fileArrays.length > 0 || files.length > 1 ? " with multiple files" : files[0] != null ? ` containing ${files[0].isOptional ? "an optional" : "a"} file` : ""}`;
+    },
+    bytes: (bytes) =>
+      `binary data${bytes.contentType != null ? ` of type ${bytes.contentType}` : ""}`,
+    object: (obj) => renderTypeShorthand(obj, { withArticle: true }, types),
+    alias: (alias) => renderTypeShorthand(alias, { withArticle: true }, types),
+  })}.`;
 }
 
 function renderTypeShorthandFormDataField(

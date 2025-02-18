@@ -13,11 +13,11 @@ import { ReferenceLayout } from "@/components/layouts/ReferenceLayout";
 import { MdxServerComponentProseSuspense } from "@/components/mdx/server-component";
 import { MdxSerializer } from "@/server/mdx-serializer";
 
+import { TypeReferenceDefinitions } from "../type-definitions/TypeReferenceDefinitions";
 import {
   SetTypeDefinitionSlots,
   TypeDefinitionRoot,
-} from "../types/context/TypeDefinitionContext";
-import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";
+} from "../type-definitions/context/TypeDefinitionContext";
 import { EndpointContentCodeSnippets } from "./EndpointContentCodeSnippets";
 import { EndpointContentLeft } from "./EndpointContentLeft";
 import { EndpointContextProvider } from "./EndpointContext";
@@ -72,9 +72,9 @@ export async function EndpointContent({
           />
         }
         reference={
-          <TypeDefinitionRoot types={types}>
+          <TypeDefinitionRoot types={types} slug={node.slug}>
             <SetTypeDefinitionSlots
-              slots={createTypeDefinitionSlots(types, serialize, node.slug)}
+              slots={createTypeDefinitionSlots(types, serialize)}
             >
               <EndpointContentLeft
                 serialize={serialize}
@@ -98,8 +98,7 @@ export async function EndpointContent({
 
 function createTypeDefinitionSlots(
   types: Record<string, TypeDefinition>,
-  serialize: MdxSerializer,
-  slug: FernNavigation.Slug
+  serialize: MdxSerializer
 ) {
   return Object.fromEntries(
     Object.entries(types).map(([id, type]) => [
@@ -108,9 +107,6 @@ function createTypeDefinitionSlots(
         key={id}
         serialize={serialize}
         shape={type.shape}
-        isCollapsible={true}
-        anchorIdParts={[]}
-        slug={slug}
         types={types}
       />,
     ])

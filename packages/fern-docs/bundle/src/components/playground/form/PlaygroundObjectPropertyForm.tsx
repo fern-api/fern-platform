@@ -263,7 +263,7 @@ export const PlaygroundObjectPropertiesForm =
               text={
                 <span>
                   {`${hiddenProperties.length} ${shownProperties.length > 0 ? "more " : ""}optional propert${hiddenProperties.length > 1 ? "ies" : "y"}`}
-                  <span className="t-muted ml-2 font-mono text-xs opacity-50">
+                  <span className="text-muted ml-2 font-mono text-xs opacity-50">
                     {hiddenProperties
                       .map((property) => property.key)
                       .join(", ")}

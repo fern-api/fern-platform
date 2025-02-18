@@ -14,12 +14,13 @@ import { MdxSerializer } from "@/server/mdx-serializer";
 import { Markdown } from "../../mdx/Markdown";
 import { PlaygroundButton } from "../../playground/PlaygroundButton";
 import { ApiPageCenter } from "../api-page-center";
-import { EndpointParameter } from "../endpoints/EndpointParameter";
 import { EndpointSection } from "../endpoints/EndpointSection";
 import { EndpointUrlWithPlaygroundBaseUrl } from "../endpoints/EndpointUrlWithPlaygroundBaseUrl";
 import { TitledExample } from "../examples/TitledExample";
-import { TypeComponentSeparator } from "../types/TypeComponentSeparator";
-import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";
+import { ObjectProperty } from "../type-definitions/ObjectProperty";
+import { TypeDefinitionAnchorPart } from "../type-definitions/TypeDefinitionContext";
+import { WithSeparator } from "../type-definitions/TypeDefinitionDetails";
+import { TypeReferenceDefinitions } from "../type-definitions/TypeReferenceDefinitions";
 import { CardedSection } from "./CardedSection";
 import { CopyWithBaseUrl } from "./CopyWithBaseUrl";
 import { HandshakeExample } from "./HandshakeExample";
@@ -127,7 +128,7 @@ export async function WebSocketContent({
                 <span className="inline-flex items-center gap-2">
                   {"Handshake"}
                   <span className="bg-tag-default inline-block rounded-full p-1">
-                    <Wifi className="t-muted size-icon" strokeWidth={1.5} />
+                    <Wifi className="text-muted size-icon" strokeWidth={1.5} />
                   </span>
                 </span>
               }
@@ -139,155 +140,101 @@ export async function WebSocketContent({
                 </div>
               }
             >
-              {headers && headers.length > 0 && (
-                <EndpointSection
-                  title="Headers"
-                  anchorIdParts={["request", "headers"]}
-                  slug={node.slug}
-                >
-                  <div className="flex flex-col">
-                    {headers.map((parameter) => (
-                      <div className="flex flex-col" key={parameter.key}>
-                        <TypeComponentSeparator />
-                        <EndpointParameter
-                          serialize={serialize}
-                          name={parameter.key}
-                          shape={parameter.valueShape}
-                          anchorIdParts={["request", "headers", parameter.key]}
-                          slug={node.slug}
-                          description={parameter.description}
-                          additionalDescriptions={
-                            ApiDefinition.unwrapReference(
-                              parameter.valueShape,
-                              types
-                            ).descriptions
-                          }
-                          availability={parameter.availability}
-                          types={types}
-                        />
-                      </div>
-                    ))}
-                  </div>
-                </EndpointSection>
-              )}
-              {channel.pathParameters && channel.pathParameters.length > 0 && (
-                <EndpointSection
-                  title="Path parameters"
-                  anchorIdParts={["request", "path"]}
-                  slug={node.slug}
-                >
-                  <div className="flex flex-col">
-                    {channel.pathParameters.map((parameter) => (
-                      <div className="flex flex-col" key={parameter.key}>
-                        <TypeComponentSeparator />
-                        <EndpointParameter
-                          serialize={serialize}
-                          name={parameter.key}
-                          shape={parameter.valueShape}
-                          anchorIdParts={["request", "path", parameter.key]}
-                          slug={node.slug}
-                          description={parameter.description}
-                          additionalDescriptions={
-                            ApiDefinition.unwrapReference(
-                              parameter.valueShape,
-                              types
-                            ).descriptions
-                          }
-                          availability={parameter.availability}
-                          types={types}
-                        />
-                      </div>
-                    ))}
-                  </div>
-                </EndpointSection>
-              )}
-              {channel.queryParameters &&
-                channel.queryParameters.length > 0 && (
-                  <EndpointSection
-                    title="Query parameters"
-                    anchorIdParts={["request", "query"]}
-                    slug={node.slug}
-                  >
-                    <div className="flex flex-col">
-                      {channel.queryParameters.map((parameter) => {
-                        return (
-                          <div className="flex flex-col" key={parameter.key}>
-                            <TypeComponentSeparator />
-                            <EndpointParameter
+              <TypeDefinitionAnchorPart part="request">
+                {headers && headers.length > 0 && (
+                  <TypeDefinitionAnchorPart part="headers">
+                    <EndpointSection title="Headers">
+                      <WithSeparator>
+                        {headers.map((parameter) => (
+                          <ObjectProperty
+                            serialize={serialize}
+                            key={parameter.key}
+                            property={parameter}
+                            types={types}
+                          />
+                        ))}
+                      </WithSeparator>
+                    </EndpointSection>
+                  </TypeDefinitionAnchorPart>
+                )}
+                {channel.pathParameters &&
+                  channel.pathParameters.length > 0 && (
+                    <TypeDefinitionAnchorPart part="path">
+                      <EndpointSection title="Path parameters">
+                        <WithSeparator>
+                          {channel.pathParameters.map((parameter) => (
+                            <ObjectProperty
                               serialize={serialize}
-                              name={parameter.key}
-                              shape={parameter.valueShape}
-                              anchorIdParts={[
-                                "request",
-                                "query",
-                                parameter.key,
-                              ]}
-                              slug={node.slug}
-                              description={parameter.description}
-                              additionalDescriptions={
-                                ApiDefinition.unwrapReference(
-                                  parameter.valueShape,
-                                  types
-                                ).descriptions
-                              }
-                              availability={parameter.availability}
+                              key={parameter.key}
+                              property={parameter}
                               types={types}
                             />
-                          </div>
-                        );
-                      })}
-                    </div>
-                  </EndpointSection>
-                )}
+                          ))}
+                        </WithSeparator>
+                      </EndpointSection>
+                    </TypeDefinitionAnchorPart>
+                  )}
+                {channel.queryParameters &&
+                  channel.queryParameters.length > 0 && (
+                    <TypeDefinitionAnchorPart part="query">
+                      <EndpointSection title="Query parameters">
+                        <WithSeparator>
+                          {channel.queryParameters.map((parameter) => {
+                            return (
+                              <ObjectProperty
+                                serialize={serialize}
+                                key={parameter.key}
+                                property={parameter}
+                                types={types}
+                              />
+                            );
+                          })}
+                        </WithSeparator>
+                      </EndpointSection>
+                    </TypeDefinitionAnchorPart>
+                  )}
+              </TypeDefinitionAnchorPart>
             </CardedSection>
 
             {publishMessages.length > 0 && (
-              <EndpointSection
-                title={
-                  <span className="inline-flex items-center gap-2">
-                    {"Send"}
-                    <span className="text-intent-success bg-tag-success inline-block rounded-full p-1">
-                      <ArrowUp className="size-icon" />
+              <TypeDefinitionAnchorPart part="send">
+                <EndpointSection
+                  title={
+                    <span className="inline-flex items-center gap-2">
+                      {"Send"}
+                      <span className="text-intent-success bg-tag-success inline-block rounded-full p-1">
+                        <ArrowUp className="size-icon" />
+                      </span>
                     </span>
-                  </span>
-                }
-                anchorIdParts={["send"]}
-                slug={node.slug}
-                headerType="h2"
-              >
-                <TypeReferenceDefinitions
-                  serialize={serialize}
-                  shape={publishMessageShape}
-                  isCollapsible={false}
-                  anchorIdParts={["send"]}
-                  slug={node.slug}
-                  types={types}
-                />
-              </EndpointSection>
+                  }
+                >
+                  <TypeReferenceDefinitions
+                    serialize={serialize}
+                    shape={publishMessageShape}
+                    types={types}
+                  />
+                </EndpointSection>
+              </TypeDefinitionAnchorPart>
             )}
             {subscribeMessages.length > 0 && (
-              <EndpointSection
-                title={
-                  <span className="inline-flex items-center gap-2">
-                    {"Receive"}
-                    <span className="text-accent-aaa bg-tag-primary inline-block rounded-full p-1">
-                      <ArrowDown className="size-icon" />
+              <TypeDefinitionAnchorPart part="receive">
+                <EndpointSection
+                  title={
+                    <span className="inline-flex items-center gap-2">
+                      {"Receive"}
+                      <span className="text-accent-aaa bg-tag-primary inline-block rounded-full p-1">
+                        <ArrowDown className="size-icon" />
+                      </span>
                     </span>
-                  </span>
-                }
-                anchorIdParts={["receive"]}
-                slug={node.slug}
-                headerType="h2"
-              >
-                <TypeReferenceDefinitions
-                  serialize={serialize}
-                  shape={subscribeMessageShape}
-                  isCollapsible={false}
-                  anchorIdParts={["receive"]}
-                  slug={node.slug}
-                  types={types}
-                />
-              </EndpointSection>
+                  }
+                >
+                  <TypeReferenceDefinitions
+                    serialize={serialize}
+                    shape={subscribeMessageShape}
+                    types={types}
+                  />
+                </EndpointSection>
+              </TypeDefinitionAnchorPart>
             )}
           </>
         }

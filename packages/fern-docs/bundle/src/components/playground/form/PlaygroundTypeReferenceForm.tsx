@@ -199,7 +199,7 @@ export const PlaygroundTypeReferenceForm =
                 htmlFor={id}
               >
                 <div className="flex items-center justify-start gap-3">
-                  {/* <label className="t-muted font-mono text-sm leading-none">
+                  {/* <label className="text-muted font-mono text-sm leading-none">
                                     {checked == null ? "undefined" : checked ? "true" : "false"}
                                 </label> */}
                   <FernSwitch

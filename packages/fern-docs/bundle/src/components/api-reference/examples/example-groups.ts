@@ -9,7 +9,7 @@ import {
   ExamplesByLanguageKeyAndStatusCode,
   ExamplesByStatusCode,
   SelectedExampleKey,
-} from "../types/EndpointContent";
+} from "../type-definitions/EndpointContent";
 import { CodeExample } from "./code-example";
 
 /**

@@ -44,7 +44,7 @@ export const TitledExample = forwardRef<
   return (
     <div
       className={cn(
-        "bg-card-background after:ring-card-border relative flex flex-col overflow-hidden rounded-xl shadow-sm after:pointer-events-none after:absolute after:inset-0 after:rounded-[inherit] after:ring-1 after:content-[''] after:ring-inset",
+        "bg-card-background after:ring-card-border relative flex flex-col overflow-hidden rounded-xl shadow-sm after:pointer-events-none after:absolute after:inset-0 after:rounded-[inherit] after:ring-1 after:ring-inset after:content-['']",
         "max-md:max-h-content-height-padded",
         className
       )}
@@ -63,7 +63,7 @@ export const TitledExample = forwardRef<
           {typeof title === "string" ? (
             <div
               className={cn("px-1 text-sm", {
-                "t-muted": intent === "none" || intent === "primary",
+                "text-muted": intent === "none" || intent === "primary",
                 "text-intent-warning": intent === "warning",
                 "text-intent-success": intent === "success",
                 "text-intent-danger": intent === "danger",

@@ -6,18 +6,22 @@ import React from "react";
 import { StoreApi, UseBoundStore, create } from "zustand";
 
 import { TypeDefinition } from "@fern-api/fdr-sdk/api-definition";
+import { addLeadingSlash } from "@fern-docs/utils";
 import { useLazyRef } from "@fern-ui/react-commons";
 
 import { ErrorBoundary } from "@/components/error-boundary";
 
-import { JsonPropertyPath } from "../../examples/JsonPropertyPath";
-import { JsonPropertyPathPart } from "../../examples/JsonPropertyPath";
+import { JsonPropertyPath } from "../examples/JsonPropertyPath";
+import { JsonPropertyPathPart } from "../examples/JsonPropertyPath";
 
 interface TypeDefinitionContextValue {
   types: Record<string, TypeDefinition>;
   isRootTypeDefinition: boolean;
   jsonPropertyPath: JsonPropertyPath;
   isResponse: boolean | undefined;
+  slug: string;
+  anchorIdParts: readonly string[];
+  collapsible: boolean;
 
   useSlots: UseBoundStore<StoreApi<Record<string, React.ReactNode>>>;
 }
@@ -35,9 +39,11 @@ export function useTypeDefinitionContext(): TypeDefinitionContextValue {
 export function TypeDefinitionRoot({
   children,
   types,
+  slug,
 }: {
   children: React.ReactNode;
   types: Record<string, TypeDefinition>;
+  slug: string;
 }) {
   const contextValue = useLazyRef(() => ({
     isRootTypeDefinition: true,
@@ -45,6 +51,9 @@ export function TypeDefinitionRoot({
     isResponse: undefined,
     types,
     useSlots: create<Record<string, React.ReactNode>>(() => ({})),
+    slug,
+    anchorIdParts: [],
+    collapsible: false,
   }));
 
   return (
@@ -66,10 +75,30 @@ export function TypeDefinitionPathPart({
   part: JsonPropertyPathPart;
 }) {
   const parent = useTypeDefinitionContext();
-  const contextValue = useLazyRef(() => () => ({
+  const contextValue = React.useRef(() => ({
     ...parent,
     isRootTypeDefinition: false,
     jsonPropertyPath: [...parent.jsonPropertyPath, part],
+  }));
+
+  return (
+    <TypeDefinitionContext.Provider value={contextValue.current}>
+      {children}
+    </TypeDefinitionContext.Provider>
+  );
+}
+
+export function TypeDefinitionAnchorPart({
+  children,
+  part,
+}: {
+  children: React.ReactNode;
+  part: string;
+}) {
+  const parent = useTypeDefinitionContext();
+  const contextValue = React.useRef(() => ({
+    ...parent,
+    anchorIdParts: [...parent.anchorIdParts, part],
   }));
 
   return (
@@ -85,10 +114,32 @@ export function TypeDefinitionResponse({
   children: React.ReactNode;
 }) {
   const parent = useTypeDefinitionContext();
-  const contextValue = useLazyRef(() => () => ({
+  const contextValue = React.useRef(() => ({
     ...parent,
     isResponse: true,
   }));
+
+  return (
+    <TypeDefinitionContext.Provider value={contextValue.current}>
+      {children}
+    </TypeDefinitionContext.Provider>
+  );
+}
+
+export function TypeDefinitionCollapsible({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const parent = useTypeDefinitionContext();
+  const contextValue = React.useRef(() => ({
+    ...parent,
+    collapsible: true,
+  }));
+
+  if (parent.collapsible) {
+    return children;
+  }
 
   return (
     <TypeDefinitionContext.Provider value={contextValue.current}>
@@ -146,4 +197,15 @@ export function SetTypeDefinitionSlots({
 }) {
   useSetTypeDefinitionSlots(slots);
   return children;
+}
+
+export function useAnchorId(): string | null {
+  const { anchorIdParts } = useTypeDefinitionContext();
+  return anchorIdParts.length > 0 ? anchorIdParts.join(".") : null;
+}
+
+export function useHref(): string {
+  const { slug, anchorIdParts } = useTypeDefinitionContext();
+  const pathname = addLeadingSlash(slug);
+  return `${pathname}${anchorIdParts.length > 0 ? `#${anchorIdParts.join(".")}` : ""}`;
 }

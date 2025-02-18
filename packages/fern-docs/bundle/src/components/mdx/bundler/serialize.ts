@@ -168,7 +168,7 @@ async function serializeMdxImpl(
             li: "Li",
             ol: "Ol",
             strong: "Strong",
-            // table: "Table",
+            table: "Table",
             ul: "Ul",
           },
         ],

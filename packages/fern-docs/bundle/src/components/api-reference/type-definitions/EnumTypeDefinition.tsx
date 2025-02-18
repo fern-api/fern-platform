@@ -19,10 +19,8 @@ export type Ref = React.Dispatch<React.SetStateAction<HTMLDivElement | null>>;
 
 export function EnumTypeDefinition({
   elements,
-  showText,
 }: {
   elements: React.ReactNode[];
-  showText: string;
 }) {
   const collapse = useBooleanState(false);
   const autofocus = useBooleanState(false);
@@ -39,7 +37,7 @@ export function EnumTypeDefinition({
         onValueChange={setSearchInput}
         className="w-full"
         style={{ flex: 1, backgroundColor: "transparent" }}
-        leftIcon={<Search className="t-muted size-4" />}
+        leftIcon={<Search className="text-muted size-4" />}
         rightElement={
           <FernButton
             icon={
@@ -59,8 +57,8 @@ export function EnumTypeDefinition({
   return (
     <>
       {elements.length < 6 ? (
-        <div className="t-muted flex items-baseline gap-2">
-          <span className="shrink-0 text-sm"> Allowed values: </span>
+        <div className="text-muted flex items-baseline gap-2">
+          <span className="shrink-0 text-sm">Allowed values:</span>
           <FernTooltipProvider>
             <span className="inline-flex flex-wrap gap-2">{elements}</span>
           </FernTooltipProvider>
@@ -69,7 +67,7 @@ export function EnumTypeDefinition({
         <FernCollapseWithButton
           isOpen={collapse.value}
           toggleIsOpen={collapse.toggleValue}
-          showText={showText}
+          showText="Show enum values"
           hideText={hideText}
           buttonProps={{
             className: !collapse.value ? "multiline" : undefined,

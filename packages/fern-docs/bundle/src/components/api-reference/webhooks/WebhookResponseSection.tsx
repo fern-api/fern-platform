@@ -11,7 +11,7 @@ export const WebhookResponseSection: React.FC = () => {
           <div className="rounded bg-green-500/20 p-1 text-xs text-green-400">
             {200}
           </div>
-          <div className="t-muted text-xs">any</div>
+          <div className="text-muted text-xs">any</div>
         </div>
 
         <Markdown

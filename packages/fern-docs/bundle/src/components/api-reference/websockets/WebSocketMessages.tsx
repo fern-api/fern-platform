@@ -35,7 +35,7 @@ export const WebSocketMessages: FC<WebSocketMessagesProps> = ({
       {messages.length === 0 && (
         <div className="absolute inset-0 flex size-full items-center justify-center">
           <div className="flex flex-col items-center space-y-4">
-            {/* <WifiOff className="t-muted" size={28} /> */}
+            {/* <WifiOff className="text-muted" size={28} /> */}
             <h4 className="m-0">No messages...</h4>
           </div>
         </div>

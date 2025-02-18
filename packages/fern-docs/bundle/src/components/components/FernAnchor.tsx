@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import React from "react";
 
 import * as Tooltip from "@radix-ui/react-tooltip";
-import { Check, Link } from "iconoir-react";
+import { Check, Link } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 
 import { useCopyToClipboard } from "@fern-ui/react-commons";
@@ -14,6 +14,7 @@ import { FernLink } from "./FernLink";
 interface FernAnchorProps {
   href: string;
   sideOffset?: number;
+  asChild?: boolean;
 }
 
 const DisableFernAnchorCtx = React.createContext<boolean>(false);
@@ -34,6 +35,7 @@ export function FernAnchor({
   href,
   sideOffset = 12,
   children,
+  asChild = false,
 }: React.PropsWithChildren<FernAnchorProps>) {
   const isDisabled = useIsFernAnchorDisabled();
   const { copyToClipboard, wasJustCopied } = useCopyToClipboard(() =>
@@ -61,7 +63,7 @@ export function FernAnchor({
   return (
     <Tooltip.Provider>
       <Tooltip.Root delayDuration={0}>
-        <Tooltip.Trigger asChild>{children}</Tooltip.Trigger>
+        <Tooltip.Trigger asChild={asChild}>{children}</Tooltip.Trigger>
         <Tooltip.Portal forceMount={forceMount}>
           <Tooltip.Content
             sideOffset={sideOffset}

@@ -195,7 +195,7 @@ export const PlaygroundFileUploadForm = memo<PlaygroundFileUploadFormProps>(
                     </div>
                     <span className="inline-flex min-w-0 shrink items-baseline gap-2">
                       <span className="truncate text-sm">{file.name}</span>
-                      <span className="t-muted text-xs">
+                      <span className="text-muted text-xs">
                         ({numeral(file.size).format("0.0b")})
                       </span>
                     </span>

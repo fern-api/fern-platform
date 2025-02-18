@@ -4,7 +4,7 @@ import { TypeShapeOrReference } from "@fern-api/fdr-sdk/api-definition";
 
 import { renderTypeShorthandRoot } from "@/components/type-shorthand";
 
-import { useTypeDefinitionContext } from "../context/TypeDefinitionContext";
+import { useTypeDefinitionContext } from "./TypeDefinitionContext";
 
 export function TypeShorthand({ shape }: { shape: TypeShapeOrReference }) {
   const context = useTypeDefinitionContext();

@@ -26,7 +26,7 @@ import {
 import { TitledExample } from "../examples/TitledExample";
 import type { CodeExample } from "../examples/code-example";
 import { lineNumberOf } from "../examples/utils";
-import { StatusCode } from "../types/EndpointContent";
+import { StatusCode } from "../type-definitions/EndpointContent";
 import { CodeExampleClientDropdown } from "./CodeExampleClientDropdown";
 import { useEndpointContext } from "./EndpointContext";
 import { EndpointExampleSegmentedControl } from "./EndpointExampleSegmentedControl";
@@ -105,7 +105,7 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<
         getExampleId={getExampleId}
       />
     ) : (
-      <span className="t-muted line-clamp-1 text-sm">
+      <span className="text-muted line-clamp-1 text-sm">
         {getExampleId(selectedExample)}
       </span>
     );

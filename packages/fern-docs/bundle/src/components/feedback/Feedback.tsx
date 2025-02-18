@@ -112,7 +112,7 @@ export const Feedback: FC<FeedbackProps> = ({
     <div className={className} ref={ref}>
       {!sent ? (
         <div className="flex flex-wrap items-center justify-start gap-4">
-          <span className="t-muted text-sm font-medium">
+          <span className="text-muted text-sm font-medium">
             {feedbackQuestion}
           </span>
           <FernButtonGroup>
@@ -174,7 +174,9 @@ export const Feedback: FC<FeedbackProps> = ({
         </div>
       ) : (
         <div className="flex h-6 items-center">
-          <span className="t-muted text-xs">Thank you for your feedback!</span>
+          <span className="text-muted text-xs">
+            Thank you for your feedback!
+          </span>
         </div>
       )}
     </div>

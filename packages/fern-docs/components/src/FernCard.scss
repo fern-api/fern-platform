@@ -1,19 +1,51 @@
 @layer components {
   .fern-card {
     @apply text-body bg-card-background border-card-border hover:text-body border transition-all hover:transition-none;
+    shadow: 0 1px 2px var(--grayscale-a6);
+
+    @variant dark {
+      shadow: 0 2px 4px var(--grayscale-a6);
+    }
 
     &.interactive {
-      @apply shadow-card-light cursor-pointer;
-      @apply hover:shadow-card-elevated-light dark:hover:shadow-card-elevated-dark hover:border-accent;
-      @apply active:border-border-primary active:shadow-card-elevated-light dark:active:shadow-card-elevated-dark;
-
       &.active {
-        @apply border-border-primary shadow-card-elevated-light dark:shadow-card-elevated-dark;
+        border-color: var(--accent-a8);
+        shadow:
+          0 1px 2px var(--grayscale-a6),
+          0 3px 6px var(--grayscale-a6);
+
+        @variant dark {
+          shadow:
+            0 2px 4px var(--grayscale-a6),
+            0 2px 24px var(--grayscale-a6);
+        }
+      }
+
+      @variant hover {
+        shadow:
+          0 1px 2px var(--grayscale-a6),
+          0 3px 6px var(--grayscale-a6);
+        border-color: var(--accent-a8);
+
+        @variant dark {
+          shadow:
+            0 2px 4px var(--grayscale-a6),
+            0 2px 24px var(--grayscale-a6);
+        }
       }
     }
 
     &.elevated {
-      @apply border-border-primary shadow-card-elevated-light dark:shadow-card-elevated-dark;
+      border-color: var(--accent-a8);
+      shadow:
+        0 1px 2px var(--grayscale-a6),
+        0 3px 6px var(--grayscale-a6);
+
+      @variant dark {
+        shadow:
+          0 2px 4px var(--grayscale-a6),
+          0 2px 24px var(--grayscale-a6);
+      }
     }
 
     ul:not(.list-none) {

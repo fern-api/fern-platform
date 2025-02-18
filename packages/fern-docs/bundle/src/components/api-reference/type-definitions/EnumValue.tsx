@@ -17,11 +17,13 @@ export function EnumValue({
     <Chip
       name={enumValue.value}
       description={
-        <MdxServerComponentProseSuspense
-          serialize={serialize}
-          mdx={enumValue.description}
-          size="xs"
-        />
+        enumValue.description && (
+          <MdxServerComponentProseSuspense
+            serialize={serialize}
+            mdx={enumValue.description}
+            size="xs"
+          />
+        )
       }
     />
   );

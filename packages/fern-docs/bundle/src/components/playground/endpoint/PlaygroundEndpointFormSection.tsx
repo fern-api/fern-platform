@@ -20,7 +20,7 @@ export function PlaygroundEndpointFormSection({
       {!ignoreHeaders && title && (
         <div className="mb-4 px-4">
           {typeof title === "string" ? (
-            <h5 className="t-muted m-0">{title}</h5>
+            <h5 className="text-muted m-0">{title}</h5>
           ) : (
             title
           )}

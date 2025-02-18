@@ -27,7 +27,7 @@ import {
   ExamplesByKeyAndStatusCode,
   ExamplesByStatusCode,
   SelectedExampleKey,
-} from "../types/EndpointContent";
+} from "../type-definitions/EndpointContent";
 
 export function useExampleSelection(
   endpoint: EndpointDefinition,

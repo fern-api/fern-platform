@@ -1,15 +1,26 @@
+import { compact } from "es-toolkit/array";
+
 import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import { EndpointContext } from "@fern-api/fdr-sdk/api-definition";
 import { visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
 
+import { MdxServerComponentProseSuspense } from "@/components/mdx/server-component";
 import { MdxSerializer } from "@/server/mdx-serializer";
 
-import { TypeComponentSeparator } from "../types/TypeComponentSeparator";
+import { ObjectProperty } from "../type-definitions/ObjectProperty";
+import {
+  TypeDefinitionAnchorPart,
+  TypeDefinitionResponse,
+} from "../type-definitions/TypeDefinitionContext";
+import { WithSeparator } from "../type-definitions/TypeDefinitionDetails";
 import { EndpointErrorGroup } from "./EndpointErrorGroup";
-import { EndpointParameter } from "./EndpointParameter";
-import { EndpointRequestSection } from "./EndpointRequestSection";
+import {
+  EndpointRequestSection,
+  createEndpointRequestDescriptionFallback,
+} from "./EndpointRequestSection";
 import { EndpointResponseSection } from "./EndpointResponseSection";
 import { EndpointSection } from "./EndpointSection";
+import { ResponseSummaryFallback } from "./response-summary-fallback";
 
 export interface HoveringProps {
   isHovering: boolean;
@@ -21,15 +32,6 @@ export declare namespace EndpointContentLeft {
     showErrors: boolean;
   }
 }
-
-const REQUEST = ["request"];
-const RESPONSE = ["response"];
-const REQUEST_PATH = ["request", "path"];
-const REQUEST_QUERY = ["request", "query"];
-const REQUEST_HEADER = ["request", "header"];
-const REQUEST_BODY = ["request", "body"];
-const RESPONSE_BODY = ["response", "body"];
-const RESPONSE_ERROR = ["response", "error"];
 
 export async function EndpointContentLeft({
   serialize,
@@ -123,151 +125,154 @@ export async function EndpointContentLeft({
 
   return (
     <>
-      {endpoint.pathParameters && endpoint.pathParameters.length > 0 && (
-        <EndpointSection
-          title="Path parameters"
-          anchorIdParts={REQUEST_PATH}
-          slug={node.slug}
-        >
-          {endpoint.pathParameters.map((parameter) => (
-            <div key={parameter.key}>
-              <TypeComponentSeparator />
-              <EndpointParameter
+      <TypeDefinitionAnchorPart part="request">
+        {endpoint.pathParameters && endpoint.pathParameters.length > 0 && (
+          <TypeDefinitionAnchorPart part="path">
+            <EndpointSection title="Path parameters">
+              <WithSeparator>
+                {endpoint.pathParameters.map((parameter) => (
+                  <TypeDefinitionAnchorPart
+                    key={parameter.key}
+                    part={parameter.key}
+                  >
+                    <ObjectProperty
+                      serialize={serialize}
+                      property={parameter}
+                      types={types}
+                    />
+                  </TypeDefinitionAnchorPart>
+                ))}
+              </WithSeparator>
+            </EndpointSection>
+          </TypeDefinitionAnchorPart>
+        )}
+        {headers.length > 0 && (
+          <TypeDefinitionAnchorPart part="header">
+            <EndpointSection title="Headers">
+              <WithSeparator>
+                {headers.map((parameter) => {
+                  let isAuth = false;
+                  if (
+                    (auth?.type === "header" &&
+                      parameter.key === auth?.headerWireValue) ||
+                    parameter.key === "Authorization"
+                  ) {
+                    isAuth = true;
+                  }
+
+                  // {isAuth && (
+                  //   <div className="absolute right-0 top-3">
+                  //     <div className="bg-tag-danger flex h-5 items-center rounded-xl px-2">
+                  //       <span className="text-intent-danger text-xs">Auth</span>
+                  //     </div>
+                  //   </div>
+                  // )}
+
+                  return (
+                    <TypeDefinitionAnchorPart
+                      key={parameter.key}
+                      part={parameter.key}
+                    >
+                      <ObjectProperty
+                        serialize={serialize}
+                        property={parameter}
+                        types={types}
+                      />
+                    </TypeDefinitionAnchorPart>
+                  );
+                })}
+              </WithSeparator>
+            </EndpointSection>
+          </TypeDefinitionAnchorPart>
+        )}
+        {endpoint.queryParameters && endpoint.queryParameters.length > 0 && (
+          <TypeDefinitionAnchorPart part="query">
+            <EndpointSection title="Query parameters">
+              <WithSeparator>
+                {endpoint.queryParameters.map((parameter) => (
+                  <TypeDefinitionAnchorPart
+                    key={parameter.key}
+                    part={parameter.key}
+                  >
+                    <ObjectProperty
+                      serialize={serialize}
+                      property={parameter}
+                      types={types}
+                    />
+                  </TypeDefinitionAnchorPart>
+                ))}
+              </WithSeparator>
+            </EndpointSection>
+          </TypeDefinitionAnchorPart>
+        )}
+        {endpoint.requests?.[0] != null && (
+          <EndpointSection
+            title="Request"
+            description={
+              <MdxServerComponentProseSuspense
                 serialize={serialize}
-                name={parameter.key}
-                shape={parameter.valueShape}
-                anchorIdParts={[...REQUEST_PATH, parameter.key]}
-                slug={node.slug}
-                description={parameter.description}
-                additionalDescriptions={
-                  ApiDefinition.unwrapReference(parameter.valueShape, types)
-                    .descriptions
-                }
-                availability={parameter.availability}
+                size="sm"
+                className="text-muted my-3"
+                mdx={endpoint.requests[0].description}
+                fallback={createEndpointRequestDescriptionFallback(
+                  endpoint.requests[0],
+                  types
+                )}
+              />
+            }
+          >
+            <TypeDefinitionAnchorPart part="body">
+              <EndpointRequestSection
+                serialize={serialize}
+                request={endpoint.requests[0]}
                 types={types}
               />
-            </div>
-          ))}
-        </EndpointSection>
-      )}
-      {headers.length > 0 && (
-        <EndpointSection
-          title="Headers"
-          anchorIdParts={REQUEST_HEADER}
-          slug={node.slug}
-        >
-          {headers.map((parameter) => {
-            let isAuth = false;
-            if (
-              (auth?.type === "header" &&
-                parameter.key === auth?.headerWireValue) ||
-              parameter.key === "Authorization"
-            ) {
-              isAuth = true;
-            }
-
-            return (
-              <div key={parameter.key} className="relative">
-                {isAuth && (
-                  <div className="absolute top-3 right-0">
-                    <div className="bg-tag-danger flex h-5 items-center rounded-xl px-2">
-                      <span className="text-intent-danger text-xs">Auth</span>
-                    </div>
-                  </div>
-                )}
-                <TypeComponentSeparator />
-                <EndpointParameter
+            </TypeDefinitionAnchorPart>
+          </EndpointSection>
+        )}
+      </TypeDefinitionAnchorPart>
+      <TypeDefinitionResponse>
+        <TypeDefinitionAnchorPart part="response">
+          {endpoint.responses?.[0] != null && (
+            <EndpointSection
+              title="Response"
+              description={
+                <MdxServerComponentProseSuspense
                   serialize={serialize}
-                  name={parameter.key}
-                  shape={parameter.valueShape}
-                  anchorIdParts={[...REQUEST_HEADER, parameter.key]}
-                  slug={node.slug}
-                  description={parameter.description}
-                  additionalDescriptions={
-                    ApiDefinition.unwrapReference(parameter.valueShape, types)
-                      .descriptions
+                  size="sm"
+                  className="text-muted my-3"
+                  mdx={endpoint.responses[0].description}
+                  fallback={
+                    <ResponseSummaryFallback
+                      response={endpoint.responses[0]}
+                      types={types}
+                    />
                   }
-                  availability={parameter.availability}
+                />
+              }
+            >
+              <TypeDefinitionAnchorPart part="body">
+                <EndpointResponseSection
+                  serialize={serialize}
+                  body={endpoint.responses[0].body}
                   types={types}
                 />
-              </div>
-            );
-          })}
-        </EndpointSection>
-      )}
-      {endpoint.queryParameters && endpoint.queryParameters.length > 0 && (
-        <EndpointSection
-          title="Query parameters"
-          anchorIdParts={REQUEST_QUERY}
-          slug={node.slug}
-        >
-          {endpoint.queryParameters.map((parameter) => (
-            <div key={parameter.key}>
-              <TypeComponentSeparator />
-              <EndpointParameter
-                serialize={serialize}
-                name={parameter.key}
-                shape={parameter.valueShape}
-                anchorIdParts={[...REQUEST_QUERY, parameter.key]}
-                slug={node.slug}
-                description={parameter.description}
-                additionalDescriptions={
-                  ApiDefinition.unwrapReference(parameter.valueShape, types)
-                    .descriptions
-                }
-                availability={parameter.availability}
-                types={types}
-              />
-            </div>
-          ))}
-        </EndpointSection>
-      )}
-      {endpoint.requests?.[0] != null && (
-        <EndpointSection
-          key={endpoint.requests[0].contentType}
-          title="Request"
-          anchorIdParts={REQUEST}
-          slug={node.slug}
-        >
-          <EndpointRequestSection
-            serialize={serialize}
-            request={endpoint.requests[0]}
-            anchorIdParts={REQUEST_BODY}
-            slug={node.slug}
-            types={types}
-          />
-        </EndpointSection>
-      )}
-      {endpoint.responses?.[0] != null && (
-        <EndpointSection
-          title="Response"
-          anchorIdParts={RESPONSE}
-          slug={node.slug}
-        >
-          <EndpointResponseSection
-            serialize={serialize}
-            response={endpoint.responses[0]}
-            anchorIdParts={RESPONSE_BODY}
-            slug={node.slug}
-            types={types}
-          />
-        </EndpointSection>
-      )}
-      {showErrors && endpoint.errors && endpoint.errors.length > 0 && (
-        <EndpointSection
-          title="Errors"
-          anchorIdParts={RESPONSE_ERROR}
-          slug={node.slug}
-        >
-          <EndpointErrorGroup
-            serialize={serialize}
-            anchorIdParts={RESPONSE_ERROR}
-            slug={node.slug}
-            errors={endpoint.errors}
-            types={types}
-          />
-        </EndpointSection>
-      )}
+              </TypeDefinitionAnchorPart>
+            </EndpointSection>
+          )}
+          {showErrors && endpoint.errors && endpoint.errors.length > 0 && (
+            <TypeDefinitionAnchorPart part="error">
+              <EndpointSection title="Errors">
+                <EndpointErrorGroup
+                  serialize={serialize}
+                  errors={endpoint.errors}
+                  types={types}
+                />
+              </EndpointSection>
+            </TypeDefinitionAnchorPart>
+          )}
+        </TypeDefinitionAnchorPart>
+      </TypeDefinitionResponse>
     </>
   );
 }

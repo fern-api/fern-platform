@@ -227,7 +227,7 @@ const FeedbackPopover = forwardRef<
                 </motion.p>
                 <motion.p
                   layoutId="success-description"
-                  className="t-muted text-center text-sm"
+                  className="text-muted text-center text-sm"
                 >
                   Thank you for improving the docs.
                 </motion.p>

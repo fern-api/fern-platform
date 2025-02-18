@@ -149,7 +149,7 @@ export const EndpointUrl = React.forwardRef<
                         baseUrl={baseUrl}
                         environmentId={environmentId}
                         options={options}
-                        urlTextStyle="t-muted"
+                        urlTextStyle="text-muted"
                         protocolTextStyle="text-faded"
                         isEditingEnvironment={isEditingEnvironment}
                         editable
@@ -159,7 +159,7 @@ export const EndpointUrl = React.forwardRef<
                   {!showEnvironment &&
                     environmentBasepath &&
                     environmentBasepath !== "/" && (
-                      <span className="t-muted">{environmentBasepath}</span>
+                      <span className="text-muted">{environmentBasepath}</span>
                     )}
                   {pathParts}
                 </span>

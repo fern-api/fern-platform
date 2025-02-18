@@ -46,7 +46,7 @@ export const Card: React.FC<Card.Props> = ({
   const content = (
     <>
       {badge != null && (
-        <Badge intent="primary" className="absolute -top-2 -right-2">
+        <Badge intent="primary" className="absolute -right-2 -top-2">
           {badge}
         </Badge>
       )}
@@ -78,7 +78,7 @@ export const Card: React.FC<Card.Props> = ({
         ) : null}
         <div className="w-full space-y-1 overflow-hidden">
           <div className="text-body text-base font-semibold">{title}</div>
-          {children != null && <div className="t-muted">{children}</div>}
+          {children != null && <div className="text-muted">{children}</div>}
         </div>
       </div>
     </>

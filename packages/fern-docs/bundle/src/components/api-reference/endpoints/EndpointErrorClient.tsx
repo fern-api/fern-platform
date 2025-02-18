@@ -39,7 +39,7 @@ export function EndpointErrorClient({
         <div className="bg-tag-danger text-intent-danger rounded-lg px-2 py-1 text-xs">
           {error.statusCode}
         </div>
-        <div className="t-muted text-left text-xs">{error.name}</div>
+        <div className="text-muted text-left text-xs">{error.name}</div>
         {availability != null && (
           <AvailabilityBadge availability={availability} size="sm" rounded />
         )}

@@ -124,7 +124,7 @@ function FoundOAuthReferencedEndpointForm({
                     <span className="inline-flex font-mono text-sm">
                       Generated OAuth Token
                       <FernTooltip content="This bearer token was generated from an OAuth API call, and as a result cannot be edited">
-                        <HelpCircle className="t-muted ml-2 size-4 self-center" />
+                        <HelpCircle className="text-muted ml-2 size-4 self-center" />
                       </FernTooltip>
                     </span>
                   </label>
@@ -133,7 +133,7 @@ function FoundOAuthReferencedEndpointForm({
               <PasswordInputGroup
                 value={value.accessToken}
                 disabled={true}
-                className="t-muted"
+                className="text-muted"
               />
             </li>
           )}

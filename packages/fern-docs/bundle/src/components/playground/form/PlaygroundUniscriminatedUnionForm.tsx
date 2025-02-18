@@ -109,7 +109,7 @@ export const PlaygroundUniscriminatedUnionForm =
                     {selectedOption.label ?? selectedOption.value}
                   </span>
                 ) : (
-                  <span className="t-muted">Select a variant...</span>
+                  <span className="text-muted">Select a variant...</span>
                 )
               }
               rightIcon={<NavArrowDown />}

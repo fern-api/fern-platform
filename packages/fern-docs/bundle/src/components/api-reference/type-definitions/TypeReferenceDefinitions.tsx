@@ -5,16 +5,15 @@ import React from "react";
 import { UnreachableCaseError } from "ts-essentials";
 
 import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
-import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
 
 import { MdxSerializer } from "@/server/mdx-serializer";
 
+import { InternalTypeDefinition } from "./InternalTypeDefinition";
 import {
   TypeDefinitionPathPart,
   TypeDefinitionSlot,
-} from "../context/TypeDefinitionContext";
-import { InternalTypeDefinition } from "../type-definition/InternalTypeDefinition";
+} from "./TypeDefinitionContext";
 
 // HACHACK: this is a hack to render inlined enums above the description
 export function hasInlineEnum(
@@ -64,112 +63,53 @@ export function hasInternalTypeReference(
 export function TypeReferenceDefinitions({
   serialize,
   shape,
-  isCollapsible,
-  className,
-  anchorIdParts,
-  slug,
   types,
 }: {
   serialize: MdxSerializer;
-  isCollapsible: boolean;
-  className?: string;
-  anchorIdParts: readonly string[];
-  slug: FernNavigation.Slug;
   shape: ApiDefinition.TypeShapeOrReference;
   types: Record<ApiDefinition.TypeId, ApiDefinition.TypeDefinition>;
 }) {
   switch (shape.type) {
-    case "object": {
-      if (shape.extraProperties != null) {
-        // TODO: (rohin) Refactor this
-        return (
-          <InternalTypeDefinition
-            serialize={serialize}
-            shape={shape}
-            isCollapsible={isCollapsible}
-            anchorIdParts={anchorIdParts}
-            slug={slug}
-            types={types}
-          />
-        );
-      }
-      return (
-        <InternalTypeDefinition
-          serialize={serialize}
-          shape={shape}
-          isCollapsible={isCollapsible}
-          anchorIdParts={anchorIdParts}
-          slug={slug}
-          types={types}
-        />
-      );
-    }
+    case "id":
+      return <TypeDefinitionSlot id={shape.id} />;
+    case "object":
     case "enum":
     case "primitive":
-    case "undiscriminatedUnion": {
+    case "undiscriminatedUnion":
+    case "discriminatedUnion":
       return (
         <InternalTypeDefinition
           serialize={serialize}
           shape={shape}
-          isCollapsible={isCollapsible}
-          anchorIdParts={anchorIdParts}
-          slug={slug}
           types={types}
         />
       );
-    }
-    case "discriminatedUnion": {
-      return (
-        <InternalTypeDefinition
-          serialize={serialize}
-          shape={shape}
-          isCollapsible={isCollapsible}
-          anchorIdParts={anchorIdParts}
-          slug={slug}
-          types={types}
-        />
-      );
-    }
     case "list":
-    case "set": {
+    case "set":
       return (
         <TypeDefinitionPathPart part={{ type: "listItem" }}>
           <TypeReferenceDefinitions
             serialize={serialize}
             shape={shape.itemShape}
-            isCollapsible={isCollapsible}
-            className={className}
-            anchorIdParts={anchorIdParts}
-            slug={slug}
             types={types}
           />
         </TypeDefinitionPathPart>
       );
-    }
-    case "map": {
+    case "map":
       return (
         <TypeDefinitionPathPart part={{ type: "objectProperty" }}>
           <TypeReferenceDefinitions
             serialize={serialize}
             shape={shape.keyShape}
-            isCollapsible={isCollapsible}
-            className={className}
-            anchorIdParts={anchorIdParts}
-            slug={slug}
             types={types}
           />
           <TypeReferenceDefinitions
             serialize={serialize}
             shape={shape.valueShape}
-            isCollapsible={isCollapsible}
-            className={className}
-            anchorIdParts={anchorIdParts}
-            slug={slug}
             types={types}
           />
         </TypeDefinitionPathPart>
       );
-    }
     case "literal":
     case "unknown":
       return null;
@@ -178,26 +118,16 @@ export function TypeReferenceDefinitions({
         <TypeReferenceDefinitions
           serialize={serialize}
           shape={shape.value}
-          isCollapsible={isCollapsible}
-          className={className}
-          anchorIdParts={anchorIdParts}
-          slug={slug}
           types={types}
         />
       );
     }
-    case "id":
-      return <TypeDefinitionSlot id={shape.id} isCollapsible={isCollapsible} />;
     case "optional":
     case "nullable": {
       return (
         <TypeReferenceDefinitions
           serialize={serialize}
           shape={shape.shape}
-          isCollapsible={isCollapsible}
-          className={className}
-          anchorIdParts={anchorIdParts}
-          slug={slug}
           types={types}
         />
       );
