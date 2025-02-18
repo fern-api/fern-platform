@@ -1,9 +1,152 @@
 {
   "id": "test-uuid-replacement",
-  "endpoints": {},
+  "endpoints": {
+    "endpoint_user.get": {
+      "id": "endpoint_user.get",
+      "namespace": [
+        "user"
+      ],
+      "method": "GET",
+      "path": [
+        {
+          "type": "literal",
+          "value": "/"
+        },
+        {
+          "type": "literal",
+          "value": "user"
+        }
+      ],
+      "environments": [],
+      "responses": [
+        {
+          "statusCode": 200,
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "id",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "optional",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "uuid"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          "description": "Success"
+        }
+      ],
+      "errors": [],
+      "examples": [
+        {
+          "path": "/user",
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "id": "id"
+            }
+          }
+        }
+      ],
+      "protocol": {
+        "type": "rest"
+      }
+    },
+    "endpoint_user.get-all": {
+      "id": "endpoint_user.get-all",
+      "namespace": [
+        "user"
+      ],
+      "method": "GET",
+      "path": [
+        {
+          "type": "literal",
+          "value": "/"
+        },
+        {
+          "type": "literal",
+          "value": "users"
+        }
+      ],
+      "environments": [],
+      "responses": [
+        {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "list",
+              "itemShape": {
+                "type": "object",
+                "extends": [],
+                "properties": [
+                  {
+                    "key": "id",
+                    "valueShape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "optional",
+                        "shape": {
+                          "type": "alias",
+                          "value": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "uuid"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "description": "Success"
+        }
+      ],
+      "errors": [],
+      "examples": [
+        {
+          "path": "/users",
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": [
+              {
+                "id": "id"
+              }
+            ]
+          }
+        }
+      ],
+      "protocol": {
+        "type": "rest"
+      }
+    }
+  },
   "websockets": {},
   "webhooks": {},
   "types": {},
-  "subpackages": {},
+  "subpackages": {
+    "user": {
+      "id": "user",
+      "name": "user",
+      "displayName": "User"
+    }
+  },
   "auths": {}
 }

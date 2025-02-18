@@ -29187,8 +29187,8 @@
         "type": "rest"
       }
     },
-    "endpoint_.checkAPIKey": {
-      "id": "endpoint_.checkAPIKey",
+    "endpoint_.check-api-key": {
+      "id": "endpoint_.check-api-key",
       "description": "Checks that the api key in the Authorization header is valid and active\n",
       "displayName": "Check API key",
       "operationId": "checkAPIKey",
@@ -29781,8 +29781,8 @@
         "type": "rest"
       }
     },
-    "endpoint_finetuning.ListFinetunedModels": {
-      "id": "endpoint_finetuning.ListFinetunedModels",
+    "endpoint_finetuning.list-finetuned-models": {
+      "id": "endpoint_finetuning.list-finetuned-models",
       "namespace": [
         "finetuning"
       ],
@@ -30165,8 +30165,8 @@
         "type": "rest"
       }
     },
-    "endpoint_finetuning.CreateFinetunedModel": {
-      "id": "endpoint_finetuning.CreateFinetunedModel",
+    "endpoint_finetuning.create-finetuned-model": {
+      "id": "endpoint_finetuning.create-finetuned-model",
       "namespace": [
         "finetuning"
       ],
@@ -30503,8 +30503,8 @@
         "type": "rest"
       }
     },
-    "endpoint_finetuning.GetFinetunedModel": {
-      "id": "endpoint_finetuning.GetFinetunedModel",
+    "endpoint_finetuning.get-finetuned-model": {
+      "id": "endpoint_finetuning.get-finetuned-model",
       "namespace": [
         "finetuning"
       ],
@@ -30833,8 +30833,8 @@
         "type": "rest"
       }
     },
-    "endpoint_finetuning.UpdateFinetunedModel": {
-      "id": "endpoint_finetuning.UpdateFinetunedModel",
+    "endpoint_finetuning.update-finetuned-model": {
+      "id": "endpoint_finetuning.update-finetuned-model",
       "namespace": [
         "finetuning"
       ],
@@ -31381,8 +31381,8 @@
         "type": "rest"
       }
     },
-    "endpoint_finetuning.DeleteFinetunedModel": {
-      "id": "endpoint_finetuning.DeleteFinetunedModel",
+    "endpoint_finetuning.delete-finetuned-model": {
+      "id": "endpoint_finetuning.delete-finetuned-model",
       "namespace": [
         "finetuning"
       ],
@@ -31684,8 +31684,8 @@
         "type": "rest"
       }
     },
-    "endpoint_finetuning.ListEvents": {
-      "id": "endpoint_finetuning.ListEvents",
+    "endpoint_finetuning.list-events": {
+      "id": "endpoint_finetuning.list-events",
       "namespace": [
         "finetuning"
       ],
@@ -32077,8 +32077,8 @@
         "type": "rest"
       }
     },
-    "endpoint_finetuning.ListTrainingStepMetrics": {
-      "id": "endpoint_finetuning.ListTrainingStepMetrics",
+    "endpoint_finetuning.list-training-step-metrics": {
+      "id": "endpoint_finetuning.list-training-step-metrics",
       "namespace": [
         "finetuning"
       ],

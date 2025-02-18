@@ -1,3 +1,4 @@
+import { camelCase } from "es-toolkit/compat";
 import { getEndpointId } from "../getEndpointId";
 
 describe("getEndpointId", () => {
@@ -9,6 +10,7 @@ describe("getEndpointId", () => {
         method: "method",
         sdkMethodName: "opId",
         operationId: undefined,
+        displayName: undefined,
         isWebhook: undefined,
       })
     ).toBeUndefined();
@@ -22,6 +24,7 @@ describe("getEndpointId", () => {
         method: "getById",
         sdkMethodName: undefined,
         operationId: undefined,
+        displayName: undefined,
         isWebhook: undefined,
       })
     ).toBe("endpoint_pets.get-by-id-pets-get");
@@ -35,6 +38,7 @@ describe("getEndpointId", () => {
         method: "getById",
         sdkMethodName: undefined,
         operationId: undefined,
+        displayName: undefined,
         isWebhook: undefined,
       })
     ).toBe("endpoint_pets/v1.get-by-id-pets-get");
@@ -48,6 +52,7 @@ describe("getEndpointId", () => {
         method: "getById",
         sdkMethodName: undefined,
         operationId: undefined,
+        displayName: undefined,
         isWebhook: undefined,
       })
     ).toBe("endpoint_.get-by-id-pets-get");
@@ -61,9 +66,10 @@ describe("getEndpointId", () => {
         method: undefined,
         sdkMethodName: undefined,
         operationId: "getPetById",
+        displayName: undefined,
         isWebhook: undefined,
       })
-    ).toBe("endpoint_pets.getPetById");
+    ).toBe("endpoint_pets.get-pet-by-id");
   });
 
   it("falls back to path endpoint when no sdkMethodName or operationId", () => {
@@ -74,6 +80,7 @@ describe("getEndpointId", () => {
         method: undefined,
         sdkMethodName: undefined,
         operationId: undefined,
+        displayName: undefined,
         isWebhook: undefined,
       })
     ).toBe("endpoint_pets.pets-get");
@@ -87,8 +94,38 @@ describe("getEndpointId", () => {
         method: "getDetails",
         sdkMethodName: undefined,
         operationId: undefined,
+        displayName: undefined,
         isWebhook: undefined,
       })
     ).toBe("endpoint_pets.get-details-api-v-1-pets-pet-id-details");
+  });
+
+  it("uses displayName when it is provided", () => {
+    expect(
+      getEndpointId({
+        namespace: "pets",
+        path: "/pets/get",
+        method: "getById",
+        sdkMethodName: undefined,
+        operationId: undefined,
+        displayName: "Get Pet By Id",
+        isWebhook: undefined,
+      })
+    ).toBe("endpoint_pets.get-pet-by-id");
+  });
+
+  it("handles apostrophe in displayName", () => {
+    console.log(camelCase("Get Pet's By Id"));
+    expect(
+      getEndpointId({
+        namespace: "pets",
+        path: "/pets/get",
+        method: "getById",
+        sdkMethodName: undefined,
+        operationId: undefined,
+        displayName: "Get Pet's By Id",
+        isWebhook: undefined,
+      })
+    ).toBe("endpoint_pets.get-pets-by-id");
   });
 });

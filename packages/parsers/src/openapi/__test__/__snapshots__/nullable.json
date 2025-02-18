@@ -1,8 +1,8 @@
 {
   "id": "test-uuid-replacement",
   "endpoints": {
-    "endpoint_.post-users": {
-      "id": "endpoint_.post-users",
+    "endpoint_.create-a-user": {
+      "id": "endpoint_.create-a-user",
       "displayName": "Create a user",
       "method": "POST",
       "path": [
@@ -83,8 +83,8 @@
         "type": "rest"
       }
     },
-    "endpoint_.put-users": {
-      "id": "endpoint_.put-users",
+    "endpoint_.update-a-user": {
+      "id": "endpoint_.update-a-user",
       "displayName": "Update a user",
       "method": "PUT",
       "path": [
@@ -165,8 +165,8 @@
         "type": "rest"
       }
     },
-    "endpoint_.get-users-user-id": {
-      "id": "endpoint_.get-users-user-id",
+    "endpoint_.get-a-user": {
+      "id": "endpoint_.get-a-user",
       "displayName": "Get a user",
       "method": "GET",
       "path": [

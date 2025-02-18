@@ -1,4 +1,4 @@
-import { camelCase, kebabCase } from "es-toolkit";
+import { camelCase, kebabCase } from "es-toolkit/compat";
 import { maybeSingleValueToArray } from "./maybeSingleValueToArray";
 
 export function getEndpointId({
@@ -7,6 +7,7 @@ export function getEndpointId({
   method,
   sdkMethodName,
   operationId,
+  displayName,
   isWebhook,
 }: {
   namespace: string | string[] | undefined;
@@ -14,21 +15,29 @@ export function getEndpointId({
   method: string | undefined;
   sdkMethodName: string | undefined;
   operationId: string | undefined;
+  displayName: string | undefined;
   isWebhook: boolean | undefined;
 }): string | undefined {
   if (path == null) {
     return undefined;
   }
-  const endpointName =
+  const endpointFallbackName =
     method != null && path != null
-      ? `${method}/${path}`
+      ? `${method}_${path.split("/").join("_")}`
       : method != null
         ? method
-        : path;
-  if (endpointName == null) {
+        : path.split("/").join("_");
+
+  if (
+    sdkMethodName == null &&
+    operationId == null &&
+    displayName == null &&
+    endpointFallbackName == null
+  ) {
     return undefined;
   }
-  return `${getPrefix(isWebhook)}${getFullyQualifiedNamespace(namespace)}.${getEndpointName(sdkMethodName, operationId, endpointName)}`;
+
+  return `${getPrefix(isWebhook)}${getFullyQualifiedNamespace(namespace)}.${getEndpointName(sdkMethodName, operationId, displayName, endpointFallbackName)}`;
 }
 
 function getPrefix(isWebhook: boolean | undefined): string {
@@ -48,9 +57,13 @@ function getFullyQualifiedNamespace(
 function getEndpointName(
   sdkMethodName: string | undefined,
   operationId: string | undefined,
-  endpointName: string
+  displayName: string | undefined,
+  fallbackName: string | undefined
 ): string | undefined {
-  return (
-    kebabCase(sdkMethodName ?? "") || operationId || kebabCase(endpointName)
+  return kebabCase(
+    sdkMethodName ||
+      operationId ||
+      camelCase(displayName ?? "") ||
+      camelCase(fallbackName ?? "")
   );
 }

@@ -1,8 +1,8 @@
 {
   "id": "test-uuid-replacement",
   "endpoints": {
-    "endpoint_generativelanguage.GenerateContent": {
-      "id": "endpoint_generativelanguage.GenerateContent",
+    "endpoint_generativelanguage.generate-content": {
+      "id": "endpoint_generativelanguage.generate-content",
       "namespace": [
         "generativelanguage"
       ],

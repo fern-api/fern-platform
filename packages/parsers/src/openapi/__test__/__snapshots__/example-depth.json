@@ -1,8 +1,8 @@
 {
   "id": "test-uuid-replacement",
   "endpoints": {
-    "endpoint_.getTree": {
-      "id": "endpoint_.getTree",
+    "endpoint_.get-tree": {
+      "id": "endpoint_.get-tree",
       "displayName": "Get tree",
       "operationId": "getTree",
       "method": "GET",
