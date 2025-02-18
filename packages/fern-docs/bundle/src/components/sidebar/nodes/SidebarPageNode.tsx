@@ -1,3 +1,5 @@
+"use client";
+
 import { ReactNode } from "react";
 
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";

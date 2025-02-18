@@ -1,23 +1,16 @@
-"use client";
+import React from "react";
 
-import { memo } from "react";
+import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 
-import { isEqual } from "es-toolkit/predicate";
+import { SidebarRootChild } from "./SidebarRootChild";
 
-import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
-
-import { useCurrentSidebarRoot } from "@/state/navigation";
-
-import { SidebarRootChild, SidebarRootChildProps } from "./SidebarRootChild";
-
-export const SidebarRootNode = memo(function SidebarRootNode() {
-  const node = useCurrentSidebarRoot();
-  if (!node) {
-    return null;
-  }
-
+export function SidebarRootNode({
+  root: node,
+}: {
+  root: FernNavigation.SidebarRootNode;
+}) {
   const children = node.children.flatMap(
-    (child): SidebarRootChildProps["node"][] => {
+    (child): React.ComponentProps<typeof SidebarRootChild>["node"][] => {
       if (child.type !== "apiReference" || !child.hideTitle) {
         return [child];
       }
@@ -41,7 +34,7 @@ export const SidebarRootNode = memo(function SidebarRootNode() {
             lastGroup = {
               ...child,
               // Generate a unique ID for the group
-              id: FernNavigation.NodeId(`${child.id}-${groups.length}`),
+              id: `${child.id}-${groups.length}` as FernNavigation.NodeId,
               children: [],
               changelog: undefined,
             };
@@ -69,4 +62,4 @@ export const SidebarRootNode = memo(function SidebarRootNode() {
       ))}
     </ul>
   );
-}, isEqual);
+}

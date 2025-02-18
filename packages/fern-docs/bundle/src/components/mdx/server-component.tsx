@@ -24,24 +24,6 @@ export async function MdxServerComponent({
   return <MdxContent mdx={parsed_mdx} fallback={mdx} />;
 }
 
-export function MdxServerComponentSuspense({
-  serialize,
-  mdx,
-  fallback,
-}: {
-  serialize: MdxSerializer;
-  mdx: string | null | undefined;
-  fallback?: React.ReactNode;
-}) {
-  return (
-    <ErrorBoundary fallback={mdx ?? fallback}>
-      <React.Suspense fallback={fallback}>
-        <MdxServerComponent mdx={mdx} serialize={serialize} />
-      </React.Suspense>
-    </ErrorBoundary>
-  );
-}
-
 export function MdxServerComponentProse({
   serialize,
   mdx,

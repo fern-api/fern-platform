@@ -1,3 +1,5 @@
+"use client";
+
 import { ReactNode, useCallback } from "react";
 
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";

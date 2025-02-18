@@ -1,8 +1,5 @@
 "use client";
 
-import { ReactElement } from "react";
-
-import { type NavbarLink } from "../atoms";
 import { SidebarContainer } from "./SidebarContainer";
 import { SidebarRootNode } from "./nodes/SidebarRootNode";
 

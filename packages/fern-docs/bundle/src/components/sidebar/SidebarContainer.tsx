@@ -2,11 +2,10 @@
 
 import React from "react";
 
-import { FernScrollArea, FernTooltipProvider, cn } from "@fern-docs/components";
+import { FernScrollArea, cn } from "@fern-docs/components";
 
 import { useCurrentTab, useTabs } from "@/state/navigation";
 
-import { type NavbarLink } from "../atoms";
 import { useIsScrolled } from "../hooks/useIsScrolled";
 import { MobileSidebarHeaderLinks } from "./MobileSidebarHeaderLinks";
 import { SidebarFixedItemsSection } from "./SidebarFixedItemsSection";
@@ -56,7 +55,7 @@ export const SidebarContainer = React.memo(function SidebarContainer({
             ))}
           </ul>
         )}
-        <FernTooltipProvider>{children}</FernTooltipProvider>
+        {children}
         <MobileSidebarHeaderLinks>{navbarLinks}</MobileSidebarHeaderLinks>
       </FernScrollArea>
     </>

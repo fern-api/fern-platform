@@ -8,7 +8,6 @@ import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import { AvailabilityBadge } from "@fern-docs/components/badges";
 
 import { MdxServerComponentProseSuspense } from "@/components/mdx/server-component";
-import { renderTypeShorthandRoot } from "@/components/type-shorthand";
 import { MdxSerializer } from "@/server/mdx-serializer";
 
 import {
@@ -20,6 +19,7 @@ import {
   TypeDefinitionCollapsible,
 } from "./TypeDefinitionContext";
 import { TypeReferenceDefinitions } from "./TypeReferenceDefinitions";
+import { TypeShorthand } from "./TypeShorthand";
 
 export function ObjectProperty({
   serialize,
@@ -69,7 +69,7 @@ export function PropertyWithShape({
       serialize={serialize}
       name={name}
       description={description}
-      typeShorthand={renderTypeShorthandRoot(shape, types, false)}
+      typeShorthand={<TypeShorthand shape={shape} />}
       availability={availability}
     >
       <TypeReferenceDefinitions

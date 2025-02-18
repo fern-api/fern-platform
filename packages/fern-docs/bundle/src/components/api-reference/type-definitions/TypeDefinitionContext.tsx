@@ -3,8 +3,6 @@
 import { createContext, useContext, useMemo } from "react";
 import React from "react";
 
-import { StoreApi, UseBoundStore, create } from "zustand";
-
 import { TypeDefinition } from "@fern-api/fdr-sdk/api-definition";
 import { addLeadingSlash } from "@fern-docs/utils";
 import { useLazyRef } from "@fern-ui/react-commons";
@@ -132,6 +130,28 @@ export function TypeDefinitionCollapsible({
   const contextValue = React.useRef(() => ({
     ...parent,
     collapsible: true,
+  }));
+
+  if (parent.collapsible) {
+    return children;
+  }
+
+  return (
+    <TypeDefinitionContext.Provider value={contextValue.current}>
+      {children}
+    </TypeDefinitionContext.Provider>
+  );
+}
+
+export function TypeDefinitionUncollapsible({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const parent = useTypeDefinitionContext();
+  const contextValue = React.useRef(() => ({
+    ...parent,
+    collapsible: false,
   }));
 
   if (parent.collapsible) {

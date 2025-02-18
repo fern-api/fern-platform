@@ -6,10 +6,7 @@ import type { FernNavigation } from "@fern-api/fdr-sdk";
 
 import { MdxSerializer } from "@/server/mdx-serializer";
 
-import {
-  MdxServerComponent,
-  MdxServerComponentSuspense,
-} from "../mdx/server-component";
+import { MdxServerComponent } from "../mdx/server-component";
 import { FernBreadcrumbs } from "./FernBreadcrumbs";
 
 export function PageHeader({
@@ -40,11 +37,9 @@ export function PageHeader({
 
       {subtitle && (
         <div className="prose-p:text-muted mt-2 leading-7">
-          <MdxServerComponentSuspense
-            serialize={serialize}
-            mdx={subtitle}
-            fallback={subtitle}
-          />
+          <React.Suspense fallback={subtitle}>
+            <MdxServerComponent serialize={serialize} mdx={subtitle} />
+          </React.Suspense>
         </div>
       )}
 

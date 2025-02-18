@@ -1,4 +1,4 @@
-import { ReactElement } from "react";
+"use client";
 
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { cn } from "@fern-docs/components";
@@ -18,7 +18,7 @@ export interface SidebarRootApiPackageNodeProps {
 export function SidebarRootApiPackageNode({
   node,
   className,
-}: SidebarRootApiPackageNodeProps): ReactElement<any> | null {
+}: SidebarRootApiPackageNodeProps) {
   const childSelected = useIsChildSelected(node.id);
   const shallow = false;
 
