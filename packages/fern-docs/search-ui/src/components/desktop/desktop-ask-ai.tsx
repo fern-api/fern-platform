@@ -283,7 +283,7 @@ const DesktopAskAIChat = ({
   const [initialConversation, setInitialConversation] = useAtom(
     initialConversationAtom
   );
-  const [chatError, setChatError] = useAtom(chatErrorAtom);
+  const [_, setChatError] = useAtom(chatErrorAtom);
 
   const chat = useChat({
     id: chatId,
@@ -621,11 +621,13 @@ const AskAICommandItems = memo<{
     });
 
     if (chatError) {
-      console.log("chatError, sq msgs", squeezedMessages);
-      let asst = squeezedMessages.at(-1)?.assistant;
-      if (asst != null) {
-        asst.content =
-          "I wasn't able to complete your request. Please try again in a few seconds.";
+      let lastConvo = squeezedMessages.at(-1);
+      if (lastConvo != null && lastConvo.assistant == null) {
+        lastConvo.assistant = {
+          id: "error-msg-id",
+          content:
+            "I wasn't able to complete your request. Please try again in a few seconds.",
+        };
       }
     }
 
