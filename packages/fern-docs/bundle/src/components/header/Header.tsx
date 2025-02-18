@@ -45,7 +45,7 @@ export function Header({
       {showSearchBar && (
         <SearchV2Trigger
           aria-label="Search"
-          className="max-w-content-width mx-2 hidden w-full min-w-0 shrink lg:inline-flex"
+          className="max-w-content-width hidden w-full min-w-0 shrink lg:inline-flex"
         />
       )}
 

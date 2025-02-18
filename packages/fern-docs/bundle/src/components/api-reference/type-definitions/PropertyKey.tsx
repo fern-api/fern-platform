@@ -20,7 +20,7 @@ export function PropertyKey({
   const { jsonPropertyPath } = useTypeDefinitionContext();
   const href = `${addLeadingSlash(slug)}#${anchorId}`;
   return (
-    <FernAnchor href={href} sideOffset={6}>
+    <FernAnchor href={href} sideOffset={6} asChild>
       <span
         {...props}
         onPointerEnter={composeEventHandlers(props.onPointerEnter, () => {

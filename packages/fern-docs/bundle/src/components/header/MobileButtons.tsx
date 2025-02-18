@@ -2,7 +2,7 @@
 
 import { Menu, Search, X } from "lucide-react";
 
-import { FernButton, cn } from "@fern-docs/components";
+import { Button, FernButton, cn } from "@fern-docs/components";
 
 import {
   useIsDismissableSidebarOpen,
@@ -14,29 +14,13 @@ export function MobileMenuButton() {
   const isDismissableSidebarOpen = useIsDismissableSidebarOpen();
   const toggleDismissableSidebar = useToggleDismissableSidebar();
   return (
-    <FernButton
-      className="lg:hidden"
+    <Button
+      className="shrink-0 rounded-full lg:hidden"
       onClick={toggleDismissableSidebar}
-      icon={isDismissableSidebarOpen ? <X /> : <Menu />}
-      intent={isDismissableSidebarOpen ? "primary" : "none"}
-      variant={isDismissableSidebarOpen ? "filled" : "minimal"}
-      rounded={true}
-      size="large"
-    />
-  );
-}
-
-export function MobileSearchButton({ className }: { className?: string }) {
-  const toggleSearchDialog = useToggleSearchDialog();
-  return (
-    <FernButton
-      className={cn("lg:hidden", className)}
-      icon={<Search />}
-      intent="none"
-      variant="minimal"
-      rounded={true}
-      size="large"
-      onClick={toggleSearchDialog}
-    />
+      variant={isDismissableSidebarOpen ? "default" : "ghost"}
+      size="icon"
+    >
+      {isDismissableSidebarOpen ? <X /> : <Menu />}
+    </Button>
   );
 }

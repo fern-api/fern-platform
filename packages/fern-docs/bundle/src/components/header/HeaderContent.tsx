@@ -5,9 +5,8 @@ import { FernButtonGroup, cn } from "@fern-docs/components";
 
 import { SearchV2Trigger } from "@/state/search";
 
-import { ErrorBoundary } from "../error-boundary";
 import { ThemeButton } from "../themes";
-import { MobileMenuButton, MobileSearchButton } from "./MobileButtons";
+import { MobileMenuButton } from "./MobileButtons";
 
 export function HeaderContent({
   logo,
@@ -46,7 +45,7 @@ export function HeaderContent({
       {showSearchBar && (
         <SearchV2Trigger
           aria-label="Search"
-          className="max-w-content-width mx-2 hidden w-full min-w-0 shrink lg:inline-flex"
+          className="max-w-content-width hidden w-full min-w-0 shrink lg:inline-flex"
         />
       )}
 
@@ -59,10 +58,6 @@ export function HeaderContent({
           {showThemeButton && <ThemeButton />}
         </nav>
       </FernButtonGroup>
-
-      <ErrorBoundary>
-        <MobileSearchButton className="ml-auto" />
-      </ErrorBoundary>
     </div>
   );
 }
