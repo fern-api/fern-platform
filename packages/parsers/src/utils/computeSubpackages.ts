@@ -31,19 +31,17 @@ export function computeSubpackages({
     ...webhookEndpoints,
   }).forEach((endpoint) => {
     const qualifiedPath: string[] = [];
-    return endpoint.namespace?.forEach((subpackage) => {
-      const prunedSubpackage = subpackage;
-      // subpackage.replace(/subpackage_/, "");
-      const qualifiedSubpackagePath = [...qualifiedPath, prunedSubpackage];
+    endpoint.namespace?.forEach((subpackage) => {
+      const qualifiedSubpackagePath = [...qualifiedPath, subpackage];
       const fullyQualifiedSubpackageId = FernRegistry.api.v1.SubpackageId(
         qualifiedSubpackagePath.join(".")
       );
       subpackages[fullyQualifiedSubpackageId] = {
         id: fullyQualifiedSubpackageId,
         name: qualifiedSubpackagePath.join("/"),
-        displayName: titleCase(prunedSubpackage),
+        displayName: titleCase(subpackage),
       };
-      qualifiedPath.push(prunedSubpackage);
+      qualifiedPath.push(subpackage);
     });
   });
 
