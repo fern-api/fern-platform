@@ -55,9 +55,7 @@
     "webpack": "5.94.0"
   },
   "dependencies": {
-    "@radix-ui/colors": "^3.0.0",
-    "fern-api": "0.41.16",
-    "get-port": "^7.1.0"
+    "fern-api": "0.41.16"
   },
   "devDependencies": {
     "@babel/core": "^7.26.0",
@@ -92,6 +90,7 @@
     "eslint-plugin-vitest": "^0.5.4",
     "execa": "^5.1.1",
     "express": "^4.21.2",
+    "get-port": "^7.1.0",
     "globals": "^15.14.0",
     "http-proxy-middleware": "^3.0.3",
     "husky": "^8.0.1",
@@ -128,7 +127,16 @@
   "packageManager": "pnpm@10.4.1+sha512.c753b6c3ad7afa13af388fa6d808035a008e30ea9993f58c6663e2bc5ff21679aa834db094987129aa4d488b86df57f7b634981b2f827cdcacc698cc0cfb88af",
   "engines": {
     "node": ">=18.18.0",
-    "pnpm": "^9.4.0"
+    "pnpm": "^10"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "@swc/core",
+      "esbuild",
+      "prisma",
+      "sharp",
+      "workerd"
+    ]
   },
   "nextBundleAnalysis": {
     "buildOutputDirectory": "packages/fern-docs/bundle/.next",

@@ -43,11 +43,15 @@ export type WebSocketContext = {
 
 export function createWebSocketContext(
   node: FernNavigation.WebSocketNode | undefined,
-  api: ApiDefinition.ApiDefinition | undefined
+  apiDefinition: ApiDefinition.ApiDefinition | undefined
 ): WebSocketContext | undefined {
   if (!node) {
     return undefined;
   }
+  const api =
+    apiDefinition != null
+      ? ApiDefinition.prune(apiDefinition, node)
+      : undefined;
   const channel = api?.websockets[node.webSocketId];
   if (!channel) {
     return undefined;
@@ -69,11 +73,15 @@ export type WebhookContext = {
 
 export function createWebhookContext(
   node: FernNavigation.WebhookNode | undefined,
-  api: ApiDefinition.ApiDefinition | undefined
+  apiDefinition: ApiDefinition.ApiDefinition | undefined
 ): WebhookContext | undefined {
   if (!node) {
     return undefined;
   }
+  const api =
+    apiDefinition != null
+      ? ApiDefinition.prune(apiDefinition, node)
+      : undefined;
   const webhook = api?.webhooks[node.webhookId];
   if (!webhook) {
     return undefined;

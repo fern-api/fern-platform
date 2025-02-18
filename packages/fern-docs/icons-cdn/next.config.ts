@@ -1,8 +1,9 @@
+import type { NextConfig } from "next";
+
 import createWithBundleAnalyzer from "@next/bundle-analyzer";
 import process from "node:process";
 
-/** @type {import('next').NextConfig} */
-const nextConfig = {
+const nextConfig: NextConfig = {
   transpilePackages: [
     "@fortawesome/fontawesome-svg-core",
     "@fortawesome/free-brands-svg-icons",
