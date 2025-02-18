@@ -6,6 +6,11 @@
     .fern-sidebar-heading-content {
       @apply m-0 text-base font-semibold leading-6 lg:text-sm lg:leading-5;
     }
+
+    > svg {
+      @apply mr-3 size-4 shrink-0;
+      color: var(--grayscale-a9);
+    }
   }
 
   .fern-sidebar-group {
