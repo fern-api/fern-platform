@@ -771,6 +771,9 @@ importers:
       '@opentelemetry/sdk-logs':
         specifier: ^0.57.0
         version: 0.57.0(@opentelemetry/api@1.9.0)
+      '@slack/web-api':
+        specifier: ^6.9.0
+        version: 6.12.0
       '@types/qs':
         specifier: 6.9.14
         version: 6.9.14
