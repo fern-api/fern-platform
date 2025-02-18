@@ -90,6 +90,7 @@ export default async function Layout(props: {
       <GlobalStyles>{`
         :root {
           ${domain.includes("nominal") ? "--radius: 0px;" : ""}
+          ${domain.includes("nominal") ? "--border-color: #000;" : ""}
           ${layout.headerHeight ? `--header-height-real: ${layout.headerHeight}px;` : ""}
         }
 

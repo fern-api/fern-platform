@@ -290,18 +290,18 @@
   --color-grayscale-a12: var(--grayscale-a12);
 
   --color-border-primary: var(--accent-a8);
-  --color-border-default: var(--grayscale-a8);
+  --color-border-default: var(--border-color, var(--grayscale-a8));
   --color-border-warning: var(--amber-a8);
   --color-border-success: var(--green-a8);
   --color-border-danger: var(--red-a8);
   --color-border-info: var(--blue-a8);
-  --color-border-default-soft: var(--grayscale-a6);
+  --color-border-default-soft: var(--border-color, var(--grayscale-a6));
   --color-border-primary-soft: var(--accent-a6);
   --color-border-warning-soft: var(--amber-a6);
   --color-border-success-soft: var(--green-a6);
   --color-border-danger-soft: var(--red-a6);
   --color-border-info-soft: var(--blue-a6);
-  --color-border-concealed: var(--grayscale-a4);
+  --color-border-concealed: var(--border-color, var(--grayscale-a4));
   --color-card-border: var(--border-color-card, var(--border-default));
 
   --color-intent-default: var(--grayscale-a11);
