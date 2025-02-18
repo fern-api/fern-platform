@@ -38,7 +38,7 @@ export function computeSubpackages({
       );
       subpackages[fullyQualifiedSubpackageId] = {
         id: fullyQualifiedSubpackageId,
-        name: qualifiedSubpackagePath.join("/"),
+        name: subpackage,
         displayName: titleCase(subpackage),
       };
       qualifiedPath.push(subpackage);

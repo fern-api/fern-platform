@@ -356,6 +356,7 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
           method: this.method,
           sdkMethodName: sdkMethodName.sdkMethodName,
           operationId: this.input.operationId,
+          displayName: this.displayName,
           isWebhook: this.isWebhook,
         })
       )

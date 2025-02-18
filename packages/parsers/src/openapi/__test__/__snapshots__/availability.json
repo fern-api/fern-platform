@@ -1,8 +1,8 @@
 {
   "id": "test-uuid-replacement",
   "endpoints": {
-    "endpoint_.get-collection-id-active-id-deprecated-ref-id-x-fern-availability-path-param": {
-      "id": "endpoint_.get-collection-id-active-id-deprecated-ref-id-x-fern-availability-path-param",
+    "endpoint_.getCollectionIdActiveIdDeprecatedRefIdXFernAvailabilityPathParam": {
+      "id": "endpoint_.getCollectionIdActiveIdDeprecatedRefIdXFernAvailabilityPathParam",
       "method": "GET",
       "path": [
         {
@@ -280,8 +280,8 @@
         "type": "rest"
       }
     },
-    "endpoint_.post-success-ref": {
-      "id": "endpoint_.post-success-ref",
+    "endpoint_.postSuccessRef": {
+      "id": "endpoint_.postSuccessRef",
       "method": "POST",
       "path": [
         {
@@ -342,8 +342,8 @@
         "type": "rest"
       }
     },
-    "endpoint_.post-success-inline-property-deprecation": {
-      "id": "endpoint_.post-success-inline-property-deprecation",
+    "endpoint_.postSuccessInlinePropertyDeprecation": {
+      "id": "endpoint_.postSuccessInlinePropertyDeprecation",
       "method": "POST",
       "path": [
         {
@@ -440,8 +440,8 @@
         "type": "rest"
       }
     },
-    "endpoint_.post-success-inline-object-deprecation": {
-      "id": "endpoint_.post-success-inline-object-deprecation",
+    "endpoint_.postSuccessInlineObjectDeprecation": {
+      "id": "endpoint_.postSuccessInlineObjectDeprecation",
       "availability": "Deprecated",
       "method": "POST",
       "path": [
@@ -514,8 +514,8 @@
         "type": "rest"
       }
     },
-    "endpoint_.post-success-inline-beta-body": {
-      "id": "endpoint_.post-success-inline-beta-body",
+    "endpoint_.postSuccessInlineBetaBody": {
+      "id": "endpoint_.postSuccessInlineBetaBody",
       "availability": "Beta",
       "method": "POST",
       "path": [

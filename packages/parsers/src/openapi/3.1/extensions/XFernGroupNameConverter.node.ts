@@ -1,4 +1,4 @@
-import { camelCase } from "es-toolkit";
+import { camelCase } from "es-toolkit/compat";
 import { FernRegistry } from "../../../client/generated";
 import {
   BaseOpenApiV3_1ConverterNode,
