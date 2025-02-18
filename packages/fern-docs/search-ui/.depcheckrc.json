@@ -1,4 +1,8 @@
 {
-  "ignores": ["postcss", "cssnano"],
+  "ignores": [
+    "@tailwindcss/postcss",
+    "@tailwindcss/typography",
+    "tailwindcss-animate"
+  ],
   "ignore-patterns": ["dist"]
 }

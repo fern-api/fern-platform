@@ -73,8 +73,7 @@
     "@radix-ui/react-use-controllable-state": "^1.1.0",
     "@storybook/client-api": "^7.6.17",
     "class-variance-authority": "^0.7.1",
-    "clsx": "^2.1.0",
-    "copyfiles": "^2.4.1",
+    "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
     "es-toolkit": "^1.24.0",
     "iconoir-react": "^7.7.0",
@@ -83,7 +82,7 @@
     "react-dom": "19.0.0",
     "sonner": "^1.5.0",
     "swr": "^2.2.5",
-    "tailwind-merge": "^2.3.0",
+    "tailwind-merge": "^3.0.1",
     "ts-extras": "^0.11.0"
   },
   "devDependencies": {
@@ -115,7 +114,6 @@
     "jsdom": "^24.0.0",
     "prettier": "^3.4.2",
     "react-test-renderer": "^18",
-    "sass": "^1.74.1",
     "storybook": "^8.5.6",
     "stylelint": "^16.1.0",
     "tailwindcss": "^4.0.6",
@@ -125,7 +123,6 @@
   },
   "peerDependencies": {
     "react": "19.0.0",
-    "react-dom": "19.0.0",
-    "sass": "^1.74.1"
+    "react-dom": "19.0.0"
   }
 }

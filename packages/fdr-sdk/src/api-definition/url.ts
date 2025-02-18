@@ -1,5 +1,6 @@
-import { EndpointDefinition, PathPart } from "@fern-api/fdr-sdk/api-definition";
 import { unknownToString } from "@fern-api/ui-core-utils";
+
+import type { EndpointDefinition, PathPart } from "./latest";
 
 function buildQueryParams(
   queryParameters: Record<string, unknown> | undefined

@@ -44,7 +44,6 @@ const nextConfig: NextConfig = {
     "@fern-docs/mdx",
     "@fern-docs/search-server",
     "@fern-docs/search-ui",
-    "@fern-docs/search-utils",
     "@fern-docs/syntax-highlighter",
     "@fern-docs/utils",
     "@fern-platform/fdr-utils",

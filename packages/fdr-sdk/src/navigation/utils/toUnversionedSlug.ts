@@ -1,3 +1,5 @@
+import escapeStringRegexp from "escape-string-regexp";
+
 import { Slug } from "..";
 
 /**
@@ -6,5 +8,7 @@ import { Slug } from "..";
  * For example, if the original slug is "docs/v1.0.0/foo/bar", the unversionedSlug is "foo/bar".
  */
 export function toUnversionedSlug(slug: Slug, versionSlug: Slug): Slug {
-  return Slug(slug.replace(new RegExp(`^${versionSlug}(/|$)`), ""));
+  return Slug(
+    slug.replace(new RegExp(`^${escapeStringRegexp(versionSlug)}(/|$)`), "")
+  );
 }

@@ -1,25 +1,36 @@
-import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
-import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
+import type {
+  EndpointNode,
+  TypeId,
+  WebSocketNode,
+  WebhookNode,
+} from "../navigation";
+import type {
+  ApiDefinition,
+  AuthScheme,
+  EndpointDefinition,
+  ObjectProperty,
+  TypeDefinition,
+  WebSocketChannel,
+  WebhookDefinition,
+} from "./latest";
+import { prune } from "./prune";
 
 export type EndpointContext = {
-  node: FernNavigation.EndpointNode;
-  endpoint: ApiDefinition.EndpointDefinition;
-  globalHeaders: ApiDefinition.ObjectProperty[];
-  auth: ApiDefinition.AuthScheme | undefined;
-  types: Record<ApiDefinition.TypeId, ApiDefinition.TypeDefinition>;
+  node: EndpointNode;
+  endpoint: EndpointDefinition;
+  globalHeaders: ObjectProperty[];
+  auth: AuthScheme | undefined;
+  types: Record<TypeId, TypeDefinition>;
 };
 
 export function createEndpointContext(
-  node: FernNavigation.EndpointNode | undefined,
-  apiDefinition: ApiDefinition.ApiDefinition | undefined
+  node: EndpointNode | undefined,
+  apiDefinition: ApiDefinition | undefined
 ): EndpointContext | undefined {
   if (!node) {
     return undefined;
   }
-  const api =
-    apiDefinition != null
-      ? ApiDefinition.prune(apiDefinition, node)
-      : undefined;
+  const api = apiDefinition != null ? prune(apiDefinition, node) : undefined;
   const endpoint = api?.endpoints[node.endpointId];
   if (!endpoint) {
     return undefined;
@@ -34,24 +45,21 @@ export function createEndpointContext(
 }
 
 export type WebSocketContext = {
-  node: FernNavigation.WebSocketNode;
-  channel: ApiDefinition.WebSocketChannel;
-  globalHeaders: ApiDefinition.ObjectProperty[];
-  auth: ApiDefinition.AuthScheme | undefined;
-  types: Record<ApiDefinition.TypeId, ApiDefinition.TypeDefinition>;
+  node: WebSocketNode;
+  channel: WebSocketChannel;
+  globalHeaders: ObjectProperty[];
+  auth: AuthScheme | undefined;
+  types: Record<TypeId, TypeDefinition>;
 };
 
 export function createWebSocketContext(
-  node: FernNavigation.WebSocketNode | undefined,
-  apiDefinition: ApiDefinition.ApiDefinition | undefined
+  node: WebSocketNode | undefined,
+  apiDefinition: ApiDefinition | undefined
 ): WebSocketContext | undefined {
   if (!node) {
     return undefined;
   }
-  const api =
-    apiDefinition != null
-      ? ApiDefinition.prune(apiDefinition, node)
-      : undefined;
+  const api = apiDefinition != null ? prune(apiDefinition, node) : undefined;
   const channel = api?.websockets[node.webSocketId];
   if (!channel) {
     return undefined;
@@ -66,22 +74,19 @@ export function createWebSocketContext(
 }
 
 export type WebhookContext = {
-  node: FernNavigation.WebhookNode;
-  webhook: ApiDefinition.WebhookDefinition;
-  types: Record<ApiDefinition.TypeId, ApiDefinition.TypeDefinition>;
+  node: WebhookNode;
+  webhook: WebhookDefinition;
+  types: Record<TypeId, TypeDefinition>;
 };
 
 export function createWebhookContext(
-  node: FernNavigation.WebhookNode | undefined,
-  apiDefinition: ApiDefinition.ApiDefinition | undefined
+  node: WebhookNode | undefined,
+  apiDefinition: ApiDefinition | undefined
 ): WebhookContext | undefined {
   if (!node) {
     return undefined;
   }
-  const api =
-    apiDefinition != null
-      ? ApiDefinition.prune(apiDefinition, node)
-      : undefined;
+  const api = apiDefinition != null ? prune(apiDefinition, node) : undefined;
   const webhook = api?.webhooks[node.webhookId];
   if (!webhook) {
     return undefined;

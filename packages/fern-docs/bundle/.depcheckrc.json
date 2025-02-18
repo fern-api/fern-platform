@@ -1,19 +1,21 @@
 {
   "ignores": [
-    "@fern-platform/configs",
-    "@types/node",
-    "@types/react",
-    "@types/react-dom",
-    "postcss",
+    "@chromatic-com/storybook",
+    "@storybook/addon-essentials",
+    "@storybook/addon-interactions",
+    "@storybook/addon-links",
+    "@storybook/addon-onboarding",
+    "@storybook/blocks",
+    "@storybook/test",
+    "@tailwindcss/postcss",
     "@tailwindcss/typography",
-    "tailwindcss",
+    "@upstash/qstash",
     "cssnano",
     "esbuild",
     "glslify-import",
     "glslify-loader",
     "raw-loader",
-    "@upstash/qstash",
-    "@mdx-js/react"
+    "tailwindcss"
   ],
   "ignore-patterns": ["dist"]
 }

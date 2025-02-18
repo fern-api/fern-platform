@@ -1,3 +1,5 @@
+import escapeStringRegexp from "escape-string-regexp";
+
 import { FernNavigation } from "../..";
 import { NodeCollector } from "../NodeCollector";
 import { isApiReferenceNode } from "../versions/latest/isApiReferenceNode";
@@ -119,7 +121,10 @@ export function findNode(
         : undefined;
     const slugPrefix = currentVersion?.slug ?? root.slug;
     const unversionedSlug = FernNavigation.Slug(
-      found.node.slug.replace(new RegExp(`^${slugPrefix}/?`), "")
+      found.node.slug.replace(
+        new RegExp(`^${escapeStringRegexp(slugPrefix)}/`),
+        ""
+      )
     );
     return {
       type: "found",

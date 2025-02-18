@@ -1,3 +1,5 @@
+import escapeStringRegexp from "escape-string-regexp";
+
 import { Slug } from ".";
 
 /**
@@ -26,7 +28,7 @@ export function toDefaultSlug(
   if (slug.startsWith(versionSlug)) {
     return Slug(
       slug
-        .replace(new RegExp(`^${versionSlug.replaceAll("/", "\\/")}`), rootSlug)
+        .replace(new RegExp(`^${escapeStringRegexp(versionSlug)}`), rootSlug)
         .replace(/^\//, "")
     );
   }

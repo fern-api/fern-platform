@@ -40,7 +40,6 @@
     "zod": "^3.24.1"
   },
   "devDependencies": {
-    "@fern-docs/search-utils": "workspace:*",
     "@fern-platform/configs": "workspace:*",
     "@types/node": "^18.7.18",
     "depcheck": "^1.4.7",

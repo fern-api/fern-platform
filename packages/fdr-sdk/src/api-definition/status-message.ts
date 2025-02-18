@@ -1,6 +1,6 @@
-import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
+import { HttpMethod } from "./latest";
 
-type StatusCodeMessagesByMethod = Partial<Record<APIV1Read.HttpMethod, string>>;
+type StatusCodeMessagesByMethod = Partial<Record<HttpMethod, string>>;
 
 type StatusCodeMessages = Record<number, StatusCodeMessagesByMethod>;
 
@@ -84,7 +84,7 @@ export const STATUS_CODE_MESSAGES_METHOD_OVERRIDES: StatusCodeMessages = {
 
 export function getMessageForStatus(
   statusCode: number,
-  method?: APIV1Read.HttpMethod
+  method?: HttpMethod
 ): string {
   // return the method-specific message if it exists
   if (method != null) {
