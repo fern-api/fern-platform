@@ -212,21 +212,6 @@ export const SidebarSlugLink = forwardRef<
   const { slug, ...innerProps } = props;
   const ref = useRef<HTMLDivElement>(null);
 
-  // useAtomEffect(
-  //   useCallbackOne(
-  //     (get) => {
-  //       if (props.selected) {
-  //         scrollToCenter(
-  //           get.peek(SIDEBAR_SCROLL_CONTAINER_ATOM),
-  //           ref.current,
-  //           get.peek(IS_READY_ATOM)
-  //         );
-  //       }
-  //     },
-  //     [props.selected]
-  //   )
-  // );
-
   const href = slug ? addLeadingSlash(slug) : undefined;
   return (
     <SidebarLink
