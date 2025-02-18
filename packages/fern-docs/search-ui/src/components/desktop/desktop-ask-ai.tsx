@@ -249,6 +249,7 @@ const DesktopAskAIContent = (props: {
 };
 
 const initialConversationAtom = atom<Message[]>([]);
+const chatErrorAtom = atom(false);
 
 const DesktopAskAIChat = ({
   onReturnToSearch,
@@ -282,6 +283,8 @@ const DesktopAskAIChat = ({
   const [initialConversation, setInitialConversation] = useAtom(
     initialConversationAtom
   );
+  const [chatError, setChatError] = useAtom(chatErrorAtom);
+
   const chat = useChat({
     id: chatId,
     initialInput,
@@ -292,6 +295,10 @@ const DesktopAskAIChat = ({
     onFinish: useEventCallback(() => {
       setInitialConversation(chat.messages);
     }),
+    onError: (error) => {
+      console.error(error);
+      setChatError(true);
+    },
   });
 
   // Reset userScrolled when the chat is loading
@@ -312,6 +319,7 @@ const DesktopAskAIChat = ({
         );
         return;
       }
+      setChatError(false); // reset any previous chat error
       void chat.append({ role: "user", content: message });
       chat.setInput("");
     },
@@ -580,6 +588,7 @@ const AskAICommandItems = memo<{
     domain,
     renderActions,
   }): ReactElement => {
+    const [chatError, _] = useAtom(chatErrorAtom);
     const squeezedMessages = squeezeMessages(messages);
 
     const lastConversationRef = useRef<Element | null>(null);
@@ -610,6 +619,15 @@ const AskAICommandItems = memo<{
         });
       }
     });
+
+    if (chatError) {
+      console.log("chatError, sq msgs", squeezedMessages);
+      let asst = squeezedMessages.at(-1)?.assistant;
+      if (asst != null) {
+        asst.content =
+          "I wasn't able to complete your request. Please try again in a few seconds.";
+      }
+    }
 
     if (squeezedMessages.length === 0) {
       return (
