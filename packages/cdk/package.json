@@ -24,7 +24,7 @@
   "dependencies": {
     "@fern-fern/fern-cloud-sdk": "^0.0.305",
     "archiver": "^7.0.1",
-    "aws-cdk-lib": "^2.122.0",
+    "aws-cdk-lib": "^2.179.0",
     "constructs": "^10.3.0",
     "tsx": "^4.7.1"
   },
@@ -32,7 +32,7 @@
     "@fern-platform/configs": "workspace:*",
     "@types/archiver": "^6.0.2",
     "@types/node": "^18.7.18",
-    "aws-cdk": "^2.118.0",
+    "aws-cdk": "^2.179.0",
     "prettier": "^3.4.2",
     "typescript": "^5"
   }
