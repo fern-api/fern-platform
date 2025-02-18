@@ -145,7 +145,7 @@ export const middleware: NextMiddleware = async (request) => {
    */
   if (pathname.endsWith("/~explorer")) {
     const pathname = withoutEnding("/~explorer");
-    return rewrite(withDomain(`/explorer${pathname}`));
+    return rewrite(withDomain(`/explorer/${encodeURIComponent(pathname)}`));
   }
 
   let newToken: string | undefined;
@@ -157,13 +157,13 @@ export const middleware: NextMiddleware = async (request) => {
 
   const getResponse = () => {
     if (authState.authed) {
-      return rewrite(withDomain(`/dynamic${pathname}`));
+      return rewrite(withDomain(`/dynamic/${encodeURIComponent(pathname)}`));
     }
     if (!authState.ok && authState.authorizationUrl) {
       return NextResponse.redirect(authState.authorizationUrl);
     }
 
-    return rewrite(withDomain(`/static${pathname}`));
+    return rewrite(withDomain(`/static/${encodeURIComponent(pathname)}`));
   };
 
   const response = getResponse();

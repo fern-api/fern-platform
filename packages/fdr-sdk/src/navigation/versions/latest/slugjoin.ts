@@ -12,7 +12,8 @@ export function slugjoin(
     .filter(isNonNullish)
     .flatMap((part) =>
       typeof part === "string" ? [part.trim()] : part.map((part) => part.trim())
-    );
+    )
+    .map((part) => decodeURIComponent(part));
   return Slug(
     urljoin(slugArray)
       .replaceAll("//*", "/")

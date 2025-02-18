@@ -34,18 +34,15 @@ import { DocsMainContent } from "../app/[domain]/main";
 export default async function SharedPage({
   domain,
   slug,
-  static: disableAuth,
+  fernToken,
 }: {
   domain: string;
   slug: Slug;
-  static?: boolean;
+  fernToken?: string;
 }) {
   console.debug("/app/[domain]/_page.tsx: starting...");
 
-  const loader = await createCachedDocsLoader(
-    domain,
-    disableAuth ? undefined : await getFernToken()
-  );
+  const loader = await createCachedDocsLoader(domain, fernToken);
   // start loading the root node early
   const rootPromise = loader.getRoot();
   const baseUrlPromise = loader.getBaseUrl();
@@ -183,16 +180,13 @@ export default async function SharedPage({
 export async function generateMetadata({
   domain,
   slug,
-  static: disableAuth,
+  fernToken,
 }: {
   domain: string;
   slug: Slug;
-  static?: boolean;
+  fernToken?: string;
 }): Promise<Metadata> {
-  const loader = await createCachedDocsLoader(
-    domain,
-    disableAuth ? undefined : await getFernToken()
-  );
+  const loader = await createCachedDocsLoader(domain, fernToken);
   const findNode = createFindNode(loader);
   const [files, node, config, isSeoDisabled] = await Promise.all([
     loader.getFiles(),

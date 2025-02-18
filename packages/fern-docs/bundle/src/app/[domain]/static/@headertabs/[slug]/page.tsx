@@ -7,7 +7,7 @@ import { createCachedDocsLoader } from "@/server/docs-loader";
 export default async function HeaderTabsPage({
   params,
 }: {
-  params: Promise<{ domain: string; slug: string[] }>;
+  params: Promise<{ domain: string; slug: string }>;
 }) {
   const { domain, slug } = await params;
   const loader = await createCachedDocsLoader(domain);

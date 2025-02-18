@@ -14,7 +14,7 @@ import { PlaygroundWebSocket } from "@/components/playground/websocket/Playgroun
 import { createCachedDocsLoader } from "@/server/docs-loader";
 
 export default async function Page(props: {
-  params: Promise<{ slug: string[]; domain: string }>;
+  params: Promise<{ slug: string; domain: string }>;
 }) {
   const [{ domain, slug: slugProp }, cookieJar, headersList] =
     await Promise.all([props.params, cookies(), headers()]);
