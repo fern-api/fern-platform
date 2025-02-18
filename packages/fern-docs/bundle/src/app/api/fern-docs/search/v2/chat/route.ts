@@ -1,5 +1,4 @@
 import { track } from "@/server/analytics/posthog";
-import { WebClient } from "@slack/web-api";
 import { safeVerifyFernJWTConfig } from "@/server/auth/FernJWT";
 import { getOrgMetadataForDomain } from "@/server/auth/metadata-for-url";
 import { openaiApiKey, turbopufferApiKey } from "@/server/env-variables";
@@ -13,7 +12,16 @@ import {
   toDocuments,
 } from "@fern-docs/search-server/turbopuffer";
 import { COOKIE_FERN_TOKEN, withoutStaging } from "@fern-docs/utils";
-import { embed, EmbeddingModel, InvalidToolArgumentsError, NoSuchToolError, streamText, tool, ToolExecutionError } from "ai";
+import { WebClient } from "@slack/web-api";
+import {
+  embed,
+  EmbeddingModel,
+  InvalidToolArgumentsError,
+  NoSuchToolError,
+  streamText,
+  tool,
+  ToolExecutionError,
+} from "ai";
 import { initLogger, wrapAISDKModel } from "braintrust";
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
@@ -21,7 +29,7 @@ import { z } from "zod";
 
 export const maxDuration = 60;
 export const revalidate = 0;
-const engNotifsSlackChannel = "#engineering-notifs"
+const engNotifsSlackChannel = "#engineering-notifs";
 
 export async function POST(req: NextRequest) {
   const _logger = initLogger({
@@ -135,38 +143,36 @@ export async function POST(req: NextRequest) {
   });
 
   const response = result.toDataStreamResponse({
-    getErrorMessage: error => {
+    getErrorMessage: (error) => {
       if (error == null) {
-        return ""
+        return "";
       }
 
-      let errorKind = "UnknownError"
+      let errorKind = "UnknownError";
       if (NoSuchToolError.isInstance(error)) {
-        errorKind = "NoSuchToolError"
-      }
-      else if (InvalidToolArgumentsError.isInstance(error)) {
-        errorKind = "InvalidToolArgumentsError"
-      }
-      else if (ToolExecutionError.isInstance(error)) {
-        errorKind = "ToolExecutionError"
+        errorKind = "NoSuchToolError";
+      } else if (InvalidToolArgumentsError.isInstance(error)) {
+        errorKind = "InvalidToolArgumentsError";
+      } else if (ToolExecutionError.isInstance(error)) {
+        errorKind = "ToolExecutionError";
       }
 
-      const msg = `encountered a ${errorKind} for query '${lastUserMessage}: ${error}'`
-      console.error(msg)
+      const msg = `encountered a ${errorKind} for query '${lastUserMessage}: ${error}'`;
+      console.error(msg);
       const slackToken = process.env.SLACK_TOKEN;
       if (slackToken) {
-        const slackMsg  = `:rotating_light: [${domain}] \`Ask AI\` encountered a ${errorKind} for query '${lastUserMessage}': \`${error}\``;
+        const slackMsg = `:rotating_light: [${domain}] \`Ask AI\` encountered a ${errorKind} for query '${lastUserMessage}': \`${error}\``;
         const webClient = new WebClient(slackToken);
         webClient.chat
-        .postMessage({
-          channel: engNotifsSlackChannel,
-          text: slackMsg,
-        })
-        .catch((err: unknown) => {
-          console.error(err);
+          .postMessage({
+            channel: engNotifsSlackChannel,
+            text: slackMsg,
+          })
+          .catch((err: unknown) => {
+            console.error(err);
           });
       }
-      return msg
+      return msg;
     },
   });
 
