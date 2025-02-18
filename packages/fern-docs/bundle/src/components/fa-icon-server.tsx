@@ -1,9 +1,9 @@
-"use server";
+import "server-only";
 
 import React from "react";
 
-import { FaIcon } from "./fa-icon";
-import { getIconUrl, parseSvg } from "./util/fa";
+import { FaIcon } from "@fern-docs/components/fa-icon";
+import { getIconUrl, parseSvg } from "@fern-docs/components/util/fa";
 
 export async function FaIconServer({
   icon,
@@ -14,7 +14,10 @@ export async function FaIconServer({
   const url = getIconUrl(icon);
   const clientIcon = <FaIcon icon={icon} {...props} />;
   try {
-    const res = await fetch(url, { cache: "force-cache" });
+    const res = await fetch(url, {
+      cache: "force-cache",
+      next: { tags: ["icon", icon] },
+    });
     if (!res.ok) {
       return clientIcon;
     }

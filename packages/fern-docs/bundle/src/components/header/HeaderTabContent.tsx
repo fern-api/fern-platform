@@ -3,7 +3,8 @@ import "server-only";
 import { Lock } from "lucide-react";
 
 import type { TabChild } from "@fern-api/fdr-sdk/navigation";
-import { FaIconServer } from "@fern-docs/components";
+
+import { FaIconServer } from "@/components/fa-icon-server";
 
 export function HeaderTabContent({ tab }: { tab: TabChild }) {
   return (

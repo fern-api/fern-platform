@@ -1,3 +1,5 @@
+"use client";
+
 import { FC, forwardRef } from "react";
 
 import * as Select from "@radix-ui/react-select";

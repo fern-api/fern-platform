@@ -4,16 +4,19 @@ import * as Tabs from "@radix-ui/react-tabs";
 import { Lock } from "lucide-react";
 
 import { TabChild, hasRedirect } from "@fern-api/fdr-sdk/navigation";
-import { FaIconServer, cn } from "@fern-docs/components";
+import { cn } from "@fern-docs/components";
 import { addLeadingSlash } from "@fern-docs/utils";
 
+import { FaIconServer } from "@/components/fa-icon-server";
+
 import { FernLink } from "../components/FernLink";
+import { HeaderTabsRoot } from "./HeaderTabsRoot";
 
 export function HeaderTabsList({
   tabs,
   children,
 }: {
-  tabs: TabChild[];
+  tabs: readonly TabChild[];
   children?: React.ReactNode;
 }) {
   return (

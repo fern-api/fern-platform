@@ -1,3 +1,5 @@
+"use client";
+
 import * as React from "react";
 
 import { Slot } from "@radix-ui/react-slot";
@@ -6,15 +8,15 @@ import { type VariantProps, cva } from "class-variance-authority";
 import { cn } from "./cn";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 rounded-md text-sm font-medium whitespace-nowrap transition-colors hover:transition-none focus-visible:ring-1 focus-visible:ring-(--accent-6) focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
+  "focus-visible:ring-(--accent-6) inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors hover:transition-none focus-visible:outline-none focus-visible:ring-1 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
   {
     variants: {
       variant: {
         default:
-          "bg-(--accent-10) text-[var(--accent-contrast,var(--accent-1))] hover:bg-(--accent-9)",
+          "bg-(--accent-10) hover:bg-(--accent-9) text-[var(--accent-contrast,var(--accent-1))]",
         destructive: "bg-(--red-10) text-(--red-12) hover:bg-(--red-11)",
         outline:
-          "border border-(--grayscale-a6) bg-(--grayscale-2) text-(--grayscale-12) hover:bg-(--grayscale-4) hover:text-(--accent-12)",
+          "border-(--grayscale-a6) bg-(--grayscale-2) text-(--grayscale-12) hover:bg-(--grayscale-4) hover:text-(--accent-12) border",
         secondary:
           "bg-(--grayscale-a3) text-(--accent-12) hover:bg-(--grayscale-a4)",
         ghost: "hover:bg-(--accent-a3) hover:text-(--accent-12)",

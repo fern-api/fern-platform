@@ -2,6 +2,7 @@
 
 import { cn } from "@fern-docs/components";
 
+import { HeaderTabsRoot } from "@/components/header/HeaderTabsRoot";
 import { useLayout } from "@/state/layout";
 import {
   useCloseDismissableSidebar,
@@ -31,7 +32,7 @@ export default function DefaultDocs({
       <FernHeader className="bg-header-background border-border-default fixed inset-x-0 top-0 z-30 border-b backdrop-blur-lg">
         {announcement}
         <div className="h-header-height-real flex items-center">{header}</div>
-        {tabs}
+        <HeaderTabsRoot>{tabs}</HeaderTabsRoot>
       </FernHeader>
 
       <main className="max-w-page-width mt-(--header-height) relative z-0 mx-auto flex flex-row">

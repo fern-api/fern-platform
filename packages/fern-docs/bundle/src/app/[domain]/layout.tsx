@@ -87,16 +87,9 @@ export default async function Layout(props: {
       <DarkCode value={edgeFlags.isDarkCodeEnabled} />
       {/* <FernUser domain={domain} fern_token={fern_token} /> */}
       <BgImageGradient colors={colors} />
-      <GlobalStyles>{`
-        :root {
-          ${domain.includes("nominal") ? "--radius: 0px;" : ""}
-          ${domain.includes("nominal") ? "--border-color: #000;" : ""}
-          ${layout.headerHeight ? `--header-height-real: ${layout.headerHeight}px;` : ""}
-        }
-
-
-        ${stylesheet}
-      `}</GlobalStyles>
+      <GlobalStyles domain={domain} layout={layout}>
+        {stylesheet}
+      </GlobalStyles>
       <FeatureFlagProvider featureFlagsConfig={{ launchDarkly }}>
         {children}
       </FeatureFlagProvider>

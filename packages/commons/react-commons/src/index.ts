@@ -1,3 +1,5 @@
+"use client";
+
 export { PREVENT_DEFAULT } from "./preventDefault";
 export { STOP_PROPAGATION } from "./stopPropagation";
 export { useBooleanState } from "./useBooleanState";

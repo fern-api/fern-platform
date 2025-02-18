@@ -1,3 +1,5 @@
+"use client";
+
 import { arrayIncludes, objectKeys } from "ts-extras";
 
 import { CopyToClipboardButton } from "./CopyToClipboardButton";

@@ -14,8 +14,8 @@ export function Sidebar({
   className?: string;
   logo: React.ReactNode;
   versionSelect: React.ReactNode;
-  navbarLinks: NavbarLink[];
-}): ReactElement<any> | null {
+  navbarLinks: React.ReactNode;
+}) {
   // const showDismissableSidebar = useAtomValue(SIDEBAR_DISMISSABLE_ATOM);
   // const disableSidebar = useAtomValue(DISABLE_SIDEBAR_ATOM);
 

@@ -1,15 +1,12 @@
 import React from "react";
 
-import { TabbedNode, traverseBF } from "@fern-api/fdr-sdk/navigation";
-import { CONTINUE, SKIP } from "@fern-api/fdr-sdk/traversers";
 import { withDefaultProtocol } from "@fern-api/ui-core-utils";
 import { isTrailingSlashEnabled } from "@fern-docs/utils";
 
 import type { NavbarLink } from "@/components/atoms/types";
-import { Announcement } from "@/components/header/announcement";
-import { HeaderContent } from "@/components/header/header-content";
-import { HeaderNavbarLink } from "@/components/header/header-navbar-link";
-import { HeaderTabs } from "@/components/header/header-tabs";
+import { Announcement } from "@/components/header/Announcement";
+import { HeaderContent } from "@/components/header/HeaderContent";
+import { NavbarLinks } from "@/components/header/NavbarLinks";
 import { Logo } from "@/components/logo";
 import { MdxServerComponentSuspense } from "@/components/mdx/server-component";
 import { Sidebar } from "@/components/sidebar/Sidebar";
@@ -26,19 +23,16 @@ import { getFernToken } from "../fern-token";
 
 export default async function DocsLayout({
   children,
-  params,
-  authed,
+  headertabs,
+  domain,
+  fernToken,
 }: {
   children: React.ReactNode;
-  params: Promise<{ domain: string }>;
-  authed?: boolean;
+  headertabs: React.ReactNode;
+  domain: string;
+  fernToken?: string;
 }) {
-  const { domain } = await params;
-
-  const loader = await createCachedDocsLoader(
-    domain,
-    authed ? await getFernToken() : undefined
-  );
+  const loader = await createCachedDocsLoader(domain, fernToken);
   const serialize = createCachedMdxSerializer(loader);
   const [
     { basePath },
@@ -124,19 +118,6 @@ export default async function DocsLayout({
     });
   }
 
-  const tabbedNodes: TabbedNode[] = [];
-
-  traverseBF(root, (node) => {
-    if (node.type === "tabbed") {
-      tabbedNodes.push(node);
-      return SKIP;
-    }
-    if (node.type === "sidebarRoot") {
-      return SKIP;
-    }
-    return CONTINUE;
-  });
-
   return (
     <RootNodeProvider root={root}>
       <ThemedDocs
@@ -163,24 +144,10 @@ export default async function DocsLayout({
             versionSelect={false}
             showSearchBar={layout.searchbarPlacement === "HEADER"}
             showThemeButton={Boolean(colors.dark && colors.light)}
-            navbarLinks={
-              <>
-                {navbarLinks.map((navbarLink, idx) => (
-                  <HeaderNavbarLink key={idx} navbarLink={navbarLink} />
-                ))}
-              </>
-            }
+            navbarLinks={<NavbarLinks loader={loader} />}
           />
         }
-        tabs={
-          tabbedNodes.length > 0 && (
-            <>
-              {tabbedNodes.map((node) => (
-                <HeaderTabs key={node.id} node={node} />
-              ))}
-            </>
-          )
-        }
+        tabs={headertabs}
         sidebar={
           <Sidebar
             logo={
@@ -190,7 +157,11 @@ export default async function DocsLayout({
               />
             }
             versionSelect={false}
-            navbarLinks={navbarLinks}
+            navbarLinks={
+              <React.Suspense fallback={null}>
+                <NavbarLinks loader={loader} />
+              </React.Suspense>
+            }
           />
         }
       >

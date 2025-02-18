@@ -1,3 +1,5 @@
+"use client";
+
 import { ComponentPropsWithoutRef, forwardRef, useRef } from "react";
 
 import { composeEventHandlers } from "@radix-ui/primitive";

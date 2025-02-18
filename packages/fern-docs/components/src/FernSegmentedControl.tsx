@@ -1,3 +1,5 @@
+"use client";
+
 import { FC } from "react";
 
 import * as ToggleGroup from "@radix-ui/react-toggle-group";

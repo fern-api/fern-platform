@@ -20,7 +20,7 @@ export const SidebarContainer = React.memo(function SidebarContainer({
 }: {
   logo: React.ReactNode;
   versionSelect: React.ReactNode;
-  navbarLinks: NavbarLink[];
+  navbarLinks: React.ReactNode;
   children: React.ReactNode;
 }) {
   const tabs = useTabs();
@@ -57,7 +57,7 @@ export const SidebarContainer = React.memo(function SidebarContainer({
           </ul>
         )}
         <FernTooltipProvider>{children}</FernTooltipProvider>
-        <MobileSidebarHeaderLinks navbarLinks={navbarLinks} />
+        <MobileSidebarHeaderLinks>{navbarLinks}</MobileSidebarHeaderLinks>
       </FernScrollArea>
     </>
   );

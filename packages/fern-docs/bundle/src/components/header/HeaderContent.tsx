@@ -7,7 +7,7 @@ import { SearchV2Trigger } from "@/state/search";
 
 import { ErrorBoundary } from "../error-boundary";
 import { ThemeButton } from "../themes";
-import { MobileMenuButton, MobileSearchButton } from "./mobile-buttons";
+import { MobileMenuButton, MobileSearchButton } from "./MobileButtons";
 
 export function HeaderContent({
   logo,
