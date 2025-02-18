@@ -10,10 +10,8 @@ import { visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
 import { MdxSerializer } from "@/server/mdx-serializer";
 
 import { InternalTypeDefinition } from "./InternalTypeDefinition";
-import {
-  TypeDefinitionPathPart,
-  TypeDefinitionSlot,
-} from "./TypeDefinitionContext";
+import { TypeDefinitionPathPart } from "./TypeDefinitionContext";
+import { TypeDefinitionSlot } from "./TypeDefinitionSlotsClient";
 
 // HACHACK: this is a hack to render inlined enums above the description
 export function hasInlineEnum(

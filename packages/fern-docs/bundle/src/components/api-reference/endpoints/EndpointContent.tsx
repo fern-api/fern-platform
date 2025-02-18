@@ -13,11 +13,8 @@ import { ReferenceLayout } from "@/components/layouts/ReferenceLayout";
 import { MdxServerComponentProseSuspense } from "@/components/mdx/server-component";
 import { MdxSerializer } from "@/server/mdx-serializer";
 
-import { TypeReferenceDefinitions } from "../type-definitions/TypeReferenceDefinitions";
-import {
-  SetTypeDefinitionSlots,
-  TypeDefinitionRoot,
-} from "../type-definitions/context/TypeDefinitionContext";
+import { TypeDefinitionRoot } from "../type-definitions/TypeDefinitionContext";
+import { TypeDefinitionSlotsServer } from "../type-definitions/TypeDefinitionSlotsServer";
 import { EndpointContentCodeSnippets } from "./EndpointContentCodeSnippets";
 import { EndpointContentLeft } from "./EndpointContentLeft";
 import { EndpointContextProvider } from "./EndpointContext";
@@ -73,16 +70,14 @@ export async function EndpointContent({
         }
         reference={
           <TypeDefinitionRoot types={types} slug={node.slug}>
-            <SetTypeDefinitionSlots
-              slots={createTypeDefinitionSlots(types, serialize)}
-            >
+            <TypeDefinitionSlotsServer types={types} serialize={serialize}>
               <EndpointContentLeft
                 serialize={serialize}
                 context={context}
                 showAuth={showAuth}
                 showErrors={showErrors}
               />
-            </SetTypeDefinitionSlots>
+            </TypeDefinitionSlotsServer>
           </TypeDefinitionRoot>
         }
         footer={<FooterLayout bottomNavigation={bottomNavigation} />}
@@ -93,22 +88,5 @@ export async function EndpointContent({
         />
       </ReferenceLayout>
     </EndpointContextProvider>
-  );
-}
-
-function createTypeDefinitionSlots(
-  types: Record<string, TypeDefinition>,
-  serialize: MdxSerializer
-) {
-  return Object.fromEntries(
-    Object.entries(types).map(([id, type]) => [
-      id,
-      <TypeReferenceDefinitions
-        key={id}
-        serialize={serialize}
-        shape={type.shape}
-        types={types}
-      />,
-    ])
   );
 }

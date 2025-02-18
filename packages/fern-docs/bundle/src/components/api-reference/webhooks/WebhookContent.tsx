@@ -16,8 +16,12 @@ import {
   ObjectProperty,
   PropertyWithShape,
 } from "../type-definitions/ObjectProperty";
-import { TypeDefinitionAnchorPart } from "../type-definitions/TypeDefinitionContext";
+import {
+  TypeDefinitionAnchorPart,
+  TypeDefinitionRoot,
+} from "../type-definitions/TypeDefinitionContext";
 import { WithSeparator } from "../type-definitions/TypeDefinitionDetails";
+import { TypeDefinitionSlotsServer } from "../type-definitions/TypeDefinitionSlotsServer";
 import { TypeReferenceDefinitions } from "../type-definitions/TypeReferenceDefinitions";
 import { WebhookResponseSection } from "./WebhookResponseSection";
 import { WebhookExample } from "./webhook-examples/WebhookExample";
@@ -49,55 +53,57 @@ export async function WebhookContent({
         }
         aside={webhookExample}
         reference={
-          <>
-            <TypeDefinitionAnchorPart part="payload">
-              {webhook.headers && webhook.headers.length > 0 && (
-                <TypeDefinitionAnchorPart part="header">
-                  <EndpointSection title="Headers">
-                    <WithSeparator>
-                      {webhook.headers.map((parameter) => (
-                        <TypeDefinitionAnchorPart
-                          key={parameter.key}
-                          part={parameter.key}
-                        >
-                          <ObjectProperty
-                            serialize={serialize}
-                            property={parameter}
-                            types={types}
-                          />
-                        </TypeDefinitionAnchorPart>
-                      ))}
-                    </WithSeparator>
-                  </EndpointSection>
-                </TypeDefinitionAnchorPart>
-              )}
+          <TypeDefinitionRoot types={types} slug={node.slug}>
+            <TypeDefinitionSlotsServer types={types} serialize={serialize}>
+              <TypeDefinitionAnchorPart part="payload">
+                {webhook.headers && webhook.headers.length > 0 && (
+                  <TypeDefinitionAnchorPart part="header">
+                    <EndpointSection title="Headers">
+                      <WithSeparator>
+                        {webhook.headers.map((parameter) => (
+                          <TypeDefinitionAnchorPart
+                            key={parameter.key}
+                            part={parameter.key}
+                          >
+                            <ObjectProperty
+                              serialize={serialize}
+                              property={parameter}
+                              types={types}
+                            />
+                          </TypeDefinitionAnchorPart>
+                        ))}
+                      </WithSeparator>
+                    </EndpointSection>
+                  </TypeDefinitionAnchorPart>
+                )}
 
-              {webhook.payloads?.[0] && (
-                <TypeDefinitionAnchorPart part="body">
-                  <EndpointSection
-                    title="Payload"
-                    description={
-                      <Prose className="text-muted my-3" size="sm">
-                        {`The payload of this webhook request is ${renderTypeShorthand(webhook.payloads[0].shape, { withArticle: true }, types)}.`}
-                      </Prose>
-                    }
-                  >
-                    <TypeReferenceDefinitions
-                      serialize={serialize}
-                      shape={webhook.payloads?.[0].shape}
-                      types={types}
-                    />
-                  </EndpointSection>
-                </TypeDefinitionAnchorPart>
-              )}
-            </TypeDefinitionAnchorPart>
+                {webhook.payloads?.[0] && (
+                  <TypeDefinitionAnchorPart part="body">
+                    <EndpointSection
+                      title="Payload"
+                      description={
+                        <Prose className="text-muted my-3" size="sm">
+                          {`The payload of this webhook request is ${renderTypeShorthand(webhook.payloads[0].shape, { withArticle: true }, types)}.`}
+                        </Prose>
+                      }
+                    >
+                      <TypeReferenceDefinitions
+                        serialize={serialize}
+                        shape={webhook.payloads?.[0].shape}
+                        types={types}
+                      />
+                    </EndpointSection>
+                  </TypeDefinitionAnchorPart>
+                )}
+              </TypeDefinitionAnchorPart>
 
-            <TypeDefinitionAnchorPart part="response">
-              <EndpointSection title="Response">
-                <WebhookResponseSection />
-              </EndpointSection>
-            </TypeDefinitionAnchorPart>
-          </>
+              <TypeDefinitionAnchorPart part="response">
+                <EndpointSection title="Response">
+                  <WebhookResponseSection />
+                </EndpointSection>
+              </TypeDefinitionAnchorPart>
+            </TypeDefinitionSlotsServer>
+          </TypeDefinitionRoot>
         }
       >
         <Markdown className="leading-6" mdx={webhook.description} />

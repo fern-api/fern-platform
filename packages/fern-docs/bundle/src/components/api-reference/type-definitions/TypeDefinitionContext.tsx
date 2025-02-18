@@ -22,8 +22,6 @@ interface TypeDefinitionContextValue {
   slug: string;
   anchorIdParts: readonly string[];
   collapsible: boolean;
-
-  useSlots: UseBoundStore<StoreApi<Record<string, React.ReactNode>>>;
 }
 
 export const TypeDefinitionContext = createContext<
@@ -50,7 +48,6 @@ export function TypeDefinitionRoot({
     jsonPropertyPath: [],
     isResponse: undefined,
     types,
-    useSlots: create<Record<string, React.ReactNode>>(() => ({})),
     slug,
     anchorIdParts: [],
     collapsible: false,
@@ -151,52 +148,6 @@ export function TypeDefinitionCollapsible({
 export function useTypeDefinition(id: string) {
   const context = useTypeDefinitionContext();
   return context.types[id];
-}
-
-export function TypeDefinitionSlot({
-  id,
-  isCollapsible,
-}: {
-  id: string;
-  isCollapsible?: boolean;
-}) {
-  const { useSlots } = useTypeDefinitionContext();
-  const slot = useSlots((s) => s[id]);
-
-  if (React.isValidElement<{ isCollapsible?: boolean }>(slot)) {
-    return React.cloneElement(slot, {
-      isCollapsible,
-    });
-  }
-
-  return slot;
-}
-
-const useIsomorphicLayoutEffect =
-  typeof window === "undefined" ? React.useEffect : React.useLayoutEffect;
-
-export function useSetTypeDefinitionSlots(
-  slots: Record<string, React.ReactNode>
-) {
-  const { useSlots } = useTypeDefinitionContext();
-
-  useIsomorphicLayoutEffect(() => {
-    useSlots.setState((prev) => ({
-      ...prev,
-      ...slots,
-    }));
-  }, [slots, useSlots]);
-}
-
-export function SetTypeDefinitionSlots({
-  slots,
-  children,
-}: {
-  slots: Record<string, React.ReactNode>;
-  children: React.ReactNode;
-}) {
-  useSetTypeDefinitionSlots(slots);
-  return children;
 }
 
 export function useAnchorId(): string | null {

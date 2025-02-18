@@ -18,8 +18,12 @@ import { EndpointSection } from "../endpoints/EndpointSection";
 import { EndpointUrlWithPlaygroundBaseUrl } from "../endpoints/EndpointUrlWithPlaygroundBaseUrl";
 import { TitledExample } from "../examples/TitledExample";
 import { ObjectProperty } from "../type-definitions/ObjectProperty";
-import { TypeDefinitionAnchorPart } from "../type-definitions/TypeDefinitionContext";
+import {
+  TypeDefinitionAnchorPart,
+  TypeDefinitionRoot,
+} from "../type-definitions/TypeDefinitionContext";
 import { WithSeparator } from "../type-definitions/TypeDefinitionDetails";
+import { TypeDefinitionSlotsServer } from "../type-definitions/TypeDefinitionSlotsServer";
 import { TypeReferenceDefinitions } from "../type-definitions/TypeReferenceDefinitions";
 import { CardedSection } from "./CardedSection";
 import { CopyWithBaseUrl } from "./CopyWithBaseUrl";
@@ -121,48 +125,35 @@ export async function WebSocketContent({
           </div>
         }
         reference={
-          <>
-            <CardedSection
-              number={1}
-              title={
-                <span className="inline-flex items-center gap-2">
-                  {"Handshake"}
-                  <span className="bg-tag-default inline-block rounded-full p-1">
-                    <Wifi className="text-muted size-icon" strokeWidth={1.5} />
+          <TypeDefinitionRoot types={types} slug={node.slug}>
+            <TypeDefinitionSlotsServer types={types} serialize={serialize}>
+              <CardedSection
+                number={1}
+                title={
+                  <span className="inline-flex items-center gap-2">
+                    {"Handshake"}
+                    <span className="bg-tag-default inline-block rounded-full p-1">
+                      <Wifi
+                        className="text-muted size-icon"
+                        strokeWidth={1.5}
+                      />
+                    </span>
                   </span>
-                </span>
-              }
-              slug={node.slug}
-              headingElement={
-                <div className="border-default -mx-2 flex items-center justify-between rounded-xl border px-2 py-1 transition-colors">
-                  <EndpointUrlWithPlaygroundBaseUrl endpoint={channel} />
-                  <CopyWithBaseUrl channel={channel} />
-                </div>
-              }
-            >
-              <TypeDefinitionAnchorPart part="request">
-                {headers && headers.length > 0 && (
-                  <TypeDefinitionAnchorPart part="headers">
-                    <EndpointSection title="Headers">
-                      <WithSeparator>
-                        {headers.map((parameter) => (
-                          <ObjectProperty
-                            serialize={serialize}
-                            key={parameter.key}
-                            property={parameter}
-                            types={types}
-                          />
-                        ))}
-                      </WithSeparator>
-                    </EndpointSection>
-                  </TypeDefinitionAnchorPart>
-                )}
-                {channel.pathParameters &&
-                  channel.pathParameters.length > 0 && (
-                    <TypeDefinitionAnchorPart part="path">
-                      <EndpointSection title="Path parameters">
+                }
+                slug={node.slug}
+                headingElement={
+                  <div className="border-default -mx-2 flex items-center justify-between rounded-xl border px-2 py-1 transition-colors">
+                    <EndpointUrlWithPlaygroundBaseUrl endpoint={channel} />
+                    <CopyWithBaseUrl channel={channel} />
+                  </div>
+                }
+              >
+                <TypeDefinitionAnchorPart part="request">
+                  {headers && headers.length > 0 && (
+                    <TypeDefinitionAnchorPart part="headers">
+                      <EndpointSection title="Headers">
                         <WithSeparator>
-                          {channel.pathParameters.map((parameter) => (
+                          {headers.map((parameter) => (
                             <ObjectProperty
                               serialize={serialize}
                               key={parameter.key}
@@ -174,69 +165,87 @@ export async function WebSocketContent({
                       </EndpointSection>
                     </TypeDefinitionAnchorPart>
                   )}
-                {channel.queryParameters &&
-                  channel.queryParameters.length > 0 && (
-                    <TypeDefinitionAnchorPart part="query">
-                      <EndpointSection title="Query parameters">
-                        <WithSeparator>
-                          {channel.queryParameters.map((parameter) => {
-                            return (
+                  {channel.pathParameters &&
+                    channel.pathParameters.length > 0 && (
+                      <TypeDefinitionAnchorPart part="path">
+                        <EndpointSection title="Path parameters">
+                          <WithSeparator>
+                            {channel.pathParameters.map((parameter) => (
                               <ObjectProperty
                                 serialize={serialize}
                                 key={parameter.key}
                                 property={parameter}
                                 types={types}
                               />
-                            );
-                          })}
-                        </WithSeparator>
-                      </EndpointSection>
-                    </TypeDefinitionAnchorPart>
-                  )}
-              </TypeDefinitionAnchorPart>
-            </CardedSection>
+                            ))}
+                          </WithSeparator>
+                        </EndpointSection>
+                      </TypeDefinitionAnchorPart>
+                    )}
+                  {channel.queryParameters &&
+                    channel.queryParameters.length > 0 && (
+                      <TypeDefinitionAnchorPart part="query">
+                        <EndpointSection title="Query parameters">
+                          <WithSeparator>
+                            {channel.queryParameters.map((parameter) => {
+                              return (
+                                <ObjectProperty
+                                  serialize={serialize}
+                                  key={parameter.key}
+                                  property={parameter}
+                                  types={types}
+                                />
+                              );
+                            })}
+                          </WithSeparator>
+                        </EndpointSection>
+                      </TypeDefinitionAnchorPart>
+                    )}
+                </TypeDefinitionAnchorPart>
+              </CardedSection>
 
-            {publishMessages.length > 0 && (
-              <TypeDefinitionAnchorPart part="send">
-                <EndpointSection
-                  title={
-                    <span className="inline-flex items-center gap-2">
-                      {"Send"}
-                      <span className="text-intent-success bg-tag-success inline-block rounded-full p-1">
-                        <ArrowUp className="size-icon" />
+              {publishMessages.length > 0 && (
+                <TypeDefinitionAnchorPart part="send">
+                  <EndpointSection
+                    title={
+                      <span className="inline-flex items-center gap-2">
+                        {"Send"}
+                        <span className="text-intent-success bg-tag-success inline-block rounded-full p-1">
+                          <ArrowUp className="size-icon" />
+                        </span>
                       </span>
-                    </span>
-                  }
-                >
-                  <TypeReferenceDefinitions
-                    serialize={serialize}
-                    shape={publishMessageShape}
-                    types={types}
-                  />
-                </EndpointSection>
-              </TypeDefinitionAnchorPart>
-            )}
-            {subscribeMessages.length > 0 && (
-              <TypeDefinitionAnchorPart part="receive">
-                <EndpointSection
-                  title={
-                    <span className="inline-flex items-center gap-2">
-                      {"Receive"}
-                      <span className="text-accent-aaa bg-tag-primary inline-block rounded-full p-1">
-                        <ArrowDown className="size-icon" />
+                    }
+                  >
+                    <TypeReferenceDefinitions
+                      serialize={serialize}
+                      shape={publishMessageShape}
+                      types={types}
+                    />
+                  </EndpointSection>
+                </TypeDefinitionAnchorPart>
+              )}
+              {subscribeMessages.length > 0 && (
+                <TypeDefinitionAnchorPart part="receive">
+                  <EndpointSection
+                    title={
+                      <span className="inline-flex items-center gap-2">
+                        {"Receive"}
+                        <span className="text-accent-aaa bg-tag-primary inline-block rounded-full p-1">
+                          <ArrowDown className="size-icon" />
+                        </span>
                       </span>
-                    </span>
-                  }
-                >
-                  <TypeReferenceDefinitions
-                    serialize={serialize}
-                    shape={subscribeMessageShape}
-                    types={types}
-                  />
-                </EndpointSection>
-              </TypeDefinitionAnchorPart>
-            )}
-          </>
+                    }
+                  >
+                    <TypeReferenceDefinitions
+                      serialize={serialize}
+                      shape={subscribeMessageShape}
+                      types={types}
+                    />
+                  </EndpointSection>
+                </TypeDefinitionAnchorPart>
+              )}
+            </TypeDefinitionSlotsServer>
+          </TypeDefinitionRoot>
         }
       >
         <Markdown className="mt-4 leading-6" mdx={channel.description} />
