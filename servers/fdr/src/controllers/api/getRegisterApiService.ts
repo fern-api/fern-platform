@@ -239,7 +239,10 @@ function enrichApiLatestDefinitionWithSnippets(
           exampleId: example.name,
         });
 
-      if (goSnippet != null) {
+      if (
+        goSnippet != null &&
+        (example.snippets?.go == null || example.snippets.go?.length === 0)
+      ) {
         example.snippets ??= {};
         example.snippets.go ??= [];
         example.snippets.go.push({
@@ -251,27 +254,26 @@ function enrichApiLatestDefinitionWithSnippets(
           name: undefined,
         });
       }
-      if (pythonSnippet != null) {
+      if (
+        pythonSnippet != null &&
+        (example.snippets?.python == null ||
+          example.snippets.python?.length === 0)
+      ) {
         example.snippets ??= {};
         example.snippets.python ??= [];
-        example.snippets.python.push({
-          language: "python",
-          code: pythonSnippet.async_client,
-          install: pythonSnippet.install,
-          generated: true,
-          description: example.description,
-          name: "async_client",
-        });
         example.snippets.python.push({
           language: "python",
           code: pythonSnippet.sync_client,
           install: pythonSnippet.install,
           generated: true,
           description: example.description,
-          name: "sync_client",
+          name: undefined,
         });
       }
-      if (rubySnippet != null) {
+      if (
+        rubySnippet != null &&
+        (example.snippets?.ruby == null || example.snippets.ruby?.length === 0)
+      ) {
         example.snippets ??= {};
         example.snippets.ruby ??= [];
         example.snippets.ruby.push({
@@ -283,7 +285,11 @@ function enrichApiLatestDefinitionWithSnippets(
           name: undefined,
         });
       }
-      if (typescriptSnippet != null) {
+      if (
+        typescriptSnippet != null &&
+        (example.snippets?.typescript == null ||
+          example.snippets.typescript?.length === 0)
+      ) {
         example.snippets ??= {};
         example.snippets.typescript ??= [];
         example.snippets.typescript.push({
