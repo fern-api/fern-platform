@@ -34,7 +34,7 @@ export function BottomNavigation({
   return (
     <nav
       aria-label="Up next"
-      className="bg-(--grayscale-a3) flex rounded-[calc(var(--border-radius))] p-1 [&>a]:rounded-[calc(var(--border-radius)-4px)]"
+      className="bg-(--grayscale-a3) max-w-content-width mx-auto flex rounded-[calc(var(--border-radius))] p-1 [&>a]:rounded-[calc(var(--border-radius)-4px)]"
     >
       {neighbors.prev && (
         <MaybeFernLink

@@ -1,7 +1,5 @@
 "use client";
 
-import { cn } from "@fern-docs/components";
-
 import { useLayout } from "@/state/layout";
 
 import {
