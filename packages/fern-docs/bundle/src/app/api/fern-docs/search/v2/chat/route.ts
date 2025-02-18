@@ -140,7 +140,7 @@ export async function POST(req: NextRequest) {
         return ""
       }
 
-      let errorKind = "Unknown"
+      let errorKind = "UnknownError"
       if (NoSuchToolError.isInstance(error)) {
         errorKind = "NoSuchToolError"
       }
@@ -150,16 +150,21 @@ export async function POST(req: NextRequest) {
       else if (ToolExecutionError.isInstance(error)) {
         errorKind = "ToolExecutionError"
       }
-      const msg  = `An internal error occurred. ${errorKind} ${error}`;
-      console.error(msg)
 
+      const msg = `encountered a ${errorKind} for query '${lastUserMessage}: ${error}'`
+      console.error(msg)
       const slackToken = process.env.SLACK_TOKEN;
       if (slackToken) {
+        const slackMsg  = `:rotating_light: [${domain}] \`Ask AI\` encountered a ${errorKind} for query '${lastUserMessage}': \`${error}\``;
         const webClient = new WebClient(slackToken);
-        webClient.chat.postMessage({
+        webClient.chat
+        .postMessage({
           channel: engNotifsSlackChannel,
-          text: msg,
-        });
+          text: slackMsg,
+        })
+        .catch((err: unknown) => {
+          console.error(err);
+          });
       }
       return msg
     },
