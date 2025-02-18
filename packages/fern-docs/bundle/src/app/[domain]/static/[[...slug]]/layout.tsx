@@ -1,4 +1,4 @@
-import SharedLayout from "../../_layout";
+import SharedLayout from "@/components/shared-layout";
 
 export default async function Layout({
   children,

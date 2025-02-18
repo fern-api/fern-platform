@@ -148,19 +148,29 @@ export const middleware: NextMiddleware = async (request) => {
     return rewrite(withDomain(`/explorer${pathname}`));
   }
 
-  const dynamicResponse = rewrite(withDomain(`/dynamic${pathname}`));
+  let newToken: string | undefined;
+
   const { getAuthState } = await createGetAuthStateEdge(request, (token) => {
-    dynamicResponse.cookies.set(COOKIE_FERN_TOKEN, token);
+    newToken = token;
   });
   const authState = await getAuthState(pathname);
-  if (authState.authed) {
-    return dynamicResponse;
-  }
-  if (!authState.ok && authState.authorizationUrl) {
-    return NextResponse.redirect(authState.authorizationUrl);
-  }
 
-  return rewrite(withDomain(`/static${pathname}`));
+  const getResponse = () => {
+    if (authState.authed) {
+      return rewrite(withDomain(`/dynamic${pathname}`));
+    }
+    if (!authState.ok && authState.authorizationUrl) {
+      return NextResponse.redirect(authState.authorizationUrl);
+    }
+
+    return rewrite(withDomain(`/static${pathname}`));
+  };
+
+  const response = getResponse();
+  if (newToken) {
+    response.cookies.set(COOKIE_FERN_TOKEN, newToken);
+  }
+  return response;
 };
 
 export const config: MiddlewareConfig = {

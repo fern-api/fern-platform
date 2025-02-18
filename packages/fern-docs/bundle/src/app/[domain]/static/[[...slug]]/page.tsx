@@ -4,7 +4,9 @@ import { Metadata } from "next/types";
 
 import { slugjoin } from "@fern-api/fdr-sdk/navigation";
 
-import Page, { generateMetadata as _generateMetadata } from "../../_page";
+import SharedPage, {
+  generateMetadata as _generateMetadata,
+} from "@/components/shared-page";
 
 export const dynamic = "force-static";
 
@@ -12,7 +14,7 @@ export default async function StaticPage(props: {
   params: Promise<{ slug?: string[]; domain: string }>;
 }) {
   const { domain, slug } = await props.params;
-  return <Page domain={domain} slug={slugjoin(slug)} static />;
+  return <SharedPage domain={domain} slug={slugjoin(slug)} static />;
 }
 
 export async function generateMetadata(props: {

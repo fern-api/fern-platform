@@ -29,9 +29,9 @@ import {
   createCachedMdxSerializer,
 } from "@/server/mdx-serializer";
 
-import { DocsMainContent } from "./main";
+import { DocsMainContent } from "../app/[domain]/main";
 
-export default async function Page({
+export default async function SharedPage({
   domain,
   slug,
   static: disableAuth,
