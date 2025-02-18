@@ -4,7 +4,6 @@ import { Check, Copy } from "lucide-react";
 
 import { useCopyToClipboard } from "@fern-ui/react-commons";
 
-import { FernButton } from "./FernButton";
 import { Button } from "./FernButtonV2";
 import { FernTooltip, FernTooltipProvider } from "./FernTooltip";
 import { cn } from "./cn";

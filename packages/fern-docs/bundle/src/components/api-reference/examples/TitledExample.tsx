@@ -79,7 +79,7 @@ export const TitledExample = forwardRef<
             {!disableClipboard && (
               <CopyToClipboardButton
                 content={copyToClipboardText}
-                className="-m-1 size-fit"
+                className="-m-1"
               />
             )}
           </div>

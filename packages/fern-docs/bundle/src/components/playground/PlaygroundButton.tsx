@@ -35,7 +35,7 @@ export const PlaygroundButton: FC<{
           href={settings?.button?.href ?? conformExplorerRoute(state.slug)}
           target={settings?.button?.href ? "_blank" : undefined}
           rightIcon={<PlaySolid />}
-          variant="outlined"
+          variant="filled"
           intent="primary"
           size="small"
           mono={true}
