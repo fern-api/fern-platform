@@ -9,12 +9,12 @@ import {
 } from "react";
 
 import { composeRefs } from "@radix-ui/react-compose-refs";
-import cn from "clsx";
 import { Minus, Plus } from "iconoir-react";
 
 import { useEventCallback } from "@fern-ui/react-commons";
 
 import { FernButton } from "./FernButton";
+import { cn } from "./cn";
 
 export interface FernNumericInputProps extends ComponentProps<"input"> {
   inputClassName?: string;

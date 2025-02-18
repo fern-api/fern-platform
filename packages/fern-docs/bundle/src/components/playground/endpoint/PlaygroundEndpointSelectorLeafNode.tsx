@@ -1,8 +1,7 @@
 import { ReactElement, forwardRef } from "react";
 
-import clsx from "clsx";
-
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
+import { cn } from "@fern-docs/components";
 import { FernTooltip } from "@fern-docs/components";
 import { HttpMethodBadge } from "@fern-docs/components/badges";
 
@@ -62,7 +61,7 @@ export const PlaygroundEndpointSelectorLeafNode = forwardRef<
                 method={node.method}
                 size="sm"
                 variant={active ? "solid" : "subtle"}
-                className={clsx("mr-1", {
+                className={cn("mr-1", {
                   "tracking-tighter": node.isResponseStream,
                 })}
               >

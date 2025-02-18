@@ -1,18 +1,17 @@
 import { ReactElement, createRef, useEffect, useState } from "react";
 
-import clsx from "clsx";
 import {
   Forward,
   Pause,
   Play,
-  Restart,
   Rewind,
-  SoundHigh,
-  SoundOff,
-} from "iconoir-react";
-import moment from "moment";
+  RotateCcw,
+  Volume2,
+  VolumeOff,
+} from "lucide-react";
 
 import { FernButton, FernButtonGroup } from "./FernButton";
+import { cn } from "./cn";
 
 export interface FernAudioPlayerProps {
   /** The URL of the audio file to play */
@@ -32,7 +31,7 @@ export function FernAudioPlayer(props: FernAudioPlayerProps): ReactElement {
   const [duration, setDuration] = useState<number>(0);
 
   return (
-    <div className={clsx("fern-audio-player", props.className)}>
+    <div className={cn("fern-audio-player", props.className)}>
       <audio
         ref={ref}
         preload="metadata"
@@ -73,7 +72,7 @@ export function FernAudioPlayer(props: FernAudioPlayerProps): ReactElement {
               variant="minimal"
               size="normal"
               intent="none"
-              icon={<Restart />}
+              icon={<RotateCcw />}
               onClick={() => {
                 if (ref.current) {
                   ref.current.currentTime = 0;
@@ -131,7 +130,7 @@ export function FernAudioPlayer(props: FernAudioPlayerProps): ReactElement {
               variant="minimal"
               size="normal"
               intent="none"
-              icon={isMuted ? <SoundOff /> : <SoundHigh />}
+              icon={isMuted ? <VolumeOff /> : <Volume2 />}
               onClick={() => {
                 if (ref.current) {
                   ref.current.muted = !ref.current.muted;
@@ -154,8 +153,9 @@ function FernAudioProgress({
 }) {
   const [currentTime, setCurrentTime] = useState<number>(0);
 
-  const from = moment.utc(currentTime * 1000).format("mm:ss");
-  const to = moment.utc(duration * 1000).format("mm:ss");
+  // TODO: detect hours
+  const from = new Date(currentTime * 1000).toISOString().substring(14, 19);
+  const to = new Date(duration * 1000).toISOString().substring(14, 19);
 
   const progress = duration > 0 ? currentTime / duration : 0;
 
@@ -176,7 +176,7 @@ function FernAudioProgress({
   return (
     <div className="flex items-center gap-3">
       <time
-        className="text-end font-mono text-xs select-none"
+        className="select-none text-end font-mono text-xs"
         style={{
           width: `${from.length}ch`,
         }}
@@ -202,7 +202,7 @@ function FernAudioProgress({
         ></div>
       </div>
       <time
-        className="text-start font-mono text-xs select-none"
+        className="select-none text-start font-mono text-xs"
         style={{
           width: `${to.length}ch`,
         }}

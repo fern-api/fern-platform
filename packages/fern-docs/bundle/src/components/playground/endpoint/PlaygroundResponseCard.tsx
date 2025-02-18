@@ -1,10 +1,10 @@
 import { ReactElement } from "react";
 
-import clsx from "clsx";
 import { round } from "es-toolkit/math";
 import { Download } from "iconoir-react";
 import { useAtomValue } from "jotai";
 
+import { cn } from "@fern-docs/components";
 import {
   CopyToClipboardButton,
   FernAudioPlayer,
@@ -43,7 +43,7 @@ export function PlaygroundResponseCard({
         {response.type === "loaded" && (
           <div className="flex items-center gap-2 text-xs">
             <span
-              className={clsx(
+              className={cn(
                 "flex h-5 items-center rounded-md px-1.5 py-1 font-mono",
                 {
                   ["bg-(--accent-a3) text-(--accent-a11)"]:

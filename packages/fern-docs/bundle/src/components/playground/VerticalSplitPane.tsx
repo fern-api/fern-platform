@@ -10,7 +10,7 @@ import {
   useState,
 } from "react";
 
-import cn, { clsx } from "clsx";
+import { cn } from "@fern-docs/components";
 
 import { useResizeX, useResizeY } from "./useSplitPlane";
 
@@ -152,7 +152,7 @@ export function HorizontalSplitPane({
         {left}
       </div>
       <div
-        className={clsx(
+        className={cn(
           "shink-0 group sticky top-0 z-10 flex w-3 flex-none cursor-col-resize touch-none items-center justify-center opacity-0 transition-opacity after:absolute after:inset-y-0 after:-left-1 after:w-6 after:content-[''] hover:opacity-100 hover:delay-300",
           {
             "py-8": rizeBarHeight != null,

@@ -1,9 +1,9 @@
 import { forwardRef, memo, useImperativeHandle, useMemo, useRef } from "react";
 
-import cn from "clsx";
 import { isEqual } from "es-toolkit/predicate";
 import type { Element } from "hast";
 
+import { cn } from "@fern-docs/components";
 import { FernScrollArea } from "@fern-docs/components";
 import { parseStringStyle, visit } from "@fern-docs/mdx";
 

@@ -13,13 +13,13 @@ import {
 } from "react";
 
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
-import cn, { clsx } from "clsx";
 import { Check, InfoCircle } from "iconoir-react";
 
 import { useResizeObserver } from "@fern-ui/react-commons";
 
 import { FernScrollArea } from "./FernScrollArea";
 import { FernTooltip, FernTooltipProvider } from "./FernTooltip";
+import { cn } from "./cn";
 
 export declare namespace FernDropdown {
   export interface ValueOption {
@@ -97,7 +97,7 @@ export const FernDropdown = forwardRef<
         side={side}
         align={align}
         {...contentProps}
-        className={clsx("fern-dropdown", contentProps?.className)}
+        className={cn("fern-dropdown", contentProps?.className)}
       >
         <FernTooltipProvider>
           <FernScrollArea

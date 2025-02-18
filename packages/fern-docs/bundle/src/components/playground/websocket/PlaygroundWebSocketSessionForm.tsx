@@ -1,10 +1,9 @@
 import { Dispatch, FC, SetStateAction, useCallback } from "react";
 
-import cn from "clsx";
-
 import type * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import type { WebSocketContext } from "@fern-api/fdr-sdk/api-definition";
 import titleCase from "@fern-api/ui-core-utils/titleCase";
+import { cn } from "@fern-docs/components";
 import { FernButton, FernCard, FernScrollArea } from "@fern-docs/components";
 
 import { WebSocketMessagesVirtualized } from "@/components/api-reference/websockets/WebSocketMessagesVirtualized";

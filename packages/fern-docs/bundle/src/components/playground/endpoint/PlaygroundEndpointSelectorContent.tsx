@@ -3,11 +3,11 @@
 import { usePathname } from "next/navigation";
 import { Fragment, forwardRef, useEffect, useRef, useState } from "react";
 
-import cn, { clsx } from "clsx";
 import { Search, Slash, Xmark } from "iconoir-react";
 
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { isNonNullish } from "@fern-api/ui-core-utils";
+import { cn } from "@fern-docs/components";
 import {
   FernButton,
   FernInput,
@@ -79,7 +79,7 @@ export const PlaygroundEndpointSelectorContent = forwardRef<
                 {idx > 0 && (
                   <Slash className="size-icon-sm text-faded mx-0.5" />
                 )}
-                <span className="text-accent shrink truncate text-xs whitespace-nowrap">
+                <span className="text-accent shrink truncate whitespace-nowrap text-xs">
                   {breadcrumb}
                 </span>
               </Fragment>
@@ -112,10 +112,10 @@ export const PlaygroundEndpointSelectorContent = forwardRef<
   return (
     <FernTooltipProvider>
       <div
-        className={clsx("relative flex size-full flex-col", className)}
+        className={cn("relative flex size-full flex-col", className)}
         ref={forwardedRef}
       >
-        <div className={cn("relative z-20 px-3 pt-3 pb-0")}>
+        <div className={cn("relative z-20 px-3 pb-0 pt-3")}>
           <FernInput
             leftIcon={<Search className="size-icon" />}
             data-1p-ignore="true"

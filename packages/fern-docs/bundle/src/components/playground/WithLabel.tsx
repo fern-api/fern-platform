@@ -1,6 +1,5 @@
 import { FC, PropsWithChildren, ReactNode } from "react";
 
-import cn from "clsx";
 import { HelpCircle, Xmark } from "iconoir-react";
 
 import {
@@ -10,6 +9,7 @@ import {
   WithDescription,
   unwrapReference,
 } from "@fern-api/fdr-sdk/api-definition";
+import { cn } from "@fern-docs/components";
 import { FernButton, FernTooltip } from "@fern-docs/components";
 import { AvailabilityBadge } from "@fern-docs/components/badges";
 

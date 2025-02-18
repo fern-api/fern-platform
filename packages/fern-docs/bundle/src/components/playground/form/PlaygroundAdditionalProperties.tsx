@@ -1,10 +1,10 @@
 // import { Property, TypeIdKey, TypeId } from "@fern-api/fdr-sdk/navigation";
 import { ReactElement, useCallback, useMemo } from "react";
 
-import clsx from "clsx";
 import { noop } from "ts-essentials";
 
 import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
+import { cn } from "@fern-docs/components";
 
 import { WithLabel } from "../WithLabel";
 import { castToRecord } from "../utils";
@@ -109,7 +109,7 @@ export function PlaygroundAdditionalProperties({
   );
 
   return (
-    <div className={clsx("mt-8 min-w-0 flex-1 shrink")}>
+    <div className={cn("mt-8 min-w-0 flex-1 shrink")}>
       <WithLabel
         property={{
           key: ApiDefinition.PropertyKey("Optional Extra Properties"),

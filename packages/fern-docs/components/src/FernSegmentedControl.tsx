@@ -1,11 +1,11 @@
 import { FC } from "react";
 
 import * as ToggleGroup from "@radix-ui/react-toggle-group";
-import cn from "clsx";
 
 import { FernButton } from "./FernButton";
 import { FernDropdown } from "./FernDropdown";
 import { FernTooltip, FernTooltipProvider } from "./FernTooltip";
+import { cn } from "./cn";
 
 interface FernSegmentedControlProps {
   className?: string;

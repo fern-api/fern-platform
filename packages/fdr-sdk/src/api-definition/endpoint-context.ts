@@ -1,4 +1,4 @@
-import type * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
+import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 
 export type EndpointContext = {
@@ -11,11 +11,15 @@ export type EndpointContext = {
 
 export function createEndpointContext(
   node: FernNavigation.EndpointNode | undefined,
-  api: ApiDefinition.ApiDefinition | undefined
+  apiDefinition: ApiDefinition.ApiDefinition | undefined
 ): EndpointContext | undefined {
   if (!node) {
     return undefined;
   }
+  const api =
+    apiDefinition != null
+      ? ApiDefinition.prune(apiDefinition, node)
+      : undefined;
   const endpoint = api?.endpoints[node.endpointId];
   if (!endpoint) {
     return undefined;

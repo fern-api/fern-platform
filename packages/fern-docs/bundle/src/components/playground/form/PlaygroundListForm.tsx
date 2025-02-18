@@ -1,12 +1,12 @@
 import { memo, useCallback } from "react";
 
-import { clsx } from "clsx";
 import { Plus, Xmark } from "iconoir-react";
 
 import {
   TypeDefinition,
   TypeShapeOrReference,
 } from "@fern-api/fdr-sdk/api-definition";
+import { cn } from "@fern-docs/components";
 import { FernButton } from "@fern-docs/components";
 
 import { getEmptyValueForType, shouldRenderInline } from "../utils";
@@ -127,7 +127,7 @@ function PlaygroundListItemForm({
   return (
     <li
       key={idx}
-      className={clsx("min-h-12 w-full space-y-2", {
+      className={cn("min-h-12 w-full space-y-2", {
         "py-2": renderInline,
         "pb-4 pt-2": !renderInline,
       })}

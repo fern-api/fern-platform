@@ -7,11 +7,11 @@ import {
   useState,
 } from "react";
 
-import cn from "clsx";
 import { uniqBy } from "es-toolkit/array";
 import { File, FilePlus, Mic, X } from "lucide-react";
-import numeral from "numeral";
+import prettyBytes from "pretty-bytes";
 
+import { cn } from "@fern-docs/components";
 import { FernButton, FernButtonGroup, FernCard } from "@fern-docs/components";
 
 import { WithLabelInternal } from "../WithLabel";
@@ -196,7 +196,7 @@ export const PlaygroundFileUploadForm = memo<PlaygroundFileUploadFormProps>(
                     <span className="inline-flex min-w-0 shrink items-baseline gap-2">
                       <span className="truncate text-sm">{file.name}</span>
                       <span className="text-muted text-xs">
-                        ({numeral(file.size).format("0.0b")})
+                        ({prettyBytes(file.size)})
                       </span>
                     </span>
                   </div>

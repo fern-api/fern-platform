@@ -11,9 +11,9 @@ import {
 } from "react";
 
 import { Slot } from "@radix-ui/react-slot";
-import cn, { clsx } from "clsx";
 
 import { FernTooltip } from "./FernTooltip";
+import { cn } from "./cn";
 import { SemanticColor } from "./colors";
 import { FaIcon } from "./fa-icon";
 
@@ -150,7 +150,7 @@ export function ButtonContent({
 >): ReactElement {
   children = children ?? text;
   return (
-    <span className={clsx("fern-button-content", className)}>
+    <span className={cn("fern-button-content", className)}>
       {renderIcon(leftIcon)}
       {children && (
         <span

@@ -1,7 +1,8 @@
 import { FC, ReactNode } from "react";
 
 import * as Tooltip from "@radix-ui/react-tooltip";
-import cn from "clsx";
+
+import { cn } from "./cn";
 
 interface FernTooltipProps
   extends Tooltip.TooltipProps,

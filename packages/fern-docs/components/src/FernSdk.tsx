@@ -1,7 +1,7 @@
-import cn from "clsx";
 import { arrayIncludes, objectKeys } from "ts-extras";
 
 import { CopyToClipboardButton } from "./CopyToClipboardButton";
+import { cn } from "./cn";
 import { FaIcon } from "./fa-icon";
 
 const languages = [
@@ -83,7 +83,7 @@ const FernSdkInstallCommand: React.FC<{
         </code>
       </pre>
       <CopyToClipboardButton
-        className="absolute top-2.5 right-2.5"
+        className="absolute right-2.5 top-2.5"
         content={command}
       />
     </>

@@ -3,7 +3,8 @@
 import { PropsWithChildren, RefObject, forwardRef } from "react";
 
 import * as ScrollArea from "@radix-ui/react-scroll-area";
-import cn from "clsx";
+
+import { cn } from "./cn";
 
 export declare namespace FernScrollArea {
   interface FernScrollAreaProps

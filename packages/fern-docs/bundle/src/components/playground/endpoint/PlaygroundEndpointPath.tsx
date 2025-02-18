@@ -1,7 +1,6 @@
 import { usePathname } from "next/navigation";
 import { FC, Fragment, ReactNode } from "react";
 
-import cn from "clsx";
 import { omitBy } from "es-toolkit/object";
 import { isUndefined } from "es-toolkit/predicate";
 import { X } from "lucide-react";
@@ -21,6 +20,7 @@ import {
 } from "@fern-api/fdr-sdk/api-definition";
 import unknownToString from "@fern-api/ui-core-utils/unknownToString";
 import visitDiscriminatedUnion from "@fern-api/ui-core-utils/visitDiscriminatedUnion";
+import { cn } from "@fern-docs/components";
 import { CopyToClipboardButton } from "@fern-docs/components";
 import { HttpMethodBadge } from "@fern-docs/components/badges";
 import { useBooleanState } from "@fern-ui/react-commons";

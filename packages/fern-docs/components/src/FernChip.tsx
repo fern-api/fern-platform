@@ -1,7 +1,6 @@
 import { PropsWithChildren, forwardRef } from "react";
 
-import { clsx } from "clsx";
-
+import { cn } from "./cn";
 import { ColorScheme, Size } from "./util/shared-component-types";
 
 export type FernChipSize = Extract<Size, "sm" | "lg">;
@@ -45,7 +44,7 @@ export const FernChip = forwardRef<HTMLButtonElement, FernChipProps>(
     return (
       <button
         ref={ref}
-        className={clsx(
+        className={cn(
           "inline-flex cursor-default items-center justify-center font-mono leading-none",
           {
             "h-[18px] min-w-[18px] px-1.5 text-[10px]": size === "sm",

@@ -1,7 +1,8 @@
 import { ComponentProps, forwardRef, useEffect, useRef } from "react";
 
 import { composeRefs } from "@radix-ui/react-compose-refs";
-import cn from "clsx";
+
+import { cn } from "./cn";
 
 interface FernTextareaProps extends ComponentProps<"textarea"> {
   onValueChange?: (value: string) => void;

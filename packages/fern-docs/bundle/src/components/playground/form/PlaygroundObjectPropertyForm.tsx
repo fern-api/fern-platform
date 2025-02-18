@@ -1,7 +1,6 @@
 import dynamic from "next/dynamic";
 import { FC, memo, useCallback, useEffect, useMemo, useState } from "react";
 
-import cn from "clsx";
 import { PlusCircle } from "iconoir-react";
 
 import {
@@ -11,6 +10,7 @@ import {
   TypeReference,
   unwrapReference,
 } from "@fern-api/fdr-sdk/api-definition";
+import { cn } from "@fern-docs/components";
 import { FernButton, FernDropdown } from "@fern-docs/components";
 import { useBooleanState } from "@fern-ui/react-commons";
 

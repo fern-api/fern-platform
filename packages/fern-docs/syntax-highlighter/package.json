@@ -22,7 +22,6 @@
   "dependencies": {
     "@fern-docs/components": "workspace:*",
     "@fern-docs/mdx": "workspace:*",
-    "clsx": "^2.1.1",
     "es-toolkit": "^1.27.0",
     "hast-util-to-jsx-runtime": "^2.3.0",
     "hastscript": "^9.0.0",

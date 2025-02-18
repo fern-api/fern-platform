@@ -1,8 +1,9 @@
 import { FC, forwardRef } from "react";
 
 import * as Select from "@radix-ui/react-select";
-import classnames from "clsx";
 import { Check, NavArrowDown, NavArrowUp } from "iconoir-react";
+
+import { cn } from "./cn";
 
 export const FernSelect: FC<Select.SelectProps> = () => (
   <Select.Root>
@@ -73,7 +74,7 @@ export const FernSelectItem = forwardRef<
 >(function FernSelectItem({ children, className, ...props }, forwardedRef) {
   return (
     <Select.Item
-      className={classnames(
+      className={cn(
         "text-violet11 data-[disabled]:text-mauve8 data-[highlighted]:bg-violet9 data-[highlighted]:text-violet1 relative flex h-[25px] select-none items-center rounded-[3px] pl-[25px] pr-[35px] text-[13px] leading-none data-[disabled]:pointer-events-none data-[highlighted]:outline-none",
         className
       )}
