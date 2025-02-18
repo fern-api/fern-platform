@@ -1,8 +1,8 @@
 {
   "id": "test-uuid-replacement",
   "endpoints": {
-    "endpoint_.get-user": {
-      "id": "endpoint_.get-user",
+    "endpoint_.GetUser": {
+      "id": "endpoint_.GetUser",
       "description": "Returns the user with the provided user ID.",
       "operationId": "GetUser",
       "method": "GET",
@@ -52,8 +52,8 @@
         "type": "rest"
       }
     },
-    "endpoint_.get-organization-user": {
-      "id": "endpoint_.get-organization-user",
+    "endpoint_.GetOrganizationUser": {
+      "id": "endpoint_.GetOrganizationUser",
       "description": "Returns the user with the provided user ID.",
       "operationId": "GetOrganizationUser",
       "method": "GET",
@@ -194,8 +194,8 @@
         "type": "rest"
       }
     },
-    "endpoint_organizations.search": {
-      "id": "endpoint_organizations.search",
+    "endpoint_organizations.Search": {
+      "id": "endpoint_organizations.Search",
       "description": "",
       "namespace": [
         "organizations"

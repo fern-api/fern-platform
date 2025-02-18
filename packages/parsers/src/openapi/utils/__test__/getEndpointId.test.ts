@@ -27,7 +27,7 @@ describe("getEndpointId", () => {
         displayName: undefined,
         isWebhook: undefined,
       })
-    ).toBe("endpoint_pets.get-by-id-pets-get");
+    ).toBe("endpoint_pets.getByIdPetsGet");
   });
 
   it("handles array namespace", () => {
@@ -41,7 +41,7 @@ describe("getEndpointId", () => {
         displayName: undefined,
         isWebhook: undefined,
       })
-    ).toBe("endpoint_pets/v1.get-by-id-pets-get");
+    ).toBe("endpoint_pets/v1.getByIdPetsGet");
   });
 
   it("handles undefined namespace", () => {
@@ -55,7 +55,7 @@ describe("getEndpointId", () => {
         displayName: undefined,
         isWebhook: undefined,
       })
-    ).toBe("endpoint_.get-by-id-pets-get");
+    ).toBe("endpoint_.getByIdPetsGet");
   });
 
   it("uses operationId when sdkMethodName is undefined", () => {
@@ -69,7 +69,7 @@ describe("getEndpointId", () => {
         displayName: undefined,
         isWebhook: undefined,
       })
-    ).toBe("endpoint_pets.get-pet-by-id");
+    ).toBe("endpoint_pets.getPetById");
   });
 
   it("falls back to path endpoint when no sdkMethodName or operationId", () => {
@@ -83,7 +83,7 @@ describe("getEndpointId", () => {
         displayName: undefined,
         isWebhook: undefined,
       })
-    ).toBe("endpoint_pets.pets-get");
+    ).toBe("endpoint_pets.petsGet");
   });
 
   it("handles complex paths", () => {
@@ -97,7 +97,7 @@ describe("getEndpointId", () => {
         displayName: undefined,
         isWebhook: undefined,
       })
-    ).toBe("endpoint_pets.get-details-api-v-1-pets-pet-id-details");
+    ).toBe("endpoint_pets.getDetailsApiV1PetsPetIdDetails");
   });
 
   it("uses displayName when it is provided", () => {
@@ -111,7 +111,7 @@ describe("getEndpointId", () => {
         displayName: "Get Pet By Id",
         isWebhook: undefined,
       })
-    ).toBe("endpoint_pets.get-pet-by-id");
+    ).toBe("endpoint_pets.getPetById");
   });
 
   it("handles apostrophe in displayName", () => {
@@ -126,6 +126,6 @@ describe("getEndpointId", () => {
         displayName: "Get Pet's By Id",
         isWebhook: undefined,
       })
-    ).toBe("endpoint_pets.get-pets-by-id");
+    ).toBe("endpoint_pets.getPetsById");
   });
 });

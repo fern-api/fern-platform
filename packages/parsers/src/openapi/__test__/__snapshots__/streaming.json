@@ -90,8 +90,8 @@
         "type": "rest"
       }
     },
-    "endpoint_.user-v-2": {
-      "id": "endpoint_.user-v-2",
+    "endpoint_.user_v2": {
+      "id": "endpoint_.user_v2",
       "operationId": "user_v2",
       "method": "POST",
       "path": [
@@ -179,8 +179,8 @@
         "type": "rest"
       }
     },
-    "endpoint_.user-v-3": {
-      "id": "endpoint_.user-v-3",
+    "endpoint_.user_v3": {
+      "id": "endpoint_.user_v3",
       "operationId": "user_v3",
       "method": "POST",
       "path": [

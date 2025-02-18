@@ -1,8 +1,8 @@
 {
   "id": "test-uuid-replacement",
   "endpoints": {
-    "endpoint_.create-a-user": {
-      "id": "endpoint_.create-a-user",
+    "endpoint_.createAUser": {
+      "id": "endpoint_.createAUser",
       "displayName": "Create a user",
       "method": "POST",
       "path": [
@@ -83,8 +83,8 @@
         "type": "rest"
       }
     },
-    "endpoint_.get-a-user": {
-      "id": "endpoint_.get-a-user",
+    "endpoint_.getAUser": {
+      "id": "endpoint_.getAUser",
       "displayName": "Get a user",
       "method": "GET",
       "path": [

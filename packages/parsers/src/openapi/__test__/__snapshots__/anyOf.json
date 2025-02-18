@@ -1,8 +1,8 @@
 {
   "id": "test-uuid-replacement",
   "endpoints": {
-    "endpoint_.get": {
-      "id": "endpoint_.get",
+    "endpoint_.Get": {
+      "id": "endpoint_.Get",
       "operationId": "Get",
       "method": "GET",
       "path": [

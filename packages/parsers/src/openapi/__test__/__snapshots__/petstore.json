@@ -1,8 +1,8 @@
 {
   "id": "test-uuid-replacement",
   "endpoints": {
-    "endpoint_pet.add-pet": {
-      "id": "endpoint_pet.add-pet",
+    "endpoint_pet.addPet": {
+      "id": "endpoint_pet.addPet",
       "description": "Add a new pet to the store",
       "namespace": [
         "pet"
@@ -365,8 +365,8 @@
         "type": "rest"
       }
     },
-    "endpoint_pet.update-pet": {
-      "id": "endpoint_pet.update-pet",
+    "endpoint_pet.updatePet": {
+      "id": "endpoint_pet.updatePet",
       "description": "Update an existing pet by Id",
       "namespace": [
         "pet"
@@ -729,8 +729,8 @@
         "type": "rest"
       }
     },
-    "endpoint_pets.get-pet-by-id": {
-      "id": "endpoint_pets.get-pet-by-id",
+    "endpoint_pets.getPetById": {
+      "id": "endpoint_pets.getPetById",
       "description": "Returns a pet when 0 < ID <= 10.  ID > 10 or nonintegers will simulate API error conditions",
       "namespace": [
         "pets"

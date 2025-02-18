@@ -65,8 +65,8 @@
         "type": "rest"
       }
     },
-    "endpoint_user.get-all": {
-      "id": "endpoint_user.get-all",
+    "endpoint_user.get_all": {
+      "id": "endpoint_user.get_all",
       "namespace": [
         "user"
       ],

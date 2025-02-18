@@ -1,4 +1,4 @@
-import { camelCase, kebabCase } from "es-toolkit/compat";
+import { camelCase } from "es-toolkit/compat";
 import { maybeSingleValueToArray } from "./maybeSingleValueToArray";
 
 export function getEndpointId({
@@ -60,10 +60,10 @@ function getEndpointName(
   displayName: string | undefined,
   fallbackName: string | undefined
 ): string | undefined {
-  return kebabCase(
+  return (
     sdkMethodName ||
-      operationId ||
-      camelCase(displayName ?? "") ||
-      camelCase(fallbackName ?? "")
+    operationId ||
+    camelCase(displayName ?? "") ||
+    camelCase(fallbackName ?? "")
   );
 }
