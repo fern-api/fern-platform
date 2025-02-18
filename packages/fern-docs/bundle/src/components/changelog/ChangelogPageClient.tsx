@@ -3,8 +3,7 @@
 import React, { Fragment, ReactElement, useEffect, useMemo } from "react";
 
 import { chunk } from "es-toolkit/array";
-import { atom, useAtomValue } from "jotai";
-import { useMemoOne } from "use-memo-one";
+import { useAtomValue } from "jotai";
 
 import type { FernNavigation } from "@fern-api/fdr-sdk";
 import { EMPTY_ARRAY } from "@fern-api/ui-core-utils";
@@ -12,8 +11,9 @@ import { cn } from "@fern-docs/components";
 import { addLeadingSlash } from "@fern-docs/utils";
 
 import { BuiltWithFern, HideBuiltWithFern } from "@/components/built-with-fern";
+import { useCurrentAnchor } from "@/hooks/use-anchor";
 
-import { IS_READY_ATOM, LOCATION_ATOM, SCROLL_BODY_ATOM } from "../atoms";
+import { SCROLL_BODY_ATOM } from "../atoms";
 import { FernLink } from "../components/FernLink";
 import { ChangelogContentLayout } from "./ChangelogContentLayout";
 
@@ -43,46 +43,41 @@ export default function ChangelogPageClient({
     () => chunk(flattenedEntries, CHANGELOG_PAGE_SIZE),
     [flattenedEntries]
   );
-  const page = useAtomValue(
-    useMemoOne(() => {
-      const pageAtom = atom((get) => {
-        if (!get(IS_READY_ATOM)) {
-          return 1;
-        }
+  const [page, setPage] = React.useState(1);
 
-        const hash = get(LOCATION_ATOM).hash;
-        if (hash == null) {
-          return 1;
-        }
+  const currentAnchor = useCurrentAnchor();
 
-        /**
-         * if the hash appears on an entry, navigate to page where the entry is located
-         */
-        const entryPageId = anchorIds[hash.slice(1)];
-        if (entryPageId != null) {
-          const entry = flattenedEntries.findIndex(
-            (entry) => entry.pageId === entryPageId
-          );
-          if (entry !== -1) {
-            return Math.floor(entry / CHANGELOG_PAGE_SIZE) + 1;
-          }
-        }
+  React.useEffect(() => {
+    const getPageFromHash = (): number => {
+      if (!currentAnchor) {
+        return 1;
+      }
 
-        const match = hash.match(/^#page-(\d+)$/)?.[1];
-        if (match == null) {
-          return 1;
-        }
-        /**
-         * Ensure the page number is within the bounds of the changelog entries
-         */
-        return Math.min(
-          Math.max(parseInt(match, 10), 1),
-          chunkedEntries.length
+      /**
+       * if the hash appears on an entry, navigate to page where the entry is located
+       */
+      const entryPageId = anchorIds[currentAnchor];
+      if (entryPageId != null) {
+        const entry = flattenedEntries.findIndex(
+          (entry) => entry.pageId === entryPageId
         );
-      });
-      return pageAtom;
-    }, [anchorIds, flattenedEntries, chunkedEntries.length])
-  );
+        if (entry !== -1) {
+          return Math.floor(entry / CHANGELOG_PAGE_SIZE) + 1;
+        }
+      }
+
+      const match = currentAnchor.match(/^page-(\d+)$/)?.[1];
+      if (match == null) {
+        return 1;
+      }
+      /**
+       * Ensure the page number is within the bounds of the changelog entries
+       */
+      return Math.min(Math.max(parseInt(match, 10), 1), chunkedEntries.length);
+    };
+
+    setPage(getPageFromHash());
+  }, [currentAnchor]);
 
   const fullWidth = true;
 

@@ -3,14 +3,13 @@
 import React from "react";
 
 import { noop } from "ts-essentials";
-import { useCallbackOne } from "use-memo-one";
 
 import {
   EndpointDefinition,
   ErrorResponse,
 } from "@fern-api/fdr-sdk/api-definition";
 
-import { ANCHOR_ATOM, useAtomEffect } from "@/components/atoms";
+import { useCurrentAnchor } from "@/hooks/use-anchor";
 
 import { useExampleSelection } from "./useExampleSelection";
 import { convertNameToAnchorPart } from "./utils";
@@ -68,26 +67,22 @@ export function EndpointContextProvider({
     [setSelectedExampleKey]
   );
 
-  useAtomEffect(
-    useCallbackOne(
-      (get) => {
-        const anchor = get(ANCHOR_ATOM);
-        const statusCodeOrName =
-          maybeGetErrorStatusCodeOrNameFromAnchor(anchor);
-        if (statusCodeOrName != null) {
-          const error = endpoint.errors?.find((e) =>
-            typeof statusCodeOrName === "number"
-              ? e.statusCode === statusCodeOrName
-              : convertNameToAnchorPart(e.name) === statusCodeOrName
-          );
-          if (error != null) {
-            setStatusCode(error.statusCode);
-          }
-        }
-      },
-      [endpoint.errors, setStatusCode]
-    )
-  );
+  const currentAnchor = useCurrentAnchor();
+
+  React.useEffect(() => {
+    const statusCodeOrName =
+      maybeGetErrorStatusCodeOrNameFromAnchor(currentAnchor);
+    if (statusCodeOrName != null) {
+      const error = endpoint.errors?.find((e) =>
+        typeof statusCodeOrName === "number"
+          ? e.statusCode === statusCodeOrName
+          : convertNameToAnchorPart(e.name) === statusCodeOrName
+      );
+      if (error != null) {
+        setStatusCode(error.statusCode);
+      }
+    }
+  }, [currentAnchor]);
 
   const selectedError = endpoint.errors?.find(
     (e) =>

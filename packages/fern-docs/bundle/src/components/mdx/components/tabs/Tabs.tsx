@@ -1,14 +1,12 @@
-import { FC, ReactNode, useEffect, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import React from "react";
 
 import * as RadixTabs from "@radix-ui/react-tabs";
-import { useAtomValue } from "jotai";
 
 import { ApiDefinition } from "@fern-api/fdr-sdk";
 
+import { useCurrentAnchor } from "@/hooks/use-anchor";
 import { useProgrammingLanguage } from "@/state/language";
-
-import { ANCHOR_ATOM } from "../../../atoms";
 
 export interface TabProps {
   title?: string;
@@ -34,7 +32,7 @@ export function TabGroup({
   ) as React.ReactElement<React.ComponentProps<typeof Tab>>[];
 
   const [activeTab, setActiveTab] = useState(() => tabs[0]?.props.id);
-  const anchor = useAtomValue(ANCHOR_ATOM);
+  const anchor = useCurrentAnchor();
   const [selectedLanguage, setSelectedLanguage] = useProgrammingLanguage();
   useEffect(() => {
     if (anchor != null) {

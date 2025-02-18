@@ -1,10 +1,8 @@
 import React from "react";
 
-import { useAtom } from "jotai";
-
 import * as AccordionComponent from "@fern-docs/components";
 
-import { ANCHOR_ATOM } from "@/components/atoms";
+import { useCurrentAnchor } from "@/hooks/use-anchor";
 
 export interface AccordionGroupProps {
   children: React.ReactNode;
@@ -13,7 +11,7 @@ export interface AccordionGroupProps {
 
 export function AccordionGroup({ children }: AccordionGroupProps) {
   const [activeTabs, setActiveTabs] = React.useState<string[]>([]);
-  const [anchor, setAnchor] = useAtom(ANCHOR_ATOM);
+  const anchor = useCurrentAnchor();
 
   const items = React.Children.toArray(children).filter(
     (child) => React.isValidElement(child) && child.type === Accordion
@@ -29,18 +27,15 @@ export function AccordionGroup({ children }: AccordionGroupProps) {
     }
   }, [anchor, items]);
 
-  const handleValueChange = React.useCallback(
-    (nextActiveTabs: string[]) => {
-      setActiveTabs((prev) => {
-        const added = nextActiveTabs.filter((tab) => !prev.includes(tab));
-        if (added[0] != null) {
-          setAnchor(added[0]);
-        }
-        return nextActiveTabs;
-      });
-    },
-    [setAnchor]
-  );
+  const handleValueChange = React.useCallback((nextActiveTabs: string[]) => {
+    setActiveTabs((prev) => {
+      const added = nextActiveTabs.filter((tab) => !prev.includes(tab));
+      if (added[0]) {
+        window.location.hash = `#${added[0]}`;
+      }
+      return nextActiveTabs;
+    });
+  }, []);
 
   return (
     <AccordionComponent.Accordion

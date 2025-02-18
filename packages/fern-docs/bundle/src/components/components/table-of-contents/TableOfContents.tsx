@@ -8,6 +8,7 @@ import {
   useMemo,
   useState,
 } from "react";
+import React from "react";
 
 import fastdom from "fastdom";
 import { useCallbackOne } from "use-memo-one";
@@ -15,7 +16,8 @@ import { useCallbackOne } from "use-memo-one";
 import { cn } from "@fern-docs/components";
 import type { TableOfContentsItem as TableOfContentsItemType } from "@fern-docs/mdx";
 
-import { ANCHOR_ATOM, useAtomEffect } from "../../atoms";
+import { useCurrentAnchor } from "@/hooks/use-anchor";
+
 import { TableOfContentsItem } from "./TableOfContentsItem";
 import { useTableOfContentsObserver } from "./useTableOfContentsObserver";
 
@@ -45,25 +47,18 @@ export const TableOfContents: React.FC<TableOfContents.Props> = ({
     undefined
   );
 
-  useAtomEffect(
-    useCallbackOne(
-      (get) => {
-        const currentPathAnchor = get(ANCHOR_ATOM);
-        if (
-          currentPathAnchor != null &&
-          allAnchors.includes(currentPathAnchor)
-        ) {
-          anchorJustSet = true;
-          setAnchorInView(currentPathAnchor);
-          clearTimeout(anchorJustSetTimeout);
-          anchorJustSetTimeout = window.setTimeout(() => {
-            anchorJustSet = false;
-          }, 500);
-        }
-      },
-      [allAnchors]
-    )
-  );
+  const currentPathAnchor = useCurrentAnchor();
+
+  React.useEffect(() => {
+    if (currentPathAnchor != null && allAnchors.includes(currentPathAnchor)) {
+      anchorJustSet = true;
+      setAnchorInView(currentPathAnchor);
+      clearTimeout(anchorJustSetTimeout);
+      anchorJustSetTimeout = window.setTimeout(() => {
+        anchorJustSet = false;
+      }, 500);
+    }
+  }, [allAnchors]);
 
   const measure = useTableOfContentsObserver(
     allAnchors,

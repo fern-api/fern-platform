@@ -876,9 +876,6 @@ importers:
       jotai-effect:
         specifier: ^1.1.6
         version: 1.1.6(jotai@2.12.0(@types/react@19.0.8)(react@19.0.0))
-      jotai-location:
-        specifier: ^0.5.5
-        version: 0.5.5(jotai@2.12.0(@types/react@19.0.8)(react@19.0.0))
       jsonpath-plus:
         specifier: 10.0.7
         version: 10.0.7
@@ -11266,11 +11263,6 @@ packages:
     engines: {node: '>=12.20.0'}
     peerDependencies:
       jotai: '>=2.5.0'
-
-  jotai-location@0.5.5:
-    resolution: {integrity: sha512-6QW/7W9IJHjhbn7gRgAw4sC30k0/G6JiC4uPlKi8ZPZGYk7R7r9PyMD2eVhL4XSxxag89JxS1iSyr6BIXsB4Sw==}
-    peerDependencies:
-      jotai: '>=1.11.0'
 
   jotai@2.12.0:
     resolution: {integrity: sha512-j5B4NmUw8gbuN7AG4NufWw00rfpm6hexL2CVhKD7juoP2YyD9FEUV5ar921JMvadyrxQhU1NpuKUL3QfsAlVpA==}
@@ -27174,10 +27166,6 @@ snapshots:
   jose@5.9.6: {}
 
   jotai-effect@1.1.6(jotai@2.12.0(@types/react@19.0.8)(react@19.0.0)):
-    dependencies:
-      jotai: 2.12.0(@types/react@19.0.8)(react@19.0.0)
-
-  jotai-location@0.5.5(jotai@2.12.0(@types/react@19.0.8)(react@19.0.0)):
     dependencies:
       jotai: 2.12.0(@types/react@19.0.8)(react@19.0.0)
 
