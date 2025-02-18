@@ -53,24 +53,25 @@ function PageHeaderSkeleton() {
   );
 }
 
-function TableOfContentsSkeleton() {
+function ContentSkeleton() {
   return (
-    <>
-      <div className="bg-(--grayscale-a3) h-9 w-32 rounded-md" />
-      <div className="bg-(--grayscale-a3) h-9 w-32 rounded-md" />
-      <div className="bg-(--grayscale-a3) h-9 w-32 rounded-md" />
-    </>
+    <section className="my-8 space-y-3.5">
+      <div className="bg-(--grayscale-a3) w-content-width h-4 max-w-full rounded-md" />
+      <div className="bg-(--grayscale-a3) w-content-width h-4 max-w-full rounded-md" />
+      <div className="bg-(--grayscale-a3) w-content-width h-4 max-w-full rounded-md" />
+      <div className="bg-(--grayscale-a3) h-4 w-[calc(var(--spacing-content-width)*0.67)] max-w-full rounded-md" />
+    </section>
   );
 }
 
-function ContentSkeleton() {
+function TableOfContentsSkeleton() {
   return (
-    <section className="my-8 space-y-2">
+    <section className="my-8 space-y-3.5">
       <div className="bg-(--grayscale-a3) w-21 h-3.5 rounded-md" />
-      <div className="border-(--grayscale-a3) space-y-2 border-l-2 pl-3">
-        <div className="bg-(--grayscale-a3) h-3.5 w-80 rounded-md" />
-        <div className="bg-(--grayscale-a3) w-90 h-3.5 rounded-md" />
-        <div className="bg-(--grayscale-a3) h-3.5 w-80 rounded-md" />
+      <div className="border-(--grayscale-a3) space-y-3.5 border-l-2 pl-3">
+        <div className="bg-(--grayscale-a3) w-38 h-3.5 rounded-md" />
+        <div className="bg-(--grayscale-a3) w-42 h-3.5 rounded-md" />
+        <div className="bg-(--grayscale-a3) h-3.5 w-40 rounded-md" />
       </div>
     </section>
   );
