@@ -208,8 +208,10 @@ function withVercelEnv(config: NextConfig): NextConfig {
   return {
     ...config,
     deploymentId: process.env.VERCEL_DEPLOYMENT_ID, // skew protection
-    productionBrowserSourceMaps: process.env.VERCEL_ENV !== "production",
-    reactProductionProfiling: process.env.VERCEL_ENV !== "production",
+    // productionBrowserSourceMaps: process.env.VERCEL_ENV !== "production",
+    // reactProductionProfiling: process.env.VERCEL_ENV !== "production",
+    productionBrowserSourceMaps: false,
+    reactProductionProfiling: false,
   };
 }
 
