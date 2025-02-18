@@ -1,4 +1,4 @@
-import DocsLayout from "../_layout";
+import DocsLayout from "../../_layout";
 
 export default function Layout({
   children,
