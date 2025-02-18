@@ -64,7 +64,7 @@
     "marked": "^5.1.0",
     "node-cron": "^3.0.2",
     "path-resolver": "*",
-    "redis": "^4.6.13",
+    "redis": "^4.7.0",
     "semver": "^7.6.2",
     "undici": "^6.20.1",
     "url-join": "5.0.0",
