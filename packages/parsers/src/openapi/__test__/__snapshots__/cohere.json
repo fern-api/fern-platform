@@ -1078,6 +1078,10 @@
         {
           "path": "/v1/chat",
           "responseStatusCode": 200,
+          "headers": {
+            "X-Client-Name": "my-cool-project",
+            "Accepts": "text/event-stream"
+          },
           "requestBody": {
             "type": "json",
             "value": {
@@ -1309,6 +1313,10 @@
         {
           "path": "/v1/chat",
           "responseStatusCode": 200,
+          "headers": {
+            "X-Client-Name": "my-cool-project",
+            "Accepts": "text/event-stream"
+          },
           "requestBody": {
             "type": "json",
             "value": {
@@ -1510,6 +1518,10 @@
         {
           "path": "/v1/chat",
           "responseStatusCode": 200,
+          "headers": {
+            "X-Client-Name": "my-cool-project",
+            "Accepts": "text/event-stream"
+          },
           "requestBody": {
             "type": "json",
             "value": {
@@ -1649,6 +1661,10 @@
         {
           "path": "/v1/chat",
           "responseStatusCode": 200,
+          "headers": {
+            "X-Client-Name": "my-cool-project",
+            "Accepts": "text/event-stream"
+          },
           "requestBody": {
             "type": "json",
             "value": {
@@ -2682,6 +2698,9 @@
         {
           "path": "/v2/chat",
           "responseStatusCode": 200,
+          "headers": {
+            "X-Client-Name": "my-cool-project"
+          },
           "requestBody": {
             "type": "json",
             "value": {
@@ -2765,6 +2784,9 @@
         {
           "path": "/v2/chat",
           "responseStatusCode": 200,
+          "headers": {
+            "X-Client-Name": "my-cool-project"
+          },
           "requestBody": {
             "type": "json",
             "value": {
@@ -3020,6 +3042,9 @@
         {
           "path": "/v2/chat",
           "responseStatusCode": 200,
+          "headers": {
+            "X-Client-Name": "my-cool-project"
+          },
           "requestBody": {
             "type": "json",
             "value": {
@@ -3134,6 +3159,9 @@
         {
           "path": "/v2/chat",
           "responseStatusCode": 200,
+          "headers": {
+            "X-Client-Name": "my-cool-project"
+          },
           "requestBody": {
             "type": "json",
             "value": {
@@ -4203,6 +4231,9 @@
         {
           "path": "/v1/generate",
           "responseStatusCode": 200,
+          "headers": {
+            "X-Client-Name": "my-cool-project"
+          },
           "requestBody": {
             "type": "json",
             "value": {
@@ -4284,6 +4315,9 @@
         {
           "path": "/v1/generate",
           "responseStatusCode": 200,
+          "headers": {
+            "X-Client-Name": "my-cool-project"
+          },
           "requestBody": {
             "type": "json",
             "value": {
@@ -4365,6 +4399,9 @@
         {
           "path": "/v1/generate",
           "responseStatusCode": 200,
+          "headers": {
+            "X-Client-Name": "my-cool-project"
+          },
           "requestBody": {
             "type": "json",
             "value": {
@@ -4446,6 +4483,9 @@
         {
           "path": "/v1/generate",
           "responseStatusCode": 200,
+          "headers": {
+            "X-Client-Name": "my-cool-project"
+          },
           "requestBody": {
             "type": "json",
             "value": {
@@ -4527,6 +4567,9 @@
         {
           "path": "/v1/generate",
           "responseStatusCode": 200,
+          "headers": {
+            "X-Client-Name": "my-cool-project"
+          },
           "requestBody": {
             "type": "json",
             "value": {
@@ -4628,6 +4671,9 @@
         {
           "path": "/v1/generate",
           "responseStatusCode": 200,
+          "headers": {
+            "X-Client-Name": "my-cool-project"
+          },
           "requestBody": {
             "type": "json",
             "value": {
@@ -4696,6 +4742,9 @@
         {
           "path": "/v1/generate",
           "responseStatusCode": 200,
+          "headers": {
+            "X-Client-Name": "my-cool-project"
+          },
           "requestBody": {
             "type": "json",
             "value": {
@@ -4797,6 +4846,9 @@
         {
           "path": "/v1/generate",
           "responseStatusCode": 200,
+          "headers": {
+            "X-Client-Name": "my-cool-project"
+          },
           "requestBody": {
             "type": "json",
             "value": {
@@ -5563,6 +5615,9 @@
         {
           "path": "/v1/embed",
           "responseStatusCode": 200,
+          "headers": {
+            "X-Client-Name": "my-cool-project"
+          },
           "requestBody": {
             "type": "json",
             "value": {
@@ -6676,6 +6731,9 @@
         {
           "path": "/v1/embed",
           "responseStatusCode": 200,
+          "headers": {
+            "X-Client-Name": "my-cool-project"
+          },
           "requestBody": {
             "type": "json",
             "value": {
@@ -9495,6 +9553,9 @@
         {
           "path": "/v2/embed",
           "responseStatusCode": 200,
+          "headers": {
+            "X-Client-Name": "my-cool-project"
+          },
           "requestBody": {
             "type": "json",
             "value": {
@@ -10607,6 +10668,9 @@
         {
           "path": "/v2/embed",
           "responseStatusCode": 200,
+          "headers": {
+            "X-Client-Name": "my-cool-project"
+          },
           "requestBody": {
             "type": "json",
             "value": {
@@ -13307,6 +13371,9 @@
         {
           "path": "/v1/embed-jobs",
           "responseStatusCode": 200,
+          "headers": {
+            "X-Client-Name": "my-cool-project"
+          },
           "responseBody": {
             "type": "json",
             "value": {
@@ -13965,6 +14032,9 @@
         {
           "path": "/v1/embed-jobs",
           "responseStatusCode": 200,
+          "headers": {
+            "X-Client-Name": "my-cool-project"
+          },
           "requestBody": {
             "type": "json",
             "value": {
@@ -14639,6 +14709,9 @@
           "pathParameters": {
             "id": "id"
           },
+          "headers": {
+            "X-Client-Name": "my-cool-project"
+          },
           "responseBody": {
             "type": "json",
             "value": {
@@ -15310,6 +15383,9 @@
           "responseStatusCode": 200,
           "pathParameters": {
             "id": "id"
+          },
+          "headers": {
+            "X-Client-Name": "my-cool-project"
           },
           "snippets": {
             "go": [
@@ -16163,6 +16239,9 @@
         {
           "path": "/v1/rerank",
           "responseStatusCode": 200,
+          "headers": {
+            "X-Client-Name": "my-cool-project"
+          },
           "requestBody": {
             "type": "json",
             "value": {
@@ -16973,6 +17052,9 @@
         {
           "path": "/v2/rerank",
           "responseStatusCode": 200,
+          "headers": {
+            "X-Client-Name": "my-cool-project"
+          },
           "requestBody": {
             "type": "json",
             "value": {
@@ -17940,6 +18022,9 @@
         {
           "path": "/v1/classify",
           "responseStatusCode": 200,
+          "headers": {
+            "X-Client-Name": "my-cool-project"
+          },
           "requestBody": {
             "type": "json",
             "value": {
@@ -18771,6 +18856,9 @@
         {
           "path": "/v1/datasets",
           "responseStatusCode": 200,
+          "headers": {
+            "X-Client-Name": "my-cool-project"
+          },
           "responseBody": {
             "type": "json",
             "value": {
@@ -19632,6 +19720,9 @@
             "name": "name",
             "type": "embed-input"
           },
+          "headers": {
+            "X-Client-Name": "my-cool-project"
+          },
           "responseBody": {
             "type": "json",
             "value": {
@@ -20251,6 +20342,9 @@
         {
           "path": "/v1/datasets/usage",
           "responseStatusCode": 200,
+          "headers": {
+            "X-Client-Name": "my-cool-project"
+          },
           "responseBody": {
             "type": "json",
             "value": {
@@ -20878,6 +20972,9 @@
           "responseStatusCode": 200,
           "pathParameters": {
             "id": "id"
+          },
+          "headers": {
+            "X-Client-Name": "my-cool-project"
           },
           "responseBody": {
             "type": "json",
@@ -21565,6 +21662,9 @@
           "responseStatusCode": 200,
           "pathParameters": {
             "id": "id"
+          },
+          "headers": {
+            "X-Client-Name": "my-cool-project"
           },
           "responseBody": {
             "type": "json",
@@ -22381,6 +22481,9 @@
         {
           "path": "/v1/summarize",
           "responseStatusCode": 200,
+          "headers": {
+            "X-Client-Name": "my-cool-project"
+          },
           "requestBody": {
             "type": "json",
             "value": {
@@ -23100,6 +23203,9 @@
           "path": "/v1/tokenize",
           "responseStatusCode": 200,
           "name": "Example",
+          "headers": {
+            "X-Client-Name": "my-cool-project"
+          },
           "requestBody": {
             "type": "json",
             "value": {
@@ -23815,6 +23921,9 @@
         {
           "path": "/v1/detokenize",
           "responseStatusCode": 200,
+          "headers": {
+            "X-Client-Name": "my-cool-project"
+          },
           "requestBody": {
             "type": "json",
             "value": {
@@ -24469,6 +24578,9 @@
         {
           "path": "/v1/connectors",
           "responseStatusCode": 200,
+          "headers": {
+            "X-Client-Name": "my-cool-project"
+          },
           "responseBody": {
             "type": "json",
             "value": {
@@ -25099,6 +25211,9 @@
         {
           "path": "/v1/connectors",
           "responseStatusCode": 200,
+          "headers": {
+            "X-Client-Name": "my-cool-project"
+          },
           "requestBody": {
             "type": "json",
             "value": {
@@ -25764,6 +25879,9 @@
           "pathParameters": {
             "id": "id"
           },
+          "headers": {
+            "X-Client-Name": "my-cool-project"
+          },
           "responseBody": {
             "type": "json",
             "value": {
@@ -26416,6 +26534,9 @@
           "responseStatusCode": 200,
           "pathParameters": {
             "id": "id"
+          },
+          "headers": {
+            "X-Client-Name": "my-cool-project"
           },
           "requestBody": {
             "type": "json",
@@ -27081,6 +27202,9 @@
           "pathParameters": {
             "id": "id"
           },
+          "headers": {
+            "X-Client-Name": "my-cool-project"
+          },
           "responseBody": {
             "type": "json",
             "value": {}
@@ -27735,6 +27859,9 @@
           "pathParameters": {
             "id": "id"
           },
+          "headers": {
+            "X-Client-Name": "my-cool-project"
+          },
           "responseBody": {
             "type": "json",
             "value": {
@@ -28373,6 +28500,9 @@
           "responseStatusCode": 200,
           "pathParameters": {
             "model": "command-r"
+          },
+          "headers": {
+            "X-Client-Name": "my-cool-project"
           },
           "responseBody": {
             "type": "json",
@@ -29634,6 +29764,9 @@
         {
           "path": "/v1/check-api-key",
           "responseStatusCode": 200,
+          "headers": {
+            "X-Client-Name": "my-cool-project"
+          },
           "responseBody": {
             "type": "json",
             "value": {
@@ -29923,6 +30056,9 @@
         {
           "path": "/v1/finetuning/finetuned-models",
           "responseStatusCode": 200,
+          "headers": {
+            "X-Client-Name": "my-cool-project"
+          },
           "responseBody": {
             "type": "json",
             "value": {
@@ -30257,6 +30393,9 @@
         {
           "path": "/v1/finetuning/finetuned-models",
           "responseStatusCode": 200,
+          "headers": {
+            "X-Client-Name": "my-cool-project"
+          },
           "requestBody": {
             "type": "json",
             "value": {
@@ -30605,6 +30744,9 @@
           "responseStatusCode": 200,
           "pathParameters": {
             "id": "id"
+          },
+          "headers": {
+            "X-Client-Name": "my-cool-project"
           },
           "responseBody": {
             "type": "json",
@@ -31103,6 +31245,9 @@
           "pathParameters": {
             "id": "id"
           },
+          "headers": {
+            "X-Client-Name": "my-cool-project"
+          },
           "requestBody": {
             "type": "json",
             "value": {
@@ -31478,6 +31623,9 @@
           "pathParameters": {
             "id": "id"
           },
+          "headers": {
+            "X-Client-Name": "my-cool-project"
+          },
           "responseBody": {
             "type": "json",
             "value": {}
@@ -31844,6 +31992,9 @@
           "responseStatusCode": 200,
           "pathParameters": {
             "finetuned_model_id": "finetuned_model_id"
+          },
+          "headers": {
+            "X-Client-Name": "my-cool-project"
           },
           "responseBody": {
             "type": "json",
@@ -32215,6 +32366,9 @@
           "responseStatusCode": 200,
           "pathParameters": {
             "finetuned_model_id": "finetuned_model_id"
+          },
+          "headers": {
+            "X-Client-Name": "my-cool-project"
           },
           "responseBody": {
             "type": "json",

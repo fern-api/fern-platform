@@ -556,7 +556,8 @@
           "responseStatusCode": 200,
           "name": "Successful Response",
           "queryParameters": {
-            "created_at_after": "1677253093"
+            "created_at_after": "1677253093",
+            "created_at_before": "1677861493"
           },
           "responseBody": {
             "type": "json",
@@ -2574,6 +2575,12 @@
           "path": "/articles/search",
           "responseStatusCode": 200,
           "name": "Search Successful",
+          "queryParameters": {
+            "phrase": "Getting started",
+            "state": "published",
+            "help_center_id": 123,
+            "highlight": false
+          },
           "responseBody": {
             "type": "json",
             "value": {
@@ -4382,6 +4389,14 @@
           "path": "/companies",
           "responseStatusCode": 200,
           "name": "Successful",
+          "queryParameters": {
+            "name": "my company",
+            "company_id": "12345",
+            "tag_id": "678910",
+            "segment_id": "98765",
+            "page": 1,
+            "per_page": 15
+          },
           "responseBody": {
             "type": "json",
             "value": {
@@ -5787,6 +5802,11 @@
           "path": "/companies/list",
           "responseStatusCode": 200,
           "name": "Successful",
+          "queryParameters": {
+            "page": 1,
+            "per_page": 15,
+            "order": "desc"
+          },
           "responseBody": {
             "type": "json",
             "value": {
@@ -12021,6 +12041,9 @@
           "pathParameters": {
             "id": 123
           },
+          "queryParameters": {
+            "display_as": "plaintext"
+          },
           "responseBody": {
             "type": "json",
             "value": {
@@ -12324,6 +12347,9 @@
           "pathParameters": {
             "id": 123
           },
+          "queryParameters": {
+            "display_as": "plaintext"
+          },
           "requestBody": {
             "type": "json",
             "value": {
@@ -12452,6 +12478,9 @@
           "name": "Not Found",
           "pathParameters": {
             "id": 123
+          },
+          "queryParameters": {
+            "display_as": "plaintext"
           },
           "requestBody": {
             "type": "json",
@@ -16057,6 +16086,10 @@
           "path": "/data_attributes",
           "responseStatusCode": 200,
           "name": "Successful Response",
+          "queryParameters": {
+            "model": "company",
+            "include_archived": false
+          },
           "responseBody": {
             "type": "json",
             "value": {
@@ -20441,6 +20474,9 @@
           "path": "/segments",
           "responseStatusCode": 200,
           "name": "Successful Response",
+          "queryParameters": {
+            "include_count": true
+          },
           "responseBody": {
             "type": "json",
             "value": {
