@@ -1,6 +1,5 @@
 "use client";
 
-import { useServerInsertedHTML } from "next/navigation";
 import React from "react";
 
 import { Xmark } from "iconoir-react";
@@ -62,9 +61,6 @@ const MotionAnnouncement = motion.create(AnnouncementInternal, {
   forwardMotionProps: true,
 });
 
-const useIsomorphicLayoutEffect =
-  typeof window !== "undefined" ? React.useLayoutEffect : React.useEffect;
-
 export function Announcement({
   className,
   announcement,
@@ -80,7 +76,7 @@ export function Announcement({
 
   const [isClientSide, setIsClientSide] = React.useState(false);
 
-  useIsomorphicLayoutEffect(() => {
+  React.useEffect(() => {
     setIsClientSide(true);
   }, []);
 
@@ -93,7 +89,10 @@ export function Announcement({
       {!isDismissed && isClientSide && (
         <MotionAnnouncement
           suppressHydrationWarning
-          className={cn("fern-announcement", className)}
+          className={cn(
+            "fern-announcement [&_.fern-mdx-link]:text-inherit",
+            className
+          )}
           exit={{ height: 0 }}
           dismiss={() => {
             useAnnouncementStore.setState({ announcement });

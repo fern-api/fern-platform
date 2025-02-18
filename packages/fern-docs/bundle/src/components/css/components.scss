@@ -30,8 +30,13 @@
   }
 
   .fern-mdx-link {
-    @apply text-(--accent-a11) decoration-accent-aa underline decoration-1 underline-offset-4 hover:decoration-2;
+    @apply text-(--accent-a11);
     @apply font-semibold;
+
+    text-decoration-line: underline;
+    text-decoration-color: currentColor;
+    text-decoration-thickness: 1px;
+    text-underline-offset: var(--spacing);
 
     h1 &,
     h2 &,
@@ -43,13 +48,11 @@
     }
 
     svg.external-link-icon {
-      @apply text-muted ml-0.5 inline-block size-3.5;
+      @apply ml-0.5 inline-block size-3.5 text-current opacity-70;
     }
 
     &:hover {
-      svg.external-link-icon {
-        @apply text-(--accent-a11);
-      }
+      text-decoration-thickness: 2px !important;
     }
   }
 

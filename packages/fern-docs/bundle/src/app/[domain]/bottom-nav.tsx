@@ -28,7 +28,9 @@ export function BottomNavigation({
   };
 }) {
   if (neighbors.prev == null && neighbors.next == null) {
-    return <Separator className="bg-(--grayscale-a5) h-px" />;
+    return (
+      <Separator orientation="horizontal" className="bg-border-default h-px" />
+    );
   }
 
   return (

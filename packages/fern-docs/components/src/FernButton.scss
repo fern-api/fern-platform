@@ -141,50 +141,24 @@
 
         @apply hover:bg-tag-default data-[selected=true]:bg-tag-default data-[state=checked]:bg-tag-default data-[state=on]:bg-tag-default data-[state=open]:bg-tag-default data-[state=opening]:bg-tag-default;
 
-        svg {
-          color: --alpha(var(--color-body) / 60%);
-        }
-
-        &:not(.primary, .success, .warning, .danger) {
-          svg {
-            color: --alpha(var(--color-body) / 70%);
-          }
-        }
-
         &.primary {
           @apply text-accent hover:text-accent;
           @apply hover:bg-tag-primary data-[selected=true]:bg-tag-primary data-[state=checked]:bg-tag-primary data-[state=on]:bg-tag-primary data-[state=open]:bg-tag-primary data-[state=opening]:bg-tag-primary;
-
-          svg {
-            @apply text-accent-aa;
-          }
         }
 
         &.success {
           @apply text-intent-success hover:text-intent-success;
           @apply hover:bg-tag-success data-[selected=true]:bg-tag-success data-[state=checked]:bg-tag-success data-[state=on]:bg-tag-success data-[state=open]:bg-tag-success data-[state=opening]:bg-tag-success;
-
-          svg {
-            @apply text-intent-success;
-          }
         }
 
         &.warning {
           @apply text-intent-warning hover:text-intent-warning;
           @apply hover:bg-tag-warning data-[selected=true]:bg-tag-warning data-[state=checked]:bg-tag-warning data-[state=on]:bg-tag-warning data-[state=open]:bg-tag-warning data-[state=opening]:bg-tag-warning;
-
-          svg {
-            @apply text-intent-warning;
-          }
         }
 
         &.danger {
           @apply text-intent-danger hover:text-intent-danger;
           @apply hover:bg-tag-danger data-[selected=true]:bg-tag-danger data-[state=checked]:bg-tag-danger data-[state=on]:bg-tag-danger data-[state=open]:bg-tag-danger data-[state=opening]:bg-tag-danger;
-
-          svg {
-            @apply text-intent-danger;
-          }
         }
       }
 
@@ -199,10 +173,6 @@
           @apply bg-black/60 text-black dark:bg-white/60 dark:text-white;
         }
 
-        svg {
-          color: --alpha(var(--color-body) / 60%);
-        }
-
         &.primary {
           @apply text-accent-contrast bg-accent hover:bg-accent;
 
@@ -212,10 +182,6 @@
           &[data-state="open"],
           &[data-state="opening"] {
             @apply text-accent-contrast bg-accent-tinted;
-          }
-
-          svg {
-            @apply text-accent-contrast;
           }
         }
 
@@ -254,14 +220,6 @@
             @apply bg-intent-danger-lightened text-white dark:text-black;
           }
         }
-
-        &.success,
-        &.warning,
-        &.danger {
-          svg {
-            @apply text-accent-contrast;
-          }
-        }
       }
 
       &.outlined {
@@ -276,16 +234,8 @@
           @apply text-body bg-tag-default;
         }
 
-        svg {
-          color: --alpha(var(--color-body) / 60%);
-        }
-
         &.primary {
           @apply text-accent ring-border-primary;
-
-          svg {
-            @apply text-accent-aa;
-          }
 
           &:hover,
           &[data-state="on"],
@@ -293,10 +243,6 @@
           &[data-state="open"],
           &[data-state="opening"] {
             @apply text-accent-aaa bg-tag-primary;
-
-            svg {
-              @apply text-accent-aaa;
-            }
           }
         }
 
@@ -310,10 +256,6 @@
           &[data-state="opening"] {
             @apply bg-tag-success text-intent-success;
           }
-
-          svg {
-            @apply text-intent-success;
-          }
         }
 
         &.warning {
@@ -326,10 +268,6 @@
           &[data-state="opening"] {
             @apply bg-tag-warning text-intent-warning;
           }
-
-          svg {
-            @apply text-intent-warning;
-          }
         }
 
         &.danger {
@@ -341,10 +279,6 @@
           &[data-state="open"],
           &[data-state="opening"] {
             @apply bg-tag-danger text-intent-danger;
-          }
-
-          svg {
-            @apply text-intent-danger;
           }
         }
       }

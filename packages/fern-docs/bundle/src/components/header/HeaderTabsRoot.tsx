@@ -9,7 +9,7 @@ export function HeaderTabsRoot({ children }: { children: React.ReactNode }) {
   return (
     <Tabs.Root
       value={currentTab?.id}
-      className="max-w-page-width mx-auto hidden select-none lg:block"
+      className="w-page-width-padded px-page-padding mx-auto hidden max-w-full select-none lg:block"
     >
       {children}
     </Tabs.Root>
