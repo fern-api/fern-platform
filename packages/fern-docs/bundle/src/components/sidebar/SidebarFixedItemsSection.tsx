@@ -1,64 +1,32 @@
-import { useMemo } from "react";
-
 import { cn } from "@fern-docs/components";
 
-import { useThemeSwitchEnabled } from "@/hooks/use-theme";
-import { SearchV2Trigger } from "@/state/search";
-
-import { ThemeButton } from "../themes";
-
-export declare namespace SidebarFixedItemsSection {
-  export interface Props {
-    logo: React.ReactNode;
-    versionSelect: React.ReactNode;
-    className?: string;
-    showBorder?: boolean;
-    currentTabIndex?: number | undefined;
-  }
-}
-
-export const SidebarFixedItemsSection: React.FC<
-  SidebarFixedItemsSection.Props
-> = ({ logo, versionSelect, className, showBorder }) => {
-  const showSearchBar = false;
-  const themeSwitchEnabled = useThemeSwitchEnabled();
-  const layout = {
-    disableHeader: false,
-  };
-
-  const searchBar = useMemo(() => {
-    return showSearchBar ? (
-      <div className="fern-sidebar-searchbar-container">
-        <SearchV2Trigger />
-      </div>
-    ) : null;
-  }, [showSearchBar]);
-
-  if (!showSearchBar) {
-    return null;
-  }
-
-  const header = layout?.disableHeader && (
-    <div className="fern-sidebar-header">
-      <div className="relative flex h-full min-w-fit flex-1 shrink-0 items-center gap-2 py-1">
-        <div className="flex items-center gap-2">
-          {logo}
-          {versionSelect}
-        </div>
-      </div>
-      <div className="-mr-3">
-        {themeSwitchEnabled && <ThemeButton size="large" />}
-      </div>
-    </div>
-  );
-
+export function SidebarFixedItemsSection({
+  logo,
+  versionSelect,
+  className,
+  showBorder,
+}: {
+  logo: React.ReactNode;
+  versionSelect: React.ReactNode;
+  showBorder?: boolean;
+  className?: string;
+}) {
   return (
     <div
-      className={cn("flex flex-col px-4", { "lg:pt-4": !header }, className)}
-      data-border={showBorder ? "show" : "hide"}
+      className={cn(
+        "flex flex-col border-b px-4",
+        showBorder ? "border-default" : "border-transparent",
+        className
+      )}
     >
-      {header}
-      {searchBar}
+      <div className="fern-sidebar-header">
+        <div className="relative flex h-full min-w-fit flex-1 shrink-0 items-center gap-2 py-1">
+          <div className="flex items-center gap-2">
+            {logo}
+            {versionSelect}
+          </div>
+        </div>
+      </div>
     </div>
   );
-};
+}

@@ -40,10 +40,10 @@ const AnnouncementInternal = React.forwardRef<
       className={cn("overflow-hidden", className)}
     >
       <motion.div
-        className="bg-accent text-accent-contrast flex min-h-8 items-center"
+        className="bg-accent text-accent-contrast flex min-h-8 items-center px-4 md:px-6 lg:px-8"
         exit={{ y: "-100%" }}
       >
-        <div className="max-w-page-width mx-auto flex-1 px-4 text-center md:px-6 lg:px-8">
+        <div className="max-w-page-width mx-auto flex-1 text-center">
           {children}
         </div>
         <FernButton
@@ -62,6 +62,9 @@ const MotionAnnouncement = motion.create(AnnouncementInternal, {
   forwardMotionProps: true,
 });
 
+const useIsomorphicLayoutEffect =
+  typeof window !== "undefined" ? React.useLayoutEffect : React.useEffect;
+
 export function Announcement({
   className,
   announcement,
@@ -75,49 +78,11 @@ export function Announcement({
     (state) => state.announcement === announcement
   );
 
-  const inserted = React.useRef(false);
-  useServerInsertedHTML(() => {
-    if (inserted.current) return null;
-    inserted.current = true;
-    return (
-      announcement && (
-        <script
-          key="fern-announcement"
-          type="text/javascript"
-          suppressHydrationWarning
-          dangerouslySetInnerHTML={{
-            __html: `(${String((announcement: string) => {
-              const dismissed = localStorage.getItem(
-                "fern-announcement-dismissed"
-              );
+  const [isClientSide, setIsClientSide] = React.useState(false);
 
-              if (
-                dismissed &&
-                JSON.parse(dismissed)?.state?.announcement === announcement
-              ) {
-                window.requestAnimationFrame(() => {
-                  const announcement =
-                    document.querySelector(".fern-announcement");
-                  if (announcement) {
-                    announcement.remove();
-                  }
-
-                  const headerHeight =
-                    document.getElementById("fern-header")?.clientHeight;
-                  if (headerHeight != null) {
-                    document.documentElement.style.setProperty(
-                      "--header-height",
-                      `${String(headerHeight)}px`
-                    );
-                  }
-                });
-              }
-            })})(${JSON.stringify(announcement)})`,
-          }}
-        />
-      )
-    );
-  });
+  useIsomorphicLayoutEffect(() => {
+    setIsClientSide(true);
+  }, []);
 
   if (!announcement) {
     return null;
@@ -125,7 +90,7 @@ export function Announcement({
 
   return (
     <AnimatePresence mode="popLayout">
-      {!isDismissed && (
+      {!isDismissed && isClientSide && (
         <MotionAnnouncement
           suppressHydrationWarning
           className={cn("fern-announcement", className)}

@@ -1,5 +1,3 @@
-import { compact } from "es-toolkit/array";
-
 import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 
@@ -12,10 +10,7 @@ import { MdxSerializer } from "@/server/mdx-serializer";
 import { Markdown } from "../../mdx/Markdown";
 import { ApiPageCenter } from "../api-page-center";
 import { EndpointSection } from "../endpoints/EndpointSection";
-import {
-  ObjectProperty,
-  PropertyWithShape,
-} from "../type-definitions/ObjectProperty";
+import { ObjectProperty } from "../type-definitions/ObjectProperty";
 import {
   TypeDefinitionAnchorPart,
   TypeDefinitionRoot,

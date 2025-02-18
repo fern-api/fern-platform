@@ -16,16 +16,21 @@ const buttonVariants = cva(
           "bg-(--accent-10) hover:bg-(--accent-9) text-[var(--accent-contrast,var(--accent-1))]",
         destructive: "bg-(--red-10) text-(--red-12) hover:bg-(--red-11)",
         outline:
-          "border-(--grayscale-a6) bg-(--grayscale-2) text-(--grayscale-12) hover:bg-(--grayscale-4) hover:text-(--accent-12) border",
+          "border-default text-grayscale-11 hover:bg-grayscale-a4 hover:text-grayscale-12 data-[state=active]:bg-grayscale-a4 data-[state=open]:bg-grayscale-a4 border",
+        outlineSuccess:
+          "border-(--green-a6) bg-(--green-a2) text-(--green-11) hover:bg-(--green-a4) data-[state=active]:bg-(--green-a4) data-[state=open]:bg-(--green-a4) border",
+        outlineDanger:
+          "border-(--red-a6) bg-(--red-a2) text-(--red-11) hover:bg-(--red-a4) data-[state=active]:bg-(--red-a4) data-[state=open]:bg-(--red-a4) border",
         secondary:
           "bg-(--grayscale-a3) text-(--accent-12) hover:bg-(--grayscale-a4)",
-        ghost: "hover:bg-(--accent-a3) hover:text-(--accent-12)",
+        ghost: "hover:bg-(--accent-a3) hover:text-(--accent-11)",
+        ghostSuccess: "hover:bg-(--green-a3) hover:text-(--green-11)",
         link: "text-(--accent-6) underline-offset-4 hover:underline",
       },
       size: {
         default: "h-9 px-4 py-2",
         xs: "h-6 rounded-md px-2 text-xs",
-        sm: "h-8 rounded-md px-3 text-xs",
+        sm: "h-8 rounded-md px-3 text-sm",
         lg: "h-10 rounded-md px-8",
         icon: "size-9",
         iconSm: "size-7",

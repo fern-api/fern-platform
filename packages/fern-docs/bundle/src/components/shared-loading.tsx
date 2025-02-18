@@ -4,35 +4,80 @@ import { cn } from "@fern-docs/components";
 
 import { useLayout } from "@/state/layout";
 
+import {
+  CustomLayout,
+  GuideLayout,
+  OverviewLayout,
+  PageLayout,
+  ReferenceLayout,
+} from "./layouts";
+
 export default function LoadingDocs() {
   const layout = useLayout();
+
+  const header = <PageHeaderSkeleton />;
+  const toc = <TableOfContentsSkeleton />;
+  const content = <ContentSkeleton />;
+
+  switch (layout) {
+    case "overview":
+      return (
+        <OverviewLayout header={header} toc={toc}>
+          {content}
+        </OverviewLayout>
+      );
+    case "guide":
+      return (
+        <GuideLayout header={header} toc={toc}>
+          {content}
+        </GuideLayout>
+      );
+    case "page":
+      return <PageLayout header={header}>{content}</PageLayout>;
+    case "reference":
+      return (
+        <ReferenceLayout header={header} aside={<EndpointSkeleton />}>
+          {content}
+        </ReferenceLayout>
+      );
+    case "custom":
+      return <CustomLayout>{content}</CustomLayout>;
+  }
+}
+
+function PageHeaderSkeleton() {
   return (
-    <div className="max-w-page-width mx-auto flex w-full flex-1 flex-row-reverse">
-      {layout === "guide" ||
-        (layout === "overview" && (
-          <aside className="w-sidebar-width shink-0 flex flex-col gap-2">
-            <div className="h-4 w-32 rounded-md bg-(--grayscale-a3)" />
-            <div className="h-4 w-32 rounded-md bg-(--grayscale-a3)" />
-            <div className="h-4 w-32 rounded-md bg-(--grayscale-a3)" />
-          </aside>
-        ))}
-      <article
-        className={cn("mx-auto min-w-0 shrink", {
-          "w-content-width": layout === "guide",
-          "w-content-wide-width": layout === "overview",
-          "w-page-width": layout === "page" || layout === "custom",
-          "w-endpoint-width": layout === "reference",
-        })}
-      >
-        <header className="my-8">
-          <div className="h-6 w-64 rounded-md bg-(--grayscale-a3)" />
-        </header>
-        <section className="my-8 space-y-2">
-          <div className="h-4 w-80 rounded-md bg-(--grayscale-a3)" />
-          <div className="h-4 w-80 rounded-md bg-(--grayscale-a3)" />
-          <div className="h-4 w-80 rounded-md bg-(--grayscale-a3)" />
-        </section>
-      </article>
-    </div>
+    <header className="my-8 space-y-2">
+      <div className="w-100 bg-(--grayscale-a3) h-9 rounded-md" />
+    </header>
+  );
+}
+
+function TableOfContentsSkeleton() {
+  return (
+    <>
+      <div className="bg-(--grayscale-a3) h-9 w-32 rounded-md" />
+      <div className="bg-(--grayscale-a3) h-9 w-32 rounded-md" />
+      <div className="bg-(--grayscale-a3) h-9 w-32 rounded-md" />
+    </>
+  );
+}
+
+function ContentSkeleton() {
+  return (
+    <section className="my-8 space-y-2">
+      <div className="bg-(--grayscale-a3) w-21 h-3.5 rounded-md" />
+      <div className="border-(--grayscale-a3) space-y-2 border-l-2 pl-3">
+        <div className="bg-(--grayscale-a3) h-3.5 w-80 rounded-md" />
+        <div className="bg-(--grayscale-a3) w-90 h-3.5 rounded-md" />
+        <div className="bg-(--grayscale-a3) h-3.5 w-80 rounded-md" />
+      </div>
+    </section>
+  );
+}
+
+function EndpointSkeleton() {
+  return (
+    <div className="bg-(--grayscale-a3) h-[calc(100svh-var(--header-height)-6rem)] w-full rounded-xl md:h-[calc(100vh-var(--header-height)-3rem)]" />
   );
 }

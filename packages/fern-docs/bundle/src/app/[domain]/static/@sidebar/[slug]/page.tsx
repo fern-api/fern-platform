@@ -1,6 +1,9 @@
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { slugjoin } from "@fern-api/fdr-sdk/navigation";
 
+import { getFernToken } from "@/app/fern-token";
+import { SidebarTabsList } from "@/components/sidebar/SidebarTabsList";
+import { SidebarTabsRoot } from "@/components/sidebar/SidebarTabsRoot";
 import { SidebarRootNode } from "@/components/sidebar/nodes/SidebarRootNode";
 import { createCachedDocsLoader } from "@/server/docs-loader";
 
@@ -10,13 +13,23 @@ export default async function SidebarPage({
   params: Promise<{ domain: string; slug: string }>;
 }) {
   const { domain, slug } = await params;
-
   const loader = await createCachedDocsLoader(domain);
-  const root = await loader.getRoot();
+  const [root, layout] = await Promise.all([
+    loader.getRoot(),
+    loader.getLayout(),
+  ]);
   const findNode = FernNavigation.utils.findNode(root, slugjoin(slug));
-  console.log(findNode);
-  if (findNode.type !== "found" || findNode.sidebar == null) {
+  if (findNode.type !== "found") {
     return null;
   }
-  return <SidebarRootNode root={findNode.sidebar} />;
+  return (
+    <>
+      {findNode.tabs && findNode.tabs.length > 0 && (
+        <SidebarTabsRoot mobileOnly={layout.tabsPlacement !== "SIDEBAR"}>
+          <SidebarTabsList tabs={findNode.tabs} />
+        </SidebarTabsRoot>
+      )}
+      {findNode.sidebar && <SidebarRootNode root={findNode.sidebar} />}
+    </>
+  );
 }

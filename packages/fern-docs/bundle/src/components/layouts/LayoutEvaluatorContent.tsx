@@ -7,6 +7,7 @@ import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import type { TableOfContentsItem } from "@fern-docs/mdx";
 
 import { MdxSerializer } from "@/server/mdx-serializer";
+import { SetLayout } from "@/state/layout";
 
 import { BuiltWithFern } from "../built-with-fern";
 import { PageHeader } from "../components/PageHeader";
@@ -74,30 +75,35 @@ export async function LayoutEvaluatorContent({
     case "custom":
       return (
         <CustomLayout footer={<BuiltWithFern className="mx-auto my-8 w-fit" />}>
+          <SetLayout value="custom" />
           {children}
         </CustomLayout>
       );
     case "guide":
       return (
         <GuideLayout header={pageHeader} toc={toc} footer={footer}>
+          <SetLayout value="guide" />
           {children}
         </GuideLayout>
       );
     case "overview":
       return (
         <OverviewLayout header={pageHeader} toc={toc} footer={footer}>
+          <SetLayout value="overview" />
           {children}
         </OverviewLayout>
       );
     case "page":
       return (
         <PageLayout header={pageHeader} footer={footer}>
+          <SetLayout value="page" />
           {children}
         </PageLayout>
       );
     case "reference":
       return (
         <ReferenceLayout header={pageHeader} aside={aside} footer={footer}>
+          <SetLayout value="reference" />
           {children}
         </ReferenceLayout>
       );

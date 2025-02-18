@@ -13,7 +13,7 @@ import { NoZoom, isImageElement } from "./image";
 export const HeadingRenderer = (
   level: number,
   props: React.ComponentProps<"h1">
-): React.ReactElement<any> => {
+) => {
   return (
     <FernAnchor href={`#${props.id}`} asChild>
       {React.createElement(`h${level}`, props)}
@@ -45,7 +45,7 @@ export function Ul({ className, ...rest }: React.ComponentProps<"ul">) {
       {...rest}
       className={cn(
         className,
-        "[&>li]:before:text-accent-a8 mb-3 list-none pl-3 [&>li]:pl-3 [&>li]:before:absolute [&>li]:before:ml-[-22px] [&>li]:before:mt-[-1px] [&>li]:before:content-['-']"
+        "[&>li]:before:text-accent-a10 mb-3 list-none pl-3 [&>li]:pl-3 [&>li]:before:absolute [&>li]:before:ml-[-22px] [&>li]:before:mt-[-1px] [&>li]:before:content-['-']"
       )}
     />
   );

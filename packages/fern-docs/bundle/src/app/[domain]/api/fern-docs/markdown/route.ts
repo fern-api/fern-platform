@@ -23,7 +23,7 @@ export async function GET(
   const loader = await createCachedDocsLoader(domain);
 
   const node = getPageNodeForPath(await loader.getRoot(), path);
-  console.log(path, node);
+
   if (node == null) {
     console.error(`[${domain}] Node not found: ${path}`);
     notFound();

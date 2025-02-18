@@ -5,12 +5,10 @@ import React, { ComponentPropsWithoutRef } from "react";
 import { cn } from "@fern-docs/components";
 import { tunnel, useIsMobile, useLazyRef } from "@fern-ui/react-commons";
 
-import { SetLayout } from "@/state/layout";
-
 interface ReferenceLayoutProps {
-  header: React.ReactNode;
+  header?: React.ReactNode;
   aside?: React.ReactNode;
-  children: React.ReactNode;
+  children?: React.ReactNode;
   reference?: React.ReactNode;
   footer?: React.ReactNode;
 }
@@ -25,21 +23,20 @@ export const ReferenceLayout = React.forwardRef<
   const isMobile = useIsMobile();
   const slot = useLazyRef(() => tunnel()).current;
   return (
-    <div className="mx-auto min-w-0 shrink px-4 md:px-6 lg:ml-0 lg:px-8 xl:ml-auto">
+    <div className="px-page-padding mx-auto min-w-0 shrink lg:ml-0 xl:ml-auto">
       <slot.In only>
-        <aside className="order-last flex max-h-[calc(100svh-var(--header-height)-3rem)] md:sticky md:top-[calc(var(--header-height)+1.5rem)] md:h-fit md:max-h-[calc(100vh-var(--header-height)-3rem)]">
+        <aside className="order-last flex max-h-[calc(100svh-var(--header-height)-6rem)] shrink-0 md:sticky md:top-[calc(var(--header-height)+1.5rem)] md:h-fit md:max-h-[calc(100vh-var(--header-height)-3rem)]">
           {aside}
         </aside>
       </slot.In>
       <article
         {...props}
         className={cn(
-          "w-content-width md:w-endpoint-width max-w-full",
+          "w-content-width md:w-endpoint-width xl:w-page-width max-w-full",
           props.className
         )}
         ref={ref}
       >
-        <SetLayout value="reference" />
         {header}
         <div className="my-6 md:grid md:grid-cols-[1fr_1fr] md:gap-8 lg:gap-12">
           {!isMobile && <slot.Out />}

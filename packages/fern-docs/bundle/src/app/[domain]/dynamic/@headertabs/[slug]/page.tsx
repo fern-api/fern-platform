@@ -12,8 +12,18 @@ export default async function HeaderTabsPage({
 }) {
   const { domain, slug } = await params;
   const loader = await createCachedDocsLoader(domain, await getFernToken());
-  const root = await loader.getRoot();
-  const findNode = FernNavigation.utils.findNode(root, slugjoin(slug));
+  const rootPromise = loader.getRoot();
+  const layout = await loader.getLayout();
+
+  if (layout.tabsPlacement !== "HEADER") {
+    return null;
+  }
+
+  const findNode = FernNavigation.utils.findNode(
+    await rootPromise,
+    slugjoin(slug)
+  );
+
   if (findNode.type !== "found") {
     return null;
   }

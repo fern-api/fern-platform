@@ -1,10 +1,11 @@
 "use client";
 
-import { Check, Copy } from "iconoir-react";
+import { Check, Copy } from "lucide-react";
 
 import { useCopyToClipboard } from "@fern-ui/react-commons";
 
 import { FernButton } from "./FernButton";
+import { Button } from "./FernButtonV2";
 import { FernTooltip, FernTooltipProvider } from "./FernTooltip";
 import { cn } from "./cn";
 
@@ -43,7 +44,7 @@ export const CopyToClipboardButton: React.FC<CopyToClipboardButton.Props> = ({
           onClick?.(e);
           copyToClipboard?.();
         }) ?? (
-          <FernButton
+          <Button
             className={cn("fern-copy-button group", className)}
             disabled={copyToClipboard == null}
             onClickCapture={(e) => {
@@ -51,12 +52,11 @@ export const CopyToClipboardButton: React.FC<CopyToClipboardButton.Props> = ({
               copyToClipboard?.();
             }}
             data-testid={testId}
-            rounded={true}
-            icon={wasJustCopied ? <Check /> : <Copy />}
-            variant="minimal"
-            intent={wasJustCopied ? "success" : "none"}
-            disableAutomaticTooltip={true}
-          />
+            variant={wasJustCopied ? "ghostSuccess" : "ghost"}
+            size="iconSm"
+          >
+            {wasJustCopied ? <Check /> : <Copy />}
+          </Button>
         )}
       </FernTooltip>
     </FernTooltipProvider>

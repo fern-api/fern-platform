@@ -26,10 +26,12 @@ export function PageHeader({
 }) {
   return (
     <header className="my-8 space-y-2">
-      <div className="flex justify-between">
-        <FernBreadcrumbs breadcrumb={breadcrumb} />
-        {tags}
-      </div>
+      {(breadcrumb.length > 0 || tags) && (
+        <div className="flex justify-between">
+          <FernBreadcrumbs breadcrumb={breadcrumb} />
+          {tags}
+        </div>
+      )}
 
       <h1 className="text-balance break-words">
         <MdxServerComponent serialize={serialize} mdx={title} />

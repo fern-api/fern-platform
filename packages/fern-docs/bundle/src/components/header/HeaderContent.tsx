@@ -28,13 +28,11 @@ export function HeaderContent({
   return (
     <div
       className={cn(
-        "flex w-full items-center justify-stretch gap-2 px-4 md:px-6 lg:px-8",
+        "flex w-full items-center justify-stretch gap-4",
         className
       )}
       style={style}
     >
-      <MobileMenuButton />
-
       <div className="relative flex h-full min-w-fit flex-1 shrink-0 items-center gap-2 py-1">
         <div className="flex items-center gap-2">
           {logo}
@@ -58,6 +56,8 @@ export function HeaderContent({
           {showThemeButton && <ThemeButton />}
         </nav>
       </FernButtonGroup>
+
+      <MobileMenuButton className="-ml-2" />
     </div>
   );
 }

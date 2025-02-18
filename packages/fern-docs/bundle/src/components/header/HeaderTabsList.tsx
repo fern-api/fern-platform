@@ -10,7 +10,6 @@ import { addLeadingSlash } from "@fern-docs/utils";
 import { FaIconServer } from "@/components/fa-icon-server";
 
 import { FernLink } from "../components/FernLink";
-import { HeaderTabsRoot } from "./HeaderTabsRoot";
 
 export function HeaderTabsList({
   tabs,
@@ -20,7 +19,7 @@ export function HeaderTabsList({
   children?: React.ReactNode;
 }) {
   return (
-    <Tabs.TabsList className="max-w-page-width mx-auto flex px-1 align-bottom text-sm md:px-3 lg:px-5">
+    <Tabs.TabsList className="-mx-3 flex align-bottom text-sm">
       {tabs.map((tab) => (
         <Tabs.TabsTrigger key={tab.id} value={tab.id} asChild>
           <FernLink
@@ -28,7 +27,7 @@ export function HeaderTabsList({
               "relative flex h-11 min-w-0 items-center justify-start space-x-2 px-3",
               "after:bg-(--accent-11) after:absolute after:inset-x-3 after:-bottom-px after:h-0.5 after:opacity-0 after:content-['']",
               "data-[state=active]:text-(--accent-11) data-[state=active]:font-semibold data-[state=active]:after:opacity-100",
-              "data-[state=inactive]:text-muted data-[state=inactive]:hover:text-default",
+              "data-[state=inactive]:text-muted data-[state=inactive]:hover:text-default [&_svg]:size-3.5",
               {
                 "opacity-50": tab.type !== "link" && tab.hidden,
               }
@@ -40,9 +39,9 @@ export function HeaderTabsList({
             }
           >
             {tab.type !== "link" && tab.authed ? (
-              <Lock className="size-3.5" />
+              <Lock />
             ) : (
-              tab.icon && <FaIconServer icon={tab.icon} className="size-3.5" />
+              tab.icon && <FaIconServer icon={tab.icon} />
             )}
             <span className="truncate font-medium">{tab.title}</span>
           </FernLink>

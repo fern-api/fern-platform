@@ -4,7 +4,7 @@ import Link, { LinkProps } from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
 
-import { OpenNewWindow } from "iconoir-react";
+import { ExternalLinkIcon } from "lucide-react";
 import { type UrlObject, format, parse, resolve } from "url";
 
 import { useDomain } from "@/state/domain";
@@ -91,7 +91,7 @@ const FernExternalLink = React.forwardRef<
     >
       {props.children}
       {!isSameSite && showExternalLinkIcon && (
-        <OpenNewWindow className="external-link-icon" />
+        <ExternalLinkIcon className="external-link-icon" />
       )}
     </a>
   );

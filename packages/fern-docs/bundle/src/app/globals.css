@@ -19,3 +19,27 @@
 @source "../components";
 @source "../../../components/src";
 @source "../../../search-ui/src/components";
+@source "../../../syntax-highlighter/src";
+
+:root {
+  --page-padding: 1rem;
+}
+
+@media (min-width: 768px) {
+  :root {
+    --page-padding: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --page-padding: 2rem;
+  }
+}
+
+@theme inline {
+  --spacing-page-padding: var(--page-padding);
+  --spacing-page-width-padded: calc(
+    var(--spacing-page-width) + var(--spacing-page-padding) * 2
+  );
+}

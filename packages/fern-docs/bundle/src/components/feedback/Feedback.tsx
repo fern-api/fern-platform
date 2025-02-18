@@ -5,7 +5,7 @@ import { FC, useCallback, useEffect, useRef, useState } from "react";
 
 import { ThumbsDown, ThumbsUp } from "lucide-react";
 
-import { cn } from "@fern-docs/components";
+import { Button, cn } from "@fern-docs/components";
 import { FernButton, FernButtonGroup, toast } from "@fern-docs/components";
 import { useKeyboardPress } from "@fern-ui/react-commons";
 
@@ -115,7 +115,7 @@ export const Feedback: FC<FeedbackProps> = ({
           <span className="text-muted text-sm font-medium">
             {feedbackQuestion}
           </span>
-          <FernButtonGroup>
+          <div className="flex gap-2">
             <FeedbackFormDialog
               content={
                 isHelpful && (
@@ -126,21 +126,18 @@ export const Feedback: FC<FeedbackProps> = ({
                 )
               }
               trigger={
-                <FernButton
-                  icon={
-                    <ThumbsUp
-                      className={cn({
-                        "animate-thumb-rock": isHelpful === "yes",
-                      })}
-                    />
-                  }
-                  variant="outlined"
-                  intent={isHelpful === "yes" ? "success" : "none"}
+                <Button
+                  variant={isHelpful === "yes" ? "outlineSuccess" : "outline"}
                   onClick={handleYes}
-                  active={isHelpful === "yes"}
+                  size="sm"
                 >
+                  <ThumbsUp
+                    className={cn({
+                      "animate-thumb-rock": isHelpful === "yes",
+                    })}
+                  />
                   Yes
-                </FernButton>
+                </Button>
               }
             />
             <FeedbackFormDialog
@@ -153,24 +150,21 @@ export const Feedback: FC<FeedbackProps> = ({
                 )
               }
               trigger={
-                <FernButton
-                  icon={
-                    <ThumbsDown
-                      className={cn({
-                        "animate-thumb-rock": isHelpful === "no",
-                      })}
-                    />
-                  }
-                  variant="outlined"
-                  intent={isHelpful === "no" ? "danger" : "none"}
+                <Button
+                  variant={isHelpful === "no" ? "outlineDanger" : "outline"}
                   onClick={handleNo}
-                  active={isHelpful === "no"}
+                  size="sm"
                 >
+                  <ThumbsDown
+                    className={cn({
+                      "animate-thumb-rock": isHelpful === "no",
+                    })}
+                  />
                   No
-                </FernButton>
+                </Button>
               }
             />
-          </FernButtonGroup>
+          </div>
         </div>
       ) : (
         <div className="flex h-6 items-center">

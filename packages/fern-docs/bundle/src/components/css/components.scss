@@ -30,7 +30,7 @@
   }
 
   .fern-mdx-link {
-    @apply text-accent-aaa decoration-accent-aa underline decoration-1 underline-offset-4 hover:decoration-2;
+    @apply text-(--accent-a11) decoration-accent-aa underline decoration-1 underline-offset-4 hover:decoration-2;
     @apply font-semibold;
 
     h1 &,
@@ -42,19 +42,13 @@
       font-weight: inherit;
     }
 
-    h1 &,
-    h2 &,
-    h3 & {
-      @apply text-accent-aa; /* WCAG AA */
-    }
-
     svg.external-link-icon {
       @apply text-muted ml-0.5 inline-block size-3.5;
     }
 
     &:hover {
       svg.external-link-icon {
-        @apply text-accent;
+        @apply text-(--accent-a11);
       }
     }
   }
