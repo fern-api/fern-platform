@@ -22,7 +22,7 @@ export function convertOperationObjectProperties(
   return convertToObjectProperties(
     properties,
     Object.entries(properties ?? {})
-      .map(([key, header]) => (header.required ? key : undefined))
+      .map(([key, property]) => (property.required ? key : undefined))
       .filter(isNonNullish)
   );
 }

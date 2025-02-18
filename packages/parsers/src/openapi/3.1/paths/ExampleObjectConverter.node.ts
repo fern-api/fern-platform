@@ -449,7 +449,7 @@ export class ExampleObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
     let queryParameters = Object.fromEntries(
       Object.entries(this.shapes.queryParameters ?? {})
         .map(([key, value]) =>
-          value.required
+          value.required || value.inputExample != null
             ? [
                 key,
                 value.example({
@@ -467,7 +467,7 @@ export class ExampleObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
     let requestHeaders = Object.fromEntries(
       Object.entries(this.shapes.requestHeaders ?? {})
         .map(([key, value]) =>
-          value.required
+          value.required || value.inputExample != null
             ? [
                 key,
                 value.example({
