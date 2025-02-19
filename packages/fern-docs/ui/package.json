@@ -138,7 +138,7 @@
     "@storybook/blocks": "^8.4.4",
     "@storybook/nextjs": "^8.4.4",
     "@storybook/react": "^8.4.4",
-    "@storybook/test": "^8.4.4",
+    "@storybook/test": "^8.5.8",
     "@tailwindcss/forms": "^0.5.7",
     "@tailwindcss/typography": "^0.5.10",
     "@testing-library/jest-dom": "^6.4.2",
