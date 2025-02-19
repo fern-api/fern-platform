@@ -11,15 +11,17 @@ import {
 
 import { FernNextResponse } from "@/server/FernNextResponse";
 import { getAllowedRedirectUrls } from "@/server/auth/allowed-redirects";
+import { preferPreview } from "@/server/auth/origin";
 import { getReturnToQueryParam } from "@/server/auth/return-to";
 import { withDeleteCookie } from "@/server/auth/with-secure-cookie";
 import { revokeSessionForToken } from "@/server/auth/workos-session";
 import { safeUrl } from "@/server/safeUrl";
-import { getDocsDomainEdge, getHostEdge } from "@/server/xfernhost/edge";
+import { getDocsDomainEdge } from "@/server/xfernhost/edge";
 
 export const runtime = "edge";
 
 export async function GET(req: NextRequest): Promise<NextResponse> {
+  const host = req.nextUrl.host;
   const domain = getDocsDomainEdge(req);
   const cookieJar = await cookies();
 
@@ -47,7 +49,7 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
   const redirectLocation =
     logoutUrl ??
     safeUrl(req.nextUrl.searchParams.get(return_to_param)) ??
-    safeUrl(withDefaultProtocol(getHostEdge(req))) ??
+    safeUrl(withDefaultProtocol(preferPreview(host, domain))) ??
     new URL(domain);
 
   const res = FernNextResponse.redirect(req, {
@@ -55,15 +57,21 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
     allowedDestinations: getAllowedRedirectUrls(authConfig),
   });
   cookieJar.delete(
-    withDeleteCookie(COOKIE_FERN_TOKEN, withDefaultProtocol(getHostEdge(req)))
+    withDeleteCookie(
+      COOKIE_FERN_TOKEN,
+      withDefaultProtocol(preferPreview(host, domain))
+    )
   );
   cookieJar.delete(
-    withDeleteCookie(COOKIE_ACCESS_TOKEN, withDefaultProtocol(getHostEdge(req)))
+    withDeleteCookie(
+      COOKIE_ACCESS_TOKEN,
+      withDefaultProtocol(preferPreview(host, domain))
+    )
   );
   cookieJar.delete(
     withDeleteCookie(
       COOKIE_REFRESH_TOKEN,
-      withDefaultProtocol(getHostEdge(req))
+      withDefaultProtocol(preferPreview(host, domain))
     )
   );
   return res;

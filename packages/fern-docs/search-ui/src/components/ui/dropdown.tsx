@@ -47,7 +47,7 @@ const DropdownMenuSubContent = React.forwardRef<
   <DropdownMenuPrimitive.SubContent
     ref={ref}
     className={cn(
-      "data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 border-grayscale-a6 bg-grayscale-a1 text-grayscale-a12 z-50 min-w-[8rem] overflow-hidden rounded-md border p-1 shadow-lg",
+      "data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 border-border-default bg-grayscale-a1 text-grayscale-a12 z-50 min-w-[8rem] overflow-hidden rounded-md border p-1 shadow-lg",
       className
     )}
     {...props}
@@ -65,7 +65,7 @@ const DropdownMenuContent = React.forwardRef<
       ref={ref}
       sideOffset={sideOffset}
       className={cn(
-        "border-grayscale-a6 bg-grayscale-a1 text-grayscale-a12 z-50 min-w-[8rem] overflow-hidden rounded-md border p-1 shadow-md backdrop-blur-xl",
+        "border-border-default bg-grayscale-a1 text-grayscale-a12 z-50 min-w-[8rem] overflow-hidden rounded-md border p-1 shadow-md backdrop-blur-xl",
         "data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
         "before:bg-(--white-a9) dark:before:bg-(--black-a9) before:pointer-events-none before:absolute before:inset-0 before:-z-50",
         className

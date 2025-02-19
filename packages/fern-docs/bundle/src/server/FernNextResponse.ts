@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import { getHostEdge } from "./xfernhost/edge";
+import { getDocsDomainEdge } from "./xfernhost/edge";
 
 export class FernNextResponse {
   public static redirect(
@@ -19,7 +19,8 @@ export class FernNextResponse {
     }
 
     const allowedDomains = [
-      getHostEdge(req),
+      req.nextUrl.host,
+      getDocsDomainEdge(req),
       ...(allowedDestinations ?? []).map((url) => new URL(url).host),
     ];
     const redirectLocation = new URL(destination);

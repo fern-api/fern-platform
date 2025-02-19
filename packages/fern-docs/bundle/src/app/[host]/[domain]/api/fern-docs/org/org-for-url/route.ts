@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
 import { createCachedDocsLoader } from "@/server/docs-loader";
-import { getDocsDomainEdge, getHostEdge } from "@/server/xfernhost/edge";
+import { getDocsDomainEdge } from "@/server/xfernhost/edge";
 
 export const runtime = "edge";
 
@@ -11,7 +11,7 @@ export interface DocsMetadata {
 }
 
 export async function GET(req: NextRequest): Promise<NextResponse> {
-  const host = getHostEdge(req);
+  const host = req.nextUrl.host;
   const domain = getDocsDomainEdge(req);
 
   if (!domain || typeof domain !== "string") {

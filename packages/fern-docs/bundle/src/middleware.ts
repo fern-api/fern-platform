@@ -4,6 +4,7 @@ import {
   NextResponse,
 } from "next/server";
 
+import { withDefaultProtocol } from "@fern-api/ui-core-utils";
 import {
   COOKIE_FERN_TOKEN,
   HEADER_X_FERN_BASEPATH,
@@ -19,6 +20,8 @@ import { withPathname } from "@/server/withPathname";
 import { getDocsDomainEdge } from "@/server/xfernhost/edge";
 
 import { createGetAuthStateEdge } from "./server/auth/getAuthStateEdge";
+import { preferPreview } from "./server/auth/origin";
+import { withSecureCookie } from "./server/auth/with-secure-cookie";
 
 function splitPathname(
   pathname: string,
@@ -169,7 +172,11 @@ export const middleware: NextMiddleware = async (request) => {
 
   const response = getResponse();
   if (newToken) {
-    response.cookies.set(COOKIE_FERN_TOKEN, newToken);
+    response.cookies.set(
+      COOKIE_FERN_TOKEN,
+      newToken,
+      withSecureCookie(withDefaultProtocol(preferPreview(host, domain)))
+    );
   }
   return response;
 };

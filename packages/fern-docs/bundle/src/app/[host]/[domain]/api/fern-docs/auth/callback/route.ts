@@ -6,16 +6,17 @@ import { HEADER_X_FERN_HOST } from "@fern-docs/utils";
 
 import { FernNextResponse } from "@/server/FernNextResponse";
 import { getAllowedRedirectUrls } from "@/server/auth/allowed-redirects";
+import { preferPreview } from "@/server/auth/origin";
 import { getReturnToQueryParam } from "@/server/auth/return-to";
 import { redirectWithLoginError } from "@/server/redirectWithLoginError";
 import { safeUrl } from "@/server/safeUrl";
-import { getDocsDomainEdge, getHostEdge } from "@/server/xfernhost/edge";
+import { getDocsDomainEdge } from "@/server/xfernhost/edge";
 
 export const runtime = "edge";
 
 export async function GET(req: NextRequest): Promise<NextResponse> {
   const domain = getDocsDomainEdge(req);
-  const host = getHostEdge(req);
+  const host = req.nextUrl.host;
 
   const config = await getAuthEdgeConfig(domain);
 
@@ -25,7 +26,8 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
   const error = req.nextUrl.searchParams.get("error");
   const error_description = req.nextUrl.searchParams.get("error_description");
   const redirectLocation =
-    safeUrl(return_to) ?? safeUrl(withDefaultProtocol(host));
+    safeUrl(return_to) ??
+    safeUrl(withDefaultProtocol(preferPreview(host, domain)));
 
   if (error != null) {
     return redirectWithLoginError(
@@ -45,16 +47,9 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
     );
   }
   const nextUrl = req.nextUrl.clone();
+  nextUrl.host = preferPreview(host, domain);
 
-  // Redirect to x-fern-host domain if it exists
-  // this is to ensure proxied origins are used for the redirect
-  if (req.headers.has(HEADER_X_FERN_HOST)) {
-    // TODO: validate allowlist of domains to prevent open redirects
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    nextUrl.host = req.headers.get(HEADER_X_FERN_HOST)!;
-  }
-
-  if (config.type === "oauth2" && config.partner === "ory") {
+  if (config?.type === "oauth2" && config.partner === "ory") {
     nextUrl.pathname = nextUrl.pathname.replace(
       "/api/fern-docs/auth/callback",
       "/api/fern-docs/oauth/ory/callback"
@@ -63,7 +58,7 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
       destination: nextUrl,
       allowedDestinations: getAllowedRedirectUrls(config),
     });
-  } else if (config.type === "sso") {
+  } else if (config?.type === "sso") {
     nextUrl.pathname = nextUrl.pathname.replace(
       "/api/fern-docs/auth/callback",
       "/api/fern-docs/auth/sso/callback"

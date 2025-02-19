@@ -505,7 +505,7 @@ const AskAIComposer = forwardRef<
     const inputRef = useRef<HTMLTextAreaElement>(null);
     return (
       <div
-        className="border-grayscale-a6 cursor-text border-t p-2"
+        className="border-border-default cursor-text border-t p-2"
         onClick={() => inputRef.current?.focus()}
       >
         <DesktopCommandInput asChild>

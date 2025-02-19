@@ -17,12 +17,12 @@ import {
   fernToken_admin,
 } from "@/server/env-variables";
 import { Gate, withBasicTokenAnonymous } from "@/server/withRbac";
-import { getDocsDomainEdge, getHostEdge } from "@/server/xfernhost/edge";
+import { getDocsDomainEdge } from "@/server/xfernhost/edge";
 
 export const maxDuration = 800; // 13 minutes
 
 export async function GET(req: NextRequest): Promise<NextResponse> {
-  const host = getHostEdge(req);
+  const host = req.nextUrl.host;
   const domain = getDocsDomainEdge(req);
 
   try {

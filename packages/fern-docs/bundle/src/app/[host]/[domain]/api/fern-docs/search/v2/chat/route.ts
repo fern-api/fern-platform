@@ -19,7 +19,7 @@ import { track } from "@/server/analytics/posthog";
 import { safeVerifyFernJWTConfig } from "@/server/auth/FernJWT";
 import { createCachedDocsLoader } from "@/server/docs-loader";
 import { openaiApiKey, turbopufferApiKey } from "@/server/env-variables";
-import { getDocsDomainEdge, getHostEdge } from "@/server/xfernhost/edge";
+import { getDocsDomainEdge } from "@/server/xfernhost/edge";
 
 export const maxDuration = 60;
 export const revalidate = 0;
@@ -42,7 +42,7 @@ export async function POST(req: NextRequest) {
   const openai = createOpenAI({ apiKey: openaiApiKey() });
   const embeddingModel = openai.embedding("text-embedding-3-small");
 
-  const host = getHostEdge(req);
+  const host = req.nextUrl.host;
   const domain = getDocsDomainEdge(req);
   const namespace = `${withoutStaging(domain)}_${embeddingModel.modelId}`;
   const { messages } = await req.json();

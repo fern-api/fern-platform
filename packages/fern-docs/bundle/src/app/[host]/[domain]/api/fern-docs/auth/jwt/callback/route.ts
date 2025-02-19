@@ -8,17 +8,18 @@ import { COOKIE_FERN_TOKEN } from "@fern-docs/utils";
 import { FernNextResponse } from "@/server/FernNextResponse";
 import { safeVerifyFernJWTConfig } from "@/server/auth/FernJWT";
 import { getAllowedRedirectUrls } from "@/server/auth/allowed-redirects";
+import { preferPreview } from "@/server/auth/origin";
 import { getReturnToQueryParam } from "@/server/auth/return-to";
 import { withSecureCookie } from "@/server/auth/with-secure-cookie";
 import { redirectWithLoginError } from "@/server/redirectWithLoginError";
 import { safeUrl } from "@/server/safeUrl";
-import { getDocsDomainEdge, getHostEdge } from "@/server/xfernhost/edge";
+import { getDocsDomainEdge } from "@/server/xfernhost/edge";
 
 export const runtime = "edge";
 
 export async function GET(req: NextRequest): Promise<NextResponse> {
   const domain = getDocsDomainEdge(req);
-  const host = getHostEdge(req);
+  const host = req.nextUrl.host;
   const edgeConfig = await getAuthEdgeConfig(domain);
 
   // since we expect the callback to be redirected to, the token will be in the query params
@@ -27,7 +28,9 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
     getReturnToQueryParam(edgeConfig)
   );
   const redirectLocation =
-    safeUrl(returnTo) ?? safeUrl(withDefaultProtocol(host));
+    safeUrl(returnTo) ??
+    safeUrl(withDefaultProtocol(preferPreview(host, domain)));
+  console.log("Redirecting", host, domain, redirectLocation);
 
   if (edgeConfig?.type !== "basic_token_verification" || token == null) {
     console.error(`Invalid config for domain ${domain}`);

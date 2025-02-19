@@ -28,8 +28,3 @@ export function getDocsDomainEdge(req: NextRequest): string {
   );
   return "buildwithfern.com";
 }
-
-// if x-fern-host is set, assume it's proxied:
-export function getHostEdge(req: NextRequest): string {
-  return req.headers.get(HEADER_X_FERN_HOST) ?? req.nextUrl.host;
-}

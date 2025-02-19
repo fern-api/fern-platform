@@ -11,11 +11,12 @@ import { getAuthEdgeConfig } from "@fern-docs/edge-config";
 import { removeTrailingSlash } from "@fern-docs/utils";
 
 import { safeVerifyFernJWTConfig } from "@/server/auth/FernJWT";
+import { preferPreview } from "@/server/auth/origin";
 import { OryOAuth2Client, getOryAuthorizationUrl } from "@/server/auth/ory";
 import { getReturnToQueryParam } from "@/server/auth/return-to";
 import { withSecureCookie } from "@/server/auth/with-secure-cookie";
 import { fernToken_admin } from "@/server/env-variables";
-import { getDocsDomainEdge, getHostEdge } from "@/server/xfernhost/edge";
+import { getDocsDomainEdge } from "@/server/xfernhost/edge";
 
 export const runtime = "edge";
 
@@ -23,7 +24,7 @@ export async function GET(
   req: NextRequest
 ): Promise<NextResponse<APIKeyInjectionConfig>> {
   const domain = getDocsDomainEdge(req);
-  const host = getHostEdge(req);
+  const host = req.nextUrl.host;
   const cookieJar = await cookies();
 
   const edgeConfig = await getAuthEdgeConfig(domain);
@@ -125,7 +126,9 @@ export async function GET(
         authenticated: false,
         authorizationUrl: getOryAuthorizationUrl(edgeConfig, {
           redirectUri: urlJoin(
-            removeTrailingSlash(withDefaultProtocol(host)),
+            removeTrailingSlash(
+              withDefaultProtocol(preferPreview(host, domain))
+            ),
             "/api/fern-docs/oauth/ory/callback"
           ),
         }),
@@ -175,7 +178,7 @@ export async function GET(
         cookieJar.set(
           "access_token",
           access_token,
-          withSecureCookie(withDefaultProtocol(host), {
+          withSecureCookie(withDefaultProtocol(preferPreview(host, domain)), {
             expires: exp,
           })
         );
@@ -188,7 +191,9 @@ export async function GET(
         cookieJar.set(
           "refresh_token",
           refresh_token,
-          withSecureCookie(withDefaultProtocol(host), { expires })
+          withSecureCookie(withDefaultProtocol(preferPreview(host, domain)), {
+            expires,
+          })
         );
       }
 
