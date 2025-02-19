@@ -3,9 +3,11 @@ import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 
 import { PageHeader } from "@/components/components/PageHeader";
 import { ReferenceLayout } from "@/components/layouts/ReferenceLayout";
+import { ScrollToTop } from "@/components/layouts/ScrollToTop";
 import { Prose } from "@/components/mdx/prose";
 import { renderTypeShorthand } from "@/components/type-shorthand";
 import { MdxSerializer } from "@/server/mdx-serializer";
+import { SetLayout } from "@/state/layout";
 
 import { Markdown } from "../../mdx/Markdown";
 import { ApiPageCenter } from "../api-page-center";
@@ -37,72 +39,72 @@ export async function WebhookContent({
   const webhookExample = example ? <WebhookExample example={example} /> : null;
 
   return (
-    <ApiPageCenter slug={node.slug} asChild>
-      <ReferenceLayout
-        header={
-          <PageHeader
-            serialize={serialize}
-            breadcrumb={breadcrumb}
-            title={node.title}
-          />
-        }
-        aside={webhookExample}
-        reference={
-          <TypeDefinitionRoot types={types} slug={node.slug}>
-            <TypeDefinitionSlotsServer types={types} serialize={serialize}>
-              <TypeDefinitionAnchorPart part="payload">
-                {webhook.headers && webhook.headers.length > 0 && (
-                  <TypeDefinitionAnchorPart part="header">
-                    <EndpointSection title="Headers">
-                      <WithSeparator>
-                        {webhook.headers.map((parameter) => (
-                          <TypeDefinitionAnchorPart
-                            key={parameter.key}
-                            part={parameter.key}
-                          >
-                            <ObjectProperty
-                              serialize={serialize}
-                              property={parameter}
-                              types={types}
-                            />
-                          </TypeDefinitionAnchorPart>
-                        ))}
-                      </WithSeparator>
-                    </EndpointSection>
-                  </TypeDefinitionAnchorPart>
-                )}
+    <ReferenceLayout
+      header={
+        <PageHeader
+          serialize={serialize}
+          breadcrumb={breadcrumb}
+          title={node.title}
+        />
+      }
+      aside={webhookExample}
+      reference={
+        <TypeDefinitionRoot types={types} slug={node.slug}>
+          <TypeDefinitionSlotsServer types={types} serialize={serialize}>
+            <TypeDefinitionAnchorPart part="payload">
+              {webhook.headers && webhook.headers.length > 0 && (
+                <TypeDefinitionAnchorPart part="header">
+                  <EndpointSection title="Headers">
+                    <WithSeparator>
+                      {webhook.headers.map((parameter) => (
+                        <TypeDefinitionAnchorPart
+                          key={parameter.key}
+                          part={parameter.key}
+                        >
+                          <ObjectProperty
+                            serialize={serialize}
+                            property={parameter}
+                            types={types}
+                          />
+                        </TypeDefinitionAnchorPart>
+                      ))}
+                    </WithSeparator>
+                  </EndpointSection>
+                </TypeDefinitionAnchorPart>
+              )}
 
-                {webhook.payloads?.[0] && (
-                  <TypeDefinitionAnchorPart part="body">
-                    <EndpointSection
-                      title="Payload"
-                      description={
-                        <Prose className="text-muted my-3" size="sm">
-                          {`The payload of this webhook request is ${renderTypeShorthand(webhook.payloads[0].shape, { withArticle: true }, types)}.`}
-                        </Prose>
-                      }
-                    >
-                      <TypeReferenceDefinitions
-                        serialize={serialize}
-                        shape={webhook.payloads?.[0].shape}
-                        types={types}
-                      />
-                    </EndpointSection>
-                  </TypeDefinitionAnchorPart>
-                )}
-              </TypeDefinitionAnchorPart>
+              {webhook.payloads?.[0] && (
+                <TypeDefinitionAnchorPart part="body">
+                  <EndpointSection
+                    title="Payload"
+                    description={
+                      <Prose className="text-muted my-3" size="sm">
+                        {`The payload of this webhook request is ${renderTypeShorthand(webhook.payloads[0].shape, { withArticle: true }, types)}.`}
+                      </Prose>
+                    }
+                  >
+                    <TypeReferenceDefinitions
+                      serialize={serialize}
+                      shape={webhook.payloads?.[0].shape}
+                      types={types}
+                    />
+                  </EndpointSection>
+                </TypeDefinitionAnchorPart>
+              )}
+            </TypeDefinitionAnchorPart>
 
-              <TypeDefinitionAnchorPart part="response">
-                <EndpointSection title="Response">
-                  <WebhookResponseSection />
-                </EndpointSection>
-              </TypeDefinitionAnchorPart>
-            </TypeDefinitionSlotsServer>
-          </TypeDefinitionRoot>
-        }
-      >
-        <Markdown className="leading-6" mdx={webhook.description} />
-      </ReferenceLayout>
-    </ApiPageCenter>
+            <TypeDefinitionAnchorPart part="response">
+              <EndpointSection title="Response">
+                <WebhookResponseSection />
+              </EndpointSection>
+            </TypeDefinitionAnchorPart>
+          </TypeDefinitionSlotsServer>
+        </TypeDefinitionRoot>
+      }
+    >
+      <SetLayout value="reference" />
+      <ScrollToTop />
+      <Markdown className="leading-6" mdx={webhook.description} />
+    </ReferenceLayout>
   );
 }

@@ -1,17 +1,16 @@
 import React from "react";
 
-import {
-  EndpointContext,
-  TypeDefinition,
-} from "@fern-api/fdr-sdk/api-definition";
+import { EndpointContext } from "@fern-api/fdr-sdk/api-definition";
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { AvailabilityBadge } from "@fern-docs/components/badges";
 
 import { PageHeader } from "@/components/components/PageHeader";
 import { FooterLayout } from "@/components/layouts/FooterLayout";
 import { ReferenceLayout } from "@/components/layouts/ReferenceLayout";
+import { ScrollToTop } from "@/components/layouts/ScrollToTop";
 import { MdxServerComponentProseSuspense } from "@/components/mdx/server-component";
 import { MdxSerializer } from "@/server/mdx-serializer";
+import { SetLayout } from "@/state/layout";
 
 import { TypeDefinitionRoot } from "../type-definitions/TypeDefinitionContext";
 import { TypeDefinitionSlotsServer } from "../type-definitions/TypeDefinitionSlotsServer";
@@ -82,6 +81,8 @@ export async function EndpointContent({
         }
         footer={<FooterLayout bottomNavigation={bottomNavigation} />}
       >
+        <SetLayout value="reference" />
+        <ScrollToTop />
         <MdxServerComponentProseSuspense
           serialize={serialize}
           mdx={endpoint.description}

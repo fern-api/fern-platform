@@ -9,7 +9,9 @@ import { AvailabilityBadge } from "@fern-docs/components/badges";
 
 import { PageHeader } from "@/components/components/PageHeader";
 import { ReferenceLayout } from "@/components/layouts/ReferenceLayout";
+import { ScrollToTop } from "@/components/layouts/ScrollToTop";
 import { MdxSerializer } from "@/server/mdx-serializer";
+import { SetLayout } from "@/state/layout";
 
 import { Markdown } from "../../mdx/Markdown";
 import { PlaygroundButton } from "../../playground/PlaygroundButton";
@@ -77,83 +79,93 @@ export async function WebSocketContent({
   const headers = [...globalHeaders, ...(channel.requestHeaders ?? [])];
 
   return (
-    <ApiPageCenter slug={node.slug} asChild>
-      <ReferenceLayout
-        header={
-          <PageHeader
-            serialize={serialize}
-            breadcrumb={breadcrumb}
-            title={node.title}
-            tags={
-              channel.availability != null && (
-                <AvailabilityBadge
-                  availability={channel.availability}
-                  rounded
-                />
-              )
+    <ReferenceLayout
+      header={
+        <PageHeader
+          serialize={serialize}
+          breadcrumb={breadcrumb}
+          title={node.title}
+          tags={
+            channel.availability != null && (
+              <AvailabilityBadge availability={channel.availability} rounded />
+            )
+          }
+        >
+          <EndpointUrlWithPlaygroundBaseUrl endpoint={channel} />
+        </PageHeader>
+      }
+      aside={
+        <div className="grid grid-rows-[repeat(auto-fit,minmax(0,min-content))] gap-6">
+          <TitledExample
+            title="Handshake"
+            actions={
+              node != null ? <PlaygroundButton state={node} /> : undefined
             }
+            disableClipboard={true}
           >
-            <EndpointUrlWithPlaygroundBaseUrl endpoint={channel} />
-          </PageHeader>
-        }
-        aside={
-          <div className="grid grid-rows-[repeat(auto-fit,minmax(0,min-content))] gap-6">
-            <TitledExample
-              title="Handshake"
-              actions={
-                node != null ? <PlaygroundButton state={node} /> : undefined
-              }
-              disableClipboard={true}
+            <FernScrollArea
+              className="rounded-b-[inherit]"
+              rootClassName="rounded-b-[inherit]"
             >
+              <HandshakeExample channel={channel} example={example} />
+            </FernScrollArea>
+          </TitledExample>
+          {exampleMessages.length > 0 && (
+            <TitledExample title={"Messages"} className="min-h-0 shrink">
               <FernScrollArea
                 className="rounded-b-[inherit]"
                 rootClassName="rounded-b-[inherit]"
               >
-                <HandshakeExample channel={channel} example={example} />
+                <WebSocketMessages messages={exampleMessages} />
               </FernScrollArea>
             </TitledExample>
-            {exampleMessages.length > 0 && (
-              <TitledExample title={"Messages"} className="min-h-0 shrink">
-                <FernScrollArea
-                  className="rounded-b-[inherit]"
-                  rootClassName="rounded-b-[inherit]"
-                >
-                  <WebSocketMessages messages={exampleMessages} />
-                </FernScrollArea>
-              </TitledExample>
-            )}
-          </div>
-        }
-        reference={
-          <TypeDefinitionRoot types={types} slug={node.slug}>
-            <TypeDefinitionSlotsServer types={types} serialize={serialize}>
-              <CardedSection
-                number={1}
-                title={
-                  <span className="inline-flex items-center gap-2">
-                    {"Handshake"}
-                    <span className="bg-tag-default inline-block rounded-full p-1">
-                      <Wifi
-                        className="text-muted size-icon"
-                        strokeWidth={1.5}
-                      />
-                    </span>
+          )}
+        </div>
+      }
+      reference={
+        <TypeDefinitionRoot types={types} slug={node.slug}>
+          <TypeDefinitionSlotsServer types={types} serialize={serialize}>
+            <CardedSection
+              number={1}
+              title={
+                <span className="inline-flex items-center gap-2">
+                  {"Handshake"}
+                  <span className="bg-tag-default inline-block rounded-full p-1">
+                    <Wifi className="text-muted size-icon" strokeWidth={1.5} />
                   </span>
-                }
-                slug={node.slug}
-                headingElement={
-                  <div className="border-border-default -mx-2 flex items-center justify-between rounded-xl border px-2 py-1 transition-colors">
-                    <EndpointUrlWithPlaygroundBaseUrl endpoint={channel} />
-                    <CopyWithBaseUrl channel={channel} />
-                  </div>
-                }
-              >
-                <TypeDefinitionAnchorPart part="request">
-                  {headers && headers.length > 0 && (
-                    <TypeDefinitionAnchorPart part="headers">
-                      <EndpointSection title="Headers">
+                </span>
+              }
+              slug={node.slug}
+              headingElement={
+                <div className="border-border-default -mx-2 flex items-center justify-between rounded-xl border px-2 py-1 transition-colors">
+                  <EndpointUrlWithPlaygroundBaseUrl endpoint={channel} />
+                  <CopyWithBaseUrl channel={channel} />
+                </div>
+              }
+            >
+              <TypeDefinitionAnchorPart part="request">
+                {headers && headers.length > 0 && (
+                  <TypeDefinitionAnchorPart part="headers">
+                    <EndpointSection title="Headers">
+                      <WithSeparator>
+                        {headers.map((parameter) => (
+                          <ObjectProperty
+                            serialize={serialize}
+                            key={parameter.key}
+                            property={parameter}
+                            types={types}
+                          />
+                        ))}
+                      </WithSeparator>
+                    </EndpointSection>
+                  </TypeDefinitionAnchorPart>
+                )}
+                {channel.pathParameters &&
+                  channel.pathParameters.length > 0 && (
+                    <TypeDefinitionAnchorPart part="path">
+                      <EndpointSection title="Path parameters">
                         <WithSeparator>
-                          {headers.map((parameter) => (
+                          {channel.pathParameters.map((parameter) => (
                             <ObjectProperty
                               serialize={serialize}
                               key={parameter.key}
@@ -165,92 +177,76 @@ export async function WebSocketContent({
                       </EndpointSection>
                     </TypeDefinitionAnchorPart>
                   )}
-                  {channel.pathParameters &&
-                    channel.pathParameters.length > 0 && (
-                      <TypeDefinitionAnchorPart part="path">
-                        <EndpointSection title="Path parameters">
-                          <WithSeparator>
-                            {channel.pathParameters.map((parameter) => (
+                {channel.queryParameters &&
+                  channel.queryParameters.length > 0 && (
+                    <TypeDefinitionAnchorPart part="query">
+                      <EndpointSection title="Query parameters">
+                        <WithSeparator>
+                          {channel.queryParameters.map((parameter) => {
+                            return (
                               <ObjectProperty
                                 serialize={serialize}
                                 key={parameter.key}
                                 property={parameter}
                                 types={types}
                               />
-                            ))}
-                          </WithSeparator>
-                        </EndpointSection>
-                      </TypeDefinitionAnchorPart>
-                    )}
-                  {channel.queryParameters &&
-                    channel.queryParameters.length > 0 && (
-                      <TypeDefinitionAnchorPart part="query">
-                        <EndpointSection title="Query parameters">
-                          <WithSeparator>
-                            {channel.queryParameters.map((parameter) => {
-                              return (
-                                <ObjectProperty
-                                  serialize={serialize}
-                                  key={parameter.key}
-                                  property={parameter}
-                                  types={types}
-                                />
-                              );
-                            })}
-                          </WithSeparator>
-                        </EndpointSection>
-                      </TypeDefinitionAnchorPart>
-                    )}
-                </TypeDefinitionAnchorPart>
-              </CardedSection>
+                            );
+                          })}
+                        </WithSeparator>
+                      </EndpointSection>
+                    </TypeDefinitionAnchorPart>
+                  )}
+              </TypeDefinitionAnchorPart>
+            </CardedSection>
 
-              {publishMessages.length > 0 && (
-                <TypeDefinitionAnchorPart part="send">
-                  <EndpointSection
-                    title={
-                      <span className="inline-flex items-center gap-2">
-                        {"Send"}
-                        <span className="text-intent-success bg-tag-success inline-block rounded-full p-1">
-                          <ArrowUp className="size-icon" />
-                        </span>
+            {publishMessages.length > 0 && (
+              <TypeDefinitionAnchorPart part="send">
+                <EndpointSection
+                  title={
+                    <span className="inline-flex items-center gap-2">
+                      {"Send"}
+                      <span className="text-intent-success bg-tag-success inline-block rounded-full p-1">
+                        <ArrowUp className="size-icon" />
                       </span>
-                    }
-                  >
-                    <TypeReferenceDefinitions
-                      serialize={serialize}
-                      shape={publishMessageShape}
-                      types={types}
-                    />
-                  </EndpointSection>
-                </TypeDefinitionAnchorPart>
-              )}
-              {subscribeMessages.length > 0 && (
-                <TypeDefinitionAnchorPart part="receive">
-                  <EndpointSection
-                    title={
-                      <span className="inline-flex items-center gap-2">
-                        {"Receive"}
-                        <span className="text-accent-aaa bg-tag-primary inline-block rounded-full p-1">
-                          <ArrowDown className="size-icon" />
-                        </span>
+                    </span>
+                  }
+                >
+                  <TypeReferenceDefinitions
+                    serialize={serialize}
+                    shape={publishMessageShape}
+                    types={types}
+                  />
+                </EndpointSection>
+              </TypeDefinitionAnchorPart>
+            )}
+            {subscribeMessages.length > 0 && (
+              <TypeDefinitionAnchorPart part="receive">
+                <EndpointSection
+                  title={
+                    <span className="inline-flex items-center gap-2">
+                      {"Receive"}
+                      <span className="text-accent-aaa bg-tag-primary inline-block rounded-full p-1">
+                        <ArrowDown className="size-icon" />
                       </span>
-                    }
-                  >
-                    <TypeReferenceDefinitions
-                      serialize={serialize}
-                      shape={subscribeMessageShape}
-                      types={types}
-                    />
-                  </EndpointSection>
-                </TypeDefinitionAnchorPart>
-              )}
-            </TypeDefinitionSlotsServer>
-          </TypeDefinitionRoot>
-        }
-      >
-        <Markdown className="mt-4 leading-6" mdx={channel.description} />
-      </ReferenceLayout>
-    </ApiPageCenter>
+                    </span>
+                  }
+                >
+                  <TypeReferenceDefinitions
+                    serialize={serialize}
+                    shape={subscribeMessageShape}
+                    types={types}
+                  />
+                </EndpointSection>
+              </TypeDefinitionAnchorPart>
+            )}
+          </TypeDefinitionSlotsServer>
+        </TypeDefinitionRoot>
+      }
+    >
+      <SetLayout value="reference" />
+      <ScrollToTop />
+      <Markdown className="mt-4 leading-6" mdx={channel.description} />
+    </ReferenceLayout>
   );
 }
 
