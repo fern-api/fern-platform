@@ -17,6 +17,7 @@ import { GuideLayout } from "./GuideLayout";
 import { OverviewLayout } from "./OverviewLayout";
 import { PageLayout } from "./PageLayout";
 import { ReferenceLayout } from "./ReferenceLayout";
+import { ScrollToTop } from "./ScrollToTop";
 import { TableOfContentsLayout } from "./TableOfContentsLayout";
 
 export async function LayoutEvaluatorContent({
@@ -76,6 +77,7 @@ export async function LayoutEvaluatorContent({
       return (
         <CustomLayout footer={<BuiltWithFern className="mx-auto my-8 w-fit" />}>
           <SetLayout value="custom" />
+          <ScrollToTop />
           {children}
         </CustomLayout>
       );
@@ -83,6 +85,7 @@ export async function LayoutEvaluatorContent({
       return (
         <GuideLayout header={pageHeader} toc={toc} footer={footer}>
           <SetLayout value="guide" />
+          <ScrollToTop />
           {children}
         </GuideLayout>
       );
@@ -90,6 +93,7 @@ export async function LayoutEvaluatorContent({
       return (
         <OverviewLayout header={pageHeader} toc={toc} footer={footer}>
           <SetLayout value="overview" />
+          <ScrollToTop />
           {children}
         </OverviewLayout>
       );
@@ -97,6 +101,7 @@ export async function LayoutEvaluatorContent({
       return (
         <PageLayout header={pageHeader} footer={footer}>
           <SetLayout value="page" />
+          <ScrollToTop />
           {children}
         </PageLayout>
       );
@@ -104,6 +109,7 @@ export async function LayoutEvaluatorContent({
       return (
         <ReferenceLayout header={pageHeader} aside={aside} footer={footer}>
           <SetLayout value="reference" />
+          <ScrollToTop />
           {children}
         </ReferenceLayout>
       );

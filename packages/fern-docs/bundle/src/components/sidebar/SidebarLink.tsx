@@ -21,6 +21,9 @@ import { cn } from "@fern-docs/components";
 import { FaIcon, FernTooltip } from "@fern-docs/components";
 import { addLeadingSlash } from "@fern-docs/utils";
 
+import { useCloseDismissableSidebar } from "@/state/mobile";
+import { useScrollSidebarNodeIntoView } from "@/state/sidebar-scroll";
+
 import { FernLink } from "../components/FernLink";
 import { scrollToRoute } from "../util/anchor";
 
@@ -61,6 +64,7 @@ type SidebarLinkProps = PropsWithChildren<
 const SidebarLinkInternal = forwardRef<HTMLDivElement, SidebarLinkProps>(
   (props, forwardRef) => {
     const {
+      nodeId,
       icon,
       className,
       linkClassName: linkClassNameProp,
@@ -85,7 +89,8 @@ const SidebarLinkInternal = forwardRef<HTMLDivElement, SidebarLinkProps>(
     } = props;
 
     const ref = useRef<HTMLDivElement>(null);
-    // const closeMobileSidebar = useCloseMobileSidebar();
+    useScrollSidebarNodeIntoView(ref, nodeId);
+    const closeDismissableSidebar = useCloseDismissableSidebar();
 
     if (hidden && !expanded && !selected) {
       return null;
@@ -101,7 +106,7 @@ const SidebarLinkInternal = forwardRef<HTMLDivElement, SidebarLinkProps>(
           href={href}
           className={linkClassName}
           onClick={composeEventHandlers(onClick, () => {
-            // closeMobileSidebar();
+            closeDismissableSidebar();
           })}
           shallow={shallow}
           target={target}
@@ -114,7 +119,7 @@ const SidebarLinkInternal = forwardRef<HTMLDivElement, SidebarLinkProps>(
         <button
           className={linkClassName}
           onClick={composeEventHandlers(onClick, () => {
-            // closeMobileSidebar();
+            closeDismissableSidebar();
           })}
         >
           {child}

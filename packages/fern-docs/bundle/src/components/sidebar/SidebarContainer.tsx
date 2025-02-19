@@ -4,6 +4,8 @@ import React from "react";
 
 import { FernScrollArea, cn } from "@fern-docs/components";
 
+import { useDismountMeasureSidebarScrollPosition } from "@/state/sidebar-scroll";
+
 import { useIsScrolled } from "../hooks/useIsScrolled";
 import { MobileSidebarHeaderLinks } from "./MobileSidebarHeaderLinks";
 import { SidebarFixedItemsSection } from "./SidebarFixedItemsSection";
@@ -25,6 +27,7 @@ export const SidebarContainer = React.memo(function SidebarContainer({
 }) {
   const ref = React.useRef<HTMLDivElement>(null);
   const isScrolled = useIsScrolled(ref);
+  useDismountMeasureSidebarScrollPosition(ref);
 
   return (
     <>
