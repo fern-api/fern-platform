@@ -1,5 +1,3 @@
-import { useExampleSelection } from "../../../api-reference/endpoints/useExampleSelection";
-import { CodeSnippetExample } from "../../../api-reference/examples/CodeSnippetExample";
 import { SchemaSnippet } from "./types";
 import { useFindEndpoint } from "./useFindEndpoint";
 import { extractEndpointPathAndMethod } from "./utils";
@@ -34,34 +32,22 @@ function EndpointSchemaSnippetInternal({
   }
 
   return (
-    <EndpointSchemaSnippetRenderer endpoint={endpoint} selector={selector} />
+    <EndpointSchemaSnippetRenderer
+      path={path}
+      method={method}
+      selector={selector}
+    />
   );
 }
 
 function EndpointSchemaSnippetRenderer({
-  endpoint,
+  path,
+  method,
   selector,
 }: SchemaSnippet.InternalProps) {
-  const { selectedExample } = useExampleSelection(endpoint, selector);
+  console.log("path", path);
+  console.log("method", method);
+  console.log("selector", selector);
 
-  const responseJson = selectedExample?.exampleCall.responseBody?.value;
-
-  if (responseJson == null) {
-    return null;
-  }
-
-  const responseJsonString = JSON.stringify(responseJson, null, 2);
-
-  return (
-    <div className="mb-5 mt-3">
-      <CodeSnippetExample
-        title="Response"
-        // actions={undefined}
-        code={responseJsonString}
-        language="json"
-        json={responseJson}
-        scrollAreaStyle={{ maxHeight: "500px" }}
-      />
-    </div>
-  );
+  return <div className="mb-5 mt-3">Snippet!</div>;
 }
