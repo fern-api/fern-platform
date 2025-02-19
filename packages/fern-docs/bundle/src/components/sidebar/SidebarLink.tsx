@@ -64,7 +64,6 @@ type SidebarLinkProps = PropsWithChildren<
 const SidebarLinkInternal = forwardRef<HTMLDivElement, SidebarLinkProps>(
   (props, forwardRef) => {
     const {
-      nodeId,
       icon,
       className,
       linkClassName: linkClassNameProp,
@@ -89,7 +88,6 @@ const SidebarLinkInternal = forwardRef<HTMLDivElement, SidebarLinkProps>(
     } = props;
 
     const ref = useRef<HTMLDivElement>(null);
-    useScrollSidebarNodeIntoView(ref, nodeId);
     const closeDismissableSidebar = useCloseDismissableSidebar();
 
     if (hidden && !expanded && !selected) {
@@ -216,7 +214,7 @@ export const SidebarSlugLink = forwardRef<
 >((props, forwardRef) => {
   const { slug, ...innerProps } = props;
   const ref = useRef<HTMLDivElement>(null);
-
+  useScrollSidebarNodeIntoView(ref, props.nodeId);
   const href = slug ? addLeadingSlash(slug) : undefined;
   return (
     <SidebarLink
