@@ -40,7 +40,11 @@ import { Json } from "./json";
 import { Mermaid } from "./mermaid";
 import { ParamField } from "./mintlify";
 import { ReferenceLayoutAside, ReferenceLayoutMain } from "./reference-layout";
-import { EndpointRequestSnippet, EndpointResponseSnippet } from "./snippets";
+import {
+  EndpointRequestSnippet,
+  EndpointResponseSnippet,
+  EndpointSchemaSnippet,
+} from "./snippets";
 import { Step, StepGroup } from "./steps";
 import { TabGroup } from "./tabs";
 import { Tooltip } from "./tooltip";
@@ -67,6 +71,7 @@ const FERN_COMPONENTS = {
   Download,
   EndpointRequestSnippet,
   EndpointResponseSnippet,
+  EndpointSchemaSnippet,
   Feature,
   Frame,
   Icon: RemoteFontAwesomeIcon,
