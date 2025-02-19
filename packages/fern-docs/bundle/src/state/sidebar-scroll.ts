@@ -22,7 +22,7 @@ export function useDismountMeasureSidebarScrollPosition(
   );
   React.useEffect(() => {
     if (ref.current && scrollPosition > 0) {
-      ref.current.scrollTo({ top: scrollPosition, behavior: "instant" });
+      ref.current.scrollTop = scrollPosition;
     }
 
     return () => {

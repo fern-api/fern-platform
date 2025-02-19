@@ -14,6 +14,7 @@ export function ThemedDocs({
   sidebar,
   children,
   tabs,
+  sidebarFixed = false,
 }: {
   theme?: FernTheme;
   announcement?: React.ReactNode;
@@ -21,6 +22,7 @@ export function ThemedDocs({
   sidebar?: React.ReactNode;
   children: React.ReactNode;
   tabs?: React.ReactNode;
+  sidebarFixed?: boolean;
 }) {
   const Docs = THEMES[theme];
   return (
@@ -29,6 +31,7 @@ export function ThemedDocs({
       header={header}
       sidebar={sidebar}
       tabs={tabs}
+      sidebarFixed={sidebarFixed}
     >
       {children}
     </Docs>

@@ -42,6 +42,11 @@ export default async function SharedLayout({
   return (
     <ThemedDocs
       theme={theme}
+      sidebarFixed={
+        !!colors.dark?.sidebarBackground ||
+        !!colors.light?.sidebarBackground ||
+        !layout.pageWidth
+      }
       announcement={
         announcementText && (
           <Announcement announcement={announcementText}>

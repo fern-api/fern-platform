@@ -21,12 +21,14 @@ export default function DefaultDocs({
   children,
   announcement,
   tabs,
+  sidebarFixed = false,
 }: {
   header: React.ReactNode;
   sidebar: React.ReactNode;
   children: React.ReactNode;
   announcement?: React.ReactNode;
   tabs?: React.ReactNode;
+  sidebarFixed?: boolean;
 }) {
   const hideAsides = useShouldHideAsides();
   return (
@@ -45,7 +47,7 @@ export default function DefaultDocs({
             "[&>aside]:lg:hidden": hideAsides,
           })}
         >
-          <SideNav>{sidebar}</SideNav>
+          <SideNav fixed={sidebarFixed}>{sidebar}</SideNav>
           {children}
         </div>
       </main>
@@ -56,7 +58,13 @@ export default function DefaultDocs({
   );
 }
 
-function SideNav({ children }: { children: React.ReactNode }) {
+function SideNav({
+  children,
+  fixed = false,
+}: {
+  children: React.ReactNode;
+  fixed?: boolean;
+}) {
   const isMobile = useIsMobile();
   const isDismissableSidebarOpen = useIsDismissableSidebarOpen();
   const closeDismissableSidebar = useCloseDismissableSidebar();
@@ -93,7 +101,10 @@ function SideNav({ children }: { children: React.ReactNode }) {
         className={cn(
           "pointer-events-auto",
           "z-30",
-          "lg:sticky lg:flex lg:h-fit lg:max-h-[calc(100dvh-var(--header-height))] lg:shrink-0 lg:translate-x-0 lg:flex-col lg:border-r-0 lg:opacity-100 lg:transition-none",
+          "lg:flex lg:shrink-0 lg:translate-x-0 lg:flex-col lg:opacity-100 lg:transition-none",
+          !fixed &&
+            "lg:sticky lg:h-fit lg:max-h-[calc(100dvh-var(--header-height))] lg:border-r-0",
+          fixed && "lg:border-border-concealed",
           "sm:ease-shift data-[mobile-state=closed]:!transition-none sm:-translate-x-full sm:opacity-0 sm:transition-[transform,opacity] sm:duration-150 sm:will-change-auto sm:data-[mobile-state=open]:translate-x-0 sm:data-[mobile-state=open]:opacity-100",
           "sm:border-border-default sm:w-(--spacing-sidebar-width) sm:flex sm:border-r",
           "bg-background/70 fixed inset-0 hidden w-dvw backdrop-blur-xl data-[mobile-state=open]:flex",
@@ -103,6 +114,9 @@ function SideNav({ children }: { children: React.ReactNode }) {
       >
         {children}
       </aside>
+      {fixed && (
+        <aside className="lg:w-(--spacing-sidebar-width) pointer-events-none hidden lg:block lg:shrink-0" />
+      )}
     </>
   );
 }

@@ -65,7 +65,7 @@ export default function WaveformComplex({
 
   return (
     <motion.div
-      className={cn("relative h-[400px] w-full", className)}
+      className={cn("relative w-full", className, "h-[500px]")}
       ref={canvasWrapper}
       animate={{
         filter: `blur(${blur}px)`,

@@ -73,11 +73,13 @@ function TableOfContentsSkeleton() {
         "w-sidebar-width"
       )}
     >
-      <div className="bg-grayscale-a3 w-21 h-3.5 rounded-md" />
-      <div className="border-grayscale-a3 space-y-3.5 border-l-2 pl-3">
-        <div className="bg-grayscale-a3 w-38 h-3.5 rounded-md" />
-        <div className="bg-grayscale-a3 w-42 h-3.5 rounded-md" />
-        <div className="bg-grayscale-a3 h-3.5 w-40 rounded-md" />
+      <div className="space-y-4 px-4 pb-12 pt-8 lg:pr-5">
+        <div className="bg-grayscale-a3 w-21 h-3.5 rounded-md" />
+        <div className="border-grayscale-a3 space-y-3.5 border-l-2 pl-3">
+          <div className="bg-grayscale-a3 w-38 h-3.5 rounded-md" />
+          <div className="bg-grayscale-a3 w-42 h-3.5 rounded-md" />
+          <div className="bg-grayscale-a3 h-3.5 w-40 rounded-md" />
+        </div>
       </div>
     </aside>
   );

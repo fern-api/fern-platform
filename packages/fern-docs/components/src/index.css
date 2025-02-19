@@ -325,9 +325,9 @@
   --color-tag-danger-soft: var(--red-a2);
   --color-tag-info-soft: var(--blue-a2);
 
-  --spacing-page-width: 88rem;
-  --spacing-content-width: 40rem;
-  --spacing-sidebar-width: 18rem;
+  --spacing-page-width: var(--page-width, 88rem);
+  --spacing-content-width: var(--content-width, 40rem);
+  --spacing-sidebar-width: var(--sidebar-width, 18rem);
   --spacing-content-wide-width: calc(
     (var(--spacing-content-width) * 3) / 2 + 0.5rem
   );
