@@ -296,7 +296,7 @@ function transformAccordion(
   parent: Hast.Root | Hast.Element | Hast.MdxJsxElement,
   visitor: Visitor
 ): VisitorResult {
-  const title = getTitle(node) ?? "Untitled";
+  const title = getTitle(node) ?? `Untitled ${index + 1}`;
   applyGeneratedId(node, title);
   const idAttr = node.attributes
     .filter(isMdxJsxAttribute)
