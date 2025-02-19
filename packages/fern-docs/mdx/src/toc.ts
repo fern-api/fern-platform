@@ -1,10 +1,8 @@
+import { Hast } from "@fern-docs/mdx";
 import { slug } from "github-slugger";
 import type { Doctype, ElementContent, Root } from "hast";
 import { headingRank } from "hast-util-heading-rank";
 import { SKIP, visit, type BuildVisitor } from "unist-util-visit";
-import {
-  Hast
-} from "@fern-docs/mdx";
 import { hastToString } from "./hast-utils";
 import { hastGetBooleanValue } from "./hast-utils/hast-get-boolean-value";
 import { isHastElement } from "./hast-utils/is-hast-element";
@@ -42,13 +40,17 @@ export function makeToc(
 
   const visitor: Visitor = (node) => {
     if (isMdxJsxElementHast(node) && node.name === "Accordion") {
-      const baseId = node.attributes
-        .filter(isMdxJsxAttribute)
-        .find((attr) => attr.name === "id")?.value || 
-        slug(node.attributes
+      const baseId =
+        node.attributes
           .filter(isMdxJsxAttribute)
-          .find((attr) => attr.name === "title")?.value as string) || "";
-                
+          .find((attr) => attr.name === "id")?.value ||
+        slug(
+          node.attributes
+            .filter(isMdxJsxAttribute)
+            .find((attr) => attr.name === "title")?.value as string
+        ) ||
+        "";
+
       if (baseId && typeof baseId === "string") {
         const updateChildIds = (
           items: (Hast.Element | Hast.MdxJsxElement)[],
@@ -66,26 +68,29 @@ export function makeToc(
                 updateChildIds(
                   item.children.filter(
                     (child): child is Hast.Element | Hast.MdxJsxElement =>
-                      child.type === "element" || child.type === "mdxJsxFlowElement"
+                      child.type === "element" ||
+                      child.type === "mdxJsxFlowElement"
                   ),
                   (item.properties?.id as string) || parentId
                 );
               }
             } else if (item.type === "mdxJsxFlowElement") {
               if (item.name === "Accordion") {
-                const newId = slug(item.attributes
-                  .filter(isMdxJsxAttribute)
-                  .find((attr) => attr.name === "title")?.value as string)
-                  
+                const newId = slug(
+                  item.attributes
+                    .filter(isMdxJsxAttribute)
+                    .find((attr) => attr.name === "title")?.value as string
+                );
+
                 item.attributes.push({
                   type: "mdxJsxAttribute",
                   name: "id",
-                  value: `${parentId}.${newId}`
+                  value: `${parentId}.${newId}`,
                 });
-                
+
                 return;
               }
-    
+
               const itemIdAttr = item.attributes
                 .filter(isMdxJsxAttribute)
                 .find((attr) => attr.name === "id");
@@ -99,7 +104,8 @@ export function makeToc(
                 updateChildIds(
                   item.children.filter(
                     (child): child is Hast.Element | Hast.MdxJsxElement =>
-                      child.type === "element" || child.type === "mdxJsxFlowElement"
+                      child.type === "element" ||
+                      child.type === "mdxJsxFlowElement"
                   ),
                   (itemIdAttr?.value as string) || parentId
                 );
@@ -107,7 +113,7 @@ export function makeToc(
             }
           });
         };
-        
+
         updateChildIds(
           node.children.filter(
             (child): child is Hast.Element | Hast.MdxJsxElement =>
@@ -117,7 +123,7 @@ export function makeToc(
         );
       }
     }
-    
+
     // if the node is a <Steps toc={false}>, skip traversing its children
     if (isMdxJsxElementHast(node) && node.name === "StepGroup") {
       const isTocEnabled =
