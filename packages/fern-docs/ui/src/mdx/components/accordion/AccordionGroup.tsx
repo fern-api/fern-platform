@@ -34,9 +34,10 @@ export const AccordionGroup = forwardRef<HTMLDivElement, AccordionGroupProps>(
           });
         } else if (anchor.includes(".")) {
           const paths = anchor.split(".");
-          if (items.some((tab) => tab.id === paths[0])) {
+          const parentId = paths[0];
+          if (parentId && items.some((tab) => tab.id === parentId)) {
             setActiveTabs((prev) => {
-              return prev.includes(anchor) ? prev : [...prev, anchor];
+              return prev.includes(parentId) ? prev : [...prev, parentId];
             });
           }
         }
@@ -47,7 +48,6 @@ export const AccordionGroup = forwardRef<HTMLDivElement, AccordionGroupProps>(
       (nextActiveTabs: string[]) => {
         setActiveTabs((prev) => {
           const added = nextActiveTabs.filter((tab) => !prev.includes(tab));
-          console.log("added: ", added);
           if (added[0] != null) {
             setAnchor(added[0]);
           }
