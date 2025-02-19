@@ -1,0 +1,22 @@
+{
+  "id": "test-uuid-replacement",
+  "endpoints": {},
+  "websockets": {},
+  "webhooks": {},
+  "types": {
+    "Test": {
+      "name": "Test",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "primitive",
+          "value": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "subpackages": {},
+  "auths": {}
+}
