@@ -3,6 +3,7 @@
     "@fern-platform/configs",
     "@types/node",
     "@types/react",
+    "@fern-docs/mdx",
     "hast",
     "mdast",
     "mdx",

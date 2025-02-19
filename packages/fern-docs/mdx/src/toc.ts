@@ -1,3 +1,4 @@
+import { Hast } from "@fern-docs/mdx";
 import { slug } from "github-slugger";
 import type { Doctype, ElementContent, Root } from "hast";
 import { headingRank } from "hast-util-heading-rank";
@@ -38,6 +39,91 @@ export function makeToc(
   const headings: FoundHeading[] = [];
 
   const visitor: Visitor = (node) => {
+    if (isMdxJsxElementHast(node) && node.name === "Accordion") {
+      const baseId =
+        node.attributes
+          .filter(isMdxJsxAttribute)
+          .find((attr) => attr.name === "id")?.value ||
+        slug(
+          node.attributes
+            .filter(isMdxJsxAttribute)
+            .find((attr) => attr.name === "title")?.value as string
+        ) ||
+        "";
+
+      if (baseId && typeof baseId === "string") {
+        const updateChildIds = (
+          items: (Hast.Element | Hast.MdxJsxElement)[],
+          parentId: string
+        ) => {
+          items.forEach((item) => {
+            if (item.type === "element") {
+              if (item.properties?.id) {
+                const oldId = item.properties.id as string;
+                item.properties.id = oldId.startsWith(parentId)
+                  ? oldId
+                  : `${parentId}.${oldId}`;
+              }
+              if (item.children) {
+                updateChildIds(
+                  item.children.filter(
+                    (child): child is Hast.Element | Hast.MdxJsxElement =>
+                      child.type === "element" ||
+                      child.type === "mdxJsxFlowElement"
+                  ),
+                  (item.properties?.id as string) || parentId
+                );
+              }
+            } else if (item.type === "mdxJsxFlowElement") {
+              if (item.name === "Accordion") {
+                const newId = slug(
+                  item.attributes
+                    .filter(isMdxJsxAttribute)
+                    .find((attr) => attr.name === "title")?.value as string
+                );
+
+                item.attributes.push({
+                  type: "mdxJsxAttribute",
+                  name: "id",
+                  value: `${parentId}.${newId}`,
+                });
+
+                return;
+              }
+
+              const itemIdAttr = item.attributes
+                .filter(isMdxJsxAttribute)
+                .find((attr) => attr.name === "id");
+              if (itemIdAttr && typeof itemIdAttr.value === "string") {
+                const oldId = itemIdAttr.value;
+                itemIdAttr.value = oldId.startsWith(parentId)
+                  ? oldId
+                  : `${parentId}.${oldId}`;
+              }
+              if (item.children) {
+                updateChildIds(
+                  item.children.filter(
+                    (child): child is Hast.Element | Hast.MdxJsxElement =>
+                      child.type === "element" ||
+                      child.type === "mdxJsxFlowElement"
+                  ),
+                  (itemIdAttr?.value as string) || parentId
+                );
+              }
+            }
+          });
+        };
+
+        updateChildIds(
+          node.children.filter(
+            (child): child is Hast.Element | Hast.MdxJsxElement =>
+              child.type === "element" || child.type === "mdxJsxFlowElement"
+          ),
+          baseId
+        );
+      }
+    }
+
     // if the node is a <Steps toc={false}>, skip traversing its children
     if (isMdxJsxElementHast(node) && node.name === "StepGroup") {
       const isTocEnabled =
@@ -129,7 +215,7 @@ export function makeToc(
           }
           headings.push({
             depth: 6,
-            id: slug(item.title),
+            id: item.id ?? slug(item.title),
             title: item.title,
           });
         });
@@ -158,7 +244,7 @@ export function makeToc(
           }
           headings.push({
             depth: 6,
-            id: slug(item.title),
+            id: item.id ?? slug(item.title),
             title: item.title,
           });
         });
