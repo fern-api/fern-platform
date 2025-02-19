@@ -24,20 +24,26 @@ export const revalidate = 0;
 const logToBraintrust = (
   input: string,
   output: string,
-  start: Date,
-  end: Date
+  start: number,
+  end: number,
+  prompt_tokens: number,
+  completion_tokens: number,
+  total_tokens: number
 ) => {
   traced((span) => {
     span.log({
       input,
       output,
       metrics: {
-        duration: (end.getTime() - start.getTime()) / 1000.0,
+        duration: (end - start) / 1000.0,
         start,
         end,
+        prompt_tokens,
+        completion_tokens,
+        total_tokens,
       },
       metadata: {
-        custom_metadata: "this_is_custom_metadata",
+        domain: process.env.NEXT_PUBLIC_DOMAIN,
       },
     });
   });
@@ -151,7 +157,15 @@ export async function POST(req: NextRequest) {
       e.warnings?.forEach((warning) => {
         console.warn(warning);
       });
-      logToBraintrust(lastUserMessage || "", e.text, start, end);
+      logToBraintrust(
+        lastUserMessage || "",
+        e.text,
+        start,
+        end,
+        e.usage.promptTokens,
+        e.usage.completionTokens,
+        e.usage.totalTokens
+      );
     },
   });
 

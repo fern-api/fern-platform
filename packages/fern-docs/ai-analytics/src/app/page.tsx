@@ -105,8 +105,18 @@ export default async function Home({
             if (typeof msg.content === "string") {
               if (msg.content && msg.content.includes("elevenlabs.io")) {
                 domain = "elevenlabs.io";
-              } else {
+              } else if (
+                msg.content &&
+                msg.content.includes("buildwithfern.com")
+              ) {
                 domain = "buildwithfern.com";
+              } else if (msg.content && msg.content.includes("openrouter.ai")) {
+                domain = "openrouter.ai";
+              } else if (msg.content && msg.content.includes("flagright.com")) {
+                domain = "flagright.com";
+              } else {
+                console.log(msg.content);
+                domain = "unknown";
               }
             }
           }

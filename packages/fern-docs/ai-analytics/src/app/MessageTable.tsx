@@ -108,6 +108,15 @@ export function MessageTableClient({
                 Buildwithfern.com ({countByDomain["buildwithfern.com"]}{" "}
                 conversations)
               </Select.Item>
+              <Select.Item value="openrouter.ai">
+                openrouter.ai ({countByDomain["openrouter.ai"]} conversations)
+              </Select.Item>
+              <Select.Item value="flagright.com">
+                flagright.com ({countByDomain["flagright.com"]} conversations)
+              </Select.Item>
+              <Select.Item value="unknown">
+                Unknown ({countByDomain["unknown"] || 0} conversations)
+              </Select.Item>
             </Select.Content>
           </Select.Root>
         </Card>
