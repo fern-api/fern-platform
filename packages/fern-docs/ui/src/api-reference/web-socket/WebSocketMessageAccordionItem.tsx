@@ -53,7 +53,15 @@ export const WebsocketMessageAccordionItem: FC<
 
         <CopyToClipboardButton
           className="fern-web-socket-copy"
-          content={() => JSON.stringify(message.data, null, 2)}
+          content={() => {
+            try {
+              return JSON.stringify(message.data, null, 2);
+            } catch {
+              return typeof message.data === "string"
+                ? message.data.slice(0, 100)
+                : String(message.data).slice(0, 100);
+            }
+          }}
           onClick={(e) => e.stopPropagation()}
         />
 
@@ -66,7 +74,15 @@ export const WebsocketMessageAccordionItem: FC<
         <div className="group/cb-container relative">
           <FernSyntaxHighlighter
             className="w-0 min-w-full overflow-y-auto"
-            code={JSON.stringify(message.data, null, 2)}
+            code={(() => {
+              try {
+                return JSON.stringify(message.data, null, 2);
+              } catch {
+                return typeof message.data === "string"
+                  ? message.data.slice(0, 100)
+                  : String(message.data).slice(0, 100);
+              }
+            })()}
             language="json"
             fontSize="sm"
           />
