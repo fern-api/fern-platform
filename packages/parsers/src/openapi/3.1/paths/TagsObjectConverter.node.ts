@@ -1,4 +1,4 @@
-import { noop } from "es-toolkit";
+import { noop } from "es-toolkit/compat";
 import { OpenAPIV3_1 } from "openapi-types";
 import {
   BaseOpenApiV3_1ConverterNode,

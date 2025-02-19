@@ -1,8 +1,8 @@
 {
   "id": "test-uuid-replacement",
   "endpoints": {
-    "endpoint_.post-test": {
-      "id": "endpoint_.post-test",
+    "endpoint_.testUpload": {
+      "id": "endpoint_.testUpload",
       "description": "Test multipart request with different content types.\n",
       "displayName": "Test upload",
       "method": "POST",

@@ -1,8 +1,8 @@
 {
   "id": "test-uuid-replacement",
   "endpoints": {
-    "endpoint_.post-v-1-users": {
-      "id": "endpoint_.post-v-1-users",
+    "endpoint_.postV1Users": {
+      "id": "endpoint_.postV1Users",
       "method": "POST",
       "path": [
         {

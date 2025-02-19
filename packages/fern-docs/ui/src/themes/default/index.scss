@@ -117,7 +117,14 @@
   }
 
   .fern-body.fern-sidebar-open {
-    @apply fixed overflow-hidden;
+    @apply fixed h-[100vh] overflow-hidden;
+  }
+
+  #fern-footer.fern-sidebar-open {
+    @apply fixed bottom-0 left-0 right-0;
+
+    height: auto !important;
+    transform: translateY(100%);
   }
 
   .fern-body {

@@ -1,8 +1,8 @@
 {
   "id": "test-uuid-replacement",
   "endpoints": {
-    "endpoint_.patch-settings": {
-      "id": "endpoint_.patch-settings",
+    "endpoint_.patchSettings": {
+      "id": "endpoint_.patchSettings",
       "method": "PATCH",
       "path": [
         {

@@ -52,7 +52,7 @@ describe("OperationObjectConverterNode", () => {
               },
             },
           ],
-          id: "endpoint_.get-pets-pet-id",
+          id: "endpoint_.getPetsPetId",
           method: "GET",
           namespace: undefined,
           operationId: undefined,

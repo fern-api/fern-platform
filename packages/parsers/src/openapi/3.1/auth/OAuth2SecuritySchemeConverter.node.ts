@@ -83,6 +83,7 @@ export class OAuth2SecuritySchemeConverterNode extends BaseOpenApiV3_1ConverterN
       method: "POST",
       sdkMethodName: undefined,
       operationId: undefined,
+      displayName: undefined,
       isWebhook: undefined,
     });
     if (endpointId == null) {

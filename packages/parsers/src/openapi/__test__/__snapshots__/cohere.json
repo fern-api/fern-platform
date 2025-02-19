@@ -19783,8 +19783,8 @@
         "type": "rest"
       }
     },
-    "endpoint_datasets.get-usage": {
-      "id": "endpoint_datasets.get-usage",
+    "endpoint_datasets.getUsage": {
+      "id": "endpoint_datasets.getUsage",
       "description": "View the dataset storage usage for your Organization. Each Organization can have up to 10GB of storage across all their users.",
       "namespace": [
         "datasets"
@@ -27263,8 +27263,8 @@
         "type": "rest"
       }
     },
-    "endpoint_connectors.o-auth-authorize": {
-      "id": "endpoint_connectors.o-auth-authorize",
+    "endpoint_connectors.oAuthAuthorize": {
+      "id": "endpoint_connectors.oAuthAuthorize",
       "description": "Authorize the connector with the given ID for the connector oauth app.  See ['Connector Authentication'](https://docs.cohere.com/docs/connector-authentication) for more information.",
       "namespace": [
         "connectors"

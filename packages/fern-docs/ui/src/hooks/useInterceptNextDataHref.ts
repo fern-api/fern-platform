@@ -22,12 +22,17 @@ function createPageLoaderGetDataHref(
     const { pathname: asPathname } = parseRelativeUrl(asPath);
     const route = addLeadingSlash(removeTrailingSlash(hrefPathname));
 
+    const indexPrefix = route === "/" ? "index" : undefined;
+
     const getHrefForSlug = (path: string) => {
-      // note: getAsssetPathFromRoute will automatically turn `/` to `/index`
-      const dataRoute = getAssetPathFromRoute(
+      let dataRoute = getAssetPathFromRoute(
         removeTrailingSlash(addLocale(path, locale)),
         ".json"
       );
+      if (indexPrefix != null) {
+        dataRoute = `/${indexPrefix}${dataRoute}`;
+      }
+
       // ->> /_next/data/development/index.json
       return addPathPrefix(
         `/_next/data/${buildId}${dataRoute}${search}`,

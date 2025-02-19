@@ -1,8 +1,8 @@
 {
   "id": "test-uuid-replacement",
   "endpoints": {
-    "endpoint_.get-users": {
-      "id": "endpoint_.get-users",
+    "endpoint_.listUsers": {
+      "id": "endpoint_.listUsers",
       "description": "List information about all users",
       "displayName": "List Users",
       "method": "GET",
@@ -56,8 +56,8 @@
         "type": "rest"
       }
     },
-    "endpoint_.get-users-user-id": {
-      "id": "endpoint_.get-users-user-id",
+    "endpoint_.getUserInformation": {
+      "id": "endpoint_.getUserInformation",
       "description": "Retrieve detailed information about a specific user",
       "displayName": "Get user information",
       "method": "GET",
@@ -136,8 +136,8 @@
         "type": "rest"
       }
     },
-    "endpoint_.get-token": {
-      "id": "endpoint_.get-token",
+    "endpoint_.getAuthenticationToken": {
+      "id": "endpoint_.getAuthenticationToken",
       "description": "Retrieve an authentication token for the API",
       "displayName": "Get authentication token",
       "method": "GET",

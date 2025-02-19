@@ -1,5 +1,5 @@
 import { isNonNullish } from "@fern-api/ui-core-utils";
-import { camelCase, mapValues } from "es-toolkit";
+import { camelCase, mapValues } from "es-toolkit/compat";
 import { OpenAPIV3_1 } from "openapi-types";
 import { UnreachableCaseError } from "ts-essentials";
 import { FernRegistry } from "../../../../client/generated";
