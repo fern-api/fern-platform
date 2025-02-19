@@ -114,6 +114,8 @@ export default async function Home({
                 domain = "openrouter.ai";
               } else if (msg.content && msg.content.includes("flagright.com")) {
                 domain = "flagright.com";
+              } else if (msg.content && msg.content.includes("accelbooks.ai")) {
+                domain = "accelbooks.ai";
               } else {
                 console.log(msg.content);
                 domain = "unknown";

@@ -114,6 +114,9 @@ export function MessageTableClient({
               <Select.Item value="flagright.com">
                 flagright.com ({countByDomain["flagright.com"]} conversations)
               </Select.Item>
+              <Select.Item value="accelbooks.ai">
+                accelbooks.ai ({countByDomain["accelbooks.ai"]} conversations)
+              </Select.Item>
               <Select.Item value="unknown">
                 Unknown ({countByDomain["unknown"] || 0} conversations)
               </Select.Item>
