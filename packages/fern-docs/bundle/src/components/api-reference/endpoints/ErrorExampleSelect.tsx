@@ -78,7 +78,7 @@ export const ErrorExampleSelect: FC<
       </Select.Trigger>
       <Select.Portal>
         <Select.Content className="bg-card-background ring-border-default z-50 overflow-hidden rounded-md shadow-2xl ring-1 ring-inset backdrop-blur">
-          <Select.ScrollUpButton className="text-accent bg-card-background flex h-8 cursor-default items-center justify-center">
+          <Select.ScrollUpButton className="text-accent-a11 bg-card-background flex h-8 cursor-default items-center justify-center">
             <NavArrowUp className="size-icon" />
           </Select.ScrollUpButton>
           <Select.Viewport className="p-[5px]">
@@ -105,7 +105,7 @@ export const ErrorExampleSelect: FC<
               )
             )}
           </Select.Viewport>
-          <Select.ScrollDownButton className="text-accent bg-card-background flex h-8 cursor-default items-center justify-center">
+          <Select.ScrollDownButton className="text-accent-a11 bg-card-background flex h-8 cursor-default items-center justify-center">
             <NavArrowDown className="size-icon" />
           </Select.ScrollDownButton>
         </Select.Content>

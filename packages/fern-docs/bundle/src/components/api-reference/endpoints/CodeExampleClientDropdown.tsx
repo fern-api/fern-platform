@@ -42,7 +42,7 @@ export const CodeExampleClientDropdown: React.FC<
         <FernButton
           icon={
             <FaIcon
-              className="text-accent size-4"
+              className="text-accent-a11 size-4"
               icon={getIconForClient(value)}
             />
           }

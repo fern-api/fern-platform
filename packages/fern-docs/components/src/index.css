@@ -203,7 +203,7 @@
   --tw-prose-links: var(--color-accent-a11);
 
   /** Radius */
-  --radius-lg: var(--border-radius, 0.5rem); /* 8px */
+  --radius-lg: var(--radius, 0.5rem); /* 8px */
   --radius-xs: calc(var(--radius-lg) - var(--spacing) * 1.5); /* 2px */
   --radius-sm: calc(var(--radius-lg) - var(--spacing)); /* 4px */
   --radius-md: calc(var(--radius-lg) - var(--spacing) * 0.5); /* 6px */

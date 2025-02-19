@@ -51,7 +51,7 @@ export const Callout: FC<PropsWithChildren<Callout.Props>> = ({
   return (
     <div
       className={cn(
-        "mt-4 mb-6 rounded-lg p-4 first:mt-0", // pb-0 to compensate for the ::after margin
+        "mb-6 mt-4 rounded-lg p-4 first:mt-0", // pb-0 to compensate for the ::after margin
         visitDiscriminatedUnion({ intent }, "intent")._visit({
           info: () => "callout-outlined",
           warning: () => "callout-outlined-warning",
@@ -75,7 +75,7 @@ export const Callout: FC<PropsWithChildren<Callout.Props>> = ({
                 "text-intent-success": intent === "success",
                 "text-intent-danger": intent === "error",
                 "text-intent-info": intent === "note",
-                "text-accent": intent === "launch",
+                "text-accent-a11": intent === "launch",
               })}
               icon={icon}
             />
@@ -94,7 +94,7 @@ export const Callout: FC<PropsWithChildren<Callout.Props>> = ({
                 <WarningTriangle className="size-icon-md text-intent-danger" />
               ),
               note: () => <Pin className="size-icon-md text-intent-info" />,
-              launch: () => <Rocket className="text-accent size-icon-md" />,
+              launch: () => <Rocket className="text-accent-a11 size-icon-md" />,
               tip: () => <Star className="size-icon-md text-intent-success" />,
               check: () => (
                 <Check className="size-icon-md text-intent-success" />
@@ -116,7 +116,7 @@ export const Callout: FC<PropsWithChildren<Callout.Props>> = ({
               success: () => "text-intent-success",
               error: () => "text-intent-danger",
               note: () => "text-intent-info",
-              launch: () => "text-accent",
+              launch: () => "text-accent-a11",
               tip: () => "text-intent-success",
               check: () => "text-intent-success",
               _other: () => "text-body",

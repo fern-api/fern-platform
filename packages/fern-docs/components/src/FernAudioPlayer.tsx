@@ -53,7 +53,7 @@ export function FernAudioPlayer(props: FernAudioPlayerProps): ReactElement {
       <div className="relative flex flex-1 flex-col justify-center gap-1">
         <p className="m-0 inline-flex justify-center gap-2 text-center">
           {props.title != null && (
-            <span className="text-accent max-w-[40vw] truncate">
+            <span className="text-accent-a11 max-w-[40vw] truncate">
               {props.title}
             </span>
           )}

@@ -108,7 +108,7 @@
   }
 
   .fern-sidebar-link-expand[data-state="active"] {
-    @apply text-accent after:bg-tag-primary after:pointer-events-none after:absolute after:inset-1 after:rounded-xl after:content-[''] lg:after:rounded-md;
+    @apply text-accent-a11 after:bg-tag-primary after:pointer-events-none after:absolute after:inset-1 after:rounded-xl after:content-[''] lg:after:rounded-md;
   }
 
   .fern-sidebar-tabs {

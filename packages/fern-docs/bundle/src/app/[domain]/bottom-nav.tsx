@@ -52,7 +52,7 @@ export function BottomNavigation({
       {neighbors.next && (
         <MaybeFernLink
           href={neighbors.next.href}
-          className="bg-background hover:border-accent-a6 flex h-16 flex-1 items-center justify-end gap-4 border border-transparent px-3"
+          className="bg-background hover:border-accent-a8 flex h-16 flex-1 items-center justify-end gap-4 border border-transparent px-3"
         >
           <div className="min-w-0 shrink space-y-2 pl-4">
             <h4 className="text-grayscale-a12 truncate text-base font-bold">

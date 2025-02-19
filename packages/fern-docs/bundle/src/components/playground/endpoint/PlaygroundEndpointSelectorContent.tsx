@@ -79,7 +79,7 @@ export const PlaygroundEndpointSelectorContent = forwardRef<
                 {idx > 0 && (
                   <Slash className="size-icon-sm text-faded mx-0.5" />
                 )}
-                <span className="text-accent shrink truncate whitespace-nowrap text-xs">
+                <span className="text-accent-a11 shrink truncate whitespace-nowrap text-xs">
                   {breadcrumb}
                 </span>
               </Fragment>

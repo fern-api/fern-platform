@@ -43,7 +43,7 @@
 
   .fern-numeric-input-group:focus-within
     .fern-numeric-input-step:not(:disabled) {
-    @apply text-accent border-border-primary ring-accent hover:text-accent hover:bg-tag-primary;
+    @apply text-accent-a11 border-border-primary ring-accent hover:text-accent-a11 hover:bg-tag-primary;
   }
 
   .fern-numeric-input-group .fern-numeric-input-step:first-child {

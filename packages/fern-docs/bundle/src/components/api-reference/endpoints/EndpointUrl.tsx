@@ -84,7 +84,7 @@ export const EndpointUrl = React.forwardRef<
           elements.push(
             <span
               key={`part-${i}`}
-              className="bg-accent-highlight text-accent whitespace-nowrap rounded px-1"
+              className="bg-accent-highlight text-accent-a11 whitespace-nowrap rounded px-1"
             >
               :{pathParameter.value}
             </span>

@@ -215,7 +215,7 @@ const FeedbackPopover = forwardRef<
               >
                 <motion.div
                   layoutId="icon-container"
-                  className="bg-tag-primary text-accent mx-auto flex size-8 items-center justify-center rounded-md"
+                  className="bg-tag-primary text-accent-a11 mx-auto flex size-8 items-center justify-center rounded-md"
                 >
                   <Check />
                 </motion.div>

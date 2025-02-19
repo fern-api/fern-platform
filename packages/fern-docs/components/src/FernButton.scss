@@ -142,7 +142,7 @@
         @apply hover:bg-tag-default data-[selected=true]:bg-tag-default data-[state=checked]:bg-tag-default data-[state=on]:bg-tag-default data-[state=open]:bg-tag-default data-[state=opening]:bg-tag-default;
 
         &.primary {
-          @apply text-accent hover:text-accent;
+          @apply text-accent-a11 hover:text-accent-a11;
           @apply hover:bg-tag-primary data-[selected=true]:bg-tag-primary data-[state=checked]:bg-tag-primary data-[state=on]:bg-tag-primary data-[state=open]:bg-tag-primary data-[state=opening]:bg-tag-primary;
         }
 
@@ -235,7 +235,7 @@
         }
 
         &.primary {
-          @apply text-accent ring-border-primary;
+          @apply text-accent-a11 ring-border-primary;
 
           &:hover,
           &[data-state="on"],

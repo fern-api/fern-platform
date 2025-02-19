@@ -42,7 +42,7 @@ const UnmemoizedSidebarTabButton: React.FC<SidebarTabButton.Props> = ({
           <div className="min-w-fit">
             <div className="bg-card-surface ring-border-default group-hover/tab-button:bg-tag-primary group-hover/tab-button:ring-accent/70 group-data-[state=active]/tab-button:bg-accent group-hover/tab-button:group-data-[state=active]/tab-button:bg-accent flex size-6 items-center justify-center rounded-md shadow-sm ring-1 group-data-[state=active]/tab-button:ring-0">
               <FaIcon
-                className="text-faded group-hover/tab-button:text-accent group-data-[state=active]/tab-button:text-background group-hover/tab-button:group-data-[state=active]/tab-button:text-background size-4"
+                className="text-faded group-hover/tab-button:text-accent-a11 group-data-[state=active]/tab-button:text-background group-hover/tab-button:group-data-[state=active]/tab-button:text-background size-4"
                 // TODO: Should we validate that the icon is not undefined in sidebar mode
                 icon={
                   tab.type !== "link" && tab.authed
