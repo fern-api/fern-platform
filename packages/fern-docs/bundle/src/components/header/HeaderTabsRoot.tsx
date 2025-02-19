@@ -2,13 +2,13 @@
 
 import * as Tabs from "@radix-ui/react-tabs";
 
-import { useCurrentTab } from "@/state/navigation";
+import { useCurrentTabId } from "@/state/navigation";
 
 export function HeaderTabsRoot({ children }: { children: React.ReactNode }) {
-  const currentTab = useCurrentTab();
+  const currentTabId = useCurrentTabId();
   return (
     <Tabs.Root
-      value={currentTab?.id}
+      value={currentTabId}
       className="w-page-width-padded px-page-padding mx-auto hidden max-w-full select-none lg:block"
     >
       {children}

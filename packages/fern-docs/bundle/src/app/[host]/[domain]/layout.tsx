@@ -26,6 +26,11 @@ import { DarkCode } from "@/state/dark-code";
 import { Domain } from "@/state/domain";
 import { LaunchDarklyInfo } from "@/state/feature-flags";
 import { DefaultLanguage } from "@/state/language";
+import { RootNodeProvider, SetBasePath } from "@/state/navigation";
+import {
+  getAllSidebarRootNodes,
+  getSidebarRootNodeIdToChildToParentsMap,
+} from "@/state/navigation-server";
 
 import { GlobalStyles } from "../../global-styles";
 import { toImageDescriptor } from "../../seo";
@@ -41,7 +46,9 @@ export default async function Layout(props: {
 
   const loader = await createCachedDocsLoader(host, domain);
   const [
+    { basePath },
     config,
+    unsafe_fullRoot,
     edgeFlags,
     files,
     colors,
@@ -50,7 +57,9 @@ export default async function Layout(props: {
     deprecated_customerAnalytics,
     launchDarkly,
   ] = await Promise.all([
+    loader.getBaseUrl(),
     loader.getConfig(),
+    loader.unsafe_getFullRoot(),
     getEdgeFlags(domain),
     loader.getFiles(),
     loader.getColors(),
@@ -66,41 +75,53 @@ export default async function Layout(props: {
 
   const jsConfig = withJsConfig(config.js, files);
 
+  // this creates a safe id mapping, so we can send it to the client:
+  const sidebarRootNodes = getAllSidebarRootNodes(unsafe_fullRoot);
+  const sidebarRootNodesToChildToParentsMap =
+    getSidebarRootNodeIdToChildToParentsMap(sidebarRootNodes);
+
   return (
     <ThemeProvider
       hasLight={Boolean(colors.light)}
       hasDark={Boolean(colors.dark)}
     >
-      <Domain value={domain} />
-      {config.defaultLanguage != null && (
-        <DefaultLanguage language={config.defaultLanguage} />
-      )}
-      <DarkCode value={edgeFlags.isDarkCodeEnabled} />
-      {/* <FernUser domain={domain} fern_token={fern_token} /> */}
-      <BgImageGradient colors={colors} />
-      <GlobalStyles
-        domain={domain}
-        layout={layout}
-        fonts={fonts}
-        light={colors.light}
-        dark={colors.dark}
-        inlineCss={config.css?.inline}
-      />
-      <FeatureFlagProvider featureFlagsConfig={{ launchDarkly }}>
-        {children}
-      </FeatureFlagProvider>
-      <React.Suspense fallback={null}>
-        <SearchV2 domain={domain} isAskAiEnabled={edgeFlags.isAskAiEnabled} />
-      </React.Suspense>
-      {jsConfig != null && <JavascriptProvider config={jsConfig} />}
-      {VERCEL_ENV === "production" && (
-        <CustomerAnalytics
-          config={mergeCustomerAnalytics(
-            deprecated_customerAnalytics,
-            config.analyticsConfig
-          )}
+      <RootNodeProvider
+        sidebarRootNodesToChildToParentsMap={
+          sidebarRootNodesToChildToParentsMap
+        }
+      >
+        <Domain value={domain} />
+        <SetBasePath value={basePath ?? ""} />
+        {config.defaultLanguage != null && (
+          <DefaultLanguage language={config.defaultLanguage} />
+        )}
+        <DarkCode value={edgeFlags.isDarkCodeEnabled} />
+        {/* <FernUser domain={domain} fern_token={fern_token} /> */}
+        <BgImageGradient colors={colors} />
+        <GlobalStyles
+          domain={domain}
+          layout={layout}
+          fonts={fonts}
+          light={colors.light}
+          dark={colors.dark}
+          inlineCss={config.css?.inline}
         />
-      )}
+        <FeatureFlagProvider featureFlagsConfig={{ launchDarkly }}>
+          {children}
+        </FeatureFlagProvider>
+        <React.Suspense fallback={null}>
+          <SearchV2 domain={domain} isAskAiEnabled={edgeFlags.isAskAiEnabled} />
+        </React.Suspense>
+        {jsConfig != null && <JavascriptProvider config={jsConfig} />}
+        {VERCEL_ENV === "production" && (
+          <CustomerAnalytics
+            config={mergeCustomerAnalytics(
+              deprecated_customerAnalytics,
+              config.analyticsConfig
+            )}
+          />
+        )}
+      </RootNodeProvider>
     </ThemeProvider>
   );
 }

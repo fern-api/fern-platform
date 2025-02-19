@@ -12,6 +12,10 @@ import { createFileResolver } from "@/server/file-resolver";
 import { createCachedMdxSerializer } from "@/server/mdx-serializer";
 import { withLogo } from "@/server/withLogo";
 import { RootNodeProvider } from "@/state/navigation";
+import {
+  getAllSidebarRootNodes,
+  getSidebarRootNodeIdToChildToParentsMap,
+} from "@/state/navigation-server";
 
 import { LoginButton } from "./login-button";
 
@@ -27,10 +31,9 @@ export default async function SharedLayout({
   loader: DocsLoader;
 }) {
   const serialize = createCachedMdxSerializer(loader);
-  const [{ basePath }, root, config, edgeFlags, files, colors, layout] =
+  const [{ basePath }, config, edgeFlags, files, colors, layout] =
     await Promise.all([
       loader.getBaseUrl(),
-      loader.getRoot(),
       loader.getConfig(),
       loader.getEdgeFlags(),
       loader.getFiles(),
@@ -42,73 +45,71 @@ export default async function SharedLayout({
   const resolveFileSrc = createFileResolver(files);
 
   return (
-    <RootNodeProvider root={root}>
-      <ThemedDocs
-        theme={theme}
-        announcement={
-          announcementText && (
-            <Announcement announcement={announcementText}>
-              <React.Suspense fallback={announcementText}>
-                <MdxServerComponent
-                  serialize={serialize}
-                  mdx={announcementText}
-                />
-              </React.Suspense>
-            </Announcement>
-          )
-        }
-        header={
-          <HeaderContent
-            className="max-w-page-width mx-auto"
-            logo={
-              <Logo
-                logo={withLogo(config, resolveFileSrc, basePath)}
-                className="w-fit shrink-0"
+    <ThemedDocs
+      theme={theme}
+      announcement={
+        announcementText && (
+          <Announcement announcement={announcementText}>
+            <React.Suspense fallback={announcementText}>
+              <MdxServerComponent
+                serialize={serialize}
+                mdx={announcementText}
               />
-            }
-            versionSelect={false}
-            showSearchBar={layout.searchbarPlacement === "HEADER"}
-            showThemeButton={Boolean(colors.dark && colors.light)}
-            navbarLinks={<NavbarLinks loader={loader} />}
-            loginButton={
-              <React.Suspense fallback={null}>
-                <LoginButton loader={loader} size="sm" className="mx-2" />
-              </React.Suspense>
-            }
-          />
-        }
-        tabs={headertabs}
-        sidebar={
-          <SidebarContainer
-            logo={
-              <Logo
-                logo={withLogo(config, resolveFileSrc, basePath)}
-                className="w-fit shrink-0"
+            </React.Suspense>
+          </Announcement>
+        )
+      }
+      header={
+        <HeaderContent
+          className="max-w-page-width mx-auto"
+          logo={
+            <Logo
+              logo={withLogo(config, resolveFileSrc, basePath)}
+              className="w-fit shrink-0"
+            />
+          }
+          versionSelect={false}
+          showSearchBar={layout.searchbarPlacement === "HEADER"}
+          showThemeButton={Boolean(colors.dark && colors.light)}
+          navbarLinks={<NavbarLinks loader={loader} />}
+          loginButton={
+            <React.Suspense fallback={null}>
+              <LoginButton loader={loader} size="sm" className="mx-2" />
+            </React.Suspense>
+          }
+        />
+      }
+      tabs={headertabs}
+      sidebar={
+        <SidebarContainer
+          logo={
+            <Logo
+              logo={withLogo(config, resolveFileSrc, basePath)}
+              className="w-fit shrink-0"
+            />
+          }
+          tabs={false}
+          versionSelect={false}
+          navbarLinks={
+            <React.Suspense fallback={null}>
+              <NavbarLinks loader={loader} />
+            </React.Suspense>
+          }
+          loginButton={
+            <React.Suspense fallback={null}>
+              <LoginButton
+                loader={loader}
+                className="my-6 flex w-full justify-between lg:hidden"
+                showIcon
               />
-            }
-            tabs={false}
-            versionSelect={false}
-            navbarLinks={
-              <React.Suspense fallback={null}>
-                <NavbarLinks loader={loader} />
-              </React.Suspense>
-            }
-            loginButton={
-              <React.Suspense fallback={null}>
-                <LoginButton
-                  loader={loader}
-                  className="my-6 flex w-full justify-between lg:hidden"
-                  showIcon
-                />
-              </React.Suspense>
-            }
-          >
-            {sidebar}
-          </SidebarContainer>
-        }
-      >
-        {children}
-      </ThemedDocs>
-    </RootNodeProvider>
+            </React.Suspense>
+          }
+        >
+          {sidebar}
+        </SidebarContainer>
+      }
+    >
+      {children}
+    </ThemedDocs>
   );
 }

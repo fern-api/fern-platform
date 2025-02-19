@@ -4,7 +4,7 @@ import * as Tabs from "@radix-ui/react-tabs";
 
 import { cn } from "@fern-docs/components";
 
-import { useCurrentTab } from "@/state/navigation";
+import { useCurrentTabId } from "@/state/navigation";
 
 export function SidebarTabsRoot({
   children,
@@ -13,10 +13,10 @@ export function SidebarTabsRoot({
   children: React.ReactNode;
   mobileOnly?: boolean;
 }) {
-  const currentTab = useCurrentTab();
+  const currentTabId = useCurrentTabId();
   return (
     <Tabs.Root
-      value={currentTab?.id}
+      value={currentTabId}
       className={cn("my-6", {
         "lg:hidden": mobileOnly,
       })}

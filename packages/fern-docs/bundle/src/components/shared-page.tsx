@@ -26,6 +26,7 @@ import {
   MdxSerializer,
   createCachedMdxSerializer,
 } from "@/server/mdx-serializer";
+import { SetCurrentNavigationNode } from "@/state/navigation";
 
 import { DocsMainContent } from "../app/[host]/[domain]/main";
 
@@ -160,6 +161,11 @@ export default async function SharedPage({
 
   return (
     <FeedbackPopoverProvider>
+      <SetCurrentNavigationNode
+        nodeId={found.node.id}
+        sidebarRootNodeId={found.sidebar?.id}
+        tabId={found.currentTab?.id}
+      />
       <DocsMainContent
         loader={loader}
         serialize={serialize}

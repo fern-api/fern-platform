@@ -1,15 +1,19 @@
 "use client";
 
-import { usePathname } from "next/navigation";
 import React from "react";
 
+import { atom, useAtomValue, useSetAtom } from "jotai";
+import { useHydrateAtoms } from "jotai/utils";
 import { StoreApi, UseBoundStore, create } from "zustand";
 
 import { FernNavigation } from "@fern-api/fdr-sdk";
-import { CONTINUE, SKIP } from "@fern-api/fdr-sdk/traversers";
-import { EMPTY_ARRAY } from "@fern-api/ui-core-utils";
-import { addLeadingSlash } from "@fern-docs/utils";
 import { useLazyRef } from "@fern-ui/react-commons";
+
+import {
+  ExpandedNodesState,
+  createInitialExpandedNodes,
+  invertParentChildMap,
+} from "./navigation-server";
 
 type SidebarAction =
   | { type: "toggle"; nodeId: FernNavigation.NodeId }
@@ -21,21 +25,7 @@ type SidebarAction =
   | { type: "expand-all" }
   | { type: "reset-implicit" };
 
-/**
- * The state of the expanded nodes for a sidebar root node
- */
-interface ExpandedNodesState {
-  expandedNodes: ReadonlySet<FernNavigation.NodeId>;
-  implicitExpandedNodes: ReadonlySet<FernNavigation.NodeId>;
-  childToParentsMap: ReadonlyMap<
-    FernNavigation.NodeId,
-    FernNavigation.NodeId[]
-  >;
-}
-
 type RootNodeState = {
-  root: FernNavigation.RootNode | undefined;
-  collector: FernNavigation.NodeCollector;
   state: ReadonlyMap<FernNavigation.NodeId, ExpandedNodesState>;
   dispatch: (
     action: SidebarAction,
@@ -44,22 +34,13 @@ type RootNodeState = {
 };
 
 export function createRootNodeStore(
-  root?: FernNavigation.RootNode,
-  pathname?: string
+  sidebarRootNodeToChildToParentsMap: ReadonlyMap<
+    FernNavigation.NodeId,
+    ReadonlyMap<FernNavigation.NodeId, FernNavigation.NodeId[]>
+  >
 ) {
-  const collector = FernNavigation.NodeCollector.collect(root);
-  const sidebarRootNodes = getAllSidebarRootNodes(root);
-  const initialExpandedNodes = createInitialExpandedNodesBySidebarRootId(
-    collector.getSlugMapWithParents().get(FernNavigation.slugjoin(pathname))
-      ?.node?.id,
-    sidebarRootNodes
-  );
-  const sidebarRootNodeToChildToParentsMap =
-    getSidebarRootNodeIdToChildToParentsMap(sidebarRootNodes);
   return create<RootNodeState>((set) => ({
-    root,
-    collector,
-    state: initialExpandedNodes,
+    state: new Map(),
     dispatch: (
       action: SidebarAction,
       currentSidebarRootNodeId: FernNavigation.NodeId
@@ -75,88 +56,81 @@ export function createRootNodeStore(
   }));
 }
 
+const basepathAtom = atom<string>("");
+
 export function useBasePath() {
-  const useStore = React.useContext(RootNodeStoreContext);
-  return useStore((s) => addLeadingSlash(s.root?.slug ?? ""));
+  return useAtomValue(basepathAtom);
+}
+
+export function SetBasePath({ value }: { value: string }) {
+  useHydrateAtoms([[basepathAtom, value]]);
+  return null;
 }
 
 const RootNodeStoreContext = React.createContext<
   UseBoundStore<StoreApi<RootNodeState>>
->(createRootNodeStore());
+>(createRootNodeStore(new Map()));
 
-export function useRootNode() {
-  const store = React.useContext(RootNodeStoreContext);
-  return store((s) => s.root);
+const currentSidebarRootNodeIdAtom = atom<FernNavigation.NodeId | undefined>(
+  undefined
+);
+const currentNodeIdAtom = atom<FernNavigation.NodeId | undefined>(undefined);
+const currentTabIdAtom = atom<FernNavigation.NodeId | undefined>(undefined);
+
+export function useCurrentSidebarRootNodeId() {
+  return useAtomValue(currentSidebarRootNodeIdAtom);
 }
 
-export function useNodeCollector() {
-  const store = React.useContext(RootNodeStoreContext);
-  return store((s) => s.collector);
+export function useCurrentNodeId() {
+  return useAtomValue(currentNodeIdAtom);
 }
 
-export function useNode() {
-  const pathname = usePathname();
-  const collector = useNodeCollector();
-  const withParents = collector
-    .getSlugMapWithParents()
-    .get(FernNavigation.slugjoin(pathname));
+export function useCurrentTabId() {
+  return useAtomValue(currentTabIdAtom);
+}
 
-  return {
-    next: withParents?.next,
-    prev: withParents?.prev,
-    current: withParents?.node,
-    parents: withParents?.parents,
-  };
+export function SetCurrentNavigationNode({
+  sidebarRootNodeId,
+  nodeId,
+  tabId,
+}: {
+  sidebarRootNodeId?: FernNavigation.NodeId;
+  nodeId?: FernNavigation.NodeId;
+  tabId?: FernNavigation.NodeId;
+}) {
+  const useStore = React.useContext(RootNodeStoreContext);
+  const dispatch = useStore((s) => s.dispatch);
+  const setCurrentSidebarRootNodeId = useSetAtom(currentSidebarRootNodeIdAtom);
+  const setCurrentNodeId = useSetAtom(currentNodeIdAtom);
+  const setCurrentTabId = useSetAtom(currentTabIdAtom);
+  useHydrateAtoms([
+    [currentSidebarRootNodeIdAtom, sidebarRootNodeId],
+    [currentNodeIdAtom, nodeId],
+    [currentTabIdAtom, tabId],
+  ]);
+  React.useEffect(() => {
+    setCurrentSidebarRootNodeId(sidebarRootNodeId);
+    setCurrentNodeId(nodeId);
+    setCurrentTabId(tabId);
+    if (nodeId && sidebarRootNodeId) {
+      dispatch({ type: "expand", nodeId }, sidebarRootNodeId);
+    }
+  }, [nodeId, tabId, sidebarRootNodeId]);
+  return null;
 }
 
 export function useIsSelectedSidebarNode(nodeId: FernNavigation.NodeId) {
-  const { current } = useNode();
-  return current?.id === nodeId;
-}
-
-export function useCurrentTab() {
-  const { parents, current } = useNode();
-  if (current?.type === "tab") {
-    return current;
-  }
-  return parents?.find((parent) => parent.type === "tab");
-}
-
-export function useCurrentTabbedNode() {
-  const { parents } = useNode();
-  return parents?.find((parent) => parent.type === "tabbed");
-}
-
-export function useTabs() {
-  return useCurrentTabbedNode()?.children ?? EMPTY_ARRAY;
-}
-
-export function useVersions() {
-  const { parents } = useNode();
-  // TODO: filter out default version that is not the current version
-  return parents?.find((parent) => parent.type === "versioned")?.children ?? [];
-}
-
-export function useCurrentVersion() {
-  const { parents, current } = useNode();
-  if (current?.type === "version") {
-    return current;
-  }
-  return parents?.find((parent) => parent.type === "version");
-}
-
-export function useCurrentSidebarRoot() {
-  const { parents } = useNode();
-  return parents?.find((parent) => parent.type === "sidebarRoot");
+  const currentNodeId = useCurrentNodeId();
+  return currentNodeId === nodeId;
 }
 
 export function useIsExpanded(nodeId: FernNavigation.NodeId) {
-  const rootNodeId = useCurrentSidebarRoot()?.id;
-  const store = React.useContext(RootNodeStoreContext);
-  if (rootNodeId == null) {
-    return false;
-  }
-  const state = store((s) => {
+  const rootNodeId = useCurrentSidebarRootNodeId();
+  const useStore = React.useContext(RootNodeStoreContext);
+  const state = useStore((s) => {
+    if (rootNodeId == null) {
+      return false;
+    }
     const expandedState = s.state.get(rootNodeId);
     if (expandedState == null) {
       return false;
@@ -170,38 +144,38 @@ export function useIsExpanded(nodeId: FernNavigation.NodeId) {
 }
 
 export function useIsChildSelected(nodeId: FernNavigation.NodeId) {
-  const rootNodeId = useCurrentSidebarRoot()?.id;
-  const { current } = useNode();
-  const store = React.useContext(RootNodeStoreContext);
-  if (rootNodeId == null || current == null) {
-    return false;
-  }
-  const state = store((s) => {
+  const rootNodeId = useCurrentSidebarRootNodeId();
+  const currentNodeId = useCurrentNodeId();
+  const useStore = React.useContext(RootNodeStoreContext);
+  const state = useStore((s) => {
+    if (rootNodeId == null || currentNodeId == null) {
+      return false;
+    }
     const expandedState = s.state.get(rootNodeId);
     if (expandedState == null) {
       return false;
     }
-    if (current.id === nodeId) {
+    if (currentNodeId === nodeId) {
       return true;
     }
 
     const parentToChildrenMap = invertParentChildMap(
       expandedState.childToParentsMap
     );
-    return parentToChildrenMap.get(nodeId)?.includes(current.id) ?? false;
+    return parentToChildrenMap.get(nodeId)?.includes(currentNodeId) ?? false;
   });
   return state;
 }
 
 export function useDispatchSidebarAction() {
   const store = React.useContext(RootNodeStoreContext);
-  const currentSidebarRoot = useCurrentSidebarRoot();
+  const currentSidebarRootNodeId = useCurrentSidebarRootNodeId();
   const dispatch = store((s) => s.dispatch);
   return (action: SidebarAction) => {
-    if (currentSidebarRoot == null) {
+    if (currentSidebarRootNodeId == null) {
       return;
     }
-    dispatch(action, currentSidebarRoot.id);
+    dispatch(action, currentSidebarRootNodeId);
   };
 }
 
@@ -212,13 +186,17 @@ export function useToggleSidebarNode(nodeId: FernNavigation.NodeId) {
 
 export function RootNodeProvider({
   children,
-  root,
+  sidebarRootNodesToChildToParentsMap,
 }: {
   children: React.ReactNode;
-  root: FernNavigation.RootNode;
+  sidebarRootNodesToChildToParentsMap: ReadonlyMap<
+    FernNavigation.NodeId,
+    ReadonlyMap<FernNavigation.NodeId, FernNavigation.NodeId[]>
+  >;
 }) {
-  const pathname = usePathname();
-  const store = useLazyRef(() => createRootNodeStore(root, pathname));
+  const store = useLazyRef(() =>
+    createRootNodeStore(sidebarRootNodesToChildToParentsMap)
+  );
   return (
     <RootNodeStoreContext.Provider value={store.current}>
       <PathnameDispatcher />
@@ -228,89 +206,21 @@ export function RootNodeProvider({
 }
 
 export function PathnameDispatcher() {
-  const { current } = useNode();
-  const sidebarRootNodeId = useCurrentSidebarRoot()?.id;
+  const currentNodeId = useCurrentNodeId();
+  const currentSidebarRootNodeId = useCurrentSidebarRootNodeId();
   const useStore = React.useContext(RootNodeStoreContext);
   const dispatch = useStore((s) => s.dispatch);
   React.useEffect(() => {
-    if (current == null || sidebarRootNodeId == null) {
+    if (currentNodeId == null || currentSidebarRootNodeId == null) {
       return;
     }
-    dispatch({ type: "expand", nodeId: current.id }, sidebarRootNodeId);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [current?.id, sidebarRootNodeId]);
-  return null;
-}
-
-/**
- * Get the child to parents map for a sidebar root node
- * @param sidebar - The sidebar root node
- * @returns The child to parents map
- */
-function getNavigationChildToParentsMap(
-  sidebar: FernNavigation.SidebarRootNode | undefined
-): ReadonlyMap<FernNavigation.NodeId, FernNavigation.NodeId[]> {
-  const childToParentsMap = new Map<
-    FernNavigation.NodeId,
-    FernNavigation.NodeId[]
-  >();
-  if (sidebar == null) {
-    return childToParentsMap;
-  }
-
-  FernNavigation.traverseDF(sidebar, (node, parents) => {
-    childToParentsMap.set(
-      node.id,
-      parents.map((p) => p.id)
+    dispatch(
+      { type: "expand", nodeId: currentNodeId },
+      currentSidebarRootNodeId
     );
-  });
-
-  return childToParentsMap;
-}
-
-/**
- * Invert a parent to child map
- * @param parentChildMap - The parent to child map
- * @returns The child to parent map
- */
-function invertParentChildMap(
-  parentChildMap: ReadonlyMap<FernNavigation.NodeId, FernNavigation.NodeId[]>
-): ReadonlyMap<FernNavigation.NodeId, FernNavigation.NodeId[]> {
-  const invertedParentChildMap = new Map<
-    FernNavigation.NodeId,
-    FernNavigation.NodeId[]
-  >();
-  parentChildMap.forEach((children, parent) => {
-    children.forEach((child) => {
-      const parents = invertedParentChildMap.get(child) ?? [];
-      parents.push(parent);
-      invertedParentChildMap.set(child, parents);
-    });
-  });
-  return invertedParentChildMap;
-}
-
-/**
- * Create the initial expanded nodes for a sidebar root node
- * @param currentNodeId - The current node id
- * @param childToParentsMap - The child to parents map
- * @returns The initial expanded nodes state
- */
-function createInitialExpandedNodes(
-  currentNodeId: FernNavigation.NodeId | undefined,
-  childToParentsMap: ReadonlyMap<FernNavigation.NodeId, FernNavigation.NodeId[]>
-): ExpandedNodesState {
-  const expandedNodes = new Set<FernNavigation.NodeId>();
-  const implicitExpandedNodes = new Set<FernNavigation.NodeId>();
-
-  if (currentNodeId != null) {
-    expandedNodes.add(currentNodeId);
-    childToParentsMap.get(currentNodeId)?.forEach((parent) => {
-      implicitExpandedNodes.add(parent);
-    });
-  }
-
-  return { expandedNodes, implicitExpandedNodes, childToParentsMap };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentNodeId, currentSidebarRootNodeId]);
+  return null;
 }
 
 const EMPTY_EXPANDED_NODES_STATE: ExpandedNodesState = {
@@ -412,75 +322,6 @@ function reduceExpandedNodes(
   }
 
   return prev;
-}
-
-function getSidebarRootNodeIdToChildToParentsMap(
-  sidebarRootNodes: ReadonlyMap<
-    FernNavigation.NodeId,
-    FernNavigation.SidebarRootNode
-  >
-): ReadonlyMap<
-  FernNavigation.NodeId,
-  ReadonlyMap<FernNavigation.NodeId, FernNavigation.NodeId[]>
-> {
-  return new Map(
-    Array.from(sidebarRootNodes.values()).map((sidebarRootNode) => {
-      return [
-        sidebarRootNode.id,
-        getNavigationChildToParentsMap(sidebarRootNode),
-      ];
-    })
-  );
-}
-/**
- * Get all the sidebar root nodes in a root node
- * @param root - The root node
- * @returns The sidebar root nodes
- */
-function getAllSidebarRootNodes(
-  root: FernNavigation.RootNode | undefined
-): ReadonlyMap<FernNavigation.NodeId, FernNavigation.SidebarRootNode> {
-  if (root == null) {
-    return new Map();
-  }
-  const sidebarRootNodes = new Map<
-    FernNavigation.NodeId,
-    FernNavigation.SidebarRootNode
-  >();
-  FernNavigation.traverseBF(root, (node) => {
-    if (node.type === "sidebarRoot") {
-      sidebarRootNodes.set(node.id, node);
-      return SKIP;
-    }
-    return CONTINUE;
-  });
-  return sidebarRootNodes;
-}
-
-/**
- * Create the initial expanded nodes for a sidebar root node
- * @param currentNodeId - The current node id
- * @param sidebarRootNodes - The sidebar root nodes
- * @returns The initial expanded nodes state
- */
-function createInitialExpandedNodesBySidebarRootId(
-  currentNodeId: FernNavigation.NodeId | undefined,
-  sidebarRootNodes: ReadonlyMap<
-    FernNavigation.NodeId,
-    FernNavigation.SidebarRootNode
-  >
-): ReadonlyMap<FernNavigation.NodeId, ExpandedNodesState> {
-  return new Map(
-    Array.from(sidebarRootNodes.values()).map((sidebarRootNode) => {
-      return [
-        sidebarRootNode.id,
-        createInitialExpandedNodes(
-          currentNodeId,
-          getNavigationChildToParentsMap(sidebarRootNode)
-        ),
-      ];
-    })
-  );
 }
 
 /**

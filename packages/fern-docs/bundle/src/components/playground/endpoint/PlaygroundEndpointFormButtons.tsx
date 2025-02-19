@@ -5,8 +5,6 @@ import { ArrowUpRight } from "iconoir-react";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { FernButton, FernButtonGroup } from "@fern-docs/components";
 
-import { useNode } from "@/state/navigation";
-
 import { FernLink } from "../../components/FernLink";
 
 const USE_EXAMPLE_TEXT = "Use example";
@@ -22,9 +20,8 @@ export function PlaygroundEndpointFormButtons({
   node,
   resetWithExample,
   resetWithoutExample,
-}: PlaygroundEndpointFormButtonsProps): ReactElement<any> {
-  const { current } = useNode();
-  const apiReferenceId = FernNavigation.utils.getApiReferenceId(current);
+}: PlaygroundEndpointFormButtonsProps) {
+  const apiReferenceId = FernNavigation.utils.getApiReferenceId(node);
   return (
     <div className="flex items-center justify-between">
       <FernButtonGroup>
