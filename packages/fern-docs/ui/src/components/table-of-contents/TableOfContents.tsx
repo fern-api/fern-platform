@@ -108,9 +108,11 @@ export const TableOfContents: React.FC<TableOfContents.Props> = ({
           return [];
         }
         return [
-          <WithFeatureFlags featureFlags={featureFlags}>
+          <WithFeatureFlags
+            featureFlags={featureFlags}
+            key={`${depth}-${anchorString}`}
+          >
             <TableOfContentsItem
-              key={`${depth}-${anchorString}`}
               text={text}
               anchorString={anchorString}
               active={anchorInView === anchorString}
