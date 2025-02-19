@@ -1,5 +1,4 @@
 import { NavigationNodePage } from "@fern-api/fdr-sdk/navigation";
-import { RecursiveCharacterTextSplitter } from "@langchain/textsplitters";
 import { Turbopuffer } from "@turbopuffer/turbopuffer";
 import {
   LoadDocsWithUrlPayload,
@@ -8,12 +7,6 @@ import {
 import { createTurbopufferRecords } from "../records/create-turbopuffer-records";
 import { vectorizeTurbopufferRecords } from "../records/vectorize-turbopuffer-records";
 import { FernTurbopufferAttributeSchema } from "../types";
-
-const defaultTextSplitter = new RecursiveCharacterTextSplitter({
-  chunkSize: 1000,
-  chunkOverlap: 200,
-  separators: ["|", "##", ">", "-"],
-});
 
 interface TurbopufferIndexerTaskOptions {
   apiKey: string;
@@ -31,11 +24,6 @@ interface TurbopufferIndexerTaskOptions {
   vectorizer: (chunk: string[]) => Promise<number[][]>;
 
   /**
-   * Text splitter to use.
-   */
-  splitText?: (text: string) => Promise<string[]>;
-
-  /**
    * Whether to delete the existing records before upserting.
    */
   deleteExisting?: boolean;
@@ -47,7 +35,6 @@ export async function turbopufferUpsertTask({
   payload,
   authed,
   vectorizer,
-  splitText = (text) => defaultTextSplitter.splitText(text),
   deleteExisting = false,
 }: TurbopufferIndexerTaskOptions): Promise<number> {
   const tpuf = new Turbopuffer({
@@ -65,7 +52,6 @@ export async function turbopufferUpsertTask({
     org_id,
     pages,
     authed,
-    splitText,
   });
 
   const records = await vectorizeTurbopufferRecords(

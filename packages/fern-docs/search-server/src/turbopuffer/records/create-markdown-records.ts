@@ -15,14 +15,12 @@ import { BaseRecord } from "./create-base-record";
 interface CreateMarkdownRecordsOptions {
   base: BaseRecord;
   markdown: string;
-  splitText: (text: string) => Promise<string[]>;
 }
 
 // TODO: the `<If>` component is not supported, and will show up in search results!
 export async function createMarkdownRecords({
   base,
   markdown,
-  splitText,
 }: CreateMarkdownRecordsOptions): Promise<
   FernTurbopufferRecordWithoutVector[]
 > {
@@ -81,9 +79,9 @@ export async function createMarkdownRecords({
 
   const chunked_code_snippets = flatten(
     await Promise.all([
-      description_content != null ? splitText(description_content) : [],
-      root_content != null ? splitText(root_content) : [],
-      ...code_snippets.map((code) => splitText(code)),
+      description_content != null ? [description_content] : [],
+      root_content != null ? [root_content] : [],
+      ...code_snippets,
     ])
   );
 
@@ -171,10 +169,7 @@ export async function createMarkdownRecords({
         );
 
         const chunked_content = flatten(
-          await Promise.all([
-            splitText(markdownContent),
-            ...code_snippets.map((code) => splitText(code)),
-          ])
+          await Promise.all([markdownContent, ...code_snippets])
         );
 
         // Note: unlike the root content, it's less important if subheadings are not indexed if there's no content inside
