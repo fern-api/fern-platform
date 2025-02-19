@@ -25,7 +25,6 @@ function createPageLoaderGetDataHref(
     const indexPrefix = route === "/" ? "index" : undefined;
 
     const getHrefForSlug = (path: string) => {
-      // note: getAsssetPathFromRoute will automatically turn `/` to `/index`
       let dataRoute = getAssetPathFromRoute(
         removeTrailingSlash(addLocale(path, locale)),
         ".json"
