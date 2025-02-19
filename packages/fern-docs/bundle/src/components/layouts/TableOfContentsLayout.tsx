@@ -12,21 +12,23 @@ export function TableOfContentsLayout({
   tableOfContents,
   hideTableOfContents,
 }: TableOfContentsLayoutProps) {
-  return (
+  const showTableOfContents =
     tableOfContents != null &&
     !hideTableOfContents &&
-    tableOfContents.length > 0 && (
-      <aside
-        role="directory"
-        className={cn(
-          "top-header-height sticky order-last hidden h-fit max-h-[calc(100dvh-var(--spacing-header-height))] flex-col xl:flex",
-          "w-sidebar-width"
-        )}
-      >
+    tableOfContents.length > 0;
+  return (
+    <aside
+      role="directory"
+      className={cn(
+        "top-header-height sticky order-last hidden h-fit max-h-[calc(100dvh-var(--spacing-header-height))] flex-col xl:flex",
+        "w-sidebar-width"
+      )}
+    >
+      {showTableOfContents && (
         <FernScrollArea className="px-4 pb-12 pt-8 lg:pr-5">
           <TableOfContents tableOfContents={tableOfContents} />
         </FernScrollArea>
-      </aside>
-    )
+      )}
+    </aside>
   );
 }

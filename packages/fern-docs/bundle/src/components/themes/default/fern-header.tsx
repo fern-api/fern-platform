@@ -19,7 +19,7 @@ export function FernHeader(props: React.ComponentPropsWithoutRef<"header">) {
         suppressHydrationWarning
         dangerouslySetInnerHTML={{
           __html: `(${String(function () {
-            window.requestAnimationFrame(() => {
+            document.addEventListener("DOMContentLoaded", () => {
               const headerHeight =
                 document.getElementById("fern-header")?.clientHeight;
               if (headerHeight != null) {

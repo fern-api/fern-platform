@@ -30,13 +30,13 @@ export function GlobalStyles({
           --font-heading: ${fonts.headingFont ?? "initial"};
           --font-code: ${fonts.codeFont ?? "initial"};
           ${domain.includes("nominal") ? "--radius: 0px;" : ""}
-          --spacing-header-height-real: ${layout.headerHeight}px;
-          --spacing-content-width: ${layout.contentWidth}px;
-          --spacing-sidebar-width: ${layout.sidebarWidth}px;
-          --spacing-page-width: ${layout.pageWidth != null
+          --header-height-real: ${layout.headerHeight}px;
+          --content-width: ${layout.contentWidth}px;
+          --sidebar-width: ${layout.sidebarWidth}px;
+          --page-width: ${layout.pageWidth != null
             ? `${layout.pageWidth}px`
             : "100vw"};
-          --spacing-logo-height: ${layout.logoHeight}px;
+          --logo-height: ${layout.logoHeight}px;
         }
 
         :root,
