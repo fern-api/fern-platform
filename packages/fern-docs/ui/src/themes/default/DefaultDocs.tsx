@@ -91,7 +91,12 @@ function UnmemoizedDefaultDocs({
       </div>
 
       {/* Enables footer DOM injection */}
-      <footer id="fern-footer" />
+      <footer
+        id="fern-footer"
+        className={clsx({
+          "fern-sidebar-open": isMobileSidebarOpen,
+        })}
+      />
     </div>
   );
 }
