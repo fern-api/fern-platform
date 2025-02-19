@@ -1,34 +1,50 @@
+import { isNonNullish } from "@fern-api/ui-core-utils";
 import { Hast } from "@fern-docs/mdx";
 import { slug } from "github-slugger";
-import type { Doctype, ElementContent, Root } from "hast";
+import type { Root } from "hast";
 import { headingRank } from "hast-util-heading-rank";
-import { SKIP, visit, type BuildVisitor } from "unist-util-visit";
+import { SKIP } from "unist-util-visit";
+import { visitParents } from "unist-util-visit-parents";
 import { hastToString } from "./hast-utils";
 import { hastGetBooleanValue } from "./hast-utils/hast-get-boolean-value";
 import { isHastElement } from "./hast-utils/is-hast-element";
+import { extractAttributeValueLiteral } from "./mdx-utils/extract-literal";
 import { isMdxJsxElementHast } from "./mdx-utils/is-mdx-element";
 import { isMdxJsxAttribute } from "./mdx-utils/is-mdx-jsx-attr";
+
+interface FeatureProps {
+  flag: string;
+  fallbackValue: unknown | undefined;
+  match: unknown | undefined;
+}
 
 interface FoundHeading {
   depth: number;
   title: string;
   id: string;
+  /**
+   * supports feature flags
+   */
+  featureFlags?: FeatureProps[];
 }
-
-type Visitor = BuildVisitor<Root | Doctype | ElementContent>;
 
 interface AccordionItemProps {
   title: string;
   id: string;
   toc?: boolean;
-  // children: ReactNode;
 }
 
 export interface TableOfContentsItem {
   simpleString: string;
   anchorString: string;
   children: TableOfContentsItem[];
+  /**
+   * supports feature flags
+   */
+  featureFlags?: FeatureProps[];
 }
+
+type HastNode = Hast.RootContent | Hast.Root | Hast.Doctype;
 
 // TODO: a lot of this logic is duplicated in split-into-sections.ts, consider merging
 // TODO: add tests for this function
@@ -38,7 +54,11 @@ export function makeToc(
 ): TableOfContentsItem[] {
   const headings: FoundHeading[] = [];
 
-  const visitor: Visitor = (node) => {
+  const visitor = (node: HastNode, parents: HastNode[]) => {
+    if (node.type === "root" || node.type === "doctype") {
+      return;
+    }
+
     if (isMdxJsxElementHast(node) && node.name === "Accordion") {
       const baseId =
         node.attributes
@@ -150,9 +170,14 @@ export function makeToc(
             ) {
               return;
             }
-            headings.push({ depth: 3, id, title });
+            headings.push({
+              depth: 3,
+              id,
+              title,
+              featureFlags: findFlag(parents),
+            });
 
-            visit(child, visitor);
+            visitParents(child, visitor);
           }
         });
       }
@@ -169,7 +194,12 @@ export function makeToc(
 
       const title = hastToString(node);
 
-      headings.push({ depth: rank, id, title });
+      headings.push({
+        depth: rank,
+        id,
+        title,
+        featureFlags: findFlag(parents),
+      });
     }
 
     // parse mdx-jsx headings i.e. `<h1 id="my-id">My Title</h1>`
@@ -192,7 +222,7 @@ export function makeToc(
       }
 
       const title = hastToString(node);
-      headings.push({ depth, id, title });
+      headings.push({ depth, id, title, featureFlags: findFlag(parents) });
     }
 
     if (isMdxJsxElementHast(node) && node.name === "TabGroup") {
@@ -217,6 +247,7 @@ export function makeToc(
             depth: 6,
             id: item.id ?? slug(item.title),
             title: item.title,
+            featureFlags: findFlag(parents),
           });
         });
       } catch (e) {
@@ -246,6 +277,7 @@ export function makeToc(
             depth: 6,
             id: item.id ?? slug(item.title),
             title: item.title,
+            featureFlags: findFlag(parents),
           });
         });
       } catch (e) {
@@ -256,7 +288,7 @@ export function makeToc(
     return;
   };
 
-  visit(tree, visitor);
+  visitParents(tree, visitor);
 
   const minDepth = Math.min(...headings.map((heading) => heading.depth));
   return makeTree(headings, minDepth);
@@ -294,4 +326,43 @@ function makeTree(
   }
 
   return tree;
+}
+
+function findFlag(parents: HastNode[]): FeatureProps[] | undefined {
+  const feature = parents
+    .filter(isMdxJsxElementHast)
+    .filter((parent) => parent.name === "Feature")
+    .map(extractFeatureProps)
+    .filter(isNonNullish);
+
+  if (feature.length === 0) {
+    return undefined;
+  }
+
+  return feature;
+}
+
+function extractFeatureProps(
+  feature: Hast.MdxJsxElement
+): FeatureProps | undefined {
+  const attributes = feature.attributes.filter(isMdxJsxAttribute);
+  const flag = extractAttributeValueLiteral(
+    attributes.find((attr) => attr.name === "flag")?.value
+  );
+  const fallbackValue = extractAttributeValueLiteral(
+    attributes.find((attr) => attr.name === "fallbackValue")?.value
+  );
+  const match = extractAttributeValueLiteral(
+    attributes.find((attr) => attr.name === "match")?.value
+  );
+
+  if (typeof flag !== "string") {
+    return undefined;
+  }
+
+  return {
+    flag,
+    fallbackValue,
+    match,
+  };
 }

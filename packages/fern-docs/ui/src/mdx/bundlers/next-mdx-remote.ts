@@ -11,13 +11,13 @@ import {
   rehypeAcornErrorBoundary,
   rehypeExpressionToMd,
   rehypeMdxClassStyle,
+  rehypeSlug,
   rehypeSqueezeParagraphs,
   remarkSanitizeAcorn,
   remarkSqueezeParagraphs,
 } from "@fern-docs/mdx/plugins";
 import { serialize } from "next-mdx-remote/serialize";
 import rehypeKatex from "rehype-katex";
-import rehypeSlug from "rehype-slug";
 import remarkGemoji from "remark-gemoji";
 import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
