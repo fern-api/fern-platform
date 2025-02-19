@@ -17,11 +17,9 @@ import {
   getRedirectForPath,
 } from "@fern-docs/utils";
 
-import { getFernToken } from "@/app/fern-token";
 import { toImageDescriptor } from "@/app/seo";
 import FeedbackPopover from "@/components/feedback/FeedbackPopover";
 import { DocsLoader } from "@/server/docs-loader";
-import { createCachedDocsLoader } from "@/server/docs-loader";
 import { createFindNode } from "@/server/find-node";
 import { withLaunchDarkly } from "@/server/ld-adapter";
 import {
@@ -29,20 +27,17 @@ import {
   createCachedMdxSerializer,
 } from "@/server/mdx-serializer";
 
-import { DocsMainContent } from "../app/[domain]/main";
+import { DocsMainContent } from "../app/[host]/[domain]/main";
 
 export default async function SharedPage({
-  domain,
+  loader,
   slug,
-  fernToken,
 }: {
-  domain: string;
+  loader: DocsLoader;
   slug: Slug;
-  fernToken?: string;
 }) {
   console.debug("/app/[domain]/_page.tsx: starting...");
 
-  const loader = await createCachedDocsLoader(domain, fernToken);
   // start loading the root node early
   const rootPromise = loader.getRoot();
   const baseUrlPromise = loader.getBaseUrl();
@@ -96,7 +91,7 @@ export default async function SharedPage({
   }
 
   if (found.type === "notFound") {
-    console.error(`[${domain}] Not found: ${slug}`);
+    console.error(`[${loader.domain}] Not found: ${slug}`);
 
     const edgeFlags = await edgeFlagsPromise;
 
@@ -126,7 +121,7 @@ export default async function SharedPage({
 
   // if the current node requires authentication and the user is not authenticated, redirect to the auth page
   if (found.node.authed && !authState.authed) {
-    console.error(`[${domain}] Not authed: ${slug}`);
+    console.error(`[${loader.domain}] Not authed: ${slug}`);
 
     // if the page can be considered an edge node when it's unauthed, then we'll follow the redirect
     if (FernNavigation.hasRedirect(found.node)) {
@@ -148,7 +143,7 @@ export default async function SharedPage({
       .filter(FernNavigation.hasMetadata)
       .every((node) => flagPredicate(node))
   ) {
-    console.error(`[${domain}] Feature flag predicate failed: ${slug}`);
+    console.error(`[${loader.domain}] Feature flag predicate failed: ${slug}`);
     notFound();
   }
 
@@ -178,15 +173,12 @@ export default async function SharedPage({
 }
 
 export async function generateMetadata({
-  domain,
+  loader,
   slug,
-  fernToken,
 }: {
-  domain: string;
+  loader: DocsLoader;
   slug: Slug;
-  fernToken?: string;
 }): Promise<Metadata> {
-  const loader = await createCachedDocsLoader(domain, fernToken);
   const findNode = createFindNode(loader);
   const [files, node, config, isSeoDisabled] = await Promise.all([
     loader.getFiles(),

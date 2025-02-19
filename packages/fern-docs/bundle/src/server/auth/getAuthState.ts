@@ -1,7 +1,6 @@
 import "server-only";
 
 import { AsyncOrSync } from "ts-essentials";
-import urlJoin from "url-join";
 
 import { withDefaultProtocol } from "@fern-api/ui-core-utils";
 import { AuthEdgeConfig, FernUser } from "@fern-docs/auth";
@@ -83,12 +82,14 @@ export async function getAuthStateInternal({
   previewAuthConfig,
   setFernToken,
   domain,
+  host,
 }: {
   fernToken: string | undefined;
   authConfig?: AuthEdgeConfig;
   previewAuthConfig?: PreviewUrlAuth;
   setFernToken?: (token: string) => void;
   domain: string;
+  host: string;
 }): Promise<(pathname?: string) => AsyncOrSync<AuthState>> {
   // if the auth type is neither sso nor basic_token_verification, allow the request to pass through
   if (!authConfig) {
@@ -126,7 +127,12 @@ export async function getAuthStateInternal({
       return (pathname) => ({
         authed: false,
         ok: true,
-        authorizationUrl: getAuthorizationUrl(authConfig, domain, pathname),
+        authorizationUrl: getAuthorizationUrl(
+          authConfig,
+          host,
+          domain,
+          pathname
+        ),
         partner,
       });
     }
@@ -168,6 +174,7 @@ export async function getAuthStateInternal({
  * @param next - the function to call if the user is logged in and the session is valid for the current pathname
  */
 export async function createGetAuthState(
+  host: string,
   domain: string,
   fernToken: string | undefined,
   authConfig?: AuthEdgeConfig,
@@ -193,6 +200,7 @@ export async function createGetAuthState(
     setFernToken,
     previewAuthConfig,
     domain,
+    host,
   });
 
   const allowedDestinations = getAllowedRedirectUrls(
@@ -209,25 +217,25 @@ export async function createGetAuthState(
 
 function getAuthorizationUrl(
   authConfig: AuthEdgeConfig,
+  // TODO: we'll need to pass in the basepath here for any customers who are using a non-root basepath.
+  host: string,
   domain: string,
   pathname?: string
 ): string | undefined {
   // TODO: this is currently not a correct implementation of the state parameter b/c it should be signed w/ the jwt secret
   // however, we should not break existing customers who are consuming the state as a `return_to` param in their auth flows.
-  const state = urlJoin(
-    removeTrailingSlash(withDefaultProtocol(preferPreview(domain))),
-    pathname ?? ""
-  );
+  const state = `${withDefaultProtocol(
+    removeTrailingSlash(preferPreview(host, domain))
+  )}${pathname ?? ""}`;
 
   if (authConfig.type === "basic_token_verification") {
     const destination = new URL(authConfig.redirect);
 
     // note: `redirect` is allowed to override the default redirect uri, and the `return_to` param
     if (!destination.searchParams.has("redirect_uri")) {
-      const redirectUri = urlJoin(
-        removeTrailingSlash(preferPreview(domain)),
-        "/api/fern-docs/auth/jwt/callback"
-      );
+      const redirectUri = `${withDefaultProtocol(
+        removeTrailingSlash(preferPreview(host, domain))
+      )}/api/fern-docs/auth/jwt/callback`;
 
       destination.searchParams.set("redirect_uri", redirectUri);
     }
@@ -236,10 +244,10 @@ function getAuthorizationUrl(
     }
     return destination.toString();
   } else if (authConfig.type === "sso" && authConfig.partner === "workos") {
-    const redirectUri = urlJoin(
-      removeTrailingSlash(preferPreview(domain)),
-      "/api/fern-docs/auth/sso/callback"
-    );
+    const redirectUri = `${withDefaultProtocol(
+      removeTrailingSlash(preferPreview(host, domain))
+    )}/api/fern-docs/auth/sso/callback`;
+
     return getWorkosSSOAuthorizationUrl({
       state,
       redirectUri,
@@ -253,18 +261,16 @@ function getAuthorizationUrl(
     if (authConfig.partner === "webflow") {
       return getWebflowAuthorizationUrl(authConfig, {
         state,
-        redirectUri: urlJoin(
-          removeTrailingSlash(preferPreview(domain)),
-          "/api/fern-docs/oauth/webflow/callback"
-        ),
+        redirectUri: `${withDefaultProtocol(
+          removeTrailingSlash(preferPreview(host, domain))
+        )}/api/fern-docs/oauth/webflow/callback`,
       });
     } else if (authConfig.partner === "ory") {
       return getOryAuthorizationUrl(authConfig, {
         state,
-        redirectUri: urlJoin(
-          removeTrailingSlash(preferPreview(domain)),
-          "/api/fern-docs/oauth/ory/callback"
-        ),
+        redirectUri: `${withDefaultProtocol(
+          removeTrailingSlash(preferPreview(host, domain))
+        )}/api/fern-docs/oauth/ory/callback`,
       });
     }
   }

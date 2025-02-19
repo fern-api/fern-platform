@@ -35,6 +35,7 @@ function splitPathname(
 }
 
 export const middleware: NextMiddleware = async (request) => {
+  const host = request.nextUrl.host;
   const domain = getDocsDomainEdge(request);
   const pathname = removeTrailingSlash(request.nextUrl.pathname);
 
@@ -66,7 +67,7 @@ export const middleware: NextMiddleware = async (request) => {
     });
   };
 
-  const withDomain = (pathname: string) => `/${domain}${pathname}`;
+  const withDomain = (pathname: string) => `/${host}/${domain}${pathname}`;
 
   const withoutBasepath = (splitter: string | RegExp) => {
     const [basepath, newPathname] = splitPathname(pathname, splitter);

@@ -9,7 +9,7 @@
 
     &.interactive {
       &.active {
-        border-color: var(--color-accent-a8);
+        border-color: var(--color-accent-a9);
         box-shadow:
           0 1px 2px var(--color-grayscale-a3),
           0 3px 6px var(--color-grayscale-a3);
@@ -25,7 +25,7 @@
         box-shadow:
           0 1px 2px var(--color-grayscale-a3),
           0 3px 6px var(--color-grayscale-a3);
-        border-color: var(--color-accent-a8);
+        border-color: var(--color-accent-a9);
 
         @variant dark {
           box-shadow:
@@ -36,7 +36,7 @@
     }
 
     &.elevated {
-      border-color: var(--color-accent-a8);
+      border-color: var(--color-accent-a9);
       box-shadow:
         0 1px 2px var(--color-grayscale-a3),
         0 3px 6px var(--color-grayscale-a3);

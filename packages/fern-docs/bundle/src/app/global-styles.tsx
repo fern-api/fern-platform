@@ -1,6 +1,7 @@
 "use client";
 
 import { FernFonts } from "@/server/generateFonts";
+import { ArrayOf12 } from "@/server/generateRadixColors";
 import { FernColorTheme, FernLayoutConfig } from "@/server/types";
 
 export function GlobalStyles({
@@ -29,13 +30,13 @@ export function GlobalStyles({
           --font-heading: ${fonts.headingFont ?? "initial"};
           --font-code: ${fonts.codeFont ?? "initial"};
           ${domain.includes("nominal") ? "--radius: 0px;" : ""}
-          --header-height-real: ${layout.headerHeight}px;
-          --content-width: ${layout.contentWidth}px;
-          --sidebar-width: ${layout.sidebarWidth}px;
-          --page-width: ${layout.pageWidth != null
+          --spacing-header-height-real: ${layout.headerHeight}px;
+          --spacing-content-width: ${layout.contentWidth}px;
+          --spacing-sidebar-width: ${layout.sidebarWidth}px;
+          --spacing-page-width: ${layout.pageWidth != null
             ? `${layout.pageWidth}px`
             : "100vw"};
-          --logo-height: ${layout.logoHeight}px;
+          --spacing-logo-height: ${layout.logoHeight}px;
         }
 
         :root,
@@ -52,18 +53,10 @@ export function GlobalStyles({
           --accent-contrast: ${root?.accentContrast ?? "initial"};
           --accent-surface: ${root?.accentSurface ?? "initial"};
           --grayscale-surface: ${root?.graySurface ?? "initial"};
-          ${root?.accentScale
-            .map((color, index) => `--accent-${index + 1}: ${color};`)
-            .join("\n          ") ?? ""}
-          ${root?.accentScaleAlpha
-            .map((color, index) => `--accent-a${index + 1}: ${color};`)
-            .join("\n          ") ?? ""}
-          ${root?.grayScale
-            .map((color, index) => `--grayscale-${index + 1}: ${color};`)
-            .join("\n          ") ?? ""}
-          ${root?.grayScaleAlpha
-            .map((color, index) => `--grayscale-a${index + 1}: ${color};`)
-            .join("\n          ") ?? ""}
+          ${generateColorVariables("accent", root?.accentScale)}
+          ${generateColorVariables("accent", root?.accentScaleAlpha, true)}
+          ${generateColorVariables("grayscale", root?.grayScale)}
+          ${generateColorVariables("grayscale", root?.grayScaleAlpha, true)}
         }
 
         @supports (color: color(display-p3 1 1 1)) {
@@ -73,18 +66,18 @@ export function GlobalStyles({
             .light-theme${!light ? ", .dark, .dark-theme" : ""} {
               --accent-surface: ${root?.accentSurfaceWideGamut ?? "initial"};
               --grayscale-surface: ${root?.graySurfaceWideGamut ?? "initial"};
-              ${root?.accentScaleWideGamut
-                .map((color, index) => `--accent-${index + 1}: ${color};`)
-                .join("\n              ") ?? ""}
-              ${root?.accentScaleAlphaWideGamut
-                .map((color, index) => `--accent-a${index + 1}: ${color};`)
-                .join("\n              ") ?? ""}
-              ${root?.grayScaleWideGamut
-                .map((color, index) => `--grayscale-${index + 1}: ${color};`)
-                .join("\n              ") ?? ""}
-              ${root?.grayScaleAlphaWideGamut
-                .map((color, index) => `--grayscale-a${index + 1}: ${color};`)
-                .join("\n              ") ?? ""}
+              ${generateColorVariables("accent", root?.accentScaleWideGamut)}
+              ${generateColorVariables(
+                "accent",
+                root?.accentScaleAlphaWideGamut,
+                true
+              )}
+              ${generateColorVariables("grayscale", root?.grayScaleWideGamut)}
+              ${generateColorVariables(
+                "grayscale",
+                root?.grayScaleAlphaWideGamut,
+                true
+              )}
             }
           }
         }
@@ -102,26 +95,10 @@ export function GlobalStyles({
           --accent-contrast: ${dark?.accentContrast ?? "initial"};
           --accent-surface: ${dark?.accentSurface ?? "initial"};
           --grayscale-surface: ${dark?.graySurface ?? "initial"};
-          ${
-            dark?.accentScale
-              .map((color, index) => `--accent-${index + 1}: ${color};`)
-              .join("\n          ") ?? ""
-          }
-          ${
-            dark?.accentScaleAlpha
-              .map((color, index) => `--accent-a${index + 1}: ${color};`)
-              .join("\n          ") ?? ""
-          }
-          ${
-            dark?.grayScale
-              .map((color, index) => `--grayscale-${index + 1}: ${color};`)
-              .join("\n          ") ?? ""
-          }
-          ${
-            dark?.grayScaleAlpha
-              .map((color, index) => `--grayscale-a${index + 1}: ${color};`)
-              .join("\n          ") ?? ""
-          }
+          ${generateColorVariables("accent", dark?.accentScale)}
+          ${generateColorVariables("accent", dark?.accentScaleAlpha, true)}
+          ${generateColorVariables("grayscale", dark?.grayScale)}
+          ${generateColorVariables("grayscale", dark?.grayScaleAlpha, true)}
         }
           
         @supports (color: color(display-p3 1 1 1)) {
@@ -129,26 +106,18 @@ export function GlobalStyles({
             .dark, .dark-theme {
               --accent-surface: ${dark?.accentSurfaceWideGamut ?? "initial"};
               --grayscale-surface: ${dark?.graySurfaceWideGamut ?? "initial"};
-              ${
-                dark?.accentScaleWideGamut
-                  .map((color, index) => `--accent-${index + 1}: ${color};`)
-                  .join("\n              ") ?? ""
-              }
-              ${
-                dark?.accentScaleAlphaWideGamut
-                  .map((color, index) => `--accent-a${index + 1}: ${color};`)
-                  .join("\n              ") ?? ""
-              }
-              ${
-                dark?.grayScaleWideGamut
-                  .map((color, index) => `--grayscale-${index + 1}: ${color};`)
-                  .join("\n              ") ?? ""
-              }
-              ${
-                dark?.grayScaleAlphaWideGamut
-                  .map((color, index) => `--grayscale-a${index + 1}: ${color};`)
-                  .join("\n              ") ?? ""
-              }
+              ${generateColorVariables("accent", dark?.accentScaleWideGamut)}
+              ${generateColorVariables(
+                "accent",
+                dark?.accentScaleAlphaWideGamut,
+                true
+              )}
+              ${generateColorVariables("grayscale", dark?.grayScaleWideGamut)}
+              ${generateColorVariables(
+                "grayscale",
+                dark?.grayScaleAlphaWideGamut,
+                true
+              )}
             }
           }`
           : ""}
@@ -159,8 +128,22 @@ export function GlobalStyles({
 
         ${fonts.additionalCss}
 
-        ${inlineCss.join("\n        ")}
+        ${inlineCss.join("\n")}
       `}
     </style>
+  );
+}
+
+function generateColorVariables(
+  prefix: string,
+  colors?: ArrayOf12<string>,
+  alpha = false
+) {
+  return (
+    colors
+      ?.map((color, index) => {
+        return `--${prefix}-${alpha ? "a" : ""}${index + 1}: ${color};`;
+      })
+      .join("\n") ?? ""
   );
 }

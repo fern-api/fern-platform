@@ -458,6 +458,7 @@ const getAuthConfig = cache(getAuthEdgeConfig);
  * in a piece-meal fashion, and eventually remove all use of loadWithUrl.
  */
 export const createCachedDocsLoader = async (
+  host: string,
   domain: string,
   fern_token?: string
 ): Promise<DocsLoader> => {
@@ -466,6 +467,7 @@ export const createCachedDocsLoader = async (
 
   const getAuthState = async (pathname?: string) => {
     const { getAuthState } = await createGetAuthState(
+      host,
       domain,
       fern_token,
       await authConfig,

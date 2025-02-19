@@ -2,10 +2,10 @@ import "server-only";
 
 import { getEnv } from "@vercel/functions";
 
-export function preferPreview(domain: string) {
-  const { VERCEL_ENV, VERCEL_URL } = getEnv();
+export function preferPreview(host: string, domain: string) {
+  const { VERCEL_ENV } = getEnv();
   if (VERCEL_ENV === "production") {
     return domain;
   }
-  return VERCEL_URL || domain;
+  return host || domain;
 }

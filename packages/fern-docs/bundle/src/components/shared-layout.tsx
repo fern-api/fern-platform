@@ -7,7 +7,7 @@ import { Logo } from "@/components/logo";
 import { MdxServerComponent } from "@/components/mdx/server-component";
 import { SidebarContainer } from "@/components/sidebar/SidebarContainer";
 import { ThemedDocs } from "@/components/themes/ThemedDocs";
-import { createCachedDocsLoader } from "@/server/docs-loader";
+import { DocsLoader } from "@/server/docs-loader";
 import { createFileResolver } from "@/server/file-resolver";
 import { createCachedMdxSerializer } from "@/server/mdx-serializer";
 import { withLogo } from "@/server/withLogo";
@@ -17,16 +17,13 @@ export default async function SharedLayout({
   children,
   headertabs,
   sidebar,
-  domain,
-  fernToken,
+  loader,
 }: {
   children: React.ReactNode;
   headertabs: React.ReactNode;
   sidebar: React.ReactNode;
-  domain: string;
-  fernToken?: string;
+  loader: DocsLoader;
 }) {
-  const loader = await createCachedDocsLoader(domain, fernToken);
   const serialize = createCachedMdxSerializer(loader);
   const [{ basePath }, root, config, edgeFlags, files, colors, layout] =
     await Promise.all([

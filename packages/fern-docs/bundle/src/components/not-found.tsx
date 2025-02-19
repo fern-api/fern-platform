@@ -6,11 +6,12 @@ import { addLeadingSlash, conformTrailingSlash } from "@fern-docs/utils";
 import { FernLinkButton } from "@/components/components/FernLinkButton";
 import { Logo } from "@/components/logo";
 import { createCachedDocsLoader } from "@/server/docs-loader";
-import { getDocsDomainApp } from "@/server/xfernhost/app";
+import { getDocsDomainApp, getDocsHostApp } from "@/server/xfernhost/app";
 
 export default async function NotFound() {
+  const host = await getDocsHostApp();
   const domain = await getDocsDomainApp();
-  const loader = await createCachedDocsLoader(domain);
+  const loader = await createCachedDocsLoader(host, domain);
   const [baseUrl, colors, config] = await Promise.all([
     loader.getBaseUrl(),
     loader.getColors(),

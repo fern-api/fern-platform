@@ -25,3 +25,8 @@ export async function getDocsDomainApp(): Promise<string> {
   );
   return "buildwithfern.com";
 }
+
+export async function getDocsHostApp(): Promise<string> {
+  const headersList = await headers();
+  return headersList.get("host") ?? (await getDocsDomainApp());
+}
