@@ -1,0 +1,11 @@
+openapi: 3.1.0
+info:
+  title: Single Element Type
+  description: Single Element Type
+  version: 1.0.0
+components:
+  schemas:
+    Test:
+      type: 
+        - string
+        
