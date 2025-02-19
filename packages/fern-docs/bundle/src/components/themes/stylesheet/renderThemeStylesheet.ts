@@ -4,7 +4,7 @@ import tinycolor from "tinycolor2";
 
 import type { DocsV1Read } from "@fern-api/fdr-sdk/client/types";
 
-import { ColorsThemeConfig } from "@/server/types";
+import { FernColorTheme } from "@/server/types";
 
 import { CSS_VARIABLES, getColorVariables } from "./getColorVariables";
 import { getFontVariables } from "./getFontVariables";
@@ -19,8 +19,8 @@ export function renderThemeStylesheet({
   hasTabs,
 }: {
   colorsConfig: {
-    light?: ColorsThemeConfig;
-    dark?: ColorsThemeConfig;
+    light?: FernColorTheme;
+    dark?: FernColorTheme;
   };
   typography: DocsV1Read.DocsTypographyConfigV2 | undefined;
   layoutConfig: DocsV1Read.DocsLayoutConfig | undefined;

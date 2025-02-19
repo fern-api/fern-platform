@@ -33,7 +33,7 @@
   .fern-table-root.fullscreen .fern-table thead th {
     @apply sticky top-0;
 
-    box-shadow: inset 0 -1px var(--grayscale-a5);
+    box-shadow: inset 0 -1px var(--color-grayscale-a5);
     border-bottom: 0;
 
     &::after {

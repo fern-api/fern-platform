@@ -40,3 +40,7 @@ export const DEFAULT_SIDEBAR_WIDTH = 288;
 export const DEFAULT_HEADER_HEIGHT = 64;
 export const DEFAULT_PAGE_WIDTH = 1_408;
 export const DEFAULT_CONTENT_WIDTH = 640;
+
+export const FERN_COLOR_ACCENT = "oklch(62.42% 0.1929 143.94)";
+export const FERN_COLOR_AIR = "oklch(99.56% 0.0078 139.44)";
+export const FERN_COLOR_GROUND = "oklch(16.16% 0.021 144.53)";

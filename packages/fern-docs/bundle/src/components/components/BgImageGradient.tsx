@@ -1,6 +1,6 @@
 import { cn } from "@fern-docs/components";
 
-import { ColorsThemeConfig } from "@/server/types";
+import { FernColorTheme } from "@/server/types";
 
 export function BgImageGradient({
   className,
@@ -8,8 +8,8 @@ export function BgImageGradient({
 }: {
   className?: string;
   colors: {
-    light?: ColorsThemeConfig;
-    dark?: ColorsThemeConfig;
+    light?: FernColorTheme;
+    dark?: FernColorTheme;
   };
 }) {
   const darkBackground = colors.dark?.background;

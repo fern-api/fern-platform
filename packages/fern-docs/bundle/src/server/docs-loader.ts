@@ -4,6 +4,7 @@ import { unstable_cache } from "next/cache";
 import { notFound } from "next/navigation";
 import { cache } from "react";
 
+import Color from "colorjs.io";
 import { mapValues } from "es-toolkit/object";
 import { UnreachableCaseError } from "ts-essentials";
 
@@ -14,12 +15,7 @@ import {
   FernNavigation,
 } from "@fern-api/fdr-sdk";
 import { ApiDefinitionV1ToLatest } from "@fern-api/fdr-sdk/api-definition";
-import {
-  ApiDefinitionId,
-  PageId,
-  Slug,
-  hasMetadata,
-} from "@fern-api/fdr-sdk/navigation";
+import { ApiDefinitionId, PageId, Slug } from "@fern-api/fdr-sdk/navigation";
 import { CONTINUE, SKIP } from "@fern-api/fdr-sdk/traversers";
 import { isPlainObject } from "@fern-api/ui-core-utils";
 import { AuthEdgeConfig } from "@fern-docs/auth";
@@ -31,10 +27,11 @@ import { findEndpoint } from "@/components/util/processRequestSnippetComponents"
 
 import { AuthState, createGetAuthState } from "./auth/getAuthState";
 import { cacheSeed } from "./cache-seed";
+import { generateFernColorPalette } from "./generateFernColors";
 import { getDocsUrlMetadata } from "./getDocsUrlMetadata";
 import { hash } from "./hash";
 import { loadWithUrl as uncachedLoadWithUrl } from "./loadWithUrl";
-import { ColorsThemeConfig, FileData, RgbaColor } from "./types";
+import { FernColorTheme, FileData, RgbaColor } from "./types";
 import { pruneWithAuthState } from "./withRbac";
 
 const loadWithUrl = cache(uncachedLoadWithUrl);
@@ -129,8 +126,8 @@ export interface DocsLoader {
   }>;
 
   getColors: () => Promise<{
-    light?: ColorsThemeConfig;
-    dark?: ColorsThemeConfig;
+    light?: FernColorTheme;
+    dark?: FernColorTheme;
   }>;
 
   getLayout: () => Promise<{
@@ -390,12 +387,16 @@ const getColors = cache(async (domain: string) => {
           backgroundImage: light.backgroundImage
             ? files[light.backgroundImage]
             : undefined,
-          accentPrimary: toRgbaColor(light.accentPrimary),
-          background: toRgbaColor(light.background),
-          border: toRgbaColor(light.border),
-          sidebarBackground: toRgbaColor(light.sidebarBackground),
-          headerBackground: toRgbaColor(light.headerBackground),
-          cardBackground: toRgbaColor(light.cardBackground),
+          ...generateFernColorPalette({
+            appearance: "light",
+            background: toOklch(light.background),
+            accent: toOklch(light.accentPrimary),
+            border: toOklch(light.border),
+            sidebarBackground: toOklch(light.sidebarBackground),
+            headerBackground: toOklch(light.headerBackground),
+            cardBackground: toOklch(light.cardBackground),
+          }),
+          backgroundGradient: light.background.type === "gradient",
         }
       : undefined,
     dark: dark
@@ -404,12 +405,16 @@ const getColors = cache(async (domain: string) => {
           backgroundImage: dark.backgroundImage
             ? files[dark.backgroundImage]
             : undefined,
-          accentPrimary: toRgbaColor(dark.accentPrimary),
-          background: toRgbaColor(dark.background),
-          border: toRgbaColor(dark.border),
-          sidebarBackground: toRgbaColor(dark.sidebarBackground),
-          headerBackground: toRgbaColor(dark.headerBackground),
-          cardBackground: toRgbaColor(dark.cardBackground),
+          ...generateFernColorPalette({
+            appearance: "dark",
+            background: toOklch(dark.background),
+            accent: toOklch(dark.accentPrimary),
+            border: toOklch(dark.border),
+            sidebarBackground: toOklch(dark.sidebarBackground),
+            headerBackground: toOklch(dark.headerBackground),
+            cardBackground: toOklch(dark.cardBackground),
+          }),
+          backgroundGradient: dark.background.type === "gradient",
         }
       : undefined,
   };
@@ -527,9 +532,7 @@ export const createCachedDocsLoader = async (
   };
 };
 
-function toRgbaColor(color: RgbaColor): RgbaColor;
-function toRgbaColor(color: object | undefined): RgbaColor | undefined;
-function toRgbaColor(color: object | undefined): RgbaColor | undefined {
+function toOklch(color: object | undefined): string | undefined {
   if (!color || !isPlainObject(color)) {
     return undefined;
   }
@@ -541,12 +544,13 @@ function toRgbaColor(color: object | undefined): RgbaColor | undefined {
     "b" in color &&
     typeof color.b === "number"
   ) {
-    return {
-      r: color.r,
-      g: color.g,
-      b: color.b,
-      a: "a" in color && typeof color.a === "number" ? color.a : undefined,
-    };
+    return new Color({
+      coords: [color.r, color.g, color.b],
+      space: "srgb",
+      alpha: "a" in color && typeof color.a === "number" ? color.a : undefined,
+    })
+      .to("oklch")
+      .toString();
   }
   return undefined;
 }

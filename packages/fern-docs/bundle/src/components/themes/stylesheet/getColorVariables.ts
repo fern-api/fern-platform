@@ -2,14 +2,14 @@ import tinycolor from "tinycolor2";
 
 import type { DocsV1Read } from "@fern-api/fdr-sdk/client/types";
 
-import type { ColorsThemeConfig } from "@/server/types";
+import type { FernColorTheme } from "@/server/types";
 
 import {
   darkGrayColors,
   generateRadixColors,
   getClosestGrayScale,
   lightGrayColors,
-} from "../../util/generateRadixColors";
+} from "../../../server/generateRadixColors";
 
 interface ColorConfig {
   dark: DocsV1Read.RgbaColor;
@@ -126,8 +126,8 @@ function isRgbColor(color: unknown): color is DocsV1Read.RgbaColor {
 
 function getColor(
   colors: {
-    light?: ColorsThemeConfig;
-    dark?: ColorsThemeConfig;
+    light?: FernColorTheme;
+    dark?: FernColorTheme;
   },
   key: "background" | "accentPrimary",
   theme: "light" | "dark"
@@ -142,8 +142,8 @@ function getColor(
 
 function getColor2(
   colors: {
-    light?: ColorsThemeConfig;
-    dark?: ColorsThemeConfig;
+    light?: FernColorTheme;
+    dark?: FernColorTheme;
   },
   key:
     | "background"
@@ -162,8 +162,8 @@ function getColor2(
 }
 
 export function getColorVariables(colors: {
-  light?: ColorsThemeConfig;
-  dark?: ColorsThemeConfig;
+  light?: FernColorTheme;
+  dark?: FernColorTheme;
 }): {
   light: Record<string, string | undefined>;
   dark: Record<string, string | undefined>;
@@ -375,9 +375,9 @@ export function getColorVariables(colors: {
       [CSS_VARIABLES.HEADER_BACKGROUND]:
         headerBackgroundLight?.toRgbString() ?? "transparent",
       [CSS_VARIABLES.BORDER]:
-        borderLight?.toRgbString() ?? "var(--grayscale-a4)",
+        borderLight?.toRgbString() ?? "var(--color-grayscale-a4)",
       [CSS_VARIABLES.BORDER_CONCEALED]:
-        borderLight?.toRgbString() ?? "var(--grayscale-a2)",
+        borderLight?.toRgbString() ?? "var(--color-grayscale-a2)",
       [CSS_VARIABLES.BACKGROUND_IMAGE]: colors.light?.backgroundImage?.src
         ? `url(${colors.light.backgroundImage.src})`
         : undefined,
@@ -460,9 +460,9 @@ export function getColorVariables(colors: {
       [CSS_VARIABLES.HEADER_BACKGROUND]:
         headerBackgroundDark?.toRgbString() ?? "transparent",
       [CSS_VARIABLES.BORDER]:
-        borderDark?.toRgbString() ?? "var(--grayscale-a4)",
+        borderDark?.toRgbString() ?? "var(--color-grayscale-a4)",
       [CSS_VARIABLES.BORDER_CONCEALED]:
-        borderDark?.toRgbString() ?? "var(--grayscale-a2)",
+        borderDark?.toRgbString() ?? "var(--color-grayscale-a2)",
       [CSS_VARIABLES.BACKGROUND_IMAGE]: colors.dark?.backgroundImage?.src
         ? `url(${colors.dark.backgroundImage.src})`
         : undefined,

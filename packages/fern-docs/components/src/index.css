@@ -236,9 +236,9 @@
   --color-header-background: var(--header-background);
   --color-card-background: var(--bg-color-card);
   --color-card-solid: var(--bg-color-card-solid);
-  --color-muted: var(--grayscale-a11);
-  --color-disabled: var(--grayscale-a10);
-  --color-faded: var(--grayscale-a9);
+  --color-muted: var(--color-grayscale-a11);
+  --color-disabled: var(--color-grayscale-a10);
+  --color-faded: var(--color-grayscale-a9);
 
   --color-accent-1: var(--accent-1);
   --color-accent-2: var(--accent-2);
@@ -290,22 +290,22 @@
   --color-grayscale-a12: var(--grayscale-a12);
 
   --color-border-primary: var(--accent-a8);
-  --color-border-default: var(--border-color, var(--grayscale-a8));
+  --color-border-default: var(--border-color, var(--color-grayscale-a8));
   --color-border-warning: var(--amber-a8);
   --color-border-success: var(--green-a8);
   --color-border-danger: var(--red-a8);
   --color-border-info: var(--blue-a8);
-  --color-border-default-soft: var(--border-color, var(--grayscale-a6));
+  --color-border-default-soft: var(--border-color, var(--color-grayscale-a6));
   --color-border-primary-soft: var(--accent-a6);
   --color-border-warning-soft: var(--amber-a6);
   --color-border-success-soft: var(--green-a6);
   --color-border-danger-soft: var(--red-a6);
   --color-border-info-soft: var(--blue-a6);
-  --color-border-concealed: var(--border-color, var(--grayscale-a4));
+  --color-border-concealed: var(--border-color, var(--color-grayscale-a4));
   --color-card-border: var(--border-color-card, var(--border-default));
 
-  --color-intent-default: var(--grayscale-a11);
-  --color-intent-default-lightened: var(--grayscale-a12);
+  --color-intent-default: var(--color-grayscale-a11);
+  --color-intent-default-lightened: var(--color-grayscale-a12);
   --color-intent-warning: var(--amber-a11);
   --color-intent-warning-lightened: var(--amber-a12);
   --color-intent-success: var(--green-a11);
@@ -315,15 +315,15 @@
   --color-intent-info: var(--blue-a11);
   --color-intent-info-lightened: var(--blue-a12);
 
-  --color-tag-default: var(--grayscale-a3);
-  --color-tag-default-solid: var(--grayscale-3);
-  --color-tag-default-hover: var(--grayscale-a4);
+  --color-tag-default: var(--color-grayscale-a3);
+  --color-tag-default-solid: var(--color-grayscale-3);
+  --color-tag-default-hover: var(--color-grayscale-a4);
   --color-tag-primary: var(--accent-a3);
   --color-tag-warning: var(--amber-a3);
   --color-tag-success: var(--green-a3);
   --color-tag-danger: var(--red-a3);
   --color-tag-info: var(--blue-a3);
-  --color-tag-default-soft: var(--grayscale-a2);
+  --color-tag-default-soft: var(--color-grayscale-a2);
   --color-tag-primary-soft: var(--accent-a2);
   --color-tag-warning-soft: var(--amber-a2);
   --color-tag-success-soft: var(--green-a2);
@@ -349,12 +349,12 @@
 
   --shadow-header: 0px 4px 24px 0px var(--color-accent-a3);
 
-  --shadow-card-light: 0 1px 2px var(--grayscale-a6);
-  --shadow-card-light-elevated: 0 1px 2px var(--grayscale-a6),
-    0 3px 6px var(--grayscale-a6);
-  --shadow-card-dark: 0 2px 4px var(--grayscale-a6);
-  --shadow-card-dark-elevated: 0 2px 4px var(--grayscale-a6),
-    0 2px 24px var(--grayscale-a6);
+  --shadow-card-light: 0 1px 2px var(--color-grayscale-a6);
+  --shadow-card-light-elevated: 0 1px 2px var(--color-grayscale-a6),
+    0 3px 6px var(--color-grayscale-a6);
+  --shadow-card-dark: 0 2px 4px var(--color-grayscale-a6);
+  --shadow-card-dark-elevated: 0 2px 4px var(--color-grayscale-a6),
+    0 2px 24px var(--color-grayscale-a6);
 }
 
 @support (height: 100dvh) {
