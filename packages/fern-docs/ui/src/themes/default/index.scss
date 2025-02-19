@@ -122,6 +122,7 @@
 
   #fern-footer.fern-sidebar-open {
     @apply fixed bottom-0 left-0 right-0;
+
     height: auto !important;
     transform: translateY(100%);
   }
