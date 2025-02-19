@@ -298,22 +298,86 @@ function transformAccordion(
 ): VisitorResult {
   const title = getTitle(node) ?? "Untitled";
   applyGeneratedId(node, title);
-  const id = node.attributes
+  const idAttr = node.attributes
     .filter(isMdxJsxAttribute)
-    .find((attr) => attr.name === "id")?.value;
+    .find((attr) => attr.name === "id");
 
-  node.children.forEach((item) => {
-    if (item.type === "element") {
-      if (item.properties?.id) {
-        item.properties.id = `${id}.${item.properties.id}`;
-      }
-    }
-  });
+  // Find parent accordion's ID if it exists
+  let parentId: string | undefined;
+  if (isMdxJsxElementHast(parent) && parent.name === "Accordion") {
+    parentId = parent.attributes
+      .filter(isMdxJsxAttribute)
+      .find((attr) => attr.name === "id")?.value as string | undefined;
+  }
+
+  // If we have both a parent ID and current ID, combine them
+  if (parentId && idAttr && typeof idAttr.value === "string") {
+    idAttr.value = `${parentId}.${idAttr.value}`;
+  }
+
+  // Rest of the updateChildIds logic for nested elements
+  if (idAttr && typeof idAttr.value === "string") {
+    const baseId = idAttr.value;
+    const updateChildIds = (
+      items: (Hast.Element | Hast.MdxJsxElement)[],
+      parentId: string
+    ) => {
+      items.forEach((item) => {
+        if (item.type === "element") {
+          if (item.properties?.id) {
+            const oldId = item.properties.id as string;
+            item.properties.id = oldId.startsWith(parentId)
+              ? oldId
+              : `${parentId}.${oldId}`;
+          }
+          if (item.children) {
+            updateChildIds(
+              item.children.filter(
+                (child): child is Hast.Element | Hast.MdxJsxElement =>
+                  child.type === "element" || child.type === "mdxJsxFlowElement"
+              ),
+              (item.properties?.id as string) || parentId
+            );
+          }
+        } else if (item.type === "mdxJsxFlowElement") {
+          if (item.name === "Accordion") {
+            return;
+          }
+
+          const itemIdAttr = item.attributes
+            .filter(isMdxJsxAttribute)
+            .find((attr) => attr.name === "id");
+          if (itemIdAttr && typeof itemIdAttr.value === "string") {
+            const oldId = itemIdAttr.value;
+            itemIdAttr.value = oldId.startsWith(parentId)
+              ? oldId
+              : `${parentId}.${oldId}`;
+          }
+          if (item.children) {
+            updateChildIds(
+              item.children.filter(
+                (child): child is Hast.Element | Hast.MdxJsxElement =>
+                  child.type === "element" || child.type === "mdxJsxFlowElement"
+              ),
+              (itemIdAttr?.value as string) || parentId
+            );
+          }
+        }
+      });
+    };
+
+    updateChildIds(
+      node.children.filter(
+        (child): child is Hast.Element | Hast.MdxJsxElement =>
+          child.type === "element" || child.type === "mdxJsxFlowElement"
+      ),
+      baseId
+    );
+  }
 
   visit(node, visitor);
 
   const { props } = hastMdxJsxElementHastToProps(node);
-
   const items = [props];
 
   const child = {

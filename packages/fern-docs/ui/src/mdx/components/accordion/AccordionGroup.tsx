@@ -26,23 +26,44 @@ export const AccordionGroup = forwardRef<HTMLDivElement, AccordionGroupProps>(
   ({ items = [] }, forwardedRef) => {
     const [activeTabs, setActiveTabs] = useState<string[]>([]);
     const [anchor, setAnchor] = useAtom(ANCHOR_ATOM);
+
+    const findParentAccordion = useCallback(
+      (anchor: string) => {
+        // Direct match
+        if (items.some((tab) => tab.id === anchor)) {
+          return anchor;
+        }
+
+        // Check parent paths
+        if (anchor.includes(".")) {
+          const segments = anchor.split(".");
+          return segments.reduce<string | undefined>(
+            (parentPath, segment, index) => {
+              if (index === 0) return segment;
+              const path = `${parentPath}.${segment}`;
+              return items.some((tab) => tab.id === parentPath)
+                ? parentPath
+                : path;
+            },
+            undefined
+          );
+        }
+
+        return undefined;
+      },
+      [items]
+    );
+
     useEffect(() => {
       if (anchor != null) {
-        if (items.some((tab) => tab.id === anchor)) {
-          setActiveTabs((prev) => {
-            return prev.includes(anchor) ? prev : [...prev, anchor];
-          });
-        } else if (anchor.includes(".")) {
-          const paths = anchor.split(".");
-          const parentId = paths[0];
-          if (parentId && items.some((tab) => tab.id === parentId)) {
-            setActiveTabs((prev) => {
-              return prev.includes(parentId) ? prev : [...prev, parentId];
-            });
-          }
+        const parentAccordion = findParentAccordion(anchor);
+        if (parentAccordion) {
+          setActiveTabs((prev) =>
+            prev.includes(parentAccordion) ? prev : [...prev, parentAccordion]
+          );
         }
       }
-    }, [anchor, items]);
+    }, [anchor, findParentAccordion]);
 
     const handleValueChange = useCallback(
       (nextActiveTabs: string[]) => {
