@@ -33,7 +33,7 @@ export default async function SidebarPage({
           <SidebarTabsList tabs={findNode.tabs} />
         </SidebarTabsRoot>
       )}
-      {findNode.sidebar && <SidebarRootNode root={findNode.sidebar} />}
+      <SidebarRootNode root={findNode.sidebar} />
     </>
   );
 }

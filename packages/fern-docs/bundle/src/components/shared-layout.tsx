@@ -11,11 +11,6 @@ import { DocsLoader } from "@/server/docs-loader";
 import { createFileResolver } from "@/server/file-resolver";
 import { createCachedMdxSerializer } from "@/server/mdx-serializer";
 import { withLogo } from "@/server/withLogo";
-import { RootNodeProvider } from "@/state/navigation";
-import {
-  getAllSidebarRootNodes,
-  getSidebarRootNodeIdToChildToParentsMap,
-} from "@/state/navigation-server";
 
 import { LoginButton } from "./login-button";
 

@@ -1,7 +1,6 @@
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { slugjoin } from "@fern-api/fdr-sdk/navigation";
 
-import { getFernToken } from "@/app/fern-token";
 import { SidebarTabsList } from "@/components/sidebar/SidebarTabsList";
 import { SidebarTabsRoot } from "@/components/sidebar/SidebarTabsRoot";
 import { SidebarRootNode } from "@/components/sidebar/nodes/SidebarRootNode";
@@ -46,7 +45,7 @@ export default async function SidebarPage({
           <SidebarTabsList tabs={foundNode.tabs} />
         </SidebarTabsRoot>
       )}
-      {sidebar && <SidebarRootNode root={sidebar} />}
+      <SidebarRootNode root={sidebar} />
     </>
   );
 }

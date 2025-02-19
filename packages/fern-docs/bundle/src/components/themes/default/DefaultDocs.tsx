@@ -8,7 +8,7 @@ import { cn } from "@fern-docs/components";
 import { useIsMobile } from "@fern-ui/react-commons";
 
 import { HeaderTabsRoot } from "@/components/header/HeaderTabsRoot";
-import { useLayout } from "@/state/layout";
+import { useLayout, useShouldHideAsides } from "@/state/layout";
 import {
   useCloseDismissableSidebar,
   useIsDismissableSidebarOpen,
@@ -29,6 +29,7 @@ export default function DefaultDocs({
   announcement?: React.ReactNode;
   tabs?: React.ReactNode;
 }) {
+  const hideAsides = useShouldHideAsides();
   return (
     <>
       <FernHeader className="bg-header-background border-border-concealed fixed inset-x-0 top-0 z-30 border-b backdrop-blur-lg">
@@ -40,7 +41,11 @@ export default function DefaultDocs({
       </FernHeader>
 
       <main className="mt-(--header-height) relative z-0">
-        <div className="max-w-page-width-padded mx-auto flex flex-row">
+        <div
+          className={cn("max-w-page-width-padded mx-auto flex flex-row", {
+            "[&>aside]:lg:hidden": hideAsides,
+          })}
+        >
           <SideNav>{sidebar}</SideNav>
           {children}
         </div>
@@ -53,7 +58,6 @@ export default function DefaultDocs({
 }
 
 function SideNav({ children }: { children: React.ReactNode }) {
-  const layout = useLayout();
   const isMobile = useIsMobile();
   const isDismissableSidebarOpen = useIsDismissableSidebarOpen();
   const closeDismissableSidebar = useCloseDismissableSidebar();
@@ -94,8 +98,7 @@ function SideNav({ children }: { children: React.ReactNode }) {
           "sm:ease-shift data-[mobile-state=closed]:!transition-none sm:-translate-x-full sm:opacity-0 sm:transition-[transform,opacity] sm:duration-150 sm:will-change-auto sm:data-[mobile-state=open]:translate-x-0 sm:data-[mobile-state=open]:opacity-100",
           "sm:border-border-default sm:w-(--spacing-sidebar-width) sm:flex sm:border-r",
           "bg-background/70 fixed inset-0 hidden w-dvw backdrop-blur-xl data-[mobile-state=open]:flex",
-          "top-(--header-height)",
-          { "lg:hidden": layout === "page" }
+          "top-(--header-height)"
         )}
         data-mobile-state={isDismissableSidebarOpen ? "open" : "closed"}
       >

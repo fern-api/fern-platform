@@ -1,5 +1,7 @@
 "use client";
 
+import { cn } from "@fern-docs/components";
+
 import { useLayout } from "@/state/layout";
 
 import {
@@ -64,7 +66,13 @@ function ContentSkeleton() {
 
 function TableOfContentsSkeleton() {
   return (
-    <aside className="my-8 space-y-3.5">
+    <aside
+      role="directory"
+      className={cn(
+        "top-header-height sticky order-last hidden h-fit max-h-[calc(100dvh-var(--spacing-header-height))] flex-col xl:flex",
+        "w-sidebar-width"
+      )}
+    >
       <div className="bg-grayscale-a3 w-21 h-3.5 rounded-md" />
       <div className="border-grayscale-a3 space-y-3.5 border-l-2 pl-3">
         <div className="bg-grayscale-a3 w-38 h-3.5 rounded-md" />

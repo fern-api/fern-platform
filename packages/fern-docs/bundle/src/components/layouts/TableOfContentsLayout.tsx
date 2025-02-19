@@ -1,6 +1,8 @@
 import { FernScrollArea, cn } from "@fern-docs/components";
 import type { TableOfContentsItem } from "@fern-docs/mdx";
 
+import { SetEmptyTableOfContents } from "@/state/layout";
+
 import { TableOfContents } from "../components/table-of-contents/TableOfContents";
 
 interface TableOfContentsLayoutProps {
@@ -24,6 +26,7 @@ export function TableOfContentsLayout({
         "w-sidebar-width"
       )}
     >
+      <SetEmptyTableOfContents value={!showTableOfContents} />
       {showTableOfContents && (
         <FernScrollArea className="px-4 pb-12 pt-8 lg:pr-5">
           <TableOfContents tableOfContents={tableOfContents} />
