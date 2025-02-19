@@ -1,50 +1,50 @@
 @layer components {
   .fern-card {
     @apply text-body bg-card-background border-border-default hover:text-body border transition-all hover:transition-none;
-    shadow: 0 1px 2px var(--color-grayscale-a6);
+    box-shadow: 0 1px 2px var(--color-grayscale-a3);
 
     @variant dark {
-      shadow: 0 2px 4px var(--color-grayscale-a6);
+      box-shadow: 0 2px 4px var(--color-grayscale-a3);
     }
 
     &.interactive {
       &.active {
-        border-color: var(--color-accent-a8);
-        shadow:
-          0 1px 2px var(--color-grayscale-a6),
-          0 3px 6px var(--color-grayscale-a6);
+        border-color: var(--color-accent);
+        box-shadow:
+          0 1px 2px var(--color-grayscale-a3),
+          0 3px 6px var(--color-grayscale-a3);
 
         @variant dark {
-          shadow:
-            0 2px 4px var(--color-grayscale-a6),
-            0 2px 24px var(--color-grayscale-a6);
+          box-shadow:
+            0 2px 4px var(--color-grayscale-a3),
+            0 2px 24px var(--color-grayscale-a3);
         }
       }
 
       @variant hover {
-        shadow:
-          0 1px 2px var(--color-grayscale-a6),
-          0 3px 6px var(--color-grayscale-a6);
-        border-color: var(--color-accent-a8);
+        box-shadow:
+          0 1px 2px var(--color-grayscale-a3),
+          0 3px 6px var(--color-grayscale-a3);
+        border-color: var(--color-accent);
 
         @variant dark {
-          shadow:
-            0 2px 4px var(--color-grayscale-a6),
-            0 2px 24px var(--color-grayscale-a6);
+          box-shadow:
+            0 2px 4px var(--color-grayscale-a3),
+            0 2px 24px var(--color-grayscale-a3);
         }
       }
     }
 
     &.elevated {
-      border-color: var(--color-accent-a8);
-      shadow:
-        0 1px 2px var(--color-grayscale-a6),
-        0 3px 6px var(--color-grayscale-a6);
+      border-color: var(--color-accent);
+      box-shadow:
+        0 1px 2px var(--color-grayscale-a3),
+        0 3px 6px var(--color-grayscale-a3);
 
       @variant dark {
-        shadow:
-          0 2px 4px var(--color-grayscale-a6),
-          0 2px 24px var(--color-grayscale-a6);
+        box-shadow:
+          0 2px 4px var(--color-grayscale-a3),
+          0 2px 24px var(--color-grayscale-a3);
       }
     }
 

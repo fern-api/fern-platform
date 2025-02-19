@@ -28,7 +28,7 @@ export function GlobalStyles({
           --font-body: ${fonts.bodyFont ?? "initial"};
           --font-heading: ${fonts.headingFont ?? "initial"};
           --font-code: ${fonts.codeFont ?? "initial"};
-          ${domain.includes("nominal") ? "--radius: 0px;" : ""}
+          ${domain.includes("nominal") ? "--border-radius: 0px;" : ""}
           --header-height-real: ${layout.headerHeight}px;
           --content-width: ${layout.contentWidth}px;
           --sidebar-width: ${layout.sidebarWidth}px;

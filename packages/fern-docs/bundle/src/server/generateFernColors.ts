@@ -24,36 +24,31 @@ export function getSourceForGrayscale({
   background?: string;
   accent?: string;
 }): string {
-  if (!background && !accent) {
-    return RadixColors.gray.gray6;
-  }
-  let source = RadixColors.gray.gray6;
-  if (background && !isWhiteOrBlack(background)) {
-    source = background;
-  } else if (accent) {
-    source = accent;
-  }
+  const shouldUseAccentColor =
+    accent != null && (!background || isWhiteOrBlack(background));
 
-  return source;
-}
-
-function isWhiteOrBlack(color: string): boolean {
-  return ["#ffffff", "#000000"].includes(
-    new Color(color).toString({ format: "hex" }).toLowerCase()
+  return (
+    (shouldUseAccentColor ? accent : background) ?? RadixColors.gray.gray12
   );
 }
 
-function getClosestGrayColor(opts: {
-  source: string;
-  appearance: "light" | "dark";
-}): string {
+function isWhiteOrBlack(color: string): boolean {
+  return ["#fff", "#000", "#ffffff", "#000000"].includes(
+    new Color(color).to("srgb").toString({ format: "hex" }).toLowerCase()
+  );
+}
+
+type GrayScale = keyof typeof lightGrayColors | keyof typeof darkGrayColors;
+
+function getClosestGrayColor(source: string): GrayScale {
   try {
-    const sourceColor = new Color(opts.source).to("oklch");
-    const scales =
-      opts.appearance === "light" ? lightGrayColors : darkGrayColors;
+    const sourceColor = new Color(source).to("oklch");
     const allColors: { scale: string; color: Color; distance: number }[] = [];
 
-    Object.entries(scales).forEach(([name, scale]) => {
+    [
+      ...Object.entries(lightGrayColors),
+      ...Object.entries(darkGrayColors),
+    ].forEach(([name, scale]) => {
       for (const color of scale) {
         const distance = sourceColor.deltaE76(color);
         allColors.push({ scale: name, distance, color });
@@ -63,8 +58,7 @@ function getClosestGrayColor(opts: {
     allColors.sort((a, b) => a.distance - b.distance);
 
     const closestColor = allColors[0]!;
-    console.log("closestColor", closestColor);
-    return closestColor.scale;
+    return closestColor.scale as GrayScale;
   } catch (e) {
     console.error(e);
     return "gray";
@@ -77,22 +71,18 @@ function generateColorPalette(opts: {
   background?: string;
 }): ColorPalette {
   const source = getSourceForGrayscale(opts);
-  console.log("source", source);
-  const gray = getClosestGrayColor({
-    source,
-    appearance: opts.appearance,
-  });
+  const gray = getClosestGrayColor(source);
   const accent = opts.accent;
   const background =
     opts.background ?? (opts.appearance === "light" ? "#ffffff" : "#000000");
   const grayColors =
     opts.appearance === "light" ? lightGrayColors : darkGrayColors;
-  const grayScale = grayColors[gray as keyof typeof grayColors];
+  const grayScale = grayColors[gray];
   const palette = generateRadixColors({
     appearance: opts.appearance,
     accent,
     background,
-    gray: grayScale[6].toString()!,
+    gray: grayScale[11].toString()!,
   });
   return {
     ...palette,
@@ -135,8 +125,9 @@ export function generateFernColorPalette({
   headerBackground?: string;
   cardBackground?: string;
 }): FernColorPalette {
+  const palette = generateColorPalette({ appearance, background, accent });
   return {
-    ...generateColorPalette({ appearance, background, accent }),
+    ...palette,
     accent,
     border,
     sidebarBackground,

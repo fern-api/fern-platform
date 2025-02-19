@@ -145,7 +145,7 @@ export const PlaygroundEndpointSelectorContent = forwardRef<
           </ul>
           <div className="!h-6"></div>
         </FernScrollArea>
-        <div className="border-default bg-background border-t px-6 py-4">
+        <div className="border-border-default bg-background border-t px-6 py-4">
           <BuiltWithFern />
         </div>
       </div>

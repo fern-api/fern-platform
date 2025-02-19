@@ -63,7 +63,7 @@ function getIconForTypeReference(
   const { content, size } = info;
   return (
     <div
-      className="border-default flex size-6 items-center justify-center self-center rounded border"
+      className="border-border-default flex size-6 items-center justify-center self-center rounded border"
       style={{ fontSize: size }}
     >
       {content}

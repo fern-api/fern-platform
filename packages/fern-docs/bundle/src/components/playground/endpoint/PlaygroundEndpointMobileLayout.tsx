@@ -29,7 +29,7 @@ export function PlaygroundEndpointMobileLayout({
           content: (
             <div className="space-y-4 pb-6">
               {form}
-              <div className="border-default flex justify-end border-b pb-4">
+              <div className="border-border-default flex justify-end border-b pb-4">
                 {sendButton}
                 {/* <PlaygroundSendRequestButton
                                     sendRequest={() => {

@@ -24,7 +24,7 @@ export const FeedbackFormDialog: FC<FeedbackFormDialogProps> = ({
           side="bottom"
           sideOffset={8}
           className={cn(
-            "border-default dark:bg-background/50 z-50 w-[calc(100vw-32px)] rounded-lg border bg-white/50 p-4 shadow-xl backdrop-blur-xl sm:w-96",
+            "border-border-default dark:bg-background/50 z-50 w-[calc(100vw-32px)] rounded-lg border bg-white/50 p-4 shadow-xl backdrop-blur-xl sm:w-96",
             "data-[state=open]:data-[side=bottom]:animate-slide-up-and-fade data-[state=open]:data-[side=left]:animate-slide-right-and-fade data-[state=open]:data-[side=right]:animate-slide-left-and-fade data-[state=open]:data-[side=top]:animate-slide-down-and-fade will-change-[transform,opacity]",
             className
           )}

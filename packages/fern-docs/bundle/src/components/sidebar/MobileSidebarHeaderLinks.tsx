@@ -12,7 +12,7 @@ export function MobileSidebarHeaderLinks({
   }
   return (
     <div
-      className={cn("border-default -mx-4 mt-4 list-none border-t p-4", {
+      className={cn("border-border-default -mx-4 mt-4 list-none border-t p-4", {
         "lg:hidden": true,
       })}
     >

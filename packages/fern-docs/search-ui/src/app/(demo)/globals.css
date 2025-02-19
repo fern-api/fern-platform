@@ -51,11 +51,11 @@
       helvetica neue,
       sans-serif;
 
-    @apply text-(--grayscale-12);
+    @apply text-grayscale-12;
     background-color: var(--color-background);
   }
 
   * {
-    @apply border-(--grayscale-a6);
+    @apply border-grayscale-a6;
   }
 }

@@ -94,7 +94,7 @@ export const PlaygroundMapForm = memo<PlaygroundMapFormProps>((props) => {
   return (
     <>
       {internalState.length > 0 && (
-        <ul className="border-default divide-border-default w-full max-w-full list-none divide-y divide-dashed border-t border-dashed">
+        <ul className="border-border-default divide-border-default w-full max-w-full list-none divide-y divide-dashed border-t border-dashed">
           {internalState.map((item, idx) => (
             <PlaygroundMapItemForm
               key={idx}
