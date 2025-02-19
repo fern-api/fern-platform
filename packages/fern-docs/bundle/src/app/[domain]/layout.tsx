@@ -21,9 +21,7 @@ import { JavascriptProvider } from "@/components/components/JavascriptProvider";
 import { withJsConfig } from "@/components/components/with-js-config";
 import { FeatureFlagProvider } from "@/components/feature-flags/FeatureFlagProvider";
 import SearchV2 from "@/components/search";
-import { renderThemeStylesheet } from "@/components/themes/stylesheet/renderThemeStylesheet";
 import { DocsLoader, createCachedDocsLoader } from "@/server/docs-loader";
-import type { RgbaColor } from "@/server/types";
 import { DarkCode } from "@/state/dark-code";
 import { Domain } from "@/state/domain";
 import { LaunchDarklyInfo } from "@/state/feature-flags";
@@ -49,6 +47,7 @@ export default async function Layout(props: {
     files,
     colors,
     layout,
+    fonts,
     deprecated_customerAnalytics,
     launchDarkly,
   ] = await Promise.all([
@@ -57,19 +56,12 @@ export default async function Layout(props: {
     loader.getFiles(),
     loader.getColors(),
     loader.getLayout(),
+    loader.getFonts(),
     deprecated_getCustomerAnalytics(domain),
     getLaunchDarklyInfo(loader),
   ]);
 
   generatePreloadHrefs(config.typographyV2, files);
-  const stylesheet = renderThemeStylesheet({
-    colorsConfig: colors,
-    typography: config.typographyV2,
-    layoutConfig: config.layout,
-    css: config.css,
-    files,
-    hasTabs: true, // todo: fix this
-  });
 
   const { VERCEL_ENV } = getEnv();
 
@@ -87,9 +79,14 @@ export default async function Layout(props: {
       <DarkCode value={edgeFlags.isDarkCodeEnabled} />
       {/* <FernUser domain={domain} fern_token={fern_token} /> */}
       <BgImageGradient colors={colors} />
-      <GlobalStyles domain={domain} layout={layout}>
-        {stylesheet}
-      </GlobalStyles>
+      <GlobalStyles
+        domain={domain}
+        layout={layout}
+        fonts={fonts}
+        light={colors.light}
+        dark={colors.dark}
+        inlineCss={config.css?.inline}
+      />
       <FeatureFlagProvider featureFlagsConfig={{ launchDarkly }}>
         {children}
       </FeatureFlagProvider>
@@ -159,12 +156,8 @@ export async function generateViewport(props: {
 
   const loader = await createCachedDocsLoader(domain);
   const colors = await loader.getColors();
-  const dark = maybeToHex(
-    colors.dark?.background ?? colors.dark?.accentPrimary
-  );
-  const light = maybeToHex(
-    colors.light?.background ?? colors.light?.accentPrimary
-  );
+  const dark = colors.dark?.background ?? colors.dark?.accent;
+  const light = colors.light?.background ?? colors.light?.accent;
   return {
     themeColor: compact([
       dark ? { color: dark, media: "(prefers-color-scheme: dark)" } : undefined,
@@ -173,13 +166,6 @@ export async function generateViewport(props: {
         : undefined,
     ]),
   };
-}
-
-function maybeToHex(color: RgbaColor | undefined): string | undefined {
-  if (color == null) {
-    return undefined;
-  }
-  return tinycolor(color).toHexString();
 }
 
 export async function generateMetadata(props: {

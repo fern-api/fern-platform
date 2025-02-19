@@ -4,10 +4,14 @@ import Color from "colorjs.io";
 import { FERN_COLOR_ACCENT } from "@fern-docs/utils";
 
 import {
+  ArrayOf12,
   ColorPalette,
   darkGrayColors,
   generateRadixColors,
+  getAlphaColorP3,
+  getAlphaColorSrgb,
   lightGrayColors,
+  toOklchString,
 } from "./generateRadixColors";
 
 /**
@@ -25,7 +29,7 @@ export function getSourceForGrayscale({
   }
   let source = RadixColors.gray.gray6;
   if (background && !isWhiteOrBlack(background)) {
-    source = RadixColors.gray.gray12;
+    source = background;
   } else if (accent) {
     source = accent;
   }
@@ -35,14 +39,18 @@ export function getSourceForGrayscale({
 
 function isWhiteOrBlack(color: string): boolean {
   return ["#ffffff", "#000000"].includes(
-    new Color(color).to("srgb").toString({ format: "hex" }).toLowerCase()
+    new Color(color).toString({ format: "hex" }).toLowerCase()
   );
 }
 
-function getClosestGrayColor(source: string): string {
+function getClosestGrayColor(opts: {
+  source: string;
+  appearance: "light" | "dark";
+}): string {
   try {
-    const sourceColor = new Color(source).to("oklch");
-    const scales = { ...lightGrayColors, ...darkGrayColors };
+    const sourceColor = new Color(opts.source).to("oklch");
+    const scales =
+      opts.appearance === "light" ? lightGrayColors : darkGrayColors;
     const allColors: { scale: string; color: Color; distance: number }[] = [];
 
     Object.entries(scales).forEach(([name, scale]) => {
@@ -54,10 +62,12 @@ function getClosestGrayColor(source: string): string {
 
     allColors.sort((a, b) => a.distance - b.distance);
 
-    return allColors[0]!.color.toString({ format: "hex" });
+    const closestColor = allColors[0]!;
+    console.log("closestColor", closestColor);
+    return closestColor.scale;
   } catch (e) {
     console.error(e);
-    return RadixColors.gray.gray6;
+    return "gray";
   }
 }
 
@@ -67,16 +77,36 @@ function generateColorPalette(opts: {
   background?: string;
 }): ColorPalette {
   const source = getSourceForGrayscale(opts);
-  const gray = getClosestGrayColor(source);
+  console.log("source", source);
+  const gray = getClosestGrayColor({
+    source,
+    appearance: opts.appearance,
+  });
   const accent = opts.accent;
   const background =
     opts.background ?? (opts.appearance === "light" ? "#ffffff" : "#000000");
-  return generateRadixColors({
+  const grayColors =
+    opts.appearance === "light" ? lightGrayColors : darkGrayColors;
+  const grayScale = grayColors[gray as keyof typeof grayColors];
+  const palette = generateRadixColors({
     appearance: opts.appearance,
     accent,
     background,
-    gray,
+    gray: grayScale[6].toString()!,
   });
+  return {
+    ...palette,
+    grayScale: grayScale.map((color) =>
+      color.to("srgb").toString()
+    ) as ArrayOf12<string>,
+    grayScaleAlpha: grayScale.map((color) =>
+      getAlphaColorSrgb(color.to("srgb").toString(), background)
+    ) as ArrayOf12<string>,
+    grayScaleWideGamut: grayScale.map(toOklchString) as ArrayOf12<string>,
+    grayScaleAlphaWideGamut: grayScale.map((color) =>
+      getAlphaColorP3(color.to("p3").toString(), background)
+    ) as ArrayOf12<string>,
+  };
 }
 
 export interface FernColorPalette extends ColorPalette {

@@ -1,46 +1,54 @@
 "use client";
 
-import { FernColorTheme } from "@/server/types";
+import { FernFonts } from "@/server/generateFonts";
+import { FernColorTheme, FernLayoutConfig } from "@/server/types";
 
 export function GlobalStyles({
-  children,
   domain,
   layout,
   light,
   dark,
+  fonts,
+  inlineCss = [],
 }: {
-  children: string;
   domain: string;
-  layout: {
-    logoHeight: number;
-    sidebarWidth: number;
-    headerHeight: number;
-    pageWidth: number | undefined;
-    contentWidth: number;
-    tabsPlacement: "SIDEBAR" | "HEADER";
-    searchbarPlacement: "SIDEBAR" | "HEADER" | "HEADER_TABS";
-  };
+  layout: FernLayoutConfig;
   light?: FernColorTheme;
   dark?: FernColorTheme;
+  fonts: FernFonts;
+  inlineCss?: string[];
 }) {
   const root = light ?? dark;
   return (
     <style jsx global>
       {`
+        ${fonts.fontFaces.join("\n        ")}
+
+        :root {
+          --font-body: ${fonts.bodyFont ?? "initial"};
+          --font-heading: ${fonts.headingFont ?? "initial"};
+          --font-code: ${fonts.codeFont ?? "initial"};
+          ${domain.includes("nominal") ? "--radius: 0px;" : ""}
+          --header-height-real: ${layout.headerHeight}px;
+          --content-width: ${layout.contentWidth}px;
+          --sidebar-width: ${layout.sidebarWidth}px;
+          --page-width: ${layout.pageWidth != null
+            ? `${layout.pageWidth}px`
+            : "100vw"};
+          --logo-height: ${layout.logoHeight}px;
+        }
+
         :root,
         .light,
         .light-theme${!light ? ", .dark, .dark-theme" : ""} {
-          ${domain.includes("nominal") ? "--radius: 0px;" : ""}
-          ${layout.headerHeight
-            ? `--header-height-real: ${layout.headerHeight}px;`
-            : ""}
           --background: ${root?.background ?? "initial"};
-          --border-color: ${domain.includes("nominal")
+          --border: ${domain.includes("nominal")
             ? "#000"
             : (root?.border ?? "initial")};
           --sidebar-background: ${root?.sidebarBackground ?? "initial"};
           --header-background: ${root?.headerBackground ?? "initial"};
           --card-background: ${root?.cardBackground ?? "initial"};
+          --accent: ${root?.accent ?? "initial"};
           --accent-contrast: ${root?.accentContrast ?? "initial"};
           --accent-surface: ${root?.accentSurface ?? "initial"};
           --grayscale-surface: ${root?.graySurface ?? "initial"};
@@ -84,12 +92,13 @@ export function GlobalStyles({
         ${light && dark
           ? `.dark, .dark-theme {
           --background: ${dark?.background ?? "initial"};
-          --border-color: ${
+          --border: ${
             domain.includes("nominal") ? "#fff" : (dark?.border ?? "initial")
           };
           --sidebar-background: ${dark?.sidebarBackground ?? "initial"};
           --header-background: ${dark?.headerBackground ?? "initial"};
           --card-background: ${dark?.cardBackground ?? "initial"};
+          --accent: ${dark?.accent ?? "initial"};
           --accent-contrast: ${dark?.accentContrast ?? "initial"};
           --accent-surface: ${dark?.accentSurface ?? "initial"};
           --grayscale-surface: ${dark?.graySurface ?? "initial"};
@@ -144,7 +153,13 @@ export function GlobalStyles({
           }`
           : ""}
 
-        ${children}
+        html {
+          background-color: var(--background);
+        }
+
+        ${fonts.additionalCss}
+
+        ${inlineCss.join("\n        ")}
       `}
     </style>
   );

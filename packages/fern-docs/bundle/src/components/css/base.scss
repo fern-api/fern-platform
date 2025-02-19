@@ -16,9 +16,7 @@
   h4,
   h5,
   h6 {
-    @apply scroll-mt-4;
-
-    font-family: var(--typography-heading-font-family);
+    @apply font-heading scroll-mt-4;
 
     &:first-child {
       @apply mt-0;

@@ -34,7 +34,7 @@ function generateFontFace(
   return `@font-face {\n${lines.map((line) => `    ${line}`).join(";\n")};\n}`;
 }
 
-interface TypographyResult {
+export interface FernFonts {
   fontFaces: string[];
   bodyFont?: string;
   headingFont?: string;
@@ -45,7 +45,7 @@ interface TypographyResult {
 export function generateFonts(
   typography: DocsV1Read.DocsTypographyConfigV2 | undefined,
   files: Record<string, { src: string }>
-): TypographyResult {
+): FernFonts {
   const fontFaces: string[] = [];
   let additionalCss = "";
   let bodyFont: string | undefined;

@@ -17,17 +17,9 @@ export function GuideLayout({
 }: GuideLayoutProps): ReactElement<any> {
   return (
     <>
-      <aside
-        role="directory"
-        className={cn(
-          "top-(--header-height) sticky order-last hidden h-fit max-h-[calc(100dvh-var(--header-height))] flex-col xl:flex",
-          "w-(--spacing-sidebar-width)"
-        )}
-      >
-        {toc}
-      </aside>
-      <div className="px-page-padding mx-auto mb-12 flex min-w-0 shrink lg:ml-0 xl:ml-auto">
-        <article className="w-content-width min-w-0 shrink">
+      {toc}
+      <div className="px-page-padding mx-auto mb-12 shrink space-y-8 lg:ml-0 xl:ml-auto">
+        <article className="w-content-width max-w-full">
           {header}
           <div className="prose dark:prose-invert prose-h1:mt-[1.5em] first:prose-h1:mt-0 max-w-full break-words">
             {children}

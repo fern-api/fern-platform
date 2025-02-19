@@ -82,6 +82,7 @@ export default async function SharedLayout({
                 className="w-fit shrink-0"
               />
             }
+            tabs={false}
             versionSelect={false}
             navbarLinks={
               <React.Suspense fallback={null}>

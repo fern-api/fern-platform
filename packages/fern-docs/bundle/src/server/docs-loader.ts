@@ -4,7 +4,6 @@ import { unstable_cache } from "next/cache";
 import { notFound } from "next/navigation";
 import { cache } from "react";
 
-import Color from "colorjs.io";
 import { mapValues } from "es-toolkit/object";
 import { UnreachableCaseError } from "ts-essentials";
 
@@ -28,10 +27,11 @@ import { findEndpoint } from "@/components/util/processRequestSnippetComponents"
 import { AuthState, createGetAuthState } from "./auth/getAuthState";
 import { cacheSeed } from "./cache-seed";
 import { generateFernColorPalette } from "./generateFernColors";
+import { FernFonts, generateFonts } from "./generateFonts";
 import { getDocsUrlMetadata } from "./getDocsUrlMetadata";
 import { hash } from "./hash";
 import { loadWithUrl as uncachedLoadWithUrl } from "./loadWithUrl";
-import { FernColorTheme, FileData, RgbaColor } from "./types";
+import { FernColorTheme, FernLayoutConfig, FileData, RgbaColor } from "./types";
 import { pruneWithAuthState } from "./withRbac";
 
 const loadWithUrl = cache(uncachedLoadWithUrl);
@@ -130,15 +130,9 @@ export interface DocsLoader {
     dark?: FernColorTheme;
   }>;
 
-  getLayout: () => Promise<{
-    logoHeight: number;
-    sidebarWidth: number;
-    headerHeight: number;
-    pageWidth: number | undefined;
-    contentWidth: number;
-    tabsPlacement: "SIDEBAR" | "HEADER";
-    searchbarPlacement: "SIDEBAR" | "HEADER" | "HEADER_TABS";
-  }>;
+  getFonts: () => Promise<FernFonts>;
+
+  getLayout: () => Promise<FernLayoutConfig>;
 
   getAuthState: (pathname?: string) => Promise<AuthState>;
 
@@ -420,6 +414,14 @@ const getColors = cache(async (domain: string) => {
   };
 });
 
+const getFonts = cache(async (domain: string) => {
+  const response = await loadWithUrl(domain);
+  return generateFonts(
+    response.definition.config.typographyV2,
+    await getFiles(domain)
+  );
+});
+
 const getLayout = cache(async (domain: string) => {
   const config = await getConfig(domain);
   if (!config) {
@@ -523,6 +525,9 @@ export const createCachedDocsLoader = async (
     getLayout: unstable_cache(() => getLayout(domain), [domain, cacheSeed()], {
       tags: [domain, "getLayout"],
     }),
+    getFonts: unstable_cache(() => getFonts(domain), [domain, cacheSeed()], {
+      tags: [domain, "getFonts"],
+    }),
     getAuthState,
     getEdgeFlags: unstable_cache(
       () => cachedGetEdgeFlags(domain),
@@ -544,13 +549,10 @@ function toOklch(color: object | undefined): string | undefined {
     "b" in color &&
     typeof color.b === "number"
   ) {
-    return new Color({
-      coords: [color.r, color.g, color.b],
-      space: "srgb",
-      alpha: "a" in color && typeof color.a === "number" ? color.a : undefined,
-    })
-      .to("oklch")
-      .toString();
+    if ("a" in color && typeof color.a === "number") {
+      return `rgba(${color.r}, ${color.g}, ${color.b}, ${color.a})`;
+    }
+    return `rgb(${color.r}, ${color.g}, ${color.b})`;
   }
   return undefined;
 }
