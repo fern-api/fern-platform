@@ -197,10 +197,8 @@ function transformAccordionGroup(
     .filter(isMdxJsxElementHast)
     .filter((child) => child.name === "Accordion");
 
-  items.forEach((tab, index) => {
-    const title = getTitle(tab) ?? `Untitled ${index + 1}`;
-    applyGeneratedId(tab, title);
-    visit(tab, visitor);
+  items.forEach((accordion, index) => {
+    transformAccordion(accordion, index, node, visitor);
   });
 
   const child = {
@@ -300,6 +298,18 @@ function transformAccordion(
 ): VisitorResult {
   const title = getTitle(node) ?? "Untitled";
   applyGeneratedId(node, title);
+  const id = node.attributes
+    .filter(isMdxJsxAttribute)
+    .find((attr) => attr.name === "id")?.value;
+
+  node.children.forEach((item) => {
+    if (item.type === "element") {
+      if (item.properties?.id) {
+        item.properties.id = `${id}.${item.properties.id}`;
+      }
+    }
+  });
+
   visit(node, visitor);
 
   const { props } = hastMdxJsxElementHastToProps(node);
