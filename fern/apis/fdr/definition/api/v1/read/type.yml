@@ -59,6 +59,7 @@ types:
     union:
       integer: IntegerType
       double: DoubleType
+      float: FloatType
       string: StringType
       long: LongType
       boolean: BooleanType
@@ -81,6 +82,12 @@ types:
       minimum: optional<double>
       maximum: optional<double>
       default: optional<double>
+
+  FloatType:
+    properties:
+      minimum: optional<float>
+      maximum: optional<float>
+      default: optional<float>
 
   StringType:
     properties:
