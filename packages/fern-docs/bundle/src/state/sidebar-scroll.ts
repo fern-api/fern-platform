@@ -2,12 +2,7 @@
 
 import React from "react";
 
-import { atom, useAtom, useAtomValue, useSetAtom } from "jotai";
-import { noop } from "ts-essentials";
-
 import { useIsSelectedSidebarNode } from "./navigation";
-
-const sidebarScrollRestorationAtom = atom(0);
 
 /**
  * In the app router the sidebar gets scrolled to the top between page loads.
@@ -17,17 +12,15 @@ const sidebarScrollRestorationAtom = atom(0);
 export function useDismountMeasureSidebarScrollPosition(
   ref: React.RefObject<HTMLDivElement | null>
 ) {
-  const [scrollPosition, setSidebarScrollRestoration] = useAtom(
-    sidebarScrollRestorationAtom
-  );
   React.useEffect(() => {
-    if (ref.current && scrollPosition > 0) {
-      ref.current.scrollTop = scrollPosition;
+    window._FERN_SIDEBAR_SCROLL_RESTORATION ??= 0;
+    if (ref.current && window._FERN_SIDEBAR_SCROLL_RESTORATION > 0) {
+      ref.current.scrollTop = window._FERN_SIDEBAR_SCROLL_RESTORATION;
     }
 
     return () => {
       if (ref.current) {
-        setSidebarScrollRestoration(ref.current.scrollTop);
+        window._FERN_SIDEBAR_SCROLL_RESTORATION = ref.current.scrollTop;
       }
     };
   }, []);
