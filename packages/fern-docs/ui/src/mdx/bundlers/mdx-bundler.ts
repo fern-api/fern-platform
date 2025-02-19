@@ -10,6 +10,7 @@ import {
   rehypeAcornErrorBoundary,
   rehypeExpressionToMd,
   rehypeMdxClassStyle,
+  rehypeSlug,
   rehypeSqueezeParagraphs,
   remarkInjectEsm,
   remarkSanitizeAcorn,
@@ -20,7 +21,6 @@ import { mapKeys } from "es-toolkit/object";
 import { bundleMDX } from "mdx-bundler";
 import path, { dirname } from "path";
 import rehypeKatex from "rehype-katex";
-import rehypeSlug from "rehype-slug";
 import remarkGemoji from "remark-gemoji";
 import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
