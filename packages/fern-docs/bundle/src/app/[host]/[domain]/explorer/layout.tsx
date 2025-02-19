@@ -42,7 +42,7 @@ export default async function Layout({
       <HorizontalSplitPane
         mode="pixel"
         className="size-full"
-        leftClassName="border-border-default border-r"
+        leftClassName="border-border-default border-r hidden lg:block"
       >
         <PlaygroundEndpointSelectorContent
           apiGroups={apiGroups}

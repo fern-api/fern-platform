@@ -2,30 +2,21 @@ import React from "react";
 
 import { ArrowRight } from "lucide-react";
 
-import { withDefaultProtocol } from "@fern-api/ui-core-utils";
 import { cn } from "@fern-docs/components";
-import { isTrailingSlashEnabled } from "@fern-docs/utils";
 
 import type {
   NavbarLink,
   NavbarLink as NavbarLinkType,
 } from "@/components/atoms";
 import { FaIconServer } from "@/components/fa-icon-server";
-import { getReturnToQueryParam } from "@/server/auth/return-to";
 import { DocsLoader } from "@/server/docs-loader";
 
 import { FernLinkButton } from "../components/FernLinkButton";
-import { getApiRouteSupplier } from "../util/getApiRouteSupplier";
 import { GitHubWidget, getGitHubRepo } from "./GitHubWidget";
 import { WithReturnTo } from "./WithReturnTo";
 
 export async function NavbarLinks({ loader }: { loader: DocsLoader }) {
-  const [{ basePath }, config, authConfig, authState] = await Promise.all([
-    loader.getBaseUrl(),
-    loader.getConfig(),
-    loader.getAuthConfig(),
-    loader.getAuthState(),
-  ]);
+  const config = await loader.getConfig();
 
   const navbarLinks: NavbarLink[] = [];
 
@@ -52,39 +43,6 @@ export async function NavbarLinks({ loader }: { loader: DocsLoader }) {
     }
   });
 
-  // HACKHACK: This is a hack to add a login button to the navbar if the user is not authenticated
-  if (authConfig?.type === "basic_token_verification" && !authState.authed) {
-    navbarLinks.push({
-      type: "outlined",
-      text: "Login",
-      href: withDefaultProtocol(authConfig.redirect),
-      icon: undefined,
-      rightIcon: undefined,
-      rounded: false,
-      className: undefined,
-      id: "fern-docs-login-button",
-      returnToQueryParam: getReturnToQueryParam(authConfig),
-    });
-  }
-
-  const getApiRoute = getApiRouteSupplier({
-    basepath: basePath,
-    includeTrailingSlash: isTrailingSlashEnabled(),
-  });
-
-  if (authState.authed) {
-    navbarLinks.push({
-      type: "outlined",
-      text: "Logout",
-      href: getApiRoute("/api/fern-docs/auth/logout"),
-      icon: undefined,
-      rightIcon: undefined,
-      rounded: false,
-      className: undefined,
-      id: "fern-docs-logout-button",
-      returnToQueryParam: getReturnToQueryParam(authConfig),
-    });
-  }
   return (
     <>
       {navbarLinks.map((navbarLink, idx) => (

@@ -13,6 +13,8 @@ import { createCachedMdxSerializer } from "@/server/mdx-serializer";
 import { withLogo } from "@/server/withLogo";
 import { RootNodeProvider } from "@/state/navigation";
 
+import { LoginButton } from "./login-button";
+
 export default async function SharedLayout({
   children,
   headertabs,
@@ -68,6 +70,11 @@ export default async function SharedLayout({
             showSearchBar={layout.searchbarPlacement === "HEADER"}
             showThemeButton={Boolean(colors.dark && colors.light)}
             navbarLinks={<NavbarLinks loader={loader} />}
+            loginButton={
+              <React.Suspense fallback={null}>
+                <LoginButton loader={loader} size="sm" className="mx-2" />
+              </React.Suspense>
+            }
           />
         }
         tabs={headertabs}
@@ -84,6 +91,15 @@ export default async function SharedLayout({
             navbarLinks={
               <React.Suspense fallback={null}>
                 <NavbarLinks loader={loader} />
+              </React.Suspense>
+            }
+            loginButton={
+              <React.Suspense fallback={null}>
+                <LoginButton
+                  loader={loader}
+                  className="my-6 flex w-full justify-between lg:hidden"
+                  showIcon
+                />
               </React.Suspense>
             }
           >

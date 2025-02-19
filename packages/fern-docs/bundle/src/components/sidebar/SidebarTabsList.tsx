@@ -39,7 +39,7 @@ export function SidebarTabsList({
               className={cn(
                 "bg-card-surface border-border-default mr-4 flex size-6 items-center justify-center rounded-md border shadow-sm",
                 "group-hover:group-data-[state=inactive]:bg-accent-a3 group-hover:group-data-[state=inactive]:border-accent-a8 group-hover:group-data-[state=inactive]:text-accent-a11",
-                "group-data-[state=active]:bg-accent group-data-[state=active]:text-accent-contrast group-data-[state=active]:border-transparent"
+                "group-data-[state=active]:bg-accent-10 group-data-[state=active]:text-background group-data-[state=active]:border-transparent group-data-[state=active]:shadow-none"
               )}
             >
               {tab.type !== "link" && tab.authed ? (

@@ -16,6 +16,7 @@ export function HeaderContent({
   showThemeButton,
   showSearchBar,
   navbarLinks,
+  loginButton,
 }: {
   logo: React.ReactNode;
   versionSelect: React.ReactNode;
@@ -24,6 +25,7 @@ export function HeaderContent({
   showThemeButton?: boolean;
   showSearchBar?: boolean;
   navbarLinks: React.ReactNode;
+  loginButton?: React.ReactNode;
 }) {
   return (
     <div
@@ -53,6 +55,7 @@ export function HeaderContent({
           className="hidden flex-1 lg:flex lg:items-center lg:justify-end"
         >
           {navbarLinks}
+          {loginButton}
           {showThemeButton && <ThemeButton />}
         </nav>
       </FernButtonGroup>

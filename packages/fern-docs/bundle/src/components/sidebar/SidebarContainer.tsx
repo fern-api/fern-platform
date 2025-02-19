@@ -13,12 +13,14 @@ export const SidebarContainer = React.memo(function SidebarContainer({
   logo,
   versionSelect,
   navbarLinks,
+  loginButton,
   children,
 }: {
   tabs: React.ReactNode;
   logo: React.ReactNode;
   versionSelect: React.ReactNode;
   navbarLinks: React.ReactNode;
+  loginButton: React.ReactNode;
   children: React.ReactNode;
 }) {
   const ref = React.useRef<HTMLDivElement>(null);
@@ -39,6 +41,7 @@ export const SidebarContainer = React.memo(function SidebarContainer({
         scrollbars="vertical"
         ref={ref}
       >
+        {loginButton}
         {tabs}
         {children}
         <MobileSidebarHeaderLinks>{navbarLinks}</MobileSidebarHeaderLinks>

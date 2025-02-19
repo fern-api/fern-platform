@@ -5,7 +5,7 @@ import { useAtomValue } from "jotai";
 
 import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
 import { visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
-import { FernButton } from "@fern-docs/components";
+import { Button, FernButton, SemanticBadge } from "@fern-docs/components";
 
 import { PLAYGROUND_AUTH_STATE_ATOM } from "../../atoms";
 import { PlaygroundAuthState } from "../types";
@@ -34,45 +34,30 @@ export function PlaygroundCardTriggerManual({
     _other: () => "Enter your credentials",
   });
 
-  if (isAuthed(auth, authState)) {
-    return (
-      <FernButton
-        className="w-full text-left"
-        size="large"
-        intent="success"
-        variant="outlined"
-        text={authButtonCopy}
-        icon={<Key />}
-        rightIcon={
-          <span className="bg-tag-success text-intent-success flex items-center rounded-[4px] p-1 font-mono text-xs uppercase leading-none">
-            Authenticated
-          </span>
-        }
-        onClick={toggleOpen}
-        active={isOpen}
-        disabled={disabled}
-      />
-    );
-  } else {
-    return (
-      <FernButton
-        className="w-full text-left"
-        size="large"
-        intent="danger"
-        variant="outlined"
-        text={authButtonCopy}
-        icon={<Key />}
-        rightIcon={
-          <span className="bg-tag-danger text-intent-danger flex items-center rounded-[4px] p-1 font-mono text-xs uppercase leading-none">
-            Not Authenticated
-          </span>
-        }
-        onClick={toggleOpen}
-        active={isOpen}
-        disabled={disabled}
-      />
-    );
-  }
+  const authed = isAuthed(auth, authState);
+
+  return (
+    <Button
+      className="w-full px-4 text-left"
+      size="lg"
+      variant={authed ? "outlineSuccess" : "outlineDanger"}
+      onClick={toggleOpen}
+      disabled={disabled}
+      data-state={isOpen ? "open" : "closed"}
+    >
+      <Key />
+      {authButtonCopy}
+      {authed ? (
+        <SemanticBadge intent="success" className="ml-auto">
+          Authenticated
+        </SemanticBadge>
+      ) : (
+        <SemanticBadge intent="danger" className="ml-auto">
+          Not Authenticated
+        </SemanticBadge>
+      )}
+    </Button>
+  );
 }
 
 function isEmpty(str: string | undefined): boolean {
