@@ -28,12 +28,17 @@ export const AccordionGroup = forwardRef<HTMLDivElement, AccordionGroupProps>(
     const [anchor, setAnchor] = useAtom(ANCHOR_ATOM);
     useEffect(() => {
       if (anchor != null) {
-        console.log("anchor: ", anchor);
         if (items.some((tab) => tab.id === anchor)) {
           setActiveTabs((prev) => {
-            console.log("prev: ", prev);
             return prev.includes(anchor) ? prev : [...prev, anchor];
           });
+        } else if (anchor.includes(".")) {
+          const paths = anchor.split(".");
+          if (items.some((tab) => tab.id === paths[0])) {
+            setActiveTabs((prev) => {
+              return prev.includes(anchor) ? prev : [...prev, anchor];
+            });
+          }
         }
       }
     }, [anchor, items]);
