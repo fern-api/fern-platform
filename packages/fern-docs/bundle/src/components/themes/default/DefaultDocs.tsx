@@ -31,7 +31,7 @@ export default function DefaultDocs({
 }) {
   return (
     <>
-      <FernHeader className="bg-header-background border-border-default fixed inset-x-0 top-0 z-30 border-b backdrop-blur-lg">
+      <FernHeader className="bg-header-background border-border-concealed fixed inset-x-0 top-0 z-30 border-b backdrop-blur-lg">
         {announcement}
         <div className="h-header-height-real px-page-padding flex items-center">
           {header}

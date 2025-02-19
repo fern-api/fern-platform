@@ -189,7 +189,6 @@
 
 :root {
   --color-body: var(--color-black);
-  --radius: 0.5rem;
   --header-height-real: 4rem;
 }
 
@@ -200,45 +199,41 @@
 }
 
 @theme inline {
-  --font-mono: var(--typography-code-font-family, var(--default-font-mono));
-  --font-body: var(--typography-body-font-family, var(--font-sans));
-  --font-heading: var(
-    --typography-heading-font-family,
-    var(--font-body, var(--font-sans))
-  );
-
   /** typography */
   --tw-prose-links: var(--color-accent-a11);
 
   /** Radius */
-  --radius: 0.5rem;
-  --radius-xs: calc(max(0, var(--radius) - var(--spacing) * 1.5)); /* 2px */
-  --radius-sm: calc(max(0, var(--radius) - var(--spacing))); /* 4px */
-  --radius-md: calc(max(0, var(--radius) - var(--spacing) * 0.5)); /* 6px */
-  --radius-lg: calc(max(0, var(--radius))); /* 8px */
-  --radius-xl: calc(max(0, var(--radius) + var(--spacing))); /* 12px */
-  --radius-2xl: calc(max(0, var(--radius) + var(--spacing) * 2)); /* 16px */
-  --radius-3xl: calc(max(0, var(--radius) + var(--spacing) * 3)); /* 20px */
-  --radius-4xl: calc(max(0, var(--radius) + var(--spacing) * 4)); /* 24px */
-  --radius-full: calc(var(--radius) * 9999);
+  --radius-lg: var(--border-radius, 0.5rem); /* 8px */
+  --radius-xs: calc(var(--radius-lg) - var(--spacing) * 1.5); /* 2px */
+  --radius-sm: calc(var(--radius-lg) - var(--spacing)); /* 4px */
+  --radius-md: calc(var(--radius-lg) - var(--spacing) * 0.5); /* 6px */
+  --radius-xl: calc(var(--radius-lg) + var(--spacing) * 0.5); /* 12px */
+  --radius-2xl: calc(var(--radius-lg) + var(--spacing) * 2); /* 16px */
+  --radius-3xl: calc(var(--radius-lg) + var(--spacing) * 4); /* 20px */
+  --radius-4xl: calc(var(--radius-lg) + var(--spacing) * 6); /* 32px */
+  --radius-full: calc(var(--radius-lg) * 9999);
 
-  --color-accent: rgba(var(--accent), 1);
-  --color-accent-aa: var(--accent-a11, rgba(var(--accent-aa), 1));
-  --color-accent-aaa: var(--accent-a12, rgba(var(--accent-aaa), 1));
-  --color-accent-tinted: var(--accent-10);
+  /** Colors */
+  --color-accent-surface: var(--accent-surface);
+  --color-grayscale-surface: var(--grayscale-surface);
+
+  --color-accent: var(--accent);
+  --color-accent-aa: var(--accent-a11);
+  --color-accent-aaa: var(--accent-a12);
+  --color-accent-tinted: var(--accent-a10);
   --color-accent-contrast: var(--accent-contrast);
-  --color-accent-muted: var(--accent-6);
-  --color-accent-highlight: var(--accent-3);
-  --color-accent-highlight-faded: var(--accent-2);
-  --color-background: rgba(var(--background), 1);
-  --color-background-translucent: rgba(var(--background), 0.7);
+  --color-accent-muted: var(--accent-a6);
+  --color-accent-highlight: var(--accent-a3);
+  --color-accent-highlight-faded: var(--accent-a2);
+  --color-background: var(--background);
+  --color-background-translucent: --alpha(var(--color-background) / 70%);
   --color-sidebar-background: var(--sidebar-background);
   --color-header-background: var(--header-background);
-  --color-card-background: var(--bg-color-card);
-  --color-card-solid: var(--bg-color-card-solid);
-  --color-muted: var(--grayscale-a11);
-  --color-disabled: var(--grayscale-a10);
-  --color-faded: var(--grayscale-a9);
+  --color-card-background: var(--color-grayscale-surface);
+  --color-card-solid: var(--color-grayscale-surface);
+  --color-muted: var(--color-grayscale-a11);
+  --color-disabled: var(--color-grayscale-a10);
+  --color-faded: var(--color-grayscale-a9);
 
   --color-accent-1: var(--accent-1);
   --color-accent-2: var(--accent-2);
@@ -289,23 +284,23 @@
   --color-grayscale-a11: var(--grayscale-a11);
   --color-grayscale-a12: var(--grayscale-a12);
 
-  --color-border-primary: var(--accent-a8);
-  --color-border-default: var(--border-color, var(--grayscale-a8));
-  --color-border-warning: var(--amber-a8);
-  --color-border-success: var(--green-a8);
-  --color-border-danger: var(--red-a8);
-  --color-border-info: var(--blue-a8);
-  --color-border-default-soft: var(--border-color, var(--grayscale-a6));
-  --color-border-primary-soft: var(--accent-a6);
-  --color-border-warning-soft: var(--amber-a6);
-  --color-border-success-soft: var(--green-a6);
-  --color-border-danger-soft: var(--red-a6);
-  --color-border-info-soft: var(--blue-a6);
-  --color-border-concealed: var(--border-color, var(--grayscale-a4));
-  --color-card-border: var(--border-color-card, var(--border-default));
+  --color-border-primary: var(--accent-a5);
+  --color-border-default: var(--border, var(--color-grayscale-a5));
+  --color-border-warning: var(--amber-a5);
+  --color-border-success: var(--green-a5);
+  --color-border-danger: var(--red-a5);
+  --color-border-info: var(--blue-a5);
+  --color-border-default-soft: var(--border, var(--color-grayscale-a4));
+  --color-border-primary-soft: var(--accent-a4);
+  --color-border-warning-soft: var(--amber-a4);
+  --color-border-success-soft: var(--green-a4);
+  --color-border-danger-soft: var(--red-a4);
+  --color-border-info-soft: var(--blue-a4);
+  --color-border-concealed: var(--border, var(--color-grayscale-a3));
+  --color-card-border: var(--color-border-default);
 
-  --color-intent-default: var(--grayscale-a11);
-  --color-intent-default-lightened: var(--grayscale-a12);
+  --color-intent-default: var(--color-grayscale-a11);
+  --color-intent-default-lightened: var(--color-grayscale-a12);
   --color-intent-warning: var(--amber-a11);
   --color-intent-warning-lightened: var(--amber-a12);
   --color-intent-success: var(--green-a11);
@@ -315,15 +310,15 @@
   --color-intent-info: var(--blue-a11);
   --color-intent-info-lightened: var(--blue-a12);
 
-  --color-tag-default: var(--grayscale-a3);
-  --color-tag-default-solid: var(--grayscale-3);
-  --color-tag-default-hover: var(--grayscale-a4);
+  --color-tag-default: var(--color-grayscale-a3);
+  --color-tag-default-solid: var(--color-grayscale-3);
+  --color-tag-default-hover: var(--color-grayscale-a4);
   --color-tag-primary: var(--accent-a3);
   --color-tag-warning: var(--amber-a3);
   --color-tag-success: var(--green-a3);
   --color-tag-danger: var(--red-a3);
   --color-tag-info: var(--blue-a3);
-  --color-tag-default-soft: var(--grayscale-a2);
+  --color-tag-default-soft: var(--color-grayscale-a2);
   --color-tag-primary-soft: var(--accent-a2);
   --color-tag-warning-soft: var(--amber-a2);
   --color-tag-success-soft: var(--green-a2);
@@ -349,12 +344,12 @@
 
   --shadow-header: 0px 4px 24px 0px var(--color-accent-a3);
 
-  --shadow-card-light: 0 1px 2px var(--grayscale-a6);
-  --shadow-card-light-elevated: 0 1px 2px var(--grayscale-a6),
-    0 3px 6px var(--grayscale-a6);
-  --shadow-card-dark: 0 2px 4px var(--grayscale-a6);
-  --shadow-card-dark-elevated: 0 2px 4px var(--grayscale-a6),
-    0 2px 24px var(--grayscale-a6);
+  --shadow-card-light: 0 1px 2px var(--color-grayscale-a6);
+  --shadow-card-light-elevated: 0 1px 2px var(--color-grayscale-a6),
+    0 3px 6px var(--color-grayscale-a6);
+  --shadow-card-dark: 0 2px 4px var(--color-grayscale-a6);
+  --shadow-card-dark-elevated: 0 2px 4px var(--color-grayscale-a6),
+    0 2px 24px var(--color-grayscale-a6);
 }
 
 @support (height: 100dvh) {
@@ -373,4 +368,17 @@
       @apply bg-white/5;
     }
   }
+}
+
+@utility font-mono {
+  font-family: var(--font-code, var(--font-mono)), var(--font-mono);
+}
+
+@utility font-body {
+  font-family: var(--font-body, var(--font-sans)), var(--font-sans);
+}
+
+@utility font-heading {
+  font-family: var(--font-heading, var(--font-body, var(--font-sans))),
+    var(--font-sans);
 }

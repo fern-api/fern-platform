@@ -5,7 +5,7 @@ const STATUS_200_TEXT =
 
 export const WebhookResponseSection: React.FC = () => {
   return (
-    <div className="border-default flex flex-col overflow-hidden rounded-md border">
+    <div className="border-border-default flex flex-col overflow-hidden rounded-md border">
       <div className="flex flex-col items-start p-3">
         <div className="flex items-baseline space-x-2">
           <div className="rounded bg-green-500/20 p-1 text-xs text-green-400">

@@ -15,7 +15,7 @@ export function SidebarFixedItemsSection({
     <div
       className={cn(
         "flex flex-col border-b px-4",
-        showBorder ? "border-default" : "border-transparent",
+        showBorder ? "border-border-default" : "border-transparent",
         className
       )}
     >

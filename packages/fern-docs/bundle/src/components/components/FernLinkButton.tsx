@@ -9,6 +9,7 @@ import {
 } from "react";
 
 import {
+  Button,
   ButtonContent,
   FernButtonSharedProps,
   getButtonClassName,
@@ -66,5 +67,16 @@ export const FernLinkButton = forwardRef<
     >
       {createElement(ButtonContent, { ...props, className: "" })}
     </FernLink>
+  );
+});
+
+export const ButtonLink = forwardRef<
+  HTMLAnchorElement,
+  ComponentProps<typeof Link> & ComponentProps<typeof Button>
+>((props, ref) => {
+  return (
+    <Button {...props} asChild>
+      <FernLink ref={ref} {...props} />
+    </Button>
   );
 });

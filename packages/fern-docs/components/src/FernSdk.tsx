@@ -130,7 +130,7 @@ export const FernSdk: React.FC<{
   const activeLanguage = normalizeLanguage(language);
   const activeSdk = activeLanguage && sdks[activeLanguage];
   return (
-    <div className="border-default overflow-hidden rounded-lg border">
+    <div className="border-border-default overflow-hidden rounded-lg border">
       <div className="bg-background">
         <div className="px-3 py-2 text-xs font-medium uppercase">
           Client libraries
@@ -163,7 +163,7 @@ export const FernSdk: React.FC<{
           })}
         </div>
       </div>
-      <div className="border-default bg-fern-air dark:bg-fern-ground relative border-t px-3 py-4 text-sm">
+      <div className="border-border-default bg-fern-air dark:bg-fern-ground relative border-t px-3 py-4 text-sm">
         {activeSdk ? (
           <FernSdkInstallCommand
             installCommand={

@@ -29,7 +29,7 @@ export function EndpointErrorClient({
       className={cn(
         "space hover:bg-tag-default-soft flex flex-col items-start px-3 py-3 transition-colors",
         { "bg-tag-default-soft": isSelected },
-        { "border-default border-b": !isLast },
+        { "border-border-default border-b": !isLast },
         { "rounded-t-md": isFirst },
         { "rounded-b-md": isLast }
       )}

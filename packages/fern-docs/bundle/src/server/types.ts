@@ -1,3 +1,5 @@
+import type { FernColorPalette } from "./generateFernColors";
+
 export type RgbaColor = { r: number; g: number; b: number; a?: number };
 
 export interface FileData {
@@ -10,13 +12,21 @@ export interface FileData {
   alt?: string;
 }
 
-export type ColorsThemeConfig = {
-  accentPrimary: RgbaColor;
+export interface FernColorTheme extends FernColorPalette {
   logo?: FileData;
   backgroundImage?: FileData;
-  background?: RgbaColor;
-  border?: RgbaColor;
-  sidebarBackground?: RgbaColor;
-  headerBackground?: RgbaColor;
-  cardBackground?: RgbaColor;
-};
+  /**
+   * If true, render a linear gradient in the background using the accent color
+   */
+  backgroundGradient: boolean;
+}
+
+export interface FernLayoutConfig {
+  logoHeight: number;
+  sidebarWidth: number;
+  headerHeight: number;
+  pageWidth: number | undefined;
+  contentWidth: number;
+  tabsPlacement: "SIDEBAR" | "HEADER";
+  searchbarPlacement: "SIDEBAR" | "HEADER" | "HEADER_TABS";
+}

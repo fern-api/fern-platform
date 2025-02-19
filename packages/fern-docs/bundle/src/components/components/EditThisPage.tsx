@@ -2,7 +2,7 @@ import { ReactElement } from "react";
 
 import { Edit } from "iconoir-react";
 
-import { FernLinkButton } from "../components/FernLinkButton";
+import { ButtonLink, FernLinkButton } from "../components/FernLinkButton";
 
 const EDIT_THIS_PAGE_TEXT = "Edit this page";
 
@@ -16,11 +16,9 @@ export function EditThisPageButton(
     return null;
   }
   return (
-    <FernLinkButton
-      href={props.editThisPageUrl}
-      icon={<Edit />}
-      text={EDIT_THIS_PAGE_TEXT}
-      variant="outlined"
-    />
+    <ButtonLink href={props.editThisPageUrl} variant="outline">
+      <Edit />
+      {EDIT_THIS_PAGE_TEXT}
+    </ButtonLink>
   );
 }

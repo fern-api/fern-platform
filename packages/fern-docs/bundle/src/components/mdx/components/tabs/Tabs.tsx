@@ -78,7 +78,7 @@ export function TabGroup({
 
   return (
     <RadixTabs.Root value={activeTab} onValueChange={handleTabChange}>
-      <RadixTabs.List className="border-default mb-6 mt-4 flex gap-4 border-b first:-mt-3">
+      <RadixTabs.List className="border-border-default mb-6 mt-4 flex gap-4 border-b first:-mt-3">
         {tabs.map(({ props: { title = "Untitled", id = "" } }) => (
           <RadixTabs.Trigger key={id} value={id} asChild>
             <h6

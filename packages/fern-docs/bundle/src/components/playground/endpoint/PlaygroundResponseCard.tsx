@@ -37,7 +37,7 @@ export function PlaygroundResponseCard({
   );
   return (
     <FernCard className="flex min-w-0 flex-1 shrink flex-col overflow-hidden rounded-xl shadow-sm">
-      <div className="border-default flex h-10 w-full shrink-0 items-center justify-between border-b px-3 py-2">
+      <div className="border-border-default flex h-10 w-full shrink-0 items-center justify-between border-b px-3 py-2">
         <span className="text-muted text-xs uppercase">Response</span>
 
         {response.type === "loaded" && (
@@ -46,7 +46,7 @@ export function PlaygroundResponseCard({
               className={cn(
                 "flex h-5 items-center rounded-md px-1.5 py-1 font-mono",
                 {
-                  ["bg-(--accent-a3) text-(--accent-a11)"]:
+                  ["bg-accent-a3 text-accent-a11"]:
                     response.value.response.status >= 200 &&
                     response.value.response.status < 300,
                   ["bg-(--red-a3) text-(--red-a11)"]:

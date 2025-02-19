@@ -56,7 +56,7 @@ export function FootnoteSup({ node }: { node?: HastElement }) {
             size="sm"
           >
             <a href={fn?.url} target="_blank" rel="noreferrer" className="ms-1">
-              <span className="text-xs text-(--grayscale-a9)">
+              <span className="text-grayscale-a9 text-xs">
                 {String(index + 1)}
               </span>
             </a>
@@ -65,7 +65,7 @@ export function FootnoteSup({ node }: { node?: HastElement }) {
 
         <TooltipPortal>
           <TooltipContent className="not-prose">
-            <h5 className="flex items-center gap-2 font-semibold text-(--grayscale-12)">
+            <h5 className="text-grayscale-12 flex items-center gap-2 font-semibold">
               <PageIcon
                 icon={fn.icon}
                 type={fn.api_type ?? fn.type}
@@ -76,12 +76,12 @@ export function FootnoteSup({ node }: { node?: HastElement }) {
                 {fn.title}
               </a>
             </h5>
-            <p className="max-w-xs text-xs leading-snug break-all text-(--grayscale-a9)">
+            <p className="text-grayscale-a9 max-w-xs break-all text-xs leading-snug">
               <a
                 href={fn.url}
                 target="_blank"
                 rel="noreferrer"
-                className="hover:text-(--grayscale-a10) hover:underline"
+                className="hover:text-grayscale-a10 hover:underline"
               >
                 {fn.url}
               </a>
@@ -172,7 +172,7 @@ export function FootnotesSection({
                 isSubPage={url.includes("#")}
               />
               {title}
-              <span className="text-xs text-(--grayscale-a9)">
+              <span className="text-grayscale-a9 text-xs">
                 {String(index + 1)}
               </span>
             </a>

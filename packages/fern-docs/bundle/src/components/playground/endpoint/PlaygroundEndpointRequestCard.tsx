@@ -53,7 +53,7 @@ export function PlaygroundEndpointRequestCard({
   const [baseUrl] = usePlaygroundBaseUrl(context.endpoint);
   return (
     <FernCard className="flex min-w-0 flex-1 shrink flex-col overflow-hidden rounded-xl shadow-sm">
-      <div className="border-default flex h-10 w-full shrink-0 items-center justify-between border-b px-3 py-2">
+      <div className="border-border-default flex h-10 w-full shrink-0 items-center justify-between border-b px-3 py-2">
         <span className="text-muted text-xs uppercase">Request</span>
         <FernButtonGroup>
           <FernButton

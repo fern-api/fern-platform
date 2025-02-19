@@ -158,7 +158,7 @@ export const FeedbackForm: FC<FeedbackFormProps> = ({
 
       {layoutDensity === "verbose" && (
         <>
-          <hr className="border-default my-4" />
+          <hr className="border-border-default my-4" />
 
           <div className="mt-4">
             <FernCheckbox

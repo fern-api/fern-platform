@@ -2,10 +2,10 @@
   .fern-docs-badge.subtle,
   .fern-docs-badge.outlined,
   .fern-docs-badge.outlined-subtle {
-    color: var(--grayscale-a11);
+    color: var(--color-grayscale-a11);
 
     &.accent {
-      color: var(--accent-a11, var(--grayscale-a11));
+      color: var(--color-accent-a11, var(--color-grayscale-a11));
     }
 
     &.gray {
@@ -135,19 +135,19 @@
 
   .fern-docs-badge.subtle,
   .fern-docs-badge.outlined {
-    background-color: var(--grayscale-a3);
+    background-color: var(--color-grayscale-a3);
 
     &.interactive:not(:disabled):hover,
     &[data-state="open"]:not(:disabled) {
-      background-color: var(--grayscale-a4);
+      background-color: var(--color-grayscale-a4);
     }
 
     &.accent {
-      background-color: var(--accent-a3, var(--grayscale-a3));
+      background-color: var(--color-accent-a3, var(--color-grayscale-a3));
 
       &.interactive:not(:disabled):hover,
       &[data-state="open"]:not(:disabled) {
-        background-color: var(--accent-a4, var(--grayscale-a4));
+        background-color: var(--color-accent-a4, var(--color-grayscale-a4));
       }
     }
 
@@ -432,19 +432,19 @@
   }
 
   .fern-docs-badge.outlined-subtle {
-    background-color: var(--grayscale-a1);
+    background-color: var(--color-grayscale-a1);
 
     &.interactive:not(:disabled):hover,
     &[data-state="open"]:not(:disabled) {
-      background-color: var(--grayscale-a2);
+      background-color: var(--color-grayscale-a2);
     }
 
     &.accent {
-      background-color: var(--accent-a1, var(--grayscale-a1));
+      background-color: var(--color-accent-a1, var(--color-grayscale-a1));
 
       &.interactive:not(:disabled):hover,
       &[data-state="open"]:not(:disabled) {
-        background-color: var(--accent-a2, var(--grayscale-a2));
+        background-color: var(--color-accent-a2, var(--color-grayscale-a2));
       }
     }
 
@@ -730,10 +730,10 @@
 
   .fern-docs-badge.outlined,
   .fern-docs-badge.outlined-subtle {
-    border: 1px solid var(--grayscale-a6);
+    border: 1px solid var(--color-grayscale-a6);
 
     &.accent {
-      border-color: var(--accent-a6, var(--grayscale-a6));
+      border-color: var(--color-accent-a6, var(--color-grayscale-a6));
     }
 
     &.gray {
@@ -862,8 +862,8 @@
   }
 
   .fern-docs-badge.solid {
-    color: var(--grayscale-1);
-    background-color: var(--grayscale-9);
+    color: var(--color-grayscale-1);
+    background-color: var(--color-grayscale-9);
 
     &:is(.dark *) {
       color: white;
@@ -871,16 +871,16 @@
 
     &.interactive:not(:disabled):hover,
     &[data-state="open"]:not(:disabled) {
-      background-color: var(--grayscale-10);
+      background-color: var(--color-grayscale-10);
     }
 
     &.accent {
-      color: var(--accent-1, var(--gray-1));
-      background-color: var(--accent-9, var(--gray-9));
+      color: var(--color-accent-1, var(--gray-1));
+      background-color: var(--color-accent-9, var(--gray-9));
 
       &.interactive:not(:disabled):hover,
       &[data-state="open"]:not(:disabled) {
-        background-color: var(--accent-10, var(--gray-10));
+        background-color: var(--color-accent-10, var(--gray-10));
       }
     }
 

@@ -30,7 +30,7 @@
   }
 
   .fern-mdx-link {
-    @apply text-(--accent-a11);
+    @apply text-accent-a11;
     @apply font-semibold;
 
     text-decoration-line: underline;

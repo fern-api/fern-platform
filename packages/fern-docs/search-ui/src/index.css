@@ -5,9 +5,3 @@
 @import "@fern-docs/components/src/badges/index.scss";
 @import "@fern-docs/syntax-highlighter/src/index.css";
 @import "./components/shared/reset.css";
-
-@theme {
-  --radius-sm: var(--radius);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: calc(var(--radius) - 4px);
-}

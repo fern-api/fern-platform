@@ -127,8 +127,8 @@ export const DesktopCommandWithAskAI = forwardRef<
         ref.current.animate(
           {
             boxShadow: [
-              "0 0 0px var(--accent-a5), var(--cmdk-shadow)",
-              "0 0 75px var(--accent-a5), var(--cmdk-shadow)",
+              "0 0 0px var(--color-accent-a5), var(--cmdk-shadow)",
+              "0 0 75px var(--color-accent-a5), var(--cmdk-shadow)",
               "0 0 150px transparent, var(--cmdk-shadow)",
             ],
           },
@@ -442,7 +442,7 @@ const DesktopAskAIChat = ({
               }: PropsWithElement<React.ComponentProps<"a">>) => (
                 <a
                   {...props}
-                  className="font-semibold decoration-(--accent-a10) hover:text-(--accent-a10) hover:decoration-2"
+                  className="decoration-accent-a10 hover:text-accent-a10 font-semibold hover:decoration-2"
                   target="_blank"
                   rel="noreferrer"
                 >
@@ -505,7 +505,7 @@ const AskAIComposer = forwardRef<
     const inputRef = useRef<HTMLTextAreaElement>(null);
     return (
       <div
-        className="cursor-text border-t border-(--grayscale-a6) p-2"
+        className="border-grayscale-a6 cursor-text border-t p-2"
         onClick={() => inputRef.current?.focus()}
       >
         <DesktopCommandInput asChild>
@@ -670,7 +670,7 @@ const AskAICommandItems = memo<{
                   scrollLogicalPosition="start"
                 >
                   <article>
-                    <div className="relative mb-2 ml-auto w-fit max-w-[70%] rounded-3xl bg-(--grayscale-a3) px-5 py-2 whitespace-pre-wrap">
+                    <div className="bg-grayscale-a3 relative mb-2 ml-auto w-fit max-w-[70%] whitespace-pre-wrap rounded-3xl px-5 py-2">
                       <section className="prose prose-sm dark:prose-invert cursor-auto">
                         <MarkdownContent components={components}>
                           {message.user?.content ?? "_No user message_"}
@@ -729,9 +729,7 @@ const AskAICommandItems = memo<{
                             message.toolInvocations.some(
                               (invocation) => invocation.state !== "result"
                             )) && (
-                            <p className="text-(--grayscale-a10)">
-                              Thinking...
-                            </p>
+                            <p className="text-grayscale-a10">Thinking...</p>
                           )}
                         {(!isLastMessage || !isLoading) &&
                           renderActions?.(message)}
@@ -779,7 +777,7 @@ function FootnoteCommands({
           <Badge rounded>{String(idx + 1)}</Badge>
           <div>
             <div className="text-sm font-semibold">{footnote.title}</div>
-            <div className="text-xs text-(--grayscale-a9)">{footnote.url}</div>
+            <div className="text-grayscale-a9 text-xs">{footnote.url}</div>
           </div>
         </CommandLink>
       ))}

@@ -142,7 +142,7 @@ export async function WebSocketContent({
                 }
                 slug={node.slug}
                 headingElement={
-                  <div className="border-default -mx-2 flex items-center justify-between rounded-xl border px-2 py-1 transition-colors">
+                  <div className="border-border-default -mx-2 flex items-center justify-between rounded-xl border px-2 py-1 transition-colors">
                     <EndpointUrlWithPlaygroundBaseUrl endpoint={channel} />
                     <CopyWithBaseUrl channel={channel} />
                   </div>

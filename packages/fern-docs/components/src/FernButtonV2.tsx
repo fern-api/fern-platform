@@ -8,24 +8,23 @@ import { type VariantProps, cva } from "class-variance-authority";
 import { cn } from "./cn";
 
 const buttonVariants = cva(
-  "focus-visible:ring-(--accent-6) inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors hover:transition-none focus-visible:outline-none focus-visible:ring-1 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
+  "focus-visible:ring-accent inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors hover:transition-none focus-visible:outline-none focus-visible:ring-1 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
   {
     variants: {
       variant: {
         default:
-          "bg-(--accent-10) hover:bg-(--accent-9) text-[var(--accent-contrast,var(--accent-1))]",
+          "bg-accent-10 hover:bg-accent-9 text-[var(--color-accent-contrast,var(--color-accent-1))]",
         destructive: "bg-(--red-10) text-(--red-12) hover:bg-(--red-11)",
         outline:
-          "border-default text-grayscale-11 hover:bg-grayscale-a4 hover:text-grayscale-12 data-[state=active]:bg-grayscale-a4 data-[state=open]:bg-grayscale-a4 border",
+          "border-border-default text-grayscale-11 hover:bg-grayscale-a4 hover:text-grayscale-12 data-[state=active]:bg-grayscale-a4 data-[state=open]:bg-grayscale-a4 border",
         outlineSuccess:
           "border-(--green-a6) bg-(--green-a2) text-(--green-11) hover:bg-(--green-a4) data-[state=active]:bg-(--green-a4) data-[state=open]:bg-(--green-a4) border",
         outlineDanger:
           "border-(--red-a6) bg-(--red-a2) text-(--red-11) hover:bg-(--red-a4) data-[state=active]:bg-(--red-a4) data-[state=open]:bg-(--red-a4) border",
-        secondary:
-          "bg-(--grayscale-a3) text-(--accent-12) hover:bg-(--grayscale-a4)",
-        ghost: "hover:bg-(--accent-a3) hover:text-(--accent-11)",
+        secondary: "bg-grayscale-a3 text-accent-12 hover:bg-grayscale-a4",
+        ghost: "hover:bg-accent-a3 hover:text-accent-11",
         ghostSuccess: "hover:bg-(--green-a3) hover:text-(--green-11)",
-        link: "text-(--accent-6) underline-offset-4 hover:underline",
+        link: "text-accent-6 underline-offset-4 hover:underline",
       },
       size: {
         default: "h-9 px-4 py-2",
