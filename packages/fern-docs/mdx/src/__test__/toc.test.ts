@@ -51,4 +51,48 @@ describe("toc", () => {
       },
     ]);
   });
+
+  it("should accept string literals wrapped in expressions", () => {
+    const toc = makeToc(
+      toTree(
+        `<Feature flag="test" fallbackValue={"false"} match={"true"}>\n# Hello world\n</Feature>`
+      ).hast
+    );
+    expect(toc).toEqual([
+      {
+        simpleString: "Hello world",
+        anchorString: "hello-world",
+        children: [],
+        featureFlags: [
+          {
+            flag: "test",
+            fallbackValue: "false",
+            match: "true",
+          },
+        ],
+      },
+    ]);
+  });
+
+  it("should accept boolean literals wrapped in expressions", () => {
+    const toc = makeToc(
+      toTree(
+        `<Feature flag="test" fallbackValue={true} match={false}>\n# Hello world\n</Feature>`
+      ).hast
+    );
+    expect(toc).toEqual([
+      {
+        simpleString: "Hello world",
+        anchorString: "hello-world",
+        children: [],
+        featureFlags: [
+          {
+            flag: "test",
+            fallbackValue: true,
+            match: false,
+          },
+        ],
+      },
+    ]);
+  });
 });
