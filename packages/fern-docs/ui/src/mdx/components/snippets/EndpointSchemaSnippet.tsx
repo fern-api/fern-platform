@@ -75,7 +75,9 @@ function EndpointSchemaSnippetInternal({
 
   return (
     <div>
-      {(selector == null || selector === "request.path") &&
+      {(selector == null ||
+        selector === "request" ||
+        selector === "request.path") &&
         endpoint.pathParameters &&
         endpoint.pathParameters.length > 0 && (
           <EndpointSection
@@ -139,7 +141,9 @@ function EndpointSchemaSnippetInternal({
             </div>
           </EndpointSection>
         )} */}
-      {(selector == null || selector === "request.query") &&
+      {(selector == null ||
+        selector === "request" ||
+        selector === "request.query") &&
         endpoint.queryParameters &&
         endpoint.queryParameters.length > 0 && (
           <EndpointSection
@@ -169,7 +173,9 @@ function EndpointSchemaSnippetInternal({
             </div>
           </EndpointSection>
         )}
-      {(selector == null || selector === "request.body") &&
+      {(selector == null ||
+        selector === "request" ||
+        selector === "request.body") &&
         endpoint.requests?.[0] != null && (
           <EndpointSection
             key={endpoint.requests[0].contentType}
@@ -185,7 +191,9 @@ function EndpointSchemaSnippetInternal({
             />
           </EndpointSection>
         )}
-      {(selector == null || selector === "response.body") &&
+      {(selector == null ||
+        selector === "response" ||
+        selector === "response.body") &&
         endpoint.responses?.[0] != null && (
           <EndpointSection
             title="Response"
