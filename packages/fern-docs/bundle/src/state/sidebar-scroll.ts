@@ -59,7 +59,8 @@ export function useScrollSidebarNodeIntoView(
     };
 
     if (shouldScrollIntoView) {
-      requestIdleCallback(() => {
+      const rIC = requestIdleCallback ?? setTimeout;
+      rIC(() => {
         scrollTo();
       });
     }
