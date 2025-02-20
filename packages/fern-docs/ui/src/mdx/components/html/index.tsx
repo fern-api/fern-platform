@@ -58,7 +58,7 @@ export const Li: FC<ComponentProps<"li">> = ({ className, ...rest }) => {
   return <li {...rest} className={cn(className)} />;
 };
 
-export const A: FC<ComponentProps<typeof FernLink>> = ({
+export const A: FC<ComponentProps<"a">> = ({
   className,
   children,
   href,
