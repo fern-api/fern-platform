@@ -273,5 +273,9 @@
       "displayName": "Auth"
     }
   },
-  "auths": {}
+  "auths": {
+    "oauth2": {
+      "type": "bearerAuth"
+    }
+  }
 }

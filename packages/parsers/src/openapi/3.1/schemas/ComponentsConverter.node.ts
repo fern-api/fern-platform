@@ -97,44 +97,46 @@ export class ComponentsConverterNode extends BaseOpenApiV3_1ConverterNode<
   }
 
   convert(): ComponentsConverterNode.Output | undefined {
-    if (this.typeSchemas == null) {
-      return undefined;
-    }
-
     return {
-      auths: Object.fromEntries(
-        Object.entries(this.securitySchemes ?? {})
-          .map(([key, value]) => {
-            const maybeAuth = value.convert();
-            if (maybeAuth == null) {
-              return undefined;
-            }
-            return [FernRegistry.api.latest.AuthSchemeId(key), maybeAuth];
-          })
-          .filter(isNonNullish)
-      ),
-      types: Object.fromEntries(
-        Object.entries(this.typeSchemas)
-          .map(([key, value]) => {
-            const name = value.name ?? key;
-            const maybeShapes = maybeSingleValueToArray(value.convert());
+      auths:
+        this.securitySchemes != null
+          ? Object.fromEntries(
+              Object.entries(this.securitySchemes ?? {})
+                .map(([key, value]) => {
+                  const maybeAuth = value.convert();
+                  if (maybeAuth == null) {
+                    return undefined;
+                  }
+                  return [FernRegistry.api.latest.AuthSchemeId(key), maybeAuth];
+                })
+                .filter(isNonNullish)
+            )
+          : undefined,
+      types:
+        this.typeSchemas != null
+          ? Object.fromEntries(
+              Object.entries(this.typeSchemas)
+                .map(([key, value]) => {
+                  const name = value.name ?? key;
+                  const maybeShapes = maybeSingleValueToArray(value.convert());
 
-            if (maybeShapes == null) {
-              return [key, undefined];
-            }
+                  if (maybeShapes == null) {
+                    return [key, undefined];
+                  }
 
-            return [
-              FernRegistry.TypeId(key),
-              {
-                name,
-                shape: maybeShapes[0],
-                description: value.description,
-                availability: undefined,
-              },
-            ];
-          })
-          .filter(([_, value]) => isNonNullish(value))
-      ),
+                  return [
+                    FernRegistry.TypeId(key),
+                    {
+                      name,
+                      shape: maybeShapes[0],
+                      description: value.description,
+                      availability: undefined,
+                    },
+                  ];
+                })
+                .filter(([_, value]) => isNonNullish(value))
+            )
+          : undefined,
     };
   }
 }
