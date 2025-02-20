@@ -1,3 +1,4 @@
+import { last } from "es-toolkit/array";
 import React, { ComponentProps, PropsWithChildren } from "react";
 import { FernLink } from "../../../components/FernLink";
 import { Button } from "../button";
@@ -24,12 +25,13 @@ export function Download({
 
     e.preventDefault();
     try {
-      const response = await fetch(src, { mode: "no-cors" });
+      const response = await fetch(src);
       const blob = await response.blob();
       const blobUrl = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = blobUrl;
-      a.download = filename || "";
+      // if the filename is not provided, use the last part of the src
+      a.download = filename || last(src.split("/")) || "";
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
