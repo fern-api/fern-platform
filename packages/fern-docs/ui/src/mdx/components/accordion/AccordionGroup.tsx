@@ -13,6 +13,7 @@ export interface AccordionItemProps {
   title: string;
   id: string;
   toc?: boolean;
+  nestedHeaders?: string[];
   children: ReactNode;
 }
 
@@ -34,19 +35,12 @@ export const AccordionGroup = forwardRef<HTMLDivElement, AccordionGroupProps>(
           return anchor;
         }
 
-        // Check parent paths
-        if (anchor.includes(".")) {
-          const segments = anchor.split(".");
-          return segments.reduce<string | undefined>(
-            (parentPath, segment, index) => {
-              if (index === 0) return segment;
-              const path = `${parentPath}.${segment}`;
-              return items.some((tab) => tab.id === parentPath)
-                ? parentPath
-                : path;
-            },
-            undefined
-          );
+        const parentAccordion = items.find((tab) =>
+          tab.nestedHeaders?.includes(anchor)
+        );
+
+        if (parentAccordion) {
+          return parentAccordion.id;
         }
 
         return undefined;
