@@ -14,6 +14,14 @@ export function Download({
   }
 
   const handleClick = async (e: React.MouseEvent<HTMLAnchorElement>) => {
+    // enable downloads from the same origin, or data urls
+    if (
+      src.startsWith(window.location.origin + "/") ||
+      src.startsWith("data:")
+    ) {
+      return;
+    }
+
     e.preventDefault();
     try {
       const response = await fetch(src, { mode: "no-cors" });
