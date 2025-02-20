@@ -11,3 +11,16 @@ export declare namespace RequestSnippet {
     example: string | undefined;
   }
 }
+
+export declare namespace SchemaSnippet {
+  export interface Props {
+    endpoint: string;
+    selector?: string;
+  }
+
+  export interface InternalProps {
+    path: string;
+    method: APIV1Read.HttpMethod;
+    selector: string | undefined;
+  }
+}

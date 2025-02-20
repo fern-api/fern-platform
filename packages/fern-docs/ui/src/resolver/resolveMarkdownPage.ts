@@ -20,7 +20,8 @@ function shouldFetchApiRef(markdown: FernDocs.MarkdownText): boolean {
   if (typeof markdown === "string") {
     return (
       markdown.includes("EndpointRequestSnippet") ||
-      markdown.includes("EndpointResponseSnippet")
+      markdown.includes("EndpointResponseSnippet") ||
+      markdown.includes("EndpointSchemaSnippet")
     );
   } else {
     return shouldFetchApiRef(markdown.code);
