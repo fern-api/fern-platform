@@ -1,3 +1,5 @@
+import "server-only";
+
 import { notFound } from "next/navigation";
 
 import { FernNavigation } from "@fern-api/fdr-sdk";

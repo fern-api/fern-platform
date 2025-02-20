@@ -1,3 +1,5 @@
+import "server-only";
+
 import React from "react";
 
 import { EndpointContext } from "@fern-api/fdr-sdk/api-definition";

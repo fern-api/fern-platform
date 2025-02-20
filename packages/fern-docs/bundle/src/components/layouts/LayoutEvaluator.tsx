@@ -1,3 +1,5 @@
+import "server-only";
+
 import React from "react";
 
 import type * as FernDocs from "@fern-api/fdr-sdk/docs";

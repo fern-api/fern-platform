@@ -1,3 +1,5 @@
+import "server-only";
+
 import { compact } from "es-toolkit/array";
 
 import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";

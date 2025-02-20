@@ -1,10 +1,11 @@
+import "server-only";
+
 import { Metadata, Viewport } from "next/types";
 import React from "react";
 import { preload } from "react-dom";
 
 import { getEnv } from "@vercel/functions";
 import { compact } from "es-toolkit/array";
-import tinycolor from "tinycolor2";
 
 import { DocsV1Read, DocsV2Read } from "@fern-api/fdr-sdk/client/types";
 import { isNonNullish } from "@fern-api/ui-core-utils";

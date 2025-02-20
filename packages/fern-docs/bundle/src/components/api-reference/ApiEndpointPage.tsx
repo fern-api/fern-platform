@@ -68,6 +68,7 @@ async function ApiEndpointContent({
           context={context}
           showErrors
           bottomNavigation={bottomNavigation}
+          showAuth
         />
       );
     }

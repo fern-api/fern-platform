@@ -1,3 +1,5 @@
+import "server-only";
+
 import { getFernToken } from "@/app/fern-token";
 import { HorizontalSplitPane } from "@/components/playground/VerticalSplitPane";
 import { PlaygroundEndpointSelectorContent } from "@/components/playground/endpoint/PlaygroundEndpointSelectorContent";

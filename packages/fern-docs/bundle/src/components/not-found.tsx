@@ -1,3 +1,5 @@
+import "server-only";
+
 import { Undo2 } from "lucide-react";
 
 import { Badge } from "@fern-docs/components";

@@ -1,3 +1,5 @@
+import "server-only";
+
 import { cookies, headers } from "next/headers";
 import { notFound, redirect } from "next/navigation";
 

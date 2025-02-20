@@ -1,3 +1,5 @@
+import "server-only";
+
 import { getFernToken } from "@/app/fern-token";
 import SharedLayout from "@/components/shared-layout";
 import { createCachedDocsLoader } from "@/server/docs-loader";
