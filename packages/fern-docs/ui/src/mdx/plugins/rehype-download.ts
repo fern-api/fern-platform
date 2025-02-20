@@ -48,7 +48,7 @@ export function rehypeDownload() {
           child.attributes.push({
             type: "mdxJsxAttribute",
             name: "download",
-            value: filenameAttr?.value ?? "",
+            value: filenameAttr?.value,
           });
 
           parent.children[index] = child;
