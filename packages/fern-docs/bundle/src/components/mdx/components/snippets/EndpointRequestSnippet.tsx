@@ -9,7 +9,7 @@ import { useExampleSelection } from "@/components/api-reference/endpoints/useExa
 import { CodeSnippetExample } from "@/components/api-reference/examples/CodeSnippetExample";
 import { ApiReferenceButton } from "@/components/components/ApiReferenceButton";
 import { usePlaygroundBaseUrl } from "@/components/playground/utils/select-environment";
-import { useCurrentVersion } from "@/state/navigation";
+import { useCurrentVersionId, useCurrentVersionSlug } from "@/state/navigation";
 
 export function EndpointRequestSnippet({
   example,
@@ -108,7 +108,7 @@ function EndpointRequestSnippetInternal({
 }
 
 function useCurrentSlug(slugs: string[]): string | undefined {
-  const currentVersion = useCurrentVersion();
+  const currentVersionSlug = useCurrentVersionSlug();
 
   if (slugs.length === 0) {
     return undefined;
@@ -118,10 +118,10 @@ function useCurrentSlug(slugs: string[]): string | undefined {
     return slugs[0];
   }
 
-  if (currentVersion == null) {
-    return undefined;
+  if (currentVersionSlug == null) {
+    return slugs[0];
   }
 
-  const slug = slugs.find((slug) => slug.startsWith(currentVersion.slug + "/"));
+  const slug = slugs.find((slug) => slug.startsWith(currentVersionSlug + "/"));
   return slug ?? slugs[0];
 }

@@ -76,6 +76,8 @@ const currentSidebarRootNodeIdAtom = atom<FernNavigation.NodeId | undefined>(
 );
 const currentNodeIdAtom = atom<FernNavigation.NodeId | undefined>(undefined);
 const currentTabIdAtom = atom<FernNavigation.NodeId | undefined>(undefined);
+const currentVersionIdAtom = atom<FernNavigation.NodeId | undefined>(undefined);
+const currentVersionSlugAtom = atom<FernNavigation.Slug | undefined>(undefined);
 
 export function useCurrentSidebarRootNodeId() {
   return useAtomValue(currentSidebarRootNodeIdAtom);
@@ -89,33 +91,57 @@ export function useCurrentTabId() {
   return useAtomValue(currentTabIdAtom);
 }
 
+export function useCurrentVersionId() {
+  return useAtomValue(currentVersionIdAtom);
+}
+
+export function useCurrentVersionSlug() {
+  return useAtomValue(currentVersionSlugAtom);
+}
+
 export function SetCurrentNavigationNode({
   sidebarRootNodeId,
   nodeId,
   tabId,
+  versionId,
+  versionSlug,
 }: {
   sidebarRootNodeId?: FernNavigation.NodeId;
   nodeId?: FernNavigation.NodeId;
   tabId?: FernNavigation.NodeId;
+  versionId?: FernNavigation.NodeId;
+  versionSlug?: FernNavigation.Slug;
 }) {
   const useStore = React.useContext(RootNodeStoreContext);
   const dispatch = useStore((s) => s.dispatch);
   const setCurrentSidebarRootNodeId = useSetAtom(currentSidebarRootNodeIdAtom);
   const setCurrentNodeId = useSetAtom(currentNodeIdAtom);
   const setCurrentTabId = useSetAtom(currentTabIdAtom);
+  const setCurrentVersionId = useSetAtom(currentVersionIdAtom);
+  const setCurrentVersionSlug = useSetAtom(currentVersionSlugAtom);
+
   useHydrateAtoms([
     [currentSidebarRootNodeIdAtom, sidebarRootNodeId],
     [currentNodeIdAtom, nodeId],
     [currentTabIdAtom, tabId],
+    [currentVersionIdAtom, versionId],
+    [currentVersionSlugAtom, versionSlug],
   ]);
+
   React.useEffect(() => {
     setCurrentSidebarRootNodeId(sidebarRootNodeId);
     setCurrentNodeId(nodeId);
     setCurrentTabId(tabId);
+    setCurrentVersionId(versionId);
+    setCurrentVersionSlug(versionSlug);
+  }, [nodeId, tabId, sidebarRootNodeId, versionId, versionSlug]);
+
+  React.useEffect(() => {
     if (nodeId && sidebarRootNodeId) {
       dispatch({ type: "expand", nodeId }, sidebarRootNodeId);
     }
-  }, [nodeId, tabId, sidebarRootNodeId]);
+  }, [nodeId && sidebarRootNodeId]);
+
   return null;
 }
 
