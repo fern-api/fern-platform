@@ -25,7 +25,6 @@ import remarkGemoji from "remark-gemoji";
 import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
 import remarkSmartypants from "remark-smartypants";
-import { rehypeDownload } from "../plugins/rehype-download";
 import { rehypeFiles } from "../plugins/rehype-files";
 import { rehypeLinks } from "../plugins/rehype-links";
 import { rehypeExtractAsides } from "../plugins/rehypeExtractAsides";
@@ -159,7 +158,6 @@ async function serializeMdxImpl(
         rehypeMdxClassStyle,
         [rehypeFiles, { replaceSrc }],
         [rehypeLinks, { replaceHref }],
-        rehypeDownload, // must be after rehypeFiles
         rehypeAcornErrorBoundary,
         rehypeSlug,
         rehypeKatex,

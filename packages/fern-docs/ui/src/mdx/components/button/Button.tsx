@@ -31,6 +31,7 @@ export function Button({
   large,
   href,
   className,
+  intent = "primary",
   ...props
 }: Button.Props): ReactElement {
   const variant = outlined ? "outlined" : minimal ? "minimal" : "filled";
@@ -42,6 +43,7 @@ export function Button({
         {...props}
         variant={variant}
         size={size}
+        intent={intent}
         className={clsx(className, "not-prose")}
       />
     );
@@ -52,6 +54,7 @@ export function Button({
       {...props}
       variant={variant}
       size={size}
+      intent={intent}
       className={clsx(className, "not-prose")}
     />
   );
