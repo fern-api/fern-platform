@@ -20,6 +20,7 @@ export declare namespace Button {
     intent?: "none" | "primary" | "success" | "warning" | "danger";
     text?: ReactNode;
     href?: string;
+    download?: any;
   }
 }
 

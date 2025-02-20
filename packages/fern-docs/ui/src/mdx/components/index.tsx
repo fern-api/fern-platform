@@ -29,6 +29,7 @@ import { ClientLibraries } from "./client-libraries";
 import { CodeBlock } from "./code/CodeBlock";
 import { CodeGroup } from "./code/CodeGroup";
 import { Column, ColumnGroup } from "./columns";
+import { Download } from "./download";
 import { Feature } from "./feature";
 import { Frame } from "./frame";
 import { A, HeadingRenderer, Image, Li, Ol, Strong, Ul } from "./html";
@@ -63,6 +64,7 @@ const FERN_COMPONENTS = {
   CodeGroup, // note: alias is handled in rehypeFernCode
   Column,
   ColumnGroup,
+  Download,
   EndpointRequestSnippet,
   EndpointResponseSnippet,
   Feature,
