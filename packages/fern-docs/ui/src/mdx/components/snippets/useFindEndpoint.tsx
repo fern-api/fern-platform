@@ -1,5 +1,6 @@
 import {
   EndpointDefinition,
+  ObjectProperty,
   TypeDefinition,
 } from "@fern-api/fdr-sdk/api-definition";
 import { atom, useAtomValue } from "jotai";
@@ -56,6 +57,33 @@ export function useFindTypes(
             }
           }
           return {};
+        }),
+      [method, path]
+    )
+  );
+}
+
+export function useGlobalHeaders(
+  method: string,
+  path: string
+): ObjectProperty[] | undefined {
+  return useAtomValue(
+    useMemoOne(
+      () =>
+        atom((get) => {
+          const apis = get(READ_APIS_ATOM);
+          for (const apiDefinition of Object.values(apis)) {
+            const endpoint = findEndpoint({
+              apiDefinition,
+              path,
+              method,
+              example: undefined,
+            });
+            if (endpoint) {
+              return apiDefinition.globalHeaders || [];
+            }
+          }
+          return [];
         }),
       [method, path]
     )

@@ -51,9 +51,11 @@ const REQUEST = ["request"];
 const RESPONSE = ["response"];
 const REQUEST_PATH = ["request", "path"];
 const REQUEST_QUERY = ["request", "query"];
+// todo: finish implementation
 // const REQUEST_HEADER = ["request", "header"];
 const REQUEST_BODY = ["request", "body"];
 const RESPONSE_BODY = ["response", "body"];
+// out of scope for now
 // const RESPONSE_ERROR = ["response", "error"];
 
 function EndpointSchemaSnippetInternal({
@@ -66,10 +68,6 @@ function EndpointSchemaSnippetInternal({
   selector: string | undefined;
 }) {
   const currentSlug = useAtomValue(SLUG_ATOM);
-
-  // const types = Object.entries(types).reduce<
-  //   Record<string, ApiDefinition.TypeDefinition>
-  // >((acc, [key, type]) => ({ ...acc, [`type_:${key}`]: type }), {});
 
   if (endpoint == null) {
     return null;
@@ -107,6 +105,40 @@ function EndpointSchemaSnippetInternal({
             </div>
           </EndpointSection>
         )}
+      {/* {(selector == null || selector === "request.header") &&
+        headers &&
+        headers.length > 0 && (
+          <EndpointSection
+            title="Headers"
+            anchorIdParts={REQUEST_HEADER}
+            slug={currentSlug}
+          >
+            <div>
+              {headers.map((parameter) => {
+                return (
+                  <div key={parameter.key} className="relative">
+                    <TypeComponentSeparator />
+                    <EndpointParameter
+                      name={parameter.key}
+                      shape={parameter.valueShape}
+                      anchorIdParts={[...REQUEST_HEADER, parameter.key]}
+                      slug={currentSlug}
+                      description={parameter.description}
+                      additionalDescriptions={
+                        ApiDefinition.unwrapReference(
+                          parameter.valueShape,
+                          types
+                        ).descriptions
+                      }
+                      availability={parameter.availability}
+                      types={types}
+                    />
+                  </div>
+                );
+              })}
+            </div>
+          </EndpointSection>
+        )} */}
       {(selector == null || selector === "request.query") &&
         endpoint.queryParameters &&
         endpoint.queryParameters.length > 0 && (
