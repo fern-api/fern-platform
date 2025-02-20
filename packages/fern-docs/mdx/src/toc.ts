@@ -318,6 +318,7 @@ function makeTree(
           simpleString: token.title.trim(),
           anchorString: token.id.trim(),
           children: makeTree(headings, depth + 1),
+          featureFlags: token.featureFlags,
         });
       }
     } else {
