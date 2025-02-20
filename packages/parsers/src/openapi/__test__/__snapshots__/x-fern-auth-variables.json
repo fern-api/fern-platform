@@ -148,5 +148,11 @@
       "displayName": "User"
     }
   },
-  "auths": {}
+  "auths": {
+    "BasicAuth": {
+      "type": "basicAuth",
+      "usernameName": "username",
+      "passwordName": "password"
+    }
+  }
 }

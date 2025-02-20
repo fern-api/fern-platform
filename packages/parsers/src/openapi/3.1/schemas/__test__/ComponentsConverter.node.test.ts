@@ -52,7 +52,8 @@ describe("ComponentsConverterNode", () => {
       pathId: "test",
     });
     const result = converter.convert();
-    expect(result).toBeUndefined();
+    expect(result?.types).toBeUndefined();
+    expect(result?.auths).toBeUndefined();
   });
 
   it("should use schema name if available, otherwise use key", () => {

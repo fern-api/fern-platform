@@ -138,6 +138,7 @@ export class OpenApiDocumentConverterNode extends BaseOpenApiV3_1ConverterNode<
     > = computeSubpackages({ endpoints, webhookEndpoints: webhooks });
 
     const { types, auths } = this.components?.convert() ?? {};
+    console.log(types, auths);
 
     return {
       id: FernRegistry.ApiDefinitionId(apiDefinitionId),

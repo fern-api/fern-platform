@@ -502,11 +502,17 @@ export class ResponseMediaTypeObjectConverterNode extends BaseOpenApiV3_1Convert
         exampleName !== GLOBAL_EXAMPLE_NAME
     );
 
-    // Match based on index, saturating examples at the end of lists if mismatched
-    this.matchExamplesByIndex(
-      filteredRequestExamples,
-      filteredResponseExamples
-    );
+    if (
+      !Object.keys(responseExamples).every(
+        (exampleName) => exampleName === GLOBAL_EXAMPLE_NAME
+      )
+    ) {
+      // Match based on index, saturating examples at the end of lists if mismatched
+      this.matchExamplesByIndex(
+        filteredRequestExamples,
+        filteredResponseExamples
+      );
+    }
 
     // Fallback to a generated example if no examples were matched
     if (
