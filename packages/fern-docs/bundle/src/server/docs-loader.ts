@@ -298,7 +298,7 @@ const getRootCached = async (
   authConfig: AuthEdgeConfig | undefined
 ) => {
   return await unstable_cache(getRoot, [cacheSeed()], {
-    tags: [domain],
+    tags: [domain, "getRoot"],
   })(domain, authState, authConfig);
 };
 
