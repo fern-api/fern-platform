@@ -4,11 +4,11 @@ import visitDiscriminatedUnion from "@fern-api/ui-core-utils/visitDiscriminatedU
 import { CopyToClipboardButton } from "@fern-docs/components";
 import { HttpMethodBadge } from "@fern-docs/components/badges";
 import { useBooleanState } from "@fern-ui/react-commons";
+import { composeRefs } from "@radix-ui/react-compose-refs";
 import cn from "clsx";
 import React, {
   PropsWithChildren,
   ReactElement,
-  useImperativeHandle,
   useMemo,
   useRef,
   useState,
@@ -44,12 +44,9 @@ export const EndpointUrl = React.forwardRef<
     showEnvironment,
     options,
   },
-  parentRef
+  forwardedRef
 ) {
   const ref = useRef<HTMLDivElement>(null);
-
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  useImperativeHandle(parentRef, () => ref.current!);
 
   const [isHovered, setIsHovered] = useState(false);
   const isEditingEnvironment = useBooleanState(false);
@@ -110,10 +107,13 @@ export const EndpointUrl = React.forwardRef<
   }, [options, environmentId, baseUrl]);
 
   return (
-    <div ref={ref} className={cn("flex items-center gap-1 pr-2", className)}>
+    <div
+      ref={composeRefs(forwardedRef, ref)}
+      className={cn("flex items-center gap-1 pr-2", className)}
+    >
       <HttpMethodBadge method={method} />
 
-      <div className={cn("flex items-center")}>
+      <div className={cn("fern-endpoint-url")}>
         <span
           className={`inline-flex shrink items-baseline ${isHovered ? "hover:bg-tag-default" : ""} cursor-default rounded-md p-1`}
         >

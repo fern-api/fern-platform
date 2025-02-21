@@ -1,6 +1,5 @@
 import cn from "clsx";
 import {
-  AnchorHTMLAttributes,
   ComponentProps,
   createElement,
   FC,
@@ -59,7 +58,7 @@ export const Li: FC<ComponentProps<"li">> = ({ className, ...rest }) => {
   return <li {...rest} className={cn(className)} />;
 };
 
-export const A: FC<AnchorHTMLAttributes<HTMLAnchorElement>> = ({
+export const A: FC<ComponentProps<"a">> = ({
   className,
   children,
   href,

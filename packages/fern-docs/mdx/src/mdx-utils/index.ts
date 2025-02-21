@@ -1,4 +1,5 @@
 export * from "./extract-jsx";
+export * from "./extract-literal";
 export * from "./is-mdx-element";
 export * from "./is-mdx-expression";
 export * from "./is-mdx-jsx-attr";

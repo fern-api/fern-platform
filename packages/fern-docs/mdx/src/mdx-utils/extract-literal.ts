@@ -2,6 +2,8 @@ import type { Program } from "estree";
 import { walk } from "estree-walker";
 import { MdxJsxAttributeValueExpression } from "mdast-util-mdx-jsx";
 
+type Literal = string | number | bigint | boolean | RegExp | null | undefined;
+
 /**
  * Extracts a single literal from an estree program.
  *
@@ -10,11 +12,11 @@ import { MdxJsxAttributeValueExpression } from "mdast-util-mdx-jsx";
  */
 export function extractSingleLiteral(
   estree?: Program | null | undefined
-): string | number | bigint | boolean | RegExp | null | undefined {
+): Literal {
   if (estree == null) {
     return undefined;
   }
-  const literals: string[] = [];
+  const literals: Literal[] = [];
   walk(estree, {
     enter: function (node) {
       // ignore function declarations, arrow functions, and JSX elements
@@ -27,7 +29,7 @@ export function extractSingleLiteral(
         this.skip();
       }
 
-      if (node.type === "Literal" && typeof node.value === "string") {
+      if (node.type === "Literal") {
         literals.push(node.value);
       }
     },
