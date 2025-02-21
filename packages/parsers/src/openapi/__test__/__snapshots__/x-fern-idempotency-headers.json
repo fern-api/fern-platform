@@ -66,9 +66,7 @@
           "responseStatusCode": 200,
           "requestBody": {
             "type": "json",
-            "value": {
-              "send": false
-            }
+            "value": {}
           },
           "responseBody": {
             "type": "json",

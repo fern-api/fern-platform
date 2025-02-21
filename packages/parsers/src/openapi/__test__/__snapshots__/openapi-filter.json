@@ -17395,8 +17395,7 @@
           "queryParameters": {
             "filter": {
               "user_id": "user_id"
-            },
-            "type": "type"
+            }
           },
           "responseBody": {
             "type": "json",
@@ -26065,9 +26064,7 @@
           "path": "/visitors",
           "responseStatusCode": 200,
           "name": "Successful",
-          "queryParameters": {
-            "user_id": "user_id"
-          },
+          "queryParameters": {},
           "responseBody": {
             "type": "json",
             "value": {
@@ -26460,7 +26457,6 @@
                   "segments"
                 ]
               },
-              "custom_attributes": {},
               "referrer": "https://www.google.com/",
               "utm_campaign": "intercom-link",
               "utm_content": "banner",

@@ -2,6 +2,7 @@ import { isNonNullish } from "@fern-api/ui-core-utils";
 import { OpenAPIV3_1 } from "openapi-types";
 import { FernRegistry } from "../../../../client/generated";
 import {
+  BaseOpenApiV3_1ConverterExampleArgs,
   BaseOpenApiV3_1ConverterNodeConstructorArgs,
   BaseOpenApiV3_1ConverterNodeWithExample,
 } from "../../../BaseOpenApiV3_1Converter.node";
@@ -81,13 +82,15 @@ export class EnumConverterNode extends BaseOpenApiV3_1ConverterNodeWithExample<
     };
   }
 
-  example(): string | undefined {
+  example({
+    includeOptionals,
+  }: BaseOpenApiV3_1ConverterExampleArgs): string | null | undefined {
     return (
       this.input.example ??
       this.input.examples?.[0] ??
       this.default ??
       this.values[0] ??
-      (this.nullable ? null : undefined)
+      (includeOptionals ? (this.nullable ? null : undefined) : undefined)
     );
   }
 }
