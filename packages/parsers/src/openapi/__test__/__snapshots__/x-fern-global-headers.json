@@ -143,17 +143,10 @@
           "pathParameters": {
             "userId": "userId"
           },
-          "headers": {
-            "my-api-key": "my-api-key",
-            "another_header": "another_header",
-            "x-api-key": "x-api-key",
-            "my-api-version": "my-api-version"
-          },
+          "headers": {},
           "requestBody": {
             "type": "json",
-            "value": {
-              "stream": false
-            }
+            "value": {}
           },
           "responseBody": {
             "type": "json",

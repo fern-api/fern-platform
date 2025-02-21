@@ -1,0 +1,14 @@
+[
+  {
+    "message": "Invalid example, expected valid form-data",
+    "path": [
+      "paths",
+      "/v1/voices/{voice_id}",
+      "put",
+      "responses",
+      "content",
+      "application/json",
+      "examples",
+    ],
+  },
+]

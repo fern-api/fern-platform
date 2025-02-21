@@ -177,9 +177,7 @@
             "organization_id": "organization_id",
             "user_id": "user_id"
           },
-          "queryParameters": {
-            "limit": 0
-          },
+          "queryParameters": {},
           "responseBody": {
             "type": "json",
             "value": {

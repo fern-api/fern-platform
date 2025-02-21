@@ -266,7 +266,7 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
         Object.values(requestBodiesByContent).forEach((requestBody) => {
           if (Object.keys(requestBody.examples ?? {}).length === 0) {
             const example = requestBody.schema?.example({
-              includeOptionals: false,
+              includeOptionals: true,
               override: undefined,
             });
 

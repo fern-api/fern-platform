@@ -95,9 +95,7 @@
           },
           "requestBody": {
             "type": "json",
-            "value": {
-              "stream": false
-            }
+            "value": {}
           },
           "responseBody": {
             "type": "json",

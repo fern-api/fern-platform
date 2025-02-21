@@ -38,8 +38,7 @@
             "type": "json",
             "value": {
               "status": "success",
-              "message": "message",
-              "custom_fields": {}
+              "message": "message"
             }
           }
         }

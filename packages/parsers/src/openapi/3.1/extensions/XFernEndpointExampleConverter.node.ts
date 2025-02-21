@@ -8,6 +8,7 @@ import {
   BaseOpenApiV3_1ConverterNodeConstructorArgs,
 } from "../../BaseOpenApiV3_1Converter.node";
 import { extendType } from "../../utils/extendType";
+import { replacePathParameters } from "../../utils/replacePathParameters";
 import { isExampleCodeSampleSchemaLanguage } from "../guards/isExampleCodeSampleSchemaLanguage";
 import { isExampleCodeSampleSchemaSdk } from "../guards/isExampleCodeSampleSchemaSdk";
 import { isExampleResponseBody } from "../guards/isExampleResponseBody";
@@ -329,7 +330,7 @@ export class XFernEndpointExampleConverterNode extends BaseOpenApiV3_1ConverterN
         );
 
         return {
-          path: this.path,
+          path: replacePathParameters(this.path, pathParameters ?? {}),
           responseStatusCode: this.successResponseStatusCode,
           name: example.name,
           description: example.docs,

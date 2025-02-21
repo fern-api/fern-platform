@@ -1,6 +1,7 @@
 import { OpenAPIV3_1 } from "openapi-types";
 import { FernRegistry } from "../../../../client/generated";
 import {
+  BaseOpenApiV3_1ConverterExampleArgs,
   BaseOpenApiV3_1ConverterNodeConstructorArgs,
   BaseOpenApiV3_1ConverterNodeWithExample,
 } from "../../../BaseOpenApiV3_1Converter.node";
@@ -58,12 +59,14 @@ export class BooleanConverterNode extends BaseOpenApiV3_1ConverterNodeWithExampl
     };
   }
 
-  example(): string | boolean | undefined {
+  example({
+    includeOptionals,
+  }: BaseOpenApiV3_1ConverterExampleArgs): string | boolean | null | undefined {
     return (
       this.input.example ??
       this.input.examples?.[0] ??
       this.default ??
-      (this.nullable ? null : false)
+      (includeOptionals ? (this.nullable ? null : false) : undefined)
     );
   }
 }

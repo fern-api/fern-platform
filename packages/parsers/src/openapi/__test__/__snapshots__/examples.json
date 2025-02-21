@@ -614,7 +614,6 @@
             "value": {
               "id": "id",
               "name": "name",
-              "another_string": "another_string",
               "nested_object": "var1"
             }
           },
