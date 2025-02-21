@@ -56,4 +56,26 @@ describe("coalesceServers", () => {
     expect(result[0]).toBe(existingServer);
     expect(result[1]).toBeInstanceOf(ServerObjectConverterNode);
   });
+
+  it("should not add new servers containing an existing url", () => {
+    const existingServer = new ServerObjectConverterNode({
+      input: { url: "https://existing.com" },
+      context: mockContext,
+      accessPath: [],
+      pathId: "servers[0]",
+    });
+    const newServers: OpenAPIV3_1.ServerObject[] = [
+      { url: "https://existing.com" },
+      { url: "https://new.com" }
+    ];
+    const result = coalesceServers(
+      [existingServer],
+      newServers,
+      mockContext,
+      []
+    );
+    expect(result).toHaveLength(2);
+    expect(result[0]).toBe(existingServer);
+    expect(result[1].url).toBe("https://new.com");
+  });
 });
