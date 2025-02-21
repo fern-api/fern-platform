@@ -1,19 +1,16 @@
 import React from "react";
 
 const MOBILE_BREAKPOINT = 768;
+const DESKTOP_BREAKPOINT = 1024;
 
 const useIsomorphicLayoutEffect =
   typeof window !== "undefined" ? React.useLayoutEffect : React.useEffect;
 
 export function useMinWidth(breakpoint: number): boolean {
-  const [largerThanBreakpoint, setLargerThanBreakpoint] = React.useState<
-    boolean | undefined
-  >(() => {
-    if (typeof window === "undefined") {
-      return undefined;
-    }
-    return window.innerWidth >= breakpoint;
-  });
+  const [largerThanBreakpoint, setLargerThanBreakpoint] =
+    React.useState<boolean>(() =>
+      typeof window === "undefined" ? true : window.innerWidth >= breakpoint
+    );
 
   useIsomorphicLayoutEffect(() => {
     requestAnimationFrame(() => {
@@ -34,4 +31,8 @@ export function useMinWidth(breakpoint: number): boolean {
 
 export function useIsMobile(): boolean {
   return !useMinWidth(MOBILE_BREAKPOINT);
+}
+
+export function useIsDesktop(): boolean {
+  return useMinWidth(DESKTOP_BREAKPOINT);
 }

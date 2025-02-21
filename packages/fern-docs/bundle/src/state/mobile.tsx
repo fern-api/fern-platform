@@ -1,9 +1,9 @@
-import { atom, useAtomValue, useSetAtom } from "jotai";
+import { atom, useAtom, useAtomValue, useSetAtom } from "jotai";
 
 export const isDismissableSidebarOpenAtom = atom(false);
 
 export const useIsDismissableSidebarOpen = () => {
-  return useAtomValue(isDismissableSidebarOpenAtom);
+  return useAtom(isDismissableSidebarOpenAtom);
 };
 
 export const useToggleDismissableSidebar = () => {

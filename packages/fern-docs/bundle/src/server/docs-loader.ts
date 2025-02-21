@@ -435,7 +435,7 @@ const getLayout = cache(async (domain: string) => {
       ? undefined
       : (toPx(config.layout?.pageWidth) ?? 1_408);
   const headerHeight = toPx(config.layout?.headerHeight) ?? 64;
-  const contentWidth = toPx(config.layout?.contentWidth) ?? 704;
+  const contentWidth = toPx(config.layout?.contentWidth) ?? 640;
   const tabsPlacement = config.layout?.tabsPlacement ?? "SIDEBAR";
   const searchbarPlacement = config.layout?.searchbarPlacement ?? "HEADER";
   return {

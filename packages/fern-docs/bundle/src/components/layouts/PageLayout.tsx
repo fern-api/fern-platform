@@ -8,7 +8,7 @@ interface PageLayoutProps {
 
 export function PageLayout({ header, children, footer }: PageLayoutProps) {
   return (
-    <article className="max-w-page-width px-page-padding mx-auto flex-1">
+    <article className="max-w-page-width px-page-padding mx-auto min-w-0 flex-1">
       {header}
       <div className="prose dark:prose-invert prose-h1:mt-[1.5em] first:prose-h1:mt-0 max-w-full break-words">
         {children}

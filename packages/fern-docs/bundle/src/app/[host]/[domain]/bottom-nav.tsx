@@ -52,9 +52,9 @@ export function BottomNavigation({
       {neighbors.next && (
         <MaybeFernLink
           href={neighbors.next.href}
-          className="bg-background hover:border-accent-a9 flex h-16 flex-1 items-center justify-end gap-4 border border-transparent px-3"
+          className="bg-background hover:border-accent-a9 border-grayscale-a6 flex h-16 min-w-0 flex-1 shrink items-center justify-end gap-4 border px-3"
         >
-          <div className="min-w-0 shrink space-y-2 pl-4">
+          <div className="min-w-0 shrink pl-4 text-right">
             <h4 className="text-grayscale-a12 truncate text-base font-bold">
               <React.Suspense fallback={neighbors.next.title}>
                 <MdxServerComponent
@@ -64,7 +64,7 @@ export function BottomNavigation({
               </React.Suspense>
             </h4>
             {neighbors.next.excerpt && (
-              <div className="text-grayscale-a11 truncate text-sm">
+              <div className="text-grayscale-a11 truncate text-sm [&_p]:truncate">
                 <React.Suspense fallback={neighbors.next.excerpt}>
                   <MdxServerComponent
                     serialize={serialize}

@@ -21,6 +21,7 @@ function SegmentScript(props: { apiKey: string }) {
   return (
     <Script
       id="segment-script"
+      defer
       dangerouslySetInnerHTML={{
         __html: renderSegmentSnippet(props.apiKey),
       }}

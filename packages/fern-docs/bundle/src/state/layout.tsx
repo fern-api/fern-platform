@@ -54,7 +54,6 @@ export function useShouldHideAsides() {
   const emptyTableOfContents =
     useAtomValue(emptyTableOfContentsAtom) ||
     (layout !== "guide" && layout !== "overview");
-  console.log("emptySidebar", emptySidebar, emptyTableOfContents);
 
   if (layout === "custom" || layout === "page") {
     return true;

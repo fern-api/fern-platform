@@ -19,7 +19,7 @@ export function JavascriptProvider({ config }: { config: JsConfig }) {
   return (
     <>
       {config.inline?.map((inline, idx) => (
-        <Script key={`inline-script-${idx}`} id={`inline-script-${idx}`}>
+        <Script key={`inline-script-${idx}`} id={`inline-script-${idx}`} defer>
           {inline}
         </Script>
       ))}
@@ -30,6 +30,7 @@ export function JavascriptProvider({ config }: { config: JsConfig }) {
           strategy={remote.strategy}
           type="module"
           crossOrigin="anonymous"
+          defer
         />
       ))}
     </>

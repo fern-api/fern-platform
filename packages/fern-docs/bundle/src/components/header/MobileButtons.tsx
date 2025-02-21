@@ -10,7 +10,7 @@ import {
 } from "@/state/mobile";
 
 export function MobileMenuButton({ className }: { className?: string }) {
-  const isDismissableSidebarOpen = useIsDismissableSidebarOpen();
+  const [isDismissableSidebarOpen] = useIsDismissableSidebarOpen();
   const toggleDismissableSidebar = useToggleDismissableSidebar();
   return (
     <Button

@@ -18,7 +18,7 @@ export function OverviewLayout({
   return (
     <>
       {toc}
-      <div className="px-page-padding mx-auto mb-12 shrink space-y-8 lg:ml-0 xl:ml-auto">
+      <div className="px-page-padding mx-auto mb-12 min-w-0 shrink space-y-8 lg:ml-0 xl:ml-auto">
         <article className="w-content-wide-width max-w-full">
           {header}
           <div className="prose dark:prose-invert prose-h1:mt-[1.5em] first:prose-h1:mt-0 max-w-full break-words">

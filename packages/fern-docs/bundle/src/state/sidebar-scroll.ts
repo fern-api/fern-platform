@@ -18,10 +18,14 @@ export function useDismountMeasureSidebarScrollPosition(
       ref.current.scrollTop = window._FERN_SIDEBAR_SCROLL_RESTORATION;
     }
 
+    const handleScroll = () => {
+      window._FERN_SIDEBAR_SCROLL_RESTORATION = ref.current?.scrollTop ?? 0;
+    };
+
+    ref.current?.addEventListener("scroll", handleScroll);
+
     return () => {
-      if (ref.current) {
-        window._FERN_SIDEBAR_SCROLL_RESTORATION = ref.current.scrollTop;
-      }
+      ref.current?.removeEventListener("scroll", handleScroll);
     };
   }, []);
 }

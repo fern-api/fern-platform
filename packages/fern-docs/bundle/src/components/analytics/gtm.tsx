@@ -42,6 +42,7 @@ export default function GoogleTagManager(props: GTMParams): ReactNode {
         <script
           key="ga"
           id="_fern-gtm"
+          defer
           dangerouslySetInnerHTML={{
             __html: `
 (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':

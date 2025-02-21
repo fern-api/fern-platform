@@ -43,6 +43,7 @@ export default function GoogleAnalytics(props: GAParams): ReactNode {
         <script
           key="ga"
           id="_fern-ga-init"
+          defer
           dangerouslySetInnerHTML={{
             __html: `
           window['${dataLayerName}'] = window['${dataLayerName}'] || [];
@@ -55,6 +56,7 @@ export default function GoogleAnalytics(props: GAParams): ReactNode {
       </Head>
       <Script
         id="_fern-ga"
+        defer
         src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}
         nonce={nonce}
       />

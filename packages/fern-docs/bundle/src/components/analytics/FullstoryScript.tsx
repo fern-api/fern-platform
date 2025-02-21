@@ -9,6 +9,7 @@ function FullstoryScript(props: {
   return (
     <Script
       id="init-fullstory"
+      defer
       dangerouslySetInnerHTML={{ __html: initFullstory(props.config) }}
     />
   );

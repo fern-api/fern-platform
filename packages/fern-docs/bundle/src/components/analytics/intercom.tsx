@@ -52,6 +52,7 @@ function IntercomScript(props: { config: DocsV1Read.IntercomConfig }) {
   return (
     <Script
       id="init-intercom"
+      defer
       dangerouslySetInnerHTML={{
         __html: widgetBootstrapScript(props.config.appId),
       }}
