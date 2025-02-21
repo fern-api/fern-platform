@@ -112,6 +112,8 @@ function SideNav({
 
 function MobileMenu({ children }: { children: React.ReactNode }) {
   const [open, setOpen] = useIsDismissableSidebarOpen();
+  const [dragStartX, setDragStartX] = React.useState(-1);
+  const [dragX, setDragX] = React.useState(0);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -119,9 +121,33 @@ function MobileMenu({ children }: { children: React.ReactNode }) {
         <DialogOverlay className="bg-background/70 fixed inset-0 z-40" />
         <DialogContent
           className={cn(
-            "sm:w-sidebar-width bg-background/70 border-border-default fixed inset-y-0 right-0 z-50 w-full max-w-[calc(100dvw-3rem)] transform border-l backdrop-blur-xl",
-            "transition-transform duration-300 data-[state=closed]:translate-x-full data-[state=open]:translate-x-0"
+            "sm:w-sidebar-width bg-background/70 border-border-default fixed inset-y-0 right-0 z-50 w-full max-w-[calc(100dvw-3rem)] transform border-l backdrop-blur-xl"
+            // "transition-transform duration-300 data-[state=closed]:translate-x-full data-[state=open]:translate-x-0"
           )}
+          style={{
+            transform:
+              dragStartX === -1 || dragX < 0
+                ? undefined
+                : `translateX(${dragX}px)`,
+          }}
+          draggable={false}
+          onPointerDown={(event) => {
+            setDragStartX(event.clientX);
+          }}
+          onPointerMove={(event) => {
+            if (dragStartX === -1) {
+              return;
+            }
+            setDragX(event.clientX - dragStartX);
+          }}
+          onPointerUp={(e) => {
+            if (dragX > e.currentTarget.clientWidth / 2) {
+              setOpen(false);
+            }
+
+            setDragStartX(-1);
+            setDragX(0);
+          }}
         >
           <VisuallyHidden>
             <DialogTitle>Menu</DialogTitle>

@@ -34,7 +34,7 @@ import { loadWithUrl as uncachedLoadWithUrl } from "./loadWithUrl";
 import { FernColorTheme, FernLayoutConfig, FileData, RgbaColor } from "./types";
 import { pruneWithAuthState } from "./withRbac";
 
-const loadWithUrl = cache(uncachedLoadWithUrl);
+const loadWithUrl = uncachedLoadWithUrl;
 
 export interface DocsLoader {
   domain: string;
@@ -139,117 +139,112 @@ export interface DocsLoader {
   getEdgeFlags: () => Promise<EdgeFlags>;
 }
 
-const cachedGetEdgeFlags = cache(async (domain: string) => {
+const cachedGetEdgeFlags = async (domain: string) => {
   return await getEdgeFlags(domain);
-});
+};
 
-const getBaseUrl = cache(
-  async (domain: string): Promise<DocsV2Read.BaseUrl> => {
-    const response = await loadWithUrl(domain);
-    return {
-      domain: response.baseUrl.domain,
-      basePath: response.baseUrl.basePath,
-    };
-  }
-);
+const getBaseUrl = async (domain: string): Promise<DocsV2Read.BaseUrl> => {
+  const response = await loadWithUrl(domain);
+  return {
+    domain: response.baseUrl.domain,
+    basePath: response.baseUrl.basePath,
+  };
+};
 
-const getFiles = cache(
-  async (domain: string): Promise<Record<string, FileData>> => {
-    const response = await loadWithUrl(domain);
-    return mapValues(response.definition.filesV2, (file) => {
-      if (file.type === "url") {
-        return {
-          src: file.url,
-        };
-      } else if (file.type === "image") {
-        return {
-          src: file.url,
-          width: file.width,
-          height: file.height,
-          blurDataURL: file.blurDataUrl,
-          alt: file.alt,
-        };
-      }
-      throw new UnreachableCaseError(file);
-    });
-  }
-);
-
-const getApi = cache(
-  async (domain: string, id: string): Promise<ApiDefinition.ApiDefinition> => {
-    const response = await loadWithUrl(domain);
-    const latest = response.definition.apisV2[ApiDefinitionId(id)];
-    if (latest != null) {
-      return latest;
+const getFiles = async (domain: string): Promise<Record<string, FileData>> => {
+  const response = await loadWithUrl(domain);
+  return mapValues(response.definition.filesV2, (file) => {
+    if (file.type === "url") {
+      return {
+        src: file.url,
+      };
+    } else if (file.type === "image") {
+      return {
+        src: file.url,
+        width: file.width,
+        height: file.height,
+        blurDataURL: file.blurDataUrl,
+        alt: file.alt,
+      };
     }
-    const v1 = response.definition.apis[ApiDefinitionId(id)];
-    if (v1 == null) {
-      notFound();
-    }
-    const flags = await cachedGetEdgeFlags(domain);
-    return ApiDefinitionV1ToLatest.from(v1, flags).migrate();
-  }
-);
+    throw new UnreachableCaseError(file);
+  });
+};
 
-const getAllApisForDomain = cache(
-  async (domain: string): Promise<ApiDefinition.ApiDefinition[]> => {
-    const response = await loadWithUrl(domain);
-    if (
-      response.definition.apisV2 &&
-      Object.keys(response.definition.apisV2).length > 0
-    ) {
-      return Object.values(response.definition.apisV2);
-    }
-    const flags = await cachedGetEdgeFlags(domain);
-    return Object.values(response.definition.apis).map((v1) =>
-      ApiDefinitionV1ToLatest.from(v1, flags).migrate()
-    );
+const getApi = async (
+  domain: string,
+  id: string
+): Promise<ApiDefinition.ApiDefinition> => {
+  const response = await loadWithUrl(domain);
+  const latest = response.definition.apisV2[ApiDefinitionId(id)];
+  if (latest != null) {
+    return latest;
   }
-);
-
-const getEndpointByLocator = cache(
-  async (
-    domain: string,
-    method: HttpMethod,
-    path: string,
-    example?: string
-  ): Promise<{
-    apiDefinitionId: ApiDefinition.ApiDefinitionId;
-    endpoint: ApiDefinition.EndpointDefinition;
-    slugs: Slug[];
-  }> => {
-    const apis = await getAllApisForDomain(domain);
-    for (const api of apis) {
-      const endpoint = findEndpoint({
-        apiDefinition: api,
-        method,
-        path,
-        example,
-      });
-      if (endpoint != null) {
-        const root = await unsafe_getFullRoot(domain);
-        const slugs = FernNavigation.NodeCollector.collect(root)
-          .getNodesInOrder()
-          .filter(FernNavigation.hasMetadata)
-          .filter(
-            (node) =>
-              node.type === "endpoint" &&
-              node.apiDefinitionId === api.id &&
-              node.endpointId === endpoint.id
-          )
-          .map((node) => node.slug);
-        return {
-          apiDefinitionId: api.id,
-          endpoint,
-          slugs,
-        };
-      }
-    }
+  const v1 = response.definition.apis[ApiDefinitionId(id)];
+  if (v1 == null) {
     notFound();
   }
-);
+  const flags = await cachedGetEdgeFlags(domain);
+  return ApiDefinitionV1ToLatest.from(v1, flags).migrate();
+};
 
-const unsafe_getFullRoot = cache(async (domain: string) => {
+const getAllApisForDomain = async (
+  domain: string
+): Promise<ApiDefinition.ApiDefinition[]> => {
+  const response = await loadWithUrl(domain);
+  if (
+    response.definition.apisV2 &&
+    Object.keys(response.definition.apisV2).length > 0
+  ) {
+    return Object.values(response.definition.apisV2);
+  }
+  const flags = await cachedGetEdgeFlags(domain);
+  return Object.values(response.definition.apis).map((v1) =>
+    ApiDefinitionV1ToLatest.from(v1, flags).migrate()
+  );
+};
+
+const getEndpointByLocator = async (
+  domain: string,
+  method: HttpMethod,
+  path: string,
+  example?: string
+): Promise<{
+  apiDefinitionId: ApiDefinition.ApiDefinitionId;
+  endpoint: ApiDefinition.EndpointDefinition;
+  slugs: Slug[];
+}> => {
+  const apis = await getAllApisForDomain(domain);
+  for (const api of apis) {
+    const endpoint = findEndpoint({
+      apiDefinition: api,
+      method,
+      path,
+      example,
+    });
+    if (endpoint != null) {
+      const root = await unsafe_getFullRoot(domain);
+      const slugs = FernNavigation.NodeCollector.collect(root)
+        .getNodesInOrder()
+        .filter(FernNavigation.hasMetadata)
+        .filter(
+          (node) =>
+            node.type === "endpoint" &&
+            node.apiDefinitionId === api.id &&
+            node.endpointId === endpoint.id
+        )
+        .map((node) => node.slug);
+      return {
+        apiDefinitionId: api.id,
+        endpoint,
+        slugs,
+      };
+    }
+  }
+  notFound();
+};
+
+const unsafe_getFullRoot = async (domain: string) => {
   const response = await loadWithUrl(domain);
   const v1 = response.definition.config.root;
 
@@ -271,15 +266,15 @@ const unsafe_getFullRoot = cache(async (domain: string) => {
   }
 
   return root;
-});
+};
 
-const unsafe_getRootCached = cache(async (domain: string) => {
+const unsafe_getRootCached = async (domain: string) => {
   return await unstable_cache(
     unsafe_getFullRoot,
     ["unsafe_getRoot", cacheSeed()],
     { tags: [domain, "unsafe_getRoot"] }
   )(domain);
-});
+};
 
 const getRoot = async (
   domain: string,
@@ -322,13 +317,13 @@ const getNavigationNode = async (
   return node;
 };
 
-const getConfig = cache(async (domain: string) => {
+const getConfig = async (domain: string) => {
   const response = await loadWithUrl(domain);
   const { navigation, root, ...config } = response.definition.config;
   return config;
-});
+};
 
-const getPage = cache(async (domain: string, pageId: string) => {
+const getPage = async (domain: string, pageId: string) => {
   const response = await loadWithUrl(domain);
   const page = response.definition.pages[pageId as PageId];
   if (page == null) {
@@ -340,14 +335,14 @@ const getPage = cache(async (domain: string, pageId: string) => {
     hash: hash(page.markdown),
     editThisPageUrl: page.editThisPageUrl,
   };
-});
+};
 
-const getMdxBundlerFiles = cache(async (domain: string) => {
+const getMdxBundlerFiles = async (domain: string) => {
   const response = await loadWithUrl(domain);
   return response.definition.jsFiles ?? {};
-});
+};
 
-const getColors = cache(async (domain: string) => {
+const getColors = async (domain: string) => {
   const [config, files] = await Promise.all([
     getConfig(domain),
     getFiles(domain),
@@ -412,17 +407,17 @@ const getColors = cache(async (domain: string) => {
         }
       : undefined,
   };
-});
+};
 
-const getFonts = cache(async (domain: string) => {
+const getFonts = async (domain: string) => {
   const response = await loadWithUrl(domain);
   return generateFonts(
     response.definition.config.typographyV2,
     await getFiles(domain)
   );
-});
+};
 
-const getLayout = cache(async (domain: string) => {
+const getLayout = async (domain: string) => {
   const config = await getConfig(domain);
   if (!config) {
     notFound();
@@ -447,9 +442,9 @@ const getLayout = cache(async (domain: string) => {
     tabsPlacement,
     searchbarPlacement,
   };
-});
+};
 
-const getAuthConfig = cache(getAuthEdgeConfig);
+const getAuthConfig = getAuthEdgeConfig;
 
 /**
  * The "use cache" tags help us speed up rendering specific parts of the page that are static.
@@ -465,7 +460,7 @@ export const createCachedDocsLoader = async (
   const authConfig = getAuthConfig(domain);
   const metadata = getDocsUrlMetadata(domain);
 
-  const getAuthState = async (pathname?: string) => {
+  const getAuthState = cache(async (pathname?: string) => {
     const { getAuthState } = await createGetAuthState(
       host,
       domain,
@@ -475,66 +470,82 @@ export const createCachedDocsLoader = async (
     );
 
     return await getAuthState(pathname);
-  };
+  });
 
   return {
     domain,
     fern_token,
     getAuthConfig: () => authConfig,
-    getBaseUrl: unstable_cache(
-      () => getBaseUrl(domain),
-      [domain, cacheSeed()],
-      {
+    getBaseUrl: cache(
+      unstable_cache(() => getBaseUrl(domain), [domain, cacheSeed()], {
         tags: [domain, "getBaseUrl"],
-      }
+      })
     ),
     getMetadata: () => metadata,
-    getFiles: unstable_cache(() => getFiles(domain), [domain, cacheSeed()], {
-      tags: [domain, "files"],
-    }),
-    getMdxBundlerFiles: unstable_cache(
-      () => getMdxBundlerFiles(domain),
-      [domain, cacheSeed()],
-      { tags: [domain, "mdxBundlerFiles"] }
+    getFiles: cache(
+      unstable_cache(() => getFiles(domain), [domain, cacheSeed()], {
+        tags: [domain, "files"],
+      })
     ),
-    getApi: unstable_cache(
-      (id: string) => getApi(domain, id),
-      [domain, cacheSeed()],
-      { tags: [domain, "api"] }
+    getMdxBundlerFiles: cache(
+      unstable_cache(() => getMdxBundlerFiles(domain), [domain, cacheSeed()], {
+        tags: [domain, "mdxBundlerFiles"],
+      })
     ),
-    getEndpointByLocator: unstable_cache(
-      (method: HttpMethod, path: string, example?: string) =>
-        getEndpointByLocator(domain, method, path, example),
-      [domain, cacheSeed()],
-      { tags: [domain, "endpointByLocator"] }
+    getApi: cache(
+      unstable_cache(
+        (id: string) => getApi(domain, id),
+        [domain, cacheSeed()],
+        { tags: [domain, "api"] }
+      )
     ),
-    getRoot: async () =>
-      getRootCached(domain, await getAuthState(), await authConfig),
-    getNavigationNode: async (id: string) =>
-      getNavigationNode(domain, id, await getAuthState(), await authConfig),
-    unsafe_getFullRoot: () => unsafe_getRootCached(domain),
-    getConfig: unstable_cache(() => getConfig(domain), [domain, cacheSeed()], {
-      tags: [domain, "getConfig"],
-    }),
-    getPage: unstable_cache(
-      (pageId: string) => getPage(domain, pageId),
-      [domain, cacheSeed()],
-      { tags: [domain, "getPage"] }
+    getEndpointByLocator: cache(
+      unstable_cache(
+        (method: HttpMethod, path: string, example?: string) =>
+          getEndpointByLocator(domain, method, path, example),
+        [domain, cacheSeed()],
+        { tags: [domain, "endpointByLocator"] }
+      )
     ),
-    getColors: unstable_cache(() => getColors(domain), [domain, cacheSeed()], {
-      tags: [domain, "getColors"],
-    }),
-    getLayout: unstable_cache(() => getLayout(domain), [domain, cacheSeed()], {
-      tags: [domain, "getLayout"],
-    }),
-    getFonts: unstable_cache(() => getFonts(domain), [domain, cacheSeed()], {
-      tags: [domain, "getFonts"],
-    }),
+    getRoot: cache(async () =>
+      getRootCached(domain, await getAuthState(), await authConfig)
+    ),
+    getNavigationNode: cache(async (id: string) =>
+      getNavigationNode(domain, id, await getAuthState(), await authConfig)
+    ),
+    unsafe_getFullRoot: cache(() => unsafe_getRootCached(domain)),
+    getConfig: cache(
+      unstable_cache(() => getConfig(domain), [domain, cacheSeed()], {
+        tags: [domain, "getConfig"],
+      })
+    ),
+    getPage: cache(
+      unstable_cache(
+        (pageId: string) => getPage(domain, pageId),
+        [domain, cacheSeed()],
+        { tags: [domain, "getPage"] }
+      )
+    ),
+    getColors: cache(
+      unstable_cache(() => getColors(domain), [domain, cacheSeed()], {
+        tags: [domain, "getColors"],
+      })
+    ),
+    getLayout: cache(
+      unstable_cache(() => getLayout(domain), [domain, cacheSeed()], {
+        tags: [domain, "getLayout"],
+      })
+    ),
+    getFonts: cache(
+      unstable_cache(() => getFonts(domain), [domain, cacheSeed()], {
+        tags: [domain, "getFonts"],
+      })
+    ),
     getAuthState,
-    getEdgeFlags: unstable_cache(
-      () => cachedGetEdgeFlags(domain),
-      [domain, cacheSeed()],
-      { tags: [domain, "getEdgeFlags"] }
+    getEdgeFlags: cache(
+      unstable_cache(() => cachedGetEdgeFlags(domain), [domain, cacheSeed()], {
+        tags: [domain, "getEdgeFlags"],
+      })
     ),
   };
 };
