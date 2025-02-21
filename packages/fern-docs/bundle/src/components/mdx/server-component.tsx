@@ -40,7 +40,7 @@ export function MdxServerComponentProse({
   if (!mdx) {
     return (
       <Prose size={size} className={className}>
-        {fallback}
+        {mdx ?? fallback}
       </Prose>
     );
   }
@@ -76,7 +76,7 @@ export function MdxServerComponentProseSuspense({
       <React.Suspense
         fallback={
           <Prose size={size} className={className}>
-            {fallback}
+            {mdx ?? fallback}
           </Prose>
         }
       >
