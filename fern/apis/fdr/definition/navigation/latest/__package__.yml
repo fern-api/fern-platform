@@ -249,6 +249,9 @@ types:
 
   PlaygroundSettings:
     properties:
+      disabled: 
+        type: optional<boolean>
+        docs: Whether the playground is disabled. Defaults to false.
       environments:
         type: optional<list<commons.EnvironmentId>>
         docs: |
