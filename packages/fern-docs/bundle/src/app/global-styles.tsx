@@ -4,6 +4,11 @@ import { FernFonts } from "@/server/generateFonts";
 import { ArrayOf12 } from "@/server/generateRadixColors";
 import { FernColorTheme, FernLayoutConfig } from "@/server/types";
 
+const FONT_MONO =
+  "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace";
+const FONT_SANS =
+  "ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'";
+
 export function GlobalStyles({
   domain,
   layout,
@@ -20,15 +25,19 @@ export function GlobalStyles({
   inlineCss?: string[];
 }) {
   const root = light ?? dark;
+  const hasTheme = !!light && !!dark;
   return (
     <style jsx global>
       {`
-        ${fonts.fontFaces.join("\n        ")}
+        ${fonts.fontFaces.join("\n")}
 
         :root {
-          --font-body: ${fonts.bodyFont ?? "initial"};
-          --font-heading: ${fonts.headingFont ?? "initial"};
-          --font-code: ${fonts.codeFont ?? "initial"};
+          --font-body: ${createFontFamilyCss(fonts.bodyFont, FONT_SANS)};
+          --font-heading: ${createFontFamilyCss(
+            fonts.headingFont,
+            createFontFamilyCss(fonts.bodyFont, FONT_SANS)
+          )};
+          --font-code: ${createFontFamilyCss(fonts.codeFont, FONT_MONO)};
           ${domain.includes("nominal") ? "--radius: 0px;" : ""}
           --header-height-real: ${layout.headerHeight}px;
           --content-width: ${layout.contentWidth}px;
@@ -39,9 +48,63 @@ export function GlobalStyles({
           --logo-height: ${layout.logoHeight}px;
         }
 
-        :root,
-        .light,
-        .light-theme${!light ? ", .dark, .dark-theme" : ""} {
+        ${root
+          ? getColorScaleCss({
+              mode: hasTheme ? "light" : "none",
+              name: "accent",
+              scale: root.accentScale,
+              scaleWideGamut: root.accentScaleWideGamut,
+              scaleAlpha: root.accentScaleAlpha,
+              scaleAlphaWideGamut: root.accentScaleAlphaWideGamut,
+              contrast: root.accentContrast,
+              surface: root.accentSurface,
+              surfaceWideGamut: root.accentSurfaceWideGamut,
+            })
+          : ""}
+
+        ${root
+          ? getColorScaleCss({
+              mode: hasTheme ? "light" : "none",
+              name: "grayscale",
+              scale: root.grayScale,
+              scaleWideGamut: root.grayScaleWideGamut,
+              scaleAlpha: root.grayScaleAlpha,
+              scaleAlphaWideGamut: root.grayScaleAlphaWideGamut,
+              contrast: root.appearance === "light" ? "#000" : "#fff",
+              surface: root.graySurface,
+              surfaceWideGamut: root.graySurfaceWideGamut,
+            })
+          : ""}
+
+        ${hasTheme && dark
+          ? getColorScaleCss({
+              mode: "dark",
+              name: "accent",
+              scale: dark.accentScale,
+              scaleWideGamut: dark.accentScaleWideGamut,
+              scaleAlpha: dark.accentScaleAlpha,
+              scaleAlphaWideGamut: dark.accentScaleAlphaWideGamut,
+              contrast: dark.accentContrast,
+              surface: dark.accentSurface,
+              surfaceWideGamut: dark.accentSurfaceWideGamut,
+            })
+          : ""}
+
+        ${hasTheme && dark
+          ? getColorScaleCss({
+              mode: "dark",
+              name: "grayscale",
+              scale: dark.grayScale,
+              scaleWideGamut: dark.grayScaleWideGamut,
+              scaleAlpha: dark.grayScaleAlpha,
+              scaleAlphaWideGamut: dark.grayScaleAlphaWideGamut,
+              contrast: dark.appearance === "light" ? "#000" : "#fff",
+              surface: dark.graySurface,
+              surfaceWideGamut: dark.graySurfaceWideGamut,
+            })
+          : ""}
+
+        ${hasTheme ? ":root, .light" : ":root"} {
           --background: ${root?.background ?? "initial"};
           --border: ${domain.includes("nominal")
             ? "#000"
@@ -49,77 +112,18 @@ export function GlobalStyles({
           --sidebar-background: ${root?.sidebarBackground ?? "initial"};
           --header-background: ${root?.headerBackground ?? "initial"};
           --card-background: ${root?.cardBackground ?? "initial"};
-          --accent: ${root?.accent ?? "initial"};
-          --accent-contrast: ${root?.accentContrast ?? "initial"};
-          --accent-surface: ${root?.accentSurface ?? "initial"};
-          --grayscale-surface: ${root?.graySurface ?? "initial"};
-          ${generateColorVariables("accent", root?.accentScale)}
-          ${generateColorVariables("accent", root?.accentScaleAlpha, true)}
-          ${generateColorVariables("grayscale", root?.grayScale)}
-          ${generateColorVariables("grayscale", root?.grayScaleAlpha, true)}
         }
 
-        @supports (color: color(display-p3 1 1 1)) {
-          @media (color-gamut: p3) {
-            :root,
-            .light,
-            .light-theme${!light ? ", .dark, .dark-theme" : ""} {
-              --accent-surface: ${root?.accentSurfaceWideGamut ?? "initial"};
-              --grayscale-surface: ${root?.graySurfaceWideGamut ?? "initial"};
-              ${generateColorVariables("accent", root?.accentScaleWideGamut)}
-              ${generateColorVariables(
-                "accent",
-                root?.accentScaleAlphaWideGamut,
-                true
-              )}
-              ${generateColorVariables("grayscale", root?.grayScaleWideGamut)}
-              ${generateColorVariables(
-                "grayscale",
-                root?.grayScaleAlphaWideGamut,
-                true
-              )}
-            }
-          }
-        }
-
-        ${light && dark
-          ? `.dark, .dark-theme {
-          --background: ${dark?.background ?? "initial"};
+        ${hasTheme && dark
+          ? `.dark {
+          --background: ${dark.background};
           --border: ${
-            domain.includes("nominal") ? "#fff" : (dark?.border ?? "initial")
+            domain.includes("nominal") ? "#fff" : (dark.border ?? "initial")
           };
-          --sidebar-background: ${dark?.sidebarBackground ?? "initial"};
-          --header-background: ${dark?.headerBackground ?? "initial"};
-          --card-background: ${dark?.cardBackground ?? "initial"};
-          --accent: ${dark?.accent ?? "initial"};
-          --accent-contrast: ${dark?.accentContrast ?? "initial"};
-          --accent-surface: ${dark?.accentSurface ?? "initial"};
-          --grayscale-surface: ${dark?.graySurface ?? "initial"};
-          ${generateColorVariables("accent", dark?.accentScale)}
-          ${generateColorVariables("accent", dark?.accentScaleAlpha, true)}
-          ${generateColorVariables("grayscale", dark?.grayScale)}
-          ${generateColorVariables("grayscale", dark?.grayScaleAlpha, true)}
-        }
-          
-        @supports (color: color(display-p3 1 1 1)) {
-          @media (color-gamut: p3) {
-            .dark, .dark-theme {
-              --accent-surface: ${dark?.accentSurfaceWideGamut ?? "initial"};
-              --grayscale-surface: ${dark?.graySurfaceWideGamut ?? "initial"};
-              ${generateColorVariables("accent", dark?.accentScaleWideGamut)}
-              ${generateColorVariables(
-                "accent",
-                dark?.accentScaleAlphaWideGamut,
-                true
-              )}
-              ${generateColorVariables("grayscale", dark?.grayScaleWideGamut)}
-              ${generateColorVariables(
-                "grayscale",
-                dark?.grayScaleAlphaWideGamut,
-                true
-              )}
-            }
-          }`
+          --sidebar-background: ${dark.sidebarBackground ?? "initial"};
+          --header-background: ${dark.headerBackground ?? "initial"};
+          --card-background: ${dark.cardBackground ?? "initial"};
+        }`
           : ""}
 
         html {
@@ -133,17 +137,61 @@ export function GlobalStyles({
     </style>
   );
 }
+const getColorScaleCss = ({
+  mode,
+  name,
+  scale,
+  scaleWideGamut,
+  scaleAlpha,
+  scaleAlphaWideGamut,
+  contrast,
+  surface,
+  surfaceWideGamut,
+}: {
+  mode: "light" | "dark" | "none";
+  name: string;
+  scale: ArrayOf12<string>;
+  scaleWideGamut: ArrayOf12<string>;
+  scaleAlpha: ArrayOf12<string>;
+  scaleAlphaWideGamut: ArrayOf12<string>;
+  contrast: string;
+  surface: string;
+  surfaceWideGamut: string;
+}) => {
+  const selector =
+    mode === "dark" ? ".dark" : mode === "light" ? ":root, .light" : ":root";
 
-function generateColorVariables(
-  prefix: string,
-  colors?: ArrayOf12<string>,
-  alpha = false
-) {
-  return (
-    colors
-      ?.map((color, index) => {
-        return `--${prefix}-${alpha ? "a" : ""}${index + 1}: ${color};`;
-      })
-      .join("\n") ?? ""
-  );
+  return `
+${selector} {
+  ${scale.map((value, index) => `--${name}-${index + 1}: ${value};`).join("\n  ")}
+
+  ${scaleAlpha.map((value, index) => `--${name}-a${index + 1}: ${value};`).join("\n  ")}
+
+  --${name}-contrast: ${contrast};
+  --${name}-surface: ${surface};
+  --${name}-indicator: ${scale[8]};
+  --${name}-track: ${scale[8]};
+}
+
+@supports (color: color(display-p3 1 1 1)) {
+  @media (color-gamut: p3) {
+    ${selector} {
+      ${scaleWideGamut.map((value, index) => `--${name}-${index + 1}: ${value};`).join("\n      ")}
+
+      ${scaleAlphaWideGamut
+        .map((value, index) => `--${name}-a${index + 1}: ${value};`)
+        .join("\n      ")}
+
+      --${name}-contrast: ${contrast};
+      --${name}-surface: ${surfaceWideGamut};
+      --${name}-indicator: ${scaleWideGamut[8]};
+      --${name}-track: ${scaleWideGamut[8]};
+    }
+  }
+}
+  `.trim();
+};
+
+function createFontFamilyCss(fontFamily: string | undefined, fallback: string) {
+  return fontFamily ? `${fontFamily}, ${fallback}` : fallback;
 }

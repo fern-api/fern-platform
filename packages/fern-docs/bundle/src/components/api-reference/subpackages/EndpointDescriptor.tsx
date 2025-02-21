@@ -45,13 +45,13 @@ export const EndpointDescriptor: React.FC<EndpointDescriptor.Props> = ({
     >
       <div className="flex items-baseline space-x-2">
         <HttpMethodIcon />
-        <MonospaceText className="text-muted w-16 break-all text-end text-sm leading-5 transition-colors group-hover:text-white">
+        <MonospaceText className="text-(color:--grayscale-a11) w-16 break-all text-end text-sm leading-5 transition-colors group-hover:text-white">
           {endpointDefinition.method}
         </MonospaceText>
       </div>
 
       <div className="flex">
-        <MonospaceText className="text-muted break-words text-start text-sm leading-5 transition-colors group-hover:text-white">
+        <MonospaceText className="text-(color:--grayscale-a11) break-words text-start text-sm leading-5 transition-colors group-hover:text-white">
           {urlWithBreakpoints}
         </MonospaceText>
       </div>

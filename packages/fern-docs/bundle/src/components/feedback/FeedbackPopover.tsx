@@ -186,7 +186,7 @@ const FeedbackPopover = forwardRef<
           transition={{ type: "spring", duration: 0.4, bounce: 0 }}
           sideOffset={8}
           className={cn(
-            "border-border-default dark:bg-background/50 z-50 rounded-lg border bg-white/50 p-1 shadow-xl backdrop-blur-xl",
+            "border-border-default dark:bg-background/50 rounded-2 z-50 border bg-white/50 p-1 shadow-xl backdrop-blur-xl",
             {
               "min-w-80 space-y-2 p-2": isHelpful !== undefined,
             }
@@ -215,7 +215,7 @@ const FeedbackPopover = forwardRef<
               >
                 <motion.div
                   layoutId="icon-container"
-                  className="bg-tag-primary text-accent-a11 mx-auto flex size-8 items-center justify-center rounded-md"
+                  className="bg-(--accent-a3) text-(color:--accent-a11) rounded-3/2 mx-auto flex size-8 items-center justify-center"
                 >
                   <Check />
                 </motion.div>
@@ -227,7 +227,7 @@ const FeedbackPopover = forwardRef<
                 </motion.p>
                 <motion.p
                   layoutId="success-description"
-                  className="text-muted text-center text-sm"
+                  className="text-(color:--grayscale-a11) text-center text-sm"
                 >
                   Thank you for improving the docs.
                 </motion.p>

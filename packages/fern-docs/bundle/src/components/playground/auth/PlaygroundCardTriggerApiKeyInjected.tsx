@@ -72,7 +72,7 @@ export function PlaygroundCardTriggerApiKeyInjected({
   if (apiKey != null && apiKey.trim().length > 0) {
     return (
       <FernCard
-        className="mb-3 rounded-xl p-4 shadow-sm"
+        className="rounded-3 mb-3 p-4 shadow-sm"
         title="Login to send a real request"
       >
         <FernButton
@@ -136,10 +136,12 @@ export function PlaygroundCardTriggerApiKeyInjected({
   }
 
   return (
-    <FernCard className="mb-2 rounded-xl p-4 shadow-sm">
+    <FernCard className="rounded-3 mb-2 p-4 shadow-sm">
       {error && <Callout intent="error">{errorDescription ?? error}</Callout>}
 
-      <h5 className="text-muted m-0">Login to send a real request</h5>
+      <h5 className="text-(color:--grayscale-a11) m-0">
+        Login to send a real request
+      </h5>
       <div className="my-5 flex justify-center gap-2">
         <FernButton
           size="normal"

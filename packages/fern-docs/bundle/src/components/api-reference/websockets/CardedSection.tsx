@@ -28,9 +28,9 @@ export function CardedSection({
     <section
       {...props}
       id={href}
-      className="border-border-default divide-border-default -mx-4 divide-y rounded-xl border"
+      className="border-border-default divide-border-default rounded-3 -mx-4 divide-y border"
     >
-      <div className="bg-tag-default-soft space-y-4 rounded-t-[inherit] p-4 last:rounded-b-[inherit]">
+      <div className="bg-(--grayscale-a2) space-y-4 rounded-t-[inherit] p-4 last:rounded-b-[inherit]">
         <FernAnchor href={href} asChild>
           <h2 className="relative mt-0 flex items-center">{title}</h2>
         </FernAnchor>

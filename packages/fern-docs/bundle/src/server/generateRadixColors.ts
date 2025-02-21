@@ -19,6 +19,8 @@ const scaleNames = [...grayScaleNames, 'tomato', 'red', 'ruby', 'crimson', 'pink
 'grass', 'brown', 'orange', 'sky', 'mint', 'lime', 'yellow', 'amber'] as const;
 
 export interface ColorPalette {
+  appearance: "light" | "dark";
+
   accentScale: ArrayOf12<string>;
   accentScaleAlpha: ArrayOf12<string>;
   accentScaleWideGamut: ArrayOf12<string>;
@@ -179,6 +181,8 @@ export const generateRadixColors = ({
       : getAlphaColorP3(accentScaleWideGamut[1], backgroundHex, 0.5);
 
   return {
+    appearance,
+
     accentScale: accentScaleHex,
     accentScaleAlpha: accentScaleAlphaHex,
     accentScaleWideGamut: accentScaleWideGamut,

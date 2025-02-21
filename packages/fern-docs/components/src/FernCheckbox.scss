@@ -4,18 +4,18 @@
   }
 
   .fern-checkbox-item {
-    @apply ring-border-default relative mt-0.5 inline-block size-4 rounded-sm ring-1 ring-inset;
+    @apply ring-border-default rounded-1 relative mt-0.5 inline-block size-4 ring-1 ring-inset;
   }
 
   .fern-checkbox-item:hover {
-    @apply bg-tag-primary;
+    @apply bg-(--accent-a3);
   }
 
   .fern-checkbox-item:focus {
-    @apply outline-tag-primary outline outline-4 outline-offset-0;
+    @apply outline-(--accent-a3) outline outline-4 outline-offset-0;
   }
 
   .fern-checkbox-indicator {
-    @apply bg-accent text-accent-contrast flex size-4 items-center justify-center rounded-sm;
+    @apply bg-(--accent) text-(color:--accent-contrast) rounded-1 flex size-4 items-center justify-center;
   }
 }

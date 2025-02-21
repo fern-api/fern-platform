@@ -63,7 +63,9 @@ export function PlaygroundElevenLabsVoiceIdForm(
               {activeItem.label ?? activeItem.value}
             </span>
           ) : (
-            <span className="text-muted">Select an enum...</span>
+            <span className="text-(color:--grayscale-a11)">
+              Select an enum...
+            </span>
           )
         }
         variant="outlined"

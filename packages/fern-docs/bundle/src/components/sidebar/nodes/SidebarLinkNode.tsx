@@ -30,7 +30,9 @@ export function SidebarLinkNode({
       className={className}
       depth={Math.max(depth - 1, 0)}
       title={node.title}
-      rightElement={<ExternalLink className="text-faded size-4 self-center" />}
+      rightElement={
+        <ExternalLink className="text-(color:--grayscale-a9) size-4 self-center" />
+      }
       href={node.url}
       selected={selected}
     />

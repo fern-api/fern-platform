@@ -11,11 +11,11 @@
   }
 
   .toc-root::before {
-    @apply bg-grayscale-a5 h-full;
+    @apply bg-(--grayscale-a5) h-full;
   }
 
   .toc-root::after {
-    @apply bg-accent-a9;
+    @apply bg-(--accent-a9);
 
     height: var(--height, 20px);
     transform: translateY(calc(var(--top, 0px)));

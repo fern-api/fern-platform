@@ -31,7 +31,7 @@ export const SdkCardLayout: React.FC<SdkCardLayout.Props> = ({
   return (
     <div
       className={cn(
-        "flex h-[120px] items-center justify-between rounded-xl border border-neutral-700 bg-neutral-800/20 px-5 py-8",
+        "rounded-3 flex h-[120px] items-center justify-between border border-neutral-700 bg-neutral-800/20 px-5 py-8",
         {
           "cursor-pointer hover:bg-neutral-800/50": onClick != null,
         }
@@ -42,7 +42,7 @@ export const SdkCardLayout: React.FC<SdkCardLayout.Props> = ({
         <div className="mr-5 text-neutral-200">{icon}</div>
         <div className="flex flex-col justify-center gap-px">
           <div className="text-lg font-medium text-neutral-200">{title}</div>
-          <div className="text-muted">{subtitle}</div>
+          <div className="text-(color:--grayscale-a11)">{subtitle}</div>
         </div>
       </div>
       {rightElement}

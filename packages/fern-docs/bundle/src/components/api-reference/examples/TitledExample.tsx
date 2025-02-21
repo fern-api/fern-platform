@@ -44,7 +44,7 @@ export const TitledExample = forwardRef<
   return (
     <div
       className={cn(
-        "bg-card-background after:ring-card-border relative flex flex-col overflow-hidden rounded-xl shadow-sm after:pointer-events-none after:absolute after:inset-0 after:rounded-[inherit] after:ring-1 after:ring-inset after:content-['']",
+        "bg-card-background after:ring-card-border rounded-3 relative flex flex-col overflow-hidden shadow-sm after:pointer-events-none after:absolute after:inset-0 after:rounded-[inherit] after:ring-1 after:ring-inset after:content-['']",
         "max-md:max-h-content-height-padded",
         className
       )}
@@ -52,21 +52,22 @@ export const TitledExample = forwardRef<
       ref={ref}
     >
       <div
-        className={cn("h-10 rounded-t-xl", {
-          "bg-tag-default-soft": intent === "none" || intent === "primary",
-          "bg-tag-warning-soft": intent === "warning",
-          "bg-tag-success-soft": intent === "success",
-          "bg-tag-danger-soft": intent === "danger",
+        className={cn("rounded-t-3 h-10", {
+          "bg-(--grayscale-a2)": intent === "none" || intent === "primary",
+          "bg-(--amber-a2)": intent === "warning",
+          "bg-(--green-a2)": intent === "success",
+          "bg-(--red-a2)": intent === "danger",
         })}
       >
-        <div className="shadow-card-border mx-px flex min-h-10 items-center justify-between rounded-t-xl px-2 shadow-[inset_0_-1px_0_0]">
+        <div className="shadow-card-border rounded-t-3 mx-px flex min-h-10 items-center justify-between px-2 shadow-[inset_0_-1px_0_0]">
           {typeof title === "string" ? (
             <div
               className={cn("px-1 text-sm", {
-                "text-muted": intent === "none" || intent === "primary",
-                "text-intent-warning": intent === "warning",
-                "text-intent-success": intent === "success",
-                "text-intent-danger": intent === "danger",
+                "text-(color:--grayscale-a11)":
+                  intent === "none" || intent === "primary",
+                "text-(color:--amber-a11)": intent === "warning",
+                "text-(color:--green-a11)": intent === "success",
+                "text-(color:--red-a11)": intent === "danger",
               })}
             >
               {title}

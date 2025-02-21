@@ -27,19 +27,21 @@ export function EndpointErrorClient({
   return (
     <button
       className={cn(
-        "space hover:bg-tag-default-soft flex flex-col items-start px-3 py-3 transition-colors",
-        { "bg-tag-default-soft": isSelected },
+        "space hover:bg-(--grayscale-a2) flex flex-col items-start px-3 py-3 transition-colors",
+        { "bg-(--grayscale-a2)": isSelected },
         { "border-border-default border-b": !isLast },
-        { "rounded-t-md": isFirst },
-        { "rounded-b-md": isLast }
+        { "rounded-t-3/2": isFirst },
+        { "rounded-b-3/2": isLast }
       )}
       onClick={onClick}
     >
       <div className="flex items-baseline space-x-2">
-        <div className="bg-tag-danger text-intent-danger rounded-lg px-2 py-1 text-xs">
+        <div className="bg-(--red-a3) text-(color:--red-a11) rounded-2 px-2 py-1 text-xs">
           {error.statusCode}
         </div>
-        <div className="text-muted text-left text-xs">{error.name}</div>
+        <div className="text-(color:--grayscale-a11) text-left text-xs">
+          {error.name}
+        </div>
         {availability != null && (
           <AvailabilityBadge availability={availability} size="sm" rounded />
         )}

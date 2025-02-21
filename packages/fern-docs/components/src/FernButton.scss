@@ -2,7 +2,7 @@
   .fern-button {
     @apply transition-colors hover:transition-none;
     @apply inline-flex items-center justify-center;
-    @apply h-10 rounded-lg px-3 py-1 text-sm sm:h-8;
+    @apply rounded-2 h-10 px-3 py-1 text-sm sm:h-8;
     @apply cursor-pointer;
 
     &.multiline,
@@ -133,32 +133,32 @@
 
     &:not([disabled]) {
       &.minimal {
-        @apply text-muted bg-transparent;
+        @apply text-(color:--grayscale-a11) bg-transparent;
 
         &:hover {
           @apply text-body;
         }
 
-        @apply hover:bg-tag-default data-[selected=true]:bg-tag-default data-[state=checked]:bg-tag-default data-[state=on]:bg-tag-default data-[state=open]:bg-tag-default data-[state=opening]:bg-tag-default;
+        @apply hover:bg-(--grayscale-a3) data-[selected=true]:bg-(--grayscale-a3) data-[state=checked]:bg-(--grayscale-a3) data-[state=on]:bg-(--grayscale-a3) data-[state=open]:bg-(--grayscale-a3) data-[state=opening]:bg-(--grayscale-a3);
 
         &.primary {
-          @apply text-accent-a11 hover:text-accent-a11;
-          @apply hover:bg-tag-primary data-[selected=true]:bg-tag-primary data-[state=checked]:bg-tag-primary data-[state=on]:bg-tag-primary data-[state=open]:bg-tag-primary data-[state=opening]:bg-tag-primary;
+          @apply text-(color:--accent-a11) hover:text-(color:--accent-a11);
+          @apply hover:bg-(--accent-a3) data-[selected=true]:bg-(--accent-a3) data-[state=checked]:bg-(--accent-a3) data-[state=on]:bg-(--accent-a3) data-[state=open]:bg-(--accent-a3) data-[state=opening]:bg-(--accent-a3);
         }
 
         &.success {
-          @apply text-intent-success hover:text-intent-success;
-          @apply hover:bg-tag-success data-[selected=true]:bg-tag-success data-[state=checked]:bg-tag-success data-[state=on]:bg-tag-success data-[state=open]:bg-tag-success data-[state=opening]:bg-tag-success;
+          @apply text-(color:--green-a11) hover:text-(color:--green-a11);
+          @apply hover:bg-(--green-a3) data-[selected=true]:bg-(--green-a3) data-[state=checked]:bg-(--green-a3) data-[state=on]:bg-(--green-a3) data-[state=open]:bg-(--green-a3) data-[state=opening]:bg-(--green-a3);
         }
 
         &.warning {
-          @apply text-intent-warning hover:text-intent-warning;
-          @apply hover:bg-tag-warning data-[selected=true]:bg-tag-warning data-[state=checked]:bg-tag-warning data-[state=on]:bg-tag-warning data-[state=open]:bg-tag-warning data-[state=opening]:bg-tag-warning;
+          @apply text-(color:--amber-a11) hover:text-(color:--amber-a11);
+          @apply hover:bg-(--amber-a3) data-[selected=true]:bg-(--amber-a3) data-[state=checked]:bg-(--amber-a3) data-[state=on]:bg-(--amber-a3) data-[state=open]:bg-(--amber-a3) data-[state=opening]:bg-(--amber-a3);
         }
 
         &.danger {
-          @apply text-intent-danger hover:text-intent-danger;
-          @apply hover:bg-tag-danger data-[selected=true]:bg-tag-danger data-[state=checked]:bg-tag-danger data-[state=on]:bg-tag-danger data-[state=open]:bg-tag-danger data-[state=opening]:bg-tag-danger;
+          @apply text-(color:--red-a11) hover:text-(color:--red-a11);
+          @apply hover:bg-(--red-a3) data-[selected=true]:bg-(--red-a3) data-[state=checked]:bg-(--red-a3) data-[state=on]:bg-(--red-a3) data-[state=open]:bg-(--red-a3) data-[state=opening]:bg-(--red-a3);
         }
       }
 
@@ -174,50 +174,50 @@
         }
 
         &.primary {
-          @apply text-accent-contrast bg-accent hover:bg-accent;
+          @apply text-(color:--accent-contrast) bg-(--accent) hover:bg-(--accent);
 
           &:hover,
           &[data-state="on"],
           &[data-state="checked"],
           &[data-state="open"],
           &[data-state="opening"] {
-            @apply text-accent-contrast bg-accent-tinted;
+            @apply text-(color:--accent-contrast) bg-(--accent-a10);
           }
         }
 
         &.success {
-          @apply bg-intent-success text-white dark:text-black;
+          @apply bg-(--green-a11) text-white dark:text-black;
 
           &:hover,
           &[data-state="on"],
           &[data-state="checked"],
           &[data-state="open"],
           &[data-state="opening"] {
-            @apply bg-intent-success-lightened text-white dark:text-black;
+            @apply bg-(--green-a12) text-white dark:text-black;
           }
         }
 
         &.warning {
-          @apply bg-intent-warning text-white dark:text-black;
+          @apply bg-(--amber-a11) text-white dark:text-black;
 
           &:hover,
           &[data-state="on"],
           &[data-state="checked"],
           &[data-state="open"],
           &[data-state="opening"] {
-            @apply bg-intent-warning-lightened text-white dark:text-black;
+            @apply bg-(--amber-a12) text-white dark:text-black;
           }
         }
 
         &.danger {
-          @apply bg-intent-danger text-white dark:text-black;
+          @apply bg-(--red-a11) text-white dark:text-black;
 
           &:hover,
           &[data-state="on"],
           &[data-state="checked"],
           &[data-state="open"],
           &[data-state="opening"] {
-            @apply bg-intent-danger-lightened text-white dark:text-black;
+            @apply bg-(--red-a12) text-white dark:text-black;
           }
         }
       }
@@ -231,54 +231,54 @@
         &[data-state="checked"],
         &[data-state="open"],
         &[data-state="opening"] {
-          @apply text-body bg-tag-default;
+          @apply text-body bg-(--grayscale-a3);
         }
 
         &.primary {
-          @apply text-accent-a11 ring-border-primary;
+          @apply text-(color:--accent-a11) ring-(--accent-a5);
 
           &:hover,
           &[data-state="on"],
           &[data-state="checked"],
           &[data-state="open"],
           &[data-state="opening"] {
-            @apply text-accent-aaa bg-tag-primary;
+            @apply text-(color:--accent-a12) bg-(--accent-a3);
           }
         }
 
         &.success {
-          @apply text-intent-success ring-border-success;
+          @apply text-(color:--green-a11) ring-(--green-a5);
 
           &:hover,
           &[data-state="on"],
           &[data-state="checked"],
           &[data-state="open"],
           &[data-state="opening"] {
-            @apply bg-tag-success text-intent-success;
+            @apply bg-(--green-a3) text-(color:--green-a11);
           }
         }
 
         &.warning {
-          @apply text-intent-warning ring-border-warning;
+          @apply text-(color:--amber-a11) ring-(--amber-a5);
 
           &:hover,
           &[data-state="on"],
           &[data-state="checked"],
           &[data-state="open"],
           &[data-state="opening"] {
-            @apply bg-tag-warning text-intent-warning;
+            @apply bg-(--amber-a3) text-(color:--amber-a11);
           }
         }
 
         &.danger {
-          @apply text-intent-danger ring-border-danger;
+          @apply text-(color:--red-a11) ring-(--red-a5);
 
           &:hover,
           &[data-state="on"],
           &[data-state="checked"],
           &[data-state="open"],
           &[data-state="opening"] {
-            @apply bg-tag-danger text-intent-danger;
+            @apply bg-(--red-a3) text-(color:--red-a11);
           }
         }
       }

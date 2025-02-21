@@ -64,7 +64,7 @@ export const PlaygroundEndpointPath: FC<PlaygroundEndpointPathProps> = ({
 
   return (
     <div className="playground-endpoint">
-      <div className="bg-tag-default flex h-10 min-w-0 flex-1 shrink items-center gap-2 rounded-lg px-4 py-2 max-sm:h-8 max-sm:px-2 max-sm:py-1 sm:rounded-[20px]">
+      <div className="bg-(--grayscale-a3) rounded-2 flex h-10 min-w-0 flex-1 shrink items-center gap-2 px-4 py-2 max-sm:h-8 max-sm:px-2 max-sm:py-1 sm:rounded-[20px]">
         {method != null && (
           <HttpMethodBadge
             method={method}
@@ -103,9 +103,10 @@ export const PlaygroundEndpointPath: FC<PlaygroundEndpointPathProps> = ({
                   <span
                     key={idx}
                     className={cn({
-                      "text-accent-a11 bg-accent-highlight rounded px-1 before:content-[':']":
+                      "text-(color:--accent-a11) bg-(--accent-a3) rounded-1 px-1 before:content-[':']":
                         stateValue.length === 0,
-                      "text-accent-a11 font-semibold": stateValue.length > 0,
+                      "text-(color:--accent-a11) font-semibold":
+                        stateValue.length > 0,
                     })}
                   >
                     {stateValue.length > 0
@@ -144,7 +145,7 @@ export const PlaygroundEndpointPath: FC<PlaygroundEndpointPathProps> = ({
 
                     <span>{queryParameter.key}</span>
                     <span>{"="}</span>
-                    <span className={"text-accent-a11 font-semibold"}>
+                    <span className={"text-(color:--accent-a11) font-semibold"}>
                       {encodeURI(stateValue)}
                     </span>
                   </Fragment>

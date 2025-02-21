@@ -174,7 +174,7 @@ const MemoizedTooltip = memo(
           side="right"
           sideOffset={16}
           align="start"
-          className="max-h-(--radix-tooltip-content-available-height) [&_mark]:bg-accent-a3 [&_mark]:text-accent-a11 max-w-[min(var(--radix-tooltip-content-available-width),384px)] space-y-2"
+          className="max-h-(--radix-tooltip-content-available-height) [&_mark]:bg-(--accent-a3) [&_mark]:text-(color:--accent-a11) max-w-[min(var(--radix-tooltip-content-available-width),384px)] space-y-2"
           avoidCollisions
           animate={false}
           collisionPadding={10}

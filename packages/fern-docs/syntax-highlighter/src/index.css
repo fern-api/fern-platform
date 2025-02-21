@@ -39,7 +39,7 @@
 
   .code-block-line-gutter > span {
     @apply pl-3;
-    color: var(--color-grayscale-a9, var(--gray-a9));
+    color: var(--grayscale-a9, var(--gray-a9));
   }
 
   .code-block-line-content {
@@ -62,7 +62,7 @@
 
   .code-block-line-group:not(.highlight-focus) .code-block-line.highlight {
     @apply shadow-transparent transition-[background,shadow];
-    background-color: var(--color-accent-2);
+    background-color: var(--accent-2);
   }
 
   .code-block-line-group:not(.highlight-focus)

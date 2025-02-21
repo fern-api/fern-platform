@@ -23,7 +23,9 @@ export function WithSeparator({
           orientation="horizontal"
           className="bg-border-default h-px flex-1"
         />
-        <div className="text-muted shrink text-sm">{separatorText}</div>
+        <div className="text-(color:--grayscale-a11) shrink text-sm">
+          {separatorText}
+        </div>
         <Separator
           orientation="horizontal"
           className="bg-border-default h-px flex-1"

@@ -129,7 +129,8 @@ export const FeedbackForm: FC<FeedbackFormProps> = ({
         htmlFor="feedbackReason"
         className={cn({
           "text-lg font-semibold": layoutDensity === "verbose",
-          "text-muted text-sm font-medium": layoutDensity === "condensed",
+          "text-(color:--grayscale-a11) text-sm font-medium":
+            layoutDensity === "condensed",
         })}
       >
         {legend}
@@ -184,7 +185,7 @@ export const FeedbackForm: FC<FeedbackFormProps> = ({
       <FernButton
         full={true}
         intent="primary"
-        className="mt-4 rounded-md"
+        className="rounded-3/2 mt-4"
         type="submit"
         disabled={feedbackId == null}
         size={layoutDensity === "verbose" ? "large" : "normal"}

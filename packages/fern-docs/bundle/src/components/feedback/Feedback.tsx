@@ -112,7 +112,7 @@ export const Feedback: FC<FeedbackProps> = ({
     <div className={className} ref={ref}>
       {!sent ? (
         <div className="flex flex-wrap items-center justify-start gap-4">
-          <span className="text-muted text-sm font-medium">
+          <span className="text-(color:--grayscale-a11) text-sm font-medium">
             {feedbackQuestion}
           </span>
           <div className="flex gap-2">
@@ -168,7 +168,7 @@ export const Feedback: FC<FeedbackProps> = ({
         </div>
       ) : (
         <div className="flex h-6 items-center">
-          <span className="text-muted text-xs">
+          <span className="text-(color:--grayscale-a11) text-xs">
             Thank you for your feedback!
           </span>
         </div>

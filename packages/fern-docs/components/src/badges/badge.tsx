@@ -45,7 +45,7 @@ const badgeVariants = cva("fern-docs-badge", {
       "outlined-subtle": "outlined-subtle",
     },
     rounded: {
-      true: "rounded",
+      true: "rounded-full",
     },
     interactive: {
       true: "interactive",

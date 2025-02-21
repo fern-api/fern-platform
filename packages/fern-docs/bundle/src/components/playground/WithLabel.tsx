@@ -113,7 +113,7 @@ export const WithLabelInternal: FC<
               content={<Markdown mdx={description} size="xs" />}
               delayDuration={0}
             >
-              <HelpCircle className="text-muted size-4 self-center" />
+              <HelpCircle className="text-(color:--grayscale-a11) size-4 self-center" />
             </FernTooltip>
           )}
 
@@ -121,11 +121,13 @@ export const WithLabelInternal: FC<
             <AvailabilityBadge availability={availability} />
           )}
           <span className="whitespace-nowrap text-xs">
-            <span className="text-muted">{typeShorthand}</span>
+            <span className="text-(color:--grayscale-a11)">
+              {typeShorthand}
+            </span>
           </span>
 
           {isList && Array.isArray(value) && value.length > 0 && (
-            <span className="text-muted whitespace-nowrap text-xs">
+            <span className="text-(color:--grayscale-a11) whitespace-nowrap text-xs">
               ({value.length} {value.length === 1 ? "item" : "items"})
             </span>
           )}

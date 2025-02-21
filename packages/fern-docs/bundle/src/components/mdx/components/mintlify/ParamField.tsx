@@ -41,9 +41,9 @@ export const ParamField: React.FC<
           <span>{type}</span>
           {defaultProp && <span>Defaults to {defaultProp}</span>}
           {deprecated && (
-            <span className="text-intent-warning">Deprecated</span>
+            <span className="text-(color:--amber-a11)">Deprecated</span>
           )}
-          {required && <span className="text-intent-danger">Required</span>}
+          {required && <span className="text-(color:--red-a11)">Required</span>}
         </div>
       </div>
       {children && (

@@ -1,50 +1,50 @@
 @layer components {
   .fern-card {
     @apply text-body bg-card-background border-border-default hover:text-body border transition-all hover:transition-none;
-    box-shadow: 0 1px 2px var(--color-grayscale-a3);
+    box-shadow: 0 1px 2px var(--grayscale-a3);
 
     @variant dark {
-      box-shadow: 0 2px 4px var(--color-grayscale-a3);
+      box-shadow: 0 2px 4px var(--grayscale-a3);
     }
 
     &.interactive {
       &.active {
-        border-color: var(--color-accent-a9);
+        border-color: var(--accent-a9);
         box-shadow:
-          0 1px 2px var(--color-grayscale-a3),
-          0 3px 6px var(--color-grayscale-a3);
+          0 1px 2px var(--grayscale-a3),
+          0 3px 6px var(--grayscale-a3);
 
         @variant dark {
           box-shadow:
-            0 2px 4px var(--color-grayscale-a3),
-            0 2px 24px var(--color-grayscale-a3);
+            0 2px 4px var(--grayscale-a3),
+            0 2px 24px var(--grayscale-a3);
         }
       }
 
       @variant hover {
         box-shadow:
-          0 1px 2px var(--color-grayscale-a3),
-          0 3px 6px var(--color-grayscale-a3);
-        border-color: var(--color-accent-a9);
+          0 1px 2px var(--grayscale-a3),
+          0 3px 6px var(--grayscale-a3);
+        border-color: var(--accent-a9);
 
         @variant dark {
           box-shadow:
-            0 2px 4px var(--color-grayscale-a3),
-            0 2px 24px var(--color-grayscale-a3);
+            0 2px 4px var(--grayscale-a3),
+            0 2px 24px var(--grayscale-a3);
         }
       }
     }
 
     &.elevated {
-      border-color: var(--color-accent-a9);
+      border-color: var(--accent-a9);
       box-shadow:
-        0 1px 2px var(--color-grayscale-a3),
-        0 3px 6px var(--color-grayscale-a3);
+        0 1px 2px var(--grayscale-a3),
+        0 3px 6px var(--grayscale-a3);
 
       @variant dark {
         box-shadow:
-          0 2px 4px var(--color-grayscale-a3),
-          0 2px 24px var(--color-grayscale-a3);
+          0 2px 4px var(--grayscale-a3),
+          0 2px 24px var(--grayscale-a3);
       }
     }
 

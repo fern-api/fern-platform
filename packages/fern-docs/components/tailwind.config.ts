@@ -25,8 +25,8 @@ export default {
             "--tw-prose-pre-bg": "initial",
             "--tw-prose-th-borders": "var(--border)",
             "--tw-prose-td-borders": "var(--border)",
-            "--tw-prose-bullets": "var(--color-grayscale-a8)",
-            "--tw-prose-counters": "var(--color-grayscale-a9)",
+            "--tw-prose-bullets": "var(--grayscale-a8)",
+            "--tw-prose-counters": "var(--grayscale-a9)",
             "tbody td[rowspan]:first-child, tfoot td[rowspan]:first-child": {
               paddingRight: em(8, 14),
             },
@@ -54,7 +54,7 @@ export default {
         },
         sm: {
           css: {
-            color: "var(--color-grayscale-a11)",
+            color: "var(--grayscale-a11)",
             p: {
               marginTop: "0.25rem",
             },
@@ -78,13 +78,13 @@ export default {
             "--tw-prose-invert-pre-bg": "initial",
             "--tw-prose-invert-th-borders": "var(--border)",
             "--tw-prose-invert-td-borders": "var(--border)",
-            "--tw-prose-invert-bullets": "var(--color-grayscale-a8)",
-            "--tw-prose-invert-counters": "var(--color-grayscale-a9)",
+            "--tw-prose-invert-bullets": "var(--grayscale-a8)",
+            "--tw-prose-invert-counters": "var(--grayscale-a9)",
           },
         },
         "invert-sm": {
           css: {
-            color: "var(--color-grayscale-a11)",
+            color: "var(--grayscale-a11)",
           },
         },
       },
@@ -101,54 +101,50 @@ export default {
         },
 
         ".callout-soft": {
-          "@apply bg-tag-default ring-0": {},
+          "@apply bg-(--grayscale-a3) ring-0": {},
         },
         ".callout-soft-success": {
-          "@apply bg-tag-success ring-0": {},
+          "@apply bg-(--green-a3) ring-0": {},
         },
         ".callout-soft-warning": {
-          "@apply bg-tag-warning ring-0": {},
+          "@apply bg-(--amber-a3) ring-0": {},
         },
         ".callout-soft-danger": {
-          "@apply bg-tag-danger ring-0": {},
+          "@apply bg-(--red-a3) ring-0": {},
         },
 
         ".callout-outlined": {
-          "@apply bg-tag-default-soft ring-1 ring-inset ring-border-default-soft":
+          "@apply bg-(--grayscale-a2) ring-1 ring-inset ring-border-default-soft":
             {},
         },
         ".callout-outlined-success, .callout-outlined-tip, .callout-outlined-check":
           {
-            "@apply bg-tag-success-soft ring-1 ring-inset ring-border-success-soft":
-              {},
+            "@apply bg-(--green-a2) ring-1 ring-inset ring-(--green-a4)": {},
           },
         ".callout-outlined-warning": {
-          "@apply bg-tag-warning-soft ring-1 ring-inset ring-border-warning-soft":
-            {},
+          "@apply bg-(--amber-a2) ring-1 ring-inset ring-(--amber-a4)": {},
         },
         ".callout-outlined-danger": {
-          "@apply bg-tag-danger-soft ring-1 ring-inset ring-border-danger-soft":
-            {},
+          "@apply bg-(--red-a2) ring-1 ring-inset ring-(--red-a4)": {},
         },
         ".callout-outlined-primary": {
-          "@apply bg-tag-primary-soft ring-1 ring-inset ring-border-primary-soft":
-            {},
+          "@apply bg-(--accent-a2) ring-1 ring-inset ring-(--accent-a4)": {},
         },
         ".callout-outlined-info": {
-          "@apply bg-tag-info-soft ring-1 ring-inset ring-border-info-soft": {},
+          "@apply bg-(--blue-a2) ring-1 ring-inset ring-(--info-a4)": {},
         },
 
         ".callout-outlined-ghost": {
           "@apply ring-1 ring-inset ring-border-default-soft": {},
         },
         ".callout-outlined-ghost-success": {
-          "@apply ring-1 ring-inset ring-border-success-soft": {},
+          "@apply ring-1 ring-inset ring-(--green-a4)": {},
         },
         ".callout-outlined-ghost-warning": {
-          "@apply ring-1 ring-inset ring-border-warning-soft": {},
+          "@apply ring-1 ring-inset ring-(--amber-a4)": {},
         },
         ".callout-outlined-ghost-danger": {
-          "@apply ring-1 ring-inset ring-border-danger-soft": {},
+          "@apply ring-1 ring-inset ring-(--red-a4)": {},
         },
       });
     }),

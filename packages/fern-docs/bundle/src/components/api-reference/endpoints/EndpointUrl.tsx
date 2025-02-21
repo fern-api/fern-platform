@@ -64,7 +64,10 @@ export const EndpointUrl = React.forwardRef<
           literal.value.split(/(?=\/)|(?<=\/)/).forEach((value, j) => {
             if (value === "/") {
               elements.push(
-                <span key={`separator-${i}-${j}`} className="text-faded">
+                <span
+                  key={`separator-${i}-${j}`}
+                  className="text-(color:--grayscale-a9)"
+                >
                   {"/"}
                 </span>
               );
@@ -72,7 +75,7 @@ export const EndpointUrl = React.forwardRef<
               elements.push(
                 <span
                   key={`part-${i}-${j}`}
-                  className="text-faded whitespace-nowrap"
+                  className="text-(color:--grayscale-a9) whitespace-nowrap"
                 >
                   {value}
                 </span>
@@ -84,7 +87,7 @@ export const EndpointUrl = React.forwardRef<
           elements.push(
             <span
               key={`part-${i}`}
-              className="bg-accent-highlight text-accent-a11 whitespace-nowrap rounded px-1"
+              className="bg-(--accent-a3) text-(color:--accent-a11) rounded-1 whitespace-nowrap px-1"
             >
               :{pathParameter.value}
             </span>
@@ -120,7 +123,7 @@ export const EndpointUrl = React.forwardRef<
 
       <div className={cn("flex items-center")}>
         <span
-          className={`inline-flex shrink items-baseline ${isHovered ? "hover:bg-tag-default" : ""} cursor-default rounded-md p-1`}
+          className={`inline-flex shrink items-baseline ${isHovered ? "hover:bg-(--grayscale-a3)" : ""} rounded-3/2 cursor-default p-1`}
         >
           <CopyToClipboardButton
             content={() =>
@@ -149,8 +152,8 @@ export const EndpointUrl = React.forwardRef<
                         baseUrl={baseUrl}
                         environmentId={environmentId}
                         options={options}
-                        urlTextStyle="text-muted"
-                        protocolTextStyle="text-faded"
+                        urlTextStyle="text-(color:--grayscale-a11)"
+                        protocolTextStyle="text-(color:--grayscale-a9)"
                         isEditingEnvironment={isEditingEnvironment}
                         editable
                       />
@@ -159,7 +162,9 @@ export const EndpointUrl = React.forwardRef<
                   {!showEnvironment &&
                     environmentBasepath &&
                     environmentBasepath !== "/" && (
-                      <span className="text-muted">{environmentBasepath}</span>
+                      <span className="text-(color:--grayscale-a11)">
+                        {environmentBasepath}
+                      </span>
                     )}
                   {pathParts}
                 </span>

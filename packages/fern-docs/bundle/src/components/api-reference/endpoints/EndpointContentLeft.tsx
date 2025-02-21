@@ -164,8 +164,8 @@ export async function EndpointContentLeft({
 
                   // {isAuth && (
                   //   <div className="absolute right-0 top-3">
-                  //     <div className="bg-tag-danger flex h-5 items-center rounded-xl px-2">
-                  //       <span className="text-intent-danger text-xs">Auth</span>
+                  //     <div className="bg-(--red-a3) flex h-5 items-center rounded-3 px-2">
+                  //       <span className="text-(color:--red-a11) text-xs">Auth</span>
                   //     </div>
                   //   </div>
                   // )}
@@ -214,7 +214,7 @@ export async function EndpointContentLeft({
               <MdxServerComponentProseSuspense
                 serialize={serialize}
                 size="sm"
-                className="text-muted my-3"
+                className="text-(color:--grayscale-a11) my-3"
                 mdx={endpoint.requests[0].description}
                 fallback={createEndpointRequestDescriptionFallback(
                   endpoint.requests[0],
@@ -242,7 +242,7 @@ export async function EndpointContentLeft({
                 <MdxServerComponentProseSuspense
                   serialize={serialize}
                   size="sm"
-                  className="text-muted my-3"
+                  className="text-(color:--grayscale-a11) my-3"
                   mdx={endpoint.responses[0].description}
                   fallback={
                     <ResponseSummaryFallback

@@ -1,10 +1,10 @@
 @layer components {
   a.fern-anchor {
-    @apply relative flex size-6 items-center rounded-md border-0;
+    @apply rounded-3/2 relative flex size-6 items-center border-0;
   }
 
   .fern-anchor-icon {
-    @apply absolute left-0 flex size-6 items-center justify-center rounded-md;
+    @apply rounded-3/2 absolute left-0 flex size-6 items-center justify-center;
 
     > svg {
       @apply size-4;
@@ -12,14 +12,14 @@
   }
 
   .fern-anchor-icon:not(.copied) {
-    @apply text-muted bg-card-background ring-card-border ring-1 backdrop-blur;
+    @apply text-(color:--grayscale-a11) bg-card-background ring-card-border ring-1 backdrop-blur;
   }
 
   .fern-anchor-icon.copied {
-    @apply bg-tag-primary ring-border-primary ring-1 backdrop-blur;
+    @apply bg-(--accent-a3) ring-(--accent-a5) ring-1 backdrop-blur;
 
     > svg {
-      @apply text-accent-a11;
+      @apply text-(color:--accent-a11);
     }
   }
 }

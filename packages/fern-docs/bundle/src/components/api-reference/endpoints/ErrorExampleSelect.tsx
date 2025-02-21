@@ -77,8 +77,8 @@ export const ErrorExampleSelect: FC<
         </FernButton>
       </Select.Trigger>
       <Select.Portal>
-        <Select.Content className="bg-card-background ring-border-default z-50 overflow-hidden rounded-md shadow-2xl ring-1 ring-inset backdrop-blur">
-          <Select.ScrollUpButton className="text-accent-a11 bg-card-background flex h-8 cursor-default items-center justify-center">
+        <Select.Content className="bg-card-background ring-border-default rounded-3/2 z-50 overflow-hidden shadow-2xl ring-1 ring-inset backdrop-blur">
+          <Select.ScrollUpButton className="text-(color:--accent-a11) bg-card-background flex h-8 cursor-default items-center justify-center">
             <NavArrowUp className="size-icon" />
           </Select.ScrollUpButton>
           <Select.Viewport className="p-[5px]">
@@ -86,7 +86,7 @@ export const ErrorExampleSelect: FC<
               ([statusCode, examples], idx) => (
                 <Fragment key={statusCode}>
                   {idx > 0 && (
-                    <Select.Separator className="bg-tag-default m-[5px] h-px" />
+                    <Select.Separator className="bg-(--grayscale-a3) m-[5px] h-px" />
                   )}
                   <Select.Group>
                     {examples.map((example, j) => {
@@ -105,7 +105,7 @@ export const ErrorExampleSelect: FC<
               )
             )}
           </Select.Viewport>
-          <Select.ScrollDownButton className="text-accent-a11 bg-card-background flex h-8 cursor-default items-center justify-center">
+          <Select.ScrollDownButton className="text-(color:--accent-a11) bg-card-background flex h-8 cursor-default items-center justify-center">
             <NavArrowDown className="size-icon" />
           </Select.ScrollDownButton>
         </Select.Content>
@@ -124,13 +124,13 @@ export const FernSelectItem = forwardRef<
   return (
     <Select.Item
       className={cn(
-        "text-body data-[disabled]:text-disabled relative flex h-8 select-none items-center rounded-[3px] pl-2 pr-4 text-sm leading-none data-[disabled]:pointer-events-none data-[highlighted]:outline-none",
+        "text-body data-[disabled]:text-(color:--grayscale-a10) relative flex h-8 select-none items-center rounded-[3px] pl-2 pr-4 text-sm leading-none data-[disabled]:pointer-events-none data-[highlighted]:outline-none",
         {
-          "data-[highlighted]:bg-tag-default":
+          "data-[highlighted]:bg-(--grayscale-a3)":
             intent === "none" || intent === "primary",
-          "data-[highlighted]:bg-tag-warning": intent === "warning",
-          "data-[highlighted]:bg-tag-success": intent === "success",
-          "data-[highlighted]:bg-tag-danger": intent === "danger",
+          "data-[highlighted]:bg-(--amber-a3)": intent === "warning",
+          "data-[highlighted]:bg-(--green-a3)": intent === "success",
+          "data-[highlighted]:bg-(--red-a3)": intent === "danger",
         },
         className
       )}

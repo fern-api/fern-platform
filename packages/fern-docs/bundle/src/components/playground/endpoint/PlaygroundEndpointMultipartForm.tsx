@@ -267,7 +267,7 @@ export function PlaygroundEndpointMultipartForm({
               text={
                 <span>
                   {`${hiddenFields.length} ${hiddenFields.length > 0 ? "more " : ""}optional field${hiddenFields.length > 1 ? "s" : ""}`}
-                  <span className="text-muted ml-2 font-mono text-xs opacity-50">
+                  <span className="text-(color:--grayscale-a11) ml-2 font-mono text-xs opacity-50">
                     {hiddenFields.map((field) => field.key).join(", ")}
                   </span>
                 </span>

@@ -78,7 +78,7 @@ export function VerticalSplitPane({
         onMouseDown={resizeY.onMouseDown}
         onTouchStart={resizeY.onTouchStart}
       >
-        <div className="bg-border-primary group-active:bg-accent relative z-10 mx-auto h-0.5 w-full rounded-full group-active:transition-[background]" />
+        <div className="bg-(--accent-a5) group-active:bg-(--accent) relative z-10 mx-auto h-0.5 w-full rounded-full group-active:transition-[background]" />
       </div>
       <div className={cn(belowClassName, "min-h-0 flex-1 shrink")}>{below}</div>
     </div>
@@ -163,7 +163,7 @@ export function HorizontalSplitPane({
         onTouchStart={resizeX.onTouchStart}
         style={{ height: rizeBarHeight ?? "100%" }}
       >
-        <div className="bg-border-primary group-active:bg-accent relative z-10 h-full w-0.5 rounded-full group-active:transition-[background]" />
+        <div className="bg-(--accent-a5) group-active:bg-(--accent) relative z-10 h-full w-0.5 rounded-full group-active:transition-[background]" />
       </div>
       <div className={cn(rightClassName, "relative min-w-0 flex-1 shrink")}>
         {right}

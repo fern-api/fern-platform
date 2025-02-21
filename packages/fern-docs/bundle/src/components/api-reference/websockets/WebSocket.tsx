@@ -132,14 +132,17 @@ export async function WebSocketContent({
               title={
                 <span className="inline-flex items-center gap-2">
                   {"Handshake"}
-                  <span className="bg-tag-default inline-block rounded-full p-1">
-                    <Wifi className="text-muted size-icon" strokeWidth={1.5} />
+                  <span className="bg-(--grayscale-a3) inline-block rounded-full p-1">
+                    <Wifi
+                      className="text-(color:--grayscale-a11) size-icon"
+                      strokeWidth={1.5}
+                    />
                   </span>
                 </span>
               }
               slug={node.slug}
               headingElement={
-                <div className="border-border-default -mx-2 flex items-center justify-between rounded-xl border px-2 py-1 transition-colors">
+                <div className="border-border-default rounded-3 -mx-2 flex items-center justify-between border px-2 py-1 transition-colors">
                   <EndpointUrlWithPlaygroundBaseUrl endpoint={channel} />
                   <CopyWithBaseUrl channel={channel} />
                 </div>
@@ -207,7 +210,7 @@ export async function WebSocketContent({
                   title={
                     <span className="inline-flex items-center gap-2">
                       {"Send"}
-                      <span className="text-intent-success bg-tag-success inline-block rounded-full p-1">
+                      <span className="text-(color:--green-a11) bg-(--green-a3) inline-block rounded-full p-1">
                         <ArrowUp className="size-icon" />
                       </span>
                     </span>
@@ -227,7 +230,7 @@ export async function WebSocketContent({
                   title={
                     <span className="inline-flex items-center gap-2">
                       {"Receive"}
-                      <span className="text-accent-aaa bg-tag-primary inline-block rounded-full p-1">
+                      <span className="text-(color:--accent-a12) bg-(--accent-a3) inline-block rounded-full p-1">
                         <ArrowDown className="size-icon" />
                       </span>
                     </span>

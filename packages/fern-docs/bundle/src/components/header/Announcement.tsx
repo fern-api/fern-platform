@@ -39,7 +39,7 @@ const AnnouncementInternal = React.forwardRef<
       className={cn("overflow-hidden", className)}
     >
       <motion.div
-        className="bg-accent text-accent-contrast flex min-h-8 items-center px-4 md:px-6 lg:px-8"
+        className="bg-(--accent) text-(color:--accent-contrast) flex min-h-8 items-center px-4 md:px-6 lg:px-8"
         exit={{ y: "-100%" }}
       >
         <div className="max-w-page-width mx-auto flex-1 text-center">
@@ -48,7 +48,7 @@ const AnnouncementInternal = React.forwardRef<
         <FernButton
           variant="minimal"
           className="absolute right-0"
-          icon={<Xmark className="!text-accent-contrast" />}
+          icon={<Xmark className="!text-(color:--accent-contrast)" />}
           onClick={dismiss}
         />
       </motion.div>

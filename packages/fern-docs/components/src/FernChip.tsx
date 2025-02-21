@@ -49,15 +49,15 @@ export const FernChip = forwardRef<HTMLButtonElement, FernChipProps>(
           {
             "h-[18px] min-w-[18px] px-1.5 text-[10px]": size === "sm",
             "h-6 min-w-6 px-2 py-1 text-xs": size === "lg",
-            "rounded-md": size === "sm" && !rounded,
-            "rounded-lg": size === "lg" && !rounded,
+            "rounded-3/2": size === "sm" && !rounded,
+            "rounded-2": size === "lg" && !rounded,
             "rounded-full": rounded,
           },
           {
             // Gray
-            "bg-grayscale-a3 text-grayscale-a12 hover:bg-grayscale-a4":
+            "bg-(--grayscale-a3) text-(color:--grayscale-a12) hover:bg-(--grayscale-a4)":
               colorScheme === "gray" && variant === "subtle",
-            "bg-grayscale-a12 text-background hover:bg-grayscale-a11":
+            "bg-(--grayscale-a12) text-background hover:bg-(--grayscale-a11)":
               colorScheme === "gray" && variant === "solid",
 
             // Green
@@ -85,9 +85,9 @@ export const FernChip = forwardRef<HTMLButtonElement, FernChipProps>(
               colorScheme === "red" && variant === "solid",
 
             // Accent
-            "bg-accent/20 text-accent-aaa hover:bg-accent/25":
+            "bg-(--accent)/20 text-(color:--accent-a12) hover:bg-(--accent)/25":
               colorScheme === "accent" && variant === "subtle",
-            "text-accent-contrast bg-accent hover:bg-accent-tinted":
+            "text-(color:--accent-contrast) bg-(--accent) hover:bg-(--accent-a10)":
               colorScheme === "accent" && variant === "solid",
           },
           className

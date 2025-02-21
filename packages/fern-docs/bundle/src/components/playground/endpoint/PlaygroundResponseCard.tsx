@@ -36,20 +36,22 @@ export function PlaygroundResponseCard({
     isBinaryOctetStreamAudioPlayerAtom
   );
   return (
-    <FernCard className="flex min-w-0 flex-1 shrink flex-col overflow-hidden rounded-xl shadow-sm">
+    <FernCard className="rounded-3 flex min-w-0 flex-1 shrink flex-col overflow-hidden shadow-sm">
       <div className="border-border-default flex h-10 w-full shrink-0 items-center justify-between border-b px-3 py-2">
-        <span className="text-muted text-xs uppercase">Response</span>
+        <span className="text-(color:--grayscale-a11) text-xs uppercase">
+          Response
+        </span>
 
         {response.type === "loaded" && (
           <div className="flex items-center gap-2 text-xs">
             <span
               className={cn(
-                "flex h-5 items-center rounded-md px-1.5 py-1 font-mono",
+                "rounded-3/2 flex h-5 items-center px-1.5 py-1 font-mono",
                 {
-                  ["bg-accent-a3 text-accent-a11"]:
+                  ["bg-(--accent-a3) text-(color:--accent-a11)"]:
                     response.value.response.status >= 200 &&
                     response.value.response.status < 300,
-                  ["bg-(--red-a3) text-(--red-a11)"]:
+                  ["bg-(--red-a3) text-(color:--red-a11)"]:
                     response.value.response.status > 300,
                 }
               )}
@@ -58,7 +60,7 @@ export function PlaygroundResponseCard({
             </span>
             <span
               className={
-                "bg-tag-default flex h-5 items-center rounded-md px-1.5 py-1 font-mono"
+                "bg-(--grayscale-a3) rounded-3/2 flex h-5 items-center px-1.5 py-1 font-mono"
               }
             >
               time: {round(response.value.time, 2)}ms
@@ -68,7 +70,7 @@ export function PlaygroundResponseCard({
               response.value.size.trim().length > 0 && (
                 <span
                   className={
-                    "bg-tag-default flex h-5 items-center rounded-md px-1.5 py-1 font-mono"
+                    "bg-(--grayscale-a3) rounded-3/2 flex h-5 items-center px-1.5 py-1 font-mono"
                   }
                 >
                   size: {response.value.size}b
@@ -112,7 +114,7 @@ export function PlaygroundResponseCard({
               />
             ),
           failed: () => (
-            <span className="bg-tag-danger text-intent-danger flex items-center rounded-[4px] p-1 font-mono text-xs uppercase leading-none">
+            <span className="bg-(--red-a3) text-(color:--red-a11) flex items-center rounded-[4px] p-1 font-mono text-xs uppercase leading-none">
               Failed
             </span>
           ),

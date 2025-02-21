@@ -47,7 +47,7 @@ export const FernRadioGroup = forwardRef<HTMLDivElement, FernRadioGroupProps>(
                       {item.label}
                     </div>
                     {item.helperText && (
-                      <p className="text-muted mb-0 text-sm">
+                      <p className="text-(color:--grayscale-a11) mb-0 text-sm">
                         {item.helperText}
                       </p>
                     )}

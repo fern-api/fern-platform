@@ -1,6 +1,6 @@
 @layer components {
   .card-icon {
-    @apply text-accent-a11 size-6;
+    @apply text-(color:--accent-a11) size-6;
   }
 
   .card-icon > svg,

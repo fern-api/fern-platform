@@ -40,7 +40,7 @@ export const Card: React.FC<Card.Props> = ({
   badge,
 }) => {
   const className = cn(
-    "not-prose relative block rounded-xl border p-6 text-base"
+    "not-prose rounded-3 relative block border p-6 text-base"
   );
 
   const content = (
@@ -78,7 +78,9 @@ export const Card: React.FC<Card.Props> = ({
         ) : null}
         <div className="w-full space-y-1 overflow-hidden">
           <div className="text-body text-base font-semibold">{title}</div>
-          {children != null && <div className="text-muted">{children}</div>}
+          {children != null && (
+            <div className="text-(color:--grayscale-a11)">{children}</div>
+          )}
         </div>
       </div>
     </>

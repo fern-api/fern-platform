@@ -80,7 +80,10 @@ export async function WebhookContent({
                   <EndpointSection
                     title="Payload"
                     description={
-                      <Prose className="text-muted my-3" size="sm">
+                      <Prose
+                        className="text-(color:--grayscale-a11) my-3"
+                        size="sm"
+                      >
                         {`The payload of this webhook request is ${renderTypeShorthand(webhook.payloads[0].shape, { withArticle: true }, types)}.`}
                       </Prose>
                     }

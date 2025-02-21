@@ -1,9 +1,9 @@
 @layer components {
   .fern-search-bar {
     @apply cursor-pointer;
-    @apply text-muted border-border-default flex items-center rounded-lg border-none px-2.5 py-2 text-sm;
-    @apply bg-tag-default;
-    @apply hover:bg-tag-default-hover transition-[background,shadow];
+    @apply text-(color:--grayscale-a11) border-border-default rounded-2 flex items-center border-none px-2.5 py-2 text-sm;
+    @apply bg-(--grayscale-a3);
+    @apply hover:bg-(--grayscale-a4) transition-[background,shadow];
     @apply ring-border-default hover:ring-border-default ring-1 ring-inset;
     @apply max-sm:h-10 max-sm:text-base;
 
@@ -11,12 +11,12 @@
       @apply inline-flex flex-1 items-center space-x-2.5;
 
       span {
-        @apply text-faded;
+        @apply text-(color:--grayscale-a9);
       }
     }
 
     .keyboard-shortcut-hint {
-      @apply text-muted size-icon-md shadow-card-light ring-card-border inline-flex items-center justify-center rounded font-mono text-xs leading-none ring-1;
+      @apply text-(color:--grayscale-a11) size-icon-md shadow-card-light ring-card-border rounded-1 inline-flex items-center justify-center font-mono text-xs leading-none ring-1;
       @apply bg-card-background dark:shadow-card-dark;
     }
 
@@ -25,18 +25,18 @@
     }
 
     &:disabled {
-      @apply bg-tag-default-soft cursor-default shadow-none;
+      @apply bg-(--grayscale-a2) cursor-default shadow-none;
     }
   }
 
   .fern-mdx-link {
-    @apply text-accent-a11;
+    @apply text-(color:--accent-a11);
     @apply font-semibold;
 
     text-decoration-line: underline;
     text-decoration-color: currentColor;
     text-decoration-thickness: 1px;
-    text-underline-offset: var(--spacing);
+    text-underline-offset: --spacing(1);
 
     h1 &,
     h2 &,
@@ -73,7 +73,7 @@
   }
 
   .fern-api-property-meta {
-    @apply text-muted inline-flex items-baseline gap-2 text-xs;
+    @apply text-(color:--grayscale-a11) inline-flex items-baseline gap-2 text-xs;
   }
 
   .custom-backdrop [data-rmiz-modal-overlay="visible"] {

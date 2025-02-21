@@ -25,7 +25,7 @@ export const CodeExampleClientDropdown: React.FC<
     className: "group/option",
     icon: (
       <FaIcon
-        className="size-icon-sm text-body group-data-[highlighted]/option:text-accent-contrast"
+        className="size-icon-sm text-body group-data-[highlighted]/option:text-(color:--accent-contrast)"
         icon={getIconForClient(language)}
       />
     ),
@@ -42,7 +42,7 @@ export const CodeExampleClientDropdown: React.FC<
         <FernButton
           icon={
             <FaIcon
-              className="text-accent-a11 size-4"
+              className="text-(color:--accent-a11) size-4"
               icon={getIconForClient(value)}
             />
           }

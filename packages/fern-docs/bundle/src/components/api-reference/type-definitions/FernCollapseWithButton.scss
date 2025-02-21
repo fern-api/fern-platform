@@ -1,6 +1,6 @@
 @layer components {
   .fern-collapsible-card {
-    @apply border-border-default overflow-clip rounded-lg border max-md:rounded-xl;
+    @apply border-border-default rounded-2 max-md:rounded-3 overflow-clip border;
 
     .fern-collapse-trigger {
       @apply w-full rounded-none;

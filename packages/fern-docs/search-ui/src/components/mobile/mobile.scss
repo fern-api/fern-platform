@@ -52,13 +52,13 @@
 
       @media (hover: hover) and (pointer: fine) {
         &[data-selected="true"] {
-          background-color: var(--color-accent-a3);
-          color: var(--color-accent-a11);
+          background-color: var(--accent-a3);
+          color: var(--accent-a11);
 
           .fern-search-hit-breadcrumb,
           .fern-search-hit-snippet,
           .fern-search-hit-endpoint-path {
-            color: var(--color-accent-a11);
+            color: var(--accent-a11);
             opacity: 0.8;
           }
         }
@@ -66,7 +66,7 @@
     }
 
     [data-cmdk-empty] {
-      color: var(--color-grayscale-a9);
+      color: var(--grayscale-a9);
 
       padding: 2rem;
       text-align: center;
@@ -77,7 +77,7 @@
     [data-cmdk-group-heading] {
       font-size: 0.75rem;
       font-weight: 600;
-      color: var(--color-grayscale-a9);
+      color: var(--grayscale-a9);
 
       padding: 0 1rem;
       margin-bottom: 0.5rem;

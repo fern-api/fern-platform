@@ -42,7 +42,7 @@ export const FernTooltip: FC<FernTooltipProps> = ({
           collisionPadding={6}
           {...props}
           className={cn(
-            "bg-background-translucent border-border-default animate-popover max-w-xs rounded-lg border p-2 text-xs leading-none shadow-sm backdrop-blur will-change-[transform,opacity]",
+            "bg-background-translucent border-border-default animate-popover rounded-2 max-w-xs border p-2 text-xs leading-none shadow-sm backdrop-blur will-change-[transform,opacity]",
             props.className
           )}
         >

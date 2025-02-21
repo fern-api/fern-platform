@@ -14,7 +14,7 @@
   .fern-header,
   .fern-header-tabs,
   .fern-sidebar-container {
-    @apply border-border-default rounded-lg border;
+    @apply border-border-default rounded-2 border;
   }
 
   .fern-sidebar-container {
@@ -72,7 +72,7 @@
     }
 
     .fern-header-tab-button {
-      @apply flex h-[40px] select-none items-center rounded-lg border px-3 text-sm;
+      @apply rounded-2 flex h-[40px] select-none items-center border px-3 text-sm;
     }
 
     .fern-header-tab-button[data-state="inactive"] {

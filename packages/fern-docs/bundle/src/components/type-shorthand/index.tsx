@@ -41,7 +41,7 @@ export function renderTypeShorthandRoot(
           false
         )
       ) : !isResponse ? (
-        <span className="text-intent-danger">Required</span>
+        <span className="text-(color:--red-a11)">Required</span>
       ) : (
         false
       )}
@@ -154,7 +154,7 @@ function toPrimitiveTypeLabelsString({
 //     return (
 //         <span className="fern-api-property-meta">
 //             <span>{property.type === "file" ? "file" : property.type === "fileArray" ? "files" : "unknown"}</span>
-//             {property.isOptional ? <span>Optional</span> : <span className="text-intent-danger">Required</span>}
+//             {property.isOptional ? <span>Optional</span> : <span className="text-(color:--red-a11)">Required</span>}
 //         </span>
 //     );
 // }

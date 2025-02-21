@@ -69,7 +69,7 @@ export function SidebarApiLeafNode({
   //     if (node.availability == null) {
   //         return undefined;
   //     }
-  //     return <AvailabilityBadge availability={node.availability} size="sm" rounded className="ms-1" />;
+  //     return <AvailabilityBadge availability={node.availability} size="sm" rounded-1 className="ms-1" />;
   // };
 
   return (

@@ -1,5 +1,13 @@
 @import "tailwindcss";
-@import "../../index.css";
+@import "@fern-docs/components/src/colors.css";
+@import "@fern-docs/components/src/fern-accent.scss";
+@import "@fern-docs/components/src/kbd.css";
+@import "@fern-docs/components/src/badges/index.scss";
+@import "@fern-docs/syntax-highlighter/src/index.css";
+@import "../../components/shared/reset.css";
+
+@source "../../../../components";
+
 @config "./tailwind.config.ts";
 
 @plugin "@tailwindcss/typography";
@@ -51,8 +59,8 @@
       helvetica neue,
       sans-serif;
 
-    @apply text-grayscale-12;
-    background-color: var(--color-background);
+    color: var(--grayscale-12);
+    background-color: var(--background);
   }
 
   * {

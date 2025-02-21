@@ -16,15 +16,15 @@
   }
 
   .fern-radio-item:hover {
-    @apply bg-tag-primary;
+    @apply bg-(--accent-a3);
   }
 
   .fern-radio-item:focus {
-    @apply outline-tag-primary outline outline-4 outline-offset-0;
+    @apply outline-(--accent-a3) outline outline-4 outline-offset-0;
   }
 
   .fern-radio-indicator {
-    @apply bg-accent flex size-4 items-center justify-center rounded-full;
+    @apply bg-(--accent) flex size-4 items-center justify-center rounded-full;
   }
 
   .fern-radio-indicator::after {

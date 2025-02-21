@@ -44,8 +44,8 @@ export function EndpointExampleSegmentedControl({
             <span
               className={
                 exampleKey === selectedExample?.exampleKey
-                  ? "text-accent-aa"
-                  : "text-faded"
+                  ? "text-(color:--accent-a11)"
+                  : "text-(color:--grayscale-a9)"
               }
             >
               {(exampleKey === selectedExample?.exampleKey

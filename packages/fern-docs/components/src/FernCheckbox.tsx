@@ -30,7 +30,11 @@ export const FernCheckbox: FC<FernCheckboxProps> = ({
 
     <div className="ml-2 flex-1">
       <div className={cn("text-sm font-semibold", labelClassName)}>{label}</div>
-      {helperText && <p className="text-muted mb-0 text-xs">{helperText}</p>}
+      {helperText && (
+        <p className="text-(color:--grayscale-a11) mb-0 text-xs">
+          {helperText}
+        </p>
+      )}
       {children}
     </div>
   </label>

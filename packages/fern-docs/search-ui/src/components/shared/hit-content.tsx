@@ -93,7 +93,7 @@ function HitContentWithTitle({
             />
           )}
         </span>
-        <span className="text-grayscale-a10 text-sm">
+        <span className="text-(color:--grayscale-a10) text-sm">
           {
             SEGMENT_DISPLAY_NAMES[
               hit.type === "api-reference" ? hit.api_type : hit.type

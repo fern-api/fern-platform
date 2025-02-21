@@ -131,7 +131,9 @@ export const PlaygroundDiscriminatedUnionForm =
                     {activeVariant.discriminantValue}
                   </span>
                 ) : (
-                  <span className="text-muted">Select a variant...</span>
+                  <span className="text-(color:--grayscale-a11)">
+                    Select a variant...
+                  </span>
                 )
               }
               rightIcon={<NavArrowDown />}

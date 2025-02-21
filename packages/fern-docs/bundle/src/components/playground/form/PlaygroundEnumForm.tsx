@@ -74,7 +74,9 @@ export const PlaygroundEnumForm = memo<PlaygroundEnumFormProps>((props) => {
           activeItem != null ? (
             <span className="font-mono">{activeItem.value}</span>
           ) : (
-            <span className="text-muted">Select an enum...</span>
+            <span className="text-(color:--grayscale-a11)">
+              Select an enum...
+            </span>
           )
         }
         variant="outlined"

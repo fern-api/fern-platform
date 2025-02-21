@@ -122,7 +122,7 @@ export const TableOfContents: React.FC<TableOfContents.Props> = ({
   return (
     <>
       {tableOfContents.length > 0 && (
-        <div className="text-grayscale-a11 m-0 mb-3 text-sm font-medium">
+        <div className="text-(color:--grayscale-a11) m-0 mb-3 text-sm font-medium">
           On this page
         </div>
       )}

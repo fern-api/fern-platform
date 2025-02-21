@@ -132,7 +132,7 @@ function renderTypeShorthandFormDataField(
       {property.isOptional ? (
         <span>Optional</span>
       ) : (
-        <span className="text-intent-danger">Required</span>
+        <span className="text-(color:--red-a11)">Required</span>
       )}
     </span>
   );

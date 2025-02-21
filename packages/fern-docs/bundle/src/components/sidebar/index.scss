@@ -9,7 +9,7 @@
 
     > svg {
       @apply mr-3 size-4 shrink-0;
-      color: var(--color-grayscale-a9);
+      color: var(--grayscale-a9);
     }
   }
 
@@ -28,10 +28,10 @@
 
   .fern-sidebar-link-container {
     @apply relative flex min-h-[36px] items-stretch;
-    @apply data-[state=active]:text-accent-a11;
+    @apply data-[state=active]:text-(color:--accent-a11);
 
     &:not(.top-level) {
-      @apply data-[state=inactive]:text-grayscale-a11;
+      @apply data-[state=inactive]:text-(color:--grayscale-a11);
     }
   }
 
@@ -49,34 +49,34 @@
 
   .fern-sidebar-link-container[data-state="active"] {
     .fern-sidebar-link-indent::after {
-      @apply border-accent-a7 absolute inset-y-1 -left-px border-l;
+      @apply border-(--accent-a7) absolute inset-y-1 -left-px border-l;
 
       content: "";
     }
 
     .fern-sidebar-icon {
-      @apply text-accent-a10;
+      @apply text-(color:--accent-a10);
     }
   }
 
   .fern-sidebar-link-container[data-state="inactive"] {
     .fern-sidebar-icon {
-      @apply text-faded;
+      @apply text-(color:--grayscale-a9);
     }
   }
 
   .fern-sidebar-link {
     @apply relative inline-flex flex-1 content-between items-stretch text-left max-lg:px-4 lg:px-3;
-    @apply max-lg:rounded-none lg:rounded-lg;
+    @apply lg:rounded-2 max-lg:rounded-none;
     @apply overflow-hidden;
   }
 
   .fern-sidebar-link-container[data-state="active"] .fern-sidebar-link {
-    @apply bg-accent-a5;
+    @apply bg-(--accent-a5);
   }
 
   .fern-sidebar-link-container[data-state="inactive"] .fern-sidebar-link {
-    @apply hover:bg-grayscale-a3;
+    @apply hover:bg-(--grayscale-a3);
   }
 
   .fern-sidebar-link-content {
@@ -100,7 +100,7 @@
 
   .fern-sidebar-link-expand {
     @apply relative flex w-10 items-center justify-center rounded-none ease-out lg:w-6;
-    @apply lg:rounded-lg;
+    @apply lg:rounded-2;
 
     &:last-child {
       @apply -mr-3 ml-1 flex;
@@ -108,7 +108,7 @@
   }
 
   .fern-sidebar-link-expand[data-state="active"] {
-    @apply text-accent-a11 after:bg-tag-primary after:pointer-events-none after:absolute after:inset-1 after:rounded-xl after:content-[''] lg:after:rounded-md;
+    @apply text-(color:--accent-a11) after:bg-(--accent-a3) lg:after:rounded-3/2 after:rounded-3 after:pointer-events-none after:absolute after:inset-1 after:content-[''];
   }
 
   .fern-sidebar-tabs {

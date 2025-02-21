@@ -82,7 +82,7 @@ export function TabGroup({
         {tabs.map(({ props: { title = "Untitled", id = "" } }) => (
           <RadixTabs.Trigger key={id} value={id} asChild>
             <h6
-              className="text-body hover:border-border-default data-[state=active]:t-accent data-[state=active]:border-accent -mb-px flex max-w-max cursor-pointer scroll-mt-4 whitespace-nowrap border-b border-transparent pb-2.5 pt-3 text-sm font-semibold leading-6"
+              className="text-body hover:border-border-default data-[state=active]:text-(color:--accent) data-[state=active]:border-(--accent) -mb-px flex max-w-max cursor-pointer scroll-mt-4 whitespace-nowrap border-b border-transparent pb-2.5 pt-3 text-sm font-semibold leading-6"
               id={id}
             >
               {title}

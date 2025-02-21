@@ -22,7 +22,7 @@
       @apply max-w-content-width relative mx-auto min-w-0 flex-auto shrink;
 
       .fern-changelog-date {
-        @apply text-muted mb-8 text-base lg:hidden;
+        @apply text-(color:--grayscale-a11) mb-8 text-base lg:hidden;
       }
     }
 
@@ -30,7 +30,7 @@
       @apply hidden w-64 flex-initial shrink-0 lg:block;
 
       .fern-changelog-date {
-        @apply text-muted top-header-height-padded sticky mb-8 text-base;
+        @apply text-(color:--grayscale-a11) top-header-height-padded sticky mb-8 text-base;
       }
     }
   }
@@ -50,7 +50,7 @@
       @apply max-w-content-width relative mr-6 min-w-0 flex-auto shrink;
 
       .fern-changelog-date {
-        @apply text-muted mb-8 text-base xl:hidden;
+        @apply text-(color:--grayscale-a11) mb-8 text-base xl:hidden;
       }
     }
 
@@ -58,7 +58,7 @@
       @apply -mt-2 hidden w-72 pl-4 text-right xl:block;
 
       .fern-changelog-date {
-        @apply text-muted top-header-height-padded sticky text-base;
+        @apply text-(color:--grayscale-a11) top-header-height-padded sticky text-base;
       }
     }
   }

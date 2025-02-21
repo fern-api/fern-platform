@@ -10,7 +10,7 @@ import { cn } from "./cn";
 export const FernSelect: FC<Select.SelectProps> = () => (
   <Select.Root>
     <Select.Trigger
-      className="text-violet11 hover:bg-mauve3 data-[placeholder]:text-violet9 px-icon inline-flex h-[35px] items-center justify-center gap-[5px] rounded bg-white text-[13px] leading-none shadow-[0_2px_10px] shadow-black/10 outline-none focus:shadow-[0_0_0_2px] focus:shadow-black"
+      className="text-violet11 hover:bg-mauve3 data-[placeholder]:text-violet9 px-icon rounded-1 inline-flex h-[35px] items-center justify-center gap-[5px] bg-white text-[13px] leading-none shadow-[0_2px_10px] shadow-black/10 outline-none focus:shadow-[0_0_0_2px] focus:shadow-black"
       aria-label="Food"
     >
       <Select.Value placeholder="Select a fruit…" />
@@ -19,7 +19,7 @@ export const FernSelect: FC<Select.SelectProps> = () => (
       </Select.Icon>
     </Select.Trigger>
     <Select.Portal>
-      <Select.Content className="overflow-hidden rounded-md bg-white shadow-[0px_10px_38px_-10px_rgba(22,_23,_24,_0.35),0px_10px_20px_-15px_rgba(22,_23,_24,_0.2)]">
+      <Select.Content className="rounded-3/2 overflow-hidden bg-white shadow-[0px_10px_38px_-10px_rgba(22,_23,_24,_0.35),0px_10px_20px_-15px_rgba(22,_23,_24,_0.2)]">
         <Select.ScrollUpButton className="text-violet11 flex h-[25px] cursor-default items-center justify-center bg-white">
           <NavArrowUp className="size-icon" />
         </Select.ScrollUpButton>

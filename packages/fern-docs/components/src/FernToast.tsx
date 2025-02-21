@@ -33,19 +33,25 @@ export const Toaster: React.FC<ToasterProps> = ({
         unstyled: true,
         classNames: {
           toast:
-            "rounded-lg border border-border-default bg-background w-full flex items-start p-2 pl-3 shadow-xl",
+            "rounded-2 border border-border-default bg-background w-full flex items-start p-2 pl-3 shadow-xl",
           title: "text-body-text text-sm font-medium",
-          description: "text-muted text-sm",
+          description: "text-(color:--grayscale-a11) text-sm",
           icon: "flex items-center justify-center mt-[2px]",
         },
       }}
       icons={{
-        success: <CheckCircle className="size-icon text-muted" />,
-        info: <InfoCircle className="size-icon text-muted" />,
-        warning: <WarningCircle className="size-icon text-muted" />,
-        error: <XmarkCircle className="size-icon text-muted" />,
+        success: (
+          <CheckCircle className="size-icon text-(color:--grayscale-a11)" />
+        ),
+        info: <InfoCircle className="size-icon text-(color:--grayscale-a11)" />,
+        warning: (
+          <WarningCircle className="size-icon text-(color:--grayscale-a11)" />
+        ),
+        error: (
+          <XmarkCircle className="size-icon text-(color:--grayscale-a11)" />
+        ),
         loading: (
-          <SystemRestart className="size-icon text-muted animate-spin" />
+          <SystemRestart className="size-icon text-(color:--grayscale-a11) animate-spin" />
         ),
       }}
     />

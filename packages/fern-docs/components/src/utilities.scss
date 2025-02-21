@@ -40,7 +40,7 @@
 }
 
 @utility m-mdx {
-  @apply mt-4 mb-6 first:mt-0;
+  @apply mb-6 mt-4 first:mt-0;
 }
 
 @utility text-body {
@@ -51,70 +51,68 @@
   }
 }
 
-@layer utilities {
-  @keyframes collapsible-closed {
-    0% {
-      height: var(--radix-collapsible-content-height);
-      opacity: 1;
-    }
+@keyframes collapsible-closed {
+  0% {
+    height: var(--radix-collapsible-content-height);
+    opacity: 1;
+  }
 
-    100% {
-      height: 0;
-      opacity: 0;
+  100% {
+    height: 0;
+    opacity: 0;
+  }
+}
+
+@keyframes collapsible-open {
+  0% {
+    height: 0;
+    opacity: 0;
+  }
+
+  100% {
+    height: var(--radix-collapsible-content-height);
+    opacity: 1;
+  }
+}
+
+@keyframes slide-up {
+  0% {
+    transform: translateY(0);
+  }
+
+  100% {
+    transform: translateY(-100%);
+  }
+}
+
+@keyframes slide-down {
+  0% {
+    transform: translateY(-100%);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@utility fern-collapsible {
+  overflow: hidden;
+
+  &[data-state="open"] {
+    animation: collapsible-open 0.18s var(--ease-collapse) none;
+
+    .fern-collapsible-child {
+      animation: slide-down 0.18s var(--ease-collapse) none;
+      width: var(--radix-collapsible-content-width);
     }
   }
 
-  @keyframes collapsible-open {
-    0% {
-      height: 0;
-      opacity: 0;
-    }
+  &[data-state="closed"] {
+    animation: collapsible-closed 0.18s var(--ease-collapse) none;
 
-    100% {
-      height: var(--radix-collapsible-content-height);
-      opacity: 1;
-    }
-  }
-
-  @keyframes slide-up {
-    0% {
-      transform: translateY(0);
-    }
-
-    100% {
-      transform: translateY(-100%);
-    }
-  }
-
-  @keyframes slide-down {
-    0% {
-      transform: translateY(-100%);
-    }
-
-    100% {
-      transform: translateY(0);
-    }
-  }
-
-  .fern-collapsible {
-    overflow: hidden;
-
-    &[data-state="open"] {
-      animation: collapsible-open 0.18s var(--ease-collapse) none;
-
-      .fern-collapsible-child {
-        animation: slide-down 0.18s var(--ease-collapse) none;
-        width: var(--radix-collapsible-content-width);
-      }
-    }
-
-    &[data-state="closed"] {
-      animation: collapsible-closed 0.18s var(--ease-collapse) none;
-
-      .fern-collapsible-child {
-        animation: slide-up 0.18s var(--ease-collapse) none;
-        width: var(--radix-collapsible-content-width);
-      }
+    .fern-collapsible-child {
+      animation: slide-up 0.18s var(--ease-collapse) none;
+      width: var(--radix-collapsible-content-width);
     }
   }
 }

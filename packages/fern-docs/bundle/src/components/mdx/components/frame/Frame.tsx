@@ -17,17 +17,17 @@ export const Frame: FC<PropsWithChildren<Frame.Props>> = ({
   return (
     <figure
       className={cn(
-        "not-prose fern-card relative mb-6 mt-4 overflow-hidden rounded-xl p-2 first:mt-0",
+        "not-prose fern-card rounded-3 relative mb-6 mt-4 overflow-hidden p-2 first:mt-0",
         {
-          "bg-tag-default-soft": background === "subtle",
+          "bg-(--grayscale-a2)": background === "subtle",
         }
       )}
     >
-      <div className="relative flex justify-center overflow-hidden rounded-lg shadow-sm">
+      <div className="rounded-2 relative flex justify-center overflow-hidden shadow-sm">
         {children}
       </div>
       {caption && (
-        <figcaption className="text-muted relative mt-3 flex justify-center px-8 pb-2 pt-0 text-sm">
+        <figcaption className="text-(color:--grayscale-a11) relative mt-3 flex justify-center px-8 pb-2 pt-0 text-sm">
           {caption}
         </figcaption>
       )}

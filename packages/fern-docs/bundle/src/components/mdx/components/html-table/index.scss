@@ -1,6 +1,6 @@
 @layer components {
   .fern-table-root {
-    @apply border-grayscale-a5 dark:bg-grayscale-a2 rounded-md border bg-white/70;
+    @apply border-(--grayscale-a5) dark:bg-(--grayscale-a2) rounded-3/2 border bg-white/70;
     @apply overflow-hidden text-sm backdrop-blur-2xl;
 
     /* hack to make the table scrollable */
@@ -12,13 +12,13 @@
     @apply w-full;
 
     thead tr th {
-      @apply bg-tag-default-soft;
+      @apply bg-(--grayscale-a2);
     }
 
     td,
     th {
       @apply h-9 p-2 text-left;
-      @apply border-grayscale-a5 border-b;
+      @apply border-(--grayscale-a5) border-b;
     }
 
     tbody > tr:last-child > td {
@@ -33,16 +33,16 @@
   .fern-table-root.fullscreen .fern-table thead th {
     @apply sticky top-0;
 
-    box-shadow: inset 0 -1px var(--color-grayscale-a5);
+    box-shadow: inset 0 -1px var(--grayscale-a5);
     border-bottom: 0;
 
     &::after {
-      @apply bg-grayscale-a2 pointer-events-none absolute inset-0 content-[''];
+      @apply bg-(--grayscale-a2) pointer-events-none absolute inset-0 content-[''];
     }
   }
 
   .fern-table-root.fullscreen {
-    @apply bg-background-translucent rounded-lg text-base shadow-2xl;
+    @apply bg-background-translucent rounded-2 text-base shadow-2xl;
 
     .fern-table th,
     .fern-table td {

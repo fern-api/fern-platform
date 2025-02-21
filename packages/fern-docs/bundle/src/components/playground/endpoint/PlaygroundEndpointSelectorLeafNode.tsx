@@ -122,7 +122,7 @@ function renderTextWithHighlight(
   );
   return parts.map((part, idx) =>
     part.toLowerCase() === highlight.toLowerCase() ? (
-      <mark className="text-body bg-accent-highlight" key={idx}>
+      <mark className="text-body bg-(--accent-a3)" key={idx}>
         {part}
       </mark>
     ) : (

@@ -22,7 +22,9 @@ export const PlaygroundButton: FC<{
         content={
           <span>
             Customize and run in{" "}
-            <span className="text-accent-a11 font-semibold">API Explorer</span>
+            <span className="text-(color:--accent-a11) font-semibold">
+              API Explorer
+            </span>
           </span>
         }
       >

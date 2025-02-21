@@ -104,14 +104,14 @@ function MobileFacetMenu({
           side="bottom"
           avoidCollisions
           align="start"
-          className="border-grayscale-a5 bg-grayscale-a1 absolute z-50 min-w-[220px] overflow-hidden rounded-lg border p-0 shadow-lg backdrop-blur-lg"
+          className="border-border-concealed bg-(--grayscale-surface) rounded-2 absolute z-50 min-w-[220px] overflow-hidden border p-0 shadow-lg backdrop-blur-lg"
           hidden={isLoading || optionsWithCurrent.length === 0}
         >
           <Menubar.RadioGroup value={value} onValueChange={updateFilter}>
             {optionsWithCurrent.map(({ value, count }, idx) => (
               <Fragment key={value}>
                 {idx > 0 && (
-                  <Menubar.Separator className="bg-grayscale-a5 h-px" />
+                  <Menubar.Separator className="bg-border-concealed h-px" />
                 )}
                 <Menubar.RadioItem
                   value={value}
@@ -129,7 +129,7 @@ function MobileFacetMenu({
                     </span>
 
                     <Menubar.ItemIndicator>
-                      <Check className="text-accent-a9 size-4" />
+                      <Check className="text-(color:--accent-a9) size-4" />
                     </Menubar.ItemIndicator>
                   </MenubarItem>
                 </Menubar.RadioItem>
@@ -137,11 +137,11 @@ function MobileFacetMenu({
             ))}
             {value != null && (
               <Menubar.Group>
-                <Menubar.Separator className="bg-grayscale-a5 h-px" />
+                <Menubar.Separator className="bg-(--grayscale-a5) h-px" />
                 <Menubar.Item onClick={removeFilter} asChild>
                   <MenubarItem>
                     Remove filter
-                    <Minus className="text-grayscale-a9 size-4" />
+                    <Minus className="text-(color:--grayscale-a9) size-4" />
                   </MenubarItem>
                 </Menubar.Item>
               </Menubar.Group>
@@ -218,7 +218,7 @@ const MenubarItem = forwardRef<HTMLDivElement, Menubar.MenubarItemProps>(
         ref={ref}
         {...props}
         className={cn(
-          "focus:bg-accent-a3 flex cursor-pointer items-center justify-between px-4 py-2 focus:outline-none",
+          "focus:bg-(--accent-a3) flex cursor-pointer items-center justify-between px-4 py-2 focus:outline-none",
           props.className
         )}
       />

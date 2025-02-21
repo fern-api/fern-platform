@@ -81,7 +81,7 @@ const FernSdkInstallCommand: React.FC<{
     <>
       <pre>
         <code>
-          <span className="text-muted">$</span> {command}
+          <span className="text-(color:--grayscale-a11)">$</span> {command}
         </code>
       </pre>
       <CopyToClipboardButton
@@ -130,7 +130,7 @@ export const FernSdk: React.FC<{
   const activeLanguage = normalizeLanguage(language);
   const activeSdk = activeLanguage && sdks[activeLanguage];
   return (
-    <div className="border-border-default overflow-hidden rounded-lg border">
+    <div className="border-border-default rounded-2 overflow-hidden border">
       <div className="bg-background">
         <div className="px-3 py-2 text-xs font-medium uppercase">
           Client libraries

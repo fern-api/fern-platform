@@ -34,11 +34,11 @@
     box-sizing: inherit;
 
     @apply outline-transparent;
-    @apply focus:outline-border-primary focus-visible:outline-border-primary;
+    @apply focus:outline-(--accent-a5) focus-visible:outline-(--accent-a5);
   }
 
   ::selection {
-    background-color: var(--color-accent-a6);
+    background-color: var(--accent-a6);
   }
 
   code.inline-code {

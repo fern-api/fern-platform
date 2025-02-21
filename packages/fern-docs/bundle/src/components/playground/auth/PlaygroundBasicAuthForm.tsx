@@ -48,7 +48,9 @@ export function PlaygroundBasicAuthForm({
             value={username}
             leftIcon={<User className="size-icon" />}
             rightElement={
-              <span className="text-muted text-xs">{"string"}</span>
+              <span className="text-(color:--grayscale-a11) text-xs">
+                {"string"}
+              </span>
             }
             disabled={disabled}
             resettable={isUsernameResettable}

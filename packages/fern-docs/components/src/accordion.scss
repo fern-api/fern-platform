@@ -1,6 +1,6 @@
 @layer components {
   .fern-accordion {
-    @apply divide-border-default divide-y rounded-lg;
+    @apply divide-border-default rounded-2 divide-y;
 
     li {
       @apply list-outside;
@@ -12,7 +12,7 @@
   }
 
   .fern-accordion-trigger {
-    @apply hover:bg-tag-default flex cursor-pointer items-center gap-3 rounded-[inherit] p-4 transition-colors hover:transition-none data-[state=open]:rounded-b-none;
+    @apply hover:bg-(--grayscale-a3) flex cursor-pointer items-center gap-3 rounded-[inherit] p-4 transition-colors hover:transition-none data-[state=open]:rounded-b-none;
     @apply list-none;
 
     /* Hide the default arrow on WebKit browsers */
@@ -21,7 +21,7 @@
     }
 
     .fern-accordion-trigger-arrow {
-      @apply text-muted ease-shift size-4 shrink-0 transition-transform duration-[400ms];
+      @apply text-(color:--grayscale-a11) ease-shift size-4 shrink-0 transition-transform duration-[400ms];
     }
 
     &[data-state="open"] .fern-accordion-trigger-arrow {

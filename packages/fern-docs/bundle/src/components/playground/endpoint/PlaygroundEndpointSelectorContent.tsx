@@ -77,9 +77,9 @@ export const PlaygroundEndpointSelectorContent = forwardRef<
             {apiGroup.breadcrumb.map((breadcrumb, idx) => (
               <Fragment key={idx}>
                 {idx > 0 && (
-                  <Slash className="size-icon-sm text-faded mx-0.5" />
+                  <Slash className="size-icon-sm text-(color:--grayscale-a9) mx-0.5" />
                 )}
-                <span className="text-accent-a11 shrink truncate whitespace-nowrap text-xs">
+                <span className="text-(color:--accent-a11) shrink truncate whitespace-nowrap text-xs">
                   {breadcrumb}
                 </span>
               </Fragment>

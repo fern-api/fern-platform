@@ -29,11 +29,11 @@ export const WebsocketMessageAccordionItem: FC<
     >
       <Accordion.Trigger
         className={cn("fern-web-socket-trigger", {
-          "data-[state=open]:bg-tag-success":
+          "data-[state=open]:bg-(--green-a3)":
             message.origin === APIV1Read.WebSocketMessageOrigin.Client,
-          "data-[state=open]:bg-tag-primary":
+          "data-[state=open]:bg-(--accent-a3)":
             message.origin === APIV1Read.WebSocketMessageOrigin.Server,
-          "data-[state=open]:bg-tag-default": message.origin == null,
+          "data-[state=open]:bg-(--grayscale-a3)": message.origin == null,
         })}
       >
         {message.origin === APIV1Read.WebSocketMessageOrigin.Client ? (
@@ -81,12 +81,12 @@ export const WebsocketMessageAccordionItem: FC<
         className={cn(
           "pointer-events-none absolute inset-0 z-auto mx-px rounded-[inherit] ring-inset ring-transparent group-focus-within:ring-1",
           {
-            "group-focus-within:ring-border-success":
+            "group-focus-within:ring-(--green-a5)":
               message.origin === APIV1Read.WebSocketMessageOrigin.Client,
-            "group-focus-within:ring-border-primary":
+            "group-focus-within:ring-(--accent-a5)":
               message.origin === APIV1Read.WebSocketMessageOrigin.Server,
             "group-focus-within:ring-border-default": message.origin == null,
-            "mb-px rounded-b-xl": index === messagesLength,
+            "rounded-b-3 mb-px": index === messagesLength,
           }
         )}
       />

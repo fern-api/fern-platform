@@ -35,7 +35,7 @@ export default function ChangelogEntryPageClient({
                 <div className="space-y-1">
                   <div className="not-prose">
                     <FernLink href={addLeadingSlash(content.changelogSlug)}>
-                      <span className="text-accent-a11 inline-flex shrink items-center gap-1 truncate whitespace-nowrap text-sm font-semibold">
+                      <span className="text-(color:--accent-a11) inline-flex shrink items-center gap-1 truncate whitespace-nowrap text-sm font-semibold">
                         <ArrowLeft className="size-icon" />
                         Back to {content.changelogTitle}
                       </span>
@@ -50,7 +50,7 @@ export default function ChangelogEntryPageClient({
                 <Markdown
                   mdx={excerpt}
                   size="lg"
-                  className="prose-p:text-muted mt-2 leading-7"
+                  className="prose-p:text-(color:--grayscale-a11) mt-2 leading-7"
                 />
               </header>
 

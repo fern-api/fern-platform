@@ -6,7 +6,7 @@
 
     &:hover {
       .fern-theme-button-icon {
-        @apply text-accent-a11;
+        @apply text-(color:--accent-a11);
       }
     }
   }

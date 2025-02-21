@@ -77,11 +77,11 @@ export const PlaygroundWebSocketSessionForm: FC<
             .map((message) => (
               <div key={message.type}>
                 <div className="mb-4 px-4">
-                  <h5 className="text-muted m-0">
+                  <h5 className="text-(color:--grayscale-a11) m-0">
                     {message.displayName ?? titleCase(message.type)}
                   </h5>
                 </div>
-                <FernCard className="divide-border-default divide-y rounded-xl shadow-sm">
+                <FernCard className="divide-border-default rounded-3 divide-y shadow-sm">
                   <div className="p-4">
                     <PlaygroundTypeReferenceForm
                       id={message.type}
@@ -112,9 +112,11 @@ export const PlaygroundWebSocketSessionForm: FC<
         className="sticky inset-0 flex py-6 pr-6"
         style={{ height: scrollAreaHeight }}
       >
-        <FernCard className="flex min-w-0 flex-1 shrink flex-col overflow-hidden rounded-xl shadow-sm">
+        <FernCard className="rounded-3 flex min-w-0 flex-1 shrink flex-col overflow-hidden shadow-sm">
           <div className="border-border-default flex h-10 w-full shrink-0 items-center justify-between border-b px-3 py-2">
-            <span className="text-muted text-xs uppercase">Messages</span>
+            <span className="text-(color:--grayscale-a11) text-xs uppercase">
+              Messages
+            </span>
             <div className="flex items-center gap-2">
               {messages.length > 0 && (
                 <FernButton
@@ -127,21 +129,21 @@ export const PlaygroundWebSocketSessionForm: FC<
 
               <span
                 className={cn(
-                  "-mr-1 inline-flex items-center gap-2 rounded-lg px-2 py-0.5",
+                  "rounded-2 -mr-1 inline-flex items-center gap-2 px-2 py-0.5",
                   {
-                    "text-accent-a11 bg-tag-primary": connected,
-                    "bg-tag-danger text-intent-danger": !connected,
+                    "text-(color:--accent-a11) bg-(--accent-a3)": connected,
+                    "bg-(--red-a3) text-(color:--red-a11)": !connected,
                   }
                 )}
               >
                 <span className="relative inline-flex size-2">
                   {connected && (
-                    <span className="bg-accent absolute inline-flex size-full animate-ping rounded-full opacity-75" />
+                    <span className="bg-(--accent) absolute inline-flex size-full animate-ping rounded-full opacity-75" />
                   )}
                   <span
                     className={cn("relative inline-flex size-2 rounded-full", {
-                      "bg-accent": connected,
-                      "bg-border-danger": !connected,
+                      "bg-(--accent)": connected,
+                      "bg-(--red-a5)": !connected,
                     })}
                   ></span>
                 </span>

@@ -7,7 +7,7 @@ export function PlaygroundCardSkeleton({
   children,
 }: PropsWithChildren<{ className?: string }>): ReactElement<any> {
   return (
-    <div className={cn("bg-tag-default rounded-xl", className)}>
+    <div className={cn("bg-(--grayscale-a3) rounded-3", className)}>
       {children && <div className="invisible contents">{children}</div>}
     </div>
   );

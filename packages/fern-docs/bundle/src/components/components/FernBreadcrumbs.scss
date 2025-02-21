@@ -3,11 +3,11 @@
     @apply inline-flex items-center font-semibold;
 
     .fern-breadcrumb-item {
-      @apply text-accent-aa shrink truncate text-sm whitespace-nowrap;
+      @apply text-(color:--accent-a11) shrink truncate whitespace-nowrap text-sm;
     }
 
     .fern-breadcrumb-arrow {
-      @apply text-faded mx-0.5 size-4;
+      @apply text-(color:--grayscale-a9) mx-0.5 size-4;
     }
   }
 }

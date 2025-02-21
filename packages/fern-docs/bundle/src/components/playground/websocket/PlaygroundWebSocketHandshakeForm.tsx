@@ -84,9 +84,9 @@ export const PlaygroundWebSocketHandshakeForm: FC<
         {headers.length > 0 && (
           <div>
             <div className="mb-4 px-4">
-              <h5 className="text-muted m-0">Headers</h5>
+              <h5 className="text-(color:--grayscale-a11) m-0">Headers</h5>
             </div>
-            <FernCard className="rounded-xl p-4 shadow-sm">
+            <FernCard className="rounded-3 p-4 shadow-sm">
               <PlaygroundObjectPropertiesForm
                 id="header"
                 properties={headers}
@@ -103,9 +103,11 @@ export const PlaygroundWebSocketHandshakeForm: FC<
         {channel.pathParameters && channel.pathParameters.length > 0 && (
           <div>
             <div className="mb-4 px-4">
-              <h5 className="text-muted m-0">Path Parameters</h5>
+              <h5 className="text-(color:--grayscale-a11) m-0">
+                Path Parameters
+              </h5>
             </div>
-            <FernCard className="rounded-xl p-4 shadow-sm">
+            <FernCard className="rounded-3 p-4 shadow-sm">
               <PlaygroundObjectPropertiesForm
                 id="path"
                 properties={channel.pathParameters}
@@ -122,9 +124,11 @@ export const PlaygroundWebSocketHandshakeForm: FC<
         {channel.queryParameters && channel.queryParameters.length > 0 && (
           <div>
             <div className="mb-4 px-4">
-              <h5 className="text-muted m-0">Query Parameters</h5>
+              <h5 className="text-(color:--grayscale-a11) m-0">
+                Query Parameters
+              </h5>
             </div>
-            <FernCard className="rounded-xl p-4 shadow-sm">
+            <FernCard className="rounded-3 p-4 shadow-sm">
               <PlaygroundObjectPropertiesForm
                 id="query"
                 properties={channel.queryParameters}

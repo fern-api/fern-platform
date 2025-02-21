@@ -53,14 +53,14 @@ export function FernAudioPlayer(props: FernAudioPlayerProps): ReactElement {
       <div className="relative flex flex-1 flex-col justify-center gap-1">
         <p className="m-0 inline-flex justify-center gap-2 text-center">
           {props.title != null && (
-            <span className="text-accent-a11 max-w-[40vw] truncate">
+            <span className="text-(color:--accent-a11) max-w-[40vw] truncate">
               {props.title}
             </span>
           )}
           {props.author && (
             <>
               <span>&mdash;</span>
-              <span className="text-muted max-w-[20vw] truncate">
+              <span className="text-(color:--grayscale-a11) max-w-[20vw] truncate">
                 {props.author}
               </span>
             </>
@@ -99,7 +99,7 @@ export function FernAudioPlayer(props: FernAudioPlayerProps): ReactElement {
                 isPlaying ? (
                   <Pause />
                 ) : (
-                  <Play className="fill-accent-contrast -mr-0.5" />
+                  <Play className="fill-(--accent-contrast) -mr-0.5" />
                 )
               }
               variant="filled"

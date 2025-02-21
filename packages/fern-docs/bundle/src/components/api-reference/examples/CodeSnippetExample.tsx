@@ -90,7 +90,7 @@ const CodeSnippetExampleInternal: FC<CodeSnippetExample.Props> = ({
     >
       <FernSyntaxHighlighter
         id={id}
-        className="rounded-t-0 rounded-b-[inherit]"
+        className="rounded-b-[inherit] rounded-t-none"
         ref={codeBlockRef}
         style={scrollAreaStyle}
         viewportRef={viewportRef}

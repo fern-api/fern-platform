@@ -36,15 +36,15 @@ export function BottomNavigation({
   return (
     <nav
       aria-label="Up next"
-      className="bg-grayscale-a3 max-w-content-width mx-auto flex rounded-lg p-1 [&>a]:rounded-sm"
+      className="bg-(--grayscale-a3) max-w-content-width [&>a]:rounded-1 rounded-2 mx-auto flex p-1"
     >
       {neighbors.prev && (
         <MaybeFernLink
           href={neighbors.prev.href}
           className="flex h-16 shrink-0 items-center gap-1 px-3 pr-6"
         >
-          <ChevronLeft className="size-icon text-grayscale-a9" />
-          <span className="text-grayscale-a11 hidden text-sm font-medium sm:block">
+          <ChevronLeft className="size-icon text-(color:--grayscale-a9)" />
+          <span className="text-(color:--grayscale-a11) hidden text-sm font-medium sm:block">
             Previous
           </span>
         </MaybeFernLink>
@@ -52,10 +52,10 @@ export function BottomNavigation({
       {neighbors.next && (
         <MaybeFernLink
           href={neighbors.next.href}
-          className="bg-background hover:border-accent-a9 border-grayscale-a6 flex h-16 min-w-0 flex-1 shrink items-center justify-end gap-4 border px-3"
+          className="bg-background hover:border-(--accent-a9) border-(--grayscale-a6) flex h-16 min-w-0 flex-1 shrink items-center justify-end gap-4 border px-3"
         >
           <div className="min-w-0 shrink pl-4 text-right">
-            <h4 className="text-grayscale-a12 truncate text-base font-bold">
+            <h4 className="text-(color:--grayscale-a12) truncate text-base font-bold">
               <React.Suspense fallback={neighbors.next.title}>
                 <MdxServerComponent
                   serialize={serialize}
@@ -64,7 +64,7 @@ export function BottomNavigation({
               </React.Suspense>
             </h4>
             {neighbors.next.excerpt && (
-              <div className="text-grayscale-a11 truncate text-sm [&_p]:truncate">
+              <div className="text-(color:--grayscale-a11) truncate text-sm [&_p]:truncate">
                 <React.Suspense fallback={neighbors.next.excerpt}>
                   <MdxServerComponent
                     serialize={serialize}
@@ -76,13 +76,13 @@ export function BottomNavigation({
           </div>
           <Separator
             orientation="vertical"
-            className="bg-grayscale-a5 hidden h-8 w-px sm:block"
+            className="bg-(--grayscale-a5) hidden h-8 w-px sm:block"
           />
           <span className="inline-flex items-center gap-1">
-            <span className="text-grayscale-a11 hidden text-sm font-medium sm:block">
+            <span className="text-(color:--grayscale-a11) hidden text-sm font-medium sm:block">
               Next
             </span>
-            <ChevronRight className="size-icon text-grayscale-a9" />
+            <ChevronRight className="size-icon text-(color:--grayscale-a9)" />
           </span>
         </MaybeFernLink>
       )}

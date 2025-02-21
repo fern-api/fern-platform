@@ -40,7 +40,7 @@ export function PlaygroundEndpointFormButtons({
       <FernLink
         href={`/${node.slug}`}
         shallow={apiReferenceId === node.apiDefinitionId}
-        className="text-muted hover:t-accent inline-flex items-center gap-1 text-sm font-semibold underline decoration-1 underline-offset-4 hover:decoration-2"
+        className="text-(color:--grayscale-a11) hover:text-(color:--accent) inline-flex items-center gap-1 text-sm font-semibold underline decoration-1 underline-offset-4 hover:decoration-2"
       >
         <span>View in API Reference</span>
         <ArrowUpRight className="size-icon" />

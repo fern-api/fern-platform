@@ -51,7 +51,7 @@ export function PlaygroundMicrophoneForm({
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
-                className="bg-primary text-body absolute inset-0 flex w-full items-center rounded-lg px-2"
+                className="bg-primary text-body rounded-2 absolute inset-0 flex w-full items-center px-2"
               >
                 <div className="flex-1">
                   <div className="flex items-center gap-4">

@@ -27,10 +27,10 @@
   }
 
   .playground-endpoint-baseurl {
-    @apply text-faded;
+    @apply text-(color:--grayscale-a9);
   }
 
   .playground-endpoint:hover .playground-endpoint-baseurl {
-    @apply text-muted;
+    @apply text-(color:--grayscale-a11);
   }
 }

@@ -59,7 +59,7 @@ export function EndpointErrorGroupClient({
 
   return (
     <div
-      className="border-border-default flex flex-col overflow-visible rounded-lg border"
+      className="border-border-default rounded-2 flex flex-col overflow-visible border"
       ref={errorRef}
     >
       {errors.map((error, idx) => (

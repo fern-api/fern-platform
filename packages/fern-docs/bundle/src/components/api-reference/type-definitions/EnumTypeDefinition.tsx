@@ -37,7 +37,7 @@ export function EnumTypeDefinition({
         onValueChange={setSearchInput}
         className="w-full"
         style={{ flex: 1, backgroundColor: "transparent" }}
-        leftIcon={<Search className="text-muted size-4" />}
+        leftIcon={<Search className="text-(color:--grayscale-a11) size-4" />}
         rightElement={
           <FernButton
             icon={
@@ -57,7 +57,7 @@ export function EnumTypeDefinition({
   return (
     <>
       {elements.length < 6 ? (
-        <div className="text-muted flex items-baseline gap-2">
+        <div className="text-(color:--grayscale-a11) flex items-baseline gap-2">
           <span className="shrink-0 text-sm">Allowed values:</span>
           <FernTooltipProvider>
             <span className="inline-flex flex-wrap gap-2">{elements}</span>

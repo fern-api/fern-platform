@@ -131,7 +131,7 @@ export const PlaygroundFileUploadForm = memo<PlaygroundFileUploadFormProps>(
           className="hidden"
         />
         <FernCard
-          className={cn("w-full rounded-lg", {
+          className={cn("rounded-2 w-full", {
             elevated: drag,
           })}
           onDragOver={dragOver}
@@ -195,7 +195,7 @@ export const PlaygroundFileUploadForm = memo<PlaygroundFileUploadFormProps>(
                     </div>
                     <span className="inline-flex min-w-0 shrink items-baseline gap-2">
                       <span className="truncate text-sm">{file.name}</span>
-                      <span className="text-muted text-xs">
+                      <span className="text-(color:--grayscale-a11) text-xs">
                         ({prettyBytes(file.size)})
                       </span>
                     </span>

@@ -51,7 +51,7 @@ export const Callout: FC<PropsWithChildren<Callout.Props>> = ({
   return (
     <div
       className={cn(
-        "mb-6 mt-4 rounded-lg p-4 first:mt-0", // pb-0 to compensate for the ::after margin
+        "rounded-2 mb-6 mt-4 p-4 first:mt-0", // pb-0 to compensate for the ::after margin
         visitDiscriminatedUnion({ intent }, "intent")._visit({
           info: () => "callout-outlined",
           warning: () => "callout-outlined-warning",
@@ -71,11 +71,11 @@ export const Callout: FC<PropsWithChildren<Callout.Props>> = ({
             <FaIcon
               className={cn("card-icon size-icon-md", {
                 "text-body": intent === "info",
-                "text-intent-warning": intent === "warning",
-                "text-intent-success": intent === "success",
-                "text-intent-danger": intent === "error",
-                "text-intent-info": intent === "note",
-                "text-accent-a11": intent === "launch",
+                "text-(color:--amber-a11)": intent === "warning",
+                "text-(color:--green-a11)": intent === "success",
+                "text-(color:--red-a11)": intent === "error",
+                "text-(color:--blue-a11)": intent === "note",
+                "text-(color:--accent-a11)": intent === "launch",
               })}
               icon={icon}
             />
@@ -85,19 +85,25 @@ export const Callout: FC<PropsWithChildren<Callout.Props>> = ({
             visitDiscriminatedUnion({ intent }, "intent")._visit({
               info: () => <InfoCircle className="text-body size-icon-md" />,
               warning: () => (
-                <Bell className="size-icon-md text-intent-warning" />
+                <Bell className="size-icon-md text-(color:--amber-a11)" />
               ),
               success: () => (
-                <CheckCircle className="size-icon-md text-intent-success" />
+                <CheckCircle className="size-icon-md text-(color:--green-a11)" />
               ),
               error: () => (
-                <WarningTriangle className="size-icon-md text-intent-danger" />
+                <WarningTriangle className="size-icon-md text-(color:--red-a11)" />
               ),
-              note: () => <Pin className="size-icon-md text-intent-info" />,
-              launch: () => <Rocket className="text-accent-a11 size-icon-md" />,
-              tip: () => <Star className="size-icon-md text-intent-success" />,
+              note: () => (
+                <Pin className="size-icon-md text-(color:--blue-a11)" />
+              ),
+              launch: () => (
+                <Rocket className="text-(color:--accent-a11) size-icon-md" />
+              ),
+              tip: () => (
+                <Star className="size-icon-md text-(color:--green-a11)" />
+              ),
               check: () => (
-                <Check className="size-icon-md text-intent-success" />
+                <Check className="size-icon-md text-(color:--green-a11)" />
               ),
               _other: () => <InfoCircle className="text-body size-icon-md" />,
             })
@@ -112,13 +118,13 @@ export const Callout: FC<PropsWithChildren<Callout.Props>> = ({
           <div
             className={visitDiscriminatedUnion({ intent }, "intent")._visit({
               info: () => "text-body",
-              warning: () => "text-intent-warning",
-              success: () => "text-intent-success",
-              error: () => "text-intent-danger",
-              note: () => "text-intent-info",
-              launch: () => "text-accent-a11",
-              tip: () => "text-intent-success",
-              check: () => "text-intent-success",
+              warning: () => "text-(color:--amber-a11)",
+              success: () => "text-(color:--green-a11)",
+              error: () => "text-(color:--red-a11)",
+              note: () => "text-(color:--blue-a11)",
+              launch: () => "text-(color:--accent-a11)",
+              tip: () => "text-(color:--green-a11)",
+              check: () => "text-(color:--green-a11)",
               _other: () => "text-body",
             })}
           >

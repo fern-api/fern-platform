@@ -38,7 +38,7 @@ export function PageHeader({
       </h1>
 
       {subtitle && (
-        <div className="prose-p:text-muted mt-2 leading-7">
+        <div className="prose-p:text-(color:--grayscale-a11) mt-2 leading-7">
           <React.Suspense fallback={subtitle}>
             <MdxServerComponent serialize={serialize} mdx={subtitle} />
           </React.Suspense>

@@ -29,8 +29,9 @@ export const TableOfContentsItem = memo<TableOfContentsItemProps>(
           className={cn(
             "block hyphens-auto break-words text-sm transition-colors hover:transition-none",
             {
-              "text-grayscale-a11 hover:text-grayscale-a12": !active,
-              "text-accent-aaa": active,
+              "text-(color:--grayscale-a11) hover:text-(color:--grayscale-a12)":
+                !active,
+              "text-(color:--accent-a12)": active,
             }
           )}
           href={`#${anchorString}`}
