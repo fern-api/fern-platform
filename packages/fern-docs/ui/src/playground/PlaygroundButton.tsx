@@ -15,9 +15,9 @@ export const PlaygroundButton: FC<{
 }> = ({ state }) => {
   const openPlayground = useOpenPlayground();
   const isPlaygroundEnabled = useAtomValue(IS_PLAYGROUND_ENABLED_ATOM);
-  const settings = usePlaygroundSettings(state.id);
+  const settings = usePlaygroundSettings(state.id ?? state);
 
-  if (!isPlaygroundEnabled) {
+  if (!isPlaygroundEnabled || settings?.disabled) {
     return null;
   }
 
