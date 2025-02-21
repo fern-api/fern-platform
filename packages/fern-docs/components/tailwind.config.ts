@@ -25,8 +25,8 @@ export default {
             "--tw-prose-pre-bg": "initial",
             "--tw-prose-th-borders": "var(--border)",
             "--tw-prose-td-borders": "var(--border)",
-            "--tw-prose-bullets": "var(--grayscale-a8)",
-            "--tw-prose-counters": "var(--grayscale-a9)",
+            "--tw-prose-bullets": "var(color:--grayscale-a8)",
+            "--tw-prose-counters": "var(color:--grayscale-a9)",
             "tbody td[rowspan]:first-child, tfoot td[rowspan]:first-child": {
               paddingRight: em(8, 14),
             },
@@ -54,7 +54,7 @@ export default {
         },
         sm: {
           css: {
-            color: "var(--grayscale-a11)",
+            color: "var(color:--grayscale-a11)",
             p: {
               marginTop: "0.25rem",
             },
@@ -78,13 +78,13 @@ export default {
             "--tw-prose-invert-pre-bg": "initial",
             "--tw-prose-invert-th-borders": "var(--border)",
             "--tw-prose-invert-td-borders": "var(--border)",
-            "--tw-prose-invert-bullets": "var(--grayscale-a8)",
-            "--tw-prose-invert-counters": "var(--grayscale-a9)",
+            "--tw-prose-invert-bullets": "var(color:--grayscale-a8)",
+            "--tw-prose-invert-counters": "var(color:--grayscale-a9)",
           },
         },
         "invert-sm": {
           css: {
-            color: "var(--grayscale-a11)",
+            color: "var(color:--grayscale-a11)",
           },
         },
       },
@@ -101,7 +101,7 @@ export default {
         },
 
         ".callout-soft": {
-          "@apply bg-(--grayscale-a3) ring-0": {},
+          "@apply bg-(color:--grayscale-a3) ring-0": {},
         },
         ".callout-soft-success": {
           "@apply bg-(--green-a3) ring-0": {},
@@ -114,7 +114,7 @@ export default {
         },
 
         ".callout-outlined": {
-          "@apply bg-(--grayscale-a2) ring-1 ring-inset ring-border-default-soft":
+          "@apply bg-(color:--grayscale-a2) ring-1 ring-inset ring-border-default-soft":
             {},
         },
         ".callout-outlined-success, .callout-outlined-tip, .callout-outlined-check":
@@ -128,7 +128,8 @@ export default {
           "@apply bg-(--red-a2) ring-1 ring-inset ring-(--red-a4)": {},
         },
         ".callout-outlined-primary": {
-          "@apply bg-(--accent-a2) ring-1 ring-inset ring-(--accent-a4)": {},
+          "@apply bg-(color:--accent-a2) ring-1 ring-inset ring-(color:--accent-a4)":
+            {},
         },
         ".callout-outlined-info": {
           "@apply bg-(--blue-a2) ring-1 ring-inset ring-(--info-a4)": {},

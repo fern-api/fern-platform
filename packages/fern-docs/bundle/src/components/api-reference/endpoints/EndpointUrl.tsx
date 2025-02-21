@@ -87,7 +87,7 @@ export const EndpointUrl = React.forwardRef<
           elements.push(
             <span
               key={`part-${i}`}
-              className="bg-(--accent-a3) text-(color:--accent-a11) rounded-1 whitespace-nowrap px-1"
+              className="bg-(color:--accent-a3) text-(color:--accent-a11) rounded-1 whitespace-nowrap px-1"
             >
               :{pathParameter.value}
             </span>
@@ -123,7 +123,7 @@ export const EndpointUrl = React.forwardRef<
 
       <div className={cn("flex items-center")}>
         <span
-          className={`inline-flex shrink items-baseline ${isHovered ? "hover:bg-(--grayscale-a3)" : ""} rounded-3/2 cursor-default p-1`}
+          className={`inline-flex shrink items-baseline ${isHovered ? "hover:bg-(color:--grayscale-a3)" : ""} rounded-3/2 cursor-default p-1`}
         >
           <CopyToClipboardButton
             content={() =>

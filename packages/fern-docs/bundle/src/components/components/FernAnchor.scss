@@ -16,7 +16,7 @@
   }
 
   .fern-anchor-icon.copied {
-    @apply bg-(--accent-a3) ring-(--accent-a5) ring-1 backdrop-blur;
+    @apply bg-(color:--accent-a3) ring-(color:--accent-a5) ring-1 backdrop-blur;
 
     > svg {
       @apply text-(color:--accent-a11);

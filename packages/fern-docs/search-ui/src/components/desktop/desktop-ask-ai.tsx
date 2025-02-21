@@ -127,8 +127,8 @@ export const DesktopCommandWithAskAI = forwardRef<
         ref.current.animate(
           {
             boxShadow: [
-              "0 0 0px var(--accent-a5), var(--cmdk-shadow)",
-              "0 0 75px var(--accent-a5), var(--cmdk-shadow)",
+              "0 0 0px var(color:--accent-a5), var(--cmdk-shadow)",
+              "0 0 75px var(color:--accent-a5), var(--cmdk-shadow)",
               "0 0 150px transparent, var(--cmdk-shadow)",
             ],
           },
@@ -442,7 +442,7 @@ const DesktopAskAIChat = ({
               }: PropsWithElement<React.ComponentProps<"a">>) => (
                 <a
                   {...props}
-                  className="decoration-(--accent-a10) hover:text-(color:--accent-a10) font-semibold hover:decoration-2"
+                  className="decoration-(color:--accent-a10) hover:text-(color:--accent-a10) font-semibold hover:decoration-2"
                   target="_blank"
                   rel="noreferrer"
                 >
@@ -670,7 +670,7 @@ const AskAICommandItems = memo<{
                   scrollLogicalPosition="start"
                 >
                   <article>
-                    <div className="bg-(--grayscale-a3) rounded-6 relative mb-2 ml-auto w-fit max-w-[70%] whitespace-pre-wrap px-5 py-2">
+                    <div className="bg-(color:--grayscale-a3) rounded-6 relative mb-2 ml-auto w-fit max-w-[70%] whitespace-pre-wrap px-5 py-2">
                       <section className="prose prose-sm dark:prose-invert cursor-auto">
                         <MarkdownContent components={components}>
                           {message.user?.content ?? "_No user message_"}

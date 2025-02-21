@@ -53,7 +53,8 @@ export const TitledExample = forwardRef<
     >
       <div
         className={cn("rounded-t-3 h-10", {
-          "bg-(--grayscale-a2)": intent === "none" || intent === "primary",
+          "bg-(color:--grayscale-a2)":
+            intent === "none" || intent === "primary",
           "bg-(--amber-a2)": intent === "warning",
           "bg-(--green-a2)": intent === "success",
           "bg-(--red-a2)": intent === "danger",

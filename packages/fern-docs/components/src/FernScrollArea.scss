@@ -31,7 +31,7 @@
 
   .fern-scroll-area-scrollbar {
     @apply z-10 m-1 flex touch-none select-none rounded-full transition-all ease-out;
-    @apply bg-(--grayscale-a3);
+    @apply bg-(color:--grayscale-a3);
   }
 
   .fern-scroll-area-scrollbar[data-state="hidden"] {
@@ -48,7 +48,7 @@
 
   .fern-scroll-area-thumb {
     @apply relative z-auto flex;
-    @apply bg-(--accent-track) flex-1 rounded-full;
+    @apply bg-(color:--accent-track) flex-1 rounded-full;
   }
 
   /* increase target size for touch devices https://www.w3.org/WAI/WCAG21/Understanding/target-size.html */

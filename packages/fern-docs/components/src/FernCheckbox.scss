@@ -8,14 +8,14 @@
   }
 
   .fern-checkbox-item:hover {
-    @apply bg-(--accent-a3);
+    @apply bg-(color:--accent-a3);
   }
 
   .fern-checkbox-item:focus {
-    @apply outline-(--accent-a3) outline outline-4 outline-offset-0;
+    @apply outline-(color:--accent-a3) outline outline-4 outline-offset-0;
   }
 
   .fern-checkbox-indicator {
-    @apply bg-(--accent) text-(color:--accent-contrast) rounded-1 flex size-4 items-center justify-center;
+    @apply bg-(color:--accent) text-(color:--accent-contrast) rounded-1 flex size-4 items-center justify-center;
   }
 }

@@ -111,7 +111,7 @@ export const AppSidebarContent = React.forwardRef<
               <a
                 href={item.url}
                 key={item.title}
-                className="hover:bg-(--accent-a3) hover:text-(color:--accent-a11) rounded-3/2 flex h-[36px] items-center px-2 transition-colors hover:transition-none"
+                className="hover:bg-(color:--accent-a3) hover:text-(color:--accent-a11) rounded-3/2 flex h-[36px] items-center px-2 transition-colors hover:transition-none"
               >
                 {item.title}
               </a>

@@ -1,5 +1,7 @@
 "use client";
 
+import { FERN_COLOR_ACCENT } from "@fern-docs/utils";
+
 import { FernFonts } from "@/server/generateFonts";
 import { ArrayOf12 } from "@/server/generateRadixColors";
 import { FernColorTheme, FernLayoutConfig } from "@/server/types";
@@ -105,6 +107,7 @@ export function GlobalStyles({
           : ""}
 
         ${hasTheme ? ":root, .light" : ":root"} {
+          --accent: ${root?.accent ?? FERN_COLOR_ACCENT};
           --background: ${root?.background ?? "initial"};
           --border: ${domain.includes("nominal")
             ? "#000"
@@ -116,6 +119,7 @@ export function GlobalStyles({
 
         ${hasTheme && dark
           ? `.dark {
+          --accent: ${dark?.accent ?? FERN_COLOR_ACCENT};
           --background: ${dark.background};
           --border: ${
             domain.includes("nominal") ? "#fff" : (dark.border ?? "initial")

@@ -8,7 +8,10 @@ function Skeleton({
 }: React.HTMLAttributes<HTMLDivElement>): React.JSX.Element {
   return (
     <div
-      className={cn("bg-(--grayscale-a3) rounded-3/2 animate-pulse", className)}
+      className={cn(
+        "bg-(color:--grayscale-a3) rounded-3/2 animate-pulse",
+        className
+      )}
       {...props}
     />
   );

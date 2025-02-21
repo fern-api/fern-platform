@@ -34,7 +34,7 @@
     box-sizing: inherit;
 
     @apply outline-transparent;
-    @apply focus:outline-(--accent-a5) focus-visible:outline-(--accent-a5);
+    @apply focus:outline-(color:--accent-a5) focus-visible:outline-(color:--accent-a5);
   }
 
   ::selection {

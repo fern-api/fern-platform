@@ -48,7 +48,7 @@ export function PlaygroundResponseCard({
               className={cn(
                 "rounded-3/2 flex h-5 items-center px-1.5 py-1 font-mono",
                 {
-                  ["bg-(--accent-a3) text-(color:--accent-a11)"]:
+                  ["bg-(color:--accent-a3) text-(color:--accent-a11)"]:
                     response.value.response.status >= 200 &&
                     response.value.response.status < 300,
                   ["bg-(--red-a3) text-(color:--red-a11)"]:
@@ -60,7 +60,7 @@ export function PlaygroundResponseCard({
             </span>
             <span
               className={
-                "bg-(--grayscale-a3) rounded-3/2 flex h-5 items-center px-1.5 py-1 font-mono"
+                "bg-(color:--grayscale-a3) rounded-3/2 flex h-5 items-center px-1.5 py-1 font-mono"
               }
             >
               time: {round(response.value.time, 2)}ms
@@ -70,7 +70,7 @@ export function PlaygroundResponseCard({
               response.value.size.trim().length > 0 && (
                 <span
                   className={
-                    "bg-(--grayscale-a3) rounded-3/2 flex h-5 items-center px-1.5 py-1 font-mono"
+                    "bg-(color:--grayscale-a3) rounded-3/2 flex h-5 items-center px-1.5 py-1 font-mono"
                   }
                 >
                   size: {response.value.size}b

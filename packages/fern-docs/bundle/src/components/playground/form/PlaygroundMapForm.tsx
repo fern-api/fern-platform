@@ -174,7 +174,7 @@ function PlaygroundMapItemForm({
     <li key={idx} className="flex min-h-12 flex-row items-start gap-1 py-2">
       {/* <div className="flex min-w-0 shrink items-center justify-between gap-2">
                 <label className="inline-flex flex-wrap items-baseline">
-                    <span className="text-(color:--grayscale-a11) bg-(--grayscale-a3) min-w-6 rounded-3 p-1 text-center text-xs font-semibold uppercase">
+                    <span className="text-(color:--grayscale-a11) bg-(color:--grayscale-a3) min-w-6 rounded-3 p-1 text-center text-xs font-semibold uppercase">
                         {idx + 1}
                     </span>
                 </label>

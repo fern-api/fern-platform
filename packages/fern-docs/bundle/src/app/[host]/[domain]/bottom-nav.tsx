@@ -36,7 +36,7 @@ export function BottomNavigation({
   return (
     <nav
       aria-label="Up next"
-      className="bg-(--grayscale-a3) max-w-content-width [&>a]:rounded-1 rounded-2 mx-auto flex p-1"
+      className="bg-(color:--grayscale-a3) max-w-content-width [&>a]:rounded-1 rounded-2 mx-auto flex p-1"
     >
       {neighbors.prev && (
         <MaybeFernLink
@@ -52,7 +52,7 @@ export function BottomNavigation({
       {neighbors.next && (
         <MaybeFernLink
           href={neighbors.next.href}
-          className="bg-background hover:border-(--accent-a9) border-(--grayscale-a6) flex h-16 min-w-0 flex-1 shrink items-center justify-end gap-4 border px-3"
+          className="bg-background hover:border-(color:--accent-a9) border-(color:--grayscale-a6) flex h-16 min-w-0 flex-1 shrink items-center justify-end gap-4 border px-3"
         >
           <div className="min-w-0 shrink pl-4 text-right">
             <h4 className="text-(color:--grayscale-a12) truncate text-base font-bold">
@@ -76,7 +76,7 @@ export function BottomNavigation({
           </div>
           <Separator
             orientation="vertical"
-            className="bg-(--grayscale-a5) hidden h-8 w-px sm:block"
+            className="bg-(color:--grayscale-a5) hidden h-8 w-px sm:block"
           />
           <span className="inline-flex items-center gap-1">
             <span className="text-(color:--grayscale-a11) hidden text-sm font-medium sm:block">

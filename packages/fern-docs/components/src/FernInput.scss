@@ -14,8 +14,8 @@
   .fern-input-group,
   .fern-numeric-input-group {
     @apply flex items-center overflow-hidden;
-    @apply focus-within:ring-(--accent-a5) focus-within:outline-none focus-within:ring-2;
-    @apply ring-border-default dark:bg-(--grayscale-a2) rounded-2 bg-white shadow-inner ring-1 ring-inset;
+    @apply focus-within:ring-(color:--accent-a5) focus-within:outline-none focus-within:ring-2;
+    @apply ring-border-default dark:bg-(color:--grayscale-a2) rounded-2 bg-white shadow-inner ring-1 ring-inset;
   }
 
   .fern-input-icon {
@@ -43,7 +43,7 @@
 
   .fern-numeric-input-group:focus-within
     .fern-numeric-input-step:not(:disabled) {
-    @apply text-(color:--accent-a11) border-(--accent-a5) ring-(--accent) hover:text-(color:--accent-a11) hover:bg-(--accent-a3);
+    @apply text-(color:--accent-a11) border-(color:--accent-a5) ring-(color:--accent) hover:text-(color:--accent-a11) hover:bg-(color:--accent-a3);
   }
 
   .fern-numeric-input-group .fern-numeric-input-step:first-child {
@@ -56,7 +56,7 @@
 
   .fern-input,
   .fern-textarea {
-    @apply caret-(--accent) px-2.5 py-2 text-sm;
+    @apply caret-(color:--accent) px-2.5 py-2 text-sm;
     @apply max-sm:text-base;
   }
 

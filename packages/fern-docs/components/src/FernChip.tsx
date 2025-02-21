@@ -55,9 +55,9 @@ export const FernChip = forwardRef<HTMLButtonElement, FernChipProps>(
           },
           {
             // Gray
-            "bg-(--grayscale-a3) text-(color:--grayscale-a12) hover:bg-(--grayscale-a4)":
+            "bg-(color:--grayscale-a3) text-(color:--grayscale-a12) hover:bg-(color:--grayscale-a4)":
               colorScheme === "gray" && variant === "subtle",
-            "bg-(--grayscale-a12) text-background hover:bg-(--grayscale-a11)":
+            "bg-(color:--grayscale-a12) text-background hover:bg-(color:--grayscale-a11)":
               colorScheme === "gray" && variant === "solid",
 
             // Green
@@ -85,9 +85,9 @@ export const FernChip = forwardRef<HTMLButtonElement, FernChipProps>(
               colorScheme === "red" && variant === "solid",
 
             // Accent
-            "bg-(--accent)/20 text-(color:--accent-a12) hover:bg-(--accent)/25":
+            "bg-(color:--accent)/20 text-(color:--accent-a12) hover:bg-(color:--accent)/25":
               colorScheme === "accent" && variant === "subtle",
-            "text-(color:--accent-contrast) bg-(--accent) hover:bg-(--accent-a10)":
+            "text-(color:--accent-contrast) bg-(color:--accent) hover:bg-(color:--accent-a10)":
               colorScheme === "accent" && variant === "solid",
           },
           className

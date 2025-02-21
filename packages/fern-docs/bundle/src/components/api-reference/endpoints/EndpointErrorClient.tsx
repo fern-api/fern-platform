@@ -27,8 +27,8 @@ export function EndpointErrorClient({
   return (
     <button
       className={cn(
-        "space hover:bg-(--grayscale-a2) flex flex-col items-start px-3 py-3 transition-colors",
-        { "bg-(--grayscale-a2)": isSelected },
+        "space hover:bg-(color:--grayscale-a2) flex flex-col items-start px-3 py-3 transition-colors",
+        { "bg-(color:--grayscale-a2)": isSelected },
         { "border-border-default border-b": !isLast },
         { "rounded-t-3/2": isFirst },
         { "rounded-b-3/2": isLast }

@@ -132,7 +132,7 @@ export async function WebSocketContent({
               title={
                 <span className="inline-flex items-center gap-2">
                   {"Handshake"}
-                  <span className="bg-(--grayscale-a3) inline-block rounded-full p-1">
+                  <span className="bg-(color:--grayscale-a3) inline-block rounded-full p-1">
                     <Wifi
                       className="text-(color:--grayscale-a11) size-icon"
                       strokeWidth={1.5}
@@ -230,7 +230,7 @@ export async function WebSocketContent({
                   title={
                     <span className="inline-flex items-center gap-2">
                       {"Receive"}
-                      <span className="text-(color:--accent-a12) bg-(--accent-a3) inline-block rounded-full p-1">
+                      <span className="text-(color:--accent-a12) bg-(color:--accent-a3) inline-block rounded-full p-1">
                         <ArrowDown className="size-icon" />
                       </span>
                     </span>

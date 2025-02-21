@@ -25,7 +25,7 @@ export function HeaderTabsList({
           <FernLink
             className={cn(
               "relative flex h-11 min-w-0 items-center justify-start space-x-2 px-3",
-              "after:bg-(--accent-indicator) after:absolute after:inset-x-3 after:-bottom-px after:h-0.5 after:opacity-0 after:content-['']",
+              "after:bg-(color:--accent-indicator) after:absolute after:inset-x-3 after:-bottom-px after:h-0.5 after:opacity-0 after:content-['']",
               "data-[state=active]:text-(color:--accent-11) data-[state=active]:font-semibold data-[state=active]:after:opacity-100",
               "data-[state=inactive]:text-(color:--grayscale-a11) data-[state=inactive]:hover:text-default [&_svg]:size-3.5",
               {

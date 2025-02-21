@@ -104,7 +104,7 @@ function MobileFacetMenu({
           side="bottom"
           avoidCollisions
           align="start"
-          className="border-border-concealed bg-(--grayscale-surface) rounded-2 absolute z-50 min-w-[220px] overflow-hidden border p-0 shadow-lg backdrop-blur-lg"
+          className="border-border-concealed bg-(color:--grayscale-surface) rounded-2 absolute z-50 min-w-[220px] overflow-hidden border p-0 shadow-lg backdrop-blur-lg"
           hidden={isLoading || optionsWithCurrent.length === 0}
         >
           <Menubar.RadioGroup value={value} onValueChange={updateFilter}>
@@ -137,7 +137,7 @@ function MobileFacetMenu({
             ))}
             {value != null && (
               <Menubar.Group>
-                <Menubar.Separator className="bg-(--grayscale-a5) h-px" />
+                <Menubar.Separator className="bg-(color:--grayscale-a5) h-px" />
                 <Menubar.Item onClick={removeFilter} asChild>
                   <MenubarItem>
                     Remove filter
@@ -218,7 +218,7 @@ const MenubarItem = forwardRef<HTMLDivElement, Menubar.MenubarItemProps>(
         ref={ref}
         {...props}
         className={cn(
-          "focus:bg-(--accent-a3) flex cursor-pointer items-center justify-between px-4 py-2 focus:outline-none",
+          "focus:bg-(color:--accent-a3) flex cursor-pointer items-center justify-between px-4 py-2 focus:outline-none",
           props.className
         )}
       />

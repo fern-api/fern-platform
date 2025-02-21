@@ -99,7 +99,7 @@ export function FernAudioPlayer(props: FernAudioPlayerProps): ReactElement {
                 isPlaying ? (
                   <Pause />
                 ) : (
-                  <Play className="fill-(--accent-contrast) -mr-0.5" />
+                  <Play className="fill-(color:--accent-contrast) -mr-0.5" />
                 )
               }
               variant="filled"

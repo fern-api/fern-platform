@@ -20,9 +20,9 @@ export function BgImageGradient({
   return (
     <div
       className={cn(className, "fern-background", {
-        "from-(--accent)/10 bg-gradient-to-b to-transparent":
+        "from-(color:--accent)/10 bg-gradient-to-b to-transparent":
           !lightBackground && lightBackgroundImage == null,
-        "dark:from-(--accent)/10 dark:bg-gradient-to-b dark:to-transparent":
+        "dark:from-(color:--accent)/10 dark:bg-gradient-to-b dark:to-transparent":
           !darkBackground && darkBackgroundImage == null,
         "dark:from-transparent": darkBackground && darkBackgroundImage == null,
         "fern-background-image": lightBackgroundImage != null,

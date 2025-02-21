@@ -131,18 +131,19 @@ export const PlaygroundWebSocketSessionForm: FC<
                 className={cn(
                   "rounded-2 -mr-1 inline-flex items-center gap-2 px-2 py-0.5",
                   {
-                    "text-(color:--accent-a11) bg-(--accent-a3)": connected,
+                    "text-(color:--accent-a11) bg-(color:--accent-a3)":
+                      connected,
                     "bg-(--red-a3) text-(color:--red-a11)": !connected,
                   }
                 )}
               >
                 <span className="relative inline-flex size-2">
                   {connected && (
-                    <span className="bg-(--accent) absolute inline-flex size-full animate-ping rounded-full opacity-75" />
+                    <span className="bg-(color:--accent) absolute inline-flex size-full animate-ping rounded-full opacity-75" />
                   )}
                   <span
                     className={cn("relative inline-flex size-2 rounded-full", {
-                      "bg-(--accent)": connected,
+                      "bg-(color:--accent)": connected,
                       "bg-(--red-a5)": !connected,
                     })}
                   ></span>

@@ -2,8 +2,8 @@
   .fern-search-bar {
     @apply cursor-pointer;
     @apply text-(color:--grayscale-a11) border-border-default rounded-2 flex items-center border-none px-2.5 py-2 text-sm;
-    @apply bg-(--grayscale-a3);
-    @apply hover:bg-(--grayscale-a4) transition-[background,shadow];
+    @apply bg-(color:--grayscale-a3);
+    @apply hover:bg-(color:--grayscale-a4) transition-[background,shadow];
     @apply ring-border-default hover:ring-border-default ring-1 ring-inset;
     @apply max-sm:h-10 max-sm:text-base;
 
@@ -25,7 +25,7 @@
     }
 
     &:disabled {
-      @apply bg-(--grayscale-a2) cursor-default shadow-none;
+      @apply bg-(color:--grayscale-a2) cursor-default shadow-none;
     }
   }
 

@@ -31,9 +31,9 @@ export const WebsocketMessageAccordionItem: FC<
         className={cn("fern-web-socket-trigger", {
           "data-[state=open]:bg-(--green-a3)":
             message.origin === APIV1Read.WebSocketMessageOrigin.Client,
-          "data-[state=open]:bg-(--accent-a3)":
+          "data-[state=open]:bg-(color:--accent-a3)":
             message.origin === APIV1Read.WebSocketMessageOrigin.Server,
-          "data-[state=open]:bg-(--grayscale-a3)": message.origin == null,
+          "data-[state=open]:bg-(color:--grayscale-a3)": message.origin == null,
         })}
       >
         {message.origin === APIV1Read.WebSocketMessageOrigin.Client ? (
@@ -83,7 +83,7 @@ export const WebsocketMessageAccordionItem: FC<
           {
             "group-focus-within:ring-(--green-a5)":
               message.origin === APIV1Read.WebSocketMessageOrigin.Client,
-            "group-focus-within:ring-(--accent-a5)":
+            "group-focus-within:ring-(color:--accent-a5)":
               message.origin === APIV1Read.WebSocketMessageOrigin.Server,
             "group-focus-within:ring-border-default": message.origin == null,
             "rounded-b-3 mb-px": index === messagesLength,

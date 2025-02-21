@@ -8,14 +8,14 @@ import { cn } from "@fern-docs/components";
 import { useIsMobile } from "@fern-ui/react-commons";
 
 const buttonVariants = cva(
-  "focus-visible:ring-(--accent) rounded-3/2 inline-flex h-9 w-full cursor-text items-center justify-start gap-2 whitespace-nowrap p-2 text-sm font-medium transition-colors hover:transition-none focus-visible:outline-none focus-visible:ring-1 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
+  "focus-visible:ring-(color:--accent) rounded-3/2 inline-flex h-9 w-full cursor-text items-center justify-start gap-2 whitespace-nowrap p-2 text-sm font-medium transition-colors hover:transition-none focus-visible:outline-none focus-visible:ring-1 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
   {
     variants: {
       variant: {
         default:
-          "bg-(--grayscale-a3) text-(color:--grayscale-a10) hover:bg-(--grayscale-a4)",
+          "bg-(color:--grayscale-a3) text-(color:--grayscale-a10) hover:bg-(color:--grayscale-a4)",
         loading:
-          "bg-(--grayscale-a3) text-(color:--grayscale-a10) cursor-default",
+          "bg-(color:--grayscale-a3) text-(color:--grayscale-a10) cursor-default",
       },
     },
     defaultVariants: {

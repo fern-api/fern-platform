@@ -48,7 +48,7 @@ export default function LoadingDocs() {
 function PageHeaderSkeleton() {
   return (
     <header className="my-8 space-y-2">
-      <div className="w-100 bg-(--grayscale-a3) rounded-3/2 h-9" />
+      <div className="w-100 bg-(color:--grayscale-a3) rounded-3/2 h-9" />
     </header>
   );
 }
@@ -56,10 +56,10 @@ function PageHeaderSkeleton() {
 function ContentSkeleton() {
   return (
     <section className="my-8 space-y-3.5">
-      <div className="bg-(--grayscale-a3) w-content-width rounded-3/2 h-4 max-w-full" />
-      <div className="bg-(--grayscale-a3) w-content-width rounded-3/2 h-4 max-w-full" />
-      <div className="bg-(--grayscale-a3) w-content-width rounded-3/2 h-4 max-w-full" />
-      <div className="bg-(--grayscale-a3) rounded-3/2 h-4 w-[calc(var(--spacing-content-width)*0.67)] max-w-full" />
+      <div className="bg-(color:--grayscale-a3) w-content-width rounded-3/2 h-4 max-w-full" />
+      <div className="bg-(color:--grayscale-a3) w-content-width rounded-3/2 h-4 max-w-full" />
+      <div className="bg-(color:--grayscale-a3) w-content-width rounded-3/2 h-4 max-w-full" />
+      <div className="bg-(color:--grayscale-a3) rounded-3/2 h-4 w-[calc(var(--spacing-content-width)*0.67)] max-w-full" />
     </section>
   );
 }
@@ -74,11 +74,11 @@ function TableOfContentsSkeleton() {
       )}
     >
       <div className="space-y-4 px-4 pb-12 pt-8 lg:pr-5">
-        <div className="bg-(--grayscale-a3) w-21 rounded-3/2 h-3.5" />
-        <div className="border-(--grayscale-a3) space-y-3.5 border-l-2 pl-3">
-          <div className="bg-(--grayscale-a3) w-38 rounded-3/2 h-3.5" />
-          <div className="bg-(--grayscale-a3) w-42 rounded-3/2 h-3.5" />
-          <div className="bg-(--grayscale-a3) rounded-3/2 h-3.5 w-40" />
+        <div className="bg-(color:--grayscale-a3) w-21 rounded-3/2 h-3.5" />
+        <div className="border-(color:--grayscale-a3) space-y-3.5 border-l-2 pl-3">
+          <div className="bg-(color:--grayscale-a3) w-38 rounded-3/2 h-3.5" />
+          <div className="bg-(color:--grayscale-a3) w-42 rounded-3/2 h-3.5" />
+          <div className="bg-(color:--grayscale-a3) rounded-3/2 h-3.5 w-40" />
         </div>
       </div>
     </aside>
@@ -87,6 +87,6 @@ function TableOfContentsSkeleton() {
 
 function EndpointSkeleton() {
   return (
-    <div className="bg-(--grayscale-a3) rounded-3 h-[calc(100svh-var(--header-height)-6rem)] w-full md:h-[calc(100vh-var(--header-height)-3rem)]" />
+    <div className="bg-(color:--grayscale-a3) rounded-3 h-[calc(100svh-var(--header-height)-6rem)] w-full md:h-[calc(100vh-var(--header-height)-3rem)]" />
   );
 }

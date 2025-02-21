@@ -86,7 +86,7 @@ export const ErrorExampleSelect: FC<
               ([statusCode, examples], idx) => (
                 <Fragment key={statusCode}>
                   {idx > 0 && (
-                    <Select.Separator className="bg-(--grayscale-a3) m-[5px] h-px" />
+                    <Select.Separator className="bg-(color:--grayscale-a3) m-[5px] h-px" />
                   )}
                   <Select.Group>
                     {examples.map((example, j) => {
@@ -126,7 +126,7 @@ export const FernSelectItem = forwardRef<
       className={cn(
         "text-body data-[disabled]:text-(color:--grayscale-a10) relative flex h-8 select-none items-center rounded-[3px] pl-2 pr-4 text-sm leading-none data-[disabled]:pointer-events-none data-[highlighted]:outline-none",
         {
-          "data-[highlighted]:bg-(--grayscale-a3)":
+          "data-[highlighted]:bg-(color:--grayscale-a3)":
             intent === "none" || intent === "primary",
           "data-[highlighted]:bg-(--amber-a3)": intent === "warning",
           "data-[highlighted]:bg-(--green-a3)": intent === "success",

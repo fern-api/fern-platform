@@ -79,7 +79,7 @@ export const FernLogo = forwardRef<
             fill === FernLogoFill.Ground || fill === FernLogoFill.FernGround,
           "fill-fern-ground dark:fill-fern-air":
             fill === FernLogoFill.Default || fill === FernLogoFill.Mono,
-          "fill-(--grayscale-a10)": fill === FernLogoFill.Muted,
+          "fill-(color:--grayscale-a10)": fill === FernLogoFill.Muted,
         })}
       />
       <path
@@ -93,7 +93,7 @@ export const FernLogo = forwardRef<
           "fill-fern-air": fill === FernLogoFill.Air,
           "fill-fern-ground": fill === FernLogoFill.Ground,
           "fill-fern-ground dark:fill-fern-air": fill === FernLogoFill.Mono,
-          "fill-(--grayscale-a10)": fill === FernLogoFill.Muted,
+          "fill-(color:--grayscale-a10)": fill === FernLogoFill.Muted,
         })}
       />
     </svg>

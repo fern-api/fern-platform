@@ -139,11 +139,11 @@
           @apply text-body;
         }
 
-        @apply hover:bg-(--grayscale-a3) data-[selected=true]:bg-(--grayscale-a3) data-[state=checked]:bg-(--grayscale-a3) data-[state=on]:bg-(--grayscale-a3) data-[state=open]:bg-(--grayscale-a3) data-[state=opening]:bg-(--grayscale-a3);
+        @apply hover:bg-(color:--grayscale-a3) data-[selected=true]:bg-(color:--grayscale-a3) data-[state=checked]:bg-(color:--grayscale-a3) data-[state=on]:bg-(color:--grayscale-a3) data-[state=open]:bg-(color:--grayscale-a3) data-[state=opening]:bg-(color:--grayscale-a3);
 
         &.primary {
           @apply text-(color:--accent-a11) hover:text-(color:--accent-a11);
-          @apply hover:bg-(--accent-a3) data-[selected=true]:bg-(--accent-a3) data-[state=checked]:bg-(--accent-a3) data-[state=on]:bg-(--accent-a3) data-[state=open]:bg-(--accent-a3) data-[state=opening]:bg-(--accent-a3);
+          @apply hover:bg-(color:--accent-a3) data-[selected=true]:bg-(color:--accent-a3) data-[state=checked]:bg-(color:--accent-a3) data-[state=on]:bg-(color:--accent-a3) data-[state=open]:bg-(color:--accent-a3) data-[state=opening]:bg-(color:--accent-a3);
         }
 
         &.success {
@@ -174,14 +174,14 @@
         }
 
         &.primary {
-          @apply text-(color:--accent-contrast) bg-(--accent) hover:bg-(--accent);
+          @apply text-(color:--accent-contrast) bg-(color:--accent) hover:bg-(color:--accent);
 
           &:hover,
           &[data-state="on"],
           &[data-state="checked"],
           &[data-state="open"],
           &[data-state="opening"] {
-            @apply text-(color:--accent-contrast) bg-(--accent-a10);
+            @apply text-(color:--accent-contrast) bg-(color:--accent-a10);
           }
         }
 
@@ -231,18 +231,18 @@
         &[data-state="checked"],
         &[data-state="open"],
         &[data-state="opening"] {
-          @apply text-body bg-(--grayscale-a3);
+          @apply text-body bg-(color:--grayscale-a3);
         }
 
         &.primary {
-          @apply text-(color:--accent-a11) ring-(--accent-a5);
+          @apply text-(color:--accent-a11) ring-(color:--accent-a5);
 
           &:hover,
           &[data-state="on"],
           &[data-state="checked"],
           &[data-state="open"],
           &[data-state="opening"] {
-            @apply text-(color:--accent-a12) bg-(--accent-a3);
+            @apply text-(color:--accent-a12) bg-(color:--accent-a3);
           }
         }
 
