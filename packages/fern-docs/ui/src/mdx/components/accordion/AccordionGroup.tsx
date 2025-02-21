@@ -66,6 +66,12 @@ export const AccordionGroup = forwardRef<HTMLDivElement, AccordionGroupProps>(
           if (added[0] != null) {
             setAnchor(added[0]);
           }
+
+          const removed = prev.filter((tab) => !nextActiveTabs.includes(tab));
+          if (removed[0] != null) {
+            setAnchor(undefined);
+          }
+
           return nextActiveTabs;
         });
       },
