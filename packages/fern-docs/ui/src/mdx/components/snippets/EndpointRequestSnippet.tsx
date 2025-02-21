@@ -78,23 +78,24 @@ export function EndpointRequestSnippetInternal({
             options={endpoint.environments}
           />
         }
-        actions={
-          <>
-            {availableLanguages.length > 1 && (
-              <CodeExampleClientDropdown
-                languages={availableLanguages}
-                onValueChange={(language) =>
-                  setSelectedExampleKey((prev) => ({
-                    ...prev,
-                    language,
-                  }))
-                }
-                value={selectedExampleKey.language}
-              />
-            )}
-            {slug != null && <ApiReferenceButton slug={slug} />}
-          </>
-        }
+        actions={{
+          languages:
+            availableLanguages.length > 1 ? (
+              <>
+                <CodeExampleClientDropdown
+                  languages={availableLanguages}
+                  onValueChange={(language) =>
+                    setSelectedExampleKey((prev) => ({
+                      ...prev,
+                      language,
+                    }))
+                  }
+                  value={selectedExampleKey.language}
+                />
+              </>
+            ) : undefined,
+          tryIt: slug != null ? <ApiReferenceButton slug={slug} /> : undefined,
+        }}
         code={selectedExample.code}
         language={selectedExampleKey.language}
         json={EMPTY_OBJECT}
