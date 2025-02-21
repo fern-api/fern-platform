@@ -66,7 +66,7 @@ describe("coalesceServers", () => {
     });
     const newServers: OpenAPIV3_1.ServerObject[] = [
       { url: "https://existing.com" },
-      { url: "https://new.com" }
+      { url: "https://new.com" },
     ];
     const result = coalesceServers(
       [existingServer],
