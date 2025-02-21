@@ -23,7 +23,6 @@ export type BaseOpenApiV3_1ConverterNodeConstructorArgs<Input> = {
 
 export type BaseOpenApiV3_1ConverterExampleArgs = {
   includeOptionals: boolean;
-  includeIfSpecified: boolean;
   override: unknown;
 };
 
