@@ -41,7 +41,8 @@ export class RequestMediaTypeObjectConverterNode extends BaseOpenApiV3_1Converte
 
   // application/octet-stream
   isOptional: boolean | undefined;
-  contentType: RequestContentType | undefined;
+  contentType: string | undefined;
+  contentTypeShorthand: RequestContentType | undefined;
 
   // multipart/form-data
   availability: AvailabilityConverterNode | undefined;
@@ -64,6 +65,7 @@ export class RequestMediaTypeObjectConverterNode extends BaseOpenApiV3_1Converte
     super(args);
     this.method = args.method;
     this.path = args.path;
+    this.contentType = args.contentType;
     this.safeParse(args);
   }
 
@@ -97,7 +99,7 @@ export class RequestMediaTypeObjectConverterNode extends BaseOpenApiV3_1Converte
       const mediaType = MediaType.parse(contentType);
       // An exhaustive switch cannot be used here, because contentType is an unbounded string
       if (mediaType?.containsJSON()) {
-        this.contentType = "json" as const;
+        this.contentTypeShorthand = "json" as const;
         this.schema =
           this.schema ??
           new SchemaConverterNode({
@@ -110,10 +112,10 @@ export class RequestMediaTypeObjectConverterNode extends BaseOpenApiV3_1Converte
             schemaName: "Request Body",
           });
       } else if (mediaType?.isOctetStream()) {
-        this.contentType = "bytes" as const;
+        this.contentTypeShorthand = "bytes" as const;
         this.isOptional = resolvedSchema?.required == null;
       } else if (mediaType?.isMultiPartFormData()) {
-        this.contentType = "form-data" as const;
+        this.contentTypeShorthand = "form-data" as const;
         this.requiredFields = resolvedSchema?.required;
         this.fields = Object.fromEntries(
           Object.entries(resolvedSchema?.properties ?? {})
@@ -197,7 +199,12 @@ export class RequestMediaTypeObjectConverterNode extends BaseOpenApiV3_1Converte
           case "undiscriminatedUnion":
           case "discriminatedUnion": {
             const uniqueId = camelCase(
-              [this.method, this.path, this.contentType, "request"].join("_")
+              [
+                this.method,
+                this.path,
+                this.contentTypeShorthand,
+                "request",
+              ].join("_")
             );
             createTypeDefinition({
               uniqueId,
@@ -239,7 +246,7 @@ export class RequestMediaTypeObjectConverterNode extends BaseOpenApiV3_1Converte
     if (this.schema instanceof ReferenceConverterNode) {
       return this.schema.convert();
     }
-    switch (this.contentType) {
+    switch (this.contentTypeShorthand) {
       case "json": {
         return this.convertJsonLike();
       }
@@ -247,7 +254,7 @@ export class RequestMediaTypeObjectConverterNode extends BaseOpenApiV3_1Converte
         return {
           type: "bytes",
           isOptional: this.isOptional ?? false,
-          contentType: this.contentType,
+          contentType: this.contentTypeShorthand,
         };
       case "form-data": {
         const possibleFields: FernRegistry.api.latest.FormDataField[][] =

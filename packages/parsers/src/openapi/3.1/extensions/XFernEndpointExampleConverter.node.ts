@@ -195,7 +195,7 @@ export class XFernEndpointExampleConverterNode extends BaseOpenApiV3_1ConverterN
           | FernRegistry.api.latest.ExampleEndpointRequest
           | undefined;
         if (requestBodyShape != null) {
-          switch (requestBodyShape.contentType) {
+          switch (requestBodyShape.contentTypeShorthand) {
             case "form-data":
               requestBody = isRecord(example.request)
                 ? this.convertFormDataExampleRequest(
@@ -228,7 +228,7 @@ export class XFernEndpointExampleConverterNode extends BaseOpenApiV3_1ConverterN
             case undefined:
               break;
             default:
-              new UnreachableCaseError(requestBodyShape.contentType);
+              new UnreachableCaseError(requestBodyShape.contentTypeShorthand);
               break;
           }
         }
@@ -333,6 +333,8 @@ export class XFernEndpointExampleConverterNode extends BaseOpenApiV3_1ConverterN
           responseStatusCode: this.successResponseStatusCode,
           name: example.name,
           description: example.docs,
+          requestContentType: requestBodyShape?.contentType,
+          responseContentType: responseBodyNode.contentType,
           pathParameters:
             Object.keys(pathParameters).length > 0 ? pathParameters : undefined,
           queryParameters:

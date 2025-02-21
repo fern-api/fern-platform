@@ -17,6 +17,8 @@ describe("curl snippet generation", () => {
       description: "Test example",
       responseStatusCode: 200,
       name: "Test Example",
+      requestContentType: undefined,
+      responseContentType: undefined,
       pathParameters: {},
       queryParameters: {},
       headers: {},

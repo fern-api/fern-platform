@@ -113,6 +113,10 @@ export const EndpointContent = memo<EndpointContent.Props>((props) => {
     [setHoveredResponsePropertyPath]
   );
 
+  const [requestContentType, setRequestContentType] = useState<
+    string | undefined
+  >(endpoint.requests?.[0]?.contentType);
+
   const {
     selectedExample,
     examplesByStatusCode,
@@ -120,7 +124,7 @@ export const EndpointContent = memo<EndpointContent.Props>((props) => {
     selectedExampleKey,
     availableLanguages,
     setSelectedExampleKey,
-  } = useExampleSelection(endpoint);
+  } = useExampleSelection(endpoint, requestContentType);
 
   const setStatusCode = useCallback(
     (statusCode: number | string | undefined) => {
@@ -332,6 +336,8 @@ export const EndpointContent = memo<EndpointContent.Props>((props) => {
               onHoverResponseProperty={onHoverResponseProperty}
               selectedError={selectedError}
               setSelectedError={handleSelectError}
+              requestContentType={requestContentType}
+              setRequestContentType={setRequestContentType}
             />
           </div>
 

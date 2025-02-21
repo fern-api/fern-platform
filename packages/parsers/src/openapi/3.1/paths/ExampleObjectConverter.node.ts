@@ -137,7 +137,7 @@ export class ExampleObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
       this.input?.responseExample?.summary;
 
     if (this.shapes.requestBody != null && this.resolvedRequestInput != null) {
-      switch (this.shapes.requestBody?.contentType) {
+      switch (this.shapes.requestBody?.contentTypeShorthand) {
         case "json": {
           if (typeof this.resolvedRequestInput.value !== "object") {
             this.context.errors.error({
@@ -171,7 +171,9 @@ export class ExampleObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
         case undefined:
           break;
         default:
-          new UnreachableCaseError(this.shapes.requestBody?.contentType);
+          new UnreachableCaseError(
+            this.shapes.requestBody?.contentTypeShorthand
+          );
           this.context.errors.error({
             message: "Invalid example, unsupported content type",
             path: this.accessPath,
@@ -359,7 +361,7 @@ export class ExampleObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
   convert(): FernRegistry.api.latest.ExampleEndpointCall | undefined {
     let requestBody: FernRegistry.api.latest.ExampleEndpointRequest | undefined;
     if (this.shapes.requestBody != null && this.resolvedRequestInput != null) {
-      switch (this.shapes.requestBody.contentType) {
+      switch (this.shapes.requestBody.contentTypeShorthand) {
         case "form-data":
           requestBody = this.convertFormDataExampleRequest();
           break;
@@ -381,7 +383,9 @@ export class ExampleObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
         case undefined:
           break;
         default:
-          new UnreachableCaseError(this.shapes.requestBody?.contentType);
+          new UnreachableCaseError(
+            this.shapes.requestBody?.contentTypeShorthand
+          );
           break;
       }
     }
@@ -503,6 +507,8 @@ export class ExampleObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
             ? titleCase(this.summary)
             : undefined,
       description: this.convertDescription(),
+      requestContentType: this.shapes.requestBody?.contentType,
+      responseContentType: this.shapes.responseBody?.contentType,
       pathParameters,
       queryParameters,
       headers: requestHeaders,

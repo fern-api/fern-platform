@@ -1,6 +1,7 @@
 import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import { EndpointContext } from "@fern-api/fdr-sdk/api-definition";
-import { visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
+import { isNonNullish, visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
+import { FernButton, FernDropdown } from "@fern-docs/components";
 import { sortBy } from "es-toolkit/array";
 import { camelCase, upperFirst } from "es-toolkit/string";
 import { memo, useEffect, useRef } from "react";
@@ -33,8 +34,8 @@ export declare namespace EndpointContentLeft {
     ) => void;
     selectedError: ApiDefinition.ErrorResponse | undefined;
     setSelectedError: (idx: ApiDefinition.ErrorResponse | undefined) => void;
-    // contentType: string | undefined;
-    // setContentType: (contentType: string) => void;
+    requestContentType: string | undefined;
+    setRequestContentType: (contentType: string) => void;
   }
 }
 
@@ -55,8 +56,8 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
   onHoverResponseProperty,
   selectedError,
   setSelectedError,
-  // contentType,
-  // setContentType,
+  requestContentType,
+  setRequestContentType,
 }) => {
   // if the user clicks outside of the error, clear the selected error
   const errorRef = useRef<HTMLDivElement>(null);
@@ -178,6 +179,11 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
     ...globalHeaders,
     ...(endpoint.requestHeaders ?? []),
   ];
+
+  const request = endpoint.requests?.find(
+    (request) => request?.contentType === requestContentType
+  );
+  console.log(endpoint.requests);
 
   return (
     <div className="flex max-w-full flex-1 flex-col gap-12">
@@ -330,22 +336,45 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                     </FernCard>
                 </Tabs.Root>
             )} */}
-      {endpoint.requests?.[0] != null && (
-        <EndpointSection
-          key={endpoint.requests[0].contentType}
-          title="Request"
-          anchorIdParts={REQUEST}
-          slug={node.slug}
-        >
-          <EndpointRequestSection
-            request={endpoint.requests[0]}
-            onHoverProperty={onHoverRequestProperty}
-            anchorIdParts={REQUEST_BODY}
-            slug={node.slug}
-            types={types}
-          />
-        </EndpointSection>
-      )}
+      {endpoint.requests?.some((request) => request != null) &&
+        request != null && (
+          <div>
+            <EndpointSection
+              key={requestContentType}
+              title="Request"
+              anchorIdParts={REQUEST}
+              slug={node.slug}
+            >
+              <FernDropdown
+                options={endpoint.requests
+                  .map((request) =>
+                    request.contentType != null
+                      ? {
+                          type: "value" as const,
+                          value: request.contentType,
+                        }
+                      : undefined
+                  )
+                  .filter(isNonNullish)}
+                onValueChange={setRequestContentType}
+              >
+                <FernButton
+                  text={request.contentType}
+                  size="small"
+                  variant="outlined"
+                  mono={true}
+                />
+              </FernDropdown>
+              <EndpointRequestSection
+                request={request}
+                onHoverProperty={onHoverRequestProperty}
+                anchorIdParts={REQUEST_BODY}
+                slug={node.slug}
+                types={types}
+              />
+            </EndpointSection>
+          </div>
+        )}
       {endpoint.responses?.[0] != null && (
         <EndpointSection
           title="Response"

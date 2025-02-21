@@ -22,7 +22,8 @@ import {
 
 export function useExampleSelection(
   endpoint: EndpointDefinition,
-  initialExampleId?: string
+  initialExampleId?: string,
+  initialRequestContentType?: string
 ): {
   selectedExample: CodeExample | undefined;
   examplesByStatusCode: ExamplesByStatusCode;
@@ -35,8 +36,12 @@ export function useExampleSelection(
   ) => void;
 } {
   const examplesByLanguageKeyAndStatusCode = useMemo(
-    () => groupExamplesByLanguageKeyAndStatusCode(endpoint),
-    [endpoint]
+    () =>
+      groupExamplesByLanguageKeyAndStatusCode(
+        endpoint,
+        initialRequestContentType
+      ),
+    [endpoint, initialRequestContentType]
   );
 
   const getInitialExampleKey = useCallbackOne(

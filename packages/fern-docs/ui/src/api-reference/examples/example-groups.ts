@@ -17,7 +17,8 @@ import { CodeExample } from "./code-example";
  * @returns An object where the keys are the language, exampleId, and statusCode, and the value is an array of code examples.
  */
 export function groupExamplesByLanguageKeyAndStatusCode(
-  endpoint: ApiDefinition.EndpointDefinition
+  endpoint: ApiDefinition.EndpointDefinition,
+  requestContentType?: string
 ): ExamplesByLanguageKeyAndStatusCode {
   const toRet: ExamplesByLanguageKeyAndStatusCode = {};
 
@@ -42,7 +43,12 @@ export function groupExamplesByLanguageKeyAndStatusCode(
   }
 
   endpoint.examples?.forEach((example, i) => {
-    if (example.snippets == null) {
+    if (
+      example.snippets == null ||
+      (example.requestContentType != null &&
+        requestContentType != null &&
+        example.requestContentType !== requestContentType)
+    ) {
       return;
     }
 
@@ -160,6 +166,7 @@ export function selectExampleToRender(
     ] ??
     {};
 
+  console.log(exampleKey);
   // prefer the selected exampleId, otherwise pick the first available exampleId
   const examplesByStatusCode =
     examplesByKeyAndStatusCode[exampleKey ?? ""] ??

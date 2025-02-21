@@ -151,6 +151,8 @@ export class MethodConverterNode extends BaseOpenrpcConverterNode<
                 name: resolvedExample.name ?? "Example",
                 path: "",
                 description: undefined,
+                requestContentType: "application/json",
+                responseContentType: "application/json",
                 snippets: undefined,
                 pathParameters: {},
                 queryParameters: {},
@@ -201,6 +203,8 @@ export class MethodConverterNode extends BaseOpenrpcConverterNode<
         const example = {
           name: "Example",
           path: "",
+          requestContentType: "application/json",
+          responseContentType: "application/json",
           pathParameters: {},
           queryParameters: {},
           headers: {},

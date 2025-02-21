@@ -21,6 +21,10 @@ export function mergeXFernAndResponseExamples(
           example.responseStatusCode ?? responseExample.responseStatusCode,
         name: example.name ?? responseExample.name,
         description: example.description ?? responseExample.description,
+        requestContentType:
+          example.requestContentType ?? responseExample.requestContentType,
+        responseContentType:
+          example.responseContentType ?? responseExample.responseContentType,
         pathParameters:
           example.pathParameters ?? responseExample.pathParameters,
         queryParameters:

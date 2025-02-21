@@ -6,6 +6,8 @@ export interface ExampleEndpointCall extends FernRegistry.api.latest.WithDescrip
     path: string;
     responseStatusCode: number;
     name: string | undefined;
+    requestContentType: string | undefined;
+    responseContentType: string | undefined;
     pathParameters: Record<FernRegistry.PropertyKey, unknown> | undefined;
     queryParameters: Record<FernRegistry.PropertyKey, unknown> | undefined;
     headers: Record<FernRegistry.PropertyKey, unknown> | undefined;

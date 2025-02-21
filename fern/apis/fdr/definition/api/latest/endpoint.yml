@@ -116,6 +116,8 @@ types:
       path: string
       responseStatusCode: integer
       name: optional<string>
+      requestContentType: optional<string>
+      responseContentType: optional<string>
       pathParameters: optional<map<rootCommons.PropertyKey, unknown>>
       queryParameters: optional<map<rootCommons.PropertyKey, unknown>>
       headers: optional<map<rootCommons.PropertyKey, unknown>>

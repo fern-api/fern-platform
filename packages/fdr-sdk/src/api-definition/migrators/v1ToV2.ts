@@ -472,6 +472,8 @@ export class ApiDefinitionV1ToLatest {
         responseStatusCode: example.responseStatusCode,
         name: example.name,
         description: example.description,
+        requestContentType: undefined,
+        responseContentType: undefined,
         pathParameters: example.pathParameters,
         queryParameters: example.queryParameters,
         headers: example.headers,
