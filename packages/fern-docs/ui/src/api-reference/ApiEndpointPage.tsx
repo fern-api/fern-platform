@@ -6,6 +6,7 @@ import { useNavigationNodes, useWriteApiDefinitionAtom } from "../atoms";
 import { ALL_ENVIRONMENTS_ATOM } from "../atoms/environment";
 import { BottomNavigationNeighbors } from "../components/BottomNavigationNeighbors";
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
+import { PlaygroundFloatingButton } from "../playground/PlaygroundFloatingButton";
 import { DocsContent } from "../resolver/DocsContent";
 import {
   BuiltWithFern,
@@ -67,6 +68,7 @@ export default function ApiEndpointPage({
       <div className="px-4 md:px-6 lg:hidden lg:px-8">
         <BottomNavigationNeighbors />
       </div>
+      <PlaygroundFloatingButton node={node} />
       <BuiltWithFern className="mx-auto my-8 w-fit" />
     </>
   );

@@ -1,5 +1,0 @@
-@layer components {
-  .playground-corner-button {
-    @apply bg-background ring-border-primary fixed bottom-0 right-0 m-4 flex items-center gap-2 rounded-xl p-3 shadow-[0_2px_12px_0px,0px_1px_2px_0px] shadow-black/10 ring-2 ring-inset transition-[box-shadow,background] hover:transition-none;
-  }
-}
