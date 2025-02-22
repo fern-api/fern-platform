@@ -207,6 +207,12 @@ export class FdrDeployStack extends Stack {
           viewerProtocolPolicy:
             cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
           cachePolicy: cloudfront.CachePolicy.CACHING_OPTIMIZED,
+          responseHeadersPolicy:
+            cloudfront.ResponseHeadersPolicy.fromResponseHeadersPolicyId(
+              this,
+              "PublicDocsFilesResponseHeadersPolicy",
+              "558f36e4-4213-4bdd-950f-2a86d52c1caf"
+            ),
         },
         domainNames: [publicDocsFilesDomainName],
         certificate,
