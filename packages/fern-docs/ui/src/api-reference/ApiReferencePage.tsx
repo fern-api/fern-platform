@@ -11,7 +11,6 @@ import {
   HideBuiltWithFernContext,
 } from "../sidebar/BuiltWithFern";
 import { ApiReferenceContent } from "./ApiReferenceContent";
-
 export default function ApiReferencePage({
   content,
 }: {
@@ -41,7 +40,7 @@ export default function ApiReferencePage({
           mdxs={content.mdxs}
           slug={content.slug}
         />
-        <PlaygroundFloatingButton node={node} />
+        <PlaygroundFloatingButton />
       </HideBuiltWithFernContext.Provider>
 
       {/* anchor links should get additional padding to scroll to on initial load */}

@@ -2,18 +2,19 @@ import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import cn from "clsx";
 import { NavArrowUp, TerminalTag } from "iconoir-react";
 import { useAtomValue } from "jotai";
-import { IS_PLAYGROUND_ENABLED_ATOM, useOpenPlayground } from "../atoms";
+import {
+  CURRENT_NODE_ATOM,
+  IS_PLAYGROUND_ENABLED_ATOM,
+  useOpenPlayground,
+} from "../atoms";
 import { usePlaygroundSettings } from "../hooks/usePlaygroundSettings";
 
-export const PlaygroundFloatingButton = ({
-  node,
-}: {
-  node: FernNavigation.NavigationNode;
-}) => {
+export const PlaygroundFloatingButton = () => {
   const openPlayground = useOpenPlayground();
   const isPlaygroundEnabled = useAtomValue(IS_PLAYGROUND_ENABLED_ATOM);
-  const settings = usePlaygroundSettings(node.id);
-  const apiLeaf = FernNavigation.isApiLeaf(node) ? node : undefined;
+  const node = useAtomValue(CURRENT_NODE_ATOM);
+  const settings = usePlaygroundSettings(node?.id ?? undefined);
+  const apiLeaf = node && FernNavigation.isApiLeaf(node);
 
   if (!isPlaygroundEnabled || settings?.disabled || !apiLeaf) {
     return null;
@@ -24,9 +25,10 @@ export const PlaygroundFloatingButton = ({
       className={cn("playground-floating-button")}
       onClick={() => {
         if (settings?.button?.href) {
+          console.log("settings.button.href: ", settings.button.href);
           window.open(settings.button.href, "_blank");
-        } else {
-          void openPlayground(apiLeaf);
+        } else if (apiLeaf) {
+          void openPlayground(node);
         }
       }}
     >

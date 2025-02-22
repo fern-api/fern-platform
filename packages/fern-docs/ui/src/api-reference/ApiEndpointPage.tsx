@@ -63,12 +63,12 @@ export default function ApiEndpointPage({
             mdxs={EMPTY_OBJECT}
             showErrors={content.showErrors}
           />
+          <PlaygroundFloatingButton />
         </HideBuiltWithFernContext.Provider>
       </FernErrorBoundary>
       <div className="px-4 md:px-6 lg:hidden lg:px-8">
         <BottomNavigationNeighbors />
       </div>
-      <PlaygroundFloatingButton node={node} />
       <BuiltWithFern className="mx-auto my-8 w-fit" />
     </>
   );
