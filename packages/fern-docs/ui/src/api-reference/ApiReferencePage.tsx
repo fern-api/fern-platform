@@ -4,13 +4,13 @@ import {
   useNavigationNodes,
   useWriteApiDefinitionAtom,
 } from "../atoms";
+import { PlaygroundFloatingButton } from "../playground/PlaygroundFloatingButton";
 import { DocsContent } from "../resolver/DocsContent";
 import {
   BuiltWithFern,
   HideBuiltWithFernContext,
 } from "../sidebar/BuiltWithFern";
 import { ApiReferenceContent } from "./ApiReferenceContent";
-
 export default function ApiReferencePage({
   content,
 }: {
@@ -40,6 +40,7 @@ export default function ApiReferencePage({
           mdxs={content.mdxs}
           slug={content.slug}
         />
+        <PlaygroundFloatingButton />
       </HideBuiltWithFernContext.Provider>
 
       {/* anchor links should get additional padding to scroll to on initial load */}

@@ -367,9 +367,12 @@ const WebhookContent: FC<WebhookContentProps> = ({
               <div className="max-h-content scroll-mt-content top-header-offset sticky flex flex-col gap-6 py-8">
                 <TitledExample
                   title={"Handshake"}
-                  actions={
-                    node != null ? <PlaygroundButton state={node} /> : undefined
-                  }
+                  actions={{
+                    tryIt:
+                      node != null ? (
+                        <PlaygroundButton state={node} />
+                      ) : undefined,
+                  }}
                   disableClipboard={true}
                 >
                   <FernScrollArea>
