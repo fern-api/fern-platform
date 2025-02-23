@@ -32,9 +32,9 @@ export const PlaygroundFloatingButton = () => {
         }
       }}
     >
-      <TerminalTag className="t-accent-aaa" />
+      <TerminalTag className="t-gray-500" height={16} width={16} />
 
-      <NavArrowUp className="t-accent-aaa size-5" />
+      <NavArrowUp className="t-gray-500" height={16} width={16} />
     </button>
   );
 };

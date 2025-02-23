@@ -1,7 +1,5 @@
 @layer components {
   .playground-floating-button {
-    @apply bg-background fixed bottom-0 right-0 m-5 flex items-center gap-2 rounded-xl border-2 p-3 shadow-[0_2px_12px_0px,0px_1px_2px_0px] shadow-black/10 transition-[box-shadow,background];
-
-    border-color: rgb(var(--accent));
+    @apply bg-background ring-card-border fixed bottom-0 right-0 m-5 flex items-center gap-2 rounded-lg p-2 shadow-[0_2px_12px_0px,0px_1px_2px_0px] shadow-black/10 ring-2 transition-[box-shadow,background];
   }
 }
