@@ -74,9 +74,15 @@ export function rehypeFiles(
           height != null &&
           !attributes.find((attr) => attr.name === "height")
         ) {
+          const actualWidth = Number(
+            attributes.find((attr) => attr.name === "width")?.value ?? 0
+          );
+          const adjustedHeight =
+            actualWidth && width ? height * (actualWidth / width) : height;
+
           node.attributes.unshift({
             name: "height",
-            value: String(height),
+            value: String(Math.round(adjustedHeight)),
             type: "mdxJsxAttribute",
           });
         }
@@ -85,9 +91,15 @@ export function rehypeFiles(
           width != null &&
           !attributes.find((attr) => attr.name === "width")
         ) {
+          const actualHeight = Number(
+            attributes.find((attr) => attr.name === "height")?.value ?? 0
+          );
+          const adjustedWidth =
+            actualHeight && height ? width * (actualHeight / height) : width;
+
           node.attributes.unshift({
             name: "width",
-            value: String(width),
+            value: String(Math.round(adjustedWidth)),
             type: "mdxJsxAttribute",
           });
         }
