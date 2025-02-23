@@ -74,9 +74,15 @@ export function rehypeFiles(
           height != null &&
           !attributes.find((attr) => attr.name === "height")
         ) {
+          const actualWidth = Number(
+            attributes.find((attr) => attr.name === "width")?.value ?? 0
+          );
+          const adjustedHeight =
+            actualWidth && width ? height * (actualWidth / width) : height;
+
           node.attributes.unshift({
             name: "height",
-            value: String(height),
+            value: String(Math.round(adjustedHeight)),
             type: "mdxJsxAttribute",
           });
         }
@@ -85,9 +91,15 @@ export function rehypeFiles(
           width != null &&
           !attributes.find((attr) => attr.name === "width")
         ) {
+          const actualHeight = Number(
+            attributes.find((attr) => attr.name === "height")?.value ?? 0
+          );
+          const adjustedWidth =
+            actualHeight && height ? width * (actualHeight / height) : width;
+
           node.attributes.unshift({
             name: "width",
-            value: String(width),
+            value: String(Math.round(adjustedWidth)),
             type: "mdxJsxAttribute",
           });
         }
@@ -123,25 +135,11 @@ export function rehypeFiles(
           node.properties.src = newSrc;
         }
 
-        if (height != null) {
-          if (node.properties.height != null) {
-            node.properties.style = {
-              ...node.properties.style,
-              height: node.properties.height,
-            };
-          }
-
+        if (height != null && !node.properties.height) {
           node.properties.height = height;
         }
 
-        if (width != null) {
-          if (node.properties.width != null) {
-            node.properties.style = {
-              ...node.properties.style,
-              width: node.properties.width,
-            };
-          }
-
+        if (width != null && !node.properties.width) {
           node.properties.width = width;
         }
       }
