@@ -8,9 +8,12 @@ export function coalesceServers(
   context: BaseOpenApiV3_1ConverterNodeContext,
   accessPath: string[]
 ): ServerObjectConverterNode[] {
-  return [
-    ...(existingServers ?? []),
-    ...(serversToAdd ?? []).map(
+  const existing = existingServers ?? [];
+  const existingUrls = new Set(existing.map((server) => server.url));
+
+  const newServers = (serversToAdd ?? [])
+    .filter((server) => !existingUrls.has(server.url))
+    .map(
       (server, index) =>
         new ServerObjectConverterNode({
           input: server,
@@ -18,6 +21,7 @@ export function coalesceServers(
           accessPath,
           pathId: ["servers", `${index}`],
         })
-    ),
-  ];
+    );
+
+  return [...existing, ...newServers];
 }

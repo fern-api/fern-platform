@@ -28,7 +28,7 @@ export const ANCHOR_ATOM = atom(
   (get) => get(LOCATION_ATOM).hash?.slice(1),
   (get, set, anchor: string | undefined) => {
     const location = get(LOCATION_ATOM);
-    const hash = anchor != null ? `#${anchor}` : undefined;
+    const hash = anchor != null ? `#${anchor}` : "";
     if (location.hash === hash) {
       return;
     }
