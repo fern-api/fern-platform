@@ -219,10 +219,7 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<
           tryIt:
             node != null ? (
               <>
-                <PlaygroundButton
-                  state={node}
-                  // example={selectedExample?.exampleCall}
-                />
+                <PlaygroundButton state={node} />
               </>
             ) : undefined,
         }}
