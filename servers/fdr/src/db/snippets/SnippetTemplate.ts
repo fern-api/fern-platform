@@ -238,6 +238,8 @@ export class SnippetTemplateDaoImpl implements SnippetTemplateDao {
         return SdkIdFactory.fromRuby(sdk);
       case "java":
         return SdkIdFactory.fromJava(sdk);
+      case "csharp":
+        return SdkIdFactory.fromCSharp(sdk);
     }
   }
 
