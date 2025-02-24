@@ -110,7 +110,7 @@ export const WithLabelInternal: FC<
               content={<Markdown mdx={description} size="xs" />}
               delayDuration={0}
             >
-              <HelpCircle className="t-muted size-4 self-center" />
+              <HelpCircle className="t-muted size-4 shrink-0 self-center" />
             </FernTooltip>
           )}
 
