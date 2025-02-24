@@ -45,6 +45,13 @@ export const SectionContainer = React.forwardRef<
   );
 });
 
+const rIC = (fn: () => void, timeout = 0) => {
+  if (typeof requestIdleCallback !== "undefined") {
+    return requestIdleCallback(fn, { timeout });
+  }
+  return setTimeout(fn, timeout);
+};
+
 export function PropertyContainer({
   children,
   ...props
@@ -56,10 +63,9 @@ export function PropertyContainer({
   const ref = React.useRef<HTMLDivElement>(null);
   React.useEffect(() => {
     if (isActive) {
-      const rIC = requestIdleCallback ?? setTimeout;
       rIC(() => {
         ref.current?.scrollIntoView({ behavior: "smooth", block: "center" });
-      });
+      }, 150);
     }
   }, [isActive]);
   return (
