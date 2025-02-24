@@ -70,34 +70,7 @@ export function rehypeFiles(
           srcAttribute.value = newSrc;
         }
 
-        const attrWidth = attributes.find((attr) => attr.name === "width");
-        const attrHeight = attributes.find((attr) => attr.name === "height");
-
-        if (height != null && !attrHeight) {
-          const actualWidth = Number(attrWidth?.value ?? 0);
-          const isValidWidth = !isNaN(actualWidth);
-          const adjustedHeight =
-            isValidWidth && width ? height * (actualWidth / width) : height;
-
-          node.attributes.unshift({
-            name: "height",
-            value: String(Math.round(adjustedHeight)),
-            type: "mdxJsxAttribute",
-          });
-        }
-
-        if (width != null && !attrWidth) {
-          const actualHeight = Number(attrHeight?.value ?? 0);
-          const isValidHeight = !isNaN(actualHeight);
-          const adjustedWidth =
-            isValidHeight && height ? width * (actualHeight / height) : width;
-
-          node.attributes.unshift({
-            name: "width",
-            value: String(Math.round(adjustedWidth)),
-            type: "mdxJsxAttribute",
-          });
-        }
+        setDimension(node, attributes, width, height);
 
         if (
           blurDataURL &&
@@ -195,6 +168,47 @@ function getEstree(
     return attr.data?.estree;
   } else if (isMdxExpression(attr) && attr.data?.estree) {
     return attr.data?.estree;
+  }
+  return null;
+}
+
+export function setDimension(
+  node: Hast.MdxJsxElement,
+  attributes: MdxJsxAttribute[],
+  width: number | undefined,
+  height: number | undefined
+) {
+  const attrWidth = attributes.find((attr) => attr.name === "width");
+  const attrHeight = attributes.find((attr) => attr.name === "height");
+
+  if (height != null && !attrHeight) {
+    const actualWidth = Number(attrWidth?.value ?? 0);
+    const isValidWidth = !isNaN(actualWidth);
+    const adjustedHeight =
+      isValidWidth && width ? height * (actualWidth / width) : height;
+
+    node.attributes.unshift({
+      name: "height",
+      value: String(adjustedHeight),
+      type: "mdxJsxAttribute",
+    });
+
+    console.log("attributes: ", node.attributes);
+  }
+
+  if (width != null && !attrWidth) {
+    const actualHeight = Number(attrHeight?.value ?? 0);
+    const isValidHeight = !isNaN(actualHeight);
+    const adjustedWidth =
+      isValidHeight && height ? width * (actualHeight / height) : width;
+
+    node.attributes.unshift({
+      name: "width",
+      value: String(adjustedWidth),
+      type: "mdxJsxAttribute",
+    });
+
+    console.log("attributes: ", node.attributes);
   }
   return null;
 }
