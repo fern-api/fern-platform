@@ -238,11 +238,14 @@ export class ObjectConverterNode extends BaseOpenApiV3_1ConverterNodeWithTrackin
     let objectWithAllProperties = {
       ...this.properties,
     };
+
     this.input.allOf?.forEach((type) => {
       const resolvedType = resolveSchemaReference(type, this.context.document);
+
       if (resolvedType == null) {
         return;
       }
+
       objectWithAllProperties = {
         ...objectWithAllProperties,
         ...Object.fromEntries(
@@ -265,33 +268,25 @@ export class ObjectConverterNode extends BaseOpenApiV3_1ConverterNodeWithTrackin
         ),
       };
     });
+
+    const objectWithAllPropertiesEntries = Object.entries(
+      objectWithAllProperties
+    );
+    const objectExample = objectWithAllPropertiesEntries.reduce<
+      Record<string, unknown>
+    >((acc, [key, value]) => {
+      acc[key] = value?.example({
+        includeOptionals:
+          includeOptionals || (this.requiredProperties?.includes(key) ?? false),
+        override: key,
+      });
+      return acc;
+    }, {});
+
     return (
       this.input.example ??
       this.input.examples?.[0] ??
-      (!includeOptionals &&
-      this.requiredProperties != null &&
-      this.requiredProperties.length > 0
-        ? this.requiredProperties?.reduce<Record<string, unknown>>(
-            (acc, propertyKey) => {
-              const propertyNode = objectWithAllProperties?.[propertyKey];
-              acc[propertyKey] = propertyNode?.example({
-                includeOptionals,
-                override: propertyKey,
-              });
-
-              return acc;
-            },
-            {}
-          )
-        : Object.entries(objectWithAllProperties).reduce<
-            Record<string, unknown>
-          >((acc, [key, value]) => {
-            acc[key] = value?.example({
-              includeOptionals,
-              override: key,
-            });
-            return acc;
-          }, {}))
+      (Object.keys(objectExample).length > 0 ? objectExample : undefined)
     );
   }
 }

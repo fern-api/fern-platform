@@ -1576,8 +1576,7 @@
               "finish_reason": "COMPLETE",
               "tool_calls": [
                 {
-                  "name": "name",
-                  "parameters": {}
+                  "name": "name"
                 }
               ],
               "chat_history": [
@@ -1586,8 +1585,7 @@
                   "message": "message",
                   "tool_calls": [
                     {
-                      "name": "name",
-                      "parameters": {}
+                      "name": "name"
                     }
                   ]
                 }
@@ -3089,8 +3087,7 @@
                     "text": "text",
                     "sources": [
                       {
-                        "id": "id",
-                        "tool_output": {}
+                        "id": "id"
                       }
                     ]
                   }
@@ -14041,7 +14038,6 @@
               "model": "model",
               "dataset_id": "dataset_id",
               "input_type": "search_document",
-              "name": "name",
               "embedding_types": [
                 "float"
               ],
@@ -19717,7 +19713,6 @@
           "path": "/v1/datasets",
           "responseStatusCode": 200,
           "queryParameters": {
-            "name": "name",
             "type": "embed-input"
           },
           "headers": {
@@ -21665,10 +21660,6 @@
           },
           "headers": {
             "X-Client-Name": "my-cool-project"
-          },
-          "responseBody": {
-            "type": "json",
-            "value": {}
           },
           "snippets": {
             "go": [
@@ -25218,18 +25209,11 @@
             "type": "json",
             "value": {
               "name": "name",
-              "description": "description",
               "url": "url",
               "excludes": [
-                "excludes"
+                null
               ],
-              "oauth": {
-                "client_id": "client_id",
-                "client_secret": "client_secret",
-                "authorize_url": "authorize_url",
-                "token_url": "token_url",
-                "scope": "scope"
-              },
+              "oauth": {},
               "active": true,
               "continue_on_failure": false,
               "service_auth": {
@@ -26541,18 +26525,10 @@
           "requestBody": {
             "type": "json",
             "value": {
-              "name": "name",
-              "url": "url",
               "excludes": [
-                "excludes"
+                null
               ],
-              "oauth": {
-                "client_id": "client_id",
-                "client_secret": "client_secret",
-                "authorize_url": "authorize_url",
-                "token_url": "token_url",
-                "scope": "scope"
-              },
+              "oauth": {},
               "active": true,
               "continue_on_failure": false,
               "service_auth": {
@@ -27204,10 +27180,6 @@
           },
           "headers": {
             "X-Client-Name": "my-cool-project"
-          },
-          "responseBody": {
-            "type": "json",
-            "value": {}
           },
           "snippets": {
             "go": [
@@ -31252,8 +31224,6 @@
             "type": "json",
             "value": {
               "name": "name",
-              "creator_id": "creator_id",
-              "organization_id": "organization_id",
               "settings": {
                 "base_model": {
                   "name": "name",
@@ -31279,11 +31249,7 @@
                   "entity": "entity"
                 }
               },
-              "status": "STATUS_UNSPECIFIED",
-              "created_at": "created_at",
-              "updated_at": "updated_at",
-              "completed_at": "completed_at",
-              "last_used": "last_used"
+              "status": "STATUS_UNSPECIFIED"
             }
           },
           "responseBody": {
@@ -31625,10 +31591,6 @@
           },
           "headers": {
             "X-Client-Name": "my-cool-project"
-          },
-          "responseBody": {
-            "type": "json",
-            "value": {}
           },
           "snippets": {
             "java": [

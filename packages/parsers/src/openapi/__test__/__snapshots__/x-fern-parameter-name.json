@@ -89,12 +89,8 @@
           "pathParameters": {
             "userId": "userId"
           },
-          "queryParameters": {
-            "foo": "foo"
-          },
-          "headers": {
-            "X-API-Version": "X-API-Version"
-          },
+          "queryParameters": {},
+          "headers": {},
           "responseBody": {
             "type": "json",
             "value": "string"

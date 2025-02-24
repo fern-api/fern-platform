@@ -49,13 +49,7 @@
           "requestBody": {
             "type": "json",
             "value": {
-              "name": "name",
-              "email": "email",
-              "settings": {
-                "theme": "theme",
-                "notifications": false,
-                "lastModified": null
-              }
+              "settings": {}
             }
           },
           "responseBody": {
@@ -131,13 +125,7 @@
           "requestBody": {
             "type": "json",
             "value": {
-              "name": "name",
-              "email": null,
-              "settings": {
-                "theme": "theme",
-                "notifications": false,
-                "lastModified": null
-              }
+              "settings": {}
             }
           },
           "responseBody": {
@@ -255,9 +243,7 @@
           "pathParameters": {
             "userId": "userId"
           },
-          "queryParameters": {
-            "activated": "activated"
-          },
+          "queryParameters": {},
           "responseBody": {
             "type": "json",
             "value": {

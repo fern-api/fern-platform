@@ -61,7 +61,6 @@
           "requestBody": {
             "type": "json",
             "value": {
-              "stream": false,
               "prompt": "prompt"
             }
           },
