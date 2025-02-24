@@ -113,6 +113,7 @@ export function PropertyRenderer({
         serialize={serialize}
         mdx={description}
         size="sm"
+        className="text-(color:--grayscale-a11)"
       />
 
       <TypeDefinitionCollapsible>{children}</TypeDefinitionCollapsible>

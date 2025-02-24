@@ -1,5 +1,7 @@
 import React from "react";
 
+import { Prose } from "../../prose";
+
 export const ParamField: React.FC<
   React.PropsWithChildren<{
     type: string;
@@ -46,9 +48,7 @@ export const ParamField: React.FC<
           {required && <span className="text-(color:--red-a11)">Required</span>}
         </div>
       </div>
-      {children && (
-        <div className="prose-sm dark:prose-invert-sm">{children}</div>
-      )}
+      {children && <Prose size="sm">{children}</Prose>}
     </div>
   );
 };

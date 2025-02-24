@@ -21,10 +21,9 @@ export function Prose({
         "prose dark:prose-invert max-w-none break-words",
         {
           "whitespace-pre-wrap": typeof children === "string" || pre,
-          "prose-base": size === "base",
-          "prose-sm dark:prose-invert-sm !text-xs": size === "xs",
-          "prose-sm dark:prose-invert-sm": size === "sm",
-          "prose-lg": size === "lg",
+          "text-xs": size === "xs",
+          "text-sm": size === "sm",
+          "text-lg": size === "lg",
         },
         className
       )}

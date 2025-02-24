@@ -671,7 +671,7 @@ const AskAICommandItems = memo<{
                 >
                   <article>
                     <div className="bg-(color:--grayscale-a3) rounded-6 relative mb-2 ml-auto w-fit max-w-[70%] whitespace-pre-wrap px-5 py-2">
-                      <section className="prose prose-sm dark:prose-invert cursor-auto">
+                      <section className="prose dark:prose-invert cursor-auto text-sm">
                         <MarkdownContent components={components}>
                           {message.user?.content ?? "_No user message_"}
                         </MarkdownContent>
@@ -679,7 +679,7 @@ const AskAICommandItems = memo<{
                     </div>
                     <div className="flex items-start justify-start gap-4">
                       <Sparkles className="my-1 size-4 shrink-0" />
-                      <section className="prose prose-sm dark:prose-invert min-w-0 flex-1 shrink cursor-text">
+                      <section className="prose dark:prose-invert min-w-0 flex-1 shrink cursor-text text-sm">
                         {message.assistant?.content && (
                           <MarkdownContent
                             components={{
