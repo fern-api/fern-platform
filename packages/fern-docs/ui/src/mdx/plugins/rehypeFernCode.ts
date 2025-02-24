@@ -293,8 +293,8 @@ export function parseBlockMetaString(
   const [highlights, strippedMeta] = parseHighlightedLineNumbers(meta);
   meta = strippedMeta;
 
-  if (originalMeta === meta && meta.length > 0 && title == null) {
-    title = meta;
+  if (meta.length > 0 && title == null) {
+    title = meta.trim();
   }
 
   // unescape quotes
