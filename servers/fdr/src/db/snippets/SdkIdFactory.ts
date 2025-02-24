@@ -20,4 +20,8 @@ export class SdkIdFactory {
   public static fromJava(sdk: FdrAPI.JavaSdk): string {
     return `java|${sdk.group}|${sdk.artifact}|${sdk.version}`;
   }
+
+  public static fromCSharp(sdk: FdrAPI.CsharpSdk): string {
+    return `csharp|${sdk.package}|${sdk.version}`;
+  }
 }

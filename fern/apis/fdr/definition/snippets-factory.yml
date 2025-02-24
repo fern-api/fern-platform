@@ -42,6 +42,7 @@ types:
       go: GoSDKSnippetsCreate
       java: JavaSDKSnippetsCreate
       ruby: RubySDKSnippetsCreate
+      csharp: CsharpSDKSnippetsCreate
 
   TypescriptSDKSnippetsCreate:
     properties:
@@ -67,6 +68,11 @@ types:
     properties:
       sdk: snippets.JavaSDK
       snippets: list<SingleJavaSnippetCreate>
+
+  CsharpSDKSnippetsCreate:
+    properties:
+      sdk: snippets.CsharpSDK
+      snippets: list<SingleCsharpSnippetCreate>
   # Single creates
 
   BaseSnippetCreate:
@@ -98,6 +104,12 @@ types:
     extends: BaseSnippetCreate
     properties:
       snippet: JavaSnippetCode
+
+  SingleCsharpSnippetCreate:
+    extends: BaseSnippetCreate
+    properties:
+      snippet: CsharpSnippetCode
+
   # Snippet Code
 
   TypeScriptSnippetCode:
@@ -121,3 +133,7 @@ types:
     properties:
       async_client: string
       sync_client: string
+
+  CsharpSnippetCode:
+    properties:
+      client: string

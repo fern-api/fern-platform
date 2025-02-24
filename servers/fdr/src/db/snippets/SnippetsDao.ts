@@ -376,6 +376,11 @@ function sdkInfoFromSnippetsCreate({
         language: Language.JAVA,
         id: SdkIdFactory.fromJava(sdkSnippetsCreate.sdk),
       };
+    case "csharp":
+      return {
+        language: Language.CSHARP,
+        id: SdkIdFactory.fromCSharp(sdkSnippetsCreate.sdk),
+      };
   }
 }
 
@@ -405,6 +410,11 @@ function sdkInfoFromSdk({ sdk }: { sdk: FdrAPI.Sdk }): SdkInfo {
       return {
         language: Language.JAVA,
         id: SdkIdFactory.fromJava(sdk),
+      };
+    case "csharp":
+      return {
+        language: Language.CSHARP,
+        id: SdkIdFactory.fromCSharp(sdk),
       };
   }
 }
