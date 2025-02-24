@@ -28,23 +28,22 @@ export function TypeDefinitionAnchor({
   );
 }
 
-export function SectionContainer({
-  children,
-  ...props
-}: {
-  children: React.ReactNode;
-} & React.ComponentProps<"div">) {
+export const SectionContainer = React.forwardRef<
+  HTMLDivElement,
+  React.ComponentProps<"div">
+>(({ children, ...props }, ref) => {
   const href = useHref();
   return (
     <div
       id={href}
+      ref={ref}
       {...props}
       className={cn("relative scroll-mt-4", props.className)}
     >
       {children}
     </div>
   );
-}
+});
 
 export function PropertyContainer({
   children,
