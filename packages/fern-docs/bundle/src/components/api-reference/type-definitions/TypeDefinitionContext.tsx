@@ -1,5 +1,6 @@
 "use client";
 
+import { usePathname } from "next/navigation";
 import { createContext, useContext, useMemo } from "react";
 import React from "react";
 
@@ -8,6 +9,7 @@ import { addLeadingSlash } from "@fern-docs/utils";
 import { useLazyRef } from "@fern-ui/react-commons";
 
 import { ErrorBoundary } from "@/components/error-boundary";
+import { useCurrentAnchor } from "@/hooks/use-anchor";
 
 import { JsonPropertyPath } from "../examples/JsonPropertyPath";
 import { JsonPropertyPathPart } from "../examples/JsonPropertyPath";
@@ -179,4 +181,12 @@ export function useHref(): string {
   const { slug, anchorIdParts } = useTypeDefinitionContext();
   const pathname = addLeadingSlash(slug);
   return `${pathname}${anchorIdParts.length > 0 ? `#${anchorIdParts.join(".")}` : ""}`;
+}
+
+export function useIsActive(): boolean {
+  const currentPathname = usePathname();
+  const currentAnchor = useCurrentAnchor();
+  const currentHref = `${currentPathname}${currentAnchor ? `#${currentAnchor}` : ""}`;
+  const href = useHref();
+  return currentHref === href;
 }

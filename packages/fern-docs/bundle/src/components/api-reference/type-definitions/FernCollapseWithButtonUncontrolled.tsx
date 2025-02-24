@@ -5,8 +5,13 @@ import React from "react";
 import { FernButtonProps } from "@fern-docs/components";
 import { useBooleanState } from "@fern-ui/react-commons";
 
+import { useCurrentAnchor } from "@/hooks/use-anchor";
+
 import { FernCollapseWithButton } from "./FernCollapseWithButton";
 import { useTypeDefinitionContext } from "./TypeDefinitionContext";
+
+const useIsomorphicLayoutEffect =
+  typeof window !== "undefined" ? React.useLayoutEffect : React.useEffect;
 
 export function FernCollapseWithButtonUncontrolled({
   showText,
@@ -19,8 +24,19 @@ export function FernCollapseWithButtonUncontrolled({
   buttonProps?: Partial<FernButtonProps>;
   children: React.ReactNode;
 }) {
-  const { collapsible } = useTypeDefinitionContext();
+  const { collapsible, anchorIdParts } = useTypeDefinitionContext();
   const state = useBooleanState(false);
+  const targetAnchor = anchorIdParts.join(".");
+  const currentAnchor = useCurrentAnchor();
+
+  useIsomorphicLayoutEffect(() => {
+    if (
+      currentAnchor === targetAnchor ||
+      currentAnchor?.startsWith(targetAnchor + ".")
+    ) {
+      state.setValue(true);
+    }
+  }, [currentAnchor, targetAnchor]);
 
   if (!collapsible) {
     return children;

@@ -1,11 +1,15 @@
 "use client";
 
+import React from "react";
+
 import { cn } from "@fern-docs/components";
 
 import { FernAnchor } from "@/components/components/FernAnchor";
+import { useCurrentAnchor } from "@/hooks/use-anchor";
 
 import {
   useHref,
+  useIsActive,
   useTypeDefinitionContext,
 } from "../type-definitions/TypeDefinitionContext";
 
@@ -49,10 +53,29 @@ export function PropertyContainer({
   children: React.ReactNode;
 } & React.ComponentProps<"div">) {
   const { collapsible } = useTypeDefinitionContext();
+  const isActive = useIsActive();
+  const ref = React.useRef<HTMLDivElement>(null);
+  React.useEffect(() => {
+    if (isActive) {
+      const rIC = requestIdleCallback ?? setTimeout;
+      rIC(() => {
+        ref.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+      });
+    }
+  }, [isActive]);
   return (
     <SectionContainer
+      ref={ref}
       {...props}
-      className={cn("m-3 space-y-3", { "mx-0": !collapsible }, props.className)}
+      className={cn(
+        "m-3 space-y-3",
+        { "mx-0": !collapsible },
+        props.className,
+        {
+          "before:bg-(color:--accent-a3) before:rounded-1 before:absolute before:-inset-2 before:content-['']":
+            isActive,
+        }
+      )}
     >
       {children}
     </SectionContainer>
