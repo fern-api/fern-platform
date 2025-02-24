@@ -200,15 +200,9 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<
         onClick={(e) => {
           e.stopPropagation();
         }}
-        actions={
-          <>
-            {node != null && (
-              <PlaygroundButton
-                state={node}
-                // example={selectedExample?.exampleCall}
-              />
-            )}
-            {languages.length > 1 && (
+        languages={
+          languages.length > 1 ? (
+            <>
               <CodeExampleClientDropdown
                 languages={languages}
                 value={selectedLanguage}
@@ -219,8 +213,15 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<
                   }));
                 }}
               />
-            )}
-          </>
+            </>
+          ) : undefined
+        }
+        tryIt={
+          node != null ? (
+            <>
+              <PlaygroundButton state={node} />
+            </>
+          ) : undefined
         }
         code={resolveEnvironmentUrlInCodeSnippet(
           endpoint,

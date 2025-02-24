@@ -10,7 +10,6 @@ import {
   HideBuiltWithFernContext,
 } from "../sidebar/BuiltWithFern";
 import { ApiReferenceContent } from "./ApiReferenceContent";
-
 export default function ApiReferencePage({
   content,
 }: {

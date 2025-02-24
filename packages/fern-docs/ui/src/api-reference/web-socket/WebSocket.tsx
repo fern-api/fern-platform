@@ -165,11 +165,18 @@ const WebhookContent: FC<WebhookContentProps> = ({
               <CardedSection
                 number={1}
                 title={
-                  <span className="inline-flex items-center gap-2">
-                    {"Handshake"}
-                    <span className="bg-tag-default inline-block rounded-full p-1">
-                      <Wifi className="t-muted size-icon" strokeWidth={1.5} />
-                    </span>
+                  <span className="flex w-full items-center justify-between">
+                    <div className="inline-flex items-center gap-2">
+                      {"Handshake"}
+                      <span className="bg-tag-default inline-block rounded-full p-1">
+                        <Wifi className="t-muted size-icon" strokeWidth={1.5} />
+                      </span>
+                    </div>
+                    {node != null && (
+                      <>
+                        <PlaygroundButton state={node} className="md:hidden" />
+                      </>
+                    )}
                   </span>
                 }
                 slug={node.slug}
@@ -367,7 +374,7 @@ const WebhookContent: FC<WebhookContentProps> = ({
               <div className="max-h-content scroll-mt-content top-header-offset sticky flex flex-col gap-6 py-8">
                 <TitledExample
                   title={"Handshake"}
-                  actions={
+                  tryIt={
                     node != null ? <PlaygroundButton state={node} /> : undefined
                   }
                   disableClipboard={true}

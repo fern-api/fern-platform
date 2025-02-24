@@ -12,7 +12,8 @@ export declare namespace TitledExample {
   export interface Props {
     title: ReactNode;
     intent?: SemanticColor;
-    actions?: ReactElement;
+    languages?: ReactElement;
+    tryIt?: ReactElement;
     className?: string;
     copyToClipboardText?: () => string; // use provider to lazily compute clipboard text
     onClick?: MouseEventHandler<HTMLDivElement>;
@@ -30,7 +31,8 @@ export const TitledExample = forwardRef<
     title,
     intent = "none",
     className,
-    actions,
+    languages,
+    tryIt,
     children,
     copyToClipboardText,
     onClick,
@@ -72,7 +74,7 @@ export const TitledExample = forwardRef<
             <div className="min-w-0 flex-1 shrink">{title}</div>
           )}
           <div className="flex items-center gap-2">
-            {actions}
+            {languages}
             {!disableClipboard && (
               <CopyToClipboardButton
                 content={copyToClipboardText}
@@ -83,6 +85,11 @@ export const TitledExample = forwardRef<
         </div>
       </div>
       {children}
+      {tryIt ? (
+        <div className="border-card-border bg-tag-default-soft flex h-10 justify-end border-t p-2">
+          <div className="flex max-w-[76px] items-center">{tryIt}</div>
+        </div>
+      ) : undefined}
     </div>
   );
 });

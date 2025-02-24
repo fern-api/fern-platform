@@ -78,9 +78,9 @@ export function EndpointRequestSnippetInternal({
             options={endpoint.environments}
           />
         }
-        actions={
-          <>
-            {availableLanguages.length > 1 && (
+        languages={
+          availableLanguages.length > 1 ? (
+            <>
               <CodeExampleClientDropdown
                 languages={availableLanguages}
                 onValueChange={(language) =>
@@ -91,10 +91,10 @@ export function EndpointRequestSnippetInternal({
                 }
                 value={selectedExampleKey.language}
               />
-            )}
-            {slug != null && <ApiReferenceButton slug={slug} />}
-          </>
+            </>
+          ) : undefined
         }
+        tryIt={slug != null ? <ApiReferenceButton slug={slug} /> : undefined}
         code={selectedExample.code}
         language={selectedExampleKey.language}
         json={EMPTY_OBJECT}
