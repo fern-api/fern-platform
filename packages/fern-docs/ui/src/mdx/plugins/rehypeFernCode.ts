@@ -294,7 +294,7 @@ export function parseBlockMetaString(
   meta = strippedMeta;
 
   if (meta.length > 0 && title == null) {
-    title = meta;
+    title = meta.trim();
   }
 
   // unescape quotes
