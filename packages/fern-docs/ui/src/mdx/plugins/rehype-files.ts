@@ -70,15 +70,14 @@ export function rehypeFiles(
           srcAttribute.value = newSrc;
         }
 
-        if (
-          height != null &&
-          !attributes.find((attr) => attr.name === "height")
-        ) {
-          const actualWidth = Number(
-            attributes.find((attr) => attr.name === "width")?.value ?? 0
-          );
+        const attrWidth = attributes.find((attr) => attr.name === "width");
+        const attrHeight = attributes.find((attr) => attr.name === "height");
+
+        if (height != null && !attrHeight) {
+          const actualWidth = Number(attrWidth?.value ?? 0);
+          const isValidWidth = !isNaN(actualWidth);
           const adjustedHeight =
-            actualWidth && width ? height * (actualWidth / width) : height;
+            isValidWidth && width ? height * (actualWidth / width) : height;
 
           node.attributes.unshift({
             name: "height",
@@ -87,15 +86,11 @@ export function rehypeFiles(
           });
         }
 
-        if (
-          width != null &&
-          !attributes.find((attr) => attr.name === "width")
-        ) {
-          const actualHeight = Number(
-            attributes.find((attr) => attr.name === "height")?.value ?? 0
-          );
+        if (width != null && !attrWidth) {
+          const actualHeight = Number(attrHeight?.value ?? 0);
+          const isValidHeight = !isNaN(actualHeight);
           const adjustedWidth =
-            actualHeight && height ? width * (actualHeight / height) : width;
+            isValidHeight && height ? width * (actualHeight / height) : width;
 
           node.attributes.unshift({
             name: "width",
