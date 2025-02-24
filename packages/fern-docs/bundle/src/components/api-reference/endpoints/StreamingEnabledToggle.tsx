@@ -1,6 +1,6 @@
 import { FC, PropsWithChildren, useCallback } from "react";
 
-import { AntennaSignal, AppleShortcuts } from "iconoir-react";
+import { Layers2, Radio } from "lucide-react";
 
 import { FernDropdown, FernSegmentedControl } from "@fern-docs/components";
 
@@ -13,12 +13,12 @@ export declare namespace StreamingEnabledToggle {
 }
 
 const OPTIONS: FernDropdown.Option[] = [
-  { type: "value", value: "batch", label: "Batch", icon: <AppleShortcuts /> },
+  { type: "value", value: "batch", label: "Batch", icon: <Layers2 /> },
   {
     type: "value",
     value: "stream",
     label: "Stream",
-    icon: <AntennaSignal />,
+    icon: <Radio />,
   },
 ];
 

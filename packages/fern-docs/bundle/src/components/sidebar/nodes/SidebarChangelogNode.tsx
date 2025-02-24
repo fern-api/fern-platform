@@ -2,7 +2,7 @@
 
 import { ReactNode } from "react";
 
-import { Calendar } from "iconoir-react";
+import { History } from "lucide-react";
 
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 
@@ -38,7 +38,7 @@ export function SidebarChangelogNode({
         className={className}
         selected={selected}
         depth={Math.max(0, depth - 1)}
-        icon={node.icon ?? <Calendar className="size-4" />}
+        icon={node.icon ?? <History className="size-icon" />}
         tooltipContent={renderChangelogTooltip(node)}
         hidden={node.hidden}
         authed={node.authed}

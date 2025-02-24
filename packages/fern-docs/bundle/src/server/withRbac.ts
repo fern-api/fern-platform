@@ -1,3 +1,5 @@
+import "server-only";
+
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import {
   type NavigationNode,
@@ -137,7 +139,7 @@ export function pruneWithBasicTokenAuthed(
     // hide nodes that are not authed
     .hide(
       (n) =>
-        node.hidden ||
+        n.hidden ||
         auth.anonymous?.find((path) =>
           matchPath(path, addLeadingSlash(n.slug))
         ) != null

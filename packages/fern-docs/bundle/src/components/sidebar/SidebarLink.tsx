@@ -14,7 +14,7 @@ import {
 import { composeEventHandlers } from "@radix-ui/primitive";
 import { composeRefs } from "@radix-ui/react-compose-refs";
 import { range } from "es-toolkit/math";
-import { Lock, NavArrowDown } from "iconoir-react";
+import { ChevronDown, Lock } from "lucide-react";
 
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { cn } from "@fern-docs/components";
@@ -157,7 +157,7 @@ const SidebarLinkInternal = forwardRef<HTMLDivElement, SidebarLinkProps>(
         data-state={showIndicator ? "active" : "inactive"}
         onClick={onClickIndicator}
       >
-        <NavArrowDown
+        <ChevronDown
           className={cn("size-icon-md lg:size-icon", {
             "-rotate-90": !expanded,
             "rotate-0": expanded,

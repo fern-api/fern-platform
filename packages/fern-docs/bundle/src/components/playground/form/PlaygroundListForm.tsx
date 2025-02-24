@@ -1,6 +1,6 @@
 import { memo, useCallback } from "react";
 
-import { Plus, Xmark } from "iconoir-react";
+import { Plus, X } from "lucide-react";
 
 import {
   TypeDefinition,
@@ -151,7 +151,7 @@ function PlaygroundListItemForm({
         )}
 
         <FernButton
-          icon={<Xmark />}
+          icon={<X />}
           onClick={() => onRemove(idx)}
           variant="minimal"
           size="small"

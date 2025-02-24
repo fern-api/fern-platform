@@ -2,7 +2,7 @@
 
 import React from "react";
 
-import { Xmark } from "iconoir-react";
+import { X } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
@@ -48,7 +48,7 @@ const AnnouncementInternal = React.forwardRef<
         <FernButton
           variant="minimal"
           className="absolute right-0"
-          icon={<Xmark className="!text-(color:--accent-contrast)" />}
+          icon={<X className="!text-(color:--accent-contrast)" />}
           onClick={dismiss}
         />
       </motion.div>

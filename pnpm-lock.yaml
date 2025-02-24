@@ -867,9 +867,6 @@ importers:
       hast-util-to-estree:
         specifier: ^3.1.1
         version: 3.1.1
-      iconoir-react:
-        specifier: ^7.7.0
-        version: 7.7.0(react@19.0.0)
       iron-session:
         specifier: ^8.0.4
         version: 8.0.4
@@ -1189,9 +1186,6 @@ importers:
       es-toolkit:
         specifier: ^1.24.0
         version: 1.30.0
-      iconoir-react:
-        specifier: ^7.7.0
-        version: 7.7.0(react@19.0.0)
       lucide-react:
         specifier: ^0.460.0
         version: 0.460.0(react@19.0.0)
@@ -10637,11 +10631,6 @@ packages:
     resolution: {integrity: sha512-+dQSyqPh4x1hlO1swXBiNb2HzTDN1I2IGLQx1GrBuiqFJfoMrnZWwVmatvSiO+Iz8fBUnf+lekwNo4c2LlXItg==}
     engines: {node: '>=14'}
     hasBin: true
-
-  iconoir-react@7.7.0:
-    resolution: {integrity: sha512-jKwbCZEJ3PtTDzxYga5pe9Jxg5Zvex0lK43DMS0VeHmJkLl+zSHolp6u5vW+hJzSxxxXE0Wy0P87CJBDGj3H7Q==}
-    peerDependencies:
-      react: 19.0.0
 
   iconv-lite@0.4.24:
     resolution: {integrity: sha512-v3MXnZAcvnywkTUEZomIActle7RXXeedOR31wwl7VlyoXO4Qi9arvSenNQWne1TcRwhCL1HwLI21bEqdpj8/rA==}
@@ -26399,10 +26388,6 @@ snapshots:
   human-signals@8.0.0: {}
 
   husky@8.0.3: {}
-
-  iconoir-react@7.7.0(react@19.0.0):
-    dependencies:
-      react: 19.0.0
 
   iconv-lite@0.4.24:
     dependencies:

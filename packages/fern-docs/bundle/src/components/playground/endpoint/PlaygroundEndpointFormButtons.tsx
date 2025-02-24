@@ -1,6 +1,4 @@
-import { ReactElement } from "react";
-
-import { ArrowUpRight } from "iconoir-react";
+import { ArrowUpRight } from "lucide-react";
 
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { FernButton, FernButtonGroup } from "@fern-docs/components";

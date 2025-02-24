@@ -4,7 +4,7 @@ import { ComponentProps, useState } from "react";
 
 import * as Dialog from "@radix-ui/react-dialog";
 import * as Tooltip from "@radix-ui/react-tooltip";
-import { Expand } from "iconoir-react";
+import { Expand } from "lucide-react";
 
 import { cn } from "@fern-docs/components";
 import { FernButton, FernScrollArea } from "@fern-docs/components";

@@ -1,7 +1,7 @@
 import { ReactElement } from "react";
 
-import { Key } from "iconoir-react";
 import { useAtomValue } from "jotai";
+import { Key } from "lucide-react";
 
 import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
 import { visitDiscriminatedUnion } from "@fern-api/ui-core-utils";

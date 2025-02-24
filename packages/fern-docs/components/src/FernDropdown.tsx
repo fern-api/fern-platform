@@ -15,7 +15,7 @@ import {
 } from "react";
 
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
-import { Check, InfoCircle } from "iconoir-react";
+import { Check, Info } from "lucide-react";
 
 import { useResizeObserver } from "@fern-ui/react-commons";
 
@@ -207,7 +207,7 @@ function FernDropdownItemValue({
             {option.rightElement && <span>{option.rightElement}</span>}
             {(isEllipsisActive ||
               (option.tooltip != null && option.tooltip !== "")) && (
-              <InfoCircle className="size-icon" />
+              <Info className="size-icon" />
             )}
           </span>
         </div>

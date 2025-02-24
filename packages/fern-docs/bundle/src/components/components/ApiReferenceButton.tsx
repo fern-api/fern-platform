@@ -1,4 +1,4 @@
-import { ArrowUpRight } from "iconoir-react";
+import { ArrowUpRight } from "lucide-react";
 
 import { FernTooltip, FernTooltipProvider } from "@fern-docs/components";
 import { addLeadingSlash } from "@fern-docs/utils";

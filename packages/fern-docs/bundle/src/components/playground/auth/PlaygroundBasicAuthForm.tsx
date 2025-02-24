@@ -1,8 +1,8 @@
 import { ReactElement } from "react";
 
-import { User } from "iconoir-react";
 import { useAtom, useAtomValue } from "jotai/react";
 import { RESET } from "jotai/utils";
+import { User } from "lucide-react";
 
 import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
 import { FernInput } from "@fern-docs/components";

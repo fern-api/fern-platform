@@ -1,6 +1,6 @@
 import { memo, useCallback, useEffect, useState } from "react";
 
-import { Plus, Xmark } from "iconoir-react";
+import { Plus, X } from "lucide-react";
 
 import {
   TypeDefinition,
@@ -202,7 +202,7 @@ function PlaygroundMapItemForm({
       </div>
       <div>
         <FernButton
-          icon={<Xmark />}
+          icon={<X />}
           onClick={() => onRemoveItem(idx)}
           variant="minimal"
           size="small"

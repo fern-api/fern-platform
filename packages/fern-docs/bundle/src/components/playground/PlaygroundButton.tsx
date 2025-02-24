@@ -2,7 +2,7 @@
 
 import { FC } from "react";
 
-import { PlaySolid } from "iconoir-react";
+import { Play } from "lucide-react";
 
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { FernTooltip, FernTooltipProvider } from "@fern-docs/components";
@@ -36,7 +36,7 @@ export const PlaygroundButton: FC<{
           }
           href={settings?.button?.href ?? conformExplorerRoute(state.slug)}
           target={settings?.button?.href ? "_blank" : undefined}
-          rightIcon={<PlaySolid />}
+          rightIcon={<Play className="fill-current" />}
           variant="filled"
           intent="primary"
           size="small"

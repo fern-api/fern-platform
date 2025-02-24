@@ -50,7 +50,7 @@ export class Pruner<ROOT extends FernNavigation.NavigationNode> {
     }
     FernNavigation.traverseBF(this.tree, (node, parents) => {
       if (FernNavigation.hasMetadata(node)) {
-        node.hidden = predicate(node, parents) ? true : undefined;
+        node.hidden = predicate(node, parents);
       }
     });
     return this;

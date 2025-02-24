@@ -1,6 +1,6 @@
 import { ReactElement, useEffect, useMemo, useState } from "react";
 
-import { NavArrowDown } from "iconoir-react";
+import { ChevronDown } from "lucide-react";
 
 import {
   FernButton,
@@ -69,7 +69,7 @@ export function PlaygroundElevenLabsVoiceIdForm(
           )
         }
         variant="outlined"
-        rightIcon={<NavArrowDown />}
+        rightIcon={<ChevronDown />}
         className="w-full text-left"
         disabled={props.disabled}
       />

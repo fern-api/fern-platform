@@ -1,7 +1,7 @@
 import { ReactElement, useState } from "react";
 
-import { HelpCircle, Key, User } from "iconoir-react";
 import { useAtom } from "jotai";
+import { HelpCircle, Key, User } from "lucide-react";
 
 import { EndpointContext } from "@fern-api/fdr-sdk/api-definition";
 import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";

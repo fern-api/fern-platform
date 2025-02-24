@@ -2,7 +2,7 @@
 
 import { ReactElement } from "react";
 
-import { ArrowLeft } from "iconoir-react";
+import { ArrowLeft } from "lucide-react";
 
 import { addLeadingSlash } from "@fern-docs/utils";
 

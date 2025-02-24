@@ -3,7 +3,7 @@
 import { usePathname } from "next/navigation";
 import { Fragment, forwardRef, useEffect, useRef, useState } from "react";
 
-import { Search, Slash, Xmark } from "iconoir-react";
+import { Search, Slash, X } from "lucide-react";
 
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { isNonNullish } from "@fern-api/ui-core-utils";
@@ -125,7 +125,7 @@ export const PlaygroundEndpointSelectorContent = forwardRef<
             rightElement={
               filterValue.length > 0 && (
                 <FernButton
-                  icon={<Xmark />}
+                  icon={<X />}
                   variant="minimal"
                   onClick={() => setFilterValue("")}
                 />

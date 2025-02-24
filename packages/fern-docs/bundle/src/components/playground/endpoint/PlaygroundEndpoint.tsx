@@ -3,8 +3,8 @@
 import { ReactElement, useCallback, useState } from "react";
 
 import { mapValues } from "es-toolkit/object";
-import { SendSolid } from "iconoir-react";
 import { useAtomValue, useSetAtom } from "jotai";
+import { SendHorizonal } from "lucide-react";
 
 import type { EndpointContext } from "@fern-api/fdr-sdk/api-definition";
 import { buildEndpointUrl } from "@fern-api/fdr-sdk/api-definition";
@@ -229,7 +229,7 @@ export const PlaygroundEndpoint = ({
             path={endpoint.path}
             queryParameters={endpoint.queryParameters}
             sendRequestIcon={
-              <SendSolid className="transition-transform group-hover:translate-x-0.5" />
+              <SendHorizonal className="transition-transform group-hover:translate-x-0.5" />
             }
             types={context.types}
           />

@@ -1,12 +1,6 @@
 "use client";
 
-import {
-  CheckCircle,
-  InfoCircle,
-  SystemRestart,
-  WarningCircle,
-  XmarkCircle,
-} from "iconoir-react";
+import { AlertCircle, CheckCircle, Info, Loader2, XCircle } from "lucide-react";
 import { Toaster as SonnerToaster } from "sonner";
 
 export { toast } from "sonner";
@@ -43,15 +37,13 @@ export const Toaster: React.FC<ToasterProps> = ({
         success: (
           <CheckCircle className="size-icon text-(color:--grayscale-a11)" />
         ),
-        info: <InfoCircle className="size-icon text-(color:--grayscale-a11)" />,
+        info: <Info className="size-icon text-(color:--grayscale-a11)" />,
         warning: (
-          <WarningCircle className="size-icon text-(color:--grayscale-a11)" />
+          <AlertCircle className="size-icon text-(color:--grayscale-a11)" />
         ),
-        error: (
-          <XmarkCircle className="size-icon text-(color:--grayscale-a11)" />
-        ),
+        error: <XCircle className="size-icon text-(color:--grayscale-a11)" />,
         loading: (
-          <SystemRestart className="size-icon text-(color:--grayscale-a11) animate-spin" />
+          <Loader2 className="size-icon text-(color:--grayscale-a11) animate-spin" />
         ),
       }}
     />

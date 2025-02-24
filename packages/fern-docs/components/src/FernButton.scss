@@ -14,6 +14,10 @@
       @apply rounded-full;
     }
 
+    svg {
+      @apply size-icon shrink-0;
+    }
+
     &:not(.square):has(> .fern-button-content > svg:first-child) {
       @apply pl-2;
     }
@@ -25,10 +29,6 @@
     > .fern-button-content {
       @apply inline-flex min-w-0 shrink items-center;
       @apply h-6 gap-1.5;
-
-      > svg {
-        @apply size-icon-md shrink-0;
-      }
 
       .fern-button-text {
         @apply min-w-0 shrink;
@@ -64,6 +64,10 @@
     &.small {
       @apply h-7 px-2 py-1 text-xs sm:h-6;
 
+      svg {
+        @apply size-icon-sm;
+      }
+
       &:not(.square):has(> .fern-button-content > svg:first-child) {
         @apply pl-1.5;
       }
@@ -74,10 +78,6 @@
 
       > .fern-button-content {
         @apply h-4 gap-1.5;
-
-        > svg {
-          @apply size-icon-sm;
-        }
       }
 
       &.square {
@@ -92,6 +92,10 @@
     &.large {
       @apply h-11 px-3 py-2 text-base sm:h-10 lg:px-4;
 
+      svg {
+        @apply size-icon-md;
+      }
+
       &:not(.square):has(> .fern-button-content > svg:first-child) {
         @apply pl-3;
       }
@@ -102,10 +106,6 @@
 
       > .fern-button-content {
         @apply h-6 gap-2;
-
-        > svg {
-          @apply size-icon-lg;
-        }
       }
 
       &.square {

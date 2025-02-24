@@ -2,7 +2,7 @@
 
 import { Fragment, ReactElement } from "react";
 
-import { NavArrowRight } from "iconoir-react";
+import { ChevronRight } from "lucide-react";
 
 import type { FernNavigation } from "@fern-api/fdr-sdk";
 import { addLeadingSlash } from "@fern-docs/utils";
@@ -27,7 +27,7 @@ export function FernBreadcrumbs({
     <span className="fern-breadcrumb">
       {filteredBreadcrumbs.map((breadcrumb, idx) => (
         <Fragment key={idx}>
-          {idx > 0 && <NavArrowRight className="fern-breadcrumb-arrow" />}
+          {idx > 0 && <ChevronRight className="fern-breadcrumb-arrow" />}
           {breadcrumb.pointsTo != null ? (
             <FernLink
               className="fern-breadcrumb-item"

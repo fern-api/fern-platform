@@ -9,7 +9,7 @@ import {
   useState,
 } from "react";
 
-import { Wifi, WifiOff } from "iconoir-react";
+import { Wifi, WifiOff } from "lucide-react";
 import urlJoin from "url-join";
 
 import type { WebSocketContext } from "@fern-api/fdr-sdk/api-definition";

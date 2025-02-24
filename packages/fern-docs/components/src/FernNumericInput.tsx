@@ -11,7 +11,7 @@ import {
 } from "react";
 
 import { composeRefs } from "@radix-ui/react-compose-refs";
-import { Minus, Plus } from "iconoir-react";
+import { Minus, Plus } from "lucide-react";
 
 import { useEventCallback } from "@fern-ui/react-commons";
 

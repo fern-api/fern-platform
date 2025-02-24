@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 
-import { Search, Xmark } from "iconoir-react";
+import { Search, X } from "lucide-react";
 
 import { cn } from "@fern-docs/components";
 import {
@@ -41,7 +41,7 @@ export function EnumTypeDefinition({
         rightElement={
           <FernButton
             icon={
-              <Xmark
+              <X
                 className={cn("transition", {
                   "rotate-45": collapse.value,
                 })}

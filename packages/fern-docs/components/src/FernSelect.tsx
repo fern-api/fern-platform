@@ -3,7 +3,7 @@
 import { FC, forwardRef } from "react";
 
 import * as Select from "@radix-ui/react-select";
-import { Check, NavArrowDown, NavArrowUp } from "iconoir-react";
+import { Check, ChevronDown, ChevronUp } from "lucide-react";
 
 import { cn } from "./cn";
 
@@ -15,13 +15,13 @@ export const FernSelect: FC<Select.SelectProps> = () => (
     >
       <Select.Value placeholder="Select a fruit…" />
       <Select.Icon className="text-violet11">
-        <NavArrowDown className="size-icon" />
+        <ChevronDown className="size-icon" />
       </Select.Icon>
     </Select.Trigger>
     <Select.Portal>
       <Select.Content className="rounded-3/2 overflow-hidden bg-white shadow-[0px_10px_38px_-10px_rgba(22,_23,_24,_0.35),0px_10px_20px_-15px_rgba(22,_23,_24,_0.2)]">
         <Select.ScrollUpButton className="text-violet11 flex h-[25px] cursor-default items-center justify-center bg-white">
-          <NavArrowUp className="size-icon" />
+          <ChevronUp className="size-icon" />
         </Select.ScrollUpButton>
         <Select.Viewport className="p-[5px]">
           <Select.Group>
@@ -63,7 +63,7 @@ export const FernSelect: FC<Select.SelectProps> = () => (
           </Select.Group>
         </Select.Viewport>
         <Select.ScrollDownButton className="text-violet11 flex h-[25px] cursor-default items-center justify-center bg-white">
-          <NavArrowDown className="size-icon" />
+          <ChevronDown className="size-icon" />
         </Select.ScrollDownButton>
       </Select.Content>
     </Select.Portal>

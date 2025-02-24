@@ -1,4 +1,4 @@
-import { NavArrowDown } from "iconoir-react";
+import { ChevronDown } from "lucide-react";
 
 import { FaIcon, FernButton, FernDropdown } from "@fern-docs/components";
 
@@ -46,7 +46,7 @@ export const CodeExampleClientDropdown: React.FC<
               icon={getIconForClient(value)}
             />
           }
-          rightIcon={<NavArrowDown className="!size-icon" />}
+          rightIcon={<ChevronDown className="!size-icon" />}
           text={selectedOption?.label ?? getLanguageDisplayName(value)}
           size="small"
           variant="outlined"

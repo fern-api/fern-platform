@@ -10,7 +10,7 @@ import {
 
 import { composeRefs } from "@radix-ui/react-compose-refs";
 import * as Tooltip from "@radix-ui/react-tooltip";
-import { Expand } from "iconoir-react";
+import { Expand } from "lucide-react";
 
 import { FernButton } from "@fern-docs/components";
 import { usePrevious } from "@fern-ui/react-commons";

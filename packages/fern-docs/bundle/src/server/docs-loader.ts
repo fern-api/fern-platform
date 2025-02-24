@@ -308,7 +308,7 @@ const getNavigationNode = async (
   authState: AuthState,
   authConfig: AuthEdgeConfig | undefined
 ) => {
-  const root = await getRoot(domain, authState, authConfig);
+  const root = await getRootCached(domain, authState, authConfig);
   const collector = FernNavigation.NodeCollector.collect(root);
   const node = collector.get(FernNavigation.NodeId(id));
   if (node == null) {

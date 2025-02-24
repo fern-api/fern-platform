@@ -1,8 +1,8 @@
 import { ReactElement } from "react";
 
 import { round } from "es-toolkit/math";
-import { Download } from "iconoir-react";
 import { useAtomValue } from "jotai";
+import { Download } from "lucide-react";
 
 import { cn } from "@fern-docs/components";
 import {

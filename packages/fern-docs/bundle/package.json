@@ -97,7 +97,6 @@
     "github-slugger": "^2.0.0",
     "hast-util-properties-to-mdx-jsx-attributes": "^1.0.0",
     "hast-util-to-estree": "^3.1.1",
-    "iconoir-react": "^7.7.0",
     "iron-session": "^8.0.4",
     "jose": "^5.9.6",
     "jotai": "^2.12.0",

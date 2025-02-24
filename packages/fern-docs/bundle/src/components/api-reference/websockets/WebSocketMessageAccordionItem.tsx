@@ -3,7 +3,7 @@
 import { FC } from "react";
 
 import * as Accordion from "@radix-ui/react-accordion";
-import { ArrowDown, ArrowUp, NavArrowDown } from "iconoir-react";
+import { ArrowDown, ArrowUp, ChevronDown } from "lucide-react";
 
 import { APIV1Read } from "@fern-api/fdr-sdk/client/types";
 import { cn } from "@fern-docs/components";
@@ -62,7 +62,7 @@ export const WebsocketMessageAccordionItem: FC<
           onClick={(e) => e.stopPropagation()}
         />
 
-        <NavArrowDown
+        <ChevronDown
           className="fern-web-socket-chevron group-data-[state=open]:rotate-180"
           aria-hidden
         />

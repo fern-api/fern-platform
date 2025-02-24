@@ -1,15 +1,5 @@
 import { FC, PropsWithChildren, ReactElement, isValidElement } from "react";
 
-// import {
-//   Bell,
-//   Check,
-//   CheckCircle,
-//   InfoCircle,
-//   Pin,
-//   Rocket,
-//   Star,
-//   WarningTriangle,
-// } from "iconoir-react";
 import {
   Bell,
   Check,

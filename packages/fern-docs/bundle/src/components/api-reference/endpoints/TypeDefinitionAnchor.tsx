@@ -5,7 +5,6 @@ import React from "react";
 import { cn } from "@fern-docs/components";
 
 import { FernAnchor } from "@/components/components/FernAnchor";
-import { useCurrentAnchor } from "@/hooks/use-anchor";
 
 import {
   useHref,

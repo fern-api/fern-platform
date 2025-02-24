@@ -1,6 +1,6 @@
 import "server-only";
 
-import { ArrowDown, ArrowUp, Wifi } from "iconoir-react";
+import { ArrowDown, ArrowUp, Wifi } from "lucide-react";
 
 import type { WebSocketContext } from "@fern-api/fdr-sdk/api-definition";
 import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";

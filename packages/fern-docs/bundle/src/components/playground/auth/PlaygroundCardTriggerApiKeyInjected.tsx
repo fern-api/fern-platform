@@ -1,8 +1,8 @@
 import { useSearchParams } from "next/navigation";
 import { ReactElement, useEffect } from "react";
 
-import { Key, User } from "iconoir-react";
 import { useAtomValue, useSetAtom } from "jotai";
+import { Key, User } from "lucide-react";
 import urlJoin from "url-join";
 
 import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";

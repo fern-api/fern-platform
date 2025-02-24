@@ -1,7 +1,7 @@
 import dynamic from "next/dynamic";
 import { FC, memo, useCallback, useEffect, useMemo, useState } from "react";
 
-import { PlusCircle } from "iconoir-react";
+import { PlusCircle } from "lucide-react";
 
 import {
   ObjectProperty,

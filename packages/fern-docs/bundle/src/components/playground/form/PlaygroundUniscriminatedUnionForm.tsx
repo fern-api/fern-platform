@@ -1,7 +1,7 @@
 import dynamic from "next/dynamic";
 import { memo, useCallback, useMemo, useState } from "react";
 
-import { NavArrowDown } from "iconoir-react";
+import { ChevronDown } from "lucide-react";
 
 import {
   TypeDefinition,
@@ -114,7 +114,7 @@ export const PlaygroundUniscriminatedUnionForm =
                   </span>
                 )
               }
-              rightIcon={<NavArrowDown />}
+              rightIcon={<ChevronDown className="size-icon" />}
               className="mb-4 w-full text-left"
               variant="outlined"
               mono={true}

@@ -1,6 +1,6 @@
 import { forwardRef } from "react";
 
-import { Eye, Lock } from "iconoir-react";
+import { Eye, Lock } from "lucide-react";
 
 import { FernButton, FernInput, FernInputProps } from "@fern-docs/components";
 import { useBooleanState } from "@fern-ui/react-commons";

@@ -2,7 +2,7 @@ import dynamic from "next/dynamic";
 import { memo, useMemo } from "react";
 
 import { sortBy } from "es-toolkit/array";
-import { NavArrowDown } from "iconoir-react";
+import { ChevronDown } from "lucide-react";
 
 import { EnumValue } from "@fern-api/fdr-sdk/api-definition";
 import { FernButton, FernDropdown } from "@fern-docs/components";
@@ -80,7 +80,7 @@ export const PlaygroundEnumForm = memo<PlaygroundEnumFormProps>((props) => {
           )
         }
         variant="outlined"
-        rightIcon={<NavArrowDown />}
+        rightIcon={<ChevronDown />}
         className="w-full text-left"
         disabled={disabled}
       />

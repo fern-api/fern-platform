@@ -2,7 +2,7 @@
 
 import { forwardRef, useCallback, useMemo, useState } from "react";
 
-import { Check, ThumbsDown, ThumbsUp } from "iconoir-react";
+import { Check, ThumbsDown, ThumbsUp } from "lucide-react";
 import { motion } from "motion/react";
 import * as Selection from "selection-popover";
 

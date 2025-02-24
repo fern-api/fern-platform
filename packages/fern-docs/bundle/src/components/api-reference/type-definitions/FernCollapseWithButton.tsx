@@ -1,6 +1,6 @@
 import { FC, PropsWithChildren, ReactNode } from "react";
 
-import { Xmark } from "iconoir-react";
+import { X } from "lucide-react";
 
 import { cn } from "@fern-docs/components";
 import {
@@ -58,7 +58,7 @@ export const FernCollapseWithButton: FC<
           variant="minimal"
           icon={
             typeof text === "string" ? (
-              <Xmark
+              <X
                 className={cn("transition", {
                   "rotate-45": !isOpen,
                 })}
