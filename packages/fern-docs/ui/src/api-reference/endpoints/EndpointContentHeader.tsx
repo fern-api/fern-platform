@@ -39,16 +39,19 @@ export const EndpointContentHeader = memo<EndpointContentHeaderProps>(
 
           {streamToggle}
         </div>
-        <EndpointUrlWithOverflow
-          baseUrl={baseUrl}
-          environmentId={environmentId}
-          path={endpoint.path}
-          method={endpoint.method}
-          options={endpoint.environments}
-          showEnvironment
-          large
-          playgroundButton={playgroundButton}
-        />
+
+        <div className="flex items-center justify-between">
+          <EndpointUrlWithOverflow
+            baseUrl={baseUrl}
+            environmentId={environmentId}
+            path={endpoint.path}
+            method={endpoint.method}
+            options={endpoint.environments}
+            showEnvironment
+            large
+          />
+          {playgroundButton}
+        </div>
       </header>
     );
   }

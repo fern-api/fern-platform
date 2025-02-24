@@ -200,29 +200,29 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<
         onClick={(e) => {
           e.stopPropagation();
         }}
-        actions={{
-          languages:
-            languages.length > 1 ? (
-              <>
-                <CodeExampleClientDropdown
-                  languages={languages}
-                  value={selectedLanguage}
-                  onValueChange={(language) => {
-                    setSelectedExampleKey((prev) => ({
-                      ...prev,
-                      language,
-                    }));
-                  }}
-                />
-              </>
-            ) : undefined,
-          tryIt:
-            node != null ? (
-              <>
-                <PlaygroundButton state={node} />
-              </>
-            ) : undefined,
-        }}
+        languages={
+          languages.length > 1 ? (
+            <>
+              <CodeExampleClientDropdown
+                languages={languages}
+                value={selectedLanguage}
+                onValueChange={(language) => {
+                  setSelectedExampleKey((prev) => ({
+                    ...prev,
+                    language,
+                  }));
+                }}
+              />
+            </>
+          ) : undefined
+        }
+        tryIt={
+          node != null ? (
+            <>
+              <PlaygroundButton state={node} />
+            </>
+          ) : undefined
+        }
         code={resolveEnvironmentUrlInCodeSnippet(
           endpoint,
           requestCodeSnippet,
