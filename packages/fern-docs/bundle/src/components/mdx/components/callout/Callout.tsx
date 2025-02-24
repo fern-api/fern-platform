@@ -1,15 +1,25 @@
 import { FC, PropsWithChildren, ReactElement, isValidElement } from "react";
 
+// import {
+//   Bell,
+//   Check,
+//   CheckCircle,
+//   InfoCircle,
+//   Pin,
+//   Rocket,
+//   Star,
+//   WarningTriangle,
+// } from "iconoir-react";
 import {
   Bell,
   Check,
   CheckCircle,
-  InfoCircle,
+  Info,
   Pin,
   Rocket,
   Star,
-  WarningTriangle,
-} from "iconoir-react";
+  TriangleAlert,
+} from "lucide-react";
 
 import { visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
 import { cn } from "@fern-docs/components";
@@ -51,86 +61,57 @@ export const Callout: FC<PropsWithChildren<Callout.Props>> = ({
   return (
     <div
       className={cn(
-        "rounded-2 mb-6 mt-4 p-4 first:mt-0", // pb-0 to compensate for the ::after margin
+        "rounded-2 mb-6 mt-4 border p-4 first:mt-0", // pb-0 to compensate for the ::after margin
         visitDiscriminatedUnion({ intent }, "intent")._visit({
-          info: () => "callout-outlined",
-          warning: () => "callout-outlined-warning",
-          success: () => "callout-outlined-success",
-          error: () => "callout-outlined-danger",
-          note: () => "callout-outlined-info",
-          launch: () => "callout-outlined-primary",
-          tip: () => "callout-outlined-tip",
-          check: () => "callout-outlined-check",
-          _other: () => "callout-outlined",
+          info: () =>
+            "bg-(color:--grayscale-a2) border-(color:--grayscale-a6) text-(color:--grayscale-a11) [&_svg]:text-(color:--grayscale-a10)",
+          warning: () =>
+            "bg-(color:--amber-a2) border-(color:--amber-a6) text-(color:--amber-a11) [&_svg]:text-(color:--amber-a10)",
+          success: () =>
+            "bg-(color:--green-a2) border-(color:--green-a6) text-(color:--green-a11) [&_svg]:text-(color:--green-a10)",
+          error: () =>
+            "bg-(color:--red-a2) border-(color:--red-a6) text-(color:--red-a11) [&_svg]:text-(color:--red-a10)",
+          note: () =>
+            "bg-(color:--blue-a2) border-(color:--blue-a6) text-(color:--blue-a11) [&_svg]:text-(color:--blue-a10)",
+          launch: () =>
+            "bg-(color:--accent-a2) border-(color:--accent-a6) text-(color:--accent-a11) [&_svg]:text-(color:--accent-a10)",
+          tip: () =>
+            "bg-(color:--green-a2) border-(color:--green-a6) text-(color:--green-a11) [&_svg]:text-(color:--green-a10)",
+          check: () =>
+            "bg-(color:--green-a2) border-(color:--green-a6) text-(color:--green-a11) [&_svg]:text-(color:--green-a10)",
+          _other: () =>
+            "bg-(color:--grayscale-a2) border-(color:--grayscale-a6) text-(color:--grayscale-a11) [&_svg]:text-(color:--grayscale-a10)",
         })
       )}
     >
-      <div className="flex items-start space-x-3">
-        <div className="mt-0.5 w-4">
+      <div className="flex items-start space-x-4">
+        <div className="[&_svg]:size-icon-md mt-0.5 w-4">
           {typeof icon === "string" ? (
-            <FaIcon
-              className={cn("card-icon size-icon-md", {
-                "text-body": intent === "info",
-                "text-(color:--amber-a11)": intent === "warning",
-                "text-(color:--green-a11)": intent === "success",
-                "text-(color:--red-a11)": intent === "error",
-                "text-(color:--blue-a11)": intent === "note",
-                "text-(color:--accent-a11)": intent === "launch",
-              })}
-              icon={icon}
-            />
+            <FaIcon icon={icon} />
           ) : isValidElement(icon) ? (
-            <span className="callout-icon">{icon}</span>
+            icon
           ) : (
             visitDiscriminatedUnion({ intent }, "intent")._visit({
-              info: () => <InfoCircle className="text-body size-icon-md" />,
-              warning: () => (
-                <Bell className="size-icon-md text-(color:--amber-a11)" />
-              ),
-              success: () => (
-                <CheckCircle className="size-icon-md text-(color:--green-a11)" />
-              ),
-              error: () => (
-                <WarningTriangle className="size-icon-md text-(color:--red-a11)" />
-              ),
-              note: () => (
-                <Pin className="size-icon-md text-(color:--blue-a11)" />
-              ),
-              launch: () => (
-                <Rocket className="text-(color:--accent-a11) size-icon-md" />
-              ),
-              tip: () => (
-                <Star className="size-icon-md text-(color:--green-a11)" />
-              ),
-              check: () => (
-                <Check className="size-icon-md text-(color:--green-a11)" />
-              ),
-              _other: () => <InfoCircle className="text-body size-icon-md" />,
+              info: () => <Info />,
+              warning: () => <Bell />,
+              success: () => <CheckCircle />,
+              error: () => <TriangleAlert />,
+              note: () => <Pin />,
+              launch: () => <Rocket />,
+              tip: () => <Star />,
+              check: () => <Check />,
+              _other: () => <Info />,
             })
           )}
         </div>
 
         <div
           className={cn(
-            "prose prose-sm dark:prose-invert -my-4 flex-1 overflow-x-auto before:mb-4 before:block after:mt-4 after:block" // ::after margin ensures that bottom padding overlaps with botttom margins of internal content
+            "-my-4 flex-1 overflow-x-auto text-sm before:mb-4 before:block after:mt-4 after:block" // ::after margin ensures that bottom padding overlaps with botttom margins of internal content
           )}
         >
-          <div
-            className={visitDiscriminatedUnion({ intent }, "intent")._visit({
-              info: () => "text-body",
-              warning: () => "text-(color:--amber-a11)",
-              success: () => "text-(color:--green-a11)",
-              error: () => "text-(color:--red-a11)",
-              note: () => "text-(color:--blue-a11)",
-              launch: () => "text-(color:--accent-a11)",
-              tip: () => "text-(color:--green-a11)",
-              check: () => "text-(color:--green-a11)",
-              _other: () => "text-body",
-            })}
-          >
-            <h5 className="leading-snug">{title}</h5>
-            {children}
-          </div>
+          <h5 className="leading-snug">{title}</h5>
+          {children}
         </div>
       </div>
     </div>

@@ -4,6 +4,7 @@ import React from "react";
 import * as Tabs from "@radix-ui/react-tabs";
 
 import { cleanLanguage } from "@fern-api/fdr-sdk/api-definition";
+import { isPlainObject } from "@fern-api/ui-core-utils";
 import { CopyToClipboardButton, cn } from "@fern-docs/components";
 import { FernSyntaxHighlighter } from "@fern-docs/syntax-highlighter";
 
@@ -12,14 +13,13 @@ import { useProgrammingLanguage } from "@/state/language";
 
 import { getLanguageDisplayName } from "../../../api-reference/examples/code-example";
 import { HorizontalOverflowMask } from "../../../components/HorizontalOverflowMask";
+import { unwrapChildren } from "../../common/unwrap-children";
 import { CodeBlock, toSyntaxHighlighterProps } from "./CodeBlock";
 
 export function CodeGroup({ children }: { children: React.ReactNode }) {
   const isDarkCode = useIsDarkCode();
 
-  const items = React.Children.toArray(children).filter((child) =>
-    React.isValidElement(child)
-  ) as React.ReactElement<React.ComponentProps<typeof CodeBlock>>[];
+  const items = unwrapChildren(children, CodeBlock);
 
   const [selectedTabIndex, setSelectedTabIndex] = useState(0);
   const [selectedLanguage, setSelectedLanguage] = useProgrammingLanguage();

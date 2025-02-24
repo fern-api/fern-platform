@@ -4,9 +4,12 @@ import React from "react";
 import * as RadixTabs from "@radix-ui/react-tabs";
 
 import { ApiDefinition } from "@fern-api/fdr-sdk";
+import { cn } from "@fern-docs/components";
 
 import { useCurrentAnchor } from "@/hooks/use-anchor";
 import { useProgrammingLanguage } from "@/state/language";
+
+import { unwrapChildren } from "../../common/unwrap-children";
 
 export interface TabProps {
   title?: string;
@@ -17,7 +20,6 @@ export interface TabProps {
 }
 
 export interface TabGroupProps {
-  tabs: TabProps[];
   toc?: boolean;
 }
 
@@ -27,31 +29,30 @@ export function TabGroup({
   toc?: boolean;
   children?: ReactNode;
 }) {
-  const tabs = React.Children.toArray(children).filter(
-    (child) => React.isValidElement(child) && child.type === Tab
-  ) as React.ReactElement<React.ComponentProps<typeof Tab>>[];
+  const items = unwrapChildren(children, Tab);
 
-  const [activeTab, setActiveTab] = useState(() => tabs[0]?.props.id);
+  const [activeTab, setActiveTab] = useState(() => items[0]?.props.id);
   const anchor = useCurrentAnchor();
   const [selectedLanguage, setSelectedLanguage] = useProgrammingLanguage();
+
   useEffect(() => {
     if (anchor != null) {
-      if (tabs.some((tab) => tab.props.id === anchor)) {
+      if (items.some((item) => item.props.id === anchor)) {
         setActiveTab(anchor);
       }
     }
-  }, [anchor, tabs]);
+  }, [anchor, items]);
 
   useEffect(() => {
     if (selectedLanguage) {
-      const matchingTab = tabs.find(
-        (tab) =>
-          tab.props.language &&
-          ApiDefinition.cleanLanguage(tab.props.language) === selectedLanguage
+      const matchingTab = items.find(
+        (item) =>
+          item.props.language &&
+          ApiDefinition.cleanLanguage(item.props.language) === selectedLanguage
       );
       if (matchingTab) {
         setActiveTab((prevActiveTab) => {
-          const prevTab = tabs.find((tab) => tab.props.id === prevActiveTab);
+          const prevTab = items.find((item) => item.props.id === prevActiveTab);
           if (
             prevTab?.props.language &&
             ApiDefinition.cleanLanguage(prevTab.props.language) ===
@@ -63,11 +64,11 @@ export function TabGroup({
         });
       }
     }
-  }, [selectedLanguage, tabs]);
+  }, [selectedLanguage, items]);
 
   const handleTabChange = (tabId: string) => {
     setActiveTab(tabId);
-    const selectedTab = tabs.find((tab) => tab.props.id === tabId);
+    const selectedTab = items.find((item) => item.props.id === tabId);
     const cleanedLanguage = selectedTab?.props.language
       ? ApiDefinition.cleanLanguage(selectedTab.props.language)
       : undefined;
@@ -79,10 +80,13 @@ export function TabGroup({
   return (
     <RadixTabs.Root value={activeTab} onValueChange={handleTabChange}>
       <RadixTabs.List className="border-border-default mb-6 mt-4 flex gap-4 border-b first:-mt-3">
-        {tabs.map(({ props: { title = "Untitled", id = "" } }) => (
+        {items.map(({ props: { title = "Untitled", id = "" } }) => (
           <RadixTabs.Trigger key={id} value={id} asChild>
             <h6
-              className="text-body hover:border-border-default data-[state=active]:text-(color:--accent) data-[state=active]:border-(color:--accent) -mb-px flex max-w-max cursor-pointer scroll-mt-4 whitespace-nowrap border-b border-transparent pb-2.5 pt-3 text-sm font-semibold leading-6"
+              className={cn(
+                "text-body hover:border-border-default -mb-px flex max-w-max cursor-pointer scroll-mt-4 whitespace-nowrap border-b border-transparent pb-2.5 pt-3 text-sm font-semibold leading-6",
+                "data-[state=active]:text-(color:--accent-a11) data-[state=active]:before:bg-(color:--accent-track) relative data-[state=active]:before:absolute data-[state=active]:before:inset-x-0 data-[state=active]:before:-bottom-px data-[state=active]:before:h-[2px]"
+              )}
               id={id}
             >
               {title}

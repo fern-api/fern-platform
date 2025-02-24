@@ -31,7 +31,7 @@ export const TableOfContentsItem = memo<TableOfContentsItemProps>(
             {
               "text-(color:--grayscale-a11) hover:text-(color:--grayscale-a12)":
                 !active,
-              "text-(color:--accent-a12)": active,
+              "text-(color:--accent-a11) font-semibold tracking-tight": active,
             }
           )}
           href={`#${anchorString}`}

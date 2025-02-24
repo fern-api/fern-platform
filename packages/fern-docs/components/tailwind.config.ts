@@ -99,54 +99,6 @@ export default {
           "@apply data-[side=top]:animate-slide-down-and-fade data-[side=right]:animate-slide-left-and-fade data-[side=bottom]:animate-slide-up-and-fade data-[side=left]:animate-slide-right-and-fade":
             {},
         },
-
-        ".callout-soft": {
-          "@apply bg-(color:--grayscale-a3) ring-0": {},
-        },
-        ".callout-soft-success": {
-          "@apply bg-(--green-a3) ring-0": {},
-        },
-        ".callout-soft-warning": {
-          "@apply bg-(--amber-a3) ring-0": {},
-        },
-        ".callout-soft-danger": {
-          "@apply bg-(--red-a3) ring-0": {},
-        },
-
-        ".callout-outlined": {
-          "@apply bg-(color:--grayscale-a2) ring-1 ring-inset ring-border-default-soft":
-            {},
-        },
-        ".callout-outlined-success, .callout-outlined-tip, .callout-outlined-check":
-          {
-            "@apply bg-(--green-a2) ring-1 ring-inset ring-(--green-a4)": {},
-          },
-        ".callout-outlined-warning": {
-          "@apply bg-(--amber-a2) ring-1 ring-inset ring-(--amber-a4)": {},
-        },
-        ".callout-outlined-danger": {
-          "@apply bg-(--red-a2) ring-1 ring-inset ring-(--red-a4)": {},
-        },
-        ".callout-outlined-primary": {
-          "@apply bg-(color:--accent-a2) ring-1 ring-inset ring-(color:--accent-a4)":
-            {},
-        },
-        ".callout-outlined-info": {
-          "@apply bg-(--blue-a2) ring-1 ring-inset ring-(--info-a4)": {},
-        },
-
-        ".callout-outlined-ghost": {
-          "@apply ring-1 ring-inset ring-border-default-soft": {},
-        },
-        ".callout-outlined-ghost-success": {
-          "@apply ring-1 ring-inset ring-(--green-a4)": {},
-        },
-        ".callout-outlined-ghost-warning": {
-          "@apply ring-1 ring-inset ring-(--amber-a4)": {},
-        },
-        ".callout-outlined-ghost-danger": {
-          "@apply ring-1 ring-inset ring-(--red-a4)": {},
-        },
       });
     }),
   ],

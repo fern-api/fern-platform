@@ -90,9 +90,10 @@ export function createCachedMdxSerializer(
     });
 
     // if the result is undefined, we need to revalidate the cache
-    if (result == null) {
-      revalidateTag(key);
-    }
+    // NOTE: you cannot do this because you cant revalidate the cache in a render function
+    // if (result == null) {
+    //   revalidateTag(key);
+    // }
 
     return result;
   };

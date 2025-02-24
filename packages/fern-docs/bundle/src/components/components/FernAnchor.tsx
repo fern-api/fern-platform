@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import React from "react";
 
 import * as Tooltip from "@radix-ui/react-tooltip";
-import { Check, Link } from "lucide-react";
+import { Check, Link2 } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 
 import { useCopyToClipboard } from "@fern-ui/react-commons";
@@ -82,7 +82,7 @@ export function FernAnchor({
             >
               {!wasJustCopied && !forceMount && (
                 <span className="fern-anchor-icon">
-                  <Link />
+                  <Link2 />
                 </span>
               )}
               <AnimatePresence onExitComplete={handleExitComplete}>

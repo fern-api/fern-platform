@@ -3,7 +3,10 @@ import {
   Hast,
   SKIP,
   Unified,
+  extractAttributeValueLiteral,
+  isMdxJsxAttribute,
   isMdxJsxElementHast,
+  unknownToMdxJsxAttribute,
   visit,
 } from "@fern-docs/mdx";
 

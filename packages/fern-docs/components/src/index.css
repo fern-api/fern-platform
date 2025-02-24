@@ -198,6 +198,7 @@
 @theme inline {
   /** typography */
   --tw-prose-links: var(--accent-a11);
+  --tw-prose-counters: var(--grayscale-a10);
 
   --radius-none: 0;
   --radius-1\/2: calc(var(--radius) * 0.5);

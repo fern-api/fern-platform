@@ -4,6 +4,8 @@ import * as AccordionComponent from "@fern-docs/components";
 
 import { useCurrentAnchor } from "@/hooks/use-anchor";
 
+import { unwrapChildren } from "../../common/unwrap-children";
+
 export interface AccordionGroupProps {
   children: React.ReactNode;
   toc?: boolean;
@@ -13,13 +15,11 @@ export function AccordionGroup({ children }: AccordionGroupProps) {
   const [activeTabs, setActiveTabs] = React.useState<string[]>([]);
   const anchor = useCurrentAnchor();
 
-  const items = React.Children.toArray(children).filter(
-    (child) => React.isValidElement(child) && child.type === Accordion
-  ) as React.ReactElement<React.ComponentProps<typeof Accordion>>[];
+  const items = unwrapChildren(children, Accordion);
 
   React.useEffect(() => {
     if (anchor != null) {
-      if (items.some((tab) => tab.props.id === anchor)) {
+      if (items.some((item) => item.props.id === anchor)) {
         setActiveTabs((prev) =>
           prev.includes(anchor) ? prev : [...prev, anchor]
         );

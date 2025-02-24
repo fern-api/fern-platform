@@ -1,4 +1,4 @@
-import { FC, type PropsWithChildren } from "react";
+import React, { FC, type PropsWithChildren } from "react";
 
 import { cn } from "@fern-docs/components";
 
@@ -10,8 +10,12 @@ export declare namespace CardGroup {
 
 export const CardGroup: FC<PropsWithChildren<CardGroup.Props>> = ({
   children,
-  cols = 2,
+  cols,
 }) => {
+  if (!cols) {
+    cols = Math.min(React.Children.count(children), 2);
+  }
+
   return (
     <div
       className={cn("my-6 grid gap-4 first:mt-0 sm:gap-6", {

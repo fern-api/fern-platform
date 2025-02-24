@@ -4,11 +4,15 @@ import { propertiesToMdxJsxAttributes } from "hast-util-properties-to-mdx-jsx-at
 import parseNumericRange from "parse-numeric-range";
 
 import {
+  CONTINUE,
   Hast,
   SKIP,
   Unified,
+  extractAttributeValueLiteral,
+  isMdxJsxAttribute,
   isMdxJsxElementHast,
   mdastFromMarkdown,
+  unknownToMdxJsxAttribute,
   visit,
 } from "@fern-docs/mdx";
 
