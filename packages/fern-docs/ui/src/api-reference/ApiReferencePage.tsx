@@ -4,7 +4,6 @@ import {
   useNavigationNodes,
   useWriteApiDefinitionAtom,
 } from "../atoms";
-import { PlaygroundFloatingButton } from "../playground/PlaygroundFloatingButton";
 import { DocsContent } from "../resolver/DocsContent";
 import {
   BuiltWithFern,
@@ -40,7 +39,6 @@ export default function ApiReferencePage({
           mdxs={content.mdxs}
           slug={content.slug}
         />
-        <PlaygroundFloatingButton />
       </HideBuiltWithFernContext.Provider>
 
       {/* anchor links should get additional padding to scroll to on initial load */}

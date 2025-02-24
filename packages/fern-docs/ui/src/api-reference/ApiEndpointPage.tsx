@@ -6,7 +6,6 @@ import { useNavigationNodes, useWriteApiDefinitionAtom } from "../atoms";
 import { ALL_ENVIRONMENTS_ATOM } from "../atoms/environment";
 import { BottomNavigationNeighbors } from "../components/BottomNavigationNeighbors";
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
-import { PlaygroundFloatingButton } from "../playground/PlaygroundFloatingButton";
 import { DocsContent } from "../resolver/DocsContent";
 import {
   BuiltWithFern,
@@ -63,7 +62,6 @@ export default function ApiEndpointPage({
             mdxs={EMPTY_OBJECT}
             showErrors={content.showErrors}
           />
-          <PlaygroundFloatingButton />
         </HideBuiltWithFernContext.Provider>
       </FernErrorBoundary>
       <div className="px-4 md:px-6 lg:hidden lg:px-8">
