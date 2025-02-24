@@ -1,9 +1,12 @@
+import { jsx, toJs } from "estree-util-to-js";
 import { toEstree } from "hast-util-to-estree";
 
 import { isNonNullish } from "@fern-api/ui-core-utils";
 import {
   CONTINUE,
   Hast,
+  MdxJsxAttribute,
+  MdxJsxExpressionAttribute,
   SKIP,
   Unified,
   isHastElement,
@@ -100,38 +103,8 @@ function migrateStepGroup(node: Hast.MdxJsxElement) {
 
   function resetCurrentStep() {
     if (currentStep != null) {
-      const step: Hast.MdxJsxElement = {
-        type: "mdxJsxFlowElement" as const,
-        name: "Step",
-        children: currentStepChildren,
-        attributes: [
-          {
-            type: "mdxJsxAttribute",
-            name: "title",
-            value: {
-              type: "mdxJsxAttributeValueExpression",
-              value: "",
-              data: {
-                estree: toEstree({
-                  type: "mdxJsxFlowElement",
-                  name: null,
-                  attributes: [],
-                  children: currentStep.children,
-                }),
-              },
-            },
-          },
-        ],
-      };
-
-      // copy the attributes from the current step
-      if (currentStep.type === "element") {
-        Object.entries(currentStep.properties).forEach(([key, value]) => {
-          step.attributes.push(unknownToMdxJsxAttribute(key, value));
-        });
-      } else if (isMdxJsxElementHast(currentStep)) {
-        step.attributes.push(...currentStep.attributes);
-      }
+      const step = createStep(currentStep);
+      step.children = currentStepChildren;
 
       // add the step to the children of the new step group component
       children.push(step);
@@ -145,10 +118,21 @@ function migrateStepGroup(node: Hast.MdxJsxElement) {
   for (const child of node.children) {
     if (
       (isHastElement(child) && child.tagName === headingRank) ||
-      (isMdxJsxElementHast(child) && child.name === "Step")
+      (isMdxJsxElementHast(child) &&
+        child.name?.toLocaleLowerCase() === headingRank)
     ) {
       resetCurrentStep();
+      currentStep = child;
     } else {
+      if (currentStep == null) {
+        currentStep = {
+          type: "mdxJsxFlowElement" as const,
+          name: "Step",
+          children: [],
+          attributes: [],
+        };
+      }
+
       currentStepChildren.push(child);
     }
   }
@@ -156,4 +140,65 @@ function migrateStepGroup(node: Hast.MdxJsxElement) {
   resetCurrentStep();
 
   node.children = children;
+}
+
+function getAttributes(
+  node: Hast.MdxJsxElement | Hast.Element
+): (MdxJsxAttribute | MdxJsxExpressionAttribute)[] {
+  if (node.type === "element") {
+    return Object.entries(node.properties).map(([key, value]) =>
+      unknownToMdxJsxAttribute(key, value)
+    );
+  }
+  return [...node.attributes];
+}
+
+function createStep(
+  title: Hast.MdxJsxElement | Hast.Element
+): Hast.MdxJsxElement {
+  const attributes = getAttributes(title);
+  if (
+    !attributes.some(
+      (attribute) =>
+        attribute.type === "mdxJsxAttribute" && attribute.name === "title"
+    )
+  ) {
+    let titleAttribute: MdxJsxAttribute = {
+      type: "mdxJsxAttribute",
+      name: "title",
+    };
+    attributes.push(titleAttribute);
+
+    if (
+      title.type === "element" &&
+      title.children.length === 1 &&
+      title.children[0] &&
+      title.children[0].type === "text"
+    ) {
+      titleAttribute.value = title.children[0].value;
+    } else {
+      const estree = toEstree(
+        title.children.length === 1 && title.children[0]
+          ? title.children[0]
+          : {
+              type: "mdxJsxTextElement",
+              children: title.children,
+              name: null,
+              attributes: [],
+            }
+      );
+      titleAttribute.value = {
+        type: "mdxJsxAttributeValueExpression",
+        value: toJs(estree, { handlers: jsx }).value.trim().replace(/;$/, ""),
+        data: { estree },
+      };
+    }
+  }
+
+  return {
+    type: "mdxJsxFlowElement" as const,
+    name: "Step",
+    children: [],
+    attributes,
+  };
 }

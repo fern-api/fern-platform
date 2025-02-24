@@ -32,6 +32,8 @@ export const rehypeTabs: Unified.Plugin<[], Hast.Root> = () => {
         };
 
         parent.children[index] = tabGroup;
+
+        // revisit the current node to traverse its children
         return [SKIP, index];
       }
 

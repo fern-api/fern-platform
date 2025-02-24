@@ -146,12 +146,15 @@ async function serializeMdxImpl(
         rehypeKatex,
         [rehypeFiles, { files: remoteFiles }],
         rehypeMdxClassStyle,
-        rehypeSlug,
         rehypeCodeBlock,
         rehypeSteps,
         rehypeAccordions,
         rehypeTabs,
         rehypeCards,
+        [
+          rehypeSlug,
+          { additionalJsxElements: ["Step", "Accordion", "Tab", "Card"] },
+        ],
         rehypeButtons,
         [rehypeEndpointSnippets, { loader }],
         [
