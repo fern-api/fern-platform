@@ -206,6 +206,7 @@ types:
       go: GoSDKRequest
       ruby: RubySDKRequest
       java: JavaSDKRequest
+      csharp: CsharpSDKRequest
 
   TypeScriptSDKRequest:
     properties:
@@ -237,6 +238,11 @@ types:
         docs: The artifact (e.g. `stripe-java`)
       version: optional<string>
 
+  CsharpSDKRequest:
+    properties:
+      package: string
+      version: optional<string>
+
   SDK:
     union:
       typescript: TypeScriptSDK
@@ -244,6 +250,7 @@ types:
       go: GoSDK
       ruby: RubySDK
       java: JavaSDK
+      csharp: CsharpSDK
 
   TypeScriptSDK:
     properties:
@@ -274,6 +281,12 @@ types:
         type: string
         docs: The artifact (e.g. `stripe-java`)
       version: string
+
+  CsharpSDK:
+    properties:
+      package: string
+      version: string
+
   ####### Load Snippets #######
   ### Load Snippets Custom Payload ###
 
@@ -332,6 +345,7 @@ types:
       java: JavaSnippet
       go: GoSnippet
       ruby: RubySnippet
+      csharp: CsharpSnippet
 
   TypeScriptSnippet:
     properties:
@@ -359,6 +373,11 @@ types:
       sdk: JavaSDK
       async_client: string
       sync_client: string
+
+  CsharpSnippet:
+    properties:
+      sdk: CsharpSDK
+      client: string
 
 errors:
   ApiIdRequiredError:

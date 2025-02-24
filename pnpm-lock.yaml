@@ -797,7 +797,7 @@ importers:
         version: 5.13.0
       braintrust:
         specifier: ^0.0.182
-        version: 0.0.182(@aws-sdk/credential-provider-web-identity@3.723.0(@aws-sdk/client-sts@3.723.0))(react@18.3.1)(sswr@2.1.0(svelte@5.19.2))(svelte@5.19.2)(vue@3.5.13(typescript@5.7.2))(zod@3.24.1)
+        version: 0.0.182(@aws-sdk/credential-provider-web-identity@3.723.0(@aws-sdk/client-sts@3.682.0))(react@18.3.1)(sswr@2.1.0(svelte@5.19.2))(svelte@5.19.2)(vue@3.5.13(typescript@5.7.2))(zod@3.24.1)
       cssnano:
         specifier: ^6.0.3
         version: 6.1.2(postcss@8.4.31)
@@ -2619,8 +2619,8 @@ importers:
   packages/template-resolver:
     dependencies:
       '@fern-fern/fdr-cjs-sdk':
-        specifier: 0.75.41-28-g8e9080929
-        version: 0.75.41-28-g8e9080929
+        specifier: 0.76.19-1-6e46ece2a09
+        version: 0.76.19-1-6e46ece2a09
       prettier:
         specifier: ^3.4.2
         version: 3.4.2
@@ -4877,8 +4877,8 @@ packages:
   '@fern-fern/docs-parsers-fern-definition@0.0.3':
     resolution: {integrity: sha512-K/0U4atohNlz+ufYwyclaYyMKj9cZrSu1eHd7g396A3d6LT/rBF9GywUR2hK7LmLja8xtor54DX2Gz69b3k93A==}
 
-  '@fern-fern/fdr-cjs-sdk@0.75.41-28-g8e9080929':
-    resolution: {integrity: sha512-M2isiUgGZqlj9VSDwscSmR4esuwBbnDe/IwsFGqs4BzemVagT1e7xXZO8hXJoRLYkLmLZRpyzL3vh0zQkQiLLQ==}
+  '@fern-fern/fdr-cjs-sdk@0.76.19-1-6e46ece2a09':
+    resolution: {integrity: sha512-EJ3dC1grOcUFNVzA+ISkrcMHXfDfjUsKJZ8IthELlZyiMeTToj2ONHrESG1syu60RZ/E+81WDa4inxKRoHpRhA==}
 
   '@fern-fern/fern-cloud-sdk@0.0.305':
     resolution: {integrity: sha512-FDV2dlBpIaf4ZULjPKwUh+kZ8jnUbRS0Vth/Izwa/mIt7lbbrynUTJiPVANhQdVpt5cqq0Q/8BeBx0/7IvNVDA==}
@@ -18879,6 +18879,16 @@ snapshots:
       '@smithy/types': 3.6.0
       tslib: 2.8.1
 
+  '@aws-sdk/credential-provider-web-identity@3.723.0(@aws-sdk/client-sts@3.682.0)':
+    dependencies:
+      '@aws-sdk/client-sts': 3.682.0
+      '@aws-sdk/core': 3.723.0
+      '@aws-sdk/types': 3.723.0
+      '@smithy/property-provider': 4.0.0
+      '@smithy/types': 4.1.0
+      tslib: 2.8.1
+    optional: true
+
   '@aws-sdk/credential-provider-web-identity@3.723.0(@aws-sdk/client-sts@3.723.0)':
     dependencies:
       '@aws-sdk/client-sts': 3.723.0
@@ -20574,7 +20584,7 @@ snapshots:
 
   '@fern-fern/docs-parsers-fern-definition@0.0.3': {}
 
-  '@fern-fern/fdr-cjs-sdk@0.75.41-28-g8e9080929':
+  '@fern-fern/fdr-cjs-sdk@0.76.19-1-6e46ece2a09':
     dependencies:
       form-data: 4.0.0
       formdata-node: 6.0.3
@@ -25110,9 +25120,9 @@ snapshots:
     transitivePeerDependencies:
       - typescript
 
-  '@vercel/functions@1.5.2(@aws-sdk/credential-provider-web-identity@3.723.0(@aws-sdk/client-sts@3.723.0))':
+  '@vercel/functions@1.5.2(@aws-sdk/credential-provider-web-identity@3.723.0(@aws-sdk/client-sts@3.682.0))':
     optionalDependencies:
-      '@aws-sdk/credential-provider-web-identity': 3.723.0(@aws-sdk/client-sts@3.723.0)
+      '@aws-sdk/credential-provider-web-identity': 3.723.0(@aws-sdk/client-sts@3.682.0)
 
   '@vercel/kv@2.0.0':
     dependencies:
@@ -26998,12 +27008,12 @@ snapshots:
     dependencies:
       fill-range: 7.1.1
 
-  braintrust@0.0.182(@aws-sdk/credential-provider-web-identity@3.723.0(@aws-sdk/client-sts@3.723.0))(react@18.3.1)(sswr@2.1.0(svelte@5.19.2))(svelte@5.19.2)(vue@3.5.13(typescript@5.7.2))(zod@3.24.1):
+  braintrust@0.0.182(@aws-sdk/credential-provider-web-identity@3.723.0(@aws-sdk/client-sts@3.682.0))(react@18.3.1)(sswr@2.1.0(svelte@5.19.2))(svelte@5.19.2)(vue@3.5.13(typescript@5.7.2))(zod@3.24.1):
     dependencies:
       '@ai-sdk/provider': 1.0.4
       '@braintrust/core': 0.0.76
       '@next/env': 14.2.9
-      '@vercel/functions': 1.5.2(@aws-sdk/credential-provider-web-identity@3.723.0(@aws-sdk/client-sts@3.723.0))
+      '@vercel/functions': 1.5.2(@aws-sdk/credential-provider-web-identity@3.723.0(@aws-sdk/client-sts@3.682.0))
       ai: 3.4.33(react@18.3.1)(sswr@2.1.0(svelte@5.19.2))(svelte@5.19.2)(vue@3.5.13(typescript@5.7.2))(zod@3.24.1)
       argparse: 2.0.1
       chalk: 4.1.2
@@ -28758,7 +28768,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-module-utils@2.12.0(@typescript-eslint/parser@8.18.1(eslint@9.17.0(jiti@1.21.7))(typescript@5.7.2))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.7.0)(eslint@9.17.0(jiti@1.21.7)):
+  eslint-module-utils@2.12.0(@typescript-eslint/parser@8.18.1(eslint@9.17.0(jiti@1.21.7))(typescript@5.7.2))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.7.0(eslint-plugin-import@2.31.0)(eslint@9.17.0(jiti@1.21.7)))(eslint@9.17.0(jiti@1.21.7)):
     dependencies:
       debug: 3.2.7
     optionalDependencies:
@@ -28790,7 +28800,7 @@ snapshots:
       doctrine: 2.1.0
       eslint: 9.17.0(jiti@1.21.7)
       eslint-import-resolver-node: 0.3.9
-      eslint-module-utils: 2.12.0(@typescript-eslint/parser@8.18.1(eslint@9.17.0(jiti@1.21.7))(typescript@5.7.2))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.7.0)(eslint@9.17.0(jiti@1.21.7))
+      eslint-module-utils: 2.12.0(@typescript-eslint/parser@8.18.1(eslint@9.17.0(jiti@1.21.7))(typescript@5.7.2))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.7.0(eslint-plugin-import@2.31.0)(eslint@9.17.0(jiti@1.21.7)))(eslint@9.17.0(jiti@1.21.7))
       hasown: 2.0.2
       is-core-module: 2.16.0
       is-glob: 4.0.3
