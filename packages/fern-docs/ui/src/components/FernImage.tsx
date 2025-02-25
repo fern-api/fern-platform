@@ -23,6 +23,7 @@ export const FernImage = forwardRef<
     alt,
     width,
     height,
+    style,
     fill,
     loader,
     quality,
@@ -70,7 +71,7 @@ export const FernImage = forwardRef<
         // which causes the image height to be ignored. we'll use the inline style prop to override this behavior:
         style={{
           aspectRatio,
-          ...props.style,
+          ...style,
         }}
       />
     );
@@ -108,7 +109,7 @@ export const FernImage = forwardRef<
       // which causes the image height to be ignored. we'll use the inline style prop to override this behavior:
       style={{
         aspectRatio,
-        ...props.style,
+        ...style,
       }}
     />
   );
