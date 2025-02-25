@@ -53,8 +53,10 @@ export function getRegisterApiService(app: FdrApplication): APIV1WriteService {
           javaSdk: undefined,
           goSdk: undefined,
           rubySdk: undefined,
+          csharpSdk: undefined,
         };
 
+<<<<<<< HEAD
         const snippetsConfigurationWithSdkIds = await app.dao
           .sdks()
           .getSdkIdsForPackages(snippetsConfiguration);
@@ -74,6 +76,30 @@ export function getRegisterApiService(app: FdrApplication): APIV1WriteService {
         if (snippetsConfigurationWithSdkIds.rubySdk != null) {
           sdkIds.push(snippetsConfigurationWithSdkIds.rubySdk.sdkId);
         }
+=======
+      const snippetsConfigurationWithSdkIds = await app.dao
+        .sdks()
+        .getSdkIdsForPackages(snippetsConfiguration);
+      const sdkIds: string[] = [];
+      if (snippetsConfigurationWithSdkIds.typescriptSdk != null) {
+        sdkIds.push(snippetsConfigurationWithSdkIds.typescriptSdk.sdkId);
+      }
+      if (snippetsConfigurationWithSdkIds.pythonSdk != null) {
+        sdkIds.push(snippetsConfigurationWithSdkIds.pythonSdk.sdkId);
+      }
+      if (snippetsConfigurationWithSdkIds.javaSdk != null) {
+        sdkIds.push(snippetsConfigurationWithSdkIds.javaSdk.sdkId);
+      }
+      if (snippetsConfigurationWithSdkIds.goSdk != null) {
+        sdkIds.push(snippetsConfigurationWithSdkIds.goSdk.sdkId);
+      }
+      if (snippetsConfigurationWithSdkIds.rubySdk != null) {
+        sdkIds.push(snippetsConfigurationWithSdkIds.rubySdk.sdkId);
+      }
+      if (snippetsConfigurationWithSdkIds.csharpSdk != null) {
+        sdkIds.push(snippetsConfigurationWithSdkIds.csharpSdk.sdkId);
+      }
+>>>>>>> 26ae3d805 (feat(api): Add C# to SnippetsConfig (#2212))
 
         const snippetsBySdkId = await app.dao
           .snippets()
@@ -172,6 +198,159 @@ export function getRegisterApiService(app: FdrApplication): APIV1WriteService {
   });
 }
 
+<<<<<<< HEAD
+=======
+function stringifyEndpointPathParts(
+  path: FdrAPI.api.latest.PathPart[]
+): string {
+  return urlJoin(
+    ...path.map((part) =>
+      part.type === "literal" ? part.value : `{${part.value}}`
+    )
+  );
+}
+
+function enrichApiLatestDefinitionWithSnippets(
+  definition: FdrAPI.api.latest.ApiDefinition,
+  snippetHolder: SDKSnippetHolder
+): FdrAPI.api.latest.ApiDefinition {
+  Object.entries(definition.endpoints).forEach(([_, endpoint]) => {
+    endpoint.snippetTemplates = snippetHolder.getSnippetTemplateForEndpoint({
+      endpointPath: FdrAPI.EndpointPathLiteral(
+        stringifyEndpointPathParts(endpoint.path)
+      ),
+      endpointMethod: endpoint.method,
+      endpointId: endpoint.id,
+    });
+
+    endpoint.examples?.forEach((example) => {
+      const goSnippet = snippetHolder.getGoCodeSnippetForEndpoint({
+        endpointPath: FdrAPI.EndpointPathLiteral(
+          stringifyEndpointPathParts(endpoint.path)
+        ),
+        endpointMethod: endpoint.method,
+        endpointId: endpoint.id,
+        exampleId: example.name,
+      });
+      const pythonSnippet = snippetHolder.getPythonCodeSnippetForEndpoint({
+        endpointPath: FdrAPI.EndpointPathLiteral(
+          stringifyEndpointPathParts(endpoint.path)
+        ),
+        endpointMethod: endpoint.method,
+        endpointId: endpoint.id,
+        exampleId: example.name,
+      });
+      const rubySnippet = snippetHolder.getRubyCodeSnippetForEndpoint({
+        endpointPath: FdrAPI.EndpointPathLiteral(
+          stringifyEndpointPathParts(endpoint.path)
+        ),
+        endpointMethod: endpoint.method,
+        endpointId: endpoint.id,
+        exampleId: example.name,
+      });
+      const typescriptSnippet =
+        snippetHolder.getTypeScriptCodeSnippetForEndpoint({
+          endpointPath: FdrAPI.EndpointPathLiteral(
+            stringifyEndpointPathParts(endpoint.path)
+          ),
+          endpointMethod: endpoint.method,
+          endpointId: endpoint.id,
+          exampleId: example.name,
+        });
+      const csharpSnippet = snippetHolder.getCsharpCodeSnippetForEndpoint({
+        endpointPath: FdrAPI.EndpointPathLiteral(
+          stringifyEndpointPathParts(endpoint.path)
+        ),
+        endpointMethod: endpoint.method,
+        endpointId: endpoint.id,
+        exampleId: example.name,
+      });
+
+      if (
+        goSnippet != null &&
+        (example.snippets?.go == null || example.snippets.go?.length === 0)
+      ) {
+        example.snippets ??= {};
+        example.snippets.go ??= [];
+        example.snippets.go.push({
+          language: "go",
+          code: goSnippet.client,
+          install: goSnippet.install,
+          generated: true,
+          description: example.description,
+          name: undefined,
+        });
+      }
+      if (
+        pythonSnippet != null &&
+        (example.snippets?.python == null ||
+          example.snippets.python?.length === 0)
+      ) {
+        example.snippets ??= {};
+        example.snippets.python ??= [];
+        example.snippets.python.push({
+          language: "python",
+          code: pythonSnippet.sync_client,
+          install: pythonSnippet.install,
+          generated: true,
+          description: example.description,
+          name: undefined,
+        });
+      }
+      if (
+        rubySnippet != null &&
+        (example.snippets?.ruby == null || example.snippets.ruby?.length === 0)
+      ) {
+        example.snippets ??= {};
+        example.snippets.ruby ??= [];
+        example.snippets.ruby.push({
+          language: "ruby",
+          code: rubySnippet.client,
+          install: rubySnippet.install,
+          generated: true,
+          description: example.description,
+          name: undefined,
+        });
+      }
+      if (
+        typescriptSnippet != null &&
+        (example.snippets?.typescript == null ||
+          example.snippets.typescript?.length === 0)
+      ) {
+        example.snippets ??= {};
+        example.snippets.typescript ??= [];
+        example.snippets.typescript.push({
+          language: "typescript",
+          code: typescriptSnippet.client,
+          install: typescriptSnippet.install,
+          generated: true,
+          description: example.description,
+          name: undefined,
+        });
+      }
+      if (
+        csharpSnippet != null &&
+        (example.snippets?.csharp == null ||
+          example.snippets.csharp?.length === 0)
+      ) {
+        example.snippets ??= {};
+        example.snippets.csharp ??= [];
+        example.snippets.csharp.push({
+          language: "csharp",
+          code: csharpSnippet.client,
+          install: csharpSnippet.install,
+          generated: true,
+          description: example.description,
+          name: undefined,
+        });
+      }
+    });
+  });
+
+  return definition;
+}
+
+>>>>>>> 26ae3d805 (feat(api): Add C# to SnippetsConfig (#2212))
 function getSnippetSdkRequests({
   snippetsConfigurationWithSdkIds,
 }: {

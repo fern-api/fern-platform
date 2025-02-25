@@ -17,6 +17,7 @@ export interface SdkIdForPackage {
   goSdk?: APIV1Write.GoModule & { sdkId: string };
   rubySdk?: APIV1Write.RubyGem & { sdkId: string };
   javaSdk?: APIV1Write.JavaCoordinate & { sdkId: string };
+  csharpSdk?: APIV1Write.NugetPackage & { sdkId: string };
 }
 
 interface SdkPackageRequest {
