@@ -9,6 +9,7 @@ import {
   isMdxJsxAttribute,
   isMdxJsxElementHast,
   mdxJsxAttributeToString,
+  unknownToMdxJsxAttribute,
   visit,
 } from "@fern-docs/mdx";
 import { walk } from "estree-walker";
@@ -178,32 +179,58 @@ export function setDimension(
   width: number | undefined,
   height: number | undefined
 ) {
+  // if the image has no intrinsic size, do nothing
+  if (!width || !height) {
+    return;
+  }
+
+  // if the user has defined a height or width, add as style
   const attrWidth = attributes.find((attr) => attr.name === "width");
   const attrHeight = attributes.find((attr) => attr.name === "height");
 
-  if (height != null && !attrHeight) {
-    const actualWidth = Number(attrWidth?.value);
-    const isValidWidth = !isNaN(actualWidth);
-    const adjustedHeight =
-      isValidWidth && width ? height * (actualWidth / width) : height;
-
-    node.attributes.unshift({
-      name: "height",
-      value: String(Math.round(adjustedHeight)),
-      type: "mdxJsxAttribute",
-    });
+  // validate width and height are numeric
+  if (
+    (attrWidth?.value && isNaN(Number(attrWidth.value))) ||
+    (attrHeight?.value && isNaN(Number(attrHeight.value)))
+  ) {
+    return;
   }
 
-  if (width != null && !attrWidth) {
-    const actualHeight = Number(attrHeight?.value);
-    const isValidHeight = !isNaN(actualHeight);
-    const adjustedWidth =
-      isValidHeight && height ? width * (actualHeight / height) : width;
+  let addStyle = "";
+  if (attrWidth) {
+    if (!attrHeight) {
+      addStyle = `width:${attrWidth.value}px;`;
+    } else {
+      addStyle = `width:${attrWidth.value}px;height:${attrHeight.value};`;
+    }
+  } else if (attrHeight) {
+    addStyle = `height:${attrHeight.value}px;width:auto;`;
+  }
 
-    node.attributes.unshift({
-      name: "width",
-      value: String(Math.round(adjustedWidth)),
-      type: "mdxJsxAttribute",
-    });
+  node.attributes.unshift(unknownToMdxJsxAttribute("imageSize", addStyle));
+
+  // replace the actual attribute height and width with the true image size
+  if (height != null) {
+    if (!attrHeight) {
+      node.attributes.unshift({
+        name: "height",
+        value: String(height),
+        type: "mdxJsxAttribute",
+      });
+    } else {
+      attrHeight.value = String(height);
+    }
+  }
+
+  if (width != null) {
+    if (!attrWidth) {
+      node.attributes.unshift({
+        name: "width",
+        value: String(width),
+        type: "mdxJsxAttribute",
+      });
+    } else {
+      attrWidth.value = String(width);
+    }
   }
 }

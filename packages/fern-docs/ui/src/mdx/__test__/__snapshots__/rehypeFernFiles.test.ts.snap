@@ -1,0 +1,179 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`setDimension > should do nothing with non-numeric strings 1`] = `
+{
+  "attributes": [
+    {
+      "name": "src",
+      "type": "mdxJsxAttribute",
+      "value": "file:123",
+    },
+    {
+      "name": "width",
+      "type": "mdxJsxAttribute",
+      "value": "100px",
+    },
+    {
+      "name": "height",
+      "type": "mdxJsxAttribute",
+      "value": "100px",
+    },
+  ],
+  "children": [],
+  "data": {
+    "_mdxExplicitJsx": true,
+  },
+  "name": "img",
+  "type": "mdxJsxFlowElement",
+}
+`;
+
+exports[`setDimension > should leave node as-is if no intrinsic size is set 1`] = `
+{
+  "attributes": [
+    {
+      "name": "src",
+      "type": "mdxJsxAttribute",
+      "value": "file:123",
+    },
+  ],
+  "children": [],
+  "data": {
+    "_mdxExplicitJsx": true,
+  },
+  "name": "img",
+  "type": "mdxJsxFlowElement",
+}
+`;
+
+exports[`setDimension > should preserve image with both width and height set 1`] = `
+{
+  "attributes": [
+    {
+      "name": "imageSize",
+      "type": "mdxJsxAttribute",
+      "value": "width:100px;height:100;",
+    },
+    {
+      "name": "src",
+      "type": "mdxJsxAttribute",
+      "value": "file:123",
+    },
+    {
+      "name": "width",
+      "type": "mdxJsxAttribute",
+      "value": "200",
+    },
+    {
+      "name": "height",
+      "type": "mdxJsxAttribute",
+      "value": "200",
+    },
+  ],
+  "children": [],
+  "data": {
+    "_mdxExplicitJsx": true,
+  },
+  "name": "img",
+  "type": "mdxJsxFlowElement",
+}
+`;
+
+exports[`setDimension > should properly assign height when only width is set 1`] = `
+{
+  "attributes": [
+    {
+      "name": "height",
+      "type": "mdxJsxAttribute",
+      "value": "200",
+    },
+    {
+      "name": "imageSize",
+      "type": "mdxJsxAttribute",
+      "value": "width:100px;",
+    },
+    {
+      "name": "src",
+      "type": "mdxJsxAttribute",
+      "value": "file:123",
+    },
+    {
+      "name": "width",
+      "type": "mdxJsxAttribute",
+      "value": "200",
+    },
+  ],
+  "children": [],
+  "data": {
+    "_mdxExplicitJsx": true,
+  },
+  "name": "img",
+  "type": "mdxJsxFlowElement",
+}
+`;
+
+exports[`setDimension > should properly assign width when only height is set 1`] = `
+{
+  "attributes": [
+    {
+      "name": "width",
+      "type": "mdxJsxAttribute",
+      "value": "200",
+    },
+    {
+      "name": "imageSize",
+      "type": "mdxJsxAttribute",
+      "value": "height:100px;width:auto;",
+    },
+    {
+      "name": "src",
+      "type": "mdxJsxAttribute",
+      "value": "file:123",
+    },
+    {
+      "name": "height",
+      "type": "mdxJsxAttribute",
+      "value": "200",
+    },
+  ],
+  "children": [],
+  "data": {
+    "_mdxExplicitJsx": true,
+  },
+  "name": "img",
+  "type": "mdxJsxFlowElement",
+}
+`;
+
+exports[`setDimension > should set width and height when neither is set 1`] = `
+{
+  "attributes": [
+    {
+      "name": "width",
+      "type": "mdxJsxAttribute",
+      "value": "200",
+    },
+    {
+      "name": "height",
+      "type": "mdxJsxAttribute",
+      "value": "200",
+    },
+    {
+      "name": "imageSize",
+      "type": "mdxJsxAttribute",
+      "value": "",
+    },
+    {
+      "name": "src",
+      "type": "mdxJsxAttribute",
+      "value": "file:123",
+    },
+  ],
+  "children": [],
+  "data": {
+    "_mdxExplicitJsx": true,
+  },
+  "name": "img",
+  "type": "mdxJsxFlowElement",
+}
+`;
