@@ -31,7 +31,7 @@
     "test": "vitest --run --passWithNoTests --globals --disable-console-intercept"
   },
   "dependencies": {
-    "algoliasearch": "^5.20.1",
+    "algoliasearch": "^5.20.3",
     "console-table-printer": "^2.12.0",
     "node-emoji": "^2.1.3"
   },

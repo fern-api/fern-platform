@@ -1,7 +1,5 @@
 import "server-only";
 
-import { compact } from "es-toolkit/array";
-
 import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import { EndpointContext } from "@fern-api/fdr-sdk/api-definition";
 import { visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
@@ -28,16 +26,9 @@ export interface HoveringProps {
   isHovering: boolean;
 }
 
-export declare namespace EndpointContentLeft {
-  export interface Props {
-    context: EndpointContext;
-    showErrors: boolean;
-  }
-}
-
 export async function EndpointContentLeft({
   serialize,
-  context: { node, endpoint, types, auth, globalHeaders },
+  context: { endpoint, types, auth, globalHeaders },
   showAuth,
   showErrors,
 }: {

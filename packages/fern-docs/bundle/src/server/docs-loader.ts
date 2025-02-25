@@ -121,7 +121,6 @@ export interface DocsLoader {
   getPage: (pageId: string) => Promise<{
     filename: string;
     markdown: string;
-    hash: string;
     editThisPageUrl?: string;
   }>;
 
@@ -332,7 +331,6 @@ const getPage = async (domain: string, pageId: string) => {
   return {
     filename: pageId,
     markdown: page.markdown,
-    hash: hash(page.markdown),
     editThisPageUrl: page.editThisPageUrl,
   };
 };

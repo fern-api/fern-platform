@@ -14,11 +14,11 @@
     "demo:start": "next start"
   },
   "dependencies": {
-    "@ai-sdk/anthropic": "^1.1.6",
-    "@ai-sdk/cohere": "^1.1.8",
-    "@ai-sdk/openai": "^1.1.9",
-    "@ai-sdk/provider": "^1.0.7",
-    "@algolia/client-search": "^5.20.1",
+    "@ai-sdk/anthropic": "^1.1.10",
+    "@ai-sdk/cohere": "^1.1.12",
+    "@ai-sdk/openai": "^1.1.14",
+    "@ai-sdk/provider": "^1.0.9",
+    "@algolia/client-search": "^5.20.3",
     "@fern-api/ui-core-utils": "workspace:*",
     "@fern-docs/components": "workspace:*",
     "@fern-docs/search-server": "workspace:*",
@@ -43,11 +43,10 @@
     "@radix-ui/react-visually-hidden": "^1.1.2",
     "@vercel/kv": "^2.0.0",
     "ai": "^4.0.18",
-    "algoliasearch": "^5.20.1",
+    "algoliasearch": "^5.20.3",
     "class-variance-authority": "^0.7.1",
-    "es-toolkit": "^1.27.0",
+    "es-toolkit": "^1.32.0",
     "instantsearch.js": "^4.77.3",
-    "jotai": "^2.12.0",
     "lucide-react": "^0.460.0",
     "next-themes": "^0.4.4",
     "react-instantsearch": "^7.15.3",
@@ -68,7 +67,8 @@
     "@types/react-dom": "19.0.3",
     "@upstash/qstash": "^2.7.16",
     "cssnano": "^6.0.3",
-    "next": "15.2.0-canary.73",
+    "jotai": "^2.12.1",
+    "next": "15.2.0-canary.74",
     "postcss": "^8.5.2",
     "react": "19.0.0",
     "react-dom": "19.0.0",
@@ -78,7 +78,8 @@
     "typescript": "^5"
   },
   "peerDependencies": {
-    "next": "15.2.0-canary.73",
+    "jotai": "^2",
+    "next": "15.2.0-canary.74",
     "react": "19.0.0",
     "react-dom": "19.0.0"
   }

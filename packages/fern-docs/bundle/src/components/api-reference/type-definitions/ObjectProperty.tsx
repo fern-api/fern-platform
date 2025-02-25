@@ -14,6 +14,7 @@ import {
   PropertyContainer,
   TypeDefinitionAnchor,
 } from "../endpoints/TypeDefinitionAnchor";
+import { PropertyKey } from "./PropertyKey";
 import {
   TypeDefinitionAnchorPart,
   TypeDefinitionCollapsible,
@@ -102,7 +103,9 @@ export function PropertyRenderer({
     <PropertyContainer>
       <TypeDefinitionAnchor sideOffset={6}>
         {icon}
-        {name != null && <span className="fern-api-property-key">{name}</span>}
+        {name != null && (
+          <PropertyKey className="fern-api-property-key">{name}</PropertyKey>
+        )}
         {typeShorthand}
         {availability != null && (
           <AvailabilityBadge availability={availability} size="sm" rounded />

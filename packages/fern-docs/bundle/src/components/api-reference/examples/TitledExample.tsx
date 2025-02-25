@@ -44,7 +44,7 @@ export const TitledExample = forwardRef<
   return (
     <div
       className={cn(
-        "bg-card-background after:ring-card-border rounded-3 relative flex flex-col overflow-hidden shadow-sm after:pointer-events-none after:absolute after:inset-0 after:rounded-[inherit] after:ring-1 after:ring-inset after:content-['']",
+        "bg-card-solid border-card-border rounded-3 relative flex flex-col overflow-hidden border shadow-sm",
         "max-md:max-h-content-height-padded",
         className
       )}

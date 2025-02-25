@@ -22,7 +22,7 @@
   "dependencies": {
     "@fern-docs/components": "workspace:*",
     "@fern-docs/mdx": "workspace:*",
-    "es-toolkit": "^1.27.0",
+    "es-toolkit": "^1.32.0",
     "hast-util-to-jsx-runtime": "^2.3.0",
     "hastscript": "^9.0.0",
     "react-virtuoso": "^4.7.7",

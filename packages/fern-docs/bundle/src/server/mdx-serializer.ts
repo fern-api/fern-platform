@@ -1,6 +1,7 @@
 import "server-only";
 
-import { revalidateTag, unstable_cache } from "next/cache";
+import { unstable_cache } from "next/cache";
+import { cache } from "react";
 
 import { Frontmatter } from "@fern-api/fdr-sdk/docs";
 
@@ -9,7 +10,6 @@ import { createCachedDocsLoader } from "@/server/docs-loader";
 
 import { cacheSeed } from "./cache-seed";
 import { hash } from "./hash";
-import { FileData } from "./types";
 
 export type MdxSerializerOptions = {
   /**
@@ -24,10 +24,6 @@ export type MdxSerializerOptions = {
    * The scope to inject into the mdx.
    */
   scope?: Record<string, unknown>;
-  /**
-   * The hash of the content to use for caching.
-   */
-  hash?: string;
 };
 
 export type MdxSerializer = (
@@ -43,34 +39,29 @@ export type MdxSerializer = (
 >;
 
 export function createCachedMdxSerializer(
-  loader: string | Awaited<ReturnType<typeof createCachedDocsLoader>>,
+  loader: Awaited<ReturnType<typeof createCachedDocsLoader>>,
   {
     scope,
   }: {
     scope?: Record<string, unknown>;
   } = {}
 ) {
-  const domain = typeof loader === "string" ? loader : loader.domain;
-  return async (
+  const domain = loader.domain;
+  const serializer = async (
     content: string | undefined,
     options: MdxSerializerOptions = {}
   ) => {
     if (content == null) {
       return;
     }
-    const key = `${domain}:${options.hash ?? hash(content)}`;
+    // this lets us key on just
     const cachedSerializer = unstable_cache(
       async ({ filename, toc, scope }: MdxSerializerOptions) => {
-        const loader_ =
-          typeof loader === "string"
-            ? await createCachedDocsLoader(domain)
-            : loader;
-
-        const authState = await loader_.getAuthState();
+        const authState = await loader.getAuthState();
 
         return await internalSerializeMdx(content, {
           filename,
-          loader: loader_,
+          loader,
           toc,
           scope: {
             authed: authState.authed,
@@ -79,8 +70,8 @@ export function createCachedMdxSerializer(
           },
         });
       },
-      [domain, key, cacheSeed()],
-      { tags: [domain, "serializeMdx", key] }
+      [domain, content, cacheSeed()],
+      { tags: [domain, "serializeMdx"] }
     );
 
     // merge the scope from the page with the scope from the serializer
@@ -97,4 +88,6 @@ export function createCachedMdxSerializer(
 
     return result;
   };
+
+  return cache(serializer);
 }

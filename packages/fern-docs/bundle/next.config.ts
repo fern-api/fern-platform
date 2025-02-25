@@ -35,20 +35,20 @@ const nextConfig: NextConfig = {
      *
      * pnpm list --filter=@fern-docs/bundle --only-projects --prod --recursive --depth=Infinity --json | jq -r '[.. | objects | select(.version | .!=null) | select(.version | startswith("link:")) | .from] | unique'
      */
-    "@fern-api/fdr-sdk",
-    "@fern-api/template-resolver",
-    "@fern-api/ui-core-utils",
-    "@fern-docs/auth",
-    "@fern-docs/components",
-    "@fern-docs/edge-config",
-    "@fern-docs/mdx",
-    "@fern-docs/search-server",
-    "@fern-docs/search-ui",
-    "@fern-docs/syntax-highlighter",
-    "@fern-docs/utils",
-    "@fern-platform/fdr-utils",
-    "@fern-ui/loadable",
-    "@fern-ui/react-commons",
+    // "@fern-api/fdr-sdk",
+    // "@fern-api/template-resolver",
+    // "@fern-api/ui-core-utils",
+    // "@fern-docs/auth",
+    // "@fern-docs/components",
+    // "@fern-docs/edge-config",
+    // "@fern-docs/mdx",
+    // "@fern-docs/search-server",
+    // "@fern-docs/search-ui",
+    // "@fern-docs/syntax-highlighter",
+    // "@fern-docs/utils",
+    // "@fern-platform/fdr-utils",
+    // "@fern-ui/loadable",
+    // "@fern-ui/react-commons",
   ],
   experimental: {
     scrollRestoration: true,
@@ -62,8 +62,6 @@ const nextConfig: NextConfig = {
       "lucide-react",
     ],
     optimizeServerReact: Boolean(process.env.VERCEL),
-    // typedEnv: true,
-    newDevOverlay: true,
     authInterrupts: true,
     swcTraceProfiling: true,
     webpackBuildWorker: true,
@@ -103,11 +101,11 @@ const nextConfig: NextConfig = {
     styledJsx: true,
   },
   logging: {
-    fetches: {
-      fullUrl: true,
-      hmrRefreshes: true,
-    },
-    incomingRequests: true,
+    // fetches: {
+    //   fullUrl: true,
+    //   hmrRefreshes: true,
+    // },
+    // incomingRequests: true,
   },
   headers: async () => {
     const AccessControlHeaders = [

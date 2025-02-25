@@ -1,34 +1,4 @@
 @layer components {
-  .fern-search-bar {
-    @apply cursor-pointer;
-    @apply text-(color:--grayscale-a11) border-border-default rounded-2 flex items-center border-none px-2.5 py-2 text-sm;
-    @apply bg-(color:--grayscale-a3);
-    @apply hover:bg-(color:--grayscale-a4) transition-[background,shadow];
-    @apply ring-border-default hover:ring-border-default ring-1 ring-inset;
-    @apply max-sm:h-10 max-sm:text-base;
-
-    .search-placeholder {
-      @apply inline-flex flex-1 items-center space-x-2.5;
-
-      span {
-        @apply text-(color:--grayscale-a9);
-      }
-    }
-
-    .keyboard-shortcut-hint {
-      @apply text-(color:--grayscale-a11) size-icon-md shadow-card-light ring-card-border rounded-1 inline-flex items-center justify-center font-mono text-xs leading-none ring-1;
-      @apply bg-card-background dark:shadow-card-dark;
-    }
-
-    &:hover .keyboard-shortcut-hint {
-      @apply ring-card-border;
-    }
-
-    &:disabled {
-      @apply bg-(color:--grayscale-a2) cursor-default shadow-none;
-    }
-  }
-
   .fern-mdx-link {
     @apply text-(color:--accent-a11);
     @apply font-semibold;

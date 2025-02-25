@@ -223,8 +223,8 @@
   --color-background-translucent: --alpha(var(--color-background) / 70%);
   --color-sidebar-background: var(--sidebar-background);
   --color-header-background: var(--header-background);
-  --color-card-background: var(--grayscale-surface);
-  --color-card-solid: var(--grayscale-surface);
+  --color-card-background: var(--card-background, var(--grayscale-surface));
+  --color-card-solid: var(--card-background, var(--grayscale-1));
 
   --color-border-default: var(--border, var(--grayscale-a5));
   --color-border-default-soft: var(--border, var(--grayscale-a4));

@@ -30,7 +30,7 @@
   },
   "dependencies": {
     "@fern-api/ui-core-utils": "workspace:*",
-    "es-toolkit": "^1.27.0",
+    "es-toolkit": "^1.32.0",
     "fastdom": "^1.0.12",
     "immer": "^9.0.15",
     "react": "19.0.0",

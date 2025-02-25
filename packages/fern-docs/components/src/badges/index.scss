@@ -26,14 +26,14 @@
     }
 
     &.small {
-      border-radius: var(--radius-sm);
+      border-radius: var(--radius-1);
       font-size: 0.75rem;
       height: 1rem;
       padding: 0 0.375rem;
     }
 
     &.large {
-      border-radius: var(--radius-md);
+      border-radius: var(--radius-3\/2);
       font-size: 0.875rem;
       height: 1.5rem;
       padding: 0.25rem 0.5rem;

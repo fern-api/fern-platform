@@ -12,11 +12,11 @@
   }
 
   .fern-anchor-icon:not(.copied) {
-    @apply text-(color:--grayscale-a11) bg-card-background ring-card-border ring-1 backdrop-blur;
+    @apply text-(color:--grayscale-a11) bg-card-background border-(color:--grayscale-a5) border backdrop-blur;
   }
 
   .fern-anchor-icon.copied {
-    @apply bg-(color:--accent-a3) ring-(color:--accent-a5) ring-1 backdrop-blur;
+    @apply bg-(color:--accent-a3) border-(color:--accent-a5) border backdrop-blur;
 
     > svg {
       @apply text-(color:--accent-a11);
