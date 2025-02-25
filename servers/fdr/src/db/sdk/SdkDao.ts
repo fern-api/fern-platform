@@ -162,6 +162,16 @@ export class SdkDaoImpl implements SdkDao {
         result.rubySdk = { ...snippetConfig.rubySdk, sdkId };
       }
     }
+    if (snippetConfig.csharpSdk != null) {
+      const sdkId = await this.getSdkIdForPackage({
+        sdkPackage: snippetConfig.csharpSdk.package,
+        language: Language.CSHARP,
+        version: snippetConfig.csharpSdk.version,
+      });
+      if (sdkId != null) {
+        result.csharpSdk = { ...snippetConfig.csharpSdk, sdkId };
+      }
+    }
 
     return result;
   }
@@ -185,6 +195,9 @@ export class SdkDaoImpl implements SdkDao {
           break;
         case Language.RUBY:
           id = SdkIdFactory.fromRuby({ gem: sdkPackage, version });
+          break;
+        case Language.CSHARP:
+          id = SdkIdFactory.fromCSharp({ package: sdkPackage, version });
           break;
         default:
           break;
