@@ -4,6 +4,7 @@ import {
   PreviewUrlAuth,
   getAuthEdgeConfig,
   getPreviewUrlAuthConfig,
+  isPreviewDomain,
 } from "@fern-docs/edge-config";
 import { removeTrailingSlash } from "@fern-docs/utils";
 import urlJoin from "url-join";
@@ -173,7 +174,7 @@ export async function getAuthState(
 ): Promise<AuthState & DomainAndHost> {
   authConfig ??= await getAuthEdgeConfig(domain);
   const orgMetadata = domain.includes("workato")
-    ? { isPreviewUrl: false, orgId: "workato" }
+    ? { isPreviewUrl: isPreviewDomain(domain), orgId: "workato" }
     : undefined;
   const previewAuthConfig =
     orgMetadata != null
