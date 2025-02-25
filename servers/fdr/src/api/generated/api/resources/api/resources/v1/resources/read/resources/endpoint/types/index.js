@@ -35,4 +35,3 @@ export * from "./PythonSnippet";
 export * from "./TypescriptSnippet";
 export * from "./GoSnippet";
 export * from "./RubySnippet";
-export * from "./CsharpSnippet";

@@ -91,7 +91,6 @@ types:
       goSdk: optional<GoModule>
       javaSdk: optional<JavaCoordinate>
       rubySdk: optional<RubyGem>
-      csharpSdk: optional<NugetPackage>
 
   TypescriptPackage:
     properties:
@@ -116,11 +115,6 @@ types:
   RubyGem:
     properties:
       gem: string
-      version: optional<string>
-
-  NugetPackage:
-    properties:
-      package: string
       version: optional<string>
 
   ApiDefinitionPackage:

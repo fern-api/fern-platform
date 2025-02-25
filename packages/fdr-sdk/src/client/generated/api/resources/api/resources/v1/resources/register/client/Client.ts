@@ -525,12 +525,6 @@ export class Register {
      *                     version: {
      *                         "key": "value"
      *                     }
-     *                 },
-     *                 csharpSdk: {
-     *                     package: "string",
-     *                     version: {
-     *                         "key": "value"
-     *                     }
      *                 }
      *             },
      *             navigation: {
@@ -743,12 +737,6 @@ export class Register {
      *                 },
      *                 rubySdk: {
      *                     gem: "string",
-     *                     version: {
-     *                         "key": "value"
-     *                     }
-     *                 },
-     *                 csharpSdk: {
-     *                     package: "string",
      *                     version: {
      *                         "key": "value"
      *                     }

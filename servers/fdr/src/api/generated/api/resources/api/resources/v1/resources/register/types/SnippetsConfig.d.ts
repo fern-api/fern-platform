@@ -8,5 +8,4 @@ export interface SnippetsConfig {
     goSdk: FernRegistry.api.v1.register.GoModule | undefined;
     javaSdk: FernRegistry.api.v1.register.JavaCoordinate | undefined;
     rubySdk: FernRegistry.api.v1.register.RubyGem | undefined;
-    csharpSdk: FernRegistry.api.v1.register.NugetPackage | undefined;
 }
