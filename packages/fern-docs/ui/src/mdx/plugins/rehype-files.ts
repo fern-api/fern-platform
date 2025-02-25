@@ -182,33 +182,28 @@ export function setDimension(
   const attrHeight = attributes.find((attr) => attr.name === "height");
 
   if (height != null && !attrHeight) {
-    const actualWidth = Number(attrWidth?.value ?? 0);
+    const actualWidth = Number(attrWidth?.value);
     const isValidWidth = !isNaN(actualWidth);
     const adjustedHeight =
       isValidWidth && width ? height * (actualWidth / width) : height;
 
     node.attributes.unshift({
       name: "height",
-      value: String(adjustedHeight),
+      value: String(Math.round(adjustedHeight)),
       type: "mdxJsxAttribute",
     });
-
-    console.log("attributes: ", node.attributes);
   }
 
   if (width != null && !attrWidth) {
-    const actualHeight = Number(attrHeight?.value ?? 0);
+    const actualHeight = Number(attrHeight?.value);
     const isValidHeight = !isNaN(actualHeight);
     const adjustedWidth =
       isValidHeight && height ? width * (actualHeight / height) : width;
 
     node.attributes.unshift({
       name: "width",
-      value: String(adjustedWidth),
+      value: String(Math.round(adjustedWidth)),
       type: "mdxJsxAttribute",
     });
-
-    console.log("attributes: ", node.attributes);
   }
-  return null;
 }
