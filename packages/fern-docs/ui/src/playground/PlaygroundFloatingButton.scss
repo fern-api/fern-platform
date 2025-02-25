@@ -1,11 +1,11 @@
 @layer components {
   .playground-floating-button {
     @apply bg-background ring-card-border fixed bottom-0 right-0 m-5 flex items-center gap-2 rounded-lg p-2 ring-1 transition-[box-shadow,background];
+
     box-shadow:
       0 2px 12px var(--gray-a3),
       0 1px 2px var(--gray-a3),
       inset 0 0 0 1px var(--gray-a6);
-
     color: var(--gray-a11);
 
     &:hover {
