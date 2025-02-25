@@ -1,3 +1,4 @@
+import { parseStringStyle } from "@fern-docs/mdx";
 import {
   ComponentProps,
   ComponentPropsWithoutRef,
@@ -41,6 +42,7 @@ export const Image = forwardRef<
     loading?: "eager" | "lazy" | undefined;
     blurDataURL?: string | undefined;
     unoptimized?: boolean | undefined;
+    imageSize?: string | undefined;
   }
 >((props, ref) => {
   const {
@@ -68,6 +70,10 @@ export const Image = forwardRef<
       src={src}
       width={toPixelValue(width)}
       height={toPixelValue(height)}
+      style={{
+        ...style,
+        ...parseStringStyle(rest.imageSize ?? ""),
+      }}
       {...rest}
       alt={rest.alt ?? ""}
     />
