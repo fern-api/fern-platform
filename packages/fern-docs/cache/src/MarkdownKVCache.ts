@@ -91,8 +91,15 @@ export class MarkdownKVCache {
       while (entries.length > 0) {
         batches.push(entries.splice(0, batchSize)); // batched
       }
+      const TWO_DAYS_IN_SECONDS = 60 * 60 * 24 * 2;
       await Promise.all(
-        batches.map((batch) => kv.mset(Object.fromEntries(batch)))
+        batches.map(async (batch) => {
+          await kv.mset(Object.fromEntries(batch));
+          const keys = batch.map(([key]) => key);
+          await Promise.all(
+            keys.map((key) => kv.expire(key, TWO_DAYS_IN_SECONDS))
+          );
+        })
       );
     } catch (e) {
       console.error(e);
