@@ -233,14 +233,15 @@ function enrichApiLatestDefinitionWithSnippets(
         endpointId: endpoint.id,
         exampleId: example.name,
       });
-      const typescriptSnippet = snippetHolder.getTypeScriptCodeSnippetForEndpoint({
-        endpointPath: FdrAPI.EndpointPathLiteral(
-          stringifyEndpointPathParts(endpoint.path)
-        ),
-        endpointMethod: endpoint.method,
-        endpointId: endpoint.id,
-        exampleId: example.name,
-      });
+      const typescriptSnippet =
+        snippetHolder.getTypeScriptCodeSnippetForEndpoint({
+          endpointPath: FdrAPI.EndpointPathLiteral(
+            stringifyEndpointPathParts(endpoint.path)
+          ),
+          endpointMethod: endpoint.method,
+          endpointId: endpoint.id,
+          exampleId: example.name,
+        });
       const csharpSnippet = snippetHolder.getCsharpCodeSnippetForEndpoint({
         endpointPath: FdrAPI.EndpointPathLiteral(
           stringifyEndpointPathParts(endpoint.path)
