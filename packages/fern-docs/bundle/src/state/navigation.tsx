@@ -99,6 +99,9 @@ export function useCurrentVersionSlug() {
   return useAtomValue(currentVersionSlugAtom);
 }
 
+const useIsomorphicLayoutEffect =
+  typeof window !== "undefined" ? React.useLayoutEffect : React.useEffect;
+
 export function SetCurrentNavigationNode({
   sidebarRootNodeId,
   nodeId,
@@ -120,15 +123,7 @@ export function SetCurrentNavigationNode({
   const setCurrentVersionId = useSetAtom(currentVersionIdAtom);
   const setCurrentVersionSlug = useSetAtom(currentVersionSlugAtom);
 
-  useHydrateAtoms([
-    [currentSidebarRootNodeIdAtom, sidebarRootNodeId],
-    [currentNodeIdAtom, nodeId],
-    [currentTabIdAtom, tabId],
-    [currentVersionIdAtom, versionId],
-    [currentVersionSlugAtom, versionSlug],
-  ]);
-
-  React.useEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     setCurrentSidebarRootNodeId(sidebarRootNodeId);
     setCurrentNodeId(nodeId);
     setCurrentTabId(tabId);
@@ -136,7 +131,7 @@ export function SetCurrentNavigationNode({
     setCurrentVersionSlug(versionSlug);
   }, [nodeId, tabId, sidebarRootNodeId, versionId, versionSlug]);
 
-  React.useEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (nodeId && sidebarRootNodeId) {
       dispatch({ type: "expand", nodeId }, sidebarRootNodeId);
     }
@@ -236,7 +231,7 @@ export function PathnameDispatcher() {
   const currentSidebarRootNodeId = useCurrentSidebarRootNodeId();
   const useStore = React.useContext(RootNodeStoreContext);
   const dispatch = useStore((s) => s.dispatch);
-  React.useEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (currentNodeId == null || currentSidebarRootNodeId == null) {
       return;
     }

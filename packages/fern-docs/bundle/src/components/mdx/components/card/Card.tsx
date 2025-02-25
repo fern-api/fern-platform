@@ -58,14 +58,14 @@ export const Card: React.FC<Card.Props> = ({
       >
         <style jsx>
           {`
-            .card-icon {
-              color: ${lightModeColor ?? color};
+            div > :global(.card-icon) {
+              color: ${lightModeColor ?? color ?? "var(--accent-a10)"};
               width: ${iconSize * 4}px;
               height: ${iconSize * 4}px;
             }
 
-            .card-icon:is(.dark *) {
-              color: ${darkModeColor ?? color};
+            div > :global(.card-icon:is(.dark *)) {
+              color: ${darkModeColor ?? color ?? "var(--accent-a10)"};
             }
           `}
         </style>

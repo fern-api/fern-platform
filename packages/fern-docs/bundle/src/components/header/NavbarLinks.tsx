@@ -81,7 +81,7 @@ function HeaderNavbarLink({ navbarLink }: { navbarLink: NavbarLinkType }) {
       }
       rightIcon={
         navbarLink.rightIcon === "arrow-right" ? (
-          <ArrowRight className="!size-icon transition-transform group-hover:translate-x-0.5" />
+          <ArrowRight className="transition-transform group-hover:translate-x-0.5" />
         ) : (
           navbarLink.rightIcon && <FaIconServer icon={navbarLink.rightIcon} />
         )

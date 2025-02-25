@@ -16,6 +16,7 @@ import {
 
 /**
  * the goal is to determine the closest grayscale color for the given background and accent
+ * this is used to determine which color to match against the grayscale color palettes
  */
 export function getSourceForGrayscale({
   background,
@@ -32,15 +33,23 @@ export function getSourceForGrayscale({
   );
 }
 
-function isWhiteOrBlack(color: string): boolean {
+/**
+ * @internal visible for testing
+ */
+export function isWhiteOrBlack(colorString: string): boolean {
+  const color = new Color(colorString);
+  color.alpha = 1;
   return ["#fff", "#000", "#ffffff", "#000000"].includes(
-    new Color(color).to("srgb").toString({ format: "hex" }).toLowerCase()
+    color.to("srgb").toString({ format: "hex" }).toLowerCase()
   );
 }
 
 type GrayScale = keyof typeof lightGrayColors | keyof typeof darkGrayColors;
 
-function getClosestGrayColor(source: string): GrayScale {
+/**
+ * @internal visible for testing
+ */
+export function getClosestGrayColor(source: string): GrayScale {
   try {
     const sourceColor = new Color(source).to("oklch");
     const allColors: { scale: string; color: Color; distance: number }[] = [];
@@ -75,27 +84,42 @@ function generateColorPalette(opts: {
   const accent = opts.accent;
   const background =
     opts.background ?? (opts.appearance === "light" ? "#ffffff" : "#000000");
-  const grayColors =
-    opts.appearance === "light" ? lightGrayColors : darkGrayColors;
-  const grayScale = grayColors[gray];
+  const grayScale = Object.values(
+    RadixColors[opts.appearance === "light" ? gray : (`${gray}Dark` as const)]
+  ) as ArrayOf12<string>;
+  const grayScaleAlpha = Object.values(
+    RadixColors[
+      opts.appearance === "light"
+        ? (`${gray}A` as const)
+        : (`${gray}DarkA` as const)
+    ]
+  ) as ArrayOf12<string>;
+  const grayScaleWideGamut = Object.values(
+    RadixColors[
+      opts.appearance === "light"
+        ? (`${gray}P3` as const)
+        : (`${gray}DarkP3` as const)
+    ]
+  ) as ArrayOf12<string>;
+  const grayScaleAlphaWideGamut = Object.values(
+    RadixColors[
+      opts.appearance === "light"
+        ? (`${gray}A` as const)
+        : (`${gray}DarkA` as const)
+    ]
+  ) as ArrayOf12<string>;
   const palette = generateRadixColors({
     appearance: opts.appearance,
     accent,
     background,
-    gray: grayScale[11].toString()!,
+    gray: grayScale[11],
   });
   return {
     ...palette,
-    grayScale: grayScale.map((color) =>
-      color.to("srgb").toString()
-    ) as ArrayOf12<string>,
-    grayScaleAlpha: grayScale.map((color) =>
-      getAlphaColorSrgb(color.to("srgb").toString(), background)
-    ) as ArrayOf12<string>,
-    grayScaleWideGamut: grayScale.map(toOklchString) as ArrayOf12<string>,
-    grayScaleAlphaWideGamut: grayScale.map((color) =>
-      getAlphaColorP3(color.to("p3").toString(), background)
-    ) as ArrayOf12<string>,
+    grayScale,
+    grayScaleAlpha,
+    grayScaleWideGamut,
+    grayScaleAlphaWideGamut,
   };
 }
 

@@ -13,7 +13,6 @@ const useIsomorphicLayoutEffect =
   typeof window !== "undefined" ? React.useLayoutEffect : React.useEffect;
 
 export function SetLayout({ value }: { value: FernDocs.Layout }) {
-  useHydrateAtoms([[layoutAtom, value]]);
   const setLayout = useSetAtom(layoutAtom);
   useIsomorphicLayoutEffect(() => {
     setLayout(value);
@@ -29,7 +28,6 @@ const emptySidebarAtom = atom<boolean>(false);
 const emptyTableOfContentsAtom = atom<boolean>(false);
 
 export function SetEmptySidebar({ value }: { value: boolean }) {
-  useHydrateAtoms([[emptySidebarAtom, value]]);
   const setEmptySidebar = useSetAtom(emptySidebarAtom);
   useIsomorphicLayoutEffect(() => {
     setEmptySidebar(value);
@@ -38,7 +36,6 @@ export function SetEmptySidebar({ value }: { value: boolean }) {
 }
 
 export function SetEmptyTableOfContents({ value }: { value: boolean }) {
-  useHydrateAtoms([[emptyTableOfContentsAtom, value]]);
   const setEmptyTableOfContents = useSetAtom(emptyTableOfContentsAtom);
   useIsomorphicLayoutEffect(() => {
     setEmptyTableOfContents(value);
