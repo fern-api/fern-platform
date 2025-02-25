@@ -196,15 +196,21 @@ export function setDimension(
     return;
   }
 
-  let addStyle = "";
+  let addStyle: React.CSSProperties = {};
   if (attrWidth) {
     if (!attrHeight) {
-      addStyle = `width:${attrWidth.value}px;`;
+      addStyle = { width: `${attrWidth.value}px` };
     } else {
-      addStyle = `width:${attrWidth.value}px;height:${attrHeight.value};`;
+      addStyle = {
+        width: `${attrWidth.value}px`,
+        height: `${attrHeight.value}px`,
+      };
     }
   } else if (attrHeight) {
-    addStyle = `height:${attrHeight.value}px;width:auto;`;
+    addStyle = {
+      height: `${attrHeight.value}px`,
+      width: "auto",
+    };
   }
 
   node.attributes.unshift(unknownToMdxJsxAttribute("imageSize", addStyle));
