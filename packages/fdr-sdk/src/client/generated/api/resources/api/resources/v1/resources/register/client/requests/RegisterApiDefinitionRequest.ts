@@ -498,6 +498,12 @@ import * as FernRegistry from "../../../../../../../../index";
  *                     version: {
  *                         "key": "value"
  *                     }
+ *                 },
+ *                 csharpSdk: {
+ *                     package: "string",
+ *                     version: {
+ *                         "key": "value"
+ *                     }
  *                 }
  *             },
  *             navigation: {
@@ -710,6 +716,12 @@ import * as FernRegistry from "../../../../../../../../index";
  *                 },
  *                 rubySdk: {
  *                     gem: "string",
+ *                     version: {
+ *                         "key": "value"
+ *                     }
+ *                 },
+ *                 csharpSdk: {
+ *                     package: "string",
  *                     version: {
  *                         "key": "value"
  *                     }
