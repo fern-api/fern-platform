@@ -1,8 +1,11 @@
 import { EndpointContext } from "@fern-api/fdr-sdk/api-definition";
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { AvailabilityBadge } from "@fern-docs/components/badges";
+import { useAtomValue } from "jotai";
 import { memo, type ReactNode } from "react";
+import { IS_PLAYGROUND_ENABLED_ATOM } from "../../atoms";
 import { FernBreadcrumbs } from "../../components/FernBreadcrumbs";
+import { usePlaygroundSettings } from "../../hooks/usePlaygroundSettings";
 import { PlaygroundButton } from "../../playground/PlaygroundButton";
 import { usePlaygroundBaseUrl } from "../../playground/utils/select-environment";
 import { EndpointUrlWithOverflow } from "./EndpointUrlWithOverflow";
@@ -17,10 +20,13 @@ export const EndpointContentHeader = memo<EndpointContentHeaderProps>(
   ({ context, breadcrumb, streamToggle }) => {
     const { endpoint, node } = context;
     const [baseUrl, environmentId] = usePlaygroundBaseUrl(endpoint);
-    const playgroundButton =
-      node != null ? (
-        <PlaygroundButton state={node} className="md:hidden" />
-      ) : undefined;
+    const isPlaygroundEnabled = useAtomValue(IS_PLAYGROUND_ENABLED_ATOM);
+    const settings = usePlaygroundSettings(node.id ?? node);
+    const usePlayground =
+      node != null && isPlaygroundEnabled && !settings?.disabled;
+    const playgroundButton = usePlayground ? (
+      <PlaygroundButton state={node} className="md:hidden" />
+    ) : undefined;
     return (
       <header className="space-y-1 pb-2 pt-8">
         <FernBreadcrumbs breadcrumb={breadcrumb} />

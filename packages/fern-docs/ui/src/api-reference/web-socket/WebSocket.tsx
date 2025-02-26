@@ -6,6 +6,7 @@ import { CopyToClipboardButton, FernScrollArea } from "@fern-docs/components";
 import { AvailabilityBadge } from "@fern-docs/components/badges";
 import cn from "clsx";
 import { ArrowDown, ArrowUp, Wifi } from "iconoir-react";
+import { useAtomValue } from "jotai";
 import {
   Children,
   FC,
@@ -14,10 +15,12 @@ import {
   useMemo,
   useRef,
 } from "react";
+import { IS_PLAYGROUND_ENABLED_ATOM } from "../../atoms";
 import { FernAnchor } from "../../components/FernAnchor";
 import { FernBreadcrumbs } from "../../components/FernBreadcrumbs";
 import { WithAside } from "../../contexts/api-page";
 import { useHref } from "../../hooks/useHref";
+import { usePlaygroundSettings } from "../../hooks/usePlaygroundSettings";
 import { Markdown } from "../../mdx/Markdown";
 import { PlaygroundButton } from "../../playground/PlaygroundButton";
 import { usePlaygroundBaseUrl } from "../../playground/utils/select-environment";
@@ -133,6 +136,11 @@ const WebhookContent: FC<WebhookContentProps> = ({
     [channel.requestHeaders, globalHeaders]
   );
 
+  const isPlaygroundEnabled = useAtomValue(IS_PLAYGROUND_ENABLED_ATOM);
+  const settings = usePlaygroundSettings(node.id ?? node);
+  const usePlayground =
+    node != null && isPlaygroundEnabled && !settings?.disabled;
+
   return (
     <div className="fern-endpoint-content" ref={ref} id={useHref(node.slug)}>
       <article
@@ -172,10 +180,8 @@ const WebhookContent: FC<WebhookContentProps> = ({
                         <Wifi className="t-muted size-icon" strokeWidth={1.5} />
                       </span>
                     </div>
-                    {node != null && (
-                      <>
-                        <PlaygroundButton state={node} className="md:hidden" />
-                      </>
+                    {usePlayground && (
+                      <PlaygroundButton state={node} className="md:hidden" />
                     )}
                   </span>
                 }
@@ -375,7 +381,9 @@ const WebhookContent: FC<WebhookContentProps> = ({
                 <TitledExample
                   title={"Handshake"}
                   tryIt={
-                    node != null ? <PlaygroundButton state={node} /> : undefined
+                    usePlayground ? (
+                      <PlaygroundButton state={node} />
+                    ) : undefined
                   }
                   disableClipboard={true}
                 >

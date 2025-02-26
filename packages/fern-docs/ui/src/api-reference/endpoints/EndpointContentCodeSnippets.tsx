@@ -12,6 +12,7 @@ import {
 } from "@fern-docs/components";
 import { useResizeObserver } from "@fern-ui/react-commons";
 import { sortBy } from "es-toolkit/array";
+import { useAtomValue } from "jotai";
 import { RESET } from "jotai/utils";
 import {
   ReactNode,
@@ -21,7 +22,9 @@ import {
   useMemo,
   useRef,
 } from "react";
+import { IS_PLAYGROUND_ENABLED_ATOM } from "../../atoms";
 import { FernErrorTag } from "../../components/FernErrorBoundary";
+import { usePlaygroundSettings } from "../../hooks/usePlaygroundSettings";
 import { PlaygroundButton } from "../../playground/PlaygroundButton";
 import { usePlaygroundBaseUrl } from "../../playground/utils/select-environment";
 import { AudioExample } from "../examples/AudioExample";
@@ -170,6 +173,11 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<
       );
   }, [examplesByKeyAndStatusCode]);
 
+  const isPlaygroundEnabled = useAtomValue(IS_PLAYGROUND_ENABLED_ATOM);
+  const settings = usePlaygroundSettings(node.id ?? node);
+  const usePlayground =
+    node != null && isPlaygroundEnabled && !settings?.disabled;
+
   // note: .fern-endpoint-code-snippets is used to detect clicks outside of the code snippets
   // this is used to clear the selected error when the user clicks outside of the error
   return (
@@ -216,13 +224,7 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<
             </>
           ) : undefined
         }
-        tryIt={
-          node != null ? (
-            <>
-              <PlaygroundButton state={node} />
-            </>
-          ) : undefined
-        }
+        tryIt={usePlayground ? <PlaygroundButton state={node} /> : undefined}
         code={resolveEnvironmentUrlInCodeSnippet(
           endpoint,
           requestCodeSnippet,
