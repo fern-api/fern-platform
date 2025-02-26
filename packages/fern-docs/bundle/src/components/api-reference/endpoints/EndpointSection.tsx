@@ -2,8 +2,7 @@ import "server-only";
 
 import React from "react";
 
-import { Separator } from "@radix-ui/react-separator";
-
+import { Separator } from "@/components/components/Separator";
 import { ErrorBoundary } from "@/components/error-boundary";
 
 import { SectionContainer, TypeDefinitionAnchor } from "./TypeDefinitionAnchor";
@@ -24,10 +23,7 @@ export function EndpointSection({
           <h3 className="mt-0">{title}</h3>
         </TypeDefinitionAnchor>
         {description}
-        <Separator
-          orientation="horizontal"
-          className="bg-border-default my-3 h-px"
-        />
+        <Separator className="my-3" />
         {children}
       </SectionContainer>
     </ErrorBoundary>

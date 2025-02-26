@@ -1,6 +1,6 @@
 import { ComponentPropsWithoutRef, ReactElement, ReactNode } from "react";
 
-import { cn } from "@fern-docs/components";
+import { Badge, cn } from "@fern-docs/components";
 
 interface ChangelogContentLayoutProps extends ComponentPropsWithoutRef<"div"> {
   as: "div" | "section" | "article";
@@ -14,17 +14,21 @@ export function ChangelogContentLayout({
   stickyContent,
   ...props
 }: ChangelogContentLayoutProps): ReactElement<any> {
-  const asideContent = stickyContent != null && (
-    <div className="fern-changelog-date">{stickyContent}</div>
-  );
   return (
     <Component
       {...props}
-      className={cn("fern-changelog-entry", props.className)}
+      className={cn(
+        "w-content-wide-width relative mx-auto grid grid-cols-[1fr_minmax(0,var(--content-width))_1fr]",
+        props.className
+      )}
     >
-      <aside>{asideContent}</aside>
-      <div className="fern-changelog-content">
-        {asideContent}
+      <aside className="sticky top-[calc(var(--header-height)+var(--spacing)*4)] hidden h-fit md:block">
+        {stickyContent}
+      </aside>
+      <div className="w-content-width">
+        {stickyContent != null && (
+          <div className={cn("md:hidden")}>{stickyContent}</div>
+        )}
         {children}
       </div>
     </Component>

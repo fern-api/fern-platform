@@ -1,3 +1,5 @@
+import { cn } from "@fern-docs/components";
+
 import { BuiltWithFern } from "../built-with-fern";
 import { EditThisPageButton } from "../components/EditThisPage";
 import { Feedback } from "../feedback/Feedback";
@@ -8,15 +10,17 @@ export function FooterLayout({
   editThisPageUrl,
   bottomNavigation,
   pathname,
+  className,
 }: {
   hideFeedback?: boolean;
   hideNavLinks?: boolean;
   editThisPageUrl?: string;
   bottomNavigation?: React.ReactNode;
   pathname?: string;
+  className?: string;
 }) {
   return (
-    <footer className="mt-12 space-y-8">
+    <footer className={cn("my-12 space-y-8", className)}>
       <div className="flex gap-4 max-sm:flex-col sm:justify-between">
         <div>{!hideFeedback && <Feedback pathname={pathname} />}</div>
         <EditThisPageButton editThisPageUrl={editThisPageUrl} />

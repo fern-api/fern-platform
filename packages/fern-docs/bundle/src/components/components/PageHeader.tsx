@@ -8,11 +8,13 @@ import { MdxSerializer } from "@/server/mdx-serializer";
 
 import { MdxServerComponent } from "../mdx/server-component";
 import { FernBreadcrumbs } from "./FernBreadcrumbs";
+import { FernLink } from "./FernLink";
 
 export function PageHeader({
   serialize,
   breadcrumb,
   title,
+  titleHref,
   tags,
   subtitle,
   children,
@@ -20,6 +22,7 @@ export function PageHeader({
   serialize: MdxSerializer;
   breadcrumb: readonly FernNavigation.BreadcrumbItem[];
   title: string;
+  titleHref?: string;
   subtitle?: string;
   tags?: React.ReactNode;
   children?: React.ReactNode;
@@ -33,9 +36,17 @@ export function PageHeader({
         </div>
       )}
 
-      <h1 className="text-balance break-words">
-        <MdxServerComponent serialize={serialize} mdx={title} />
-      </h1>
+      {titleHref == null ? (
+        <h1 className="text-balance break-words">
+          <MdxServerComponent serialize={serialize} mdx={title} />
+        </h1>
+      ) : (
+        <FernLink href={titleHref} className="text-balance break-words">
+          <h1 className="text-balance break-words">
+            <MdxServerComponent serialize={serialize} mdx={title} />
+          </h1>
+        </FernLink>
+      )}
 
       {subtitle && (
         <div className="prose-p:text-(color:--grayscale-a11) mt-2 leading-7">

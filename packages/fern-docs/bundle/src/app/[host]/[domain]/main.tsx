@@ -5,13 +5,15 @@ import { notFound } from "next/navigation";
 import { FernNavigation } from "@fern-api/fdr-sdk";
 
 import ApiEndpointPage from "@/components/api-reference/ApiEndpointPage";
+import { BottomNavigation } from "@/components/bottom-nav";
 import ChangelogEntryPage from "@/components/changelog/ChangelogEntryPage";
-import ChangelogPage from "@/components/changelog/ChangelogPage";
+import ChangelogPage, {
+  ChangelogPageEntry,
+  ChangelogPageOverview,
+} from "@/components/changelog/ChangelogPage";
 import { LayoutEvaluator } from "@/components/layouts/LayoutEvaluator";
 import { DocsLoader } from "@/server/docs-loader";
 import { MdxSerializer } from "@/server/mdx-serializer";
-
-import { BottomNavigation } from "./bottom-nav";
 
 export async function DocsMainContent({
   loader,
@@ -55,18 +57,27 @@ export async function DocsMainContent({
   }
 
   if (node.type === "changelogEntry") {
+    const changelogNode = parents.findLast(
+      (parent) => parent.type === "changelog"
+    );
+    if (changelogNode == null) {
+      throw new Error("Changelog node not found");
+    }
     return (
       <ChangelogEntryPage
         node={node}
-        parents={parents}
-        loader={loader}
-        serialize={serialize}
-        breadcrumb={breadcrumb}
-        neighbors={{
-          prev: null,
-          next: null,
-        }}
-      />
+        overview={
+          <ChangelogPageOverview
+            loader={loader}
+            serialize={serialize}
+            node={changelogNode}
+            breadcrumb={breadcrumb.slice(0, -3)}
+          />
+        }
+        bottomNavigation={bottomNavigation}
+      >
+        <ChangelogPageEntry loader={loader} node={node} serialize={serialize} />
+      </ChangelogEntryPage>
     );
   }
 

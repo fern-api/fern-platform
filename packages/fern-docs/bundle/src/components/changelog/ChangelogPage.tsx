@@ -7,6 +7,7 @@ import { compact } from "es-toolkit/compat";
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { isNonNullish } from "@fern-api/ui-core-utils";
 import { type TableOfContentsItem, makeToc, toTree } from "@fern-docs/mdx";
+import { addLeadingSlash } from "@fern-docs/utils";
 
 import { DocsLoader } from "@/server/docs-loader";
 import { MdxSerializer } from "@/server/mdx-serializer";
@@ -93,7 +94,7 @@ export default async function ChangelogPage({
   );
 }
 
-async function ChangelogPageOverview({
+export async function ChangelogPageOverview({
   loader,
   serialize,
   node,
@@ -117,6 +118,7 @@ async function ChangelogPageOverview({
       <PageHeader
         serialize={serialize}
         title={mdx?.frontmatter?.title ?? node.title}
+        titleHref={addLeadingSlash(node.slug)}
         subtitle={mdx?.frontmatter?.subtitle ?? mdx?.frontmatter?.excerpt}
         breadcrumb={breadcrumb}
       />
@@ -125,7 +127,7 @@ async function ChangelogPageOverview({
   );
 }
 
-async function ChangelogPageEntry({
+export async function ChangelogPageEntry({
   loader,
   serialize,
   node,

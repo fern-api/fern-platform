@@ -1,50 +1,56 @@
 import "server-only";
 
-import { notFound } from "next/navigation";
+import React, { ReactElement } from "react";
 
 import type { FernNavigation } from "@fern-api/fdr-sdk";
+import { Badge } from "@fern-docs/components";
+import { addLeadingSlash } from "@fern-docs/utils";
 
-import { DocsLoader } from "@/server/docs-loader";
-import { MdxSerializer } from "@/server/mdx-serializer";
+import { HideBuiltWithFern } from "@/components/built-with-fern";
+import { SetLayout } from "@/state/layout";
 
-import type { DocsContent } from "../resolver/DocsContent";
-import ChangelogEntryPageClient from "./ChangelogEntryPageClient";
+import { FernLink } from "../components/FernLink";
+import { Separator } from "../components/Separator";
+import { FooterLayout } from "../layouts/FooterLayout";
+import { ChangelogContentLayout } from "./ChangelogContentLayout";
 
-export default async function ChangelogEntryPage({
-  parents,
-  loader,
-  serialize,
+export default function ChangelogEntryPage({
   node,
-  breadcrumb,
-  neighbors,
+  overview,
+  bottomNavigation,
+  children,
 }: {
-  parents: readonly FernNavigation.NavigationNodeParent[];
-  loader: DocsLoader;
-  serialize: MdxSerializer;
   node: FernNavigation.ChangelogEntryNode;
-  breadcrumb: readonly FernNavigation.BreadcrumbItem[];
-  neighbors: DocsContent.Neighbors;
-}) {
-  const changelogNode = [...parents]
-    .reverse()
-    .find((n): n is FernNavigation.ChangelogNode => n.type === "changelog");
-  if (changelogNode == null) {
-    notFound();
-  }
-  const { filename, markdown } = await loader.getPage(node.pageId);
-  const page = await serialize(markdown, { filename });
-
+  overview: React.ReactNode;
+  bottomNavigation: React.ReactNode;
+  children: React.ReactNode;
+}): ReactElement<any> {
   return (
-    <ChangelogEntryPageClient
-      content={{
-        ...node,
-        type: "changelog-entry",
-        changelogTitle: changelogNode.title,
-        changelogSlug: changelogNode.slug,
-        page: page ?? markdown,
-        breadcrumb,
-        neighbors,
-      }}
-    />
+    <article className="max-w-page-width-padded px-page-padding mx-auto min-w-0 flex-1">
+      <SetLayout value="page" />
+      <HideBuiltWithFern>
+        <ChangelogContentLayout as="section" className="pb-8">
+          {overview}
+        </ChangelogContentLayout>
+        <Separator className="max-w-content-width mx-auto my-12" />
+        <ChangelogContentLayout
+          as="article"
+          id={node.date}
+          stickyContent={
+            <Badge asChild>
+              <FernLink href={addLeadingSlash(node.slug)}>
+                {node.title}
+              </FernLink>
+            </Badge>
+          }
+        >
+          {children}
+        </ChangelogContentLayout>
+      </HideBuiltWithFern>
+      <FooterLayout
+        className="max-w-content-width mx-auto"
+        bottomNavigation={bottomNavigation}
+      />
+    </article>
   );
 }

@@ -1,6 +1,6 @@
 import React, { Fragment, ReactElement } from "react";
 
-import { Separator } from "@radix-ui/react-separator";
+import { Separator } from "@/components/components/Separator";
 
 export declare namespace TypeDefinitionDetails {
   export interface Props {
@@ -19,20 +19,14 @@ export function WithSeparator({
   const separator =
     separatorText != null ? (
       <div className="flex h-px items-center gap-2">
-        <Separator
-          orientation="horizontal"
-          className="bg-border-default h-px flex-1"
-        />
+        <Separator className="flex-1" />
         <div className="text-(color:--grayscale-a11) shrink text-sm">
           {separatorText}
         </div>
-        <Separator
-          orientation="horizontal"
-          className="bg-border-default h-px flex-1"
-        />
+        <Separator className="flex-1" />
       </div>
     ) : (
-      <Separator orientation="horizontal" className="bg-border-default h-px" />
+      <Separator className="bg-border-default" />
     );
   return (
     <>

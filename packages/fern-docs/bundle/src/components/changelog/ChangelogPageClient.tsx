@@ -7,14 +7,19 @@ import { useAtomValue } from "jotai";
 
 import type { FernNavigation } from "@fern-api/fdr-sdk";
 import { EMPTY_ARRAY } from "@fern-api/ui-core-utils";
-import { cn } from "@fern-docs/components";
+import { Badge, cn } from "@fern-docs/components";
 import { addLeadingSlash } from "@fern-docs/utils";
 
-import { BuiltWithFern, HideBuiltWithFern } from "@/components/built-with-fern";
+import { HideBuiltWithFern } from "@/components/built-with-fern";
 import { useCurrentAnchor } from "@/hooks/use-anchor";
+import { SetLayout } from "@/state/layout";
 
 import { SCROLL_BODY_ATOM } from "../atoms";
+import { BottomNavigationClient } from "../bottom-nav-client";
 import { FernLink } from "../components/FernLink";
+import { Separator } from "../components/Separator";
+import { FooterLayout } from "../layouts/FooterLayout";
+import { PageLayout } from "../layouts/PageLayout";
 import { ChangelogContentLayout } from "./ChangelogContentLayout";
 
 function flattenChangelogEntries(
@@ -26,6 +31,9 @@ function flattenChangelogEntries(
 }
 
 const CHANGELOG_PAGE_SIZE = 10;
+
+const useIsomorphicLayoutEffect =
+  typeof window !== "undefined" ? React.useLayoutEffect : React.useEffect;
 
 export default function ChangelogPageClient({
   node,
@@ -47,7 +55,7 @@ export default function ChangelogPageClient({
 
   const currentAnchor = useCurrentAnchor();
 
-  React.useEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     const getPageFromHash = (): number => {
       if (!currentAnchor) {
         return 1;
@@ -79,8 +87,6 @@ export default function ChangelogPageClient({
     setPage(getPageFromHash());
   }, [currentAnchor]);
 
-  const fullWidth = true;
-
   /**
    * Scroll to the top of the page when navigating to a new page of the changelog
    */
@@ -103,36 +109,40 @@ export default function ChangelogPageClient({
 
   const visibleEntries = chunkedEntries[page - 1] ?? EMPTY_ARRAY;
 
-  // const prev = useMemo(() => {
-  //   if (page === 1) {
-  //     return undefined;
-  //   }
+  const prev = useMemo(() => {
+    if (page === 1) {
+      return undefined;
+    }
 
-  //   return {
-  //     title: "Newer posts",
-  //     hint: "Next",
-  //     href: `#page-${page - 1}`,
-  //   };
-  // }, [page]);
+    return {
+      href: `#page-${page - 1}`,
+      shallow: true,
+      onClick: () => {
+        setPage(page - 1);
+        window.scrollTo(0, 0);
+      },
+    };
+  }, [page]);
 
-  // const next = useMemo(() => {
-  //   if (page >= chunkedEntries.length) {
-  //     return undefined;
-  //   }
+  const next = useMemo(() => {
+    if (page >= chunkedEntries.length) {
+      return undefined;
+    }
 
-  //   return {
-  //     title: "Older posts",
-  //     hint: "Previous",
-  //     href: `#page-${page + 1}`,
-  //   };
-  // }, [chunkedEntries.length, page]);
+    return {
+      title: "Older posts",
+      href: `#page-${page + 1}`,
+      shallow: true,
+      onClick: () => {
+        setPage(page + 1);
+        window.scrollTo(0, 0);
+      },
+    };
+  }, [chunkedEntries.length, page]);
 
   return (
-    <div
-      className={cn("fern-changelog", {
-        "full-width": fullWidth,
-      })}
-    >
+    <article className="max-w-page-width-padded px-page-padding mx-auto min-w-0 flex-1">
+      <SetLayout value="page" />
       <HideBuiltWithFern>
         <ChangelogContentLayout as="section" className="pb-8">
           {overview}
@@ -141,14 +151,16 @@ export default function ChangelogPageClient({
         {visibleEntries.map((entry) => {
           return (
             <Fragment key={entry.id}>
-              <hr />
+              <Separator className="max-w-content-width mx-auto my-12" />
               <ChangelogContentLayout
                 as="article"
                 id={entry.date}
                 stickyContent={
-                  <FernLink href={addLeadingSlash(entry.slug)}>
-                    {entry.title}
-                  </FernLink>
+                  <Badge asChild>
+                    <FernLink href={addLeadingSlash(entry.slug)}>
+                      {entry.title}
+                    </FernLink>
+                  </Badge>
                 }
               >
                 {entries[entry.pageId]}
@@ -157,8 +169,11 @@ export default function ChangelogPageClient({
           );
         })}
       </HideBuiltWithFern>
-
-      <BuiltWithFern className="mx-auto my-8 w-fit" />
-    </div>
+      <FooterLayout
+        className="max-w-content-width mx-auto"
+        hideFeedback
+        bottomNavigation={<BottomNavigationClient prev={prev} next={next} />}
+      />
+    </article>
   );
 }
