@@ -44,11 +44,13 @@ export default async function SharedLayout({
   return (
     <ThemedDocs
       theme={theme}
-      sidebarFixed={
+      isSidebarFixed={
         !!colors.dark?.sidebarBackground ||
         !!colors.light?.sidebarBackground ||
-        !layout.pageWidth
+        !layout.pageWidth ||
+        layout.isHeaderDisabled
       }
+      isHeaderDisabled={layout.isHeaderDisabled}
       announcement={
         announcementText && (
           <Announcement announcement={announcementText}>
@@ -91,7 +93,7 @@ export default async function SharedLayout({
             />
           }
           showSearchBar={layout.searchbarPlacement === "SIDEBAR"}
-          tabs={false}
+          showHeaderInSidebar={layout.isHeaderDisabled}
           versionSelect={false}
           navbarLinks={
             <React.Suspense fallback={null}>

@@ -123,12 +123,13 @@ function generateColorPalette(opts: {
   };
 }
 
-export interface FernColorPalette extends ColorPalette {
+export interface FernColorPalette extends Omit<ColorPalette, "background"> {
   border?: string;
   accent: string;
   sidebarBackground?: string;
   headerBackground?: string;
   cardBackground?: string;
+  background?: string;
 }
 
 export function generateFernColorPalette({
@@ -157,5 +158,6 @@ export function generateFernColorPalette({
     sidebarBackground,
     headerBackground,
     cardBackground,
+    background,
   };
 }

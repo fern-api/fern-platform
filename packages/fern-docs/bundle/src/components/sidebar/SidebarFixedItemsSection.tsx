@@ -23,7 +23,7 @@ export function SidebarFixedItemsSection({
   return (
     <div
       className={cn(
-        "ml-1 flex flex-col border-b px-4",
+        "flex flex-col border-b px-4 lg:pl-5",
         showBorder ? "border-border-default" : "border-transparent",
         className
       )}
@@ -40,7 +40,7 @@ export function SidebarFixedItemsSection({
       )}
 
       {showSearchBar && (
-        <SearchV2Trigger aria-label="Search" className="my-2 w-full" />
+        <SearchV2Trigger aria-label="Search" className="my-3 w-full lg:my-2" />
       )}
     </div>
   );

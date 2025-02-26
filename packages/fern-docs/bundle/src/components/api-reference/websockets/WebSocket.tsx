@@ -10,6 +10,7 @@ import { FernScrollArea } from "@fern-docs/components";
 import { AvailabilityBadge } from "@fern-docs/components/badges";
 
 import { PageHeader } from "@/components/components/PageHeader";
+import { FooterLayout } from "@/components/layouts/FooterLayout";
 import { ReferenceLayout } from "@/components/layouts/ReferenceLayout";
 import { ScrollToTop } from "@/components/layouts/ScrollToTop";
 import { MdxSerializer } from "@/server/mdx-serializer";
@@ -38,10 +39,12 @@ export async function WebSocketContent({
   serialize,
   context,
   breadcrumb,
+  bottomNavigation,
 }: {
   serialize: MdxSerializer;
   context: WebSocketContext;
   breadcrumb: readonly FernNavigation.BreadcrumbItem[];
+  bottomNavigation: React.ReactNode;
 }) {
   const { channel, node, types, globalHeaders } = context;
 
@@ -247,6 +250,7 @@ export async function WebSocketContent({
           </TypeDefinitionSlotsServer>
         </TypeDefinitionRoot>
       }
+      footer={<FooterLayout bottomNavigation={bottomNavigation} />}
     >
       <SetLayout value="reference" />
       <ScrollToTop />

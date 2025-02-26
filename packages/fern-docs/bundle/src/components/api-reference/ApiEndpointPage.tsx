@@ -82,6 +82,7 @@ async function ApiEndpointContent({
           serialize={serialize}
           breadcrumb={breadcrumb}
           context={context}
+          bottomNavigation={bottomNavigation}
         />
       );
     }
@@ -95,6 +96,7 @@ async function ApiEndpointContent({
           serialize={serialize}
           breadcrumb={breadcrumb}
           context={context}
+          bottomNavigation={bottomNavigation}
         />
       );
     }

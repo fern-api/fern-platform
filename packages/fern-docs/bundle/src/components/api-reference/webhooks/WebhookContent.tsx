@@ -4,6 +4,7 @@ import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 
 import { PageHeader } from "@/components/components/PageHeader";
+import { FooterLayout } from "@/components/layouts/FooterLayout";
 import { ReferenceLayout } from "@/components/layouts/ReferenceLayout";
 import { ScrollToTop } from "@/components/layouts/ScrollToTop";
 import { Prose } from "@/components/mdx/prose";
@@ -28,10 +29,12 @@ export async function WebhookContent({
   serialize,
   context,
   breadcrumb,
+  bottomNavigation,
 }: {
   serialize: MdxSerializer;
   context: ApiDefinition.WebhookContext;
   breadcrumb: readonly FernNavigation.BreadcrumbItem[];
+  bottomNavigation: React.ReactNode;
 }) {
   const { node, webhook, types } = context;
 
@@ -107,6 +110,7 @@ export async function WebhookContent({
           </TypeDefinitionSlotsServer>
         </TypeDefinitionRoot>
       }
+      footer={<FooterLayout bottomNavigation={bottomNavigation} />}
     >
       <SetLayout value="reference" />
       <ScrollToTop />

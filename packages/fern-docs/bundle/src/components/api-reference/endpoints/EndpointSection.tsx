@@ -11,10 +11,12 @@ export function EndpointSection({
   title,
   description,
   children,
+  hideSeparator,
 }: {
   title: React.ReactNode;
   description?: React.ReactNode;
   children: React.ReactNode;
+  hideSeparator?: boolean;
 }) {
   return (
     <ErrorBoundary>
@@ -23,7 +25,7 @@ export function EndpointSection({
           <h3 className="mt-0">{title}</h3>
         </TypeDefinitionAnchor>
         {description}
-        <Separator className="my-3" />
+        {hideSeparator ? null : <Separator />}
         {children}
       </SectionContainer>
     </ErrorBoundary>

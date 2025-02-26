@@ -3,6 +3,7 @@
 import React from "react";
 
 import { ErrorResponse } from "@fern-api/fdr-sdk/api-definition";
+import { FernCollapse } from "@fern-docs/components";
 
 import { useEndpointContext } from "./EndpointContext";
 import { EndpointErrorClient } from "./EndpointErrorClient";
@@ -59,27 +60,31 @@ export function EndpointErrorGroupClient({
 
   return (
     <div
-      className="border-border-default rounded-2 flex flex-col overflow-visible border"
+      className="border-border-default rounded-3 flex flex-col overflow-visible border"
       ref={errorRef}
     >
-      {errors.map((error, idx) => (
-        <EndpointErrorClient
-          key={idx}
-          error={error.data}
-          isFirst={idx === 0}
-          isLast={idx === (errors?.length ?? 0) - 1}
-          isSelected={
-            selectedError != null && isErrorEqual(error.data, selectedError)
-          }
-          onClick={(event) => {
-            event.stopPropagation();
-            setSelectedError(error.data);
-          }}
-          availability={error.data.availability}
-        >
-          {error.children}
-        </EndpointErrorClient>
-      ))}
+      {errors.map((error, idx) => {
+        const isSelected =
+          selectedError != null && isErrorEqual(error.data, selectedError);
+        return (
+          <EndpointErrorClient
+            key={idx}
+            error={error.data}
+            isFirst={idx === 0}
+            isLast={idx === (errors?.length ?? 0) - 1}
+            isSelected={isSelected}
+            onClick={(event) => {
+              event.stopPropagation();
+              setSelectedError(error.data);
+            }}
+            availability={error.data.availability}
+          >
+            <FernCollapse open={isSelected} className="w-full">
+              {error.children}
+            </FernCollapse>
+          </EndpointErrorClient>
+        );
+      })}
     </div>
   );
 }

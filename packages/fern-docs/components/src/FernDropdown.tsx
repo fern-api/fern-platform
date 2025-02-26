@@ -44,7 +44,8 @@ export declare namespace FernDropdown {
   export type Option = ValueOption | SeparatorOption;
 
   export interface Props {
-    options: Option[];
+    className?: string;
+    options: readonly Option[];
     onValueChange?: (value: string) => void;
     value?: string;
     onOpen?: () => void;
@@ -67,6 +68,7 @@ export const FernDropdown = forwardRef<
 >(
   (
     {
+      className,
       options,
       onValueChange,
       value,
@@ -99,7 +101,10 @@ export const FernDropdown = forwardRef<
         side={side}
         align={align}
         {...contentProps}
-        className={cn("fern-dropdown", contentProps?.className)}
+        className={cn(
+          "fern-dropdown [&_svg]:size-icon",
+          contentProps?.className
+        )}
       >
         <FernTooltipProvider>
           <FernScrollArea
@@ -141,7 +146,7 @@ export const FernDropdown = forwardRef<
         modal={false}
         defaultOpen={defaultOpen}
       >
-        <DropdownMenu.Trigger asChild={true} ref={ref}>
+        <DropdownMenu.Trigger asChild={true} ref={ref} className={className}>
           {children}
         </DropdownMenu.Trigger>
         {usePortal ? (

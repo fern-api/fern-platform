@@ -56,7 +56,6 @@ export function HeaderContent({
         >
           {navbarLinks}
           {loginButton}
-          {showThemeButton && <ThemeButton />}
         </nav>
       </FernButtonGroup>
 

@@ -30,8 +30,8 @@ export function EndpointErrorClient({
         "space hover:bg-(color:--grayscale-a2) flex flex-col items-start px-3 py-3 transition-colors",
         { "bg-(color:--grayscale-a2)": isSelected },
         { "border-border-default border-b": !isLast },
-        { "rounded-t-3/2": isFirst },
-        { "rounded-b-3/2": isLast }
+        { "rounded-t-[inherit]": isFirst },
+        { "rounded-b-[inherit]": isLast }
       )}
       onClick={onClick}
     >

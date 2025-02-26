@@ -459,6 +459,7 @@ const getLayout = async (domain: string) => {
     contentWidth,
     tabsPlacement,
     searchbarPlacement,
+    isHeaderDisabled: config.layout?.disableHeader ?? false,
   };
 };
 

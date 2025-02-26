@@ -17,7 +17,7 @@ export function SidebarTabsRoot({
   return (
     <Tabs.Root
       value={currentTabId}
-      className={cn("my-6", {
+      className={cn({
         "lg:hidden": mobileOnly,
       })}
     >

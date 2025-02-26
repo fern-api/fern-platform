@@ -29,4 +29,5 @@ export interface FernLayoutConfig {
   contentWidth: number;
   tabsPlacement: "SIDEBAR" | "HEADER";
   searchbarPlacement: "SIDEBAR" | "HEADER" | "HEADER_TABS";
+  isHeaderDisabled: boolean;
 }

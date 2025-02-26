@@ -5,7 +5,7 @@
 
     text-decoration-line: underline;
     text-decoration-color: currentColor;
-    text-decoration-thickness: 1px;
+    text-decoration-thickness: 1px !important;
     text-underline-offset: --spacing(1);
 
     h1 &,
@@ -14,7 +14,7 @@
     h4 &,
     h5 &,
     h6 & {
-      font-weight: inherit;
+      font-weight: inherit !important;
     }
 
     svg.external-link-icon {

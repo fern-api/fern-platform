@@ -11,13 +11,14 @@ interface ReferenceLayoutProps {
   children?: React.ReactNode;
   reference?: React.ReactNode;
   footer?: React.ReactNode;
+  enableFullWidth?: boolean;
 }
 
 export const ReferenceLayout = React.forwardRef<
   HTMLDivElement,
   ComponentPropsWithoutRef<"article"> & ReferenceLayoutProps
 >(function ReferenceLayout(
-  { header, aside, children, footer, reference, ...props },
+  { header, aside, children, footer, reference, enableFullWidth, ...props },
   ref
 ) {
   const isMobile = useIsMobile();
@@ -32,7 +33,10 @@ export const ReferenceLayout = React.forwardRef<
       <article
         {...props}
         className={cn(
-          "w-content-width md:w-endpoint-width xl:w-page-width max-w-full",
+          "w-content-width md:w-endpoint-width max-w-full",
+          {
+            "xl:w-page-width": enableFullWidth,
+          },
           props.className
         )}
         ref={ref}

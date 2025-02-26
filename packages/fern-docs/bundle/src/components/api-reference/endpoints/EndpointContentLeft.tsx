@@ -205,7 +205,7 @@ export async function EndpointContentLeft({
               <MdxServerComponentProseSuspense
                 serialize={serialize}
                 size="sm"
-                className="text-(color:--grayscale-a11) my-3"
+                className="text-(color:--grayscale-a11)"
                 mdx={endpoint.requests[0].description}
                 fallback={createEndpointRequestDescriptionFallback(
                   endpoint.requests[0],
@@ -233,7 +233,7 @@ export async function EndpointContentLeft({
                 <MdxServerComponentProseSuspense
                   serialize={serialize}
                   size="sm"
-                  className="text-(color:--grayscale-a11) my-3"
+                  className="text-(color:--grayscale-a11)"
                   mdx={endpoint.responses[0].description}
                   fallback={
                     <ResponseSummaryFallback
@@ -255,7 +255,7 @@ export async function EndpointContentLeft({
           )}
           {showErrors && endpoint.errors && endpoint.errors.length > 0 && (
             <TypeDefinitionAnchorPart part="error">
-              <EndpointSection title="Errors">
+              <EndpointSection title="Errors" hideSeparator>
                 <EndpointErrorGroup
                   serialize={serialize}
                   errors={endpoint.errors}

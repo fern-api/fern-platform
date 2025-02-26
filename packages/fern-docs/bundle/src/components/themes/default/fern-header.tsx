@@ -21,13 +21,11 @@ export function FernHeader(props: React.ComponentPropsWithoutRef<"header">) {
           __html: `(${String(function () {
             window.requestAnimationFrame(() => {
               const headerHeight =
-                document.getElementById("fern-header")?.clientHeight;
-              if (headerHeight != null) {
-                document.documentElement.style.setProperty(
-                  "--header-height",
-                  `${String(headerHeight)}px`
-                );
-              }
+                document.getElementById("fern-header")?.clientHeight ?? 0;
+              document.documentElement.style.setProperty(
+                "--header-height",
+                `${String(headerHeight)}px`
+              );
             });
           })})()`,
         }}
@@ -38,14 +36,13 @@ export function FernHeader(props: React.ComponentPropsWithoutRef<"header">) {
   React.useEffect(() => {
     if (!ref.current) return;
 
-    const resizeObserver = new ResizeObserver((entries) => {
-      const headerHeight = entries[0]?.contentRect.height;
-      if (headerHeight) {
-        document.documentElement.style.setProperty(
-          "--header-height",
-          `${headerHeight}px`
-        );
-      }
+    const resizeObserver = new ResizeObserver(([entry]) => {
+      if (entry == null) return;
+      const headerHeight = entry.contentRect.height;
+      document.documentElement.style.setProperty(
+        "--header-height",
+        `${headerHeight}px`
+      );
     });
 
     resizeObserver.observe(ref.current);

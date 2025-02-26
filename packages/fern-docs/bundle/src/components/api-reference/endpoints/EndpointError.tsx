@@ -26,11 +26,13 @@ export function EndpointError({
     return null;
   }
   return (
-    <div className="space-y-2 pt-2">
+    <div className="-mb-2 space-y-2 pt-2 text-left">
       <MdxServerComponentProseSuspense
         serialize={serialize}
         mdx={error.description}
         fallback={`This error returns ${renderTypeShorthand(error.shape, { withArticle: true }, types)}.`}
+        size="sm"
+        className="text-(color:--grayscale-a11)"
       />
       {shouldHideShape(error.shape, types) ? null : (
         <TypeReferenceDefinitions

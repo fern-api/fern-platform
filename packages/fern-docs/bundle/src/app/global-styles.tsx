@@ -108,7 +108,7 @@ export function GlobalStyles({
 
         ${hasTheme ? ":root, .light" : ":root"} {
           --accent: ${root?.accent ?? FERN_COLOR_ACCENT};
-          --background: ${root?.background ?? "initial"};
+          --background: ${root?.background ?? (!!light ? "#fff" : "#000")};
           --border: ${domain.includes("nominal")
             ? "#000"
             : (root?.border ?? "initial")};
@@ -120,7 +120,7 @@ export function GlobalStyles({
         ${hasTheme && dark
           ? `.dark {
           --accent: ${dark?.accent ?? FERN_COLOR_ACCENT};
-          --background: ${dark.background};
+          --background: ${dark.background ?? "#000"};
           --border: ${
             domain.includes("nominal") ? "#fff" : (dark.border ?? "initial")
           };
@@ -131,7 +131,7 @@ export function GlobalStyles({
           : ""}
 
         html {
-          background-color: var(--background);
+          background-color: var(--background, lightdark(#fff, #000));
         }
 
         ${fonts.additionalCss}

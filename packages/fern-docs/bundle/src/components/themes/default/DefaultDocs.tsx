@@ -30,19 +30,26 @@ export default function DefaultDocs({
   children,
   announcement,
   tabs,
-  sidebarFixed = false,
+  isSidebarFixed = false,
+  isHeaderDisabled = false,
 }: {
   header: React.ReactNode;
   sidebar: React.ReactNode;
   children: React.ReactNode;
   announcement?: React.ReactNode;
   tabs?: React.ReactNode;
-  sidebarFixed?: boolean;
+  isSidebarFixed?: boolean;
+  isHeaderDisabled?: boolean;
 }) {
   const hideAsides = useShouldHideAsides();
   return (
     <>
-      <FernHeader className="bg-header-background border-border-concealed fixed inset-x-0 top-0 z-30 border-b backdrop-blur-lg">
+      <FernHeader
+        className={cn(
+          "bg-header-background border-border-concealed fixed inset-x-0 top-0 z-30 border-b backdrop-blur-lg",
+          { "lg:hidden": isHeaderDisabled }
+        )}
+      >
         {announcement}
         <div className="h-header-height-real px-page-padding flex items-center">
           {header}
@@ -56,7 +63,7 @@ export default function DefaultDocs({
             "[&>aside]:lg:hidden": hideAsides,
           })}
         >
-          <SideNav fixed={sidebarFixed}>{sidebar}</SideNav>
+          <SideNav fixed={isSidebarFixed}>{sidebar}</SideNav>
           {children}
         </div>
       </main>
