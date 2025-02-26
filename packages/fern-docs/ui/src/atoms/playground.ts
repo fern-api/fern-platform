@@ -57,9 +57,8 @@ export const IS_PLAYGROUND_ENABLED_ATOM = atom(
   (get) => get(EDGE_FLAGS_ATOM).isApiPlaygroundEnabled
 );
 
-// playground === explorer
 export const IS_PLAYGROUND_FAB_ENABLED_ATOM = atom(
-  (get) => get(EDGE_FLAGS_ATOM).isExplorerFabEnabled
+  (get) => get(EDGE_FLAGS_ATOM).isPlaygroundFabEnabled
 );
 
 export const MAX_PLAYGROUND_HEIGHT_ATOM = atom((get) => {
