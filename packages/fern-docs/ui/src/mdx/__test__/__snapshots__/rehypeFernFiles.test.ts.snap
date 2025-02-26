@@ -50,7 +50,7 @@ exports[`setDimension > should preserve image with both width and height set 1`]
 {
   "attributes": [
     {
-      "name": "imageSize",
+      "name": "__assigned_imageSize",
       "type": "mdxJsxAttribute",
       "value": {
         "data": {
@@ -137,7 +137,7 @@ exports[`setDimension > should properly assign height when only width is set 1`]
       "value": "200",
     },
     {
-      "name": "imageSize",
+      "name": "__assigned_imageSize",
       "type": "mdxJsxAttribute",
       "value": {
         "data": {
@@ -204,7 +204,7 @@ exports[`setDimension > should properly assign width when only height is set 1`]
       "value": "200",
     },
     {
-      "name": "imageSize",
+      "name": "__assigned_imageSize",
       "type": "mdxJsxAttribute",
       "value": {
         "data": {
@@ -291,7 +291,7 @@ exports[`setDimension > should set width and height when neither is set 1`] = `
       "value": "200",
     },
     {
-      "name": "imageSize",
+      "name": "__assigned_imageSize",
       "type": "mdxJsxAttribute",
       "value": {
         "data": {

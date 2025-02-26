@@ -42,7 +42,8 @@ export const Image = forwardRef<
     loading?: "eager" | "lazy" | undefined;
     blurDataURL?: string | undefined;
     unoptimized?: boolean | undefined;
-    imageSize?: CSSProperties | undefined;
+    // set by rehype-files.ts if image width or height property
+    __assigned_imageSize?: CSSProperties | undefined;
   }
 >((props, ref) => {
   const {
@@ -72,7 +73,7 @@ export const Image = forwardRef<
       height={toPixelValue(height)}
       style={{
         ...style,
-        ...rest.imageSize,
+        ...rest.__assigned_imageSize,
       }}
       {...rest}
       alt={rest.alt ?? ""}

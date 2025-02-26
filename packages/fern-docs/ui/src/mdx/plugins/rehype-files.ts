@@ -213,7 +213,9 @@ export function setDimension(
     };
   }
 
-  node.attributes.unshift(unknownToMdxJsxAttribute("imageSize", addStyle));
+  node.attributes.unshift(
+    unknownToMdxJsxAttribute("__assigned_imageSize", addStyle)
+  );
 
   // replace the actual attribute height and width with the true image size
   if (intrinsicHeight != null) {
