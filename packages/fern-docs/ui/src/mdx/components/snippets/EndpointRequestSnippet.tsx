@@ -78,23 +78,26 @@ export function EndpointRequestSnippetInternal({
             options={endpoint.environments}
           />
         }
+        // add the api reference arrow here to place correctly
         languages={
-          availableLanguages.length > 1 ? (
-            <>
-              <CodeExampleClientDropdown
-                languages={availableLanguages}
-                onValueChange={(language) =>
-                  setSelectedExampleKey((prev) => ({
-                    ...prev,
-                    language,
-                  }))
-                }
-                value={selectedExampleKey.language}
-              />
-            </>
-          ) : undefined
+          <>
+            {slug != null ? <ApiReferenceButton slug={slug} /> : undefined}
+            {availableLanguages.length > 1 ? (
+              <>
+                <CodeExampleClientDropdown
+                  languages={availableLanguages}
+                  onValueChange={(language) =>
+                    setSelectedExampleKey((prev) => ({
+                      ...prev,
+                      language,
+                    }))
+                  }
+                  value={selectedExampleKey.language}
+                />
+              </>
+            ) : undefined}
+          </>
         }
-        tryIt={slug != null ? <ApiReferenceButton slug={slug} /> : undefined}
         code={selectedExample.code}
         language={selectedExampleKey.language}
         json={EMPTY_OBJECT}

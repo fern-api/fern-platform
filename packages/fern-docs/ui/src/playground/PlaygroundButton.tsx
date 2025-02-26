@@ -5,22 +5,15 @@ import {
   FernTooltipProvider,
 } from "@fern-docs/components";
 import { PlaySolid } from "iconoir-react";
-import { useAtomValue } from "jotai";
 import { FC } from "react";
-import { IS_PLAYGROUND_ENABLED_ATOM, useOpenPlayground } from "../atoms";
+import { useOpenPlayground } from "../atoms";
 import { usePlaygroundSettings } from "../hooks/usePlaygroundSettings";
-
 export const PlaygroundButton: FC<{
   state: FernNavigation.NavigationNodeApiLeaf;
   className?: string;
 }> = ({ state, className }) => {
   const openPlayground = useOpenPlayground();
-  const isPlaygroundEnabled = useAtomValue(IS_PLAYGROUND_ENABLED_ATOM);
   const settings = usePlaygroundSettings(state.id ?? state);
-
-  if (!isPlaygroundEnabled || settings?.disabled) {
-    return null;
-  }
 
   return (
     <FernTooltipProvider>
