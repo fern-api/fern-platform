@@ -32,6 +32,7 @@ export interface EdgeFlags {
   isSearchV2Enabled: boolean;
   // TODO: remove this after pinecone demo, this is a temporary flag
   grpcEndpoints: readonly string[];
+  isExplorerFabEnabled: boolean;
 }
 
 export const DEFAULT_EDGE_FLAGS: EdgeFlags = {
@@ -68,4 +69,5 @@ export const DEFAULT_EDGE_FLAGS: EdgeFlags = {
   isSearchV2Enabled: false,
   // TODO: remove this after pinecone demo, this is a temporary flag
   grpcEndpoints: [],
+  isExplorerFabEnabled: false,
 };

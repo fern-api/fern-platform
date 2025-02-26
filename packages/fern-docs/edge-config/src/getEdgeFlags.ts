@@ -42,6 +42,7 @@ const EDGE_FLAGS = [
   "grpc-endpoints" as const,
   "authenticated-pages-discoverable" as const,
   "search-v2" as const,
+  "explorer-fab-enabled" as const,
 ];
 
 type EdgeFlag = (typeof EDGE_FLAGS)[number];
@@ -172,6 +173,10 @@ export async function getEdgeFlags(domain: string): Promise<EdgeFlags> {
       domain,
       config["authenticated-pages-discoverable"]
     );
+    const isExplorerFabEnabled = checkDomainMatchesCustomers(
+      domain,
+      config["explorer-fab-enabled"]
+    );
     const isSearchV2Enabled =
       domain === "buildwithfern.com"
         ? true
@@ -212,6 +217,7 @@ export async function getEdgeFlags(domain: string): Promise<EdgeFlags> {
       isAuthenticatedPagesDiscoverable,
       isSearchV2Enabled,
       grpcEndpoints,
+      isExplorerFabEnabled,
     };
   } catch (e) {
     console.error(e);
@@ -248,6 +254,7 @@ export async function getEdgeFlags(domain: string): Promise<EdgeFlags> {
       isAuthenticatedPagesDiscoverable: false,
       isSearchV2Enabled: domain === "buildwithfern.com",
       grpcEndpoints: [],
+      isExplorerFabEnabled: false,
     };
   }
 }

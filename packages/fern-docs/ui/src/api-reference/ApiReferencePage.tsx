@@ -1,5 +1,7 @@
+import { useAtomValue } from "jotai";
 import { ReactNode } from "react";
 import {
+  IS_PLAYGROUND_FAB_ENABLED_ATOM,
   useIsReady,
   useNavigationNodes,
   useWriteApiDefinitionAtom,
@@ -11,12 +13,15 @@ import {
   HideBuiltWithFernContext,
 } from "../sidebar/BuiltWithFern";
 import { ApiReferenceContent } from "./ApiReferenceContent";
+
 export default function ApiReferencePage({
   content,
 }: {
   content: DocsContent.ApiReferencePage;
 }): ReactNode {
   const hydrated = useIsReady();
+
+  const isPlaygroundFabEnabled = useAtomValue(IS_PLAYGROUND_FAB_ENABLED_ATOM);
 
   useWriteApiDefinitionAtom(content.apiDefinition);
 
@@ -40,7 +45,7 @@ export default function ApiReferencePage({
           mdxs={content.mdxs}
           slug={content.slug}
         />
-        <PlaygroundFloatingButton />
+        {isPlaygroundFabEnabled && <PlaygroundFloatingButton />}
       </HideBuiltWithFernContext.Provider>
 
       {/* anchor links should get additional padding to scroll to on initial load */}
