@@ -35,6 +35,8 @@ export function rehypeFernComponents(): (tree: Hast.Root) => void {
         } else if (node.name === "table") {
           // DO NOT coerce <table> into <Table> (see: https://buildwithfern.slack.com/archives/C06QKJWD4VD/p1722602687550179)
           // node.name = "Table";
+        } else if (node.name === "a") {
+          node.name = "A";
         }
       }
     });
