@@ -224,7 +224,9 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<
             </>
           ) : undefined
         }
-        tryIt={showPlaygroundButton ? <PlaygroundButton state={node} /> : undefined}
+        tryIt={
+          showPlaygroundButton ? <PlaygroundButton state={node} /> : undefined
+        }
         code={resolveEnvironmentUrlInCodeSnippet(
           endpoint,
           requestCodeSnippet,
