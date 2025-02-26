@@ -5,7 +5,10 @@ import { MouseEventHandler } from "react";
 import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
 import { cn } from "@fern-docs/components";
-import { AvailabilityBadge } from "@fern-docs/components/badges";
+import {
+  AvailabilityBadge,
+  StatusCodeBadge,
+} from "@fern-docs/components/badges";
 
 export function EndpointErrorClient({
   error,
@@ -36,9 +39,7 @@ export function EndpointErrorClient({
       onClick={onClick}
     >
       <div className="flex items-baseline space-x-2">
-        <div className="bg-(color:--red-a3) text-(color:--red-a11) rounded-2 px-2 py-1 text-xs">
-          {error.statusCode}
-        </div>
+        <StatusCodeBadge statusCode={error.statusCode} size="sm" />
         <div className="text-(color:--grayscale-a11) text-left text-xs">
           {error.name}
         </div>

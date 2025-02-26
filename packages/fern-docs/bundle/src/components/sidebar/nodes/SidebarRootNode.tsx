@@ -70,7 +70,7 @@ export function SidebarRootNode({
       {children.length > 0 && (
         <ul className="fern-sidebar-group fern-collapsible">
           {children.map((child) => (
-            <li key={child.id} className="mt-6">
+            <li key={child.id}>
               <SidebarRootChild node={child} />
             </li>
           ))}
