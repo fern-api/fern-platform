@@ -184,12 +184,17 @@ export class StringConverterNode extends BaseOpenApiV3_1ConverterNodeWithExample
 
   example({
     override,
+    includeOptionals,
   }: BaseOpenApiV3_1ConverterExampleArgs): string | undefined {
     return (
       this.input.example ??
       this.input.examples?.[0] ??
       this.default ??
-      (this.nullable ? null : (override ?? "string"))
+      (includeOptionals
+        ? this.nullable
+          ? null
+          : (override ?? "string")
+        : undefined)
     );
   }
 }

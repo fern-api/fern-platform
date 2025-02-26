@@ -69,9 +69,7 @@
             "type": "json",
             "value": {
               "text": "text",
-              "voice": "voice",
-              "language_code": "language_code",
-              "seed": null
+              "voice": "voice"
             }
           },
           "responseBody": {
@@ -162,9 +160,7 @@
             "type": "json",
             "value": {
               "text": "text",
-              "prompt_audio": "prompt_audio",
-              "language_code": "language_code",
-              "seed": null
+              "prompt_audio": "prompt_audio"
             }
           },
           "responseBody": {
@@ -324,8 +320,7 @@
                 "value": "file"
               },
               "description": {
-                "type": "json",
-                "value": "description"
+                "type": "json"
               }
             }
           },
@@ -531,16 +526,13 @@
             "type": "form",
             "value": {
               "name": {
-                "type": "json",
-                "value": "name"
+                "type": "json"
               },
               "file": {
-                "type": "filename",
-                "value": "file"
+                "type": "filename"
               },
               "description": {
-                "type": "json",
-                "value": "description"
+                "type": "json"
               }
             }
           },
