@@ -175,7 +175,7 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<
 
   const isPlaygroundEnabled = useAtomValue(IS_PLAYGROUND_ENABLED_ATOM);
   const settings = usePlaygroundSettings(node.id ?? node);
-  const usePlayground =
+  const showPlaygroundButton =
     node != null && isPlaygroundEnabled && !settings?.disabled;
 
   // note: .fern-endpoint-code-snippets is used to detect clicks outside of the code snippets
@@ -224,7 +224,7 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<
             </>
           ) : undefined
         }
-        tryIt={usePlayground ? <PlaygroundButton state={node} /> : undefined}
+        tryIt={showPlaygroundButton ? <PlaygroundButton state={node} /> : undefined}
         code={resolveEnvironmentUrlInCodeSnippet(
           endpoint,
           requestCodeSnippet,

@@ -138,7 +138,7 @@ const WebhookContent: FC<WebhookContentProps> = ({
 
   const isPlaygroundEnabled = useAtomValue(IS_PLAYGROUND_ENABLED_ATOM);
   const settings = usePlaygroundSettings(node.id ?? node);
-  const usePlayground =
+  const showPlaygroundButton =
     node != null && isPlaygroundEnabled && !settings?.disabled;
 
   return (
@@ -180,7 +180,7 @@ const WebhookContent: FC<WebhookContentProps> = ({
                         <Wifi className="t-muted size-icon" strokeWidth={1.5} />
                       </span>
                     </div>
-                    {usePlayground && (
+                    {showPlaygroundButton && (
                       <PlaygroundButton state={node} className="md:hidden" />
                     )}
                   </span>
@@ -381,7 +381,7 @@ const WebhookContent: FC<WebhookContentProps> = ({
                 <TitledExample
                   title={"Handshake"}
                   tryIt={
-                    usePlayground ? (
+                    showPlaygroundButton ? (
                       <PlaygroundButton state={node} />
                     ) : undefined
                   }

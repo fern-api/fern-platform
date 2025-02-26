@@ -22,9 +22,9 @@ export const EndpointContentHeader = memo<EndpointContentHeaderProps>(
     const [baseUrl, environmentId] = usePlaygroundBaseUrl(endpoint);
     const isPlaygroundEnabled = useAtomValue(IS_PLAYGROUND_ENABLED_ATOM);
     const settings = usePlaygroundSettings(node.id ?? node);
-    const usePlayground =
+    const showPlaygroundButton =
       node != null && isPlaygroundEnabled && !settings?.disabled;
-    const playgroundButton = usePlayground ? (
+    const playgroundButton = showPlaygroundButton ? (
       <PlaygroundButton state={node} className="md:hidden" />
     ) : undefined;
     return (
