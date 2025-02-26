@@ -2,20 +2,24 @@
   mask-image: linear-gradient(
     to bottom,
     transparent 0,
-    black --spacing(integer)
+    black calc(--value(integer) * var(--spacing))
   );
 }
 
 @utility mask-grad-bottom-* {
-  mask-image: linear-gradient(to top, transparent 0, black --spacing(integer));
+  mask-image: linear-gradient(
+    to top,
+    transparent 0,
+    black calc(--value(integer) * var(--spacing))
+  );
 }
 
 @utility mask-grad-y-* {
   mask-image: linear-gradient(
     to bottom,
     transparent 0,
-    black --spacing(integer),
-    black calc(100% - --spacing(integer)),
+    black calc(--value(integer) * var(--spacing)),
+    black calc(100% - calc(--value(integer) * var(--spacing))),
     transparent 100%
   );
 }

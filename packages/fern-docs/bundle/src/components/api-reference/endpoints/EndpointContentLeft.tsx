@@ -155,7 +155,7 @@ export async function EndpointContentLeft({
 
                   // {isAuth && (
                   //   <div className="absolute right-0 top-3">
-                  //     <div className="bg-(--red-a3) flex h-5 items-center rounded-3 px-2">
+                  //     <div className="bg-(color:--red-a3) flex h-5 items-center rounded-3 px-2">
                   //       <span className="text-(color:--red-a11) text-xs">Auth</span>
                   //     </div>
                   //   </div>

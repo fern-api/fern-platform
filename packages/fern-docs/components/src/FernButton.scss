@@ -148,17 +148,17 @@
 
         &.success {
           @apply text-(color:--green-a11) hover:text-(color:--green-a11);
-          @apply hover:bg-(--green-a3) data-[selected=true]:bg-(--green-a3) data-[state=checked]:bg-(--green-a3) data-[state=on]:bg-(--green-a3) data-[state=open]:bg-(--green-a3) data-[state=opening]:bg-(--green-a3);
+          @apply hover:bg-(color:--green-a3) data-[selected=true]:bg-(color:--green-a3) data-[state=checked]:bg-(color:--green-a3) data-[state=on]:bg-(color:--green-a3) data-[state=open]:bg-(color:--green-a3) data-[state=opening]:bg-(color:--green-a3);
         }
 
         &.warning {
           @apply text-(color:--amber-a11) hover:text-(color:--amber-a11);
-          @apply hover:bg-(--amber-a3) data-[selected=true]:bg-(--amber-a3) data-[state=checked]:bg-(--amber-a3) data-[state=on]:bg-(--amber-a3) data-[state=open]:bg-(--amber-a3) data-[state=opening]:bg-(--amber-a3);
+          @apply hover:bg-(color:--amber-a3) data-[selected=true]:bg-(color:--amber-a3) data-[state=checked]:bg-(color:--amber-a3) data-[state=on]:bg-(color:--amber-a3) data-[state=open]:bg-(color:--amber-a3) data-[state=opening]:bg-(color:--amber-a3);
         }
 
         &.danger {
           @apply text-(color:--red-a11) hover:text-(color:--red-a11);
-          @apply hover:bg-(--red-a3) data-[selected=true]:bg-(--red-a3) data-[state=checked]:bg-(--red-a3) data-[state=on]:bg-(--red-a3) data-[state=open]:bg-(--red-a3) data-[state=opening]:bg-(--red-a3);
+          @apply hover:bg-(color:--red-a3) data-[selected=true]:bg-(color:--red-a3) data-[state=checked]:bg-(color:--red-a3) data-[state=on]:bg-(color:--red-a3) data-[state=open]:bg-(color:--red-a3) data-[state=opening]:bg-(color:--red-a3);
         }
       }
 
@@ -186,38 +186,38 @@
         }
 
         &.success {
-          @apply bg-(--green-a11) text-white dark:text-black;
+          @apply bg-(color:--green-a11) text-white dark:text-black;
 
           &:hover,
           &[data-state="on"],
           &[data-state="checked"],
           &[data-state="open"],
           &[data-state="opening"] {
-            @apply bg-(--green-a12) text-white dark:text-black;
+            @apply bg-(color:--green-a12) text-white dark:text-black;
           }
         }
 
         &.warning {
-          @apply bg-(--amber-a11) text-white dark:text-black;
+          @apply bg-(color:--amber-a11) text-white dark:text-black;
 
           &:hover,
           &[data-state="on"],
           &[data-state="checked"],
           &[data-state="open"],
           &[data-state="opening"] {
-            @apply bg-(--amber-a12) text-white dark:text-black;
+            @apply bg-(color:--amber-a12) text-white dark:text-black;
           }
         }
 
         &.danger {
-          @apply bg-(--red-a11) text-white dark:text-black;
+          @apply bg-(color:--red-a11) text-white dark:text-black;
 
           &:hover,
           &[data-state="on"],
           &[data-state="checked"],
           &[data-state="open"],
           &[data-state="opening"] {
-            @apply bg-(--red-a12) text-white dark:text-black;
+            @apply bg-(color:--red-a12) text-white dark:text-black;
           }
         }
       }
@@ -254,7 +254,7 @@
           &[data-state="checked"],
           &[data-state="open"],
           &[data-state="opening"] {
-            @apply bg-(--green-a3) text-(color:--green-a11);
+            @apply bg-(color:--green-a3) text-(color:--green-a11);
           }
         }
 
@@ -266,7 +266,7 @@
           &[data-state="checked"],
           &[data-state="open"],
           &[data-state="opening"] {
-            @apply bg-(--amber-a3) text-(color:--amber-a11);
+            @apply bg-(color:--amber-a3) text-(color:--amber-a11);
           }
         }
 
@@ -278,7 +278,7 @@
           &[data-state="checked"],
           &[data-state="open"],
           &[data-state="opening"] {
-            @apply bg-(--red-a3) text-(color:--red-a11);
+            @apply bg-(color:--red-a3) text-(color:--red-a11);
           }
         }
       }

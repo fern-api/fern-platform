@@ -13,18 +13,20 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          "bg-(color:--accent-10) hover:bg-(color:--accent-9) text-[var(--color-(color:--accent-contrast),var(color:--accent-1))]",
-        destructive: "bg-(--red-10) text-(color:--red-12) hover:bg-(--red-11)",
+          "bg-(color:--accent-10) hover:bg-(color:--accent-9) text-(color:--accent-contrast)",
+        destructive:
+          "bg-(color:--red-10) text-(color:--red-12) hover:bg-(color:--red-11)",
         outline:
           "border-border-default text-(color:--grayscale-11) hover:bg-(color:--grayscale-a4) hover:text-(color:--grayscale-12) data-[state=active]:bg-(color:--grayscale-a4) data-[state=open]:bg-(color:--grayscale-a4) border",
         outlineSuccess:
-          "border-(--green-a6) bg-(--green-a2) text-(color:--green-11) hover:bg-(--green-a4) data-[state=active]:bg-(--green-a4) data-[state=open]:bg-(--green-a4) border",
+          "border-(color:--green-a6) bg-(color:--green-a2) text-(color:--green-11) hover:bg-(color:--green-a4) data-[state=active]:bg-(color:--green-a4) data-[state=open]:bg-(color:--green-a4) border",
         outlineDanger:
-          "border-(--red-a6) bg-(--red-a2) text-(color:--red-11) hover:bg-(--red-a4) data-[state=active]:bg-(--red-a4) data-[state=open]:bg-(--red-a4) border",
+          "border-(color:--red-a6) bg-(color:--red-a2) text-(color:--red-11) hover:bg-(color:--red-a4) data-[state=active]:bg-(color:--red-a4) data-[state=open]:bg-(color:--red-a4) border",
         secondary:
           "bg-(color:--grayscale-a3) text-(color:--accent-12) hover:bg-(color:--grayscale-a4)",
-        ghost: "hover:bg-(color:--accent-a3) hover:text-(color:--accent-11)",
-        ghostSuccess: "hover:bg-(--green-a3) hover:text-(color:--green-11)",
+        ghost:
+          "text-(color:--grayscale-a11) hover:bg-(color:--accent-a3) hover:text-(color:--accent-11)",
+        ghostSuccess: "bg-(color:--green-11) hover:bg-(color:--green-a3)",
         link: "text-(color:--accent-6) underline-offset-4 hover:underline",
       },
       size: {

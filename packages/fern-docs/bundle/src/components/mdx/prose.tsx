@@ -18,7 +18,7 @@ export function Prose({
   return (
     <div
       className={cn(
-        "prose dark:prose-invert max-w-none break-words",
+        "prose max-w-none break-words",
         {
           "whitespace-pre-wrap": typeof children === "string" || pre,
           "text-xs": size === "xs",

@@ -10,7 +10,7 @@
     }
 
     .fern-web-socket-client {
-      @apply text-(color:--green-a11) bg-(--green-a3);
+      @apply text-(color:--green-a11) bg-(color:--green-a3);
     }
 
     .fern-web-socket-server {
@@ -18,7 +18,7 @@
     }
 
     .fern-web-socket-end-sample {
-      @apply text-(color:--red-a11) bg-(--red-a3);
+      @apply text-(color:--red-a11) bg-(color:--red-a3);
     }
 
     .fern-web-socket-type {

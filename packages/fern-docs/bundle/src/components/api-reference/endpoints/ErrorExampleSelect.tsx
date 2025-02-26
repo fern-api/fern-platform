@@ -128,9 +128,9 @@ export const FernSelectItem = forwardRef<
         {
           "data-[highlighted]:bg-(color:--grayscale-a3)":
             intent === "none" || intent === "primary",
-          "data-[highlighted]:bg-(--amber-a3)": intent === "warning",
-          "data-[highlighted]:bg-(--green-a3)": intent === "success",
-          "data-[highlighted]:bg-(--red-a3)": intent === "danger",
+          "data-[highlighted]:bg-(color:--amber-a3)": intent === "warning",
+          "data-[highlighted]:bg-(color:--green-a3)": intent === "success",
+          "data-[highlighted]:bg-(color:--red-a3)": intent === "danger",
         },
         className
       )}

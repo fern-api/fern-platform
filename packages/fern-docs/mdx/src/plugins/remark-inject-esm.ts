@@ -10,7 +10,7 @@ import type { Root } from "mdast";
 import type { Plugin } from "unified";
 
 export interface RemarkInjectEsmOptions {
-  scope: Record<string, unknown>;
+  scope?: Record<string, unknown>;
 }
 
 /**
@@ -20,7 +20,7 @@ export interface RemarkInjectEsmOptions {
  * @returns A unified transformer.
  */
 export const remarkInjectEsm: Plugin<[RemarkInjectEsmOptions?], Root> = (
-  { scope } = { scope: {} }
+  { scope = {} } = { scope: {} }
 ) => {
   const keys = Object.keys(scope);
   if (keys.some((key) => !isIdentifierName(key))) {

@@ -6,22 +6,16 @@ import { visit } from "unist-util-visit";
 
 export function MarkdownContent({
   children,
-  // className,
   components,
-  // small,
 }: {
   children: string;
-  // className?: string;
   components?: Components;
-  // small?: boolean;
 }) {
   return (
     <Markdown
       components={components}
       remarkPlugins={[remarkGfm, remarkTest]}
-      // rehypePlugins={[rehypeThinking]}
       remarkRehypeOptions={{}}
-      // className={cn("prose dark:prose-invert", className, small && "prose-sm")}
     >
       {children.replaceAll("```[^", "```\n[^")}
     </Markdown>

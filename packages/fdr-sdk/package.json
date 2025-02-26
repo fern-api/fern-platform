@@ -42,7 +42,6 @@
     "clean": "rm -rf ./dist && tsc --build --clean",
     "compile": "tsc --build tsconfig.build.json",
     "dev": "tsc --watch tsconfig.build.json",
-    "docs:dev": "pnpm dev",
     "format": "prettier --write --ignore-unknown \"**\"",
     "format:check": "prettier --check --ignore-unknown \"**\"",
     "lint": "eslint --max-warnings 0 src --ext .ts --resolve-plugins-relative-to ../../",

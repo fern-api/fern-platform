@@ -46,6 +46,12 @@ import { rehypeSteps } from "../plugins/rehype-steps";
 import { rehypeTabs } from "../plugins/rehype-tabs";
 import { remarkExtractTitle } from "../plugins/remark-extract-title";
 
+export interface SerializeMdxResponse {
+  code: string;
+  frontmatter?: Partial<FernDocs.Frontmatter>;
+  jsxElements: string[];
+}
+
 async function serializeMdxImpl(
   content: string,
   {
@@ -54,16 +60,12 @@ async function serializeMdxImpl(
     scope,
     toc = false,
   }: {
-    loader?: DocsLoader;
+    loader?: Partial<Pick<DocsLoader, "getFiles" | "getMdxBundlerFiles">>;
     scope?: Record<string, unknown>;
     filename?: string;
     toc?: boolean;
   } = {}
-): Promise<{
-  code: string;
-  frontmatter?: Partial<FernDocs.Frontmatter>;
-  jsxElements: string[];
-}> {
+): Promise<SerializeMdxResponse> {
   content = sanitizeBreaks(content);
   content = sanitizeMdxExpression(content)[0];
 
@@ -97,12 +99,10 @@ async function serializeMdxImpl(
   let remoteFiles: Record<string, FileData> = {};
   const jsxElements: string[] = [];
 
-  if (loader != null) {
-    remoteFiles = await loader.getFiles();
+  remoteFiles = (await loader?.getFiles?.()) ?? {};
 
-    if (filename != null) {
-      files = await loader.getMdxBundlerFiles();
-    }
+  if (filename != null) {
+    files = (await loader?.getMdxBundlerFiles?.()) ?? {};
   }
 
   const bundled = await bundleMDX({
@@ -220,18 +220,48 @@ async function serializeMdxImpl(
   return { code: bundled.code, frontmatter, jsxElements };
 }
 
-export async function serializeMdx(
+export function serializeMdx(
   content: string | undefined,
   options?: Parameters<typeof serializeMdxImpl>[1]
-) {
-  if (!content?.trimStart().length) {
-    return undefined;
-  }
-  try {
-    return await serializeMdxImpl(content, options);
-  } catch (error) {
-    console.error(String(error));
-    console.debug("Failed to serialize:", content);
-    return undefined;
-  }
+): Promise<SerializeMdxResponse | undefined> {
+  const abortController = new AbortController();
+  const { signal } = abortController;
+
+  return new Promise<SerializeMdxResponse | undefined>(
+    async (resolve, reject) => {
+      if (!content?.trimStart().length) {
+        resolve(undefined);
+        return;
+      }
+
+      const timeoutId = setTimeout(() => {
+        if (!signal.aborted) {
+          abortController.abort();
+          console.error(
+            "Serialize MDX timed out after 2 seconds",
+            content,
+            options
+          );
+          reject(new Error("Serialize MDX timed out"));
+        }
+      }, 2_000);
+
+      try {
+        const result = await serializeMdxImpl(content, { ...options });
+        if (!signal.aborted) {
+          clearTimeout(timeoutId);
+          resolve(result);
+        }
+      } catch (error) {
+        clearTimeout(timeoutId);
+        if (error instanceof Error && error.name === "AbortError") {
+          console.error("Serialization was aborted.");
+        } else {
+          console.error(String(error));
+          console.debug("Failed to serialize:", content);
+        }
+        reject(error);
+      }
+    }
+  );
 }

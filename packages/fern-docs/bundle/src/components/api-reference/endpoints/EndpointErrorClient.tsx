@@ -36,7 +36,7 @@ export function EndpointErrorClient({
       onClick={onClick}
     >
       <div className="flex items-baseline space-x-2">
-        <div className="bg-(--red-a3) text-(color:--red-a11) rounded-2 px-2 py-1 text-xs">
+        <div className="bg-(color:--red-a3) text-(color:--red-a11) rounded-2 px-2 py-1 text-xs">
           {error.statusCode}
         </div>
         <div className="text-(color:--grayscale-a11) text-left text-xs">

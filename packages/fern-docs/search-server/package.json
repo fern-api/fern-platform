@@ -46,7 +46,6 @@
     "compile": "tsc --build",
     "depcheck": "depcheck",
     "dev": "tsc --watch",
-    "docs:dev": "pnpm dev",
     "format": "prettier --write --ignore-unknown \"**\"",
     "format:check": "prettier --check --ignore-unknown \"**\"",
     "lint:eslint": "eslint --max-warnings 0 .",

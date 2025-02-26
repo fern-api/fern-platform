@@ -196,10 +196,6 @@
 }
 
 @theme inline {
-  /** typography */
-  --tw-prose-links: var(--accent-a11);
-  --tw-prose-counters: var(--grayscale-a10);
-
   --radius-none: 0;
   --radius-1\/2: calc(var(--radius) * 0.5);
   --radius-3\/2: calc(var(--radius) * 1.5);
@@ -215,7 +211,7 @@
   --radius-10: calc(var(--radius) * 10);
   --radius-11: calc(var(--radius) * 11);
   --radius-12: calc(var(--radius) * 12);
-  --radius-full: calc(var(--radius) * infinity);
+  --radius-full: calc(var(--radius) * 9999);
 
   /** Colors */
   --color-accent: var(--accent);
@@ -306,4 +302,8 @@
 @utility size-icon-lg {
   width: --spacing(6);
   height: --spacing(6);
+}
+
+@utility animate-popover {
+  @apply data-[side=top]:animate-slide-down-and-fade data-[side=right]:animate-slide-left-and-fade data-[side=bottom]:animate-slide-up-and-fade data-[side=left]:animate-slide-right-and-fade;
 }

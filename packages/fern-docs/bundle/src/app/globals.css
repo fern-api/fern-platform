@@ -14,7 +14,7 @@
 @import "../components/sidebar/index.scss";
 
 @plugin "@tailwindcss/typography";
-@config "../../../components/tailwind.config.ts";
+@config "./tailwind.config.ts";
 
 @source "../components";
 @source "../../../components/src";

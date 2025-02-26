@@ -133,7 +133,7 @@ export const PlaygroundWebSocketSessionForm: FC<
                   {
                     "text-(color:--accent-a11) bg-(color:--accent-a3)":
                       connected,
-                    "bg-(--red-a3) text-(color:--red-a11)": !connected,
+                    "bg-(color:--red-a3) text-(color:--red-a11)": !connected,
                   }
                 )}
               >
@@ -144,7 +144,7 @@ export const PlaygroundWebSocketSessionForm: FC<
                   <span
                     className={cn("relative inline-flex size-2 rounded-full", {
                       "bg-(color:--accent)": connected,
-                      "bg-(--red-a5)": !connected,
+                      "bg-(color:--red-a5)": !connected,
                     })}
                   ></span>
                 </span>

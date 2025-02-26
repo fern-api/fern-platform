@@ -51,7 +51,7 @@ export function PlaygroundResponseCard({
                   ["bg-(color:--accent-a3) text-(color:--accent-a11)"]:
                     response.value.response.status >= 200 &&
                     response.value.response.status < 300,
-                  ["bg-(--red-a3) text-(color:--red-a11)"]:
+                  ["bg-(color:--red-a3) text-(color:--red-a11)"]:
                     response.value.response.status > 300,
                 }
               )}
@@ -114,7 +114,7 @@ export function PlaygroundResponseCard({
               />
             ),
           failed: () => (
-            <span className="bg-(--red-a3) text-(color:--red-a11) flex items-center rounded-[4px] p-1 font-mono text-xs uppercase leading-none">
+            <span className="bg-(color:--red-a3) text-(color:--red-a11) flex items-center rounded-[4px] p-1 font-mono text-xs uppercase leading-none">
               Failed
             </span>
           ),

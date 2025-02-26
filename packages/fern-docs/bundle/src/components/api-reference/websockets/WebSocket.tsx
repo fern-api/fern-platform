@@ -210,7 +210,7 @@ export async function WebSocketContent({
                   title={
                     <span className="inline-flex items-center gap-2">
                       {"Send"}
-                      <span className="text-(color:--green-a11) bg-(--green-a3) inline-block rounded-full p-1">
+                      <span className="text-(color:--green-a11) bg-(color:--green-a3) inline-block rounded-full p-1">
                         <ArrowUp className="size-icon" />
                       </span>
                     </span>

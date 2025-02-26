@@ -29,7 +29,7 @@ export const WebsocketMessageAccordionItem: FC<
     >
       <Accordion.Trigger
         className={cn("fern-web-socket-trigger", {
-          "data-[state=open]:bg-(--green-a3)":
+          "data-[state=open]:bg-(color:--green-a3)":
             message.origin === APIV1Read.WebSocketMessageOrigin.Client,
           "data-[state=open]:bg-(color:--accent-a3)":
             message.origin === APIV1Read.WebSocketMessageOrigin.Server,

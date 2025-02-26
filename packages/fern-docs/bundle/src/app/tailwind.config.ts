@@ -1,5 +1,5 @@
+import typography from "@tailwindcss/typography";
 import type { Config } from "tailwindcss";
-import plugin from "tailwindcss/plugin";
 
 const round = (num: number): string =>
   num
@@ -9,24 +9,33 @@ const round = (num: number): string =>
 
 const em = (px: number, base: number): string => `${round(px / base)}em`;
 
-export default {
+const config: Config = {
   theme: {
     extend: {
       typography: {
         DEFAULT: {
           css: {
-            color: "#000000",
+            color: "inherit",
             maxWidth: "unset",
             "--tw-prose-bold": "inherit",
-            "--tw-prose-links": "inherit",
-            "--tw-prose-hr": "var(--border)",
             "--tw-prose-body": "inherit",
+            "--tw-prose-bullets": "var(--grayscale-a9)",
+            "--tw-prose-captions": "var(--grayscale-a11)",
+            "--tw-prose-code": "inherit",
+            "--tw-prose-counters": "var(--grayscale-a10)",
             "--tw-prose-headings": "inherit",
+            "--tw-prose-th-borders": "var(--color-border-default)",
+            "--tw-prose-hr": "var(--color-border-default)",
+            "--tw-prose-kbd": "var(--grayscale-a11)",
+            "--tw-prose-kbd-shadows": "var(--color-border-default)",
+            "--tw-prose-lead": "var(--grayscale-a11)",
+            "--tw-prose-links": "var(--accent-a11)",
             "--tw-prose-pre-bg": "initial",
-            "--tw-prose-th-borders": "var(--border)",
-            "--tw-prose-td-borders": "var(--border)",
-            "--tw-prose-bullets": "var(color:--grayscale-a8)",
-            "--tw-prose-counters": "var(color:--grayscale-a9)",
+            "--tw-prose-pre-code": "inherit",
+            "--tw-prose-quote-borders": "var(--grayscale-a2)",
+            "--tw-prose-quotes": "var(--color-border-default)",
+            "--tw-prose-td-borders": "var(--color-border-default)",
+
             "tbody td[rowspan]:first-child, tfoot td[rowspan]:first-child": {
               paddingRight: em(8, 14),
             },
@@ -67,42 +76,13 @@ export default {
               },
           },
         },
-        invert: {
-          css: {
-            color: "#ffffff",
-            "--tw-prose-invert-bold": "inherit",
-            "--tw-prose-invert-links": "inherit",
-            "--tw-prose-invert-hr": "var(--border)",
-            "--tw-prose-invert-body": "inherit",
-            "--tw-prose-invert-headings": "inherit",
-            "--tw-prose-invert-pre-bg": "initial",
-            "--tw-prose-invert-th-borders": "var(--border)",
-            "--tw-prose-invert-td-borders": "var(--border)",
-            "--tw-prose-invert-bullets": "var(color:--grayscale-a8)",
-            "--tw-prose-invert-counters": "var(color:--grayscale-a9)",
-          },
-        },
-        "invert-sm": {
-          css: {
-            color: "var(color:--grayscale-a11)",
-          },
-        },
       },
     },
   },
-  plugins: [
-    // Defining the classes here to get proper intellisense
-    // https://github.com/tailwindlabs/tailwindcss-intellisense/issues/227#issuecomment-1269592872
-    plugin(({ addComponents }) => {
-      addComponents({
-        ".animate-popover": {
-          "@apply data-[side=top]:animate-slide-down-and-fade data-[side=right]:animate-slide-left-and-fade data-[side=bottom]:animate-slide-up-and-fade data-[side=left]:animate-slide-right-and-fade":
-            {},
-        },
-      });
-    }),
-  ],
+  plugins: [typography],
   future: {
     hoverOnlyWhenSupported: true,
   },
-} satisfies Config;
+};
+
+export default config;

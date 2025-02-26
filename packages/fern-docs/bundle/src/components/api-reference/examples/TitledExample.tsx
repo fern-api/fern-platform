@@ -52,15 +52,15 @@ export const TitledExample = forwardRef<
       ref={ref}
     >
       <div
-        className={cn("rounded-t-3 h-10", {
+        className={cn("rounded-t-inherit h-10", {
           "bg-(color:--grayscale-a2)":
             intent === "none" || intent === "primary",
-          "bg-(--amber-a2)": intent === "warning",
-          "bg-(--green-a2)": intent === "success",
-          "bg-(--red-a2)": intent === "danger",
+          "bg-(color:--amber-a2)": intent === "warning",
+          "bg-(color:--green-a2)": intent === "success",
+          "bg-(color:--red-a2)": intent === "danger",
         })}
       >
-        <div className="shadow-card-border rounded-t-3 mx-px flex min-h-10 items-center justify-between px-2 shadow-[inset_0_-1px_0_0]">
+        <div className="border-card-border rounded-inherit flex min-h-10 items-center justify-between border-b px-2">
           {typeof title === "string" ? (
             <div
               className={cn("px-1 text-sm", {
