@@ -41,12 +41,14 @@ export function deduplicateConversation(
 
 function createConversationSignature(messages: Message[]): string[] {
   // Instead of creating a single string signature, return array of message signatures
-  return messages.map((msg) => {
-    if (!msg.content) return "";
-    const normalizedContent = msg.content.toLowerCase().trim();
-    const contentHash = hashString(normalizedContent);
-    return `${msg.role}:${contentHash}`;
-  });
+  return messages
+    .filter((msg) => msg.role === "user")
+    .map((msg) => {
+      if (!msg.content) return "";
+      const normalizedContent = msg.content.toLowerCase().trim();
+      const contentHash = hashString(normalizedContent);
+      return `${msg.role}:${contentHash}`;
+    });
 }
 
 function isSignatureContained(
