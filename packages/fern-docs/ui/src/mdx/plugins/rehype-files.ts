@@ -196,22 +196,11 @@ export function setDimension(
     return;
   }
 
-  let addStyle: React.CSSProperties = {};
-  if (attrWidth) {
-    if (!attrHeight) {
-      addStyle = { width: `${attrWidth.value}px` };
-    } else {
-      addStyle = {
-        width: `${attrWidth.value}px`,
-        height: `${attrHeight.value}px`,
-      };
-    }
-  } else if (attrHeight) {
-    addStyle = {
-      height: `${attrHeight.value}px`,
-      width: "auto",
-    };
-  }
+  const addStyle: React.CSSProperties = {
+    ...(attrWidth && { width: `${attrWidth.value}px` }),
+    ...(attrHeight && { height: `${attrHeight.value}px` }),
+    ...(!attrWidth && attrHeight && { width: "auto" }),
+  };
 
   node.attributes.unshift(
     unknownToMdxJsxAttribute("__assigned_imageSize", addStyle)
