@@ -54,3 +54,10 @@ it("should serialize announcement", async () => {
   );
   expect(deterministic(result?.code)).toMatchSnapshot();
 });
+
+it("should serialize markdown", async () => {
+  const result = await serializeMdx(
+    `These are the costs of individual components of the call in USD.`
+  );
+  expect(deterministic(result?.code)).toMatchSnapshot();
+});

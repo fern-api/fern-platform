@@ -237,14 +237,10 @@ export function serializeMdx(
       const timeoutId = setTimeout(() => {
         if (!signal.aborted) {
           abortController.abort();
-          console.error(
-            "Serialize MDX timed out after 2 seconds",
-            content,
-            options
-          );
+          console.error("Serialize MDX timed out after 10 seconds");
           reject(new Error("Serialize MDX timed out"));
         }
-      }, 2_000);
+      }, 10_000);
 
       try {
         const result = await serializeMdxImpl(content, { ...options });

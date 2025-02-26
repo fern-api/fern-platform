@@ -59,16 +59,21 @@ export function createCachedMdxSerializer(
       async ({ filename, toc, scope }: MdxSerializerOptions) => {
         const authState = await loader.getAuthState();
 
-        return await internalSerializeMdx(content, {
-          filename,
-          loader,
-          toc,
-          scope: {
-            authed: authState.authed,
-            user: authState.authed ? authState.user : undefined,
-            ...scope,
-          },
-        });
+        try {
+          return await internalSerializeMdx(content, {
+            filename,
+            loader,
+            toc,
+            scope: {
+              authed: authState.authed,
+              user: authState.authed ? authState.user : undefined,
+              ...scope,
+            },
+          });
+        } catch (error) {
+          console.error("Error serializing mdx", error);
+          return undefined;
+        }
       },
       [domain, content, cacheSeed()],
       { tags: [domain, "serializeMdx"] }
