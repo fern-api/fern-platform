@@ -20,7 +20,11 @@ import { isPlainObject } from "@fern-api/ui-core-utils";
 import { AuthEdgeConfig } from "@fern-docs/auth";
 import { HttpMethod } from "@fern-docs/components";
 import { getAuthEdgeConfig, getEdgeFlags } from "@fern-docs/edge-config";
-import { DEFAULT_LOGO_HEIGHT, EdgeFlags } from "@fern-docs/utils";
+import {
+  DEFAULT_LOGO_HEIGHT,
+  EdgeFlags,
+  withoutStaging,
+} from "@fern-docs/utils";
 
 import { findEndpoint } from "@/components/util/processRequestSnippetComponents";
 
@@ -477,7 +481,7 @@ export const createCachedDocsLoader = async (
   fern_token?: string
 ): Promise<DocsLoader> => {
   const authConfig = getAuthConfig(domain);
-  const metadata = getDocsUrlMetadata(domain);
+  const metadata = getDocsUrlMetadata(withoutStaging(domain));
 
   const getAuthState = cache(async (pathname?: string) => {
     const { getAuthState } = await createGetAuthState(

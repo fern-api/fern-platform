@@ -97,6 +97,7 @@ export async function getAuthStateInternal({
       if (previewAuthConfig.type === "workos") {
         return (pathname) =>
           handleWorkosAuth({
+            host,
             domain,
             fernToken,
             organization: previewAuthConfig.org,
@@ -142,6 +143,7 @@ export async function getAuthStateInternal({
   if (authConfig.type === "sso" && authConfig.partner === "workos") {
     return (pathname) =>
       handleWorkosAuth({
+        host,
         domain,
         fernToken,
         organization: authConfig.organization,
