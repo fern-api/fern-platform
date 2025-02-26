@@ -32,6 +32,8 @@ export function AccordionGroup({ children }: AccordionGroupProps) {
       const added = nextActiveTabs.filter((tab) => !prev.includes(tab));
       if (added[0]) {
         window.location.hash = `#${added[0]}`;
+      } else {
+        window.location.hash = "";
       }
       return nextActiveTabs;
     });
