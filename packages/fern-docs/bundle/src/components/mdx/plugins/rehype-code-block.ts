@@ -6,6 +6,7 @@ import parseNumericRange from "parse-numeric-range";
 import {
   CONTINUE,
   Hast,
+  Mdast,
   SKIP,
   Unified,
   extractAttributeValueLiteral,
@@ -46,10 +47,15 @@ export const rehypeCodeBlock: Unified.Plugin<[], Hast.Root> = () => {
       }
 
       const meta = codeNode.data?.meta ?? "";
-      const replacement = mdastFromMarkdown(
-        `<CodeBlock ${migrateMeta(meta)} />`,
-        "mdx"
-      ).children[0];
+      let replacement: Mdast.RootContent | undefined;
+      try {
+        replacement = mdastFromMarkdown(
+          `<CodeBlock ${migrateMeta(meta)} />`,
+          "mdx"
+        ).children[0];
+      } catch (error) {
+        console.error(error);
+      }
 
       if (!replacement || !isMdxJsxElementHast(replacement)) {
         return;
@@ -165,6 +171,16 @@ export function migrateMeta(metastring: string): string {
   ) {
     return `title="${metastring.replace(/"/g, '\\"')}"`;
   }
+
+  metastring = metastring.replaceAll(
+    /^(.*?)(?=[a-zA-Z]+=)/g,
+    (_original, text) => {
+      if (text.trim() === "") {
+        return "";
+      }
+      return `title="${text.trim()}" `;
+    }
+  );
 
   return metastring;
 }

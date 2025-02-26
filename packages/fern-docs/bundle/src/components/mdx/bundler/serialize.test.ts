@@ -1,6 +1,9 @@
 /**
  * @vitest-environment node
  */
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
+
 import { serializeMdx } from "./serialize";
 
 vi.mock("server-only", () => ({}));
@@ -58,6 +61,13 @@ it("should serialize announcement", async () => {
 it("should serialize markdown", async () => {
   const result = await serializeMdx(
     `These are the costs of individual components of the call in USD.`
+  );
+  expect(deterministic(result?.code)).toMatchSnapshot();
+});
+
+it("should serialize markdown page", async () => {
+  const result = await serializeMdx(
+    readFileSync(join(__dirname, "tests", "servers.mdx"), "utf-8")
   );
   expect(deterministic(result?.code)).toMatchSnapshot();
 });

@@ -39,4 +39,8 @@ describe("migrateMeta", () => {
       'title="this thing has = and { and \\" so it should be wrapped in title"'
     );
   });
+
+  it("should migrate meta", () => {
+    expect(migrateMeta("generators.yml {7-12}")).toMatchInlineSnapshot(`"title="generators.yml" highlight={[7,8,9,10,11,12]}"`);
+  });
 });
