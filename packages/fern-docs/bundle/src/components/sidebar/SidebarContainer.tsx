@@ -17,7 +17,9 @@ export const SidebarContainer = React.memo(function SidebarContainer({
   navbarLinks,
   loginButton,
   children,
+  showSearchBar,
 }: {
+  showSearchBar: boolean;
   tabs: React.ReactNode;
   logo: React.ReactNode;
   versionSelect: React.ReactNode;
@@ -31,13 +33,12 @@ export const SidebarContainer = React.memo(function SidebarContainer({
 
   return (
     <>
-      {false && (
-        <SidebarFixedItemsSection
-          logo={logo}
-          versionSelect={versionSelect}
-          showBorder={isScrolled}
-        />
-      )}
+      <SidebarFixedItemsSection
+        logo={logo}
+        versionSelect={versionSelect}
+        showBorder={isScrolled}
+        showSearchBar={showSearchBar}
+      />
       <FernScrollArea
         id="sidebar-scroll-area"
         rootClassName="flex-1"

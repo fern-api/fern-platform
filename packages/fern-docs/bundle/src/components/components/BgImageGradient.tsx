@@ -12,8 +12,12 @@ export function BgImageGradient({
     dark?: FernColorTheme;
   };
 }) {
-  const darkBackground = colors.dark?.background;
-  const lightBackground = colors.light?.background;
+  const isDarkBackgroundMissing =
+    !colors.dark?.background ||
+    colors.dark?.background.toLowerCase() === "#000";
+  const isLightBackgroundMissing =
+    !colors.light?.background ||
+    colors.light?.background.toLowerCase() === "#fff";
   const darkBackgroundImage = colors.dark?.backgroundImage;
   const lightBackgroundImage = colors.light?.backgroundImage;
 
@@ -21,12 +25,13 @@ export function BgImageGradient({
     <div
       className={cn(className, "fern-background", {
         "from-(color:--accent)/10 bg-gradient-to-b to-transparent":
-          !lightBackground && lightBackgroundImage == null,
-        "dark:from-(color:--accent)/10 dark:bg-gradient-to-b dark:to-transparent":
-          !darkBackground && darkBackgroundImage == null,
-        "dark:from-transparent": darkBackground && darkBackgroundImage == null,
-        "fern-background-image": lightBackgroundImage != null,
-        "fern-background-image-dark": darkBackgroundImage != null,
+          isLightBackgroundMissing && !lightBackgroundImage,
+        "dark:from-(color:--accent)/20 dark:to-(color:--accent)/10 dark:bg-gradient-to-b":
+          isDarkBackgroundMissing && !darkBackgroundImage,
+        "dark:from-transparent":
+          !isDarkBackgroundMissing || !!darkBackgroundImage,
+        "fern-background-image": !!lightBackgroundImage,
+        "fern-background-image-dark": !!darkBackgroundImage,
       })}
     />
   );

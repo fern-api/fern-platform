@@ -74,6 +74,7 @@ const nextConfig: NextConfig = {
       dynamic: 180,
       static: 180,
     },
+    serverComponentsHmrCache: true,
   },
 
   skipMiddlewareUrlNormalize: true,

@@ -90,6 +90,7 @@ export default async function SharedLayout({
               className="w-fit shrink-0"
             />
           }
+          showSearchBar={layout.searchbarPlacement === "SIDEBAR"}
           tabs={false}
           versionSelect={false}
           navbarLinks={

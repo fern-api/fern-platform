@@ -138,9 +138,9 @@ export interface DocsLoader {
   getEdgeFlags: () => Promise<EdgeFlags>;
 }
 
-const cachedGetEdgeFlags = async (domain: string) => {
+const cachedGetEdgeFlags = cache(async (domain: string) => {
   return await getEdgeFlags(domain);
-};
+});
 
 const getBaseUrl = async (domain: string): Promise<DocsV2Read.BaseUrl> => {
   const response = await loadWithUrl(domain);
@@ -245,14 +245,34 @@ const getEndpointByLocator = async (
 
 const unsafe_getFullRoot = async (domain: string) => {
   const response = await loadWithUrl(domain);
-  const v1 = response.definition.config.root;
+  // let v1 = response.definition.config.root;
 
-  if (!v1) {
-    notFound();
+  // if (!v1 && response.definition.config.navigation) {
+  //   v1 = FernNavigation.utils.toRootNode(response);
+  // }
+
+  // if (!v1) {
+  //   notFound();
+  // }
+
+  let root: FernNavigation.RootNode | undefined;
+
+  if (response.definition.config.root) {
+    root = FernNavigation.migrate.FernNavigationV1ToLatest.create().root(
+      response.definition.config.root
+    );
+  } else if (response.definition.config.navigation) {
+    const edgeFlags = await cachedGetEdgeFlags(domain);
+    root = FernNavigation.utils.toRootNode(
+      response,
+      edgeFlags.isBatchStreamToggleDisabled,
+      edgeFlags.isApiScrollingDisabled
+    );
   }
 
-  const root =
-    FernNavigation.migrate.FernNavigationV1ToLatest.create().root(v1);
+  if (root == null) {
+    notFound();
+  }
 
   if ((await cachedGetEdgeFlags(domain)).isApiScrollingDisabled) {
     FernNavigation.traverseBF(root, (node) => {
