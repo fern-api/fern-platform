@@ -1,5 +1,4 @@
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
-import cn from "clsx";
 import { NavArrowUp, TerminalTag } from "iconoir-react";
 import { useAtomValue } from "jotai";
 import {
@@ -22,7 +21,7 @@ export const PlaygroundFloatingButton = () => {
 
   return (
     <button
-      className={cn("playground-floating-button")}
+      className="playground-floating-button"
       onClick={() => {
         if (settings?.button?.href) {
           console.log("settings.button.href: ", settings.button.href);
@@ -34,7 +33,7 @@ export const PlaygroundFloatingButton = () => {
     >
       <TerminalTag height={16} width={16} />
 
-      <NavArrowUp height={16} width={16} />
+      <NavArrowUp height={16} width={16} className="nav-arrow" />
     </button>
   );
 };
