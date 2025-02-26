@@ -203,6 +203,8 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<
             ? lineNumberOf(selectedExample?.code ?? "", "-d '{")
             : undefined
         }
+        slug={node?.slug ?? ""}
+        isResponse={false}
       />
       {selectedExample != null &&
         selectedExample.exampleCall.responseStatusCode >= 400 && (
@@ -217,6 +219,8 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<
             intent={statusCodeToIntent(
               String(selectedExample.exampleCall.responseStatusCode)
             )}
+            slug={node?.slug ?? ""}
+            isResponse={true}
           />
         )}
       {selectedExample?.exampleCall.responseBody != null &&
@@ -232,6 +236,8 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<
                 e.stopPropagation();
               }}
               json={value.value}
+              slug={node?.slug ?? ""}
+              isResponse={true}
             />
           ),
           // TODO: support other media types

@@ -12,7 +12,6 @@ import { MdxSerializer } from "@/server/mdx-serializer";
 import { SetLayout } from "@/state/layout";
 
 import { Markdown } from "../../mdx/Markdown";
-import { ApiPageCenter } from "../api-page-center";
 import { EndpointSection } from "../endpoints/EndpointSection";
 import { ObjectProperty } from "../type-definitions/ObjectProperty";
 import {
@@ -22,8 +21,8 @@ import {
 import { WithSeparator } from "../type-definitions/TypeDefinitionDetails";
 import { TypeDefinitionSlotsServer } from "../type-definitions/TypeDefinitionSlotsServer";
 import { TypeReferenceDefinitions } from "../type-definitions/TypeReferenceDefinitions";
+import { WebhookExample } from "./WebhookExample";
 import { WebhookResponseSection } from "./WebhookResponseSection";
-import { WebhookExample } from "./webhook-examples/WebhookExample";
 
 export async function WebhookContent({
   serialize,
@@ -38,7 +37,9 @@ export async function WebhookContent({
 
   const example = webhook.examples?.[0]; // TODO: Need a way to show all the examples
 
-  const webhookExample = example ? <WebhookExample example={example} /> : null;
+  const webhookExample = example ? (
+    <WebhookExample example={example} slug={node.slug} />
+  ) : null;
 
   return (
     <ReferenceLayout

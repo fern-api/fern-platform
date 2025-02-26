@@ -1,6 +1,8 @@
 "use client";
 
-import { FC, createRef, useCallback, useEffect, useMemo } from "react";
+import React, { FC, createRef, useCallback, useEffect, useMemo } from "react";
+
+import { isEqual } from "es-toolkit/predicate";
 
 import { cn } from "@fern-docs/components";
 import {
@@ -19,15 +21,15 @@ import { useHighlightJsonLines } from "./useHighlightJsonLines";
 export declare namespace CodeSnippetExample {
   export interface Props
     extends Omit<TitledExample.Props, "copyToClipboardText"> {
-    // hast: Root;
     id?: string;
     code: string;
     language: string;
-    hoveredPropertyPath?: JsonPropertyPath | undefined;
     json: unknown;
     jsonStartLine?: number;
     scrollAreaStyle?: React.CSSProperties;
     measureHeight?: (height: number) => void;
+    slug?: string;
+    isResponse?: boolean;
   }
 }
 
@@ -35,12 +37,13 @@ const CodeSnippetExampleInternal: FC<CodeSnippetExample.Props> = ({
   id,
   code,
   language,
-  hoveredPropertyPath,
   json,
   jsonStartLine,
   scrollAreaStyle,
   measureHeight,
   className,
+  slug,
+  isResponse = false,
   ...props
 }) => {
   const codeBlockRef = createRef<HTMLPreElement>();
@@ -51,6 +54,35 @@ const CodeSnippetExampleInternal: FC<CodeSnippetExample.Props> = ({
       measureHeight?.(entry.contentRect.height);
     }
   });
+
+  const [hoveredPropertyPath, setHoveredPropertyPath] = React.useState<
+    JsonPropertyPath | undefined
+  >(undefined);
+
+  React.useEffect(() => {
+    if (slug == null) {
+      return;
+    }
+    const propertyHoverOnEventName = `property-hover-on:${slug}:${isResponse ? "response" : "request"}`;
+    const propertyHoverOffEventName = `property-hover-off:${slug}:${isResponse ? "response" : "request"}`;
+    const hoverOnHandler = (event: Event) => {
+      if (event instanceof CustomEvent) {
+        const detail = event.detail as JsonPropertyPath;
+        setHoveredPropertyPath(detail);
+      }
+    };
+    const hoverOffHandler = () => {
+      setHoveredPropertyPath((prev) =>
+        isEqual(prev, hoveredPropertyPath) ? undefined : prev
+      );
+    };
+    window.addEventListener(propertyHoverOnEventName, hoverOnHandler);
+    window.addEventListener(propertyHoverOffEventName, hoverOffHandler);
+    return () => {
+      window.removeEventListener(propertyHoverOnEventName, hoverOnHandler);
+      window.removeEventListener(propertyHoverOffEventName, hoverOffHandler);
+    };
+  }, [slug, isResponse]);
 
   const requestHighlightLines = useHighlightJsonLines(
     json,

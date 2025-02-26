@@ -20,8 +20,6 @@ export declare namespace TitledExample {
     copyToClipboardText?: () => string; // use provider to lazily compute clipboard text
     onClick?: MouseEventHandler<HTMLDivElement>;
     disableClipboard?: boolean;
-    onMouseOver?: MouseEventHandler<HTMLDivElement>;
-    onMouseOut?: MouseEventHandler<HTMLDivElement>;
   }
 }
 

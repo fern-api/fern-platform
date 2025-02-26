@@ -7,6 +7,7 @@ import { CodeSnippetExample } from "../../../api-reference/examples/CodeSnippetE
 export function EndpointResponseSnippet({
   example,
   endpointDefinition,
+  slug,
 }: {
   /**
    * The endpoint locator to use for the request snippet.
@@ -20,6 +21,10 @@ export function EndpointResponseSnippet({
    * @internal the rehype-endpoint-snippets plugin will set this
    */
   endpointDefinition?: ApiDefinition.EndpointDefinition;
+  /**
+   * The slug of the endpoint.
+   */
+  slug: string;
 }) {
   if (endpointDefinition == null) {
     return null;
@@ -29,6 +34,7 @@ export function EndpointResponseSnippet({
     <EndpointResponseSnippetInternal
       endpoint={endpointDefinition}
       example={example}
+      slug={slug}
     />
   );
 }
@@ -36,7 +42,9 @@ export function EndpointResponseSnippet({
 function EndpointResponseSnippetInternal({
   endpoint,
   example,
+  slug,
 }: {
+  slug: string;
   endpoint: EndpointDefinition;
   example: string | undefined;
 }) {
@@ -59,6 +67,7 @@ function EndpointResponseSnippetInternal({
         language="json"
         json={responseJson}
         scrollAreaStyle={{ maxHeight: "500px" }}
+        isResponse
       />
     </div>
   );
