@@ -15,7 +15,7 @@
 
   .fern-sidebar-group {
     @apply list-none overflow-hidden;
-    @apply space-y-6 max-lg:-mx-4;
+    @apply max-lg:-mx-4;
 
     .fern-sidebar-group {
       @apply max-lg:mx-0;
