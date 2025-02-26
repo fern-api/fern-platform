@@ -7,6 +7,7 @@ import * as FernRegistry from "../../../../../../../../../index";
 export type PrimitiveType =
     | FernRegistry.api.v1.register.PrimitiveType.Integer
     | FernRegistry.api.v1.register.PrimitiveType.Double
+    | FernRegistry.api.v1.register.PrimitiveType.Float
     | FernRegistry.api.v1.register.PrimitiveType.String
     | FernRegistry.api.v1.register.PrimitiveType.Long
     | FernRegistry.api.v1.register.PrimitiveType.Boolean
@@ -25,6 +26,10 @@ export declare namespace PrimitiveType {
 
     interface Double extends FernRegistry.api.v1.register.DoubleType {
         type: "double";
+    }
+
+    interface Float extends FernRegistry.api.v1.register.FloatType {
+        type: "float";
     }
 
     interface String extends FernRegistry.api.v1.register.StringType {
