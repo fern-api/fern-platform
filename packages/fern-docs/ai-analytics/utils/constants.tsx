@@ -7,6 +7,8 @@ export const SONNET35_OUTPUT_COST_PER_MIL_TOKENS = 15;
 export const DOMAINS = [
   "elevenlabs.io",
   "buildwithfern.com",
+  "openrouter.ai",
+  "accelbooks.ai",
   //   "fern.docs.buildwithfern.com",
   //   "fern.docs.staging.buildwithfern.com",
   "alchemy",
@@ -23,9 +25,7 @@ export const DOMAINS = [
   "taxcloud",
   "anduril",
   "circle-fin",
-  "openrouter.ai",
   "nansen.ai",
   "chrt",
   "explorium",
-  "accelbooks.ai",
 ];
