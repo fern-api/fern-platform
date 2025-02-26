@@ -162,7 +162,7 @@ async function runQueryTurbopuffer(
     : await queryTurbopuffer(query, {
         namespace: opts.namespace,
         apiKey: turbopufferApiKey(),
-        topK: opts.topK ?? 20,
+        topK: opts.topK ?? 10,
         vectorizer: async (text) => {
           const embedding = await embed({
             model: opts.embeddingModel,
