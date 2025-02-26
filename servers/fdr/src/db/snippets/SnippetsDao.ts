@@ -473,7 +473,7 @@ function convertSnippetFromDb({
         exampleIdentifier: dbSnippet.exampleIdentifier ?? undefined,
       };
     }
-    case Language.CSHARP:
+    case Language.CSHARP: {
       const csharpSnippetCode: FdrAPI.CsharpSnippetCode = readBuffer(
         dbSnippet.snippet
       ) as FdrAPI.CsharpSnippetCode;
@@ -483,6 +483,7 @@ function convertSnippetFromDb({
         client: csharpSnippetCode.client,
         exampleIdentifier: dbSnippet.exampleIdentifier ?? undefined,
       };
+    }
     case Language.PHP:
     case Language.SWIFT:
     case Language.RUST:
