@@ -16,7 +16,7 @@ export function EditThisPageButton(
     return null;
   }
   return (
-    <ButtonLink href={props.editThisPageUrl} variant="outline">
+    <ButtonLink href={props.editThisPageUrl} variant="outline" size="sm">
       <Edit />
       {EDIT_THIS_PAGE_TEXT}
     </ButtonLink>

@@ -49,7 +49,7 @@ export function BottomNavigationClient({
       {next && (
         <MaybeFernLink
           href={next.href}
-          className="bg-background hover:border-(color:--accent-a9) border-(color:--grayscale-a6) flex h-16 min-w-0 flex-1 shrink items-center justify-end gap-4 border px-3"
+          className="bg-card-background hover:border-(color:--accent-a9) border-(color:--grayscale-a6) flex h-16 min-w-0 flex-1 shrink items-center justify-end gap-4 border px-3"
           shallow={next.shallow}
           onClick={next.onClick}
         >
