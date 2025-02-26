@@ -23,56 +23,54 @@ export const PlaygroundButton: FC<{
     return null;
   }
 
+  const tryItButton = (
+    <FernTooltipProvider>
+      <FernTooltip
+        content={
+          <span>
+            Customize and run in{" "}
+            <span className="t-accent font-semibold">API Explorer</span>
+          </span>
+        }
+      >
+        <FernButton
+          aria-description={
+            settings?.button?.href
+              ? "Opens an API Explorer in a new tab"
+              : "Opens the API Explorer"
+          }
+          onClick={() => {
+            if (settings?.button?.href) {
+              // open custom playground in new tab
+              // note: this code implies the current page as the Referrer and the new window can refer
+              // to the current `window` through their `window.opener`.
+              window.open(settings.button.href, "_blank");
+            } else {
+              void openPlayground(state);
+            }
+          }}
+          rightIcon={<PlaySolid />}
+          variant="filled"
+          intent="primary"
+          size="small"
+          mono={true}
+          className={className}
+        >
+          Try it
+        </FernButton>
+      </FernTooltip>
+    </FernTooltipProvider>
+  );
+
   return (
     <>
-      {(() => {
-        const tryItButton = (
-          <FernTooltipProvider>
-            <FernTooltip
-              content={
-                <span>
-                  Customize and run in{" "}
-                  <span className="t-accent font-semibold">API Explorer</span>
-                </span>
-              }
-            >
-              <FernButton
-                aria-description={
-                  settings?.button?.href
-                    ? "Opens an API Explorer in a new tab"
-                    : "Opens the API Explorer"
-                }
-                onClick={() => {
-                  if (settings?.button?.href) {
-                    // open custom playground in new tab
-                    // note: this code implies the current page as the Referrer and the new window can refer
-                    // to the current `window` through their `window.opener`.
-                    window.open(settings.button.href, "_blank");
-                  } else {
-                    void openPlayground(state);
-                  }
-                }}
-                rightIcon={<PlaySolid />}
-                variant="filled"
-                intent="primary"
-                size="small"
-                mono={true}
-                className={className}
-              >
-                Try it
-              </FernButton>
-            </FernTooltip>
-          </FernTooltipProvider>
-        );
-
-        return showWrapper ? (
-          <div className="border-card-border bg-tag-default-soft flex h-10 justify-end border-t p-2">
-            <div className="flex max-w-[76px] items-center">{tryItButton}</div>
-          </div>
-        ) : (
-          tryItButton
-        );
-      })()}
+      {showWrapper ? (
+        <div className="border-card-border bg-tag-default-soft flex h-10 justify-end border-t p-2">
+          <div className="flex max-w-[76px] items-center">{tryItButton}</div>
+        </div>
+      ) : (
+        tryItButton
+      )}
     </>
   );
 };
