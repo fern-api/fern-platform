@@ -218,9 +218,7 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<
         }
         tryIt={
           node != null ? (
-            <>
-              <PlaygroundButton state={node} />
-            </>
+            <PlaygroundButton state={node} showWrapper={true} />
           ) : undefined
         }
         code={resolveEnvironmentUrlInCodeSnippet(

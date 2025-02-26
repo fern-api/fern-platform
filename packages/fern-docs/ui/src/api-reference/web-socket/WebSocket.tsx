@@ -375,7 +375,9 @@ const WebhookContent: FC<WebhookContentProps> = ({
                 <TitledExample
                   title={"Handshake"}
                   tryIt={
-                    node != null ? <PlaygroundButton state={node} /> : undefined
+                    node != null ? (
+                      <PlaygroundButton state={node} showWrapper={true} />
+                    ) : undefined
                   }
                   disableClipboard={true}
                 >
