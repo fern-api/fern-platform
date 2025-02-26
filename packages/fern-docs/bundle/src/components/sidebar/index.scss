@@ -14,7 +14,7 @@
   }
 
   .fern-sidebar-group {
-    @apply list-none overflow-hidden;
+    @apply list-none;
     @apply max-lg:-mx-4;
 
     .fern-sidebar-group {
@@ -68,7 +68,6 @@
   .fern-sidebar-link {
     @apply relative inline-flex flex-1 content-between items-stretch text-left max-lg:px-4 lg:px-3;
     @apply lg:rounded-2 max-lg:rounded-none;
-    @apply overflow-hidden;
   }
 
   .fern-sidebar-link-container[data-state="active"] .fern-sidebar-link {

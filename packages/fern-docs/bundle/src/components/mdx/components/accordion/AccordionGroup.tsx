@@ -33,7 +33,7 @@ export function AccordionGroup({ children }: AccordionGroupProps) {
       if (added[0]) {
         window.location.hash = `#${added[0]}`;
       } else {
-        window.location.hash = "";
+        window.history.replaceState(null, "", window.location.pathname);
       }
       return nextActiveTabs;
     });

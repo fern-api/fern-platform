@@ -87,10 +87,7 @@ export const middleware: NextMiddleware = async (request) => {
    * Rewrite /api/fern-docs/revalidate-all/v3 to /api/fern-docs/revalidate?regenerate=true
    */
   if (pathname.endsWith("/api/fern-docs/revalidate-all/v3")) {
-    return rewrite(
-      withDomain(withoutBasepath("/api/fern-docs/revalidate")),
-      "?regenerate=true"
-    );
+    return rewrite(withDomain("/api/fern-docs/revalidate"), "?regenerate=true");
   }
 
   /**

@@ -8,18 +8,15 @@ import { getSignedUrl as getUncachedSignedUrl } from "@aws-sdk/s3-request-presig
 import { FdrAPI } from "@fern-api/fdr-sdk";
 import { getS3KeyForV1DocsDefinition } from "@fern-api/fdr-sdk/docs";
 
-const getSignedUrl = async (
-  domain: string,
-  {
-    Bucket,
-    Key,
-    expiresIn,
-  }: {
-    Bucket: string;
-    Key: string;
-    expiresIn: number;
-  }
-) => {
+const getSignedUrl = async ({
+  Bucket,
+  Key,
+  expiresIn,
+}: {
+  Bucket: string;
+  Key: string;
+  expiresIn: number;
+}) => {
   const accessKeyId = process.env.AWS_ACCESS_KEY_ID;
   const secretAccessKey = process.env.AWS_SECRET_ACCESS_KEY;
 
@@ -56,15 +53,22 @@ export const loadDocsDefinitionFromS3 = cache(
       const cleanDomain = domain.replace(/^https?:\/\//, "");
       const s3Key = getS3KeyForV1DocsDefinition(cleanDomain);
 
-      const signedUrl = await getSignedUrl(domain, {
+      const signedUrl = await getSignedUrl({
         Bucket: docsBucketName,
         Key: s3Key,
         expiresIn: 60 * 60, // 1 hour
       });
 
-      const response = await fetch(signedUrl, {
-        next: { tags: [domain, "loadDocsDefinitionFromS3"] },
-      });
+      const fetchSignedUrl = () =>
+        fetch(signedUrl, {
+          next: { tags: [domain, "loadDocsDefinitionFromS3"] },
+        });
+
+      const response = await retryablePromiseWithBackoff(
+        fetchSignedUrl,
+        3,
+        1_000
+      );
 
       if (response.ok) {
         console.debug(
@@ -83,3 +87,26 @@ export const loadDocsDefinitionFromS3 = cache(
     }
   }
 );
+
+async function retryablePromiseWithBackoff<T>(
+  fn: () => Promise<T>,
+  maxAttempts: number,
+  backoffFactor: number
+): Promise<T> {
+  let attempts = 0;
+  while (attempts < maxAttempts) {
+    try {
+      return await fn();
+    } catch (error) {
+      attempts++;
+      const backoffTime = backoffFactor * attempts;
+      console.warn(
+        `Retry attempt ${attempts} failed. Retrying in ${backoffTime}ms...`
+      );
+      await new Promise((resolve) => setTimeout(resolve, backoffTime));
+    }
+  }
+  throw new Error(
+    `Failed to execute retryable function after ${maxAttempts} attempts`
+  );
+}

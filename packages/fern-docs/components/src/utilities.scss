@@ -100,8 +100,6 @@
 }
 
 @utility fern-collapsible {
-  overflow: hidden;
-
   &[data-state="open"] {
     animation: collapsible-open 0.18s var(--ease-collapse) none;
 

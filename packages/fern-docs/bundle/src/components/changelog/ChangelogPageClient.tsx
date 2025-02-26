@@ -7,7 +7,7 @@ import { useAtomValue } from "jotai";
 
 import type { FernNavigation } from "@fern-api/fdr-sdk";
 import { EMPTY_ARRAY } from "@fern-api/ui-core-utils";
-import { Badge, cn } from "@fern-docs/components";
+import { Badge } from "@fern-docs/components";
 import { addLeadingSlash } from "@fern-docs/utils";
 
 import { HideBuiltWithFern } from "@/components/built-with-fern";

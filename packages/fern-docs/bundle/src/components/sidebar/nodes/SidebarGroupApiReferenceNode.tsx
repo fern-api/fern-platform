@@ -19,7 +19,7 @@ export function SidebarGroupApiReferenceNode({
 
   return (
     <WithFeatureFlags featureFlags={node.featureFlags}>
-      <ul className="fern-sidebar-group fern-collapsible">
+      <ul className="fern-sidebar-group">
         {node.children.map((child) => (
           <li key={child.id}>
             <SidebarApiPackageChild

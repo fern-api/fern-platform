@@ -1,6 +1,9 @@
 import * as React from "react";
 
+import { composeEventHandlers } from "@radix-ui/primitive";
 import { ChevronRight } from "lucide-react";
+
+import { useBooleanState } from "@fern-ui/react-commons/src/useBooleanState";
 
 import * as AccordionPrimitive from "./accordion-primitive";
 import { cn } from "./cn";
@@ -55,15 +58,32 @@ AccordionTrigger.displayName = AccordionPrimitive.Trigger.displayName;
 const AccordionContent = React.forwardRef<
   React.ComponentRef<typeof AccordionPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Content>
->(({ className, children, asChild, ...props }, ref) => (
-  <AccordionPrimitive.Content
-    ref={ref}
-    className={cn("fern-collapsible", className)}
-    {...props}
-  >
-    {children}
-  </AccordionPrimitive.Content>
-));
+>(({ className, children, asChild, ...props }, ref) => {
+  const animationFrameRef = React.useRef<number | null>(null);
+  const isAnimatingState = useBooleanState(false);
+  return (
+    <AccordionPrimitive.Content
+      ref={ref}
+      className={cn("fern-collapsible", className, {
+        "overflow-clip": isAnimatingState.value,
+      })}
+      {...props}
+      onAnimationStart={composeEventHandlers(props.onAnimationStart, () => {
+        if (animationFrameRef.current != null) {
+          cancelAnimationFrame(animationFrameRef.current);
+        }
+        isAnimatingState.setTrue();
+      })}
+      onAnimationEnd={composeEventHandlers(props.onAnimationEnd, () => {
+        animationFrameRef.current = requestAnimationFrame(() => {
+          isAnimatingState.setFalse();
+        });
+      })}
+    >
+      {children}
+    </AccordionPrimitive.Content>
+  );
+});
 AccordionContent.displayName = AccordionPrimitive.Content.displayName;
 
 export { Accordion, AccordionContent, AccordionItem, AccordionTrigger };

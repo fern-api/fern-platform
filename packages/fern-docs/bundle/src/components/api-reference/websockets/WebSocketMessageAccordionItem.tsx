@@ -1,6 +1,7 @@
 "use client";
 
 import { FC } from "react";
+import React from "react";
 
 import * as Accordion from "@radix-ui/react-accordion";
 import { ArrowDown, ArrowUp, ChevronDown } from "lucide-react";
@@ -9,6 +10,7 @@ import { APIV1Read } from "@fern-api/fdr-sdk/client/types";
 import { cn } from "@fern-docs/components";
 import { CopyToClipboardButton } from "@fern-docs/components";
 import { FernSyntaxHighlighter } from "@fern-docs/syntax-highlighter";
+import { useBooleanState } from "@fern-ui/react-commons/src/useBooleanState";
 
 import { WebSocketMessage } from "./WebSocketMessages";
 
@@ -21,6 +23,8 @@ export interface WebSocketMessageAccordionItemProps {
 export const WebsocketMessageAccordionItem: FC<
   WebSocketMessageAccordionItemProps
 > = ({ message, index, messagesLength }) => {
+  const animationFrameRef = React.useRef<number | null>(null);
+  const isAnimatingState = useBooleanState(false);
   return (
     <Accordion.Item
       value={index.toString()}
@@ -67,7 +71,22 @@ export const WebsocketMessageAccordionItem: FC<
           aria-hidden
         />
       </Accordion.Trigger>
-      <Accordion.Content className="fern-web-socket-content fern-collapsible">
+      <Accordion.Content
+        className={cn("fern-web-socket-content fern-collapsible", {
+          "overflow-clip": isAnimatingState.value,
+        })}
+        onAnimationStart={() => {
+          if (animationFrameRef.current != null) {
+            cancelAnimationFrame(animationFrameRef.current);
+          }
+          isAnimatingState.setTrue();
+        }}
+        onAnimationEnd={() => {
+          animationFrameRef.current = requestAnimationFrame(() => {
+            isAnimatingState.setFalse();
+          });
+        }}
+      >
         <div className="group/cb-container relative">
           <FernSyntaxHighlighter
             className="w-0 min-w-full overflow-y-auto"
