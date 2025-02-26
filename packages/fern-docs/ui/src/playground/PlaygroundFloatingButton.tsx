@@ -33,9 +33,7 @@ export const PlaygroundFloatingButton = () => {
     >
       <TerminalTag height={16} width={16} />
 
-      <div className="nav-arrow">
-        <NavArrowUp height={16} width={16} />
-      </div>
+      <NavArrowUp height={16} width={16} className="nav-arrow" />
     </button>
   );
 };
