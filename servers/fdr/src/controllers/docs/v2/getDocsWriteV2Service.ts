@@ -264,20 +264,22 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
         );
 
         let indexSegments: IndexSegment[] = [];
-        try {
-          indexSegments = await uploadToAlgoliaForRegistration(
-            app,
-            docsRegistrationInfo,
-            dbDocsDefinition,
-            apiDefinitionsById,
-            apiDefinitionsLatestById
-          );
-        } catch (e) {
-          app.logger.error(
-            `Error while trying to upload to Algolia for ${docsRegistrationInfo.fernUrl.getFullUrl()}`,
-            e
-          );
-          indexSegments = [];
+        // HACK: we don't want to index monite docs in algolia. To be removed after search v2 migration.
+        if (!docsRegistrationInfo.fernUrl.getFullUrl().includes("monite")) {
+          try {
+            indexSegments = await uploadToAlgoliaForRegistration(
+              app,
+              docsRegistrationInfo,
+              dbDocsDefinition,
+              apiDefinitionsById,
+              apiDefinitionsLatestById
+            );
+          } catch (e) {
+            app.logger.error(
+              `Error while trying to upload to Algolia for ${docsRegistrationInfo.fernUrl.getFullUrl()}`,
+              e
+            );
+          }
         }
 
         await app.docsDefinitionCache.storeDocsForUrl({
