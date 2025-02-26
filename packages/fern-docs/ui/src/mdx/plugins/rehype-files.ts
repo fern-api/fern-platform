@@ -184,7 +184,6 @@ export function setDimension(
     return;
   }
 
-  // if the user has defined a height or width, add as style
   const attrWidth = attributes.find((attr) => attr.name === "width");
   const attrHeight = attributes.find((attr) => attr.name === "height");
 
@@ -196,15 +195,18 @@ export function setDimension(
     return;
   }
 
-  const addStyle: React.CSSProperties = {
-    ...(attrWidth && { width: `${attrWidth.value}px` }),
-    ...(attrHeight && { height: `${attrHeight.value}px` }),
-    ...(!attrWidth && attrHeight && { width: "auto" }),
-  };
+  // if the user has defined a height or width, add as style
+  if (attrWidth || attrHeight) {
+    const addStyle: React.CSSProperties = {
+      ...(attrWidth && { width: `${attrWidth.value}px` }),
+      ...(attrHeight && { height: `${attrHeight.value}px` }),
+      ...(!attrWidth && attrHeight && { width: "auto" }),
+    };
 
-  node.attributes.unshift(
-    unknownToMdxJsxAttribute("__assigned_imageSize", addStyle)
-  );
+    node.attributes.unshift(
+      unknownToMdxJsxAttribute("__assigned_imageSize", addStyle)
+    );
+  }
 
   // replace the actual attribute height and width with the true image size
   if (intrinsicHeight != null) {

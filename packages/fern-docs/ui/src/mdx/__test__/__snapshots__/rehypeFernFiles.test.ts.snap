@@ -291,29 +291,6 @@ exports[`setDimension > should set width and height when neither is set 1`] = `
       "value": "200",
     },
     {
-      "name": "__assigned_imageSize",
-      "type": "mdxJsxAttribute",
-      "value": {
-        "data": {
-          "estree": {
-            "body": [
-              {
-                "expression": {
-                  "properties": [],
-                  "type": "ObjectExpression",
-                },
-                "type": "ExpressionStatement",
-              },
-            ],
-            "sourceType": "module",
-            "type": "Program",
-          },
-        },
-        "type": "mdxJsxAttributeValueExpression",
-        "value": "__expression__",
-      },
-    },
-    {
       "name": "src",
       "type": "mdxJsxAttribute",
       "value": "file:123",
