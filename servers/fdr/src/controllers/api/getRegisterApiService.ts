@@ -384,6 +384,13 @@ function getSnippetSdkRequests({
       version: snippetsConfigurationWithSdkIds.rubySdk.version,
     });
   }
+  if (snippetsConfigurationWithSdkIds.csharpSdk != null) {
+    sdkRequests.push({
+      type: "csharp",
+      package: snippetsConfigurationWithSdkIds.csharpSdk.package,
+      version: snippetsConfigurationWithSdkIds.csharpSdk.version,
+    });
+  }
   return sdkRequests;
 }
 
