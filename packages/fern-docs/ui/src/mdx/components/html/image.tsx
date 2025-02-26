@@ -2,6 +2,7 @@ import {
   ComponentProps,
   ComponentPropsWithoutRef,
   createContext,
+  CSSProperties,
   forwardRef,
   ReactElement,
   ReactNode,
@@ -41,6 +42,8 @@ export const Image = forwardRef<
     loading?: "eager" | "lazy" | undefined;
     blurDataURL?: string | undefined;
     unoptimized?: boolean | undefined;
+    // set by rehype-files.ts if image width or height property
+    __assigned_imageSize?: CSSProperties | undefined;
   }
 >((props, ref) => {
   const {
@@ -68,6 +71,10 @@ export const Image = forwardRef<
       src={src}
       width={toPixelValue(width)}
       height={toPixelValue(height)}
+      style={{
+        ...style,
+        ...rest.__assigned_imageSize,
+      }}
       {...rest}
       alt={rest.alt ?? ""}
     />
