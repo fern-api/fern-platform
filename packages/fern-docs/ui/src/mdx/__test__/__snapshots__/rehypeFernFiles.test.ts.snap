@@ -52,7 +52,56 @@ exports[`setDimension > should preserve image with both width and height set 1`]
     {
       "name": "imageSize",
       "type": "mdxJsxAttribute",
-      "value": "width:100px;height:100;",
+      "value": {
+        "data": {
+          "estree": {
+            "body": [
+              {
+                "expression": {
+                  "properties": [
+                    {
+                      "computed": false,
+                      "key": {
+                        "type": "Literal",
+                        "value": "width",
+                      },
+                      "kind": "init",
+                      "method": false,
+                      "shorthand": false,
+                      "type": "Property",
+                      "value": {
+                        "type": "Literal",
+                        "value": "100px",
+                      },
+                    },
+                    {
+                      "computed": false,
+                      "key": {
+                        "type": "Literal",
+                        "value": "height",
+                      },
+                      "kind": "init",
+                      "method": false,
+                      "shorthand": false,
+                      "type": "Property",
+                      "value": {
+                        "type": "Literal",
+                        "value": "100px",
+                      },
+                    },
+                  ],
+                  "type": "ObjectExpression",
+                },
+                "type": "ExpressionStatement",
+              },
+            ],
+            "sourceType": "module",
+            "type": "Program",
+          },
+        },
+        "type": "mdxJsxAttributeValueExpression",
+        "value": "__expression__",
+      },
     },
     {
       "name": "src",
@@ -90,7 +139,41 @@ exports[`setDimension > should properly assign height when only width is set 1`]
     {
       "name": "imageSize",
       "type": "mdxJsxAttribute",
-      "value": "width:100px;",
+      "value": {
+        "data": {
+          "estree": {
+            "body": [
+              {
+                "expression": {
+                  "properties": [
+                    {
+                      "computed": false,
+                      "key": {
+                        "type": "Literal",
+                        "value": "width",
+                      },
+                      "kind": "init",
+                      "method": false,
+                      "shorthand": false,
+                      "type": "Property",
+                      "value": {
+                        "type": "Literal",
+                        "value": "100px",
+                      },
+                    },
+                  ],
+                  "type": "ObjectExpression",
+                },
+                "type": "ExpressionStatement",
+              },
+            ],
+            "sourceType": "module",
+            "type": "Program",
+          },
+        },
+        "type": "mdxJsxAttributeValueExpression",
+        "value": "__expression__",
+      },
     },
     {
       "name": "src",
@@ -123,7 +206,56 @@ exports[`setDimension > should properly assign width when only height is set 1`]
     {
       "name": "imageSize",
       "type": "mdxJsxAttribute",
-      "value": "height:100px;width:auto;",
+      "value": {
+        "data": {
+          "estree": {
+            "body": [
+              {
+                "expression": {
+                  "properties": [
+                    {
+                      "computed": false,
+                      "key": {
+                        "type": "Literal",
+                        "value": "height",
+                      },
+                      "kind": "init",
+                      "method": false,
+                      "shorthand": false,
+                      "type": "Property",
+                      "value": {
+                        "type": "Literal",
+                        "value": "100px",
+                      },
+                    },
+                    {
+                      "computed": false,
+                      "key": {
+                        "type": "Literal",
+                        "value": "width",
+                      },
+                      "kind": "init",
+                      "method": false,
+                      "shorthand": false,
+                      "type": "Property",
+                      "value": {
+                        "type": "Literal",
+                        "value": "auto",
+                      },
+                    },
+                  ],
+                  "type": "ObjectExpression",
+                },
+                "type": "ExpressionStatement",
+              },
+            ],
+            "sourceType": "module",
+            "type": "Program",
+          },
+        },
+        "type": "mdxJsxAttributeValueExpression",
+        "value": "__expression__",
+      },
     },
     {
       "name": "src",
@@ -161,7 +293,25 @@ exports[`setDimension > should set width and height when neither is set 1`] = `
     {
       "name": "imageSize",
       "type": "mdxJsxAttribute",
-      "value": "",
+      "value": {
+        "data": {
+          "estree": {
+            "body": [
+              {
+                "expression": {
+                  "properties": [],
+                  "type": "ObjectExpression",
+                },
+                "type": "ExpressionStatement",
+              },
+            ],
+            "sourceType": "module",
+            "type": "Program",
+          },
+        },
+        "type": "mdxJsxAttributeValueExpression",
+        "value": "__expression__",
+      },
     },
     {
       "name": "src",

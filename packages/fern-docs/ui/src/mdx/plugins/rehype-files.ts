@@ -176,11 +176,11 @@ function getEstree(
 export function setDimension(
   node: Hast.MdxJsxElement,
   attributes: MdxJsxAttribute[],
-  width: number | undefined,
-  height: number | undefined
+  intrinsicWidth: number | undefined,
+  intrinsicHeight: number | undefined
 ) {
   // if the image has no intrinsic size, do nothing
-  if (!width || !height) {
+  if (!intrinsicWidth || !intrinsicHeight) {
     return;
   }
 
@@ -216,27 +216,27 @@ export function setDimension(
   node.attributes.unshift(unknownToMdxJsxAttribute("imageSize", addStyle));
 
   // replace the actual attribute height and width with the true image size
-  if (height != null) {
+  if (intrinsicHeight != null) {
     if (!attrHeight) {
       node.attributes.unshift({
         name: "height",
-        value: String(height),
+        value: String(intrinsicHeight),
         type: "mdxJsxAttribute",
       });
     } else {
-      attrHeight.value = String(height);
+      attrHeight.value = String(intrinsicHeight);
     }
   }
 
-  if (width != null) {
+  if (intrinsicWidth != null) {
     if (!attrWidth) {
       node.attributes.unshift({
         name: "width",
-        value: String(width),
+        value: String(intrinsicWidth),
         type: "mdxJsxAttribute",
       });
     } else {
-      attrWidth.value = String(width);
+      attrWidth.value = String(intrinsicWidth);
     }
   }
 }
