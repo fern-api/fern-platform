@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { DOMAINS } from "../../utils/constants";
 import { Conversation, Message } from "../../utils/types";
 import { MessageTableClient } from "./MessageTable";
 
@@ -103,23 +104,13 @@ export default async function Home({
           // find domain from preamble
           if (msg.role === "system") {
             if (typeof msg.content === "string") {
-              if (msg.content && msg.content.includes("elevenlabs.io")) {
-                domain = "elevenlabs.io";
-              } else if (
-                msg.content &&
-                msg.content.includes("buildwithfern.com")
-              ) {
-                domain = "buildwithfern.com";
-              } else if (msg.content && msg.content.includes("openrouter.ai")) {
-                domain = "openrouter.ai";
-              } else if (msg.content && msg.content.includes("flagright.com")) {
-                domain = "flagright.com";
-              } else if (msg.content && msg.content.includes("accelbooks.ai")) {
-                domain = "accelbooks.ai";
-              } else {
-                console.log(msg.content);
-                domain = "unknown";
+              for (const _domain of DOMAINS) {
+                if (msg.content && msg.content.includes(_domain)) {
+                  domain = _domain;
+                  break;
+                }
               }
+              if (domain === "") domain = "unknown";
             }
           }
         });

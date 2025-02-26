@@ -4,6 +4,7 @@ import { Button, Card, Select, Table, TextField } from "@radix-ui/themes";
 import { ChevronDown, ChevronRight } from "lucide-react";
 import { useState } from "react";
 import {
+  DOMAINS,
   SONNET35_INPUT_COST_PER_MIL_TOKENS,
   SONNET35_OUTPUT_COST_PER_MIL_TOKENS,
 } from "../../utils/constants";
@@ -101,25 +102,11 @@ export function MessageTableClient({
               <Select.Item value="show-all-domains">
                 Show all domains
               </Select.Item>
-              <Select.Item value="elevenlabs.io">
-                elevenlabs.io ({countByDomain["elevenlabs.io"]} conversations)
-              </Select.Item>
-              <Select.Item value="buildwithfern.com">
-                Buildwithfern.com ({countByDomain["buildwithfern.com"]}{" "}
-                conversations)
-              </Select.Item>
-              <Select.Item value="openrouter.ai">
-                openrouter.ai ({countByDomain["openrouter.ai"]} conversations)
-              </Select.Item>
-              <Select.Item value="flagright.com">
-                flagright.com ({countByDomain["flagright.com"]} conversations)
-              </Select.Item>
-              <Select.Item value="accelbooks.ai">
-                accelbooks.ai ({countByDomain["accelbooks.ai"]} conversations)
-              </Select.Item>
-              <Select.Item value="unknown">
-                Unknown ({countByDomain["unknown"] || 0} conversations)
-              </Select.Item>
+              {DOMAINS.map((domain) => (
+                <Select.Item key={domain} value={domain}>
+                  {domain} ({countByDomain[domain] || 0} conversations)
+                </Select.Item>
+              ))}
             </Select.Content>
           </Select.Root>
         </Card>
