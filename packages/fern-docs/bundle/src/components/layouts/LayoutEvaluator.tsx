@@ -8,9 +8,9 @@ import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { DocsLoader } from "@/server/docs-loader";
 import { MdxSerializer } from "@/server/mdx-serializer";
 
-import { MdxContent } from "../mdx/MdxContent";
-import { MdxAsideComponent } from "../mdx/bundler/component";
-import { asToc, getMDXExport } from "../mdx/get-mdx-export";
+import { MdxAsideComponent } from "../../mdx/bundler/component";
+import { MdxContent } from "../../mdx/components/MdxContent";
+import { asToc, getMDXExport } from "../../mdx/get-mdx-export";
 import { LayoutEvaluatorContent } from "./LayoutEvaluatorContent";
 
 export async function LayoutEvaluator({
@@ -43,7 +43,10 @@ export async function LayoutEvaluator({
 
   frontmatter["edit-this-page-url"] ??= editThisPageUrl;
 
-  const hasAside = exports?.aside != null;
+  const hasAside =
+    exports?.Aside != null && typeof exports.Aside === "function";
+
+  const Aside = hasAside ? (exports.Aside as React.ComponentType) : undefined;
 
   return (
     <LayoutEvaluatorContent
@@ -53,7 +56,7 @@ export async function LayoutEvaluator({
       frontmatter={frontmatter}
       breadcrumb={breadcrumb}
       tableOfContents={toc}
-      aside={mdx && hasAside && <MdxAsideComponent {...mdx} />}
+      aside={mdx && Aside && <Aside />}
       bottomNavigation={bottomNavigation}
     >
       <MdxContent mdx={mdx} fallback={markdown} />

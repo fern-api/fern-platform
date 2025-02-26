@@ -13,7 +13,7 @@ import { cn } from "@fern-docs/components";
 import { FernButton, FernTooltip } from "@fern-docs/components";
 import { AvailabilityBadge } from "@fern-docs/components/badges";
 
-import { Markdown } from "../mdx/Markdown";
+import { Markdown } from "../../mdx/components/Markdown";
 import { renderTypeShorthandRoot } from "../type-shorthand";
 import { shouldRenderInline } from "./utils";
 

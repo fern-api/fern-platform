@@ -4,6 +4,27 @@ import type { Root as HastRoot } from "hast";
 import type { Root as MdastRoot } from "mdast";
 import { visit } from "unist-util-visit";
 
+export function extractJsxFromEstree(estree: Program): {
+  jsxElements: string[];
+  esmElements: string[];
+} {
+  const jsxElements = new Set<string>();
+  const esmElements = new Set<string>();
+
+  walk(estree, {
+    enter(node) {
+      if (node.type === "JSXIdentifier") {
+        jsxElements.add(node.name);
+      }
+    },
+  });
+
+  return {
+    jsxElements: Array.from(jsxElements),
+    esmElements: Array.from(esmElements),
+  };
+}
+
 /**
  * Extracts the names of the jsx elements used in the tree, as well as the names of the esm elements assigned to variables.
  * However, if the jsx element consumes an esm element, it will not be included in the result of `jsxElements`.
@@ -15,20 +36,6 @@ export function extractJsx(tree: HastRoot | MdastRoot): {
 } {
   const jsxElements = new Set<string>();
   const esmElements = new Set<string>();
-
-  function walkEstree(estree: Program) {
-    walk(estree, {
-      enter(node) {
-        if (node.type === "JSXIdentifier") {
-          jsxElements.add(node.name);
-        }
-
-        if (node.type === "Identifier") {
-          esmElements.add(node.name);
-        }
-      },
-    });
-  }
 
   visit(tree, (node) => {
     if (
@@ -47,7 +54,9 @@ export function extractJsx(tree: HastRoot | MdastRoot): {
           typeof attribute.value !== "string" &&
           attribute.value.data?.estree
         ) {
-          walkEstree(attribute.value.data.estree);
+          const extracted = extractJsxFromEstree(attribute.value.data.estree);
+          extracted.jsxElements.forEach((name) => jsxElements.add(name));
+          extracted.esmElements.forEach((name) => esmElements.add(name));
         }
       });
     }
@@ -59,7 +68,9 @@ export function extractJsx(tree: HastRoot | MdastRoot): {
         node.type === "mdxjsEsm") &&
       node.data?.estree
     ) {
-      walkEstree(node.data.estree);
+      const extracted = extractJsxFromEstree(node.data.estree);
+      extracted.jsxElements.forEach((name) => jsxElements.add(name));
+      extracted.esmElements.forEach((name) => esmElements.add(name));
     }
   });
 

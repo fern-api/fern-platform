@@ -5,7 +5,7 @@ import { FaIcon, FernCard } from "@fern-docs/components";
 
 import { DisableFernAnchor } from "@/components/components/FernAnchor";
 
-import { FernLinkCard } from "../../../components/FernLinkCard";
+import { FernLinkCard } from "../../../components/components/FernLinkCard";
 import { Badge } from "../badge";
 import { NoZoom } from "../html/image";
 

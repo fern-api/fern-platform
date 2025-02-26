@@ -5,7 +5,7 @@ import { cache } from "react";
 
 import { Frontmatter } from "@fern-api/fdr-sdk/docs";
 
-import { serializeMdx as internalSerializeMdx } from "@/components/mdx/bundler/serialize";
+import { serializeMdx as internalSerializeMdx } from "@/mdx/bundler/serialize";
 import { createCachedDocsLoader } from "@/server/docs-loader";
 
 import { cacheSeed } from "./cache-seed";

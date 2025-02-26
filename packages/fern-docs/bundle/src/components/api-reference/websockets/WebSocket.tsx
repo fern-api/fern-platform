@@ -16,7 +16,7 @@ import { ScrollToTop } from "@/components/layouts/ScrollToTop";
 import { MdxSerializer } from "@/server/mdx-serializer";
 import { SetLayout } from "@/state/layout";
 
-import { Markdown } from "../../mdx/Markdown";
+import { Markdown } from "../../../mdx/components/Markdown";
 import { PlaygroundButton } from "../../playground/PlaygroundButton";
 import { ApiPageCenter } from "../api-page-center";
 import { EndpointSection } from "../endpoints/EndpointSection";

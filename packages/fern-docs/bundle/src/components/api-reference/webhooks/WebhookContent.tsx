@@ -12,7 +12,7 @@ import { renderTypeShorthand } from "@/components/type-shorthand";
 import { MdxSerializer } from "@/server/mdx-serializer";
 import { SetLayout } from "@/state/layout";
 
-import { Markdown } from "../../mdx/Markdown";
+import { Markdown } from "../../../mdx/components/Markdown";
 import { EndpointSection } from "../endpoints/EndpointSection";
 import { ObjectProperty } from "../type-definitions/ObjectProperty";
 import {

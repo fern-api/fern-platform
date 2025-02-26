@@ -18,7 +18,7 @@ import { getEmptyValueForType, matchesTypeReference } from "../utils";
 import { PlaygroundTypeReferenceForm } from "./PlaygroundTypeReferenceForm";
 
 const Markdown = dynamic(() =>
-  import("../../mdx/Markdown").then(({ Markdown }) => Markdown)
+  import("../../../mdx/components/Markdown").then(({ Markdown }) => Markdown)
 );
 
 interface PlaygroundUniscriminatedUnionFormProps {

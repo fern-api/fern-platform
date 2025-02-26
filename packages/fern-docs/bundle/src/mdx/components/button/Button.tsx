@@ -5,7 +5,7 @@ import { FernButton } from "@fern-docs/components";
 
 import { DisableFernAnchor } from "@/components/components/FernAnchor";
 
-import { FernLinkButton } from "../../../components/FernLinkButton";
+import { FernLinkButton } from "../../../components/components/FernLinkButton";
 
 export declare namespace Button {
   export interface Props {

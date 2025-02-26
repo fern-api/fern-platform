@@ -19,7 +19,7 @@ import {
   usePlaygroundEndpointFormState,
 } from "@/components/atoms";
 
-import { Callout } from "../../mdx/components/callout";
+import { Callout } from "../../../mdx/components/callout";
 import { PasswordInputGroup } from "../PasswordInputGroup";
 import { PlaygroundEndpointForm } from "../endpoint";
 import { useOAuthEndpointContext } from "../hooks/useOAuthEndpointContext";

@@ -11,8 +11,8 @@ import { FernSyntaxHighlighter } from "@fern-docs/syntax-highlighter";
 import { useIsDarkCode } from "@/state/dark-code";
 import { useProgrammingLanguage } from "@/state/language";
 
-import { getLanguageDisplayName } from "../../../api-reference/examples/code-example";
-import { HorizontalOverflowMask } from "../../../components/HorizontalOverflowMask";
+import { getLanguageDisplayName } from "../../../components/api-reference/examples/code-example";
+import { HorizontalOverflowMask } from "../../../components/components/HorizontalOverflowMask";
 import { unwrapChildren } from "../../common/unwrap-children";
 import { CodeBlock, toSyntaxHighlighterProps } from "./CodeBlock";
 

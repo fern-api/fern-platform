@@ -65,9 +65,16 @@ it("should serialize markdown", async () => {
   expect(deterministic(result?.code)).toMatchSnapshot();
 });
 
-it("should serialize markdown page", async () => {
+it("should serialize servers.mdx", async () => {
   const result = await serializeMdx(
     readFileSync(join(__dirname, "tests", "servers.mdx"), "utf-8")
+  );
+  expect(deterministic(result?.code)).toMatchSnapshot();
+});
+
+it("should serialize tabs.mdx", async () => {
+  const result = await serializeMdx(
+    readFileSync(join(__dirname, "tests", "tabs.mdx"), "utf-8")
   );
   expect(deterministic(result?.code)).toMatchSnapshot();
 });

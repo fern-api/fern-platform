@@ -60,7 +60,7 @@ export default tseslint.config(
       "prettier",
       "next/core-web-vitals",
       "next/typescript",
-      "plugin:tailwindcss/recommended",
+      // "plugin:tailwindcss/recommended",
     ],
     settings: {
       next: {
@@ -123,8 +123,8 @@ export default tseslint.config(
           additionalHooks: "(useMemoOne|useCallbackOne)",
         },
       ],
-      "tailwindcss/no-custom-classname": "off",
-      "tailwindcss/classnames-order": "off",
+      // "tailwindcss/no-custom-classname": "off",
+      // "tailwindcss/classnames-order": "off",
       "@typescript-eslint/no-floating-promises": "error",
     },
   },

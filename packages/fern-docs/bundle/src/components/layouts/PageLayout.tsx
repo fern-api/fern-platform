@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Prose } from "../mdx/prose";
+import { Prose } from "../../mdx/components/prose";
 
 interface PageLayoutProps {
   header?: React.ReactNode;

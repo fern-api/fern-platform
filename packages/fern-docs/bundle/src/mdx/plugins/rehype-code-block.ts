@@ -4,16 +4,12 @@ import { propertiesToMdxJsxAttributes } from "hast-util-properties-to-mdx-jsx-at
 import parseNumericRange from "parse-numeric-range";
 
 import {
-  CONTINUE,
   Hast,
   Mdast,
   SKIP,
   Unified,
-  extractAttributeValueLiteral,
-  isMdxJsxAttribute,
   isMdxJsxElementHast,
   mdastFromMarkdown,
-  unknownToMdxJsxAttribute,
   visit,
 } from "@fern-docs/mdx";
 
@@ -110,12 +106,14 @@ export const rehypeCodeBlock: Unified.Plugin<[], Hast.Root> = () => {
       ) {
         return;
       }
+
       const child = node.children[0];
       if (child && isMdxJsxElementHast(child) && child.name === "CodeBlock") {
         node.attributes = [...node.attributes, ...child.attributes];
-        node.children = [];
+        node.children = child.children;
+        return [SKIP, index];
       }
-      return SKIP;
+      return;
     });
   };
 };

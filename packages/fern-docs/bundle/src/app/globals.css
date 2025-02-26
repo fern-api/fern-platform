@@ -8,7 +8,7 @@
 @import "../components/api-reference/index.scss";
 @import "../components/playground/index.scss";
 @import "../components/components/index.scss";
-@import "../components/mdx/components/index.scss";
+@import "../mdx/components/index.scss";
 @import "../components/changelog/index.scss";
 @import "../components/themes/index.scss";
 @import "../components/sidebar/index.scss";
@@ -17,6 +17,7 @@
 @config "./tailwind.config.ts";
 
 @source "../components";
+@source "../mdx/components";
 @source "../../../components/src";
 @source "../../../search-ui/src/components";
 @source "../../../syntax-highlighter/src";

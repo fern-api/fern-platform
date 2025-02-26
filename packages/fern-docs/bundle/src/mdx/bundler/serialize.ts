@@ -15,6 +15,7 @@ import { noop } from "ts-essentials";
 
 import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 import {
+  Hast,
   type PluggableList,
   customHeadingHandler,
   sanitizeBreaks,
@@ -175,7 +176,6 @@ async function serializeMdxImpl(
             ul: "Ul",
           },
         ],
-        rehypeExtractAsides,
         toc ? rehypeToc : noop,
         rehypeAcornErrorBoundary,
         [
@@ -186,6 +186,9 @@ async function serializeMdxImpl(
             },
           },
         ],
+
+        rehypeExtractAsides,
+        rehypeLog,
       ];
 
       o.remarkPlugins = remarkPlugins;
@@ -260,4 +263,11 @@ export function serializeMdx(
       }
     }
   );
+}
+
+// uncomment this to log the tree to the console in localhost only (DO NOT COMMIT)
+function rehypeLog() {
+  return (_tree: Hast.Root) => {
+    // console.debug(JSON.stringify(tree));
+  };
 }

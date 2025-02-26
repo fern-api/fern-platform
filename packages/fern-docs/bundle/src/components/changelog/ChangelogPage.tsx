@@ -12,10 +12,10 @@ import { addLeadingSlash } from "@fern-docs/utils";
 import { DocsLoader } from "@/server/docs-loader";
 import { MdxSerializer } from "@/server/mdx-serializer";
 
+import { Markdown } from "../../mdx/components/Markdown";
+import { MdxContent } from "../../mdx/components/MdxContent";
 import { FernLink } from "../components/FernLink";
 import { PageHeader } from "../components/PageHeader";
-import { Markdown } from "../mdx/Markdown";
-import { MdxContent } from "../mdx/MdxContent";
 import ChangelogPageClient from "./ChangelogPageClient";
 
 export default async function ChangelogPage({

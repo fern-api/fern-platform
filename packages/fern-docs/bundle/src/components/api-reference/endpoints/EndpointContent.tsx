@@ -10,7 +10,7 @@ import { PageHeader } from "@/components/components/PageHeader";
 import { FooterLayout } from "@/components/layouts/FooterLayout";
 import { ReferenceLayout } from "@/components/layouts/ReferenceLayout";
 import { ScrollToTop } from "@/components/layouts/ScrollToTop";
-import { MdxServerComponentProseSuspense } from "@/components/mdx/server-component";
+import { MdxServerComponentProseSuspense } from "@/mdx/components/server-component";
 import { MdxSerializer } from "@/server/mdx-serializer";
 import { SetLayout } from "@/state/layout";
 

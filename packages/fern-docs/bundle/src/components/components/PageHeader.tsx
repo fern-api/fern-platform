@@ -6,7 +6,7 @@ import type { FernNavigation } from "@fern-api/fdr-sdk";
 
 import { MdxSerializer } from "@/server/mdx-serializer";
 
-import { MdxServerComponent } from "../mdx/server-component";
+import { MdxServerComponent } from "../../mdx/components/server-component";
 import { FernBreadcrumbs } from "./FernBreadcrumbs";
 import { FernLink } from "./FernLink";
 

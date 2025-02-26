@@ -4,7 +4,7 @@ import React from "react";
 
 import { MdxSerializer } from "@/server/mdx-serializer";
 
-import { ErrorBoundary } from "../error-boundary";
+import { ErrorBoundary } from "../../components/error-boundary";
 import { MdxContent } from "./MdxContent";
 import { Prose } from "./prose";
 

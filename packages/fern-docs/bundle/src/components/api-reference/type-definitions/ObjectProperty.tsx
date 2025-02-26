@@ -7,7 +7,7 @@ import { compact } from "es-toolkit/array";
 import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import { AvailabilityBadge } from "@fern-docs/components/badges";
 
-import { MdxServerComponentProseSuspense } from "@/components/mdx/server-component";
+import { MdxServerComponentProseSuspense } from "@/mdx/components/server-component";
 import { MdxSerializer } from "@/server/mdx-serializer";
 
 import {
