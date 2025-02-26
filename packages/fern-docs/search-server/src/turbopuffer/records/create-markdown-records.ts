@@ -1,6 +1,6 @@
 import { compact, flatten } from "es-toolkit/array";
 import { decode } from "html-entities";
-
+import { createHash } from "crypto";
 import { isNonNullish } from "@fern-api/ui-core-utils";
 import {
   MarkdownSectionRoot,
@@ -182,7 +182,9 @@ export async function createMarkdownRecords({
         return chunked_content.map((chunk, i) => {
           const record: FernTurbopufferRecordWithoutVector = {
             ...base_markdown_record,
-            id: `${base.id}-${heading.id}-chunk:${i}`, // theoretically this is unique, but we'll see
+            id: createHash("sha256")
+              .update(`${base_root_markdown_record.id}-chunk:${i}`)
+              .digest("hex"),
             attributes: {
               ...base_markdown_record.attributes,
               ...hierarchy,
