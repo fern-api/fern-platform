@@ -21,11 +21,7 @@ import {
   SearchClientRoot,
 } from "@fern-docs/search-ui";
 import { VersionSwitcherInfo } from "@fern-platform/fdr-utils";
-import {
-  useEventCallback,
-  useIsMobile,
-  useLazyRef,
-} from "@fern-ui/react-commons";
+import { useEventCallback, useLazyRef } from "@fern-ui/react-commons";
 
 import { Feedback } from "@/components/feedback/Feedback";
 import { useApiRoute } from "@/components/hooks/useApiRoute";
@@ -230,14 +226,9 @@ function useCommandTrigger(): [
   React.Dispatch<React.SetStateAction<boolean>>,
 ] {
   const [open, setOpen] = useAtom(searchDialogOpenAtom);
-  const isMobile = useIsMobile();
 
   React.useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (isMobile) {
-        return;
-      }
-
       setOpen((prev) => {
         if (prev) {
           return prev;
@@ -270,7 +261,7 @@ function useCommandTrigger(): [
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [isMobile, setOpen]);
+  }, [setOpen]);
 
   return [open, setOpen];
 }

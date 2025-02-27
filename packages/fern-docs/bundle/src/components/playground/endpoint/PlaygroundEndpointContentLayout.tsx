@@ -21,7 +21,7 @@ export function PlaygroundEndpointContentLayout({
   responseCard,
   endpointId,
 }: PlaygroundEndpointContentLayoutProps): ReactElement<any> {
-  const isMobileScreen = useIsMobile();
+  const isMobile = useIsMobile();
 
   const scrollAreaRef = useRef<HTMLDivElement>(null);
   const [scrollAreaHeight, setScrollAreaHeight] = useState(0);
@@ -38,7 +38,7 @@ export function PlaygroundEndpointContentLayout({
         ref={scrollAreaRef}
         className="mask-grad-top-6 w-full overflow-x-hidden overflow-y-scroll overscroll-contain"
       >
-        {!isMobileScreen ? (
+        {!isMobile ? (
           <PlaygroundEndpointDesktopLayout
             scrollAreaHeight={scrollAreaHeight}
             form={form}

@@ -5,7 +5,6 @@ import { SearchIcon } from "lucide-react";
 
 import { Kbd } from "@fern-docs/components";
 import { cn } from "@fern-docs/components";
-import { useIsMobile } from "@fern-ui/react-commons";
 
 const buttonVariants = cva(
   "focus-visible:ring-(color:--accent) rounded-3/2 inline-flex h-9 w-full cursor-text items-center justify-start gap-2 whitespace-nowrap p-2 text-sm font-medium transition-colors hover:transition-none focus-visible:outline-none focus-visible:ring-1 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
@@ -28,7 +27,6 @@ export const DesktopSearchButton = forwardRef<
   HTMLButtonElement,
   ComponentPropsWithoutRef<"button"> & VariantProps<typeof buttonVariants>
 >(({ children, variant, className, ...rest }, ref) => {
-  const isMobile = useIsMobile();
   return (
     <button
       {...rest}
@@ -37,7 +35,7 @@ export const DesktopSearchButton = forwardRef<
     >
       <SearchIcon />
       Search
-      {!isMobile && <CommandKbd className="ml-auto" />}
+      <CommandKbd className="pointer-coarse:hidden ml-auto" />
     </button>
   );
 });
