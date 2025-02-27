@@ -11,6 +11,7 @@ import React from "react";
 
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { Slug } from "@fern-api/fdr-sdk/navigation";
+import { withDefaultProtocol } from "@fern-api/ui-core-utils";
 import { getSeoDisabled } from "@fern-docs/edge-config";
 import { getFrontmatter, markdownToString } from "@fern-docs/mdx";
 import {
@@ -225,9 +226,9 @@ export async function generateMetadata({
       canonical:
         frontmatter?.["canonical-url"] ??
         (node != null
-          ? conformTrailingSlash(
+          ? `${withDefaultProtocol(loader.domain)}${conformTrailingSlash(
               addLeadingSlash(node.canonicalSlug ?? node.slug)
-            )
+            )}`
           : undefined),
     },
     openGraph: {
