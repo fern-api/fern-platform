@@ -312,7 +312,6 @@ function InstantSearchWrapper({
     <InstantSearchNext
       searchClient={searchClient}
       indexName={indexName}
-      future={{ preserveSharedStateOnUnmount: true }}
       insights={
         authenticatedUserToken
           ? { insightsInitParams: { authenticatedUserToken } }

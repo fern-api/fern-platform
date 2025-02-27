@@ -1,15 +1,9 @@
-import {
-  PropsWithChildren,
-  ReactNode,
-  memo,
-  useDeferredValue,
-  useEffect,
-} from "react";
+import { PropsWithChildren, ReactNode, memo, useEffect } from "react";
 import { Snippet } from "react-instantsearch";
 
 import { TooltipPortal } from "@radix-ui/react-tooltip";
 
-import { useSearchHits } from "../../hooks/use-search-hits";
+import { useSearchHits, useSendEvent } from "../../hooks/use-search-hits";
 import { AlgoliaRecordHit } from "../../types";
 import * as Command from "../cmdk";
 import { PageIcon } from "../icons/page";
@@ -36,7 +30,7 @@ export const CommandSearchHits = ({
   const isQueryEmpty = Command.useCommandState(
     (state) => state.search.trimStart().length === 0
   );
-  const items = useDeferredValue(useSearchHits());
+  const items = useSearchHits();
   const triggerSelection = Command.useTriggerSelection();
   useEffect(() => {
     triggerSelection();
@@ -111,6 +105,7 @@ function CommandHit({
   onSelect: (path: string) => void;
   prefetch?: (path: string) => void | Promise<void>;
 }) {
+  const sendEvent = useSendEvent();
   if (!hit.record) {
     return false;
   }
@@ -125,7 +120,13 @@ function CommandHit({
         href={hit.path}
         keywords={[hit.record.title]}
         prefetch={prefetch}
-        onSelect={onSelect}
+        onSelect={(value) => {
+          // record click-through event for record
+          if (hit.record) {
+            sendEvent("click", hit.record);
+          }
+          onSelect(value);
+        }}
         domain={domain}
       >
         <PageIcon
