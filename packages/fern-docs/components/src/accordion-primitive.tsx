@@ -1,3 +1,5 @@
+"use client";
+
 // copied from @radix-ui/react-accordion: https://github.com/radix-ui/primitives/blob/main/packages/react/accordion/src/Accordion.tsx
 // with some changes to support cmd+f accessibility via the html5 <details> component
 import React from "react";

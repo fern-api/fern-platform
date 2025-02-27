@@ -75,7 +75,6 @@ const nextConfig: NextConfig = {
       static: 180,
     },
     serverComponentsHmrCache: true,
-    serverSourceMaps: false,
   },
   expireTime: 3600, // 1 hour
 
@@ -183,6 +182,10 @@ const nextConfig: NextConfig = {
     path: cdnUri != null ? `${cdnUri.href}_next/image` : undefined,
   },
   webpack: (config, { isServer }) => {
+    // config.optimization = {
+    //   ...config.optimization,
+    //   minimize: false,
+    // };
     if (isServer) {
       config.externals = config.externals || [];
       config.externals.push("esbuild");
@@ -212,10 +215,12 @@ function withVercelEnv(config: NextConfig): NextConfig {
   return {
     ...config,
     deploymentId: process.env.VERCEL_DEPLOYMENT_ID, // skew protection
-    // productionBrowserSourceMaps: process.env.VERCEL_ENV !== "production",
-    // reactProductionProfiling: process.env.VERCEL_ENV !== "production",
     productionBrowserSourceMaps: false,
     reactProductionProfiling: false,
+    experimental: {
+      ...config.experimental,
+      serverSourceMaps: false,
+    },
   };
 }
 

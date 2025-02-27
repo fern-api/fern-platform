@@ -1,4 +1,3 @@
-import { useMDXComponents } from "@mdx-js/react";
 import {
   MDXContentProps,
   getMDXExport as getMDXExportOriginal,
@@ -6,7 +5,10 @@ import {
 
 import { TableOfContentsItem, isToc } from "@fern-docs/mdx";
 
-export function getMDXExport(mdx: { code: string } | undefined):
+export function getMDXExport(
+  mdx: { code: string } | undefined,
+  useMDXComponents: () => any = () => ({})
+):
   | {
       ["default"]: React.ComponentType<MDXContentProps>;
       [key: string]: unknown;
