@@ -317,7 +317,7 @@ function InstantSearchWrapper({
           ? { insightsInitParams: { authenticatedUserToken } }
           : undefined
       }
-      routing
+      routing={false}
     >
       <Configure
         attributesToSnippet={["description:32", "content:32"]}
