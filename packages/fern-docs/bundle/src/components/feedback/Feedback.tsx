@@ -6,7 +6,12 @@ import { FC, useCallback, useEffect, useRef, useState } from "react";
 import { ThumbsDown, ThumbsUp } from "lucide-react";
 
 import { Button, cn } from "@fern-docs/components";
-import { FernButton, FernButtonGroup, toast } from "@fern-docs/components";
+import {
+  CopyToClipboardButton,
+  FernButton,
+  FernButtonGroup,
+  toast,
+} from "@fern-docs/components";
 import { useKeyboardPress } from "@fern-ui/react-commons";
 
 import { track } from "../analytics";
@@ -111,66 +116,83 @@ export const Feedback: FC<FeedbackProps> = ({
   return (
     <div className={className} ref={ref}>
       {!sent ? (
-        <div className="flex flex-wrap items-center justify-start gap-4">
-          <span className="text-(color:--grayscale-a11) text-sm font-medium">
-            {feedbackQuestion}
-          </span>
-          <div className="flex gap-2">
-            <FeedbackFormDialog
-              content={
-                isHelpful && (
-                  <FeedbackForm
-                    isHelpful={isHelpful}
-                    onSubmit={handleSubmitFeedback}
-                  />
-                )
-              }
-              trigger={
-                <Button
-                  variant={isHelpful === "yes" ? "outlineSuccess" : "outline"}
-                  onClick={handleYes}
-                  size="sm"
-                >
-                  <ThumbsUp
-                    className={cn({
-                      "animate-thumb-rock": isHelpful === "yes",
-                    })}
-                  />
-                  Yes
-                </Button>
-              }
-            />
-            <FeedbackFormDialog
-              content={
-                isHelpful && (
-                  <FeedbackForm
-                    isHelpful={isHelpful}
-                    onSubmit={handleSubmitFeedback}
-                  />
-                )
-              }
-              trigger={
-                <Button
-                  variant={isHelpful === "no" ? "outlineDanger" : "outline"}
-                  onClick={handleNo}
-                  size="sm"
-                >
-                  <ThumbsDown
-                    className={cn({
-                      "animate-thumb-rock": isHelpful === "no",
-                    })}
-                  />
-                  No
-                </Button>
-              }
-            />
+        <div className="flex w-full flex-wrap items-center justify-between gap-4">
+          <div className="flex items-center justify-start gap-2">
+            <span className="text-(color:--grayscale-a11) text-sm font-medium">
+              {feedbackQuestion}
+            </span>
+            <div className="flex gap-2">
+              <FeedbackFormDialog
+                content={
+                  isHelpful && (
+                    <FeedbackForm
+                      isHelpful={isHelpful}
+                      onSubmit={handleSubmitFeedback}
+                    />
+                  )
+                }
+                trigger={
+                  <Button
+                    variant={isHelpful === "yes" ? "outlineSuccess" : "outline"}
+                    onClick={handleYes}
+                    size="sm"
+                  >
+                    <ThumbsUp
+                      className={cn({
+                        "animate-thumb-rock": isHelpful === "yes",
+                      })}
+                    />
+                    Yes
+                  </Button>
+                }
+              />
+              <FeedbackFormDialog
+                content={
+                  isHelpful && (
+                    <FeedbackForm
+                      isHelpful={isHelpful}
+                      onSubmit={handleSubmitFeedback}
+                    />
+                  )
+                }
+                trigger={
+                  <Button
+                    variant={isHelpful === "no" ? "outlineDanger" : "outline"}
+                    onClick={handleNo}
+                    size="sm"
+                  >
+                    <ThumbsDown
+                      className={cn({
+                        "animate-thumb-rock": isHelpful === "no",
+                      })}
+                    />
+                    No
+                  </Button>
+                }
+              />
+            </div>
           </div>
+          <CopyToClipboardButton
+            content={
+              typeof metadata === "function"
+                ? (metadata().assistant as string)
+                : (metadata?.assistant as string | undefined)
+            }
+          />
         </div>
       ) : (
         <div className="flex h-6 items-center">
           <span className="text-(color:--grayscale-a11) text-xs">
             Thank you for your feedback!
           </span>
+          <CopyToClipboardButton
+            className="float-right"
+            content={
+              typeof metadata === "function"
+                ? (metadata().assistant as string)
+                : (metadata?.assistant as string | undefined)
+            }
+          />
         </div>
       )}
     </div>
