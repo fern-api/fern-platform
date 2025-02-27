@@ -230,43 +230,32 @@ export function serializeMdx(
   const abortController = new AbortController();
   const { signal } = abortController;
 
-  return new Promise<SerializeMdxResponse | undefined>(
-    async (resolve, reject) => {
-      if (!content?.trimStart().length) {
-        resolve(undefined);
-        return;
-      }
-
-      const timeoutId = setTimeout(() => {
-        if (!signal.aborted) {
-          abortController.abort();
-          console.error("Serialize MDX timed out after 10 seconds");
-          reject(new Error("Serialize MDX timed out"));
-        }
-      }, 10_000);
-
-      try {
-        const result = await serializeMdxImpl(content, { ...options });
-        if (!signal.aborted) {
-          clearTimeout(timeoutId);
-          resolve(result);
-        }
-      } catch (error) {
-        clearTimeout(timeoutId);
-        if (error instanceof Error && error.name === "AbortError") {
-          console.error("Serialization was aborted.");
-        } else {
-          console.error(String(error));
-          console.debug("Failed to serialize:", content);
-        }
-        if (error instanceof Error) {
-          reject(error);
-        } else {
-          reject(new Error(String(error)));
-        }
-      }
+  return new Promise<SerializeMdxResponse | undefined>((resolve, reject) => {
+    if (!content?.trimStart().length) {
+      resolve(undefined);
+      return;
     }
-  );
+
+    const timeoutId = setTimeout(() => {
+      if (!signal.aborted) {
+        abortController.abort();
+        console.error("Serialize MDX timed out after 10 seconds");
+        reject(new Error("Serialize MDX timed out"));
+      }
+    }, 10_000);
+
+    serializeMdxImpl(content, { ...options }).then(
+      (result) => {
+        clearTimeout(timeoutId);
+        resolve(result);
+      },
+      (error: unknown) => {
+        clearTimeout(timeoutId);
+        reject(error instanceof Error ? error : new Error(String(error)));
+        console.error(error);
+      }
+    );
+  });
 }
 
 // uncomment this to log the tree to the console in localhost only (DO NOT COMMIT)
