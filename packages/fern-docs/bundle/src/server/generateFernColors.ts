@@ -64,6 +64,9 @@ export function getClosestGrayColor(source: string): GrayScale {
     allColors.sort((a, b) => a.distance - b.distance);
 
     const closestColor = allColors[0];
+    if (!closestColor) {
+      throw new Error("No closest color found");
+    }
     return closestColor.scale as GrayScale;
   } catch (e) {
     console.error(e);

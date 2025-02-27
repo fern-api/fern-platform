@@ -77,6 +77,11 @@ const nextConfig: NextConfig = {
     serverComponentsHmrCache: true,
     serverSourceMaps: false,
   },
+  expireTime: 3600, // 1 hour
+
+  // speed up build
+  typescript: { ignoreBuildErrors: true },
+  eslint: { ignoreDuringBuilds: true },
 
   skipMiddlewareUrlNormalize: true,
 
@@ -96,7 +101,6 @@ const nextConfig: NextConfig = {
    * Note that local development should not set the CDN_URI to ensure that the assets are served from the local server.
    */
   assetPrefix: cdnUri != null ? cdnUri.href : undefined,
-  typescript: { ignoreBuildErrors: true },
   compiler: {
     removeConsole:
       process.env.VERCEL_ENV === "production" ? { exclude: ["error"] } : false,

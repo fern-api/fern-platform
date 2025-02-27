@@ -42,9 +42,9 @@ export function EndpointResponseSnippet({
 function EndpointResponseSnippetInternal({
   endpoint,
   example,
-  // slug,
+  slug,
 }: {
-  // slug: string;
+  slug: string;
   endpoint: EndpointDefinition;
   example: string | undefined;
 }) {
@@ -67,6 +67,7 @@ function EndpointResponseSnippetInternal({
         language="json"
         json={responseJson}
         scrollAreaStyle={{ maxHeight: "500px" }}
+        slug={slug}
         isResponse
       />
     </div>

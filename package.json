@@ -77,7 +77,7 @@
     "depcheck": "^1.4.7",
     "dotenv": "^16.4.7",
     "eslint": "^9.21.0",
-    "eslint-config-next": "15.2.0-canary.74",
+    "eslint-config-next": "15.2.0",
     "eslint-config-prettier": "^10.0.2",
     "eslint-config-turbo": "^2.4.3",
     "eslint-plugin-deprecation": "^3.0.0",

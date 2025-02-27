@@ -6,6 +6,7 @@ import * as session from "../workos-session";
 
 describe("getAuthState", () => {
   const host = "docs.test.com";
+  const domain = "docs.test.com";
 
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const TEST_JWT_SECRET = process.env.JWT_SECRET_KEY!;
@@ -14,8 +15,9 @@ describe("getAuthState", () => {
   it("should handle missing auth config", async () => {
     const authState = await getAuthStateInternal({
       host: "localhost:3000",
+      domain,
       fernToken: "bad_token",
-    });
+    }).then((get) => get());
     expect(authState.authed).toBe(false);
     expect(authState.ok).toBe(true); // even fern_token is bad, this is still OK because authConfig is missing.
   });
@@ -24,20 +26,22 @@ describe("getAuthState", () => {
     await expect(
       getAuthStateInternal({
         host,
+        domain,
         fernToken: "bad_token",
-      })
+      }).then((get) => get())
     ).resolves.not.toThrowError();
 
     await expect(
       getAuthStateInternal({
         host,
+        domain,
         fernToken: await new SignJWT({
           fern: {},
           exp: "bad_token",
         } as any)
           .setProtectedHeader({ alg: "HS256", typ: "JWT" })
           .sign(new TextEncoder().encode(TEST_JWT_SECRET)),
-      })
+      }).then((get) => get())
     ).resolves.not.toThrowError();
   });
 
@@ -51,9 +55,10 @@ describe("getAuthState", () => {
 
     const authStateBadToken = await getAuthStateInternal({
       host,
+      domain,
       fernToken: "bad_token",
       authConfig: BASIC_TOKEN_AUTH,
-    });
+    }).then((get) => get());
     expect(authStateBadToken.partner).toBe("custom");
     expect(authStateBadToken.authed).toBe(false);
     expect(authStateBadToken.ok).toBe(true);
@@ -74,10 +79,10 @@ describe("getAuthState", () => {
 
     const authStateBadTokenWithPathname = await getAuthStateInternal({
       host,
+      domain,
       fernToken: "bad_token",
       authConfig: BASIC_TOKEN_AUTH,
-      pathname: "/docs/test",
-    });
+    }).then((get) => get("/docs/test"));
 
     expect(authStateBadTokenWithPathname.authed).toBe(false);
     expect(authStateBadTokenWithPathname.ok).toBe(true);
@@ -98,12 +103,13 @@ describe("getAuthState", () => {
 
     const authStateGoodToken = await getAuthStateInternal({
       host,
+      domain,
       fernToken: await signFernJWT(
         {},
         { secret: TEST_JWT_SECRET, issuer: ISSUER }
       ),
       authConfig: BASIC_TOKEN_AUTH,
-    });
+    }).then((get) => get());
 
     expect(authStateGoodToken.authed).toBe(true);
     expect(authStateGoodToken.ok).toBe(true);
@@ -120,9 +126,10 @@ describe("getAuthState", () => {
 
     const authStateBadToken = await getAuthStateInternal({
       host,
+      domain,
       fernToken: "bad_token",
       authConfig: ORY_AUTH_CONFIG,
-    });
+    }).then((get) => get());
     expect(authStateBadToken.authed).toBe(false);
     expect(authStateBadToken.ok).toBe(true);
     if (!authStateBadToken.authed) {
@@ -146,10 +153,10 @@ describe("getAuthState", () => {
 
     const authStateBadTokenWithPathname = await getAuthStateInternal({
       host,
+      domain,
       fernToken: "bad_token",
       authConfig: ORY_AUTH_CONFIG,
-      pathname: "/docs/test",
-    });
+    }).then((get) => get("/docs/test"));
 
     expect(authStateBadTokenWithPathname.authed).toBe(false);
     expect(authStateBadTokenWithPathname.ok).toBe(true);
@@ -179,10 +186,11 @@ describe("getAuthState", () => {
 
     const authStateGoodToken = await getAuthStateInternal({
       host,
+      domain,
       // Note: this is a valid Fern JWT, but it's not a valid ORY JWT
       fernToken,
       authConfig: ORY_AUTH_CONFIG,
-    });
+    }).then((get) => get());
 
     // even if the JWT is a valid Fern JWT, at the moment we don't support Fern Tokens generated from ORY OAuth
     expect(authStateGoodToken.authed).toBe(false);
@@ -199,9 +207,10 @@ describe("getAuthState", () => {
 
     const authStateBadToken = await getAuthStateInternal({
       host,
+      domain,
       fernToken: "bad_token",
       authConfig: WORKOS_AUTH_CONFIG,
-    });
+    }).then((get) => get());
     expect(authStateBadToken.authed).toBe(false);
     expect(authStateBadToken.ok).toBe(true);
     if (!authStateBadToken.authed) {
@@ -225,10 +234,10 @@ describe("getAuthState", () => {
 
     const authStateBadTokenWithPathname = await getAuthStateInternal({
       host,
+      domain,
       fernToken: "bad_token",
       authConfig: WORKOS_AUTH_CONFIG,
-      pathname: "/docs/test",
-    });
+    }).then((get) => get("/docs/test"));
 
     expect(authStateBadTokenWithPathname.authed).toBe(false);
     expect(authStateBadTokenWithPathname.ok).toBe(true);
@@ -253,13 +262,14 @@ describe("getAuthState", () => {
 
     const authStateGoodToken = await getAuthStateInternal({
       host,
+      domain,
       // Note: this is a valid Fern JWT, but it's not a valid Webflow JWT
       fernToken: await signFernJWT(
         {},
         { secret: TEST_JWT_SECRET, issuer: ISSUER }
       ),
       authConfig: WORKOS_AUTH_CONFIG,
-    });
+    }).then((get) => get());
 
     // even if the JWT is a valid Fern JWT, at the moment we don't support Fern tokens generated from Webflow OAuth
     expect(authStateGoodToken.authed).toBe(false);
@@ -287,9 +297,10 @@ describe("getAuthState", () => {
 
     const authStateBadToken = await getAuthStateInternal({
       host,
+      domain,
       fernToken: "bad_token",
       authConfig: WORKOS_AUTH_CONFIG,
-    });
+    }).then((get) => get());
 
     // the user is not logged in, so we'll redirect them to the login page immediately
     expect(authStateBadToken.authed).toBe(false);
@@ -326,13 +337,14 @@ describe("getAuthState", () => {
 
     const authStateGoodToken = await getAuthStateInternal({
       host,
+      domain,
       fernToken: await session.encryptSession({
         accessToken: "test",
         refreshToken: "test",
         user: WORKOS_USER,
       }),
       authConfig: WORKOS_AUTH_CONFIG,
-    });
+    }).then((get) => get());
 
     expect(getSessionFromTokenMock).toBeCalled();
     expect(toSessionUserInfoMock).toBeCalled();

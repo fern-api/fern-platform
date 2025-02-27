@@ -149,6 +149,7 @@ describe("withBasicTokenAnonymousCheck", () => {
                       viewers: undefined,
                       orphaned: undefined,
                       noindex: false,
+                      featureFlags: [],
                     },
                   ],
                 },
@@ -166,6 +167,8 @@ describe("withBasicTokenAnonymousCheck", () => {
           viewers: undefined,
           orphaned: undefined,
           pointsTo: undefined,
+          roles: [],
+          featureFlags: [],
         }
       ).authed
     ).toBe(true);
@@ -202,6 +205,7 @@ describe("withBasicTokenAnonymousCheck", () => {
                       viewers: [RoleId("everyone")],
                       orphaned: undefined,
                       noindex: false,
+                      featureFlags: [],
                     },
                   ],
                 },
@@ -219,6 +223,8 @@ describe("withBasicTokenAnonymousCheck", () => {
           viewers: undefined,
           orphaned: undefined,
           pointsTo: undefined,
+          roles: [],
+          featureFlags: [],
         }
       ).authed
     ).not.toBe(true);
@@ -257,6 +263,7 @@ describe("withBasicTokenAnonymousCheck", () => {
                       viewers: [RoleId("everyone")],
                       orphaned: undefined,
                       noindex: false,
+                      featureFlags: [],
                     },
                   ],
                   title: "Public",
@@ -271,6 +278,7 @@ describe("withBasicTokenAnonymousCheck", () => {
                   collapsed: false,
                   overviewPageId: PageId("1.mdx"),
                   pointsTo: undefined,
+                  featureFlags: [],
                 },
               ],
             },
@@ -286,6 +294,8 @@ describe("withBasicTokenAnonymousCheck", () => {
           viewers: undefined,
           orphaned: undefined,
           pointsTo: undefined,
+          roles: [],
+          featureFlags: [],
         }
       ).authed
     ).toBe(true);
@@ -323,6 +333,7 @@ describe("withBasicTokenAnonymousCheck", () => {
                       // because this is orphaned, it is not authed
                       orphaned: true,
                       noindex: false,
+                      featureFlags: [],
                     },
                   ],
                   title: "Public",
@@ -337,6 +348,7 @@ describe("withBasicTokenAnonymousCheck", () => {
                   collapsed: false,
                   overviewPageId: PageId("1.mdx"),
                   pointsTo: undefined,
+                  featureFlags: [],
                 },
               ],
             },
@@ -352,6 +364,8 @@ describe("withBasicTokenAnonymousCheck", () => {
           viewers: undefined,
           orphaned: undefined,
           pointsTo: undefined,
+          roles: [],
+          featureFlags: [],
         }
       ).authed
     ).not.toBe(true);
