@@ -211,6 +211,7 @@ const nextConfig = {
     });
     return config;
   },
+  reactProductionProfiling: true,
 };
 
 function withVercelEnv(config) {
