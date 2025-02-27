@@ -2,6 +2,8 @@ import React from "react";
 
 import { Prose } from "@/mdx/components/prose";
 
+import { AsideAwareDiv } from "./AsideAwareDiv";
+
 interface OverviewLayoutProps {
   header?: React.ReactNode;
   toc?: React.ReactNode;
@@ -18,7 +20,7 @@ export function OverviewLayout({
   return (
     <>
       {toc}
-      <div className="px-page-padding mx-auto mb-12 min-w-0 shrink space-y-8 lg:ml-0 xl:ml-auto">
+      <AsideAwareDiv className="px-page-padding mx-auto mb-12 min-w-0 shrink space-y-8">
         <article className="w-content-wide-width max-w-full">
           {header}
           <Prose className="prose-h1:mt-[1.5em] first:prose-h1:mt-0 max-w-full">
@@ -26,7 +28,7 @@ export function OverviewLayout({
           </Prose>
           {footer}
         </article>
-      </div>
+      </AsideAwareDiv>
     </>
   );
 }

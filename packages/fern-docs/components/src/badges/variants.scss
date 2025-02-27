@@ -895,7 +895,7 @@
     color: var(--grayscale-1);
     background-color: var(--grayscale-9);
 
-    &:is(.dark *) {
+    @variant dark {
       color: white;
     }
 
@@ -1239,44 +1239,42 @@
       }
     }
 
-    &.accent,
-    &.gray,
-    &.mauve,
-    &.slate,
-    &.sage,
-    &.olive,
-    &.sand,
-    &.tomato,
-    &.red,
-    &.ruby,
-    &.crimson,
-    &.pink,
-    &.plum,
-    &.purple,
-    &.violet,
-    &.iris,
-    &.indigo,
-    &.blue,
-    &.cyan,
-    &.teal,
-    &.jade,
-    &.green,
-    &.grass,
-    &.bronze,
-    &.gold,
-    &.brown,
-    &.orange {
-      &:is(.dark *) {
+    @variant dark {
+      &.accent,
+      &.gray,
+      &.mauve,
+      &.slate,
+      &.sage,
+      &.olive,
+      &.sand,
+      &.tomato,
+      &.red,
+      &.ruby,
+      &.crimson,
+      &.pink,
+      &.plum,
+      &.purple,
+      &.violet,
+      &.iris,
+      &.indigo,
+      &.blue,
+      &.cyan,
+      &.teal,
+      &.jade,
+      &.green,
+      &.grass,
+      &.bronze,
+      &.gold,
+      &.brown,
+      &.orange {
         color: white;
       }
-    }
 
-    &.amber,
-    &.sky,
-    &.mint,
-    &.lime,
-    &.yellow {
-      &:is(.dark *) {
+      &.amber,
+      &.sky,
+      &.mint,
+      &.lime,
+      &.yellow {
         color: black;
       }
     }

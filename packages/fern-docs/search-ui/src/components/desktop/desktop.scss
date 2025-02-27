@@ -21,10 +21,6 @@
       z-index: -50;
       background: var(--white-a9);
       backdrop-filter: blur(40px);
-
-      :is(.dark) & {
-        background: var(--black-a9);
-      }
     }
 
     [data-cmdk-fern-header] {
@@ -172,6 +168,12 @@
         height: min(400px, var(--cmdk-list-height));
         max-height: 400px;
       }
+    }
+  }
+
+  @variant dark {
+    #fern-search-desktop-command[data-cmdk-root]::before {
+      background: var(--black-a9);
     }
   }
 }

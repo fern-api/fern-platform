@@ -1,9 +1,17 @@
 "use client";
 
 import { atom, useAtomValue, useSetAtom } from "jotai";
+import { useHydrateAtoms } from "jotai/utils";
 
 import { FernDocs } from "@fern-api/fdr-sdk";
 import { useIsomorphicLayoutEffect } from "@fern-ui/react-commons";
+
+const isSidebarFixedAtom = atom<boolean>(false);
+
+export function SetIsSidebarFixed({ value }: { value: boolean }) {
+  useHydrateAtoms([[isSidebarFixedAtom, value]]);
+  return null;
+}
 
 const layoutAtom = atom<FernDocs.Layout>("guide");
 
@@ -39,6 +47,7 @@ export function SetEmptyTableOfContents({ value }: { value: boolean }) {
 }
 
 export function useShouldHideAsides() {
+  const isSidebarFixed = useAtomValue(isSidebarFixedAtom);
   const layout = useLayout();
   const emptySidebar = useAtomValue(emptySidebarAtom);
 
@@ -46,6 +55,10 @@ export function useShouldHideAsides() {
   const emptyTableOfContents =
     useAtomValue(emptyTableOfContentsAtom) ||
     (layout !== "guide" && layout !== "overview");
+
+  if (isSidebarFixed) {
+    return false;
+  }
 
   if (layout === "custom" || layout === "page") {
     return true;

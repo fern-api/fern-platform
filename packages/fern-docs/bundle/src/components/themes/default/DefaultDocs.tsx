@@ -26,7 +26,7 @@ import { cn } from "@fern-docs/components";
 import { useIsDesktop } from "@fern-ui/react-commons/src/useBreakpoint";
 
 import { HeaderTabsRoot } from "@/components/header/HeaderTabsRoot";
-import { useShouldHideAsides } from "@/state/layout";
+import { SetIsSidebarFixed, useShouldHideAsides } from "@/state/layout";
 import {
   useCloseDismissableSidebar,
   useIsDismissableSidebarOpen,
@@ -59,6 +59,7 @@ export default function DefaultDocs({
   const hideAsides = useShouldHideAsides();
   return (
     <>
+      <SetIsSidebarFixed value={isSidebarFixed} />
       <FernHeader
         className={cn(
           "bg-header-background border-border-concealed pointer-events-auto fixed inset-x-0 top-0 z-30 border-b backdrop-blur-lg",
@@ -189,14 +190,16 @@ function MobileMenu({ children }: { children: React.ReactNode }) {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogPortal>
         <DialogOverlay
-          className="bg-background/70 fixed inset-0 top-[calc(var(--header-height)+1px)] z-40"
+          className="bg-background/70 fixed inset-0 top-[calc(var(--header-height)+1px)] z-30"
           asChild
+          onClick={() => setOpen(false)}
         >
           <motion.div style={{ opacity }}></motion.div>
         </DialogOverlay>
         <DialogContent
-          className="sm:w-sidebar-width bg-background/70 border-border-concealed fixed inset-y-0 right-0 top-[calc(var(--header-height)+1px)] z-50 w-full max-w-[calc(100dvw-3rem)] transform border-l backdrop-blur-xl"
+          className="sm:w-sidebar-width bg-background/70 border-border-concealed fixed inset-y-0 right-0 top-[calc(var(--header-height)+1px)] z-40 w-full max-w-[calc(100dvw-3rem)] transform border-l backdrop-blur-xl"
           asChild
+          onPointerDownOutside={(e) => e.preventDefault()}
         >
           <motion.div
             ref={sidebarRef}

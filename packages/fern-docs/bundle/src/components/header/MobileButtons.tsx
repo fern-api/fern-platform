@@ -15,10 +15,7 @@ export function MobileMenuButton({ className }: { className?: string }) {
   return (
     <Button
       className={cn("shrink-0 lg:hidden", className)}
-      onClickCapture={(e) => {
-        e.stopPropagation();
-        toggleDismissableSidebar();
-      }}
+      onClick={toggleDismissableSidebar}
       variant={isDismissableSidebarOpen ? "default" : "ghost"}
       size="icon"
     >
