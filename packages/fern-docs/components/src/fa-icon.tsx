@@ -18,7 +18,9 @@ export const FaIcon = React.memo(
     const url = getIconUrl(icon);
 
     const { data } = useSWRImmutable(url, () =>
-      fetch(url, { cache: "force-cache" }).then((res) => res.text())
+      fetch(url, { cache: "force-cache" }).then((res) =>
+        res.ok ? res.text() : undefined
+      )
     );
 
     if (data == null) {

@@ -3,7 +3,6 @@
 import dynamic from "next/dynamic";
 import React, { ComponentProps, ReactElement } from "react";
 
-import { FaIcon } from "@fern-docs/components";
 import type { MDXComponents } from "@fern-docs/mdx";
 
 import {
@@ -37,6 +36,7 @@ import { Feature } from "./feature";
 import { Frame } from "./frame";
 import { A, HeadingRenderer, Image, Li, Ol, Strong, Ul } from "./html";
 import { Table } from "./html-table";
+import { Icon } from "./icon/Icon";
 import { If } from "./if";
 import { Mermaid } from "./mermaid";
 import { ParamField } from "./mintlify";
@@ -70,7 +70,7 @@ const FERN_COMPONENTS = {
   EndpointResponseSnippet,
   Feature,
   Frame,
-  Icon: FaIcon,
+  Icon,
   If,
   Mermaid,
   ParamField,
