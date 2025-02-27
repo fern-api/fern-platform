@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unnecessary-type-assertion */
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import "server-only";
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck https://github.com/radix-ui/website/blob/main/components/generateRadixColors.tsx
 import * as RadixColors from "@radix-ui/colors";
 import BezierEasing from "bezier-easing";
@@ -358,16 +359,16 @@ function getScaleFromColor(
   const ratio = Math.max(0, tanC1 / tanC2) * 0.5;
 
   // The base scale is going to be a mix of the two closest scales, with the mix ratio we determined before
-  const scaleA = scales[colorA.scale] as ArrayOf12<Color>;
-  const scaleB = scales[colorB.scale] as ArrayOf12<Color>;
+  const scaleA = scales[colorA.scale]!;
+  const scaleB = scales[colorB.scale]!;
   const scale = arrayOf12.map((i) =>
-    new Color(Color.mix(scaleA[i], scaleB[i], ratio)).to("oklch")
+    new Color(Color.mix(scaleA[i]!, scaleB[i]!, ratio)).to("oklch")
   ) as ArrayOf12<Color>;
 
   // Get the closest color from the pre-mixed scale we created
   const baseColor = scale
     .slice()
-    .sort((a, b) => source.deltaEOK(a) - source.deltaEOK(b))[0] as Color;
+    .sort((a, b) => source.deltaEOK(a) - source.deltaEOK(b))[0]!;
 
   // Note the chroma difference between the source color and the base color
   const ratioC = source.coords[1] / baseColor.coords[1];

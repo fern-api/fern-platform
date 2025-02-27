@@ -42,9 +42,9 @@ export function EndpointResponseSnippet({
 function EndpointResponseSnippetInternal({
   endpoint,
   example,
-  slug,
+  // slug,
 }: {
-  slug: string;
+  // slug: string;
   endpoint: EndpointDefinition;
   example: string | undefined;
 }) {

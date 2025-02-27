@@ -5,7 +5,6 @@ import {
   type Hast,
   SKIP,
   Unified,
-  extractJsx,
   extractJsxFromEstree,
   isMdxJsxElementHast,
   visit,

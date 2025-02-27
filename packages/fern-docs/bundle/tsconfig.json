@@ -12,7 +12,8 @@
     "src/**/*",
     ".next/types/**/*.ts",
     ".storybook/**/*.{ts,tsx}",
-    "next.config.ts"
+    "next.config.ts",
+    "vitest.config.ts"
   ],
   "references": [
     {

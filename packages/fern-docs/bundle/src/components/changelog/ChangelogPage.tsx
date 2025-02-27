@@ -9,11 +9,11 @@ import { isNonNullish } from "@fern-api/ui-core-utils";
 import { type TableOfContentsItem, makeToc, toTree } from "@fern-docs/mdx";
 import { addLeadingSlash } from "@fern-docs/utils";
 
+import { Markdown } from "@/mdx/components/Markdown";
+import { MdxContent } from "@/mdx/components/MdxContent";
 import { DocsLoader } from "@/server/docs-loader";
 import { MdxSerializer } from "@/server/mdx-serializer";
 
-import { Markdown } from "../../mdx/components/Markdown";
-import { MdxContent } from "../../mdx/components/MdxContent";
 import { FernLink } from "../components/FernLink";
 import { PageHeader } from "../components/PageHeader";
 import ChangelogPageClient from "./ChangelogPageClient";

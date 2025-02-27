@@ -9,7 +9,8 @@ import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
 import { APIKeyInjectionConfigEnabled } from "@fern-docs/auth";
 import { FernButton, FernCard } from "@fern-docs/components";
 
-import { Callout } from "../../../mdx/components/callout";
+import { Callout } from "@/mdx/components/callout";
+
 import {
   PLAYGROUND_AUTH_STATE_ATOM,
   PLAYGROUND_AUTH_STATE_BEARER_TOKEN_ATOM,

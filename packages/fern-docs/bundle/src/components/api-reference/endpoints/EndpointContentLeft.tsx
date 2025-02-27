@@ -144,13 +144,13 @@ export async function EndpointContentLeft({
             <EndpointSection title="Headers">
               <WithSeparator>
                 {headers.map((parameter) => {
-                  let isAuth = false;
+                  // let isAuth = false;
                   if (
                     (auth?.type === "header" &&
                       parameter.key === auth?.headerWireValue) ||
                     parameter.key === "Authorization"
                   ) {
-                    isAuth = true;
+                    // isAuth = true;
                   }
 
                   // {isAuth && (

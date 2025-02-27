@@ -8,10 +8,7 @@ import {
   ColorPalette,
   darkGrayColors,
   generateRadixColors,
-  getAlphaColorP3,
-  getAlphaColorSrgb,
   lightGrayColors,
-  toOklchString,
 } from "./generateRadixColors";
 
 /**
@@ -66,7 +63,7 @@ export function getClosestGrayColor(source: string): GrayScale {
 
     allColors.sort((a, b) => a.distance - b.distance);
 
-    const closestColor = allColors[0]!;
+    const closestColor = allColors[0];
     return closestColor.scale as GrayScale;
   } catch (e) {
     console.error(e);

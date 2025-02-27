@@ -6,7 +6,7 @@ import { FC, useCallback, useEffect, useRef, useState } from "react";
 import { ThumbsDown, ThumbsUp } from "lucide-react";
 
 import { Button, cn } from "@fern-docs/components";
-import { FernButton, FernButtonGroup, toast } from "@fern-docs/components";
+import { toast } from "@fern-docs/components";
 import { useKeyboardPress } from "@fern-ui/react-commons";
 
 import { track } from "../analytics";

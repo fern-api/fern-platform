@@ -71,10 +71,13 @@ const CodeSnippetExampleInternal: FC<CodeSnippetExample.Props> = ({
         setHoveredPropertyPath(detail);
       }
     };
-    const hoverOffHandler = () => {
-      setHoveredPropertyPath((prev) =>
-        isEqual(prev, hoveredPropertyPath) ? undefined : prev
-      );
+    const hoverOffHandler = (event: Event) => {
+      if (event instanceof CustomEvent) {
+        const detail = event.detail as JsonPropertyPath;
+        setHoveredPropertyPath((prev) =>
+          isEqual(prev, detail) ? undefined : prev
+        );
+      }
     };
     window.addEventListener(propertyHoverOnEventName, hoverOnHandler);
     window.addEventListener(propertyHoverOffEventName, hoverOffHandler);

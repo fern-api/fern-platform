@@ -5,11 +5,10 @@ import React from "react";
 import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 
+import { MdxContent } from "@/mdx/components/MdxContent";
 import { DocsLoader } from "@/server/docs-loader";
 import { MdxSerializer } from "@/server/mdx-serializer";
 
-import { MdxAsideComponent } from "../../mdx/bundler/component";
-import { MdxContent } from "../../mdx/components/MdxContent";
 import { asToc, getMDXExport } from "../../mdx/get-mdx-export";
 import { LayoutEvaluatorContent } from "./LayoutEvaluatorContent";
 

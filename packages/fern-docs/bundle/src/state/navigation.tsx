@@ -239,7 +239,6 @@ export function PathnameDispatcher() {
       { type: "expand", nodeId: currentNodeId },
       currentSidebarRootNodeId
     );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentNodeId, currentSidebarRootNodeId]);
   return null;
 }

@@ -5,7 +5,6 @@ import { FernButtonGroup, cn } from "@fern-docs/components";
 
 import { SearchV2Trigger } from "@/state/search";
 
-import { ThemeButton } from "../themes";
 import { MobileMenuButton } from "./MobileButtons";
 
 export function HeaderContent({
@@ -13,7 +12,6 @@ export function HeaderContent({
   versionSelect,
   className,
   style,
-  showThemeButton,
   showSearchBar,
   navbarLinks,
   loginButton,
@@ -22,7 +20,6 @@ export function HeaderContent({
   versionSelect: React.ReactNode;
   className?: string;
   style?: CSSProperties;
-  showThemeButton?: boolean;
   showSearchBar?: boolean;
   navbarLinks: React.ReactNode;
   loginButton?: React.ReactNode;

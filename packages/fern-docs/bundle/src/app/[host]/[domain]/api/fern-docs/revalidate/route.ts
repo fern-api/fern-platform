@@ -3,7 +3,6 @@ import { NextRequest, NextResponse } from "next/server";
 
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { withDefaultProtocol } from "@fern-api/ui-core-utils";
-import { getEdgeFlags } from "@fern-docs/edge-config";
 import {
   HEADER_X_FERN_HOST,
   addLeadingSlash,
@@ -11,7 +10,6 @@ import {
   withoutStaging,
 } from "@fern-docs/utils";
 
-import { preferPreview } from "@/server/auth/origin";
 import { DocsLoader, createCachedDocsLoader } from "@/server/docs-loader";
 import {
   queueAlgoliaReindex,

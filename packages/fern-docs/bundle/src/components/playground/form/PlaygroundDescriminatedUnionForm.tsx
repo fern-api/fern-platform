@@ -19,7 +19,7 @@ import { castToRecord, getEmptyValueForObjectProperties } from "../utils";
 import { PlaygroundObjectPropertiesForm } from "./PlaygroundObjectPropertyForm";
 
 const Markdown = dynamic(() =>
-  import("../../../mdx/components/Markdown").then(({ Markdown }) => Markdown)
+  import("@/mdx/components/Markdown").then(({ Markdown }) => Markdown)
 );
 
 interface PlaygroundDiscriminatedUnionFormProps {

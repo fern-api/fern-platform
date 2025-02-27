@@ -100,9 +100,7 @@ export function TabGroup({
 }
 
 export function Tab({
-  title = "Untitled",
   id = "",
-  language,
   children,
 }: {
   /**

@@ -74,7 +74,7 @@ export default async function SharedLayout({
           }
           versionSelect={false}
           showSearchBar={layout.searchbarPlacement === "HEADER"}
-          showThemeButton={Boolean(colors.dark && colors.light)}
+          // showThemeButton={Boolean(colors.dark && colors.light)}
           navbarLinks={<NavbarLinks loader={loader} />}
           loginButton={
             <React.Suspense fallback={null}>

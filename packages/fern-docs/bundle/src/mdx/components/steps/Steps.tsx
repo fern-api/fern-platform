@@ -2,7 +2,7 @@ import React, { ComponentProps, ReactElement } from "react";
 
 import { cn } from "@fern-docs/components";
 
-import { Step, StepCtx } from "./Step";
+import { StepCtx } from "./Step";
 
 export function StepGroup({
   children,

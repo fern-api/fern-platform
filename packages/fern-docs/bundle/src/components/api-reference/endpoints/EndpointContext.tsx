@@ -82,6 +82,7 @@ export function EndpointContextProvider({
         setStatusCode(error.statusCode);
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentAnchor]);
 
   const selectedError = endpoint.errors?.find(

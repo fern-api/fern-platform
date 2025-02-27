@@ -5,7 +5,7 @@ import { Key } from "lucide-react";
 
 import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
 import { visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
-import { Button, FernButton, SemanticBadge } from "@fern-docs/components";
+import { Button, SemanticBadge } from "@fern-docs/components";
 
 import { PLAYGROUND_AUTH_STATE_ATOM } from "../../atoms";
 import { PlaygroundAuthState } from "../types";

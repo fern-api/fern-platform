@@ -87,6 +87,7 @@ function SideNav({
   const currentPath = usePathname();
   React.useEffect(() => {
     closeDismissableSidebar();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentPath]);
 
   return (

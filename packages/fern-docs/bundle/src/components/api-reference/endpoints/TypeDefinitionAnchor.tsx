@@ -44,6 +44,8 @@ export const SectionContainer = React.forwardRef<
   );
 });
 
+SectionContainer.displayName = "SectionContainer";
+
 const rIC = (fn: () => void, timeout = 0) => {
   if (typeof requestIdleCallback !== "undefined") {
     return requestIdleCallback(fn, { timeout });

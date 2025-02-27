@@ -74,10 +74,8 @@
   },
   "devDependencies": {
     "@fern-platform/configs": "workspace:*",
-    "@types/node": "^18.7.18",
+    "@types/node": "^18.11.9",
     "depcheck": "^1.4.7",
-    "eslint": "^9",
-    "prettier": "^3.4.2",
     "stylelint": "^16.1.0",
     "typescript": "^5",
     "vitest": "^3.0.5"

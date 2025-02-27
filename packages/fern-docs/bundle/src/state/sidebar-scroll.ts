@@ -13,20 +13,22 @@ export function useDismountMeasureSidebarScrollPosition(
   ref: React.RefObject<HTMLDivElement | null>
 ) {
   React.useEffect(() => {
+    const current = ref.current;
     window._FERN_SIDEBAR_SCROLL_RESTORATION ??= 0;
-    if (ref.current && window._FERN_SIDEBAR_SCROLL_RESTORATION > 0) {
-      ref.current.scrollTop = window._FERN_SIDEBAR_SCROLL_RESTORATION;
+    if (current && window._FERN_SIDEBAR_SCROLL_RESTORATION > 0) {
+      current.scrollTop = window._FERN_SIDEBAR_SCROLL_RESTORATION;
     }
 
     const handleScroll = () => {
-      window._FERN_SIDEBAR_SCROLL_RESTORATION = ref.current?.scrollTop ?? 0;
+      window._FERN_SIDEBAR_SCROLL_RESTORATION = current?.scrollTop ?? 0;
     };
 
-    ref.current?.addEventListener("scroll", handleScroll);
+    current?.addEventListener("scroll", handleScroll);
 
     return () => {
-      ref.current?.removeEventListener("scroll", handleScroll);
+      current?.removeEventListener("scroll", handleScroll);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 }
 
@@ -70,5 +72,6 @@ export function useScrollSidebarNodeIntoView(
     }
 
     return;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [shouldScrollIntoView]);
 }

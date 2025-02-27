@@ -1,8 +1,6 @@
 import React from "react";
 
-import { cn } from "@fern-docs/components";
-
-import { Prose } from "../../mdx/components/prose";
+import { Prose } from "@/mdx/components/prose";
 
 interface OverviewLayoutProps {
   header?: React.ReactNode;

@@ -8,7 +8,7 @@ import { EnumValue } from "@fern-api/fdr-sdk/api-definition";
 import { FernButton, FernDropdown } from "@fern-docs/components";
 
 const Markdown = dynamic(() =>
-  import("../../../mdx/components/Markdown").then(({ Markdown }) => Markdown)
+  import("@/mdx/components/Markdown").then(({ Markdown }) => Markdown)
 );
 
 interface PlaygroundEnumFormProps {

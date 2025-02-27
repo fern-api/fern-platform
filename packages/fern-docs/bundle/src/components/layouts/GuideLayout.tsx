@@ -1,8 +1,6 @@
 import type { ReactElement } from "react";
 
-import { cn } from "@fern-docs/components";
-
-import { Prose } from "../../mdx/components/prose";
+import { Prose } from "@/mdx/components/prose";
 
 interface GuideLayoutProps {
   header?: React.ReactNode;

@@ -19,10 +19,9 @@
   "devDependencies": {
     "@fern-platform/configs": "workspace:*",
     "@types/jest": "^29.5.12",
-    "@types/node": "^18.7.18",
+    "@types/node": "^18.11.9",
     "@types/prettier": "2.6.0",
     "aws-cdk": "^2.179.0",
-    "prettier": "^3.4.2",
     "redis-cli": "^2.1.2",
     "ts-node": "^10.9.1",
     "typescript": "^5",

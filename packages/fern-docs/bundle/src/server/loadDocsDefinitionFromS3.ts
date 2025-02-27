@@ -98,6 +98,7 @@ async function retryablePromiseWithBackoff<T>(
     try {
       return await fn();
     } catch (error) {
+      console.error(error);
       attempts++;
       const backoffTime = backoffFactor * attempts;
       console.warn(

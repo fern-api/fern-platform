@@ -80,3 +80,5 @@ export const ButtonLink = forwardRef<
     </Button>
   );
 });
+
+ButtonLink.displayName = "ButtonLink";

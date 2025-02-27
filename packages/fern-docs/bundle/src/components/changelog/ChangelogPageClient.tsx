@@ -19,7 +19,6 @@ import { BottomNavigationClient } from "../bottom-nav-client";
 import { FernLink } from "../components/FernLink";
 import { Separator } from "../components/Separator";
 import { FooterLayout } from "../layouts/FooterLayout";
-import { PageLayout } from "../layouts/PageLayout";
 import { ChangelogContentLayout } from "./ChangelogContentLayout";
 
 function flattenChangelogEntries(

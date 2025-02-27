@@ -163,7 +163,7 @@ function createStep(
         attribute.type === "mdxJsxAttribute" && attribute.name === "title"
     )
   ) {
-    let titleAttribute: MdxJsxAttribute = {
+    const titleAttribute: MdxJsxAttribute = {
       type: "mdxJsxAttribute",
       name: "title",
     };

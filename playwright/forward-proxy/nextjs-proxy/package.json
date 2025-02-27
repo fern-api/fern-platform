@@ -14,12 +14,9 @@
     "react-dom": "19.0.0"
   },
   "devDependencies": {
-    "@eslint/eslintrc": "^3.2.0",
-    "@eslint/js": "^9.17.0",
-    "@types/node": "^20",
-    "@types/react": "19.0.8",
-    "@types/react-dom": "19.0.3",
-    "eslint": "^8",
+    "@types/node": "^18.11.9",
+    "@types/react": "19.0.10",
+    "@types/react-dom": "19.0.4",
     "typescript": "^5"
   }
 }

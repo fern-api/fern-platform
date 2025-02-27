@@ -63,7 +63,7 @@
     "url-join": "5.0.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.26.0",
+    "@babel/core": "^7.26.9",
     "@babel/preset-env": "^7.26.0",
     "@babel/preset-typescript": "^7.26.0",
     "@fern-platform/configs": "workspace:*",
@@ -71,8 +71,6 @@
     "@types/qs": "6.9.14",
     "@types/tinycolor2": "^1.4.6",
     "@types/ungap__structured-clone": "^1.2.0",
-    "eslint": "^9",
-    "prettier": "^3.4.2",
     "typescript": "^5",
     "vitest": "^3.0.5"
   }

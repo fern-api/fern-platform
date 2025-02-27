@@ -20,7 +20,7 @@ import { PlaygroundAdditionalProperties } from "./PlaygroundAdditionalProperties
 import { PlaygroundTypeReferenceForm } from "./PlaygroundTypeReferenceForm";
 
 const Markdown = dynamic(() =>
-  import("../../../mdx/components/Markdown").then(({ Markdown }) => Markdown)
+  import("@/mdx/components/Markdown").then(({ Markdown }) => Markdown)
 );
 
 const ADD_ALL_KEY = "__FERN_ADD_ALL__";

@@ -2,7 +2,7 @@
 
 import React from "react";
 
-import { FernScrollArea, cn } from "@fern-docs/components";
+import { FernScrollArea } from "@fern-docs/components";
 
 import { useDismountMeasureSidebarScrollPosition } from "@/state/sidebar-scroll";
 

@@ -75,6 +75,7 @@ const nextConfig: NextConfig = {
       static: 180,
     },
     serverComponentsHmrCache: true,
+    serverSourceMaps: false,
   },
 
   skipMiddlewareUrlNormalize: true,

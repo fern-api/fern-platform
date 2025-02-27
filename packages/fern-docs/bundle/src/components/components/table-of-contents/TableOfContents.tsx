@@ -58,7 +58,7 @@ export const TableOfContents: React.FC<TableOfContents.Props> = ({
         anchorJustSet = false;
       }, 500);
     }
-  }, [allAnchors]);
+  }, [allAnchors, currentPathAnchor]);
 
   const measure = useTableOfContentsObserver(
     allAnchors,

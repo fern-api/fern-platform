@@ -108,7 +108,7 @@ export function GlobalStyles({
 
         ${hasTheme ? ":root, .light" : ":root"} {
           --accent: ${root?.accent ?? FERN_COLOR_ACCENT};
-          --background: ${root?.background ?? (!!light ? "#fff" : "#000")};
+          --background: ${root?.background ?? (light ? "#fff" : "#000")};
           --border: ${domain.includes("nominal")
             ? "#000"
             : (root?.border ?? "initial")};

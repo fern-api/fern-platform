@@ -3,7 +3,6 @@
 import React from "react";
 
 import { atom, useAtomValue, useSetAtom } from "jotai";
-import { useHydrateAtoms } from "jotai/utils";
 
 import { FernDocs } from "@fern-api/fdr-sdk";
 

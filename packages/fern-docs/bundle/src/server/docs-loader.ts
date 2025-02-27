@@ -33,9 +33,8 @@ import { cacheSeed } from "./cache-seed";
 import { generateFernColorPalette } from "./generateFernColors";
 import { FernFonts, generateFonts } from "./generateFonts";
 import { getDocsUrlMetadata } from "./getDocsUrlMetadata";
-import { hash } from "./hash";
 import { loadWithUrl as uncachedLoadWithUrl } from "./loadWithUrl";
-import { FernColorTheme, FernLayoutConfig, FileData, RgbaColor } from "./types";
+import { FernColorTheme, FernLayoutConfig, FileData } from "./types";
 import { pruneWithAuthState } from "./withRbac";
 
 const loadWithUrl = uncachedLoadWithUrl;

@@ -1,7 +1,6 @@
 "use client";
 
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
-import { cn } from "@fern-docs/components";
 
 import { useIsChildSelected } from "@/state/navigation";
 

@@ -4,7 +4,6 @@ import React from "react";
 import * as Tabs from "@radix-ui/react-tabs";
 
 import { cleanLanguage } from "@fern-api/fdr-sdk/api-definition";
-import { isPlainObject } from "@fern-api/ui-core-utils";
 import { CopyToClipboardButton, cn } from "@fern-docs/components";
 import { FernSyntaxHighlighter } from "@fern-docs/syntax-highlighter";
 

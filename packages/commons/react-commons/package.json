@@ -39,11 +39,9 @@
   },
   "devDependencies": {
     "@fern-platform/configs": "workspace:*",
-    "@types/node": "^18.7.18",
-    "@types/react": "19.0.8",
+    "@types/node": "^18.11.9",
+    "@types/react": "19.0.10",
     "depcheck": "^1.4.7",
-    "eslint": "^9",
-    "prettier": "^3.4.2",
     "stylelint": "^16.1.0",
     "typescript": "^5",
     "vite": "^6.1.0",

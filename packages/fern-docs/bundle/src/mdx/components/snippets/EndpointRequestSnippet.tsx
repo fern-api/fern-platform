@@ -9,7 +9,7 @@ import { useExampleSelection } from "@/components/api-reference/endpoints/useExa
 import { CodeSnippetExample } from "@/components/api-reference/examples/CodeSnippetExample";
 import { ApiReferenceButton } from "@/components/components/ApiReferenceButton";
 import { usePlaygroundBaseUrl } from "@/components/playground/utils/select-environment";
-import { useCurrentVersionId, useCurrentVersionSlug } from "@/state/navigation";
+import { useCurrentVersionSlug } from "@/state/navigation";
 
 export function EndpointRequestSnippet({
   example,
