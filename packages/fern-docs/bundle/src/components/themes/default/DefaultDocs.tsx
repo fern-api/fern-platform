@@ -178,13 +178,24 @@ function MobileMenu({ children }: { children: React.ReactNode }) {
     return (-1 * calculateWidth(value, width)) / width;
   });
 
+  // reset the transform when the menu is closed
   React.useLayoutEffect(() => {
-    if (mainRef.current) {
-      if (!open) {
+    if (mainRef.current && !open) {
+      mainRef.current.style.transform = "";
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open]);
+
+  // reset the transform when the component unmounts
+  React.useEffect(
+    () => () => {
+      if (mainRef.current) {
         mainRef.current.style.transform = "";
       }
-    }
-  }, [animation, mainRef, open]);
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
+  );
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
