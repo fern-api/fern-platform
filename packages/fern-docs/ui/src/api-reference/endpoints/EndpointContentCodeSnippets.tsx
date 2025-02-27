@@ -22,7 +22,7 @@ import {
   useRef,
 } from "react";
 import { FernErrorTag } from "../../components/FernErrorBoundary";
-import { PlaygroundButton } from "../../playground/PlaygroundButton";
+import { PlaygroundButtonTray } from "../../playground/PlaygroundButtonTray";
 import { usePlaygroundBaseUrl } from "../../playground/utils/select-environment";
 import { AudioExample } from "../examples/AudioExample";
 import {
@@ -216,13 +216,7 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<
             </>
           ) : undefined
         }
-        tryIt={
-          node != null ? (
-            <>
-              <PlaygroundButton state={node} />
-            </>
-          ) : undefined
-        }
+        tryIt={node != null ? <PlaygroundButtonTray state={node} /> : undefined}
         code={resolveEnvironmentUrlInCodeSnippet(
           endpoint,
           requestCodeSnippet,

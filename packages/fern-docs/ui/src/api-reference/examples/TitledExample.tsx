@@ -85,11 +85,7 @@ export const TitledExample = forwardRef<
         </div>
       </div>
       {children}
-      {tryIt ? (
-        <div className="border-card-border bg-tag-default-soft flex h-10 justify-end border-t p-2">
-          <div className="flex max-w-[76px] items-center">{tryIt}</div>
-        </div>
-      ) : undefined}
+      {tryIt}
     </div>
   );
 });
