@@ -1455,6 +1455,9 @@ importers:
       '@fern-platform/configs':
         specifier: workspace:*
         version: link:../../configs
+      '@types/estree-jsx':
+        specifier: ^1.0.5
+        version: 1.0.5
       '@types/node':
         specifier: ^18.11.9
         version: 18.19.33

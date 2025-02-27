@@ -66,10 +66,9 @@ export const rehypeExtractAsides: Unified.Plugin<[], Hast.Root> = () => {
 
 function mdxJsEsmExport(
   name: string,
-  init?: Estree.Expression,
+  fragment: Estree.JSXFragment,
   identifiers: string[] = []
 ): Hast.MdxjsEsm {
-  const jsxIdentifiers = identifiers.filter((id) => id.match(/^[A-Z]/));
   return {
     type: "mdxjsEsm",
     value: "",
@@ -97,21 +96,18 @@ function mdxJsEsmExport(
                       type: "VariableDeclarator",
                       id: {
                         type: "ObjectPattern",
-                        properties: jsxIdentifiers.map((name) => ({
-                          type: "Property",
-                          method: false,
-                          shorthand: true,
-                          computed: false,
-                          key: {
-                            type: "Identifier",
-                            name,
-                          },
-                          kind: "init",
-                          value: {
-                            type: "Identifier",
-                            name,
-                          },
-                        })),
+                        properties: identifiers.map(
+                          (name) =>
+                            ({
+                              type: "Property",
+                              method: false,
+                              shorthand: true,
+                              computed: false,
+                              key: { type: "Identifier", name },
+                              kind: "init",
+                              value: { type: "Identifier", name },
+                            }) as const
+                        ),
                       },
                       init: {
                         type: "CallExpression",
@@ -137,7 +133,7 @@ function mdxJsEsmExport(
                 },
                 {
                   type: "ReturnStatement",
-                  argument: init,
+                  argument: fragment,
                 },
               ],
             },

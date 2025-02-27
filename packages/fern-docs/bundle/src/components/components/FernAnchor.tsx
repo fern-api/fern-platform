@@ -39,7 +39,7 @@ export function FernAnchor({
 }: React.PropsWithChildren<FernAnchorProps>) {
   const isDisabled = useIsFernAnchorDisabled();
   const { copyToClipboard, wasJustCopied } = useCopyToClipboard(() =>
-    new URL(href, window.location.href).toString()
+    String(new URL(href, window.location.href))
   );
 
   const [forceMount, setIsMounted] = useState<true | undefined>(

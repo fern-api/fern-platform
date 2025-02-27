@@ -78,3 +78,10 @@ it("should serialize tabs.mdx", async () => {
   );
   expect(deterministic(result?.code)).toMatchSnapshot();
 });
+
+it("should serialize cards.mdx", async () => {
+  const result = await serializeMdx(
+    readFileSync(join(__dirname, "tests", "cards.mdx"), "utf-8")
+  );
+  expect(deterministic(result?.code)).toMatchSnapshot();
+});

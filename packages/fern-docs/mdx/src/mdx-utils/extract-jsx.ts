@@ -13,8 +13,17 @@ export function extractJsxFromEstree(estree: Program): {
 
   walk(estree, {
     enter(node) {
-      if (node.type === "JSXIdentifier") {
-        jsxElements.add(node.name);
+      if (node.type === "JSXOpeningElement") {
+        walk(node.name, {
+          enter(child) {
+            if (child.type === "JSXIdentifier") {
+              jsxElements.add(child.name);
+            }
+          },
+        });
+        this.skip();
+      } else if (node.type === "Identifier") {
+        esmElements.add(node.name);
       }
     },
   });
