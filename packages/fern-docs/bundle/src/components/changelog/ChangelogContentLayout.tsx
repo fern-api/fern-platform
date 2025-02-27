@@ -27,7 +27,7 @@ export function ChangelogContentLayout({
       </aside>
       <div className="w-content-width">
         {stickyContent != null && (
-          <div className={cn("md:hidden")}>{stickyContent}</div>
+          <div className="md:hidden">{stickyContent}</div>
         )}
         {children}
       </div>

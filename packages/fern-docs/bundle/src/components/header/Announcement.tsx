@@ -3,7 +3,8 @@
 import React from "react";
 
 import { X } from "lucide-react";
-import { AnimatePresence, motion } from "motion/react";
+import { AnimatePresence, LazyMotion, domAnimation } from "motion/react";
+import * as m from "motion/react-m";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
@@ -25,20 +26,20 @@ export const useAnnouncementStore = create<AnnouncementStore>()(
 );
 
 const AnnouncementInternal = React.forwardRef<
-  React.ComponentRef<typeof motion.div>,
+  React.ComponentRef<typeof m.div>,
   {
     dismiss: () => void;
     children?: React.ReactNode;
-  } & Omit<React.ComponentPropsWithoutRef<typeof motion.div>, "children">
+  } & Omit<React.ComponentPropsWithoutRef<typeof m.div>, "children">
 >(({ dismiss, className, children, ...props }, forwardedRef) => {
   return (
-    <motion.div
+    <m.div
       suppressHydrationWarning
       ref={forwardedRef}
       {...props}
       className={cn("overflow-hidden", className)}
     >
-      <motion.div
+      <m.div
         className="bg-(color:--accent) text-(color:--accent-contrast) flex min-h-8 items-center px-4 md:px-6 lg:px-8"
         exit={{ y: "-100%" }}
       >
@@ -51,13 +52,13 @@ const AnnouncementInternal = React.forwardRef<
           icon={<X className="!text-(color:--accent-contrast)" />}
           onClick={dismiss}
         />
-      </motion.div>
-    </motion.div>
+      </m.div>
+    </m.div>
   );
 });
 AnnouncementInternal.displayName = "AnnouncementInternal";
 
-const MotionAnnouncement = motion.create(AnnouncementInternal, {
+const MotionAnnouncement = m.create(AnnouncementInternal, {
   forwardMotionProps: true,
 });
 
@@ -85,22 +86,24 @@ export function Announcement({
   }
 
   return (
-    <AnimatePresence mode="popLayout">
-      {!isDismissed && isClientSide && (
-        <MotionAnnouncement
-          suppressHydrationWarning
-          className={cn(
-            "fern-announcement [&_.fern-mdx-link]:text-inherit",
-            className
-          )}
-          exit={{ height: 0 }}
-          dismiss={() => {
-            useAnnouncementStore.setState({ announcement });
-          }}
-        >
-          {children ?? announcement}
-        </MotionAnnouncement>
-      )}
-    </AnimatePresence>
+    <LazyMotion features={domAnimation} strict>
+      <AnimatePresence mode="popLayout">
+        {!isDismissed && isClientSide && (
+          <MotionAnnouncement
+            suppressHydrationWarning
+            className={cn(
+              "fern-announcement [&_.fern-mdx-link]:text-inherit",
+              className
+            )}
+            exit={{ height: 0 }}
+            dismiss={() => {
+              useAnnouncementStore.setState({ announcement });
+            }}
+          >
+            {children ?? announcement}
+          </MotionAnnouncement>
+        )}
+      </AnimatePresence>
+    </LazyMotion>
   );
 }

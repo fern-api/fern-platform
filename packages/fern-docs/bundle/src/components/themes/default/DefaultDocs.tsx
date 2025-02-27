@@ -6,12 +6,21 @@ import React from "react";
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogOverlay,
   DialogPortal,
   DialogTitle,
 } from "@radix-ui/react-dialog";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
-import { motion, useDragControls } from "motion/react";
+import fastdom from "fastdom";
+import {
+  motion,
+  useAnimationControls,
+  useDragControls,
+  useMotionValue,
+  useMotionValueEvent,
+  useTransform,
+} from "motion/react";
 
 import { cn } from "@fern-docs/components";
 import { useIsDesktop } from "@fern-ui/react-commons/src/useBreakpoint";
@@ -24,6 +33,10 @@ import {
 } from "@/state/mobile";
 
 import { FernHeader } from "./fern-header";
+
+const MainCtx = React.createContext<React.RefObject<HTMLDivElement | null>>({
+  current: null,
+});
 
 export default function DefaultDocs({
   header,
@@ -42,12 +55,13 @@ export default function DefaultDocs({
   isSidebarFixed?: boolean;
   isHeaderDisabled?: boolean;
 }) {
+  const mainRef = React.useRef<HTMLDivElement>(null);
   const hideAsides = useShouldHideAsides();
   return (
     <>
       <FernHeader
         className={cn(
-          "bg-header-background border-border-concealed fixed inset-x-0 top-0 z-30 border-b backdrop-blur-lg",
+          "bg-header-background border-border-concealed pointer-events-auto fixed inset-x-0 top-0 z-30 border-b backdrop-blur-lg",
           { "lg:hidden": isHeaderDisabled }
         )}
       >
@@ -58,16 +72,18 @@ export default function DefaultDocs({
         <HeaderTabsRoot>{tabs}</HeaderTabsRoot>
       </FernHeader>
 
-      <main className="mt-(--header-height) relative z-0">
-        <div
-          className={cn("max-w-page-width-padded mx-auto flex flex-row", {
-            "[&>aside]:lg:hidden": hideAsides,
-          })}
-        >
-          <SideNav fixed={isSidebarFixed}>{sidebar}</SideNav>
-          {children}
-        </div>
-      </main>
+      <MainCtx.Provider value={mainRef}>
+        <main ref={mainRef} className="mt-(--header-height) relative z-0">
+          <div
+            className={cn("max-w-page-width-padded mx-auto flex flex-row", {
+              "[&>aside]:lg:hidden": hideAsides,
+            })}
+          >
+            <SideNav fixed={isSidebarFixed}>{sidebar}</SideNav>
+            {children}
+          </div>
+        </main>
+      </MainCtx.Provider>
 
       {/* Enables footer DOM injection */}
       <footer id="fern-footer" />
@@ -119,47 +135,72 @@ function SideNav({
   );
 }
 
+function calculateWidth(value: number | string, sidebarWidth: number) {
+  if (typeof value === "string" && value.endsWith("%")) {
+    value = (parseFloat(value.slice(0, -1)) / 100) * sidebarWidth;
+  }
+  if (typeof value === "number") {
+    return value - sidebarWidth;
+  }
+  return 0;
+}
+
 function MobileMenu({ children }: { children: React.ReactNode }) {
+  const animation = useAnimationControls();
   const [open, setOpen] = useIsDismissableSidebarOpen();
   const dragControls = useDragControls();
+  const x = useMotionValue(0);
+
+  const sidebarRef = React.useRef<HTMLDivElement>(null);
+  const mainRef = React.useContext(MainCtx);
+
+  // const translateX = useTransform(x, (value) =>
+  //   calculateWidth(value, sidebarRef.current?.clientWidth ?? 0)
+  // );
+
+  useMotionValueEvent(x, "change", (value) => {
+    fastdom.mutate(() => {
+      if (mainRef.current && sidebarRef.current) {
+        mainRef.current.style.transform = `translateX(${Math.min(
+          0,
+          calculateWidth(value, sidebarRef.current.clientWidth)
+        )}px)`;
+      }
+    });
+  });
+
+  const opacity = useTransform(x, (value) => {
+    const width = sidebarRef.current?.clientWidth ?? 0;
+    if (width <= 0) {
+      return 0;
+    }
+    return (-1 * calculateWidth(value, width)) / width;
+  });
+
+  React.useLayoutEffect(() => {
+    if (mainRef.current) {
+      if (!open) {
+        mainRef.current.style.transform = "";
+      }
+    }
+  }, [animation, mainRef, open]);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogPortal>
-        <DialogOverlay className="bg-background/70 fixed inset-0 z-40" />
+        <DialogOverlay
+          className="bg-background/70 fixed inset-0 top-[calc(var(--header-height)+1px)] z-40"
+          asChild
+        >
+          <motion.div style={{ opacity }}></motion.div>
+        </DialogOverlay>
         <DialogContent
-          className={cn(
-            "sm:w-sidebar-width bg-background/70 border-border-default fixed inset-y-0 right-0 z-50 w-full max-w-[calc(100dvw-3rem)] transform border-l backdrop-blur-xl"
-          )}
-          // style={{
-          //   transform:
-          //     dragStartX === -1 || dragX < 0
-          //       ? undefined
-          //       : `translateX(${dragX}px)`,
-          // }}
-          // draggable={false}
-          // onPointerDown={(event) => {
-          //   setDragStartX(event.clientX);
-          // }}
-          // onPointerMove={(event) => {
-          //   if (dragStartX === -1) {
-          //     return;
-          //   }
-          //   setDragX(event.clientX - dragStartX);
-          // }}
-          // onPointerUp={(e) => {
-          //   if (dragX > e.currentTarget.clientWidth / 2) {
-          //     void animate.start("closed");
-          //     setOpen(false);
-          //   }
-
-          //   void animate.start("open");
-          //   setDragStartX(-1);
-          //   setDragX(0);
-          // }}
+          className="sm:w-sidebar-width bg-background/70 border-border-concealed fixed inset-y-0 right-0 top-[calc(var(--header-height)+1px)] z-50 w-full max-w-[calc(100dvw-3rem)] transform border-l backdrop-blur-xl"
           asChild
         >
           <motion.div
+            ref={sidebarRef}
+            style={{ x }}
             drag="x"
             dragSnapToOrigin
             dragElastic={{ left: 0 }}
@@ -167,34 +208,31 @@ function MobileMenu({ children }: { children: React.ReactNode }) {
             dragControls={dragControls}
             onDragEnd={(event, info) => {
               if (event.target instanceof HTMLElement) {
-                if (info.offset.x > event.target.clientWidth / 2) {
-                  console.log("closing");
-                  setOpen(false);
+                if (
+                  info.offset.x > event.target.clientWidth / 2 ||
+                  info.velocity.x > 20
+                ) {
+                  void animation
+                    .start({
+                      x: "100%",
+                    })
+                    .then(() => {
+                      setOpen(false);
+                    });
                 }
               }
             }}
-            variants={{
-              open: {
-                x: 0,
-                transition: {
-                  ease: "easeOut",
-                  easings: [0.25, 0.46, 0.45, 0.94],
-                },
-              },
-              closed: {
-                x: "100%",
-                transition: {
-                  ease: "easeIn",
-                  easings: [0.25, 0.46, 0.45, 0.94],
-                },
-              },
-            }}
+            variants={{ open: { x: 0 }, closed: { x: "100%" } }}
             initial="closed"
             animate="open"
-            exit="closed"
+            transition={{
+              ease: "easeInOut",
+              easings: [0.25, 0.46, 0.45, 0.94],
+            }}
           >
             <VisuallyHidden>
               <DialogTitle>Menu</DialogTitle>
+              <DialogDescription>Navigation menu for docs.</DialogDescription>
             </VisuallyHidden>
             {children}
           </motion.div>

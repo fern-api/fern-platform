@@ -1,4 +1,10 @@
-import { PropsWithChildren, ReactNode, memo, useEffect } from "react";
+import {
+  PropsWithChildren,
+  ReactNode,
+  memo,
+  useDeferredValue,
+  useEffect,
+} from "react";
 import { Snippet } from "react-instantsearch";
 
 import { TooltipPortal } from "@radix-ui/react-tooltip";
@@ -30,7 +36,7 @@ export const CommandSearchHits = ({
   const isQueryEmpty = Command.useCommandState(
     (state) => state.search.trimStart().length === 0
   );
-  const items = useSearchHits();
+  const items = useDeferredValue(useSearchHits());
   const triggerSelection = Command.useTriggerSelection();
   useEffect(() => {
     triggerSelection();

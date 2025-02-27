@@ -8,7 +8,8 @@ import React, {
 } from "react";
 
 import { Check, Link2 } from "lucide-react";
-import { AnimatePresence, motion } from "motion/react";
+import { AnimatePresence, LazyMotion, domAnimation } from "motion/react";
+import * as m from "motion/react-m";
 
 import { cn } from "@fern-docs/components";
 import { useCopyToClipboard } from "@fern-ui/react-commons";
@@ -54,16 +55,18 @@ export function Step({
           <span className="fern-anchor-icon">
             {hover ? <Link2 /> : <span>{index}</span>}
           </span>
-          <AnimatePresence>
-            {wasJustCopied && (
-              <motion.div
-                className="fern-anchor-icon copied"
-                exit={{ opacity: 0 }}
-              >
-                <Check />
-              </motion.div>
-            )}
-          </AnimatePresence>
+          <LazyMotion features={domAnimation}>
+            <AnimatePresence>
+              {wasJustCopied && (
+                <m.div
+                  className="fern-anchor-icon copied"
+                  exit={{ opacity: 0 }}
+                >
+                  <Check />
+                </m.div>
+              )}
+            </AnimatePresence>
+          </LazyMotion>
         </FernLink>
       )}
       {title != null && (

@@ -2,7 +2,8 @@ import { FC, FormEvent, useCallback, useMemo, useRef, useState } from "react";
 
 import { useAtom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
-import { motion } from "motion/react";
+import { LazyMotion, domAnimation } from "motion/react";
+import * as m from "motion/react-m";
 
 import { cn } from "@fern-docs/components";
 import {
@@ -15,7 +16,7 @@ import {
 } from "@fern-docs/components";
 import { useKeyboardPress } from "@fern-ui/react-commons";
 
-const MotionFernRadioGroup = motion.create(FernRadioGroup);
+const MotionFernRadioGroup = m.create(FernRadioGroup);
 
 interface FeedbackFormProps {
   isHelpful: "yes" | "no";
@@ -137,16 +138,18 @@ export const FeedbackForm: FC<FeedbackFormProps> = ({
       </label>
 
       {feedbackOptions.length > 0 ? (
-        <MotionFernRadioGroup
-          layoutId={legend}
-          id="feedbackReason"
-          className="mt-4"
-          value={feedbackId}
-          onValueChange={setFeedbackId}
-          options={feedbackOptions}
-          autoFocus={true}
-          compact={layoutDensity === "condensed"}
-        />
+        <LazyMotion features={domAnimation} strict>
+          <MotionFernRadioGroup
+            layoutId={legend}
+            id="feedbackReason"
+            className="mt-4"
+            value={feedbackId}
+            onValueChange={setFeedbackId}
+            options={feedbackOptions}
+            autoFocus={true}
+            compact={layoutDensity === "condensed"}
+          />
+        </LazyMotion>
       ) : (
         <FernTextarea
           ref={textareaRef}

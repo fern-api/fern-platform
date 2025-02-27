@@ -14,8 +14,11 @@ export function MobileMenuButton({ className }: { className?: string }) {
   const toggleDismissableSidebar = useToggleDismissableSidebar();
   return (
     <Button
-      className={cn("shrink-0 rounded-full lg:hidden", className)}
-      onClick={toggleDismissableSidebar}
+      className={cn("shrink-0 lg:hidden", className)}
+      onClickCapture={(e) => {
+        e.stopPropagation();
+        toggleDismissableSidebar();
+      }}
       variant={isDismissableSidebarOpen ? "default" : "ghost"}
       size="icon"
     >

@@ -1,7 +1,8 @@
 import { ReactElement } from "react";
 
 import { Mic, RotateCcw } from "lucide-react";
-import { AnimatePresence, motion } from "motion/react";
+import { AnimatePresence, LazyMotion, domAnimation } from "motion/react";
+import * as m from "motion/react-m";
 
 import { FernButton, FernInput, FernInputProps } from "@fern-docs/components";
 
@@ -29,46 +30,48 @@ export function PlaygroundMicrophoneForm({
           <PlaygroundAudioControls audioUrl={audioUrl} />
         )}
         <div className="relative flex-1">
-          <AnimatePresence initial={false}>
-            {!isRecording && (
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 10 }}
-                className="w-full"
-              >
-                <FernInput
-                  {...props}
+          <LazyMotion features={domAnimation}>
+            <AnimatePresence initial={false}>
+              {!isRecording && (
+                <m.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 10 }}
                   className="w-full"
-                  disabled={props.disabled}
-                />
-              </motion.div>
-            )}
-          </AnimatePresence>
-          <AnimatePresence initial={false}>
-            {isRecording && (
-              <motion.div
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                className="bg-primary text-body rounded-2 absolute inset-0 flex w-full items-center px-2"
-              >
-                <div className="flex-1">
-                  <div className="flex items-center gap-4">
-                    <div className="h-3 w-full">
-                      <WaveformAnimation volume={volume} />
+                >
+                  <FernInput
+                    {...props}
+                    className="w-full"
+                    disabled={props.disabled}
+                  />
+                </m.div>
+              )}
+            </AnimatePresence>
+            <AnimatePresence initial={false}>
+              {isRecording && (
+                <m.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  className="bg-primary text-body rounded-2 absolute inset-0 flex w-full items-center px-2"
+                >
+                  <div className="flex-1">
+                    <div className="flex items-center gap-4">
+                      <div className="h-3 w-full">
+                        <WaveformAnimation volume={volume} />
+                      </div>
+                      <span className="font-mono text-sm">
+                        {Math.floor(elapsedTime / 60)
+                          .toString()
+                          .padStart(2, "0")}
+                        :{(elapsedTime % 60).toString().padStart(2, "0")}
+                      </span>
                     </div>
-                    <span className="font-mono text-sm">
-                      {Math.floor(elapsedTime / 60)
-                        .toString()
-                        .padStart(2, "0")}
-                      :{(elapsedTime % 60).toString().padStart(2, "0")}
-                    </span>
                   </div>
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
+                </m.div>
+              )}
+            </AnimatePresence>
+          </LazyMotion>
         </div>
         <FernButton
           icon={

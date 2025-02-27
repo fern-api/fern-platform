@@ -9,7 +9,13 @@ import {
 
 import { OrthographicCamera } from "@react-three/drei";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import { motion, useMotionValueEvent, useSpring } from "motion/react";
+import {
+  LazyMotion,
+  domAnimation,
+  useMotionValueEvent,
+  useSpring,
+} from "motion/react";
+import * as m from "motion/react-m";
 import * as THREE from "three";
 
 import { cn } from "@fern-docs/components";
@@ -64,21 +70,23 @@ export default function WaveformComplex({
   }, [canvasWrapper]);
 
   return (
-    <motion.div
-      className={cn("relative w-full", className, "h-[500px]")}
-      ref={canvasWrapper}
-      animate={{
-        filter: `blur(${blur}px)`,
-      }}
-      transition={{ ...springSettings }}
-    >
-      {displayCanvas && (
-        <Canvas className="absolute inset-0">
-          <Camera zoom={zoom} />
-          <Scene colors={colors} speed={speed} />
-        </Canvas>
-      )}
-    </motion.div>
+    <LazyMotion features={domAnimation} strict>
+      <m.div
+        className={cn("relative w-full", className, "h-[500px]")}
+        ref={canvasWrapper}
+        animate={{
+          filter: `blur(${blur}px)`,
+        }}
+        transition={{ ...springSettings }}
+      >
+        {displayCanvas && (
+          <Canvas className="absolute inset-0">
+            <Camera zoom={zoom} />
+            <Scene colors={colors} speed={speed} />
+          </Canvas>
+        )}
+      </m.div>
+    </LazyMotion>
   );
 }
 

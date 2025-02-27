@@ -5,7 +5,8 @@ import React from "react";
 
 import * as Tooltip from "@radix-ui/react-tooltip";
 import { Check, Link2 } from "lucide-react";
-import { AnimatePresence, motion } from "motion/react";
+import { AnimatePresence, LazyMotion, domAnimation } from "motion/react";
+import * as m from "motion/react-m";
 
 import { useCopyToClipboard } from "@fern-ui/react-commons";
 
@@ -85,16 +86,18 @@ export function FernAnchor({
                   <Link2 />
                 </span>
               )}
-              <AnimatePresence onExitComplete={handleExitComplete}>
-                {wasJustCopied && (
-                  <motion.div
-                    className="fern-anchor-icon copied"
-                    exit={{ opacity: 0, x: -8 }}
-                  >
-                    <Check />
-                  </motion.div>
-                )}
-              </AnimatePresence>
+              <LazyMotion features={domAnimation} strict>
+                <AnimatePresence onExitComplete={handleExitComplete}>
+                  {wasJustCopied && (
+                    <m.div
+                      className="fern-anchor-icon copied"
+                      exit={{ opacity: 0, x: -8 }}
+                    >
+                      <Check />
+                    </m.div>
+                  )}
+                </AnimatePresence>
+              </LazyMotion>
             </FernLink>
           </Tooltip.Content>
         </Tooltip.Portal>

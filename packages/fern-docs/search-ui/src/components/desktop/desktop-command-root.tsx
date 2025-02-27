@@ -12,7 +12,6 @@ import { composeRefs } from "@radix-ui/react-compose-refs";
 
 import * as Command from "../cmdk";
 import { CommandUxProvider } from "../shared/command-ux";
-import "./desktop.scss";
 
 export const DesktopCommandRoot = forwardRef<
   HTMLDivElement,
