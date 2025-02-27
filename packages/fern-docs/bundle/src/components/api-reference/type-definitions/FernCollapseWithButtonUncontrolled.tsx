@@ -3,15 +3,15 @@
 import React from "react";
 
 import { FernButtonProps } from "@fern-docs/components";
-import { useBooleanState } from "@fern-ui/react-commons";
+import {
+  useBooleanState,
+  useIsomorphicLayoutEffect,
+} from "@fern-ui/react-commons";
 
 import { useCurrentAnchor } from "@/hooks/use-anchor";
 
 import { FernCollapseWithButton } from "./FernCollapseWithButton";
 import { useTypeDefinitionContext } from "./TypeDefinitionContext";
-
-const useIsomorphicLayoutEffect =
-  typeof window !== "undefined" ? React.useLayoutEffect : React.useEffect;
 
 export function FernCollapseWithButtonUncontrolled({
   showText,

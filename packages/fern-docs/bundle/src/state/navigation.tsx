@@ -7,7 +7,7 @@ import { useHydrateAtoms } from "jotai/utils";
 import { StoreApi, UseBoundStore, create } from "zustand";
 
 import { FernNavigation } from "@fern-api/fdr-sdk";
-import { useLazyRef } from "@fern-ui/react-commons";
+import { useIsomorphicLayoutEffect, useLazyRef } from "@fern-ui/react-commons";
 
 import {
   ExpandedNodesState,
@@ -98,9 +98,6 @@ export function useCurrentVersionId() {
 export function useCurrentVersionSlug() {
   return useAtomValue(currentVersionSlugAtom);
 }
-
-const useIsomorphicLayoutEffect =
-  typeof window !== "undefined" ? React.useLayoutEffect : React.useEffect;
 
 export function SetCurrentNavigationNode({
   sidebarRootNodeId,

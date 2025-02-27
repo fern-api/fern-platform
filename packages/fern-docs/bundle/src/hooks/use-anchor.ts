@@ -1,7 +1,6 @@
 import React from "react";
 
-const useIsomorphicLayoutEffect =
-  typeof window !== "undefined" ? React.useLayoutEffect : React.useEffect;
+import { useIsomorphicLayoutEffect } from "@fern-ui/react-commons";
 
 export function useCurrentAnchor() {
   const [anchor, setAnchor] = React.useState<string>("");

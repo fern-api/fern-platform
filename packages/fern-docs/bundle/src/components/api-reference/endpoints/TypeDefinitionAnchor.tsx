@@ -5,6 +5,7 @@ import React from "react";
 import { cn } from "@fern-docs/components";
 
 import { FernAnchor } from "@/components/components/FernAnchor";
+import { isomorphicRequestIdleCallback } from "@/components/util/isomorphicRequestIdleCallback";
 
 import {
   useHref,
@@ -46,13 +47,6 @@ export const SectionContainer = React.forwardRef<
 
 SectionContainer.displayName = "SectionContainer";
 
-const rIC = (fn: () => void, timeout = 0) => {
-  if (typeof requestIdleCallback !== "undefined") {
-    return requestIdleCallback(fn, { timeout });
-  }
-  return setTimeout(fn, timeout);
-};
-
 export function PropertyContainer({
   children,
   ...props
@@ -64,7 +58,7 @@ export function PropertyContainer({
   const ref = React.useRef<HTMLDivElement>(null);
   React.useEffect(() => {
     if (isActive) {
-      rIC(() => {
+      isomorphicRequestIdleCallback(() => {
         ref.current?.scrollIntoView({ behavior: "smooth", block: "center" });
       }, 150);
     }

@@ -1,15 +1,11 @@
 "use client";
 
-import React from "react";
-
 import { atom, useAtomValue, useSetAtom } from "jotai";
 
 import { FernDocs } from "@fern-api/fdr-sdk";
+import { useIsomorphicLayoutEffect } from "@fern-ui/react-commons";
 
 const layoutAtom = atom<FernDocs.Layout>("guide");
-
-const useIsomorphicLayoutEffect =
-  typeof window !== "undefined" ? React.useLayoutEffect : React.useEffect;
 
 export function SetLayout({ value }: { value: FernDocs.Layout }) {
   const setLayout = useSetAtom(layoutAtom);

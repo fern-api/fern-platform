@@ -9,6 +9,7 @@ import type { FernNavigation } from "@fern-api/fdr-sdk";
 import { EMPTY_ARRAY } from "@fern-api/ui-core-utils";
 import { Badge } from "@fern-docs/components";
 import { addLeadingSlash } from "@fern-docs/utils";
+import { useIsomorphicLayoutEffect } from "@fern-ui/react-commons";
 
 import { HideBuiltWithFern } from "@/components/built-with-fern";
 import { useCurrentAnchor } from "@/hooks/use-anchor";
@@ -30,9 +31,6 @@ function flattenChangelogEntries(
 }
 
 const CHANGELOG_PAGE_SIZE = 10;
-
-const useIsomorphicLayoutEffect =
-  typeof window !== "undefined" ? React.useLayoutEffect : React.useEffect;
 
 export default function ChangelogPageClient({
   node,

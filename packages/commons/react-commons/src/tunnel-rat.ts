@@ -2,8 +2,7 @@ import React, { ReactNode } from "react";
 
 import { StoreApi, create } from "zustand";
 
-const useIsomorphicLayoutEffect =
-  typeof window !== "undefined" ? React.useLayoutEffect : React.useEffect;
+import { useIsomorphicLayoutEffect } from "./useIsomorphicLayoutEffect";
 
 type Props = {
   children: React.ReactNode;

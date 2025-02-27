@@ -33,7 +33,6 @@
     "es-toolkit": "^1.32.0",
     "fastdom": "^1.0.12",
     "immer": "^9.0.15",
-    "react": "19.0.0",
     "ts-essentials": "^10.0.1",
     "zustand": "^5.0.2"
   },
@@ -42,9 +41,13 @@
     "@types/node": "^18.11.9",
     "@types/react": "19.0.10",
     "depcheck": "^1.4.7",
+    "react": "19.0.0",
     "stylelint": "^16.1.0",
     "typescript": "^5",
     "vite": "^6.1.0",
     "vitest": "^3.0.5"
+  },
+  "peerDependencies": {
+    "react": "^19"
   }
 }

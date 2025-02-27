@@ -2,6 +2,8 @@
 
 import React from "react";
 
+import { isomorphicRequestIdleCallback } from "@/components/util/isomorphicRequestIdleCallback";
+
 import { useIsSelectedSidebarNode } from "./navigation";
 
 /**
@@ -65,8 +67,7 @@ export function useScrollSidebarNodeIntoView(
     };
 
     if (shouldScrollIntoView) {
-      const rIC = requestIdleCallback ?? setTimeout;
-      rIC(() => {
+      isomorphicRequestIdleCallback(() => {
         scrollTo();
       });
     }

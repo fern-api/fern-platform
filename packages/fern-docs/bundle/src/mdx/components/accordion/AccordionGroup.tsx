@@ -19,22 +19,27 @@ export function AccordionGroup({ children }: AccordionGroupProps) {
 
   React.useEffect(() => {
     if (anchor != null) {
-      if (items.some((item) => item.props.id === anchor)) {
+      if (items.some((tab) => tab.props.id === anchor)) {
         setActiveTabs((prev) =>
           prev.includes(anchor) ? prev : [...prev, anchor]
         );
       }
     }
-  }, [anchor, items]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [anchor]);
 
   const handleValueChange = React.useCallback((nextActiveTabs: string[]) => {
     setActiveTabs((prev) => {
       const added = nextActiveTabs.filter((tab) => !prev.includes(tab));
-      if (added[0]) {
+      if (added[0] != null) {
         window.location.hash = `#${added[0]}`;
-      } else {
+      }
+
+      const removed = prev.filter((tab) => !nextActiveTabs.includes(tab));
+      if (removed[0] != null) {
         window.history.replaceState(null, "", window.location.pathname);
       }
+
       return nextActiveTabs;
     });
   }, []);

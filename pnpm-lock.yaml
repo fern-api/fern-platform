@@ -473,9 +473,6 @@ importers:
       immer:
         specifier: ^9.0.15
         version: 9.0.21
-      react:
-        specifier: 19.0.0
-        version: 19.0.0
       ts-essentials:
         specifier: ^10.0.1
         version: 10.0.1(typescript@5.7.3)
@@ -495,6 +492,9 @@ importers:
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
+      react:
+        specifier: 19.0.0
+        version: 19.0.0
       stylelint:
         specifier: ^16.1.0
         version: 16.5.0(typescript@5.7.3)
@@ -1124,12 +1124,6 @@ importers:
       lucide-react:
         specifier: ^0.460.0
         version: 0.460.0(react@19.0.0)
-      react:
-        specifier: 19.0.0
-        version: 19.0.0
-      react-dom:
-        specifier: 19.0.0
-        version: 19.0.0(react@19.0.0)
       sonner:
         specifier: ^1.5.0
         version: 1.5.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
@@ -1215,6 +1209,12 @@ importers:
       jsdom:
         specifier: ^24.0.0
         version: 24.0.0
+      react:
+        specifier: 19.0.0
+        version: 19.0.0
+      react-dom:
+        specifier: 19.0.0
+        version: 19.0.0(react@19.0.0)
       react-test-renderer:
         specifier: ^19
         version: 19.0.0(react@19.0.0)
@@ -1328,6 +1328,9 @@ importers:
       '@types/react':
         specifier: 19.0.10
         version: 19.0.10
+      '@types/react-dom':
+        specifier: 19.0.4
+        version: 19.0.4(@types/react@19.0.10)
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
@@ -1758,15 +1761,9 @@ importers:
       '@types/react':
         specifier: 19.0.10
         version: 19.0.10
-      '@types/react-dom':
-        specifier: 19.0.4
-        version: 19.0.4(@types/react@19.0.10)
       react:
         specifier: 19.0.0
         version: 19.0.0
-      react-dom:
-        specifier: 19.0.0
-        version: 19.0.0(react@19.0.0)
 
   packages/fern-docs/utils:
     dependencies:

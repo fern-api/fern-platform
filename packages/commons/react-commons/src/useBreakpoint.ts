@@ -1,10 +1,9 @@
 import React from "react";
 
+import { useIsomorphicLayoutEffect } from "./useIsomorphicLayoutEffect";
+
 const MOBILE_BREAKPOINT = 768;
 const DESKTOP_BREAKPOINT = 1024;
-
-const useIsomorphicLayoutEffect =
-  typeof window !== "undefined" ? React.useLayoutEffect : React.useEffect;
 
 export function useMinWidth(breakpoint: number): boolean {
   const [largerThanBreakpoint, setLargerThanBreakpoint] =
