@@ -218,6 +218,7 @@ function withVercelEnv(config) {
     ...config,
     deploymentId: process.env.VERCEL_DEPLOYMENT_ID ?? "dpl_development", // skew protection
     productionBrowserSourceMaps: process.env.VERCEL_ENV === "preview",
+    reactProductionProfiling: process.env.VERCEL_ENV === "preview",
   };
 }
 
