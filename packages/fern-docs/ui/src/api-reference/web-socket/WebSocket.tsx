@@ -20,6 +20,7 @@ import { WithAside } from "../../contexts/api-page";
 import { useHref } from "../../hooks/useHref";
 import { Markdown } from "../../mdx/Markdown";
 import { PlaygroundButton } from "../../playground/PlaygroundButton";
+import { PlaygroundButtonTray } from "../../playground/PlaygroundButtonTray";
 import { usePlaygroundBaseUrl } from "../../playground/utils/select-environment";
 import { getSlugFromChildren } from "../../util/getSlugFromText";
 import { EndpointParameter } from "../endpoints/EndpointParameter";
@@ -376,7 +377,7 @@ const WebhookContent: FC<WebhookContentProps> = ({
                   title={"Handshake"}
                   tryIt={
                     node != null ? (
-                      <PlaygroundButton state={node} showWrapper={true} />
+                      <PlaygroundButtonTray state={node} />
                     ) : undefined
                   }
                   disableClipboard={true}

@@ -13,8 +13,7 @@ import { usePlaygroundSettings } from "../hooks/usePlaygroundSettings";
 export const PlaygroundButton: FC<{
   state: FernNavigation.NavigationNodeApiLeaf;
   className?: string;
-  showWrapper?: boolean;
-}> = ({ state, className, showWrapper = false }) => {
+}> = ({ state, className }) => {
   const openPlayground = useOpenPlayground();
   const isPlaygroundEnabled = useAtomValue(IS_PLAYGROUND_ENABLED_ATOM);
   const settings = usePlaygroundSettings(state.id ?? state);
@@ -23,7 +22,7 @@ export const PlaygroundButton: FC<{
     return null;
   }
 
-  const tryItButton = (
+  return (
     <FernTooltipProvider>
       <FernTooltip
         content={
@@ -60,17 +59,5 @@ export const PlaygroundButton: FC<{
         </FernButton>
       </FernTooltip>
     </FernTooltipProvider>
-  );
-
-  return (
-    <>
-      {showWrapper ? (
-        <div className="border-card-border bg-tag-default-soft flex h-10 justify-end border-t p-2">
-          <div className="flex max-w-[76px] items-center">{tryItButton}</div>
-        </div>
-      ) : (
-        tryItButton
-      )}
-    </>
   );
 };
