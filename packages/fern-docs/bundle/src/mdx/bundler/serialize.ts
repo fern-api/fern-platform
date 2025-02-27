@@ -259,7 +259,11 @@ export function serializeMdx(
           console.error(String(error));
           console.debug("Failed to serialize:", content);
         }
-        reject(error);
+        if (error instanceof Error) {
+          reject(error);
+        } else {
+          reject(new Error(String(error)));
+        }
       }
     }
   );
