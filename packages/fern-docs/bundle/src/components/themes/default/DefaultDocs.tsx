@@ -180,9 +180,33 @@ function MobileMenu({ children }: { children: React.ReactNode }) {
 
   // reset the transform when the menu is closed
   React.useLayoutEffect(() => {
-    if (mainRef.current && !open) {
+    if (!mainRef.current) {
+      return;
+    }
+
+    if (!open) {
       mainRef.current.style.transform = "";
     }
+
+    if (!sidebarRef.current) {
+      return;
+    }
+
+    // update the transform when the sidebar is resized
+    const observer = new ResizeObserver(([entry]) => {
+      if (open && mainRef.current && entry?.target === sidebarRef.current) {
+        mainRef.current.style.transform = `translateX(${Math.min(
+          0,
+          calculateWidth(x.get(), entry.contentRect.width)
+        )}px)`;
+      }
+    });
+
+    observer.observe(sidebarRef.current);
+
+    return () => {
+      observer.disconnect();
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open]);
 
