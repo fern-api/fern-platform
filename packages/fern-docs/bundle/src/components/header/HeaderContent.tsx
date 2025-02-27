@@ -56,7 +56,9 @@ export function HeaderContent({
         </nav>
       </FernButtonGroup>
 
-      <MobileMenuButton className="-ml-2" />
+      <div className="flex flex-1 items-center justify-end lg:hidden">
+        <MobileMenuButton className="-mx-2" />
+      </div>
     </div>
   );
 }

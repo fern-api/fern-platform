@@ -11,6 +11,7 @@ import {
   DialogTitle,
 } from "@radix-ui/react-dialog";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
+import { motion, useDragControls } from "motion/react";
 
 import { cn } from "@fern-docs/components";
 import { useIsDesktop } from "@fern-ui/react-commons/src/useBreakpoint";
@@ -120,8 +121,7 @@ function SideNav({
 
 function MobileMenu({ children }: { children: React.ReactNode }) {
   const [open, setOpen] = useIsDismissableSidebarOpen();
-  const [dragStartX, setDragStartX] = React.useState(-1);
-  const [dragX, setDragX] = React.useState(0);
+  const dragControls = useDragControls();
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -130,37 +130,74 @@ function MobileMenu({ children }: { children: React.ReactNode }) {
         <DialogContent
           className={cn(
             "sm:w-sidebar-width bg-background/70 border-border-default fixed inset-y-0 right-0 z-50 w-full max-w-[calc(100dvw-3rem)] transform border-l backdrop-blur-xl"
-            // "transition-transform duration-300 data-[state=closed]:translate-x-full data-[state=open]:translate-x-0"
           )}
-          style={{
-            transform:
-              dragStartX === -1 || dragX < 0
-                ? undefined
-                : `translateX(${dragX}px)`,
-          }}
-          draggable={false}
-          onPointerDown={(event) => {
-            setDragStartX(event.clientX);
-          }}
-          onPointerMove={(event) => {
-            if (dragStartX === -1) {
-              return;
-            }
-            setDragX(event.clientX - dragStartX);
-          }}
-          onPointerUp={(e) => {
-            if (dragX > e.currentTarget.clientWidth / 2) {
-              setOpen(false);
-            }
+          // style={{
+          //   transform:
+          //     dragStartX === -1 || dragX < 0
+          //       ? undefined
+          //       : `translateX(${dragX}px)`,
+          // }}
+          // draggable={false}
+          // onPointerDown={(event) => {
+          //   setDragStartX(event.clientX);
+          // }}
+          // onPointerMove={(event) => {
+          //   if (dragStartX === -1) {
+          //     return;
+          //   }
+          //   setDragX(event.clientX - dragStartX);
+          // }}
+          // onPointerUp={(e) => {
+          //   if (dragX > e.currentTarget.clientWidth / 2) {
+          //     void animate.start("closed");
+          //     setOpen(false);
+          //   }
 
-            setDragStartX(-1);
-            setDragX(0);
-          }}
+          //   void animate.start("open");
+          //   setDragStartX(-1);
+          //   setDragX(0);
+          // }}
+          asChild
         >
-          <VisuallyHidden>
-            <DialogTitle>Menu</DialogTitle>
-          </VisuallyHidden>
-          {children}
+          <motion.div
+            drag="x"
+            dragSnapToOrigin
+            dragElastic={{ left: 0 }}
+            dragConstraints={{ left: 0 }}
+            dragControls={dragControls}
+            onDragEnd={(event, info) => {
+              if (event.target instanceof HTMLElement) {
+                if (info.offset.x > event.target.clientWidth / 2) {
+                  console.log("closing");
+                  setOpen(false);
+                }
+              }
+            }}
+            variants={{
+              open: {
+                x: 0,
+                transition: {
+                  ease: "easeOut",
+                  easings: [0.25, 0.46, 0.45, 0.94],
+                },
+              },
+              closed: {
+                x: "100%",
+                transition: {
+                  ease: "easeIn",
+                  easings: [0.25, 0.46, 0.45, 0.94],
+                },
+              },
+            }}
+            initial="closed"
+            animate="open"
+            exit="closed"
+          >
+            <VisuallyHidden>
+              <DialogTitle>Menu</DialogTitle>
+            </VisuallyHidden>
+            {children}
+          </motion.div>
         </DialogContent>
       </DialogPortal>
     </Dialog>
