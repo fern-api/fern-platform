@@ -7,12 +7,12 @@ import { PageHeader } from "@/components/components/PageHeader";
 import { FooterLayout } from "@/components/layouts/FooterLayout";
 import { ReferenceLayout } from "@/components/layouts/ReferenceLayout";
 import { ScrollToTop } from "@/components/layouts/ScrollToTop";
-import { Prose } from "@/components/mdx/prose";
 import { renderTypeShorthand } from "@/components/type-shorthand";
+import { Markdown } from "@/mdx/components/Markdown";
+import { Prose } from "@/mdx/components/prose";
 import { MdxSerializer } from "@/server/mdx-serializer";
 import { SetLayout } from "@/state/layout";
 
-import { Markdown } from "../../../mdx/components/Markdown";
 import { EndpointSection } from "../endpoints/EndpointSection";
 import { ObjectProperty } from "../type-definitions/ObjectProperty";
 import {

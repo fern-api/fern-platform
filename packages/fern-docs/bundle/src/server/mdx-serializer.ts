@@ -9,7 +9,6 @@ import { serializeMdx as internalSerializeMdx } from "@/mdx/bundler/serialize";
 import { createCachedDocsLoader } from "@/server/docs-loader";
 
 import { cacheSeed } from "./cache-seed";
-import { hash } from "./hash";
 
 export type MdxSerializerOptions = {
   /**
