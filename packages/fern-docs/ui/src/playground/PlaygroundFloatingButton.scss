@@ -1,7 +1,26 @@
 @layer components {
   .playground-floating-button {
-    @apply bg-background ring-card-border fixed bottom-0 right-0 m-5 flex items-center gap-2 rounded-lg p-2 shadow-[0_2px_12px_0px,0px_1px_2px_0px] shadow-black/10 ring-2 transition-[box-shadow,background];
+    @apply bg-background ring-card-border fixed bottom-0 right-0 m-5 flex items-center gap-2 rounded-lg p-2 ring-1 transition-[box-shadow,background];
 
+    box-shadow:
+      0 2px 12px var(--grayscale-a3),
+      0 1px 2px var(--grayscale-a3),
+      inset 0 0 0 1px var(--grayscale-a6);
     color: var(--grayscale-a11);
+
+    &:hover {
+      .nav-arrow {
+        transform: translateY(-4px);
+      }
+
+      box-shadow:
+        0 2px 18px var(--grayscale-a6),
+        0 1px 2px var(--grayscale-a4),
+        inset 0 0 0 1px var(--grayscale-a6);
+    }
+  }
+
+  .nav-arrow {
+    transition: transform 0.2s ease-in-out;
   }
 }
