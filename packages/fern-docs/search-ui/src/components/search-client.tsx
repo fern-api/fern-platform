@@ -320,6 +320,7 @@ function InstantSearchWrapper({
       // CAUTION: do not turn routing on because it interferes with the nextjs app router.
       // for example, it will restore an old url even though you've navigated to a new page.
       routing={false}
+      future={{ preserveSharedStateOnUnmount: false }}
     >
       <Configure
         attributesToSnippet={["description:32", "content:32"]}

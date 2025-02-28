@@ -1,6 +1,6 @@
-import Head from "next/head";
+import { useServerInsertedHTML } from "next/navigation";
 import Script from "next/script";
-import { ReactNode, useEffect } from "react";
+import React, { ReactNode, useEffect } from "react";
 
 import { useSafeListenTrackEvents } from "./use-track";
 
@@ -37,30 +37,35 @@ export default function GoogleAnalytics(props: GAParams): ReactNode {
     sendGAEvent(dataLayerName, { event, properties });
   });
 
-  return (
-    <>
-      <Head>
-        <script
-          key="ga"
-          id="_fern-ga-init"
-          defer
-          dangerouslySetInnerHTML={{
-            __html: `
-          window['${dataLayerName}'] = window['${dataLayerName}'] || [];
-          function gtag(){window['${dataLayerName}'].push(arguments);}
-          gtag('js', new Date());
-          gtag('config', '${gaId}' ${debugMode ? ",{ 'debug_mode': true }" : ""});`,
-          }}
-          nonce={nonce}
-        />
-      </Head>
-      <Script
-        id="_fern-ga"
+  const inserted = React.useRef(false);
+  useServerInsertedHTML(() => {
+    if (inserted.current) return null;
+    inserted.current = true;
+
+    return (
+      <script
+        key="ga"
+        id="_fern-ga-init"
         defer
-        src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}
+        dangerouslySetInnerHTML={{
+          __html: `
+        window['${dataLayerName}'] = window['${dataLayerName}'] || [];
+        function gtag(){window['${dataLayerName}'].push(arguments);}
+        gtag('js', new Date());
+        gtag('config', '${gaId}' ${debugMode ? ",{ 'debug_mode': true }" : ""});`,
+        }}
         nonce={nonce}
       />
-    </>
+    );
+  });
+
+  return (
+    <Script
+      id="_fern-ga"
+      defer
+      src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}
+      nonce={nonce}
+    />
   );
 }
 

@@ -1,6 +1,6 @@
 import "server-only";
 
-import { Metadata, Viewport } from "next/types";
+import { Metadata } from "next/types";
 import React from "react";
 import { preload } from "react-dom";
 
@@ -169,31 +169,6 @@ async function getLaunchDarklyInfo(
       eventsUrl: unstable_launchDarklySettings.options?.["events-url"],
       hash: undefined,
     },
-  };
-}
-
-export async function generateViewport(props: {
-  params: Promise<{ host: string; domain: string }>;
-}): Promise<Viewport> {
-  const { host, domain } = await props.params;
-
-  const loader = await createCachedDocsLoader(host, domain);
-  const colors = await loader.getColors();
-  return {
-    themeColor: compact([
-      colors.dark?.themeColor
-        ? {
-            color: colors.dark.themeColor,
-            media: "(prefers-color-scheme: dark)",
-          }
-        : undefined,
-      colors.light?.themeColor
-        ? {
-            color: colors.light.themeColor,
-            media: "(prefers-color-scheme: light)",
-          }
-        : undefined,
-    ]),
   };
 }
 
