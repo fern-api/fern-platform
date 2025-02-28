@@ -1,4 +1,7 @@
+"use client";
+
 import { cn } from "@fern-docs/components";
+import { useIsMobile } from "@fern-ui/react-commons";
 
 import { SearchV2Trigger } from "@/state/search";
 
@@ -7,7 +10,7 @@ export function SidebarFixedItemsSection({
   versionSelect,
   className,
   showBorder,
-  showSearchBar,
+  showSearchBar: showSearchBarProp,
   showHeaderInSidebar,
 }: {
   logo: React.ReactNode;
@@ -17,6 +20,8 @@ export function SidebarFixedItemsSection({
   showHeaderInSidebar?: boolean;
   className?: string;
 }) {
+  const isMobile = useIsMobile();
+  const showSearchBar = showSearchBarProp && !isMobile;
   if (!showHeaderInSidebar && !showSearchBar) {
     return null;
   }

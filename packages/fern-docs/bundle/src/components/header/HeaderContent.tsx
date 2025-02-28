@@ -1,7 +1,10 @@
+"use client";
+
 import { CSSProperties } from "react";
 import React from "react";
 
 import { FernButtonGroup, cn } from "@fern-docs/components";
+import { useIsMobile } from "@fern-ui/react-commons";
 
 import { SearchV2Trigger } from "@/state/search";
 
@@ -24,6 +27,7 @@ export function HeaderContent({
   navbarLinks: React.ReactNode;
   loginButton?: React.ReactNode;
 }) {
+  const isMobile = useIsMobile();
   return (
     <div
       className={cn(
@@ -39,7 +43,7 @@ export function HeaderContent({
         </div>
       </div>
 
-      {showSearchBar && (
+      {(showSearchBar || isMobile) && (
         <SearchV2Trigger
           aria-label="Search"
           className="max-w-content-width hidden w-full min-w-0 shrink lg:inline-flex"

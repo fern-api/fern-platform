@@ -207,7 +207,7 @@ const GROUP_SELECTOR = "[data-cmdk-group]";
 const GROUP_ITEMS_SELECTOR = "[data-cmdk-group-items]";
 const GROUP_HEADING_SELECTOR = "[data-cmdk-group-heading]";
 const ITEM_SELECTOR = "[data-cmdk-item]";
-const VALID_ITEM_SELECTOR = `${ITEM_SELECTOR}:not([aria-disabled="true"])`;
+const VALID_ITEM_SELECTOR = `${GROUP_SELECTOR}:not([hidden]) ${ITEM_SELECTOR}:not([data-disabled="true"])`;
 const SELECT_EVENT = "cmdk-item-select";
 const VALUE_ATTR = "data-value";
 const defaultFilter: CommandProps["filter"] = (value, search, keywords) =>

@@ -96,7 +96,6 @@ export const DesktopCommandInput = forwardRef<
         selectionStateEnd.current = null;
       })}
       onFocus={composeEventHandlers(props.onFocus, () => {
-        console.log("onFocus");
         selectionStateStart.current = null;
         selectionStateEnd.current = null;
       })}

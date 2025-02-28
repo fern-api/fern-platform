@@ -98,7 +98,7 @@ export const DesktopSearchDialog = memo(
 
           <Dialog.Content
             className={cn(
-              "fixed inset-0 z-50 h-fit w-svw origin-center outline-none sm:left-1/2 sm:top-[15%] sm:w-[640px] sm:-translate-x-1/2"
+              "fixed inset-0 bottom-auto z-50 h-fit w-svw origin-center outline-none sm:left-1/2 sm:top-[15%] sm:w-[640px] sm:-translate-x-1/2"
             )}
             asChild={asChild}
             onEscapeKeyDown={(e) => {
