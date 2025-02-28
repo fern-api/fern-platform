@@ -10,7 +10,7 @@ export function SidebarFixedItemsSection({
   versionSelect,
   className,
   showBorder,
-  showSearchBar: showSearchBarProp,
+  showSearchBar,
   showHeaderInSidebar,
 }: {
   logo: React.ReactNode;
@@ -21,8 +21,7 @@ export function SidebarFixedItemsSection({
   className?: string;
 }) {
   const isMobile = useIsMobile();
-  const showSearchBar = showSearchBarProp && !isMobile;
-  if (!showHeaderInSidebar && !showSearchBar) {
+  if (!showHeaderInSidebar && !showSearchBar && !isMobile) {
     return null;
   }
   return (

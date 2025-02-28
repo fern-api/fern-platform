@@ -2,16 +2,9 @@
 
 import { usePathname } from "next/navigation";
 import React from "react";
+import { RemoveScroll } from "react-remove-scroll";
 
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogOverlay,
-  DialogPortal,
-  DialogTitle,
-} from "@radix-ui/react-dialog";
-import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
+import { Portal } from "@radix-ui/react-portal";
 import fastdom from "fastdom";
 import {
   AnimatePresence,
@@ -21,8 +14,10 @@ import {
   useMotionValueEvent,
   useTransform,
 } from "motion/react";
+import { noop } from "ts-essentials";
 
 import { cn } from "@fern-docs/components";
+import { useIsomorphicLayoutEffect } from "@fern-ui/react-commons";
 import { useIsDesktop } from "@fern-ui/react-commons/src/useBreakpoint";
 
 import { HeaderTabsRoot } from "@/components/header/HeaderTabsRoot";
@@ -135,16 +130,6 @@ function calculateWidth(value: number | string, sidebarWidth: number) {
   return 0;
 }
 
-const overlayVariants = {
-  closed: { opacity: 0 },
-  open: { opacity: 1 },
-};
-
-const dialogVariants = {
-  closed: { x: "100%" },
-  open: { x: 0 },
-};
-
 const transition = {
   ease: "easeInOut",
   easings: [0.25, 0.46, 0.45, 0.94],
@@ -163,26 +148,24 @@ function MobileMenu({ children }: { children: React.ReactNode }) {
   const dragControls = useDragControls();
   const x = useMotionValue(0);
 
-  const sidebarRef = React.useRef<HTMLDivElement>(null);
   const mainRef = React.useContext(MainCtx);
 
-  // const translateX = useTransform(x, (value) =>
-  //   calculateWidth(value, sidebarRef.current?.clientWidth ?? 0)
-  // );
-
+  const cancel = React.useRef<() => void>(noop);
   useMotionValueEvent(x, "change", (value) => {
-    fastdom.mutate(() => {
-      if (mainRef.current && sidebarRef.current) {
-        mainRef.current.style.transform = `translateX(${Math.min(
-          0,
-          calculateWidth(value, sidebarRef.current.clientWidth)
-        )}px)`;
-      }
+    cancel.current();
+    cancel.current = fastdom.mutate(() => {
+      const sidebar = document.getElementById("fern-sidebar");
+      if (!sidebar || !mainRef.current) return;
+      mainRef.current.style.willChange = "transform";
+      mainRef.current.style.transform = `translateX(${Math.min(
+        0,
+        calculateWidth(value, sidebar.clientWidth)
+      )}px)`;
     });
   });
 
   const opacity = useTransform(x, (value) => {
-    const width = sidebarRef.current?.clientWidth ?? 0;
+    const width = document.getElementById("fern-sidebar")?.clientWidth ?? 0;
     if (width <= 0) {
       return 0;
     }
@@ -190,23 +173,23 @@ function MobileMenu({ children }: { children: React.ReactNode }) {
   });
 
   // reset the transform when the menu is closed
-  React.useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (!mainRef.current) {
       return;
     }
 
-    if (!sidebarRef.current) {
-      return;
-    }
-
     const setTransform = (width: number) => {
-      if (open && mainRef.current && sidebarRef.current) {
+      if (open && mainRef.current) {
         const transform = Math.min(0, calculateWidth(x.get(), width));
+        mainRef.current.style.willChange = "transform";
         mainRef.current.style.transform = `translateX(${transform}px)`;
       }
     };
 
-    setTransform(sidebarRef.current.clientWidth);
+    const sidebar = document.getElementById("fern-sidebar");
+    if (!sidebar) return;
+
+    setTransform(sidebar.clientWidth);
 
     // update the transform when the sidebar is resized
     const observer = new ResizeObserver(([entry]) => {
@@ -215,12 +198,11 @@ function MobileMenu({ children }: { children: React.ReactNode }) {
       }
     });
 
-    observer.observe(sidebarRef.current);
+    observer.observe(sidebar);
 
     return () => {
       observer.disconnect();
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open]);
 
   // reset the transform when the component unmounts
@@ -228,92 +210,91 @@ function MobileMenu({ children }: { children: React.ReactNode }) {
     () => () => {
       if (mainRef.current) {
         mainRef.current.style.transform = "";
+        mainRef.current.style.willChange = "";
       }
+      cancel.current();
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   );
 
+  const [isLocked, setIsLocked] = React.useState(false);
+  useIsomorphicLayoutEffect(() => {
+    if (open) {
+      setIsLocked(true);
+    }
+  }, [open]);
+
   return (
-    <Dialog open={open} onOpenChange={setOpen} modal={open}>
-      <AnimatePresence
-        initial={false}
-        mode="popLayout"
-        propagate
-        onExitComplete={() => {
-          if (!open && mainRef.current) {
-            mainRef.current.style.transform = "";
-          }
-        }}
-      >
-        {open && (
-          <DialogPortal forceMount>
-            <DialogOverlay
+    <RemoveScroll forwardProps enabled={isLocked || open}>
+      <Portal className="fixed inset-0 z-0">
+        <AnimatePresence
+          mode="popLayout"
+          onExitComplete={() => {
+            setIsLocked(false);
+            if (mainRef.current) {
+              mainRef.current.style.transform = "";
+              mainRef.current.style.willChange = "";
+            }
+          }}
+        >
+          {open && (
+            <motion.div
               className="bg-background/70 fixed inset-0 top-[calc(var(--header-height)+1px)] z-30"
-              asChild
+              key="overlay"
+              style={{ opacity, touchAction: "none" }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={transition}
+              onPointerDown={(event) => dragControls.start(event)}
               onClick={() => {
                 const xValue = x.get() as string | number;
                 if (xValue === 0 || xValue === "0%") {
                   setOpen(false);
                 }
               }}
-              forceMount
-            >
-              <motion.div
-                style={{ opacity, touchAction: "none" }}
-                variants={overlayVariants}
-                initial="closed"
-                animate="open"
-                exit="closed"
-                transition={transition}
-                onPointerDown={(event) => dragControls.start(event)}
-              ></motion.div>
-            </DialogOverlay>
-            <DialogContent
+            />
+          )}
+          {open && (
+            <motion.div
+              id="fern-sidebar"
               className="sm:w-sidebar-width bg-background/70 border-border-concealed fixed inset-y-0 right-0 top-[calc(var(--header-height)+1px)] z-40 w-full max-w-[calc(100dvw-3rem)] border-l backdrop-blur-xl"
-              onPointerDownOutside={(e) => e.preventDefault()}
-              forceMount
-              asChild
-            >
-              <motion.div
-                ref={sidebarRef}
-                onPointerDown={(event) => dragControls.start(event)}
-                style={{ x, touchAction: "none" }}
-                drag="x"
-                dragDirectionLock
-                dragSnapToOrigin
-                dragListener={false}
-                dragElastic={{ left: 0 }}
-                dragConstraints={{ left: 0 }}
-                dragControls={dragControls}
-                onDragEnd={(event, info) => {
-                  if (event.target instanceof HTMLElement) {
-                    if (
-                      info.offset.x > event.target.clientWidth / 2 ||
-                      info.velocity.x > 100
-                    ) {
-                      setOpen(false);
-                    }
+              key="sidebar"
+              onPointerDown={(event) => dragControls.start(event)}
+              onDragStart={() => {
+                if (mainRef.current) {
+                  mainRef.current.style.willChange = "transform";
+                }
+              }}
+              style={{ x, touchAction: "none" }}
+              drag="x"
+              dragDirectionLock
+              dragSnapToOrigin
+              dragListener={false}
+              dragElastic={{ left: 0 }}
+              dragConstraints={{ left: 0 }}
+              dragControls={dragControls}
+              onDragEnd={(event, info) => {
+                if (event.target instanceof HTMLElement) {
+                  if (
+                    info.offset.x > event.target.clientWidth / 2 ||
+                    info.velocity.x > 100
+                  ) {
+                    setOpen(false);
                   }
-                }}
-                variants={dialogVariants}
-                initial="closed"
-                animate="open"
-                exit="closed"
-                transition={transition}
-              >
-                <VisuallyHidden>
-                  <DialogTitle>Menu</DialogTitle>
-                  <DialogDescription>
-                    Navigation menu for docs.
-                  </DialogDescription>
-                </VisuallyHidden>
-                {children}
-              </motion.div>
-            </DialogContent>
-          </DialogPortal>
-        )}
-      </AnimatePresence>
-    </Dialog>
+                }
+              }}
+              initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}
+              transition={transition}
+            >
+              {children}
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </Portal>
+    </RemoveScroll>
   );
 }
