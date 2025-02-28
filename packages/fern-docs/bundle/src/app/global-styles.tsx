@@ -130,10 +130,6 @@ export function GlobalStyles({
         }`
           : ""}
 
-        html {
-          background-color: var(--background, lightdark(#fff, #000));
-        }
-
         ${fonts.additionalCss}
 
         ${inlineCss.join("\n")}

@@ -89,7 +89,7 @@ export const DesktopSearchDialog = memo(
         </DesktopCommandAfterInput>
 
         <Dialog.Portal>
-          <Dialog.Overlay className="bg-(color:--white-a3) dark:bg-(color:--black-a3) fixed inset-0 z-40 backdrop-blur-md" />
+          <Dialog.Overlay className="bg-background-a3 fixed inset-0 z-40 backdrop-blur-md" />
 
           <VisuallyHidden>
             <Dialog.Title>Search</Dialog.Title>

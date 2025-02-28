@@ -45,7 +45,7 @@ export function SidebarTabsList({
               {tab.type !== "link" && tab.authed ? (
                 <Lock />
               ) : (
-                tab.icon && <FaIconServer icon={tab.icon} />
+                <FaIconServer icon={tab.icon ?? "book"} />
               )}
             </span>
             <span className="truncate font-medium group-data-[state=active]:font-semibold">

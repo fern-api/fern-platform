@@ -259,7 +259,7 @@ function MobileMenu({ children }: { children: React.ReactNode }) {
           {open && (
             <motion.div
               id="fern-sidebar"
-              className="sm:w-sidebar-width bg-background/70 border-border-concealed fixed inset-y-0 right-0 top-[calc(var(--header-height)+1px)] z-40 w-full max-w-[calc(100dvw-3rem)] border-l backdrop-blur-xl"
+              className="sm:w-sidebar-width bg-background/70 border-border-concealed fixed inset-y-0 right-0 top-[calc(var(--header-height)+1px)] z-40 flex w-full max-w-[calc(100dvw-3rem)] flex-col border-l backdrop-blur-xl"
               key="sidebar"
               onPointerDown={(event) => dragControls.start(event)}
               onDragStart={() => {

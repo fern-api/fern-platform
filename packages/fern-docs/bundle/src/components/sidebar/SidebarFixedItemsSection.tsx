@@ -21,7 +21,10 @@ export function SidebarFixedItemsSection({
   className?: string;
 }) {
   const isMobile = useIsMobile();
-  if (!showHeaderInSidebar && !showSearchBar && !isMobile) {
+  if (isMobile) {
+    return null;
+  }
+  if (!showHeaderInSidebar && !showSearchBar) {
     return null;
   }
   return (

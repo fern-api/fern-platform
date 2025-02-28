@@ -19,7 +19,7 @@
       position: absolute;
       inset: 0;
       z-index: -50;
-      background: var(--white-a9);
+      background: var(--color-background-a9);
       backdrop-filter: blur(40px);
     }
 
@@ -168,12 +168,6 @@
         height: min(400px, var(--cmdk-list-height));
         max-height: 400px;
       }
-    }
-  }
-
-  @variant dark {
-    #fern-search-desktop-command[data-cmdk-root]::before {
-      background: var(--black-a9);
     }
   }
 }

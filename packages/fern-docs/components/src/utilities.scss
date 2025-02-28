@@ -37,10 +37,7 @@
 }
 
 @utility bg-search-dialog {
-  background-color: var(
-    --bg-color-search-dialog,
-    var(--color-background-translucent)
-  );
+  background-color: var(--bg-color-search-dialog, var(--color-background-a9));
 }
 
 @utility m-mdx {

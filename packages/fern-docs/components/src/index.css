@@ -217,6 +217,8 @@
   --color-accent: var(--accent);
   --color-background: var(--background);
   --color-background-translucent: --alpha(var(--color-background) / 70%);
+  --color-background-a9: --alpha(var(--color-background) / 47.1%);
+  --color-background-a3: --alpha(var(--color-background) / 6.27%);
   --color-sidebar-background: var(--sidebar-background);
   --color-header-background: var(--header-background);
   --color-card-background: var(--card-background, var(--grayscale-surface));
