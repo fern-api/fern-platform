@@ -227,7 +227,7 @@ function MobileMenu({ children }: { children: React.ReactNode }) {
 
   return (
     <RemoveScroll forwardProps enabled={isLocked || open}>
-      <Portal className="fixed inset-0 z-0">
+      <Portal className="pointer-events-none fixed inset-0">
         <AnimatePresence
           mode="popLayout"
           onExitComplete={() => {
@@ -240,7 +240,7 @@ function MobileMenu({ children }: { children: React.ReactNode }) {
         >
           {open && (
             <motion.div
-              className="bg-background/70 fixed inset-0 top-[calc(var(--header-height)+1px)] z-30"
+              className="bg-background/70 pointer-events-auto fixed inset-0 top-[calc(var(--header-height)+1px)] z-30"
               key="overlay"
               style={{ opacity, touchAction: "none" }}
               initial={{ opacity: 0 }}
@@ -259,7 +259,7 @@ function MobileMenu({ children }: { children: React.ReactNode }) {
           {open && (
             <motion.div
               id="fern-sidebar"
-              className="sm:w-sidebar-width bg-background/70 border-border-concealed fixed inset-y-0 right-0 top-[calc(var(--header-height)+1px)] z-40 flex w-full max-w-[calc(100dvw-3rem)] flex-col border-l backdrop-blur-xl"
+              className="sm:w-sidebar-width bg-background/70 border-border-concealed pointer-events-auto fixed inset-y-0 right-0 top-[calc(var(--header-height)+1px)] z-40 flex w-full max-w-[calc(100dvw-3rem)] flex-col border-l backdrop-blur-xl"
               key="sidebar"
               onPointerDown={(event) => dragControls.start(event)}
               onDragStart={() => {
