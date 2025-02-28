@@ -21,7 +21,7 @@ const config: Config = {
             "--tw-prose-body": "inherit",
             "--tw-prose-bullets": "var(--grayscale-a9)",
             "--tw-prose-captions": "var(--grayscale-a11)",
-            "--tw-prose-code": "inherit",
+            "--tw-prose-code": "var(--accent-a11)",
             "--tw-prose-counters": "var(--grayscale-a10)",
             "--tw-prose-headings": "inherit",
             "--tw-prose-th-borders": "var(--color-border-default)",

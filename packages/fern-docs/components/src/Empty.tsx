@@ -7,9 +7,9 @@ type EmptyProps = {
 
 export const Empty = ({ name, description }: EmptyProps): ReactElement => {
   return (
-    <div className="flex flex-col items-center">
-      <div className="text-(color:--accent-a11)"> {name} </div>
-      <div className="text-(color:--grayscale-a11)"> {description} </div>
+    <div className="flex flex-col items-center text-sm">
+      <div className="text-(color:--accent-a11)">{name}</div>
+      <div className="text-(color:--grayscale-a10)">{description}</div>
     </div>
   );
 };

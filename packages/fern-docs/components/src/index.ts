@@ -11,7 +11,6 @@ export * from "./FernButton";
 export * from "./FernButtonV2";
 export * from "./FernCard";
 export * from "./FernCheckbox";
-export * from "./FernChip";
 export * from "./FernCollapse";
 export * from "./FernDatetimeInput";
 export * from "./FernDropdown";
