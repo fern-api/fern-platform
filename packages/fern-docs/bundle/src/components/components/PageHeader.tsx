@@ -37,12 +37,12 @@ export function PageHeader({
       )}
 
       {titleHref == null ? (
-        <h1 className="text-balance break-words">
+        <h1 className="fern-page-heading text-balance break-words">
           <MdxServerComponent serialize={serialize} mdx={title} />
         </h1>
       ) : (
-        <FernLink href={titleHref} className="text-balance break-words">
-          <h1 className="text-balance break-words">
+        <FernLink href={titleHref}>
+          <h1 className="fern-page-heading text-balance break-words">
             <MdxServerComponent serialize={serialize} mdx={title} />
           </h1>
         </FernLink>

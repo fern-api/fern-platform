@@ -53,10 +53,13 @@ export function FernHeader(props: React.ComponentPropsWithoutRef<"header">) {
 
   return (
     <header ref={ref} id="fern-header" role="banner" {...props}>
-      <style jsx>
+      <style jsx global key="__fern-header-scroll-padding">
         {`
-          :global(html, body) {
-            scroll-padding-top: var(--header-height);
+          html,
+          body {
+            scroll-padding-top: calc(
+              var(--header-height) + (var(--spacing) * 4)
+            );
           }
         `}
       </style>

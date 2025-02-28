@@ -84,7 +84,7 @@ export function TabGroup({
           <RadixTabs.Trigger key={id} value={id} asChild>
             <h6
               className={cn(
-                "text-body hover:border-border-default -mb-px flex max-w-max cursor-pointer scroll-mt-4 whitespace-nowrap border-b border-transparent pb-2.5 pt-3 text-sm font-semibold leading-6",
+                "text-(color:--grayscale-a11) hover:border-border-default -mb-px flex max-w-max cursor-pointer whitespace-nowrap border-b border-transparent pb-2.5 pt-3 text-sm font-semibold leading-6",
                 "data-[state=active]:text-(color:--accent-a11) data-[state=active]:before:bg-(color:--accent-track) relative data-[state=active]:before:absolute data-[state=active]:before:inset-x-0 data-[state=active]:before:-bottom-px data-[state=active]:before:h-[2px]"
               )}
               id={id}

@@ -38,7 +38,7 @@ export const SectionContainer = React.forwardRef<
       id={href}
       ref={ref}
       {...props}
-      className={cn("relative scroll-mt-4", props.className)}
+      className={cn("relative", props.className)}
     >
       {children}
     </div>

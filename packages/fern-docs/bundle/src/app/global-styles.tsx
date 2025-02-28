@@ -29,7 +29,7 @@ export function GlobalStyles({
   const root = light ?? dark;
   const hasTheme = !!light && !!dark;
   return (
-    <style jsx global>
+    <style jsx global key="__fern-global-styles">
       {`
         ${fonts.fontFaces.join("\n")}
 
@@ -48,6 +48,11 @@ export function GlobalStyles({
             ? `${layout.pageWidth}px`
             : "100vw"};
           --logo-height: ${layout.logoHeight}px;
+
+          /* for backwards compatibility */
+          --typography-body-font-family: var(--font-body);
+          --typography-heading-font-family: var(--font-heading);
+          --typography-code-font-family: var(--font-code);
         }
 
         ${root

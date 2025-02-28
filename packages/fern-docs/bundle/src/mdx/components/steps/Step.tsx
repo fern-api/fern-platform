@@ -39,7 +39,7 @@ export function Step({
   const isFernAnchorDisabled = useIsFernAnchorDisabled();
 
   return (
-    <div className={cn("fern-step scroll-mt-4", className)} id={id} {...props}>
+    <div className={cn("fern-step", className)} id={id} {...props}>
       {!isFernAnchorDisabled && (
         <FernLink
           className="fern-anchor"

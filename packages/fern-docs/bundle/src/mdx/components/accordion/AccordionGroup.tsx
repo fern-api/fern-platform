@@ -84,11 +84,7 @@ export function Accordion({
     return null;
   }
   return (
-    <AccordionComponent.AccordionItem
-      id={id}
-      value={id}
-      className="scroll-mt-4"
-    >
+    <AccordionComponent.AccordionItem id={id} value={id}>
       <AccordionComponent.AccordionTrigger>
         {title}
       </AccordionComponent.AccordionTrigger>
