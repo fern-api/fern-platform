@@ -4,22 +4,18 @@ import { Menu, X } from "lucide-react";
 
 import { Button, cn } from "@fern-docs/components";
 
-import {
-  useIsDismissableSidebarOpen,
-  useToggleDismissableSidebar,
-} from "@/state/mobile";
+import { useIsDismissableSidebarOpen } from "@/state/mobile";
 
 export function MobileMenuButton({ className }: { className?: string }) {
-  const [isDismissableSidebarOpen] = useIsDismissableSidebarOpen();
-  const toggleDismissableSidebar = useToggleDismissableSidebar();
+  const [open, setOpen] = useIsDismissableSidebarOpen();
   return (
     <Button
       className={cn("shrink-0 lg:hidden", className)}
-      onClick={toggleDismissableSidebar}
-      variant={isDismissableSidebarOpen ? "default" : "ghost"}
+      onClick={() => setOpen((prev) => !prev)}
+      variant={open ? "default" : "ghost"}
       size="icon"
     >
-      {isDismissableSidebarOpen ? <X /> : <Menu />}
+      {open ? <X /> : <Menu />}
     </Button>
   );
 }

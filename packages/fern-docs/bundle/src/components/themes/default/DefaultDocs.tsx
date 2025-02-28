@@ -14,8 +14,8 @@ import {
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import fastdom from "fastdom";
 import {
+  AnimatePresence,
   motion,
-  useAnimationControls,
   useDragControls,
   useMotionValue,
   useMotionValueEvent,
@@ -27,10 +27,7 @@ import { useIsDesktop } from "@fern-ui/react-commons/src/useBreakpoint";
 
 import { HeaderTabsRoot } from "@/components/header/HeaderTabsRoot";
 import { SetIsSidebarFixed, useShouldHideAsides } from "@/state/layout";
-import {
-  useCloseDismissableSidebar,
-  useIsDismissableSidebarOpen,
-} from "@/state/mobile";
+import { useIsDismissableSidebarOpen } from "@/state/mobile";
 
 import { FernHeader } from "./fern-header";
 
@@ -100,13 +97,6 @@ function SideNav({
   fixed?: boolean;
 }) {
   const isDesktop = useIsDesktop();
-  const isDismissableSidebarOpen = useIsDismissableSidebarOpen();
-  const closeDismissableSidebar = useCloseDismissableSidebar();
-  const currentPath = usePathname();
-  React.useEffect(() => {
-    closeDismissableSidebar();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentPath]);
 
   return (
     <>
@@ -123,7 +113,6 @@ function SideNav({
             "w-(--spacing-sidebar-width)",
             "top-(--header-height) hidden"
           )}
-          data-mobile-state={isDismissableSidebarOpen ? "open" : "closed"}
         >
           {children}
         </aside>
@@ -146,9 +135,31 @@ function calculateWidth(value: number | string, sidebarWidth: number) {
   return 0;
 }
 
+const overlayVariants = {
+  closed: { opacity: 0 },
+  open: { opacity: 1 },
+};
+
+const dialogVariants = {
+  closed: { x: "100%" },
+  open: { x: 0 },
+};
+
+const transition = {
+  ease: "easeInOut",
+  easings: [0.25, 0.46, 0.45, 0.94],
+  duration: 0.3,
+};
+
 function MobileMenu({ children }: { children: React.ReactNode }) {
-  const animation = useAnimationControls();
   const [open, setOpen] = useIsDismissableSidebarOpen();
+
+  const currentPath = usePathname();
+  React.useEffect(() => {
+    setOpen(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentPath]);
+
   const dragControls = useDragControls();
   const x = useMotionValue(0);
 
@@ -184,21 +195,23 @@ function MobileMenu({ children }: { children: React.ReactNode }) {
       return;
     }
 
-    if (!open) {
-      mainRef.current.style.transform = "";
-    }
-
     if (!sidebarRef.current) {
       return;
     }
 
+    const setTransform = (width: number) => {
+      if (open && mainRef.current && sidebarRef.current) {
+        const transform = Math.min(0, calculateWidth(x.get(), width));
+        mainRef.current.style.transform = `translateX(${transform}px)`;
+      }
+    };
+
+    setTransform(sidebarRef.current.clientWidth);
+
     // update the transform when the sidebar is resized
     const observer = new ResizeObserver(([entry]) => {
-      if (open && mainRef.current && entry?.target === sidebarRef.current) {
-        mainRef.current.style.transform = `translateX(${Math.min(
-          0,
-          calculateWidth(x.get(), entry.contentRect.width)
-        )}px)`;
+      if (open && mainRef.current && entry) {
+        setTransform(entry.contentRect.width);
       }
     });
 
@@ -222,60 +235,85 @@ function MobileMenu({ children }: { children: React.ReactNode }) {
   );
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogPortal>
-        <DialogOverlay
-          className="bg-background/70 fixed inset-0 top-[calc(var(--header-height)+1px)] z-30"
-          asChild
-          onClick={() => setOpen(false)}
-        >
-          <motion.div style={{ opacity }}></motion.div>
-        </DialogOverlay>
-        <DialogContent
-          className="sm:w-sidebar-width bg-background/70 border-border-concealed fixed inset-y-0 right-0 top-[calc(var(--header-height)+1px)] z-40 w-full max-w-[calc(100dvw-3rem)] transform border-l backdrop-blur-xl"
-          asChild
-          onPointerDownOutside={(e) => e.preventDefault()}
-        >
-          <motion.div
-            ref={sidebarRef}
-            style={{ x }}
-            drag="x"
-            dragSnapToOrigin
-            dragElastic={{ left: 0 }}
-            dragConstraints={{ left: 0 }}
-            dragControls={dragControls}
-            onDragEnd={(event, info) => {
-              if (event.target instanceof HTMLElement) {
-                if (
-                  info.offset.x > event.target.clientWidth / 2 ||
-                  info.velocity.x > 20
-                ) {
-                  void animation
-                    .start({
-                      x: "100%",
-                    })
-                    .then(() => {
-                      setOpen(false);
-                    });
+    <Dialog open={open} onOpenChange={setOpen} modal={open}>
+      <AnimatePresence
+        initial={false}
+        mode="popLayout"
+        propagate
+        onExitComplete={() => {
+          if (!open && mainRef.current) {
+            mainRef.current.style.transform = "";
+          }
+        }}
+      >
+        {open && (
+          <DialogPortal forceMount>
+            <DialogOverlay
+              className="bg-background/70 fixed inset-0 top-[calc(var(--header-height)+1px)] z-30"
+              asChild
+              onClick={() => {
+                const xValue = x.get() as string | number;
+                if (xValue === 0 || xValue === "0%") {
+                  setOpen(false);
                 }
-              }
-            }}
-            variants={{ open: { x: 0 }, closed: { x: "100%" } }}
-            initial="closed"
-            animate="open"
-            transition={{
-              ease: "easeInOut",
-              easings: [0.25, 0.46, 0.45, 0.94],
-            }}
-          >
-            <VisuallyHidden>
-              <DialogTitle>Menu</DialogTitle>
-              <DialogDescription>Navigation menu for docs.</DialogDescription>
-            </VisuallyHidden>
-            {children}
-          </motion.div>
-        </DialogContent>
-      </DialogPortal>
+              }}
+              forceMount
+            >
+              <motion.div
+                style={{ opacity, touchAction: "none" }}
+                variants={overlayVariants}
+                initial="closed"
+                animate="open"
+                exit="closed"
+                transition={transition}
+                onPointerDown={(event) => dragControls.start(event)}
+              ></motion.div>
+            </DialogOverlay>
+            <DialogContent
+              className="sm:w-sidebar-width bg-background/70 border-border-concealed fixed inset-y-0 right-0 top-[calc(var(--header-height)+1px)] z-40 w-full max-w-[calc(100dvw-3rem)] border-l backdrop-blur-xl"
+              onPointerDownOutside={(e) => e.preventDefault()}
+              forceMount
+              asChild
+            >
+              <motion.div
+                ref={sidebarRef}
+                onPointerDown={(event) => dragControls.start(event)}
+                style={{ x, touchAction: "none" }}
+                drag="x"
+                dragDirectionLock
+                dragSnapToOrigin
+                dragListener={false}
+                dragElastic={{ left: 0 }}
+                dragConstraints={{ left: 0 }}
+                dragControls={dragControls}
+                onDragEnd={(event, info) => {
+                  if (event.target instanceof HTMLElement) {
+                    if (
+                      info.offset.x > event.target.clientWidth / 2 ||
+                      info.velocity.x > 100
+                    ) {
+                      setOpen(false);
+                    }
+                  }
+                }}
+                variants={dialogVariants}
+                initial="closed"
+                animate="open"
+                exit="closed"
+                transition={transition}
+              >
+                <VisuallyHidden>
+                  <DialogTitle>Menu</DialogTitle>
+                  <DialogDescription>
+                    Navigation menu for docs.
+                  </DialogDescription>
+                </VisuallyHidden>
+                {children}
+              </motion.div>
+            </DialogContent>
+          </DialogPortal>
+        )}
+      </AnimatePresence>
     </Dialog>
   );
 }

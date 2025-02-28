@@ -1,13 +1,13 @@
 @layer components {
   .fern-breadcrumb {
-    @apply inline-flex items-center font-semibold;
+    @apply inline-flex max-w-full flex-wrap items-baseline font-semibold;
 
     .fern-breadcrumb-item {
-      @apply text-(color:--accent-a11) shrink truncate whitespace-nowrap text-sm;
+      @apply text-(color:--accent-a11) min-w-0 shrink text-sm;
     }
 
     .fern-breadcrumb-arrow {
-      @apply text-(color:--grayscale-a9) mx-0.5 size-4;
+      @apply text-(color:--grayscale-a9) mx-0.5 size-4 self-center;
     }
   }
 }

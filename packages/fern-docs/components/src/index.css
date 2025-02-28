@@ -220,7 +220,10 @@
   --color-sidebar-background: var(--sidebar-background);
   --color-header-background: var(--header-background);
   --color-card-background: var(--card-background, var(--grayscale-surface));
-  --color-card-solid: var(--card-background, var(--grayscale-1));
+  --color-card-solid: var(
+    --card-background,
+    color-mix(in srgb, var(--grayscale-1), var(--background))
+  );
 
   --color-border-default: var(--border, var(--grayscale-a5));
   --color-border-default-soft: var(--border, var(--grayscale-a4));

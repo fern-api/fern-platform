@@ -10,6 +10,7 @@ import { PageHeader } from "@/components/components/PageHeader";
 import { FooterLayout } from "@/components/layouts/FooterLayout";
 import { ReferenceLayout } from "@/components/layouts/ReferenceLayout";
 import { ScrollToTop } from "@/components/layouts/ScrollToTop";
+import { PlaygroundKeyboardTrigger } from "@/components/playground/PlaygroundKeyboardTrigger";
 import { MdxServerComponentProseSuspense } from "@/mdx/components/server-component";
 import { MdxSerializer } from "@/server/mdx-serializer";
 import { SetLayout } from "@/state/layout";
@@ -83,6 +84,7 @@ export async function EndpointContent({
         }
         footer={<FooterLayout bottomNavigation={bottomNavigation} />}
       >
+        <PlaygroundKeyboardTrigger />
         <SetLayout value="reference" />
         <ScrollToTop />
         <MdxServerComponentProseSuspense

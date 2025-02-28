@@ -1,6 +1,7 @@
 import "server-only";
 
 import { getFernToken } from "@/app/fern-token";
+import { PlaygroundKeyboardTrigger } from "@/components/playground/PlaygroundKeyboardTrigger";
 import { HorizontalSplitPane } from "@/components/playground/VerticalSplitPane";
 import { PlaygroundEndpointSelectorContent } from "@/components/playground/endpoint/PlaygroundEndpointSelectorContent";
 import { flattenApiSection } from "@/components/playground/utils/flatten-apis";
@@ -30,6 +31,7 @@ export default async function Layout({
 
   return (
     <main className="h-screen">
+      <PlaygroundKeyboardTrigger />
       <ApiExplorerFlags
         isFileForgeHackEnabled={edgeFlags.isFileForgeHackEnabled}
         isProxyDisabled={edgeFlags.isProxyDisabled}
