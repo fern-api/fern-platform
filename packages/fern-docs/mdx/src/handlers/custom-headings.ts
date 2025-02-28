@@ -24,7 +24,7 @@ export function customHeadingHandler(state: State, node: Heading): Element {
   const result: Element = {
     type: "element",
     tagName: "h" + node.depth,
-    properties: { id },
+    properties: id != null ? { id } : {},
     children,
   };
   state.patch(node, result);

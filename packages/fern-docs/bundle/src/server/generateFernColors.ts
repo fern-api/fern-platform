@@ -130,6 +130,7 @@ export interface FernColorPalette extends Omit<ColorPalette, "background"> {
   headerBackground?: string;
   cardBackground?: string;
   background?: string;
+  themeColor: string;
 }
 
 export function generateFernColorPalette({
@@ -159,5 +160,10 @@ export function generateFernColorPalette({
     headerBackground,
     cardBackground,
     background,
+    themeColor: toHex(background ?? accent),
   };
+}
+
+function toHex(color: string): string {
+  return new Color(color).toString({ format: "hex" });
 }

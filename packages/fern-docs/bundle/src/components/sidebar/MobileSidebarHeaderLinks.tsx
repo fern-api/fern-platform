@@ -4,8 +4,10 @@ import { cn } from "@fern-docs/components";
 
 export function MobileSidebarHeaderLinks({
   children,
+  hideInDesktop = true,
 }: {
   children: React.ReactNode;
+  hideInDesktop?: boolean;
 }) {
   if (!children) {
     return null;
@@ -14,7 +16,7 @@ export function MobileSidebarHeaderLinks({
     <div
       className={cn(
         "border-border-default -mx-4 mt-4 list-none border-t p-4 [&>*]:flex",
-        { "lg:hidden": true }
+        { "lg:hidden": hideInDesktop }
       )}
     >
       {children}

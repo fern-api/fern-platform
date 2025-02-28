@@ -85,3 +85,10 @@ it("should serialize cards.mdx", async () => {
   );
   expect(deterministic(result?.code)).toMatchSnapshot();
 });
+
+it("should serialize hume-next-js.mdx", async () => {
+  const result = await serializeMdx(
+    readFileSync(join(__dirname, "tests", "hume-next-js.mdx"), "utf-8")
+  );
+  expect(deterministic(result?.code)).toMatchSnapshot();
+});

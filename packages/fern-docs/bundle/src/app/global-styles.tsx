@@ -115,6 +115,7 @@ export function GlobalStyles({
           --sidebar-background: ${root?.sidebarBackground ?? "initial"};
           --header-background: ${root?.headerBackground ?? "initial"};
           --card-background: ${root?.cardBackground ?? "initial"};
+          --theme-color: ${root?.themeColor};
         }
 
         ${hasTheme && dark
@@ -127,6 +128,7 @@ export function GlobalStyles({
           --sidebar-background: ${dark.sidebarBackground ?? "initial"};
           --header-background: ${dark.headerBackground ?? "initial"};
           --card-background: ${dark.cardBackground ?? "initial"};
+          --theme-color: ${dark.themeColor};
         }`
           : ""}
 

@@ -192,11 +192,15 @@ export const SearchV2 = React.memo(function SearchV2({
               );
             }}
             darkCodeEnabled={isDarkCodeEnabled}
+            className="shadow-xl"
           >
             {children}
           </DesktopCommandWithAskAI>
         ) : (
-          <DesktopCommand onEscapeKeyDown={() => setOpen(false)}>
+          <DesktopCommand
+            onEscapeKeyDown={() => setOpen(false)}
+            className="shadow-xl"
+          >
             {children}
           </DesktopCommand>
         )}

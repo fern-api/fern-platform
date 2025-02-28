@@ -85,6 +85,8 @@ export default async function Layout(props: {
     <ThemeProvider
       hasLight={Boolean(colors.light)}
       hasDark={Boolean(colors.dark)}
+      lightThemeColor={colors.light?.themeColor}
+      darkThemeColor={colors.dark?.themeColor}
     >
       <RootNodeProvider
         sidebarRootNodesToChildToParentsMap={
@@ -177,13 +179,19 @@ export async function generateViewport(props: {
 
   const loader = await createCachedDocsLoader(host, domain);
   const colors = await loader.getColors();
-  const dark = colors.dark?.background ?? colors.dark?.accent;
-  const light = colors.light?.background ?? colors.light?.accent;
   return {
     themeColor: compact([
-      dark ? { color: dark, media: "(prefers-color-scheme: dark)" } : undefined,
-      light
-        ? { color: light, media: "(prefers-color-scheme: light)" }
+      colors.dark?.themeColor
+        ? {
+            color: colors.dark.themeColor,
+            media: "(prefers-color-scheme: dark)",
+          }
+        : undefined,
+      colors.light?.themeColor
+        ? {
+            color: colors.light.themeColor,
+            media: "(prefers-color-scheme: light)",
+          }
         : undefined,
     ]),
   };
