@@ -83,7 +83,6 @@ async function FooterLayoutWithEditThisPageUrl({
     mdx?.frontmatter?.["edit-this-page-url"] ?? page.editThisPageUrl;
   return (
     <FooterLayout
-      className="w-content-width mx-auto max-w-full"
       bottomNavigation={bottomNavigation}
       editThisPageUrl={editThisPageUrl}
     />

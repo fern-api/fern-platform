@@ -31,7 +31,7 @@ export function BottomNavigationClient({
   return (
     <nav
       aria-label="Up next"
-      className="bg-(color:--grayscale-a3) max-w-content-width [&>a]:rounded-1 rounded-2 mx-auto flex p-1"
+      className="bg-(color:--grayscale-a3) [&>a]:rounded-3 rounded-4 -mx-1 flex p-1"
     >
       {prev && (
         <MaybeFernLink

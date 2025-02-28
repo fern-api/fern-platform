@@ -20,7 +20,12 @@ export function FooterLayout({
   className?: string;
 }) {
   return (
-    <footer className={cn("my-12 space-y-8", className)}>
+    <footer
+      className={cn(
+        "w-content-width mx-auto my-12 max-w-full space-y-8",
+        className
+      )}
+    >
       <div className="flex gap-4 max-sm:flex-col sm:justify-between">
         <div>{!hideFeedback && <Feedback pathname={pathname} />}</div>
         <EditThisPageButton editThisPageUrl={editThisPageUrl} />
@@ -28,7 +33,7 @@ export function FooterLayout({
 
       {!hideNavLinks && bottomNavigation}
 
-      <BuiltWithFern className="mx-auto w-fit" />
+      <BuiltWithFern className="mx-auto mt-12 w-fit" />
     </footer>
   );
 }

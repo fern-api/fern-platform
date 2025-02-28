@@ -51,7 +51,7 @@ export const Callout: FC<PropsWithChildren<Callout.Props>> = ({
   return (
     <div
       className={cn(
-        "rounded-2 mb-6 mt-4 border p-4 first:mt-0", // pb-0 to compensate for the ::after margin
+        "rounded-3 mb-6 mt-4 border p-4 first:mt-0", // pb-0 to compensate for the ::after margin
         visitDiscriminatedUnion({ intent }, "intent")._visit({
           info: () =>
             "bg-(color:--grayscale-a2) border-(color:--grayscale-a6) text-(color:--grayscale-a11) [&_svg]:text-(color:--grayscale-a10)",

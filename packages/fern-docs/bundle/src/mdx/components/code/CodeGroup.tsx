@@ -86,7 +86,7 @@ export function CodeGroup({ children }: { children: React.ReactNode }) {
   };
 
   const containerClass = cn(
-    "bg-card-background after:ring-card-border rounded-2 relative mb-6 mt-4 flex w-full min-w-0 max-w-full flex-col shadow-sm after:pointer-events-none after:absolute after:inset-0 after:rounded-[inherit] after:ring-1 after:ring-inset after:content-[''] first:mt-0",
+    "bg-card-background after:ring-card-border rounded-3 relative mb-6 mt-4 flex w-full min-w-0 max-w-full flex-col shadow-sm after:pointer-events-none after:absolute after:inset-0 after:rounded-[inherit] after:ring-1 after:ring-inset after:content-[''] first:mt-0",
     {
       "bg-card-solid dark": isDarkCode,
     }

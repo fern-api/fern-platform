@@ -167,7 +167,6 @@ export default function ChangelogPageClient({
         })}
       </HideBuiltWithFern>
       <FooterLayout
-        className="max-w-content-width mx-auto"
         hideFeedback
         bottomNavigation={<BottomNavigationClient prev={prev} next={next} />}
       />
