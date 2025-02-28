@@ -2,7 +2,7 @@
 
 import React from "react";
 
-import { FernScrollArea } from "@fern-docs/components";
+import { FernScrollArea, cn } from "@fern-docs/components";
 
 import { useDismountMeasureSidebarScrollPosition } from "@/state/sidebar-scroll";
 
@@ -53,7 +53,12 @@ export const SidebarContainer = React.memo(function SidebarContainer({
         <MobileSidebarHeaderLinks hideInDesktop={!showHeaderInSidebar}>
           {navbarLinks}
         </MobileSidebarHeaderLinks>
-        <ThemeSwitch className="mx-auto mt-8 flex lg:hidden" />
+        <ThemeSwitch
+          className={cn(
+            "mx-auto mt-8 flex",
+            !showHeaderInSidebar && "lg:hidden"
+          )}
+        />
       </FernScrollArea>
     </>
   );
