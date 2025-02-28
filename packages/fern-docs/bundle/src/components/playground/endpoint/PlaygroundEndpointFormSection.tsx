@@ -26,7 +26,7 @@ export function PlaygroundEndpointFormSection({
           )}
         </div>
       )}
-      <FernCard className="rounded-3 p-4 shadow-sm">{children}</FernCard>
+      <FernCard className="rounded-3 p-4">{children}</FernCard>
     </section>
   );
 }

@@ -13,7 +13,7 @@ export const CodeBlockWithClipboardButton: React.FC<
   return (
     <div
       className={cn(
-        "not-prose bg-card-background border-(color:--grayscale-a5) rounded-3 group relative mb-6 mt-4 flex w-full border shadow-sm",
+        "not-prose bg-card-background border-(color:--grayscale-a5) rounded-3 shadow-card-grayscale group relative mb-6 mt-4 flex w-full border",
         className
       )}
     >

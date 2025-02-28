@@ -81,7 +81,7 @@ export const PlaygroundWebSocketSessionForm: FC<
                     {message.displayName ?? titleCase(message.type)}
                   </h5>
                 </div>
-                <FernCard className="divide-border-default rounded-3 divide-y shadow-sm">
+                <FernCard className="divide-border-default rounded-3 divide-y">
                   <div className="p-4">
                     <PlaygroundTypeReferenceForm
                       id={message.type}
@@ -112,7 +112,7 @@ export const PlaygroundWebSocketSessionForm: FC<
         className="sticky inset-0 flex py-6 pr-6"
         style={{ height: scrollAreaHeight }}
       >
-        <FernCard className="rounded-3 flex min-w-0 flex-1 shrink flex-col overflow-hidden shadow-sm">
+        <FernCard className="rounded-3 flex min-w-0 flex-1 shrink flex-col overflow-hidden">
           <div className="border-border-default flex h-10 w-full shrink-0 items-center justify-between border-b px-3 py-2">
             <span className="text-(color:--grayscale-a11) text-xs uppercase">
               Messages
