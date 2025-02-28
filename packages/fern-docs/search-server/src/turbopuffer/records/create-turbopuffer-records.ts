@@ -18,7 +18,6 @@ interface CreateTurbopufferRecordsOptions {
   pages: Record<PageId, string>;
   // apis: Record<ApiDefinitionId, ApiDefinition>;
   authed?: (node: NavigationNodePage) => boolean;
-  splitText: (text: string) => Promise<string[]>;
 }
 
 export async function createTurbopufferRecords({
@@ -28,7 +27,6 @@ export async function createTurbopufferRecords({
   domain,
   org_id,
   authed,
-  splitText,
 }: CreateTurbopufferRecordsOptions): Promise<
   FernTurbopufferRecordWithoutVector[]
 > {
@@ -66,7 +64,7 @@ export async function createTurbopufferRecords({
             type: "markdown",
           });
 
-          return createMarkdownRecords({ base, markdown, splitText });
+          return createMarkdownRecords({ base, markdown });
         }
       )
     )
