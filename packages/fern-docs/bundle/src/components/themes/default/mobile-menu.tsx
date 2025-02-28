@@ -94,34 +94,52 @@ export function MobileMenu({ children }: { children: React.ReactNode }) {
   );
 
   React.useEffect(() => {
-    const handlePointerMove = (event: PointerEvent) => {
-      if (open) {
-        if (event.buttons === 1) {
-          event.preventDefault();
-          document.getSelection()?.empty();
-        }
+    let maybeIsDragging = false;
 
+    const handlePointerDown = (event: PointerEvent) => {
+      if (event.buttons === 1) {
+        maybeIsDragging = true;
+      }
+    };
+
+    const handlePointerMove = (event: PointerEvent) => {
+      if (open || !maybeIsDragging) {
         return;
       }
 
-      if (event.buttons === 1 && event.movementX < -1) {
+      if (Math.abs(event.movementY) > 10) {
+        maybeIsDragging = false;
+        return;
+      }
+
+      // register a swipe gesture where the pointer is moving left and not up or down (with some margin of error)
+      if (event.movementX < -5) {
         // Only trigger if pointer is in the right 25% of the screen
         const screenWidth = window.innerWidth;
         const rightEdgeThreshold = screenWidth * 0.75;
 
-        // Don't open sidebar if user is selecting text
+        // Don't open sidebar if user is currently selecting text
         const selection = document.getSelection();
         const hasTextSelection = selection && !selection.isCollapsed;
 
         if (event.clientX >= rightEdgeThreshold && !hasTextSelection) {
           setOpen(true);
+          document.getSelection()?.empty();
         }
       }
     };
 
+    const handleCancelDrag = () => {
+      maybeIsDragging = false;
+    };
+
+    document.addEventListener("pointerdown", handlePointerDown);
     document.addEventListener("pointermove", handlePointerMove);
+    document.addEventListener("selectionchange", handleCancelDrag);
     return () => {
+      document.removeEventListener("pointerdown", handlePointerDown);
       document.removeEventListener("pointermove", handlePointerMove);
+      document.removeEventListener("selectionchange", handleCancelDrag);
     };
   }, [dragControls, open, setOpen]);
 
