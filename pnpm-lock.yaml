@@ -628,6 +628,9 @@ importers:
       '@aws-sdk/s3-request-presigner':
         specifier: ^3.744.0
         version: 3.744.0
+      '@bprogress/next':
+        specifier: ^3.1.3
+        version: 3.1.3(next@15.2.0(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(@playwright/test@1.50.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       '@fern-api/fdr-sdk':
         specifier: workspace:*
         version: link:../../fdr-sdk
@@ -3629,6 +3632,22 @@ packages:
 
   '@bcoe/v8-coverage@0.2.3':
     resolution: {integrity: sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==}
+
+  '@bprogress/core@1.1.18':
+    resolution: {integrity: sha512-+khsDSJ7jv1L9LU34jnEsNqY6tXViSZDOeoxd09Ws8zVXzFjatRzWwBpiDQqTqyVZc0nlOxkkumFDtAgDJwY2A==}
+
+  '@bprogress/next@3.1.3':
+    resolution: {integrity: sha512-22/AlkaNhC26Wyo/Y/1QKtYrL90+/fuh+C0mytnwWbKJRMMsFEx5Z87rhjhIx2gWP0cWtBwpQ1lD+aoNjotAkw==}
+    peerDependencies:
+      next: '>=13.0.0'
+      react: 19.0.0
+      react-dom: 19.0.0
+
+  '@bprogress/react@1.1.4':
+    resolution: {integrity: sha512-faAGNitciEk5vQfu5eoojFZqHLAe/oB4OeEj5zO15kTBZyLy1v9vs1BOX2u/YYnNx6/IeZQlBvENF4nZwjbZSw==}
+    peerDependencies:
+      react: 19.0.0
+      react-dom: 19.0.0
 
   '@braintree/sanitize-url@7.1.0':
     resolution: {integrity: sha512-o+UlMLt49RvtCASlOMW0AkHnabN9wR9rwCCherxO0yG4Npy34GkvrAqdXQvrhNs+jh+gkK8gB8Lf05qL/O7KWg==}
@@ -17505,6 +17524,22 @@ snapshots:
       '@babel/helper-validator-identifier': 7.25.9
 
   '@bcoe/v8-coverage@0.2.3': {}
+
+  '@bprogress/core@1.1.18': {}
+
+  '@bprogress/next@3.1.3(next@15.2.0(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(@playwright/test@1.50.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
+    dependencies:
+      '@bprogress/core': 1.1.18
+      '@bprogress/react': 1.1.4(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      next: 15.2.0(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(@playwright/test@1.50.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.0)
+      react: 19.0.0
+      react-dom: 19.0.0(react@19.0.0)
+
+  '@bprogress/react@1.1.4(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
+    dependencies:
+      '@bprogress/core': 1.1.18
+      react: 19.0.0
+      react-dom: 19.0.0(react@19.0.0)
 
   '@braintree/sanitize-url@7.1.0': {}
 

@@ -1,6 +1,6 @@
 @layer components {
   .fern-breadcrumb {
-    @apply inline-flex max-w-full flex-wrap items-baseline font-semibold;
+    @apply inline-flex max-w-full flex-wrap items-baseline font-medium;
 
     .fern-breadcrumb-item {
       @apply text-(color:--accent-a11) min-w-0 shrink text-sm;

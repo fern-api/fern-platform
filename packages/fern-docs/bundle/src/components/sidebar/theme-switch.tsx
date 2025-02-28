@@ -14,7 +14,17 @@ const themeSwitchOptions = [
   { type: "value", value: "system", label: "System", icon: <Monitor /> },
 ] as const;
 
-export function ThemeSwitch({ className }: { className?: string }) {
+export function ThemeSwitch({
+  className,
+  variant = "outline",
+  size = "default",
+  iconOnly = false,
+}: {
+  className?: string;
+  variant?: "outline" | "ghost";
+  size?: "sm" | "default";
+  iconOnly?: boolean;
+}) {
   const { setTheme, theme = "system" } = useTheme();
   const mounted = useMounted();
   const selectedOption = themeSwitchOptions.find(
@@ -27,9 +37,12 @@ export function ThemeSwitch({ className }: { className?: string }) {
       onValueChange={setTheme}
       value={selectedOption?.value}
     >
-      <Button variant="outline" size="sm">
+      <Button
+        variant={variant}
+        size={iconOnly ? (size === "default" ? "icon" : "iconSm") : size}
+      >
         {selectedOption?.icon}
-        {selectedOption?.label}
+        {!iconOnly && selectedOption?.label}
       </Button>
     </FernDropdown>
   );

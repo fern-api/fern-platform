@@ -8,6 +8,7 @@ import { useIsMobile } from "@fern-ui/react-commons";
 
 import { SearchV2Trigger } from "@/state/search";
 
+import { ThemeSwitch } from "../sidebar/theme-switch";
 import { MobileMenuButton } from "./MobileButtons";
 
 export function HeaderContent({
@@ -57,6 +58,7 @@ export function HeaderContent({
         >
           {navbarLinks}
           {loginButton}
+          <ThemeSwitch iconOnly variant="ghost" className="-mr-2 ml-2" />
         </nav>
       </FernButtonGroup>
 

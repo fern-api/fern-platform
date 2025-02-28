@@ -53,7 +53,7 @@ export const SidebarContainer = React.memo(function SidebarContainer({
         <MobileSidebarHeaderLinks hideInDesktop={!showHeaderInSidebar}>
           {navbarLinks}
         </MobileSidebarHeaderLinks>
-        <ThemeSwitch className="mx-auto mt-8 flex" />
+        <ThemeSwitch className="mx-auto mt-8 flex lg:hidden" />
       </FernScrollArea>
     </>
   );

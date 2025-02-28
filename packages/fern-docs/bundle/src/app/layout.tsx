@@ -1,15 +1,10 @@
 import { Metadata, Viewport } from "next/types";
 import { experimental_taintUniqueValue } from "react";
 
-import { TooltipProvider } from "@radix-ui/react-tooltip";
-
-import { Toaster } from "@fern-docs/components";
-
 import { ConsoleMessage } from "@/components/console-message";
-import { JotaiProvider } from "@/state/jotai-provider";
 
 import "./globals.css";
-import StyledJsxRegistry from "./registry";
+import { Providers } from "./providers";
 
 const secrets = [
   "BRAINTRUST_API_KEY",
@@ -61,14 +56,7 @@ export default function DashboardLayout({
       </head>
       <body className="antialiased">
         <ConsoleMessage />
-        <StyledJsxRegistry>
-          <JotaiProvider>
-            <TooltipProvider>
-              <Toaster />
-              {children}
-            </TooltipProvider>
-          </JotaiProvider>
-        </StyledJsxRegistry>
+        <Providers>{children}</Providers>
       </body>
     </html>
   );
