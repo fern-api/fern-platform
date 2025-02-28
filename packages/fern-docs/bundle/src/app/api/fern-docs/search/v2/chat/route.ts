@@ -47,7 +47,7 @@ export async function POST(req: NextRequest) {
   );
 
   const openai = createOpenAI({ apiKey: openaiApiKey() });
-  const embeddingModel = openai.embedding("text-embedding-3-small");
+  const embeddingModel = openai.embedding("text-embedding-3-large");
 
   const domain = getDocsDomainEdge(req);
   const namespace = `${withoutStaging(domain)}_${embeddingModel.modelId}`;
@@ -197,7 +197,7 @@ async function runQueryTurbopuffer(
     : await queryTurbopuffer(query, {
         namespace: opts.namespace,
         apiKey: turbopufferApiKey(),
-        topK: opts.topK ?? 5,
+        topK: opts.topK ?? 10,
         vectorizer: async (text) => {
           const embedding = await embed({
             model: opts.embeddingModel,
