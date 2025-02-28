@@ -21,7 +21,7 @@ export const dynamic = "force-dynamic";
 
 export async function GET(req: NextRequest): Promise<NextResponse> {
   const openai = createOpenAI({ apiKey: openaiApiKey() });
-  const embeddingModel = openai.embedding("text-embedding-3-small");
+  const embeddingModel = openai.embedding("text-embedding-3-large");
 
   const domain = getDocsDomainEdge(req);
   const deleteExisting =
