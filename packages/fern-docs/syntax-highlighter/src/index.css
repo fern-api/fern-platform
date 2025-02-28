@@ -73,16 +73,6 @@
     box-shadow: inset 0 1px 0 0 rgba(var(--accent), 0.2);
   }
 
-  @variant dark {
-    .code-block-line-group:not(.highlight-focus)
-      .code-block-line:not(.highlight)
-      + .code-block-line.highlight,
-    .code-block-line-group:not(.highlight-focus)
-      .code-block-line.highlight:first-child {
-      box-shadow: inset 0 1px 0 0 rgba(var(--accent), 0.33);
-    }
-  }
-
   .code-block-line-group:not(.highlight-focus)
     .code-block-line.highlight:has(+ .code-block-line:not(.highlight)),
   .code-block-line-group:not(.highlight-focus)
@@ -105,39 +95,41 @@
       inset 0 1px 0 0 rgba(var(--accent), 0.2);
   }
 
-  @variant dark {
+  .dark
     .code-block-line-group:not(.highlight-focus)
-      .code-block-line.highlight:has(+ .code-block-line:not(.highlight)),
+    .code-block-line.highlight:has(+ .code-block-line:not(.highlight)),
+  .dark
     .code-block-line-group:not(.highlight-focus)
-      .code-block-line.highlight:last-child {
-      box-shadow: inset 0 -1px 0 0 rgba(var(--accent), 0.33);
-    }
+    .code-block-line.highlight:last-child {
+    box-shadow: inset 0 -1px 0 0 rgba(var(--accent), 0.33);
+  }
 
+  .dark
     .code-block-line-group:not(.highlight-focus)
-      .code-block-line:not(.highlight)
-      + .code-block-line.highlight:has(+ .code-block-line:not(.highlight)),
+    .code-block-line:not(.highlight)
+    + .code-block-line.highlight:has(+ .code-block-line:not(.highlight)),
+  .dark
     .code-block-line-group:not(.highlight-focus)
-      .code-block-line.highlight:first-child:has(
-        + .code-block-line:not(.highlight)
-      ),
+    .code-block-line.highlight:first-child:has(
+      + .code-block-line:not(.highlight)
+    ),
+  .dark
     .code-block-line-group:not(.highlight-focus)
-      .code-block-line:not(.highlight)
-      + .code-block-line.highlight:last-child {
-      box-shadow:
-        inset 0 -1px 0 0 rgba(var(--accent), 0.33),
-        inset 0 1px 0 0 rgba(var(--accent), 0.33);
-    }
+    .code-block-line:not(.highlight)
+    + .code-block-line.highlight:last-child {
+    box-shadow:
+      inset 0 -1px 0 0 rgba(var(--accent), 0.33),
+      inset 0 1px 0 0 rgba(var(--accent), 0.33);
+  }
 
-    .code-block-root,
-    .code-block-root .code-block-line-content span {
-      color: var(--shiki-dark) !important;
+  .dark .code-block-line-content span {
+    color: var(--shiki-dark) !important;
 
-      /* background-color: var(--shiki-dark-bg) !important; */
+    /* background-color: var(--shiki-dark-bg) !important; */
 
-      /* Optional, if you also want font styles */
-      font-style: var(--shiki-dark-font-style) !important;
-      font-weight: var(--shiki-dark-font-weight) !important;
-      text-decoration: var(--shiki-dark-text-decoration) !important;
-    }
+    /* Optional, if you also want font styles */
+    font-style: var(--font-code) !important;
+    font-weight: var(--shiki-dark-font-weight) !important;
+    text-decoration: var(--shiki-dark-text-decoration) !important;
   }
 }
