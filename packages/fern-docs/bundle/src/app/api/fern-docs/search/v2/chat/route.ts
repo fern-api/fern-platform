@@ -47,7 +47,7 @@ export async function POST(req: NextRequest) {
   );
 
   const openai = createOpenAI({ apiKey: openaiApiKey() });
-  const embeddingModel = openai.embedding("text-embedding-3-small");
+  const embeddingModel = openai.embedding("text-embedding-3-large");
 
   const domain = getDocsDomainEdge(req);
   const namespace = `${withoutStaging(domain)}_${embeddingModel.modelId}`;
