@@ -65,6 +65,8 @@ export async function DocsMainContent({
     }
     return (
       <ChangelogEntryPage
+        loader={loader}
+        serialize={serialize}
         node={node}
         overview={
           <ChangelogPageOverview
