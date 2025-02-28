@@ -5,7 +5,6 @@ import { ReactNode } from "react";
 import { History } from "lucide-react";
 
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
-import { FaIcon } from "@fern-docs/components/fa-icon";
 
 import { WithFeatureFlags } from "../../feature-flags/WithFeatureFlags";
 import { Changelog } from "../../util/dateUtils";
@@ -13,12 +12,14 @@ import { SidebarSlugLink } from "../SidebarLink";
 
 export interface SidebarChangelogNodeProps {
   node: FernNavigation.ChangelogNode;
+  icon: React.ReactNode;
   depth: number;
   className?: string;
 }
 
 export function SidebarChangelogNode({
   node,
+  icon,
   depth,
   className,
 }: SidebarChangelogNodeProps): ReactNode {
@@ -30,13 +31,7 @@ export function SidebarChangelogNode({
         title={node.title}
         className={className}
         depth={Math.max(0, depth - 1)}
-        icon={
-          node.icon ? (
-            <FaIcon icon={node.icon} fallback={History} />
-          ) : (
-            <History />
-          )
-        }
+        icon={icon || <History />}
         tooltipContent={renderChangelogTooltip(node)}
         hidden={node.hidden}
         authed={node.authed}
@@ -45,6 +40,7 @@ export function SidebarChangelogNode({
   );
 }
 
+// NOTE: this needs to be run client-side because of the date formatting
 function renderChangelogTooltip(
   changelog: FernNavigation.ChangelogNode
 ): string | undefined {

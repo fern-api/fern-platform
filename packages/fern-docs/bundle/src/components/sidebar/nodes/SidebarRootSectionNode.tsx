@@ -1,10 +1,6 @@
-"use client";
-
 import { ReactNode } from "react";
 
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
-
-import { useIsChildSelected } from "@/state/navigation";
 
 import { WithFeatureFlags } from "../../feature-flags/WithFeatureFlags";
 import { SidebarNavigationChild } from "./SidebarNavigationChild";
@@ -13,27 +9,34 @@ import { SidebarRootHeading } from "./SidebarRootHeading";
 
 interface SidebarRootSectionNodeProps {
   node: FernNavigation.SectionNode;
+  icon: React.ReactNode;
   className?: string;
 }
 
 export function SidebarRootSectionNode({
   node,
+  icon,
   className,
 }: SidebarRootSectionNodeProps): ReactNode {
-  const childSelected = useIsChildSelected(node.id);
-
   // If the node has no children, it is a page node.
   if (node.children.length === 0 && FernNavigation.hasMarkdown(node)) {
-    return <SidebarPageNode node={node} depth={0} className={className} />;
+    return (
+      <SidebarPageNode
+        node={node}
+        depth={0}
+        className={className}
+        icon={icon}
+      />
+    );
   }
 
-  if (node.children.length === 0 || (node.hidden && !childSelected)) {
+  if (node.children.length === 0) {
     return null;
   }
 
   return (
     <WithFeatureFlags featureFlags={node.featureFlags}>
-      <SidebarRootHeading node={node} className={className} />
+      <SidebarRootHeading node={node} className={className} icon={icon} />
 
       <ul className="fern-sidebar-group">
         {node.children.map((child) => (

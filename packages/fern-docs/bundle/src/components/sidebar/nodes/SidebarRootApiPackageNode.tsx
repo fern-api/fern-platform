@@ -1,9 +1,7 @@
-"use client";
+import "server-only";
 
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { cn } from "@fern-docs/components";
-
-import { useIsChildSelected } from "@/state/navigation";
 
 import { WithFeatureFlags } from "../../feature-flags/WithFeatureFlags";
 import { SidebarApiPackageChild } from "./SidebarApiPackageChild";
@@ -12,14 +10,15 @@ import { SidebarRootHeading } from "./SidebarRootHeading";
 
 export interface SidebarRootApiPackageNodeProps {
   node: FernNavigation.ApiReferenceNode | FernNavigation.ApiPackageNode;
+  icon: React.ReactNode;
   className?: string;
 }
 
 export function SidebarRootApiPackageNode({
   node,
+  icon,
   className,
 }: SidebarRootApiPackageNodeProps) {
-  const childSelected = useIsChildSelected(node.id);
   const shallow = false;
 
   if (node.children.length === 0 && FernNavigation.hasMarkdown(node)) {
@@ -29,17 +28,23 @@ export function SidebarRootApiPackageNode({
         depth={0}
         className={cn(className, "!text-body font-semibold")}
         shallow={shallow}
+        icon={icon}
       />
     );
   }
 
-  if (node.children.length === 0 || (node.hidden && !childSelected)) {
+  if (node.children.length === 0) {
     return null;
   }
 
   return (
     <WithFeatureFlags featureFlags={node.featureFlags}>
-      <SidebarRootHeading node={node} className={className} shallow={shallow} />
+      <SidebarRootHeading
+        node={node}
+        className={className}
+        shallow={shallow}
+        icon={icon}
+      />
 
       <ul className="fern-sidebar-group">
         {node.children.map((child) => (

@@ -1,3 +1,5 @@
+"use client";
+
 import { Dispatch, SetStateAction, useEffect } from "react";
 
 import { WritableAtom, atom, useAtomValue } from "jotai";

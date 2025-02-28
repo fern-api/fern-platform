@@ -18,16 +18,16 @@ export function ChangelogContentLayout({
     <Component
       {...props}
       className={cn(
-        "w-content-wide-width relative mx-auto grid grid-cols-[1fr_minmax(0,var(--content-width))_1fr]",
+        "max-w-content-wide-width relative mx-auto grid w-full grid-cols-1 gap-4 lg:grid-cols-[1fr_minmax(0,var(--content-width))_1fr]",
         props.className
       )}
     >
-      <aside className="sticky top-[calc(var(--header-height)+var(--spacing)*4)] hidden h-fit md:block">
+      <aside className="sticky top-[calc(var(--header-height)+var(--spacing)*4)] hidden h-fit lg:flex lg:justify-end">
         {stickyContent}
       </aside>
-      <div className="w-content-width">
+      <div className="max-w-content-width mx-auto w-full">
         {stickyContent != null && (
-          <div className="md:hidden">{stickyContent}</div>
+          <div className="mb-4 lg:hidden">{stickyContent}</div>
         )}
         {children}
       </div>

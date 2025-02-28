@@ -1,3 +1,5 @@
+"use client";
+
 import { Url } from "next/dist/shared/lib/router/router";
 import {
   HTMLAttributeAnchorTarget,
@@ -103,7 +105,11 @@ const SidebarLinkInternal = React.forwardRef<
       return children;
     }
 
-    return <FernTooltip content={content} side="right"></FernTooltip>;
+    return (
+      <FernTooltip content={content} side="right">
+        {children}
+      </FernTooltip>
+    );
   };
 
   const sharedClassName = cn(

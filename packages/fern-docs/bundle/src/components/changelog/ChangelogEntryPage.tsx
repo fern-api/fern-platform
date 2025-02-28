@@ -35,7 +35,7 @@ export default function ChangelogEntryPage({
     <article className="max-w-page-width-padded px-page-padding mx-auto min-w-0 flex-1">
       <SetLayout value="page" />
       <HideBuiltWithFern>
-        <ChangelogContentLayout as="section" className="pb-8">
+        <ChangelogContentLayout as="section" className="mb-8">
           {overview}
         </ChangelogContentLayout>
         <Separator className="max-w-content-width mx-auto my-12" />

@@ -1,5 +1,3 @@
-"use client";
-
 import { ReactNode } from "react";
 
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
@@ -9,17 +7,15 @@ import { WithFeatureFlags } from "../../feature-flags/WithFeatureFlags";
 import { SidebarSlugLink } from "../SidebarLink";
 import { ApiLeafBadge } from "./ApiLeafBadge";
 
-interface SidebarApiLeafNodeProps {
-  node: FernNavigation.NavigationNodeApiLeaf;
-  depth: number;
-  shallow: boolean;
-}
-
 export function SidebarApiLeafNode({
   node,
   depth,
   shallow,
-}: SidebarApiLeafNodeProps): ReactNode {
+}: {
+  node: FernNavigation.NavigationNodeApiLeaf;
+  depth: number;
+  shallow: boolean;
+}): ReactNode {
   return (
     <WithFeatureFlags featureFlags={node.featureFlags}>
       <SidebarSlugLink

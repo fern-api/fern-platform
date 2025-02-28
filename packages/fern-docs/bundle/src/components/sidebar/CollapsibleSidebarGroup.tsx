@@ -1,32 +1,24 @@
-import type { ReactElement } from "react";
 import React from "react";
 
 import * as Collapsible from "@radix-ui/react-collapsible";
 
-import type { FernNavigation } from "@fern-api/fdr-sdk";
 import { cn } from "@fern-docs/components";
 import { useBooleanState } from "@fern-ui/react-commons";
 
-interface FernSidebarGroupProps<T> {
-  nodes: T[];
-  open: boolean;
-  renderNode: (node: T) => ReactElement<any>;
-  children: ReactElement<any>;
-}
-
-export function CollapsibleSidebarGroup<
-  T extends FernNavigation.NavigationNode,
->({
-  nodes,
+export function CollapsibleSidebarGroup({
   open,
-  renderNode,
+  trigger,
   children,
-}: FernSidebarGroupProps<T>): ReactElement<any> | null {
+}: {
+  open: boolean;
+  trigger: React.ReactNode;
+  children: React.ReactNode;
+}) {
   const animationFrameRef = React.useRef<number | null>(null);
   const isAnimatingState = useBooleanState(false);
   return (
     <Collapsible.Root open={open}>
-      <Collapsible.Trigger asChild>{children}</Collapsible.Trigger>
+      <Collapsible.Trigger asChild>{trigger}</Collapsible.Trigger>
       <Collapsible.Content
         asChild
         // the collapsible component needs to clip overflowing content during the animation,
@@ -49,8 +41,12 @@ export function CollapsibleSidebarGroup<
             isAnimatingState.value && "overflow-clip"
           )}
         >
-          {nodes.map((node) => (
-            <li key={node.id}>{renderNode(node)}</li>
+          {React.Children.map(children, (child, index) => (
+            <li
+              key={React.isValidElement(child) ? (child.key ?? index) : index}
+            >
+              {child}
+            </li>
           ))}
         </ul>
       </Collapsible.Content>
