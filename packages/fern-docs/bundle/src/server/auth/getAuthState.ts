@@ -4,12 +4,12 @@ import {
   PreviewUrlAuth,
   getAuthEdgeConfig,
   getPreviewUrlAuthConfig,
+  isPreviewDomain,
 } from "@fern-docs/edge-config";
-import { removeTrailingSlash, withoutStaging } from "@fern-docs/utils";
+import { removeTrailingSlash } from "@fern-docs/utils";
 import urlJoin from "url-join";
 import { safeVerifyFernJWTConfig } from "./FernJWT";
 import { getAllowedRedirectUrls } from "./allowed-redirects";
-import { getOrgMetadataForDomain } from "./metadata-for-url";
 import { getOryAuthorizationUrl } from "./ory";
 import { getReturnToQueryParam } from "./return-to";
 import { getWebflowAuthorizationUrl } from "./webflow";
@@ -173,7 +173,9 @@ export async function getAuthState(
   setFernToken?: (token: string) => void
 ): Promise<AuthState & DomainAndHost> {
   authConfig ??= await getAuthEdgeConfig(domain);
-  const orgMetadata = await getOrgMetadataForDomain(withoutStaging(domain));
+  const orgMetadata = domain.includes("workato")
+    ? { isPreviewUrl: isPreviewDomain(domain), orgId: "workato" }
+    : undefined;
   const previewAuthConfig =
     orgMetadata != null
       ? await getPreviewUrlAuthConfig(orgMetadata)

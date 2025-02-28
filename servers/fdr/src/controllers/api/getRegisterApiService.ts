@@ -49,6 +49,7 @@ export function getRegisterApiService(app: FdrApplication): APIV1WriteService {
           javaSdk: undefined,
           goSdk: undefined,
           rubySdk: undefined,
+          csharpSdk: undefined,
         };
 
       const snippetsConfigurationWithSdkIds = await app.dao
@@ -69,6 +70,9 @@ export function getRegisterApiService(app: FdrApplication): APIV1WriteService {
       }
       if (snippetsConfigurationWithSdkIds.rubySdk != null) {
         sdkIds.push(snippetsConfigurationWithSdkIds.rubySdk.sdkId);
+      }
+      if (snippetsConfigurationWithSdkIds.csharpSdk != null) {
+        sdkIds.push(snippetsConfigurationWithSdkIds.csharpSdk.sdkId);
       }
 
       const snippetsBySdkId = await app.dao
@@ -238,6 +242,14 @@ function enrichApiLatestDefinitionWithSnippets(
           endpointId: endpoint.id,
           exampleId: example.name,
         });
+      const csharpSnippet = snippetHolder.getCsharpCodeSnippetForEndpoint({
+        endpointPath: FdrAPI.EndpointPathLiteral(
+          stringifyEndpointPathParts(endpoint.path)
+        ),
+        endpointMethod: endpoint.method,
+        endpointId: endpoint.id,
+        exampleId: example.name,
+      });
 
       if (
         goSnippet != null &&
@@ -301,6 +313,22 @@ function enrichApiLatestDefinitionWithSnippets(
           name: undefined,
         });
       }
+      if (
+        csharpSnippet != null &&
+        (example.snippets?.csharp == null ||
+          example.snippets.csharp?.length === 0)
+      ) {
+        example.snippets ??= {};
+        example.snippets.csharp ??= [];
+        example.snippets.csharp.push({
+          language: "csharp",
+          code: csharpSnippet.client,
+          install: csharpSnippet.install,
+          generated: true,
+          description: example.description,
+          name: undefined,
+        });
+      }
     });
   });
 
@@ -354,6 +382,13 @@ function getSnippetSdkRequests({
       type: "ruby",
       gem: snippetsConfigurationWithSdkIds.rubySdk.gem,
       version: snippetsConfigurationWithSdkIds.rubySdk.version,
+    });
+  }
+  if (snippetsConfigurationWithSdkIds.csharpSdk != null) {
+    sdkRequests.push({
+      type: "csharp",
+      package: snippetsConfigurationWithSdkIds.csharpSdk.package,
+      version: snippetsConfigurationWithSdkIds.csharpSdk.version,
     });
   }
   return sdkRequests;

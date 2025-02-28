@@ -3,6 +3,8 @@
  */
 import * as FernRegistry from "../../../../../index";
 export interface PlaygroundSettings {
+    /** Whether the playground is disabled. Defaults to false. */
+    disabled: boolean | undefined;
     /**
      * A list of environment IDs that are allowed to be used in the playground.
      * If not provided, all environments are allowed. And if the provided list is empty, the playground should be disabled.

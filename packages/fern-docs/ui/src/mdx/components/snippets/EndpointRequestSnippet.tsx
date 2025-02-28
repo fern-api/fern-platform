@@ -78,9 +78,11 @@ export function EndpointRequestSnippetInternal({
             options={endpoint.environments}
           />
         }
-        actions={
+        // add the api reference button here to place correctly
+        languages={
           <>
-            {availableLanguages.length > 1 && (
+            {slug != null ? <ApiReferenceButton slug={slug} /> : undefined}
+            {availableLanguages.length > 1 ? (
               <CodeExampleClientDropdown
                 languages={availableLanguages}
                 onValueChange={(language) =>
@@ -91,8 +93,7 @@ export function EndpointRequestSnippetInternal({
                 }
                 value={selectedExampleKey.language}
               />
-            )}
-            {slug != null && <ApiReferenceButton slug={slug} />}
+            ) : undefined}
           </>
         }
         code={selectedExample.code}

@@ -3,6 +3,7 @@ import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { AvailabilityBadge } from "@fern-docs/components/badges";
 import { memo, type ReactNode } from "react";
 import { FernBreadcrumbs } from "../../components/FernBreadcrumbs";
+import { PlaygroundButton } from "../../playground/PlaygroundButton";
 import { usePlaygroundBaseUrl } from "../../playground/utils/select-environment";
 import { EndpointUrlWithOverflow } from "./EndpointUrlWithOverflow";
 
@@ -16,6 +17,10 @@ export const EndpointContentHeader = memo<EndpointContentHeaderProps>(
   ({ context, breadcrumb, streamToggle }) => {
     const { endpoint, node } = context;
     const [baseUrl, environmentId] = usePlaygroundBaseUrl(endpoint);
+    const playgroundButton =
+      node != null ? (
+        <PlaygroundButton state={node} className="md:hidden" />
+      ) : undefined;
     return (
       <header className="space-y-1 pb-2 pt-8">
         <FernBreadcrumbs breadcrumb={breadcrumb} />
@@ -34,15 +39,19 @@ export const EndpointContentHeader = memo<EndpointContentHeaderProps>(
 
           {streamToggle}
         </div>
-        <EndpointUrlWithOverflow
-          baseUrl={baseUrl}
-          environmentId={environmentId}
-          path={endpoint.path}
-          method={endpoint.method}
-          options={endpoint.environments}
-          showEnvironment
-          large
-        />
+
+        <div className="flex items-center justify-between">
+          <EndpointUrlWithOverflow
+            baseUrl={baseUrl}
+            environmentId={environmentId}
+            path={endpoint.path}
+            method={endpoint.method}
+            options={endpoint.environments}
+            showEnvironment
+            large
+          />
+          {playgroundButton}
+        </div>
       </header>
     );
   }

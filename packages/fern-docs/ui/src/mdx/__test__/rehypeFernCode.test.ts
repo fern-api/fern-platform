@@ -78,6 +78,25 @@ describe("parseBlockMetaString", () => {
     expect(meta.highlights).toEqual([1, 2, 3]);
   });
 
+  it("should parse match language if present", () => {
+    const node = createElement("for='language'");
+    const meta = parseBlockMetaString(node);
+    expect(meta.matchLanguage).toEqual("language");
+  });
+
+  it("should parse match language using double quotes", () => {
+    const node = createElement('for="language"');
+    const meta = parseBlockMetaString(node);
+    expect(meta.matchLanguage).toEqual("language");
+  });
+
+  it("should parse unidentified title if match language is specified", () => {
+    const node = createElement("title for='language'");
+    const meta = parseBlockMetaString(node);
+    expect(meta.matchLanguage).toEqual("language");
+    expect(meta.title).toEqual("title");
+  });
+
   /**
    * ``` wordWrap
    * a long sentence here

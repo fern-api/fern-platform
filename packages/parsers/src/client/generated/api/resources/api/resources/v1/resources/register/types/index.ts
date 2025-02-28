@@ -12,6 +12,7 @@ export * from "./PythonPackage";
 export * from "./GoModule";
 export * from "./JavaCoordinate";
 export * from "./RubyGem";
+export * from "./NugetPackage";
 export * from "./ApiDefinitionPackage";
 export * from "./ApiDefinitionSubpackage";
 export * from "./ApiAuth";

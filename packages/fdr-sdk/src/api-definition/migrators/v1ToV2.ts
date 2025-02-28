@@ -807,6 +807,20 @@ export class ApiDefinitionV1ToLatest {
       });
     }
 
+    if (
+      !userProvidedLanguages.has(SupportedLanguage.Csharp) &&
+      codeExamples.csharpSdk != null
+    ) {
+      push(SupportedLanguage.Csharp, {
+        name: undefined,
+        language: SupportedLanguage.Csharp,
+        install: codeExamples.csharpSdk.install,
+        code: codeExamples.csharpSdk.client,
+        generated: true,
+        description: undefined,
+      });
+    }
+
     return toRet;
   }
 }
