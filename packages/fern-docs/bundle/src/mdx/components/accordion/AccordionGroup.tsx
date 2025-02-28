@@ -89,7 +89,7 @@ export function Accordion({
         {title}
       </AccordionComponent.AccordionTrigger>
       <AccordionComponent.AccordionContent>
-        <div className="m-5">{children}</div>
+        <div className="px-5">{children}</div>
       </AccordionComponent.AccordionContent>
     </AccordionComponent.AccordionItem>
   );

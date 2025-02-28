@@ -64,7 +64,7 @@ const AccordionContent = React.forwardRef<
   return (
     <AccordionPrimitive.Content
       ref={ref}
-      className={cn("fern-collapsible", className, {
+      className={cn("fern-collapsible flex flex-col", className, {
         "overflow-clip": isAnimatingState.value,
       })}
       {...props}
