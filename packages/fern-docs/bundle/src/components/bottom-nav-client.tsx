@@ -49,16 +49,16 @@ export function BottomNavigationClient({
       {next && (
         <MaybeFernLink
           href={next.href}
-          className="bg-card-background hover:border-(color:--accent-a9) border-(color:--grayscale-a6) flex h-16 min-w-0 flex-1 shrink items-center justify-end gap-4 border px-3 transition-all hover:transition-none"
+          className="bg-card-solid hover:border-(color:--accent-a9) border-(color:--grayscale-a6) flex h-16 min-w-0 flex-1 shrink items-center justify-end gap-4 border px-3 transition-all hover:transition-none"
           shallow={next.shallow}
           onClick={next.onClick}
         >
           <div className="min-w-0 shrink pl-4 text-right">
-            <h4 className="text-(color:--grayscale-a12) truncate text-base font-bold">
+            <h4 className="text-(color:--grayscale-a12) truncate text-base font-bold [&_*]:truncate">
               {next.title}
             </h4>
             {next.excerpt && (
-              <div className="text-(color:--grayscale-a11) truncate text-sm [&_p]:truncate">
+              <div className="text-(color:--grayscale-a11) truncate text-sm [&_*]:truncate">
                 {next.excerpt}
               </div>
             )}

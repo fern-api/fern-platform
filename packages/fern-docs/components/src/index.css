@@ -224,7 +224,7 @@
   --color-card-background: var(--card-background, var(--grayscale-surface));
   --color-card-solid: var(
     --card-background,
-    color-mix(in srgb, var(--grayscale-1), var(--background))
+    color-mix(in srgb, var(--background), var(--grayscale-surface))
   );
 
   --color-border-default: var(--border, var(--grayscale-a5));

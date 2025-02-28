@@ -5,6 +5,7 @@ import React from "react";
 import { RemoveScroll } from "react-remove-scroll";
 
 import { Portal } from "@radix-ui/react-portal";
+import { compact } from "es-toolkit/array";
 import {
   AnimatePresence,
   motion,
@@ -114,9 +115,9 @@ export function MobileMenu({ children }: { children: React.ReactNode }) {
 
       // register a swipe gesture where the pointer is moving left and not up or down (with some margin of error)
       if (event.movementX < -5) {
-        // Only trigger if pointer is in the right 25% of the screen
+        // Only trigger if pointer is in the right 33% of the screen
         const screenWidth = window.innerWidth;
-        const rightEdgeThreshold = screenWidth * 0.75;
+        const rightEdgeThreshold = screenWidth * 0.66;
 
         // Don't open sidebar if user is currently selecting text
         const selection = document.getSelection();
@@ -144,7 +145,19 @@ export function MobileMenu({ children }: { children: React.ReactNode }) {
   }, [dragControls, open, setOpen]);
 
   return (
-    <RemoveScroll forwardProps enabled={isLocked || open}>
+    <RemoveScroll
+      forwardProps
+      enabled={isLocked || open}
+      shards={
+        typeof window === "undefined"
+          ? []
+          : compact([
+              document.getElementById("fern-header"),
+              document.getElementById("fern-sidebar"),
+              document.getElementById("fern-sidebar-overlay"),
+            ])
+      }
+    >
       <Portal className="pointer-events-none fixed inset-0">
         <AnimatePresence
           mode="popLayout"
