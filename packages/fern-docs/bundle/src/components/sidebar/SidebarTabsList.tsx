@@ -19,7 +19,7 @@ export function SidebarTabsList({
   children?: React.ReactNode;
 }) {
   return (
-    <Tabs.TabsList>
+    <Tabs.TabsList className="-my-2">
       {tabs.map((tab) => (
         <Tabs.TabsTrigger key={tab.id} value={tab.id} asChild>
           <FernLink
