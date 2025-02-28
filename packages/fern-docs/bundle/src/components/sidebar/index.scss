@@ -1,7 +1,7 @@
 @layer components {
   .fern-sidebar-heading {
     @apply mb-1 flex min-h-[32px] lg:min-h-[36px];
-    @apply inline-flex items-center px-4 lg:px-3;
+    @apply inline-flex items-center px-4 lg:px-2;
 
     .fern-sidebar-heading-content {
       @apply m-0 text-base font-semibold leading-6 lg:text-sm lg:leading-5;

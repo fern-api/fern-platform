@@ -22,8 +22,7 @@ export function SidebarRootHeading({
       <SidebarPageNode
         node={node}
         depth={0}
-        className={className}
-        linkClassName="font-semibold !text-body"
+        className={cn(className, "!text-body font-semibold")}
         shallow={shallow}
       />
     );

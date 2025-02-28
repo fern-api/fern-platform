@@ -23,7 +23,7 @@ export const Frame: FC<PropsWithChildren<Frame.Props>> = ({
         }
       )}
     >
-      <div className="rounded-1 relative flex justify-center overflow-hidden shadow-sm">
+      <div className="rounded-1 shadow-card-grayscale relative flex justify-center overflow-hidden">
         {children}
       </div>
       {caption && (

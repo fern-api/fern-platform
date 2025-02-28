@@ -1,6 +1,7 @@
 "use client";
 
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
+import { cn } from "@fern-docs/components";
 
 import { useIsChildSelected } from "@/state/navigation";
 
@@ -26,8 +27,7 @@ export function SidebarRootApiPackageNode({
       <SidebarPageNode
         node={node}
         depth={0}
-        className={className}
-        linkClassName="font-semibold !text-body"
+        className={cn(className, "!text-body font-semibold")}
         shallow={shallow}
       />
     );

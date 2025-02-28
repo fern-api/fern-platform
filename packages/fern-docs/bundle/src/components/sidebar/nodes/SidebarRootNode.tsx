@@ -68,7 +68,7 @@ export function SidebarRootNode({
         }
       />
       {children.length > 0 && (
-        <ul className="fern-sidebar-group space-y-6">
+        <ul className="fern-sidebar-group space-y-6 lg:px-1">
           {children.map((child) => (
             <li key={child.id}>
               <SidebarRootChild node={child} />

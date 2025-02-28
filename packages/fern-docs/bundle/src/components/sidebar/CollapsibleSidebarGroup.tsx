@@ -45,7 +45,7 @@ export function CollapsibleSidebarGroup<
       >
         <ul
           className={cn(
-            "fern-sidebar-group fern-collapsible",
+            "fern-sidebar-group fern-collapsible border-border-concealed ml-4 border-l lg:ml-2 lg:py-1 lg:pl-1",
             isAnimatingState.value && "overflow-clip"
           )}
         >

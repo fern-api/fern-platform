@@ -35,7 +35,7 @@ export function useDismountMeasureSidebarScrollPosition(
 }
 
 export function useScrollSidebarNodeIntoView(
-  ref: React.RefObject<HTMLDivElement | null>,
+  ref: React.RefObject<HTMLElement | null>,
   nodeId?: string
 ) {
   const shouldScrollIntoView = useIsSelectedSidebarNode(nodeId ?? ("" as any));

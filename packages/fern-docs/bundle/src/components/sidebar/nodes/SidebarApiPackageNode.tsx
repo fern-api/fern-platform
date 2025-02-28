@@ -3,11 +3,11 @@
 import { ReactNode, useCallback } from "react";
 
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
+import { FaIcon } from "@fern-docs/components/fa-icon";
 
 import {
   useIsChildSelected,
   useIsExpanded,
-  useIsSelectedSidebarNode,
   useToggleSidebarNode,
 } from "@/state/navigation";
 
@@ -29,7 +29,6 @@ export function SidebarApiPackageNode({
   depth,
   className,
 }: SidebarApiPackageNodeProps): ReactNode {
-  const selected = useIsSelectedSidebarNode(node.id);
   const handleToggleExpand = useToggleSidebarNode(node.id);
   const childSelected = useIsChildSelected(node.id);
   const expanded = useIsExpanded(node.id);
@@ -72,30 +71,18 @@ export function SidebarApiPackageNode({
       >
         <SidebarSlugLink
           nodeId={node.id}
-          icon={node.icon}
+          icon={node.icon ? <FaIcon icon={node.icon} /> : undefined}
           className={className}
           depth={Math.max(depth - 1, 0)}
           title={node.title}
           expanded={expanded}
-          onClick={(e) => {
-            if (e.isDefaultPrevented()) {
-              return;
-            }
-            if (selected && expanded) {
-              e.preventDefault();
-            }
-            handleToggleExpand();
-          }}
-          onClickIndicator={(e) => {
-            handleToggleExpand();
-            e.preventDefault();
-          }}
-          expandable={node.children.length > 0}
+          onToggleExpand={
+            node.children.length > 0 ? handleToggleExpand : undefined
+          }
           showIndicator={showIndicator}
           hidden={node.hidden}
           authed={node.authed}
           slug={node.overviewPageId != null ? node.slug : undefined}
-          selected={selected}
           shallow={shallow}
         />
       </CollapsibleSidebarGroup>

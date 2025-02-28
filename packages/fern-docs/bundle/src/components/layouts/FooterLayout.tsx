@@ -26,7 +26,7 @@ export function FooterLayout({
         className
       )}
     >
-      <div className="flex gap-4 max-sm:flex-col sm:justify-between">
+      <div className="flex gap-4 gap-y-8 max-sm:flex-col sm:justify-between">
         <div>{!hideFeedback && <Feedback pathname={pathname} />}</div>
         <EditThisPageButton editThisPageUrl={editThisPageUrl} />
       </div>

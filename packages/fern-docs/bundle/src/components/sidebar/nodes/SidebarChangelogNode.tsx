@@ -5,8 +5,7 @@ import { ReactNode } from "react";
 import { History } from "lucide-react";
 
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
-
-import { useIsSelectedSidebarNode } from "@/state/navigation";
+import { FaIcon } from "@fern-docs/components/fa-icon";
 
 import { WithFeatureFlags } from "../../feature-flags/WithFeatureFlags";
 import { Changelog } from "../../util/dateUtils";
@@ -23,12 +22,6 @@ export function SidebarChangelogNode({
   depth,
   className,
 }: SidebarChangelogNodeProps): ReactNode {
-  const selected = useIsSelectedSidebarNode(node.id);
-
-  if (node.hidden && !selected) {
-    return null;
-  }
-
   return (
     <WithFeatureFlags featureFlags={node.featureFlags}>
       <SidebarSlugLink
@@ -36,9 +29,14 @@ export function SidebarChangelogNode({
         slug={node.slug}
         title={node.title}
         className={className}
-        selected={selected}
         depth={Math.max(0, depth - 1)}
-        icon={node.icon ?? <History className="size-icon" />}
+        icon={
+          node.icon ? (
+            <FaIcon icon={node.icon} fallback={History} />
+          ) : (
+            <History />
+          )
+        }
         tooltipContent={renderChangelogTooltip(node)}
         hidden={node.hidden}
         authed={node.authed}
