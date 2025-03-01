@@ -27,6 +27,7 @@ export default [
         "**/lib",
         "**/node_modules",
         "fern/**",
+        "**/__snapshots__",
       ],
       plugins: {
         "unused-imports": unusedImports,

@@ -1,7 +1,7 @@
 import React from "react";
 
 import { cleanLanguage } from "@fern-api/fdr-sdk/api-definition";
-import { cn } from "@fern-docs/components";
+import { CopyToClipboardButton, cn } from "@fern-docs/components";
 import {
   CodeBlockWithClipboardButton,
   FernSyntaxHighlighter,
@@ -37,12 +37,49 @@ export function CodeBlock(props: {
   maxLines?: number;
   wordWrap?: boolean;
 }) {
-  const { className, code = "" } = props;
-  const isDarkCodeEnabled = useIsDarkCode();
+  const {
+    className,
+    code = "",
+    title,
+    filename,
+    language = "plaintext",
+  } = props;
+  const isDarkCode = useIsDarkCode();
+
+  if (title || filename) {
+    return (
+      <div
+        className={cn(
+          "bg-card-background after:ring-card-border rounded-3 shadow-card-grayscale relative mb-6 mt-4 flex w-full min-w-0 max-w-full flex-col after:pointer-events-none after:absolute after:inset-0 after:rounded-[inherit] after:ring-1 after:ring-inset after:content-[''] first:mt-0",
+          { "bg-card-solid dark": isDarkCode }
+        )}
+      >
+        <div className="bg-(color:--grayscale-a2) rounded-t-[inherit]">
+          <div className="shadow-border-default mx-px flex min-h-10 items-center justify-between shadow-[inset_0_-1px_0_0]">
+            <div className="flex min-h-10 overflow-x-auto">
+              <div className="flex items-center px-3 py-1.5">
+                <span className="text-(color:--grayscale-a11) rounded-1 text-sm font-semibold">
+                  {title ?? language}
+                </span>
+              </div>
+            </div>
+            <CopyToClipboardButton className="ml-2 mr-1" content={code} />
+          </div>
+        </div>
+        <FernSyntaxHighlighter
+          {...props}
+          code={code}
+          language={language}
+          className="rounded-b-[inherit]"
+        />
+      </div>
+    );
+  }
+
   return (
     <CodeBlockWithClipboardButton
       code={code}
-      className={cn({ "bg-card-solid dark": isDarkCodeEnabled }, className)}
+      className={cn({ "bg-card-solid dark": isDarkCode }, className)}
     >
       <FernSyntaxHighlighter {...toSyntaxHighlighterProps(props)} />
     </CodeBlockWithClipboardButton>

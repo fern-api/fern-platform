@@ -41,6 +41,8 @@ describe("migrateMeta", () => {
   });
 
   it("should migrate meta", () => {
-    expect(migrateMeta("generators.yml {7-12}")).toMatchInlineSnapshot(`"title="generators.yml" highlight={[7,8,9,10,11,12]}"`);
+    expect(migrateMeta("generators.yml {7-12}")).toMatchInlineSnapshot(
+      `"title="generators.yml" highlight={[7,8,9,10,11,12]}"`
+    );
   });
 });

@@ -1,5 +1,6 @@
 // inspired by https://github.com/remcohaszing/hast-util-properties-to-mdx-jsx-attributes
 import { compact, flatten } from "es-toolkit/array";
+import { escape } from "es-toolkit/string";
 import { propertiesToMdxJsxAttributes } from "hast-util-properties-to-mdx-jsx-attributes";
 import parseNumericRange from "parse-numeric-range";
 
@@ -51,6 +52,10 @@ export const rehypeCodeBlock: Unified.Plugin<[], Hast.Root> = () => {
         ).children[0];
       } catch (error) {
         console.error(error);
+        // if we fail to parse the meta, just wrap it in a title
+        const props = meta.trim().length === 0 ? "" : `title="${escape(meta)}"`;
+        replacement = mdastFromMarkdown(`<CodeBlock ${props} />`, "mdx")
+          .children[0];
       }
 
       if (!replacement || !isMdxJsxElementHast(replacement)) {
