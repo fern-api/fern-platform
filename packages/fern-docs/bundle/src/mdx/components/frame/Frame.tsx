@@ -18,12 +18,10 @@ export const Frame: FC<PropsWithChildren<Frame.Props>> = ({
     <figure
       className={cn(
         "not-prose fern-card rounded-3 relative mb-6 mt-4 overflow-hidden p-2 first:mt-0",
-        {
-          "bg-(color:--grayscale-a2)": background === "subtle",
-        }
+        { "bg-(color:--grayscale-a2)": background === "subtle" }
       )}
     >
-      <div className="rounded-1 shadow-card-grayscale relative flex justify-center overflow-hidden">
+      <div className="rounded-1 shadow-xs relative flex justify-center overflow-hidden">
         {children}
       </div>
       {caption && (

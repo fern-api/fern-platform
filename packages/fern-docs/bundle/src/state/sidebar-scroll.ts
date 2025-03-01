@@ -21,14 +21,18 @@ export function useDismountMeasureSidebarScrollPosition(
       current.scrollTop = window._FERN_SIDEBAR_SCROLL_RESTORATION;
     }
 
+    if (current == null) {
+      return;
+    }
+
     const handleScroll = () => {
-      window._FERN_SIDEBAR_SCROLL_RESTORATION = current?.scrollTop ?? 0;
+      window._FERN_SIDEBAR_SCROLL_RESTORATION = current.scrollTop ?? 0;
     };
 
-    current?.addEventListener("scroll", handleScroll);
+    current.addEventListener("scroll", handleScroll);
 
     return () => {
-      current?.removeEventListener("scroll", handleScroll);
+      current.removeEventListener("scroll", handleScroll);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -47,23 +51,34 @@ export function useScrollSidebarNodeIntoView(
         return;
       }
       try {
-        const sidebarNodeRect = sidebarNode.getBoundingClientRect();
-        const sidebarContainerRect = container.getBoundingClientRect();
-        console.log(sidebarNodeRect, sidebarContainerRect);
-        if (
-          sidebarNodeRect.top < sidebarContainerRect.top ||
-          sidebarNodeRect.bottom > sidebarContainerRect.bottom
-        ) {
-          const topPosition =
-            container.scrollTop -
-            sidebarContainerRect.top +
-            sidebarNodeRect.top;
+        // Get the offset from the top without using getBoundingClientRect
+        // Calculate the offset by traversing the DOM tree and summing offsetTop values
+        const getOffsetTop = (element: HTMLElement): number => {
+          let offsetTop = 0;
+          let currentElement: HTMLElement | null = element;
 
+          while (currentElement && currentElement !== container) {
+            offsetTop += currentElement.offsetTop;
+            currentElement = currentElement.offsetParent as HTMLElement | null;
+          }
+
+          return offsetTop;
+        };
+
+        // Get the vertical position of the node relative to the container
+        const nodeOffsetTop = getOffsetTop(sidebarNode);
+        const containerScrollTop = container.scrollTop;
+        const containerHeight = container.offsetHeight;
+
+        // Check if the node is outside the visible area of the container
+        const isAbove = nodeOffsetTop < containerScrollTop;
+        const isBelow =
+          nodeOffsetTop + sidebarNode.offsetHeight >
+          containerScrollTop + containerHeight;
+
+        if (isAbove || isBelow) {
           container.scrollTo({
-            top:
-              topPosition -
-              sidebarContainerRect.height / 2 +
-              sidebarContainerRect.top / 2,
+            top: nodeOffsetTop - containerHeight / 2 + container.offsetTop / 2,
             behavior: "smooth",
           });
         }
@@ -73,7 +88,7 @@ export function useScrollSidebarNodeIntoView(
     };
 
     if (shouldScrollIntoView) {
-      isomorphicRequestIdleCallback(() => {
+      return isomorphicRequestIdleCallback(() => {
         scrollTo();
       });
     }

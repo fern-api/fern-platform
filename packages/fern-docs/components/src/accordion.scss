@@ -12,7 +12,7 @@
   }
 
   .fern-accordion-trigger {
-    @apply hover:bg-(color:--grayscale-a3) flex cursor-pointer items-center gap-3 rounded-[inherit] p-4 transition-colors hover:transition-none data-[state=open]:rounded-b-none;
+    @apply hover:bg-(color:--grayscale-a2) flex cursor-pointer items-center gap-3 rounded-[inherit] p-4 transition-colors hover:transition-none data-[state=open]:rounded-b-none;
     @apply list-none;
 
     /* Hide the default arrow on WebKit browsers */
