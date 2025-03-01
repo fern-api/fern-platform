@@ -14,9 +14,9 @@
     "demo:start": "next start"
   },
   "dependencies": {
-    "@ai-sdk/anthropic": "^1.1.10",
+    "@ai-sdk/anthropic": "^1.1.12",
     "@ai-sdk/cohere": "^1.1.12",
-    "@ai-sdk/openai": "^1.1.14",
+    "@ai-sdk/openai": "^1.1.15",
     "@ai-sdk/provider": "^1.0.9",
     "@algolia/client-search": "^5.20.3",
     "@fern-api/ui-core-utils": "workspace:*",
@@ -42,7 +42,7 @@
     "@radix-ui/react-use-controllable-state": "^1.1.0",
     "@radix-ui/react-visually-hidden": "^1.1.2",
     "@vercel/kv": "^2.0.0",
-    "ai": "^4.0.18",
+    "ai": "^4.1.47",
     "algoliasearch": "^5.20.3",
     "class-variance-authority": "^0.7.1",
     "es-toolkit": "^1.32.0",

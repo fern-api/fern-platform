@@ -1,10 +1,18 @@
-import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
 import { createAmazonBedrock } from "@ai-sdk/amazon-bedrock";
 import { createOpenAI } from "@ai-sdk/openai";
-import { EmbeddingModel, embed, streamText, tool } from "ai";
-import { initLogger, traced, wrapAISDKModel } from "braintrust";
+import { WebClient } from "@slack/web-api";
+import {
+  EmbeddingModel,
+  InvalidToolArgumentsError,
+  NoSuchToolError,
+  ToolExecutionError,
+  embed,
+  streamText,
+  tool,
+} from "ai";
+import { wrapAISDKModel } from "braintrust";
 import { z } from "zod";
 
 import { getAuthEdgeConfig, getEdgeFlags } from "@fern-docs/edge-config";
@@ -13,8 +21,9 @@ import {
   queryTurbopuffer,
   toDocuments,
 } from "@fern-docs/search-server/turbopuffer";
-import { COOKIE_FERN_TOKEN, withoutStaging } from "@fern-docs/utils";
+import { withoutStaging } from "@fern-docs/utils";
 
+import { getFernToken } from "@/app/fern-token";
 import { track } from "@/server/analytics/posthog";
 import { safeVerifyFernJWTConfig } from "@/server/auth/FernJWT";
 import { createCachedDocsLoader } from "@/server/docs-loader";
@@ -23,13 +32,9 @@ import { getDocsDomainEdge } from "@/server/xfernhost/edge";
 
 export const maxDuration = 60;
 export const revalidate = 0;
+const engNotifsSlackChannel = "#engineering-notifs";
 
 export async function POST(req: NextRequest) {
-  const _logger = initLogger({
-    projectName: "Braintrust Evaluation",
-    apiKey: process.env.BRAINTRUST_API_KEY,
-  });
-
   const bedrock = createAmazonBedrock({
     region: "us-west-2",
     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
@@ -54,11 +59,8 @@ export async function POST(req: NextRequest) {
   }
 
   if (metadata.isPreview) {
-    return NextResponse.json({
-      added: 0,
-      updated: 0,
-      deleted: 0,
-      unindexable: 0,
+    return NextResponse.json("Chat is not enabled for preview environments", {
+      status: 404,
     });
   }
 
@@ -72,7 +74,7 @@ export async function POST(req: NextRequest) {
     throw new Error(`Ask AI is not enabled for ${domain}`);
   }
 
-  const fern_token = (await cookies()).get(COOKIE_FERN_TOKEN)?.value;
+  const fern_token = await getFernToken();
   const user = await safeVerifyFernJWTConfig(fern_token, authEdgeConfig);
 
   const lastUserMessage: string | undefined = messages.findLast(
@@ -91,55 +93,86 @@ export async function POST(req: NextRequest) {
     date: new Date().toDateString(),
     documents,
   });
-  const result = traced(() =>
-    streamText({
-      model: languageModel,
-      system,
-      messages,
-      maxSteps: 10,
-      maxRetries: 3,
-      tools: {
-        search: tool({
-          description:
-            "Search the knowledge base for the user's query. Semantic search is enabled.",
-          parameters: z.object({
-            query: z.string(),
-          }),
-          async execute({ query }) {
-            const response = await runQueryTurbopuffer(query, {
-              embeddingModel,
-              namespace,
-              authed: user != null,
-              roles: user?.roles ?? [],
-            });
-            return response.map((hit) => {
-              const { domain, pathname, hash } = hit.attributes;
-              const url = `https://${domain}${pathname}${hash ?? ""}`;
-              return { url, ...hit.attributes };
-            });
-          },
+  const result = streamText({
+    model: languageModel,
+    system,
+    messages,
+    maxSteps: 10,
+    maxRetries: 3,
+    tools: {
+      search: tool({
+        description:
+          "Search the knowledge base for the user's query. Semantic search is enabled.",
+        parameters: z.object({
+          query: z.string(),
         }),
-      },
-      onFinish: async (e) => {
-        const end = Date.now();
-        await track("ask_ai", {
-          languageModel: languageModel.modelId,
-          embeddingModel: embeddingModel.modelId,
-          durationMs: end - start,
-          domain,
-          namespace,
-          numToolCalls: e.toolCalls.length,
-          finishReason: e.finishReason,
-          ...e.usage,
-        });
-        e.warnings?.forEach((warning) => {
-          console.warn(warning);
-        });
-      },
-    })
-  );
+        async execute({ query }) {
+          const response = await runQueryTurbopuffer(query, {
+            embeddingModel,
+            namespace,
+            authed: user != null,
+            roles: user?.roles ?? [],
+          });
+          return response.map((hit) => {
+            const { domain, pathname, hash } = hit.attributes;
+            const url = `https://${domain}${pathname}${hash ?? ""}`;
+            return { url, ...hit.attributes };
+          });
+        },
+      }),
+    },
+    onFinish: async (e) => {
+      const end = Date.now();
+      await track("ask_ai", {
+        languageModel: languageModel.modelId,
+        embeddingModel: embeddingModel.modelId,
+        durationMs: end - start,
+        domain,
+        namespace,
+        numToolCalls: e.toolCalls.length,
+        finishReason: e.finishReason,
+        ...e.usage,
+      });
+      e.warnings?.forEach((warning) => {
+        console.warn(warning);
+      });
+    },
+  });
 
-  const response = result.toDataStreamResponse();
+  const response = result.toDataStreamResponse({
+    getErrorMessage: (error) => {
+      if (error == null) {
+        return "";
+      }
+
+      let errorKind = "UnknownError";
+      if (NoSuchToolError.isInstance(error)) {
+        errorKind = "NoSuchToolError";
+      } else if (InvalidToolArgumentsError.isInstance(error)) {
+        errorKind = "InvalidToolArgumentsError";
+      } else if (ToolExecutionError.isInstance(error)) {
+        errorKind = "ToolExecutionError";
+      }
+
+      const msg = `encountered a ${errorKind} for query '${lastUserMessage}: ${error}'`;
+      console.error(msg);
+      const slackToken = process.env.SLACK_TOKEN;
+      if (slackToken) {
+        const slackMsg = `:rotating_light: [${domain}] \`Ask AI\` encountered a ${errorKind} for query '${lastUserMessage}': \`${error}\``;
+        const webClient = new WebClient(slackToken);
+        webClient.chat
+          .postMessage({
+            channel: engNotifsSlackChannel,
+            text: slackMsg,
+          })
+          .catch((err: unknown) => {
+            console.error(err);
+          });
+      }
+      return msg;
+    },
+  });
+
   response.headers.set("Access-Control-Allow-Origin", "*");
   response.headers.set("Access-Control-Allow-Methods", "POST, OPTIONS");
   response.headers.set("Access-Control-Allow-Headers", "Content-Type");
