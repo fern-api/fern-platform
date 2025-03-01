@@ -14,10 +14,6 @@
     "demo:start": "next start"
   },
   "dependencies": {
-    "@ai-sdk/anthropic": "^1.1.12",
-    "@ai-sdk/cohere": "^1.1.12",
-    "@ai-sdk/openai": "^1.1.15",
-    "@ai-sdk/provider": "^1.0.9",
     "@algolia/client-search": "^5.20.3",
     "@fern-api/ui-core-utils": "workspace:*",
     "@fern-docs/components": "workspace:*",
@@ -42,7 +38,6 @@
     "@radix-ui/react-use-controllable-state": "^1.1.0",
     "@radix-ui/react-visually-hidden": "^1.1.2",
     "@vercel/kv": "^2.0.0",
-    "ai": "^4.1.47",
     "algoliasearch": "^5.20.3",
     "class-variance-authority": "^0.7.1",
     "es-toolkit": "^1.32.0",
@@ -59,6 +54,10 @@
     "zod": "^3.24.1"
   },
   "devDependencies": {
+    "@ai-sdk/anthropic": "^1.1.12",
+    "@ai-sdk/cohere": "^1.1.12",
+    "@ai-sdk/openai": "^1.1.15",
+    "@ai-sdk/provider": "^1.0.9",
     "@tailwindcss/postcss": "^4.0.9",
     "@tailwindcss/typography": "^0.5.16",
     "@types/hast": "^3.0.4",
@@ -66,6 +65,7 @@
     "@types/react": "19.0.10",
     "@types/react-dom": "19.0.4",
     "@upstash/qstash": "^2.7.16",
+    "ai": "^4.1.47",
     "cssnano": "^6.0.3",
     "jotai": "^2.12.1",
     "next": "15.2.0",
@@ -78,6 +78,7 @@
     "typescript": "^5"
   },
   "peerDependencies": {
+    "ai": "^4",
     "jotai": "^2",
     "next": "15.2.0",
     "react": "^19",

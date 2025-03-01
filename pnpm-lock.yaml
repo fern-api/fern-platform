@@ -1561,18 +1561,6 @@ importers:
 
   packages/fern-docs/search-ui:
     dependencies:
-      '@ai-sdk/anthropic':
-        specifier: ^1.1.12
-        version: 1.1.12(zod@3.24.1)
-      '@ai-sdk/cohere':
-        specifier: ^1.1.12
-        version: 1.1.12(zod@3.24.1)
-      '@ai-sdk/openai':
-        specifier: ^1.1.15
-        version: 1.1.15(zod@3.24.1)
-      '@ai-sdk/provider':
-        specifier: ^1.0.9
-        version: 1.0.9
       '@algolia/client-search':
         specifier: ^5.20.3
         version: 5.20.3
@@ -1645,9 +1633,6 @@ importers:
       '@vercel/kv':
         specifier: ^2.0.0
         version: 2.0.0
-      ai:
-        specifier: ^4.1.47
-        version: 4.1.47(react@19.0.0)(zod@3.24.1)
       algoliasearch:
         specifier: ^5.20.3
         version: 5.20.3
@@ -1691,6 +1676,18 @@ importers:
         specifier: ^3.24.1
         version: 3.24.1
     devDependencies:
+      '@ai-sdk/anthropic':
+        specifier: ^1.1.12
+        version: 1.1.12(zod@3.24.1)
+      '@ai-sdk/cohere':
+        specifier: ^1.1.12
+        version: 1.1.12(zod@3.24.1)
+      '@ai-sdk/openai':
+        specifier: ^1.1.15
+        version: 1.1.15(zod@3.24.1)
+      '@ai-sdk/provider':
+        specifier: ^1.0.9
+        version: 1.0.9
       '@tailwindcss/postcss':
         specifier: ^4.0.9
         version: 4.0.9
@@ -1712,6 +1709,9 @@ importers:
       '@upstash/qstash':
         specifier: ^2.7.16
         version: 2.7.16
+      ai:
+        specifier: ^4.1.47
+        version: 4.1.47(react@19.0.0)(zod@3.24.1)
       cssnano:
         specifier: ^6.0.3
         version: 6.1.2(postcss@8.5.2)
