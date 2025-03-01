@@ -2,6 +2,7 @@ import "server-only";
 
 import {
   ApiDefinition,
+  PruningNodeType,
   createEndpointContext,
   createWebSocketContext,
   createWebhookContext,
@@ -29,7 +30,10 @@ export default async function ApiEndpointPage({
   breadcrumb: readonly FernNavigation.BreadcrumbItem[];
   bottomNavigation?: React.ReactNode;
 }) {
-  const apiDefinition = await loader.getApi(node.apiDefinitionId);
+  const apiDefinition = await loader.getPrunedApi(
+    node.apiDefinitionId,
+    createPruneKey(node)
+  );
 
   return (
     <ApiEndpointContent
@@ -102,5 +106,29 @@ async function ApiEndpointContent({
     }
     default:
       return null;
+  }
+}
+
+function createPruneKey(
+  node: FernNavigation.NavigationNodeApiLeaf
+): PruningNodeType {
+  switch (node.type) {
+    case "endpoint":
+      return {
+        type: "endpoint",
+        endpointId: node.endpointId,
+      };
+    case "webSocket":
+      return {
+        type: "webSocket",
+        webSocketId: node.webSocketId,
+      };
+    case "webhook":
+      return {
+        type: "webhook",
+        webhookId: node.webhookId,
+      };
+    default:
+      throw new Error(`Unknown node type: ${node}`);
   }
 }

@@ -13,7 +13,11 @@ import {
   DocsV2Read,
   FernNavigation,
 } from "@fern-api/fdr-sdk";
-import { ApiDefinitionV1ToLatest } from "@fern-api/fdr-sdk/api-definition";
+import {
+  ApiDefinitionV1ToLatest,
+  PruningNodeType,
+  prune,
+} from "@fern-api/fdr-sdk/api-definition";
 import { ApiDefinitionId, PageId, Slug } from "@fern-api/fdr-sdk/navigation";
 import { CONTINUE, SKIP } from "@fern-api/fdr-sdk/traversers";
 import { isPlainObject } from "@fern-api/ui-core-utils";
@@ -75,6 +79,14 @@ export interface DocsLoader {
    * @returns the api definition for the given id
    */
   getApi: (id: string) => Promise<ApiDefinition.ApiDefinition>;
+
+  /**
+   * @returns the api definition for the given id, pruned to the given nodes
+   */
+  getPrunedApi: (
+    id: string,
+    ...nodes: PruningNodeType[]
+  ) => Promise<ApiDefinition.ApiDefinition>;
 
   /**
    * @returns endpoint definition for the given endpoint locator
@@ -172,22 +184,37 @@ const getFiles = async (domain: string): Promise<Record<string, FileData>> => {
   });
 };
 
-const getApi = async (
-  domain: string,
-  id: string
-): Promise<ApiDefinition.ApiDefinition> => {
-  const response = await loadWithUrl(domain);
-  const latest = response.definition.apisV2[ApiDefinitionId(id)];
-  if (latest != null) {
-    return latest;
-  }
-  const v1 = response.definition.apis[ApiDefinitionId(id)];
-  if (v1 == null) {
-    notFound();
-  }
-  const flags = await cachedGetEdgeFlags(domain);
-  return ApiDefinitionV1ToLatest.from(v1, flags).migrate();
-};
+const createGetApiCached = (domain: string) =>
+  unstable_cache(
+    async (id: string): Promise<ApiDefinition.ApiDefinition> => {
+      const response = await loadWithUrl(domain);
+      const latest = response.definition.apisV2[ApiDefinitionId(id)];
+      if (latest != null) {
+        return latest;
+      }
+      const v1 = response.definition.apis[ApiDefinitionId(id)];
+      if (v1 == null) {
+        notFound();
+      }
+      const flags = await cachedGetEdgeFlags(domain);
+      return ApiDefinitionV1ToLatest.from(v1, flags).migrate();
+    },
+    [domain],
+    { tags: [domain, "api"] }
+  );
+
+const createGetPrunedApiCached = (domain: string) =>
+  unstable_cache(
+    async (
+      id: string,
+      ...nodes: PruningNodeType[]
+    ): Promise<ApiDefinition.ApiDefinition> => {
+      const api = await createGetApiCached(domain)(id);
+      return prune(api, ...nodes);
+    },
+    [domain],
+    { tags: [domain, "api"] }
+  );
 
 const getAllApisForDomain = async (
   domain: string
@@ -511,11 +538,8 @@ export const createCachedDocsLoader = async (
         tags: [domain, "mdxBundlerFiles"],
       })
     ),
-    getApi: cache(
-      unstable_cache((id: string) => getApi(domain, id), [domain], {
-        tags: [domain, "api"],
-      })
-    ),
+    getApi: cache(createGetApiCached(domain)),
+    getPrunedApi: cache(createGetPrunedApiCached(domain)),
     getEndpointByLocator: cache(
       unstable_cache(
         (method: HttpMethod, path: string, example?: string) =>
