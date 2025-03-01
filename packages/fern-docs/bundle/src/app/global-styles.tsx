@@ -42,6 +42,7 @@ export function GlobalStyles({
           --font-code: ${createFontFamilyCss(fonts.codeFont, FONT_MONO)};
           ${domain.includes("nominal") ? "--radius: 0px;" : ""}
           --header-height-real: ${layout.headerHeight}px;
+          --mobile-header-height-real: ${Math.min(layout.headerHeight, 64)}px;
           --content-width: ${layout.contentWidth}px;
           --sidebar-width: ${layout.sidebarWidth}px;
           --page-width: ${layout.pageWidth != null

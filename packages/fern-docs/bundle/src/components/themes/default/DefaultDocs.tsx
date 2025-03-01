@@ -40,7 +40,7 @@ export default function DefaultDocs({
         )}
       >
         {announcement}
-        <div className="h-header-height-real px-page-padding flex items-center">
+        <div className="h-(--mobile-header-height-real) md:h-(--header-height-real) px-page-padding flex items-center">
           {header}
         </div>
         <HeaderTabsRoot>{tabs}</HeaderTabsRoot>

@@ -28,7 +28,7 @@ export function Logo({
     <MaybeFernLink href={href} className={className}>
       {light && (
         <FernImage
-          className={cn("max-h-full object-contain", {
+          className={cn("max-h-full object-contain max-md:!max-h-8", {
             "block dark:hidden": !!dark,
           })}
           alt={alt ?? light.alt ?? "Logo"}
@@ -44,7 +44,7 @@ export function Logo({
       )}
       {dark && (
         <FernImage
-          className={cn("max-h-full object-contain", {
+          className={cn("max-h-full object-contain max-md:!max-h-8", {
             "hidden dark:block": !!light,
           })}
           alt={alt ?? dark.alt ?? "Logo"}
