@@ -47,10 +47,10 @@
   }
 
   .custom-backdrop [data-rmiz-modal-overlay="visible"] {
-    @apply bg-black/20;
+    @apply bg-background-translucent;
 
     @variant dark {
-      @apply bg-white/20;
+      @apply bg-background-translucent;
     }
   }
 

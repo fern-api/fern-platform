@@ -41,9 +41,9 @@ export function Table({ className, ...rest }: ComponentProps<"table">) {
       </Tooltip.TooltipProvider>
       <Dialog.Root open={isFullScreen} onOpenChange={setIsFullScreen}>
         <Dialog.Portal>
-          <Dialog.Overlay className="bg-background/50 data-[state=open]:animate-overlay-show fixed inset-0 backdrop-blur-sm" />
+          <Dialog.Overlay className="bg-background/50 data-[state=open]:animate-overlay-show fixed inset-0 z-50 backdrop-blur-sm" />
           <Dialog.Content
-            className="data-[state=open]:animate-content-show fixed left-1/2 top-1/2 flex max-h-[calc(100vh-2rem)] w-[calc(100vw-2rem)] -translate-x-1/2 -translate-y-1/2 flex-col md:max-h-[calc(100vh-8rem)] md:w-[calc(100vw-8rem)]"
+            className="fixed inset-x-0 top-1/2 z-50 mx-auto flex max-h-[calc(100vh-2rem)] -translate-y-1/2 flex-col md:inset-x-4 md:max-h-[calc(100vh-8rem)] lg:inset-x-16 xl:inset-x-32"
             asChild
           >
             <div className="fern-table-root not-prose fullscreen">

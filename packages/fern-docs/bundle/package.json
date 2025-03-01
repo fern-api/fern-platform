@@ -122,7 +122,7 @@
     "react": "19.0.0",
     "react-dom": "19.0.0",
     "react-error-boundary": "^5.0.0",
-    "react-medium-image-zoom": "^5.2.13",
+    "react-medium-image-zoom": "^5.2.14",
     "react-remove-scroll": "^2.6.3",
     "react-virtuoso": "^4.12.5",
     "rehype-katex": "^7.0.1",
