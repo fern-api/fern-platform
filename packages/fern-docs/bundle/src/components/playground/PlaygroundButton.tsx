@@ -40,7 +40,6 @@ export const PlaygroundButton: FC<{
           variant="default"
           size="xs"
           className="font-mono"
-          replace={!settings?.button?.href}
           scroll={false}
         >
           <Play className="fill-current" />

@@ -1,9 +1,7 @@
-import { usePathname } from "next/navigation";
 import { FC, Fragment, ReactNode } from "react";
 
 import { omitBy } from "es-toolkit/object";
 import { isUndefined } from "es-toolkit/predicate";
-import { X } from "lucide-react";
 
 import type {
   Environment,
@@ -25,10 +23,10 @@ import { CopyToClipboardButton } from "@fern-docs/components";
 import { HttpMethodBadge } from "@fern-docs/components/badges";
 import { useBooleanState } from "@fern-ui/react-commons";
 
-import { FernLinkButton } from "@/components/FernLinkButton";
 import { MaybeEnvironmentDropdown } from "@/components/MaybeEnvironmentDropdown";
 import { useAllEnvironmentIds } from "@/state/environment";
 
+import { closeButton } from "../PlaygroundCloseButton";
 import { PlaygroundSendRequestButton } from "../PlaygroundSendRequestButton";
 import { PlaygroundRequestFormState } from "../types";
 
@@ -173,22 +171,7 @@ export const PlaygroundEndpointPath: FC<PlaygroundEndpointPathProps> = ({
         />
       </div>
 
-      <CloseButton />
+      {<closeButton.Out />}
     </div>
   );
 };
-
-function CloseButton() {
-  const pathname = usePathname();
-  return (
-    <FernLinkButton
-      icon={<X />}
-      size="large"
-      rounded
-      variant="outlined"
-      href={pathname.replace("/~explorer", "")}
-      replace
-      scroll={false}
-    />
-  );
-}

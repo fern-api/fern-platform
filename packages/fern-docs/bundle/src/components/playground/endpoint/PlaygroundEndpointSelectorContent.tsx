@@ -26,6 +26,7 @@ export interface PlaygroundEndpointSelectorContentProps {
   apiGroups: ApiGroup[];
   className?: string;
   shallow?: boolean;
+  replace?: boolean;
 }
 
 function matchesEndpoint(
@@ -47,7 +48,7 @@ function matchesEndpoint(
 export const PlaygroundEndpointSelectorContent = forwardRef<
   HTMLDivElement,
   PlaygroundEndpointSelectorContentProps
->(({ apiGroups, className, shallow }, forwardedRef) => {
+>(({ apiGroups, className, shallow, replace }, forwardedRef) => {
   const pathname = usePathname();
 
   const [filterValue, setFilterValue] = useState<string>("");
@@ -98,6 +99,7 @@ export const PlaygroundEndpointSelectorContent = forwardRef<
                 ref={active ? selectedItemRef : undefined}
                 filterValue={filterValue}
                 shallow={shallow}
+                replace={replace}
               />
             );
           })}

@@ -1,3 +1,4 @@
+import { InterceptedPlaygroundCloseButton } from "@/components/playground/PlaygroundCloseButton";
 import { PlaygroundDrawer } from "@/components/playground/PlaygroundDrawer";
 import { HorizontalSplitPane } from "@/components/playground/VerticalSplitPane";
 import { PlaygroundEndpointSelectorContent } from "@/components/playground/endpoint";
@@ -24,6 +25,7 @@ export default async function ExplorerLayout({
 
   return (
     <PlaygroundDrawer>
+      <InterceptedPlaygroundCloseButton />
       <ApiExplorerFlags
         isFileForgeHackEnabled={edgeFlags.isFileForgeHackEnabled}
         isProxyDisabled={edgeFlags.isProxyDisabled}
@@ -44,6 +46,7 @@ export default async function ExplorerLayout({
         <PlaygroundEndpointSelectorContent
           apiGroups={apiGroups}
           className="h-full"
+          replace
         />
         {children}
       </HorizontalSplitPane>

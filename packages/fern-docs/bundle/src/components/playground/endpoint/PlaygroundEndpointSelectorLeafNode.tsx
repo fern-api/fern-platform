@@ -16,12 +16,13 @@ interface PlaygroundEndpointSelectorLeafNodeProps {
   filterValue: string;
   active: boolean;
   shallow?: boolean;
+  replace?: boolean;
 }
 
 export const PlaygroundEndpointSelectorLeafNode = forwardRef<
   HTMLLIElement,
   PlaygroundEndpointSelectorLeafNodeProps
->(({ node, filterValue, active, shallow }, ref) => {
+>(({ node, filterValue, active, shallow, replace }, ref) => {
   const text = renderTextWithHighlight(node.title, filterValue);
 
   // const description = useAtomValue(
@@ -53,6 +54,7 @@ export const PlaygroundEndpointSelectorLeafNode = forwardRef<
           <FernLinkButton
             href={conformExplorerRoute(node.slug)}
             shallow={shallow}
+            replace={replace}
             text={text}
             className="w-full text-left"
             variant="minimal"
@@ -81,6 +83,7 @@ export const PlaygroundEndpointSelectorLeafNode = forwardRef<
           <FernLinkButton
             href={conformExplorerRoute(node.slug)}
             shallow={shallow}
+            replace={replace}
             text={text}
             className="w-full text-left"
             variant="minimal"

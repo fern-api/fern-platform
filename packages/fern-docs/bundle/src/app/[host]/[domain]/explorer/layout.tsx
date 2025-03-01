@@ -1,6 +1,7 @@
 import "server-only";
 
 import { getFernToken } from "@/app/fern-token";
+import { PlaygroundCloseButton } from "@/components/playground/PlaygroundCloseButton";
 import { PlaygroundKeyboardTrigger } from "@/components/playground/PlaygroundKeyboardTrigger";
 import { HorizontalSplitPane } from "@/components/playground/VerticalSplitPane";
 import { PlaygroundEndpointSelectorContent } from "@/components/playground/endpoint/PlaygroundEndpointSelectorContent";
@@ -32,6 +33,7 @@ export default async function Layout({
   return (
     <main className="fixed inset-0">
       <PlaygroundKeyboardTrigger />
+      <PlaygroundCloseButton />
       <ApiExplorerFlags
         isFileForgeHackEnabled={edgeFlags.isFileForgeHackEnabled}
         isProxyDisabled={edgeFlags.isProxyDisabled}
