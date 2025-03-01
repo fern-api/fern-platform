@@ -2,6 +2,7 @@
 
 import { usePathname } from "next/navigation";
 import { useRouter } from "next/navigation";
+import React from "react";
 
 import { X } from "lucide-react";
 
@@ -31,6 +32,17 @@ export function PlaygroundCloseButton() {
 
 export function InterceptedPlaygroundCloseButton() {
   const router = useRouter();
+  React.useEffect(() => {
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        router.back();
+      }
+    };
+    window.addEventListener("keydown", handleEscape);
+    return () => {
+      window.removeEventListener("keydown", handleEscape);
+    };
+  }, [router]);
   return (
     <closeButton.In>
       <FernButton
