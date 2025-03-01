@@ -29,7 +29,6 @@ import {
 import { findEndpoint } from "@/components/util/processRequestSnippetComponents";
 
 import { AuthState, createGetAuthState } from "./auth/getAuthState";
-import { cacheSeed } from "./cache-seed";
 import { generateFernColorPalette } from "./generateFernColors";
 import { FernFonts, generateFonts } from "./generateFonts";
 import { getDocsUrlMetadata } from "./getDocsUrlMetadata";
@@ -291,11 +290,9 @@ const unsafe_getFullRoot = async (domain: string) => {
 };
 
 const unsafe_getRootCached = async (domain: string) => {
-  return await unstable_cache(
-    unsafe_getFullRoot,
-    ["unsafe_getRoot", cacheSeed()],
-    { tags: [domain, "unsafe_getRoot"] }
-  )(domain);
+  return await unstable_cache(unsafe_getFullRoot, ["unsafe_getRoot"], {
+    tags: [domain, "unsafe_getRoot"],
+  })(domain);
 };
 
 const getRoot = async (
@@ -319,7 +316,7 @@ const getRootCached = async (
   authState: AuthState,
   authConfig: AuthEdgeConfig | undefined
 ) => {
-  return await unstable_cache(getRoot, [cacheSeed()], {
+  return await unstable_cache(getRoot, [], {
     tags: [domain, "getRoot"],
   })(domain, authState, authConfig);
 };
@@ -499,33 +496,31 @@ export const createCachedDocsLoader = async (
     fern_token,
     getAuthConfig: () => authConfig,
     getBaseUrl: cache(
-      unstable_cache(() => getBaseUrl(domain), [domain, cacheSeed()], {
+      unstable_cache(() => getBaseUrl(domain), [domain], {
         tags: [domain, "getBaseUrl"],
       })
     ),
     getMetadata: () => metadata,
     getFiles: cache(
-      unstable_cache(() => getFiles(domain), [domain, cacheSeed()], {
+      unstable_cache(() => getFiles(domain), [domain], {
         tags: [domain, "files"],
       })
     ),
     getMdxBundlerFiles: cache(
-      unstable_cache(() => getMdxBundlerFiles(domain), [domain, cacheSeed()], {
+      unstable_cache(() => getMdxBundlerFiles(domain), [domain], {
         tags: [domain, "mdxBundlerFiles"],
       })
     ),
     getApi: cache(
-      unstable_cache(
-        (id: string) => getApi(domain, id),
-        [domain, cacheSeed()],
-        { tags: [domain, "api"] }
-      )
+      unstable_cache((id: string) => getApi(domain, id), [domain], {
+        tags: [domain, "api"],
+      })
     ),
     getEndpointByLocator: cache(
       unstable_cache(
         (method: HttpMethod, path: string, example?: string) =>
           getEndpointByLocator(domain, method, path, example),
-        [domain, cacheSeed()],
+        [domain],
         { tags: [domain, "endpointByLocator"] }
       )
     ),
@@ -537,35 +532,33 @@ export const createCachedDocsLoader = async (
     ),
     unsafe_getFullRoot: cache(() => unsafe_getRootCached(domain)),
     getConfig: cache(
-      unstable_cache(() => getConfig(domain), [domain, cacheSeed()], {
+      unstable_cache(() => getConfig(domain), [domain], {
         tags: [domain, "getConfig"],
       })
     ),
     getPage: cache(
-      unstable_cache(
-        (pageId: string) => getPage(domain, pageId),
-        [domain, cacheSeed()],
-        { tags: [domain, "getPage"] }
-      )
+      unstable_cache((pageId: string) => getPage(domain, pageId), [domain], {
+        tags: [domain, "getPage"],
+      })
     ),
     getColors: cache(
-      unstable_cache(() => getColors(domain), [domain, cacheSeed()], {
+      unstable_cache(() => getColors(domain), [domain], {
         tags: [domain, "getColors"],
       })
     ),
     getLayout: cache(
-      unstable_cache(() => getLayout(domain), [domain, cacheSeed()], {
+      unstable_cache(() => getLayout(domain), [domain], {
         tags: [domain, "getLayout"],
       })
     ),
     getFonts: cache(
-      unstable_cache(() => getFonts(domain), [domain, cacheSeed()], {
+      unstable_cache(() => getFonts(domain), [domain], {
         tags: [domain, "getFonts"],
       })
     ),
     getAuthState,
     getEdgeFlags: cache(
-      unstable_cache(() => cachedGetEdgeFlags(domain), [domain, cacheSeed()], {
+      unstable_cache(() => cachedGetEdgeFlags(domain), [domain], {
         tags: [domain, "getEdgeFlags"],
       })
     ),
