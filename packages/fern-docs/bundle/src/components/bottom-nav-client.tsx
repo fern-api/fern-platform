@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import React from "react";
 
 import { ChevronLeft, ChevronRight } from "lucide-react";
@@ -24,6 +25,33 @@ export function BottomNavigationClient({
     onClick?: () => void;
   };
 }) {
+  const router = useRouter();
+  React.useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (
+        (event.key === "ArrowLeft" && event.altKey) ||
+        (event.key === "ArrowLeft" && event.metaKey)
+      ) {
+        prev?.onClick?.();
+        if (prev?.href) {
+          router.push(prev.href, { scroll: true });
+        }
+      } else if (
+        (event.key === "ArrowRight" && event.altKey) ||
+        (event.key === "ArrowRight" && event.metaKey)
+      ) {
+        next?.onClick?.();
+        if (next?.href) {
+          router.push(next.href, { scroll: true });
+        }
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [next, prev]);
+
   if (prev == null && next == null) {
     return <Separator />;
   }
