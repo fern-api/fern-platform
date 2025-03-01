@@ -1,5 +1,6 @@
 import "server-only";
 
+import { Metadata } from "next";
 import { RedirectType, redirect } from "next/navigation";
 import React from "react";
 
@@ -87,4 +88,26 @@ function NoEndpointSelected() {
       <h6 className="t-muted">Select an endpoint to get started</h6>
     </div>
   );
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ host: string; domain: string; slug: string }>;
+}): Promise<Metadata> {
+  const { host, domain, slug: slugProp } = await params;
+  const slug = FernNavigation.slugjoin(slugProp);
+  const loader = await createCachedDocsLoader(
+    host,
+    domain,
+    await getFernToken()
+  );
+  const root = await loader.getRoot();
+  const found = FernNavigation.utils.findNode(root, slug);
+  if (found.type !== "found") {
+    return {};
+  }
+  return {
+    title: `${found.node.title} (API Explorer)`,
+  };
 }

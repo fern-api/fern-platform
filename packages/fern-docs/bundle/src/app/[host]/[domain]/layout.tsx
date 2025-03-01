@@ -198,7 +198,7 @@ export async function generateMetadata(props: {
     applicationName: config.title,
     title: {
       template: config.title ? "%s | " + config.title : "%s",
-      default: config.title ?? "Documentation",
+      default: "Documentation",
     },
     robots: { index, follow },
     openGraph: {

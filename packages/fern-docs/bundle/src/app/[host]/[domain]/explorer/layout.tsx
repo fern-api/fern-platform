@@ -1,5 +1,7 @@
 import "server-only";
 
+import { Metadata } from "next";
+
 import { getFernToken } from "@/app/fern-token";
 import { PlaygroundCloseButton } from "@/components/playground/PlaygroundCloseButton";
 import { PlaygroundKeyboardTrigger } from "@/components/playground/PlaygroundKeyboardTrigger";
@@ -58,4 +60,22 @@ export default async function Layout({
       </HorizontalSplitPane>
     </main>
   );
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ host: string; domain: string }>;
+}): Promise<Metadata> {
+  const { host, domain } = await params;
+  const loader = await createCachedDocsLoader(host, domain);
+  const config = await loader.getConfig();
+  return {
+    title: {
+      default: "API Explorer",
+      template: config.title ? "%s | " + config.title : "%s",
+    },
+    description:
+      "Browse, explore, and try out API endpoints without leaving the documentation.",
+  };
 }

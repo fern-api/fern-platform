@@ -51,7 +51,7 @@ export function PlaygroundDrawer({ children }: { children: React.ReactNode }) {
     >
       <Drawer.Portal>
         <Drawer.Overlay />
-        <Drawer.Content className="bg-background-translucent rounded-t-4 border-border-default fixed inset-x-0 bottom-0 z-40 flex h-[calc(100dvh-var(--header-height))] flex-col border-l border-r border-t outline-none backdrop-blur-2xl">
+        <Drawer.Content className="bg-background-translucent rounded-t-4 border-border-default fixed inset-x-0 bottom-0 z-40 flex h-[calc(100dvh-var(--header-height))] max-h-[calc(100dvh*80%)] flex-col border-l border-r border-t outline-none backdrop-blur-2xl">
           <Drawer.Handle
             className="bg-(color:--grayscale-a4) absolute mx-auto -mb-1.5 h-1.5 w-12 flex-shrink-0 -translate-y-4 rounded-full"
             preventCycle

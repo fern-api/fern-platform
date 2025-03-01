@@ -1,5 +1,6 @@
 import "server-only";
 
+import { Metadata } from "next";
 import { cookies } from "next/headers";
 import { notFound, redirect } from "next/navigation";
 
@@ -10,6 +11,7 @@ import {
 } from "@fern-api/fdr-sdk/api-definition";
 import { COOKIE_FERN_TOKEN, conformTrailingSlash } from "@fern-docs/utils";
 
+import { getFernToken } from "@/app/fern-token";
 import { PlaygroundEndpoint } from "@/components/playground/endpoint/PlaygroundEndpoint";
 import { conformExplorerRoute } from "@/components/playground/utils/explorer-route";
 import { PlaygroundWebSocket } from "@/components/playground/websocket/PlaygroundWebSocket";
@@ -75,4 +77,26 @@ export default async function Page(props: {
     node
   );
   notFound();
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ host: string; domain: string; slug: string }>;
+}): Promise<Metadata> {
+  const { host, domain, slug: slugProp } = await params;
+  const slug = FernNavigation.slugjoin(slugProp);
+  const loader = await createCachedDocsLoader(
+    host,
+    domain,
+    await getFernToken()
+  );
+  const root = await loader.getRoot();
+  const found = FernNavigation.utils.findNode(root, slug);
+  if (found.type !== "found") {
+    return {};
+  }
+  return {
+    title: `${found.node.title} (API Explorer)`,
+  };
 }
