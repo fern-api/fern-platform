@@ -98,6 +98,7 @@ export const FernDropdown = forwardRef<
     const renderDropdownContent = () => (
       <DropdownMenu.Content
         sideOffset={4}
+        collisionPadding={4}
         side={side}
         align={align}
         {...contentProps}
@@ -143,7 +144,7 @@ export const FernDropdown = forwardRef<
       <DropdownMenu.Root
         onOpenChange={handleOpenChange}
         open={isOpen}
-        modal={false}
+        // modal={false}
         defaultOpen={defaultOpen}
       >
         <DropdownMenu.Trigger asChild={true} ref={ref} className={className}>

@@ -1,3 +1,5 @@
+"use client";
+
 import type { APIV1Read } from "@fern-api/fdr-sdk";
 
 export function useOAuthEndpointContext(

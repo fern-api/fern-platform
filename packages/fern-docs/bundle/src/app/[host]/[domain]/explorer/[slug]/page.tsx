@@ -1,6 +1,6 @@
 import "server-only";
 
-import { cookies, headers } from "next/headers";
+import { cookies } from "next/headers";
 import { notFound, redirect } from "next/navigation";
 
 import { FernNavigation } from "@fern-api/fdr-sdk";
@@ -18,11 +18,13 @@ import { createCachedDocsLoader } from "@/server/docs-loader";
 export default async function Page(props: {
   params: Promise<{ host: string; domain: string; slug: string }>;
 }) {
-  const [{ host, domain, slug: slugProp }, cookieJar, headersList] =
-    await Promise.all([props.params, cookies(), headers()]);
+  const [{ host, domain, slug: slugProp }, cookieJar] = await Promise.all([
+    props.params,
+    cookies(),
+  ]);
   console.debug(`[${domain}] Loading API Explorer page`);
 
-  const slug = FernNavigation.slugjoin(headersList.get("x-basepath"), slugProp);
+  const slug = FernNavigation.slugjoin(slugProp);
   const fern_token = cookieJar.get(COOKIE_FERN_TOKEN)?.value;
   const loader = await createCachedDocsLoader(host, domain, fern_token);
 

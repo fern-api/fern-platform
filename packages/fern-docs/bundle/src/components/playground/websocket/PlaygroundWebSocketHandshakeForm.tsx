@@ -1,3 +1,5 @@
+"use client";
+
 import { Dispatch, FC, SetStateAction, useCallback } from "react";
 
 import type { WebSocketContext } from "@fern-api/fdr-sdk/api-definition";

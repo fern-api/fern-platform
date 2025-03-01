@@ -6,7 +6,7 @@ import { X } from "lucide-react";
 import { AnimatePresence, LazyMotion, domAnimation } from "motion/react";
 import * as m from "motion/react-m";
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
+import { createJSONStorage, persist } from "zustand/middleware";
 
 import { FernButton, cn } from "@fern-docs/components";
 
@@ -21,7 +21,11 @@ export const useAnnouncementStore = create<AnnouncementStore>()(
       announcement: null,
       dismiss: (announcement: string) => set({ announcement }),
     }),
-    { name: "fern-announcement-dismissed", version: 1 }
+    {
+      name: "fern-announcement-dismissed",
+      version: 1,
+      storage: createJSONStorage(() => localStorage),
+    }
   )
 );
 

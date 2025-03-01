@@ -1,3 +1,5 @@
+"use client";
+
 import { ReactElement } from "react";
 
 import { Mic, RotateCcw } from "lucide-react";

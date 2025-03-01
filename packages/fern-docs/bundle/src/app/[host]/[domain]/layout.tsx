@@ -37,13 +37,14 @@ import { GlobalStyles } from "../../global-styles";
 import { toImageDescriptor } from "../../seo";
 import { ThemeProvider } from "../../theme";
 
-export default async function Layout(props: {
+export default async function Layout({
+  children,
+  params,
+}: {
   children: React.ReactNode;
   params: Promise<{ host: string; domain: string }>;
 }) {
-  const { host, domain } = await props.params;
-
-  const { children } = props;
+  const { host, domain } = await params;
 
   const loader = await createCachedDocsLoader(host, domain);
   const [

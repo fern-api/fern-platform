@@ -1,3 +1,5 @@
+"use client";
+
 import { FC, useEffect, useMemo, useRef } from "react";
 
 import {

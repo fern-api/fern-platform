@@ -51,7 +51,7 @@ export const CopyToClipboardButton: React.FC<CopyToClipboardButton.Props> = ({
               copyToClipboard?.();
             }}
             data-testid={testId}
-            variant={wasJustCopied ? "ghostSuccess" : "ghost"}
+            variant={wasJustCopied ? "success" : "ghost"}
             size="iconSm"
           >
             {wasJustCopied ? <Check /> : <Copy />}

@@ -1,3 +1,5 @@
+"use client";
+
 import { ReactElement, memo, useCallback } from "react";
 
 import { useAtomValue } from "jotai";

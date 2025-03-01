@@ -1,17 +1,16 @@
-import { useEffect } from "react";
+import React from "react";
 
 import { useIsWhitelabeled } from "@/state/whitelabeled";
 
-let hasBeenCalled = false;
-
 export const useConsoleMessage = (): void => {
+  const hasBeenCalled = React.useRef(false);
   const isWhitelabeled = useIsWhitelabeled();
-  useEffect(() => {
-    if (hasBeenCalled || isWhitelabeled) {
+  React.useEffect(() => {
+    if (hasBeenCalled.current || isWhitelabeled) {
       return;
     }
 
-    hasBeenCalled = true;
+    hasBeenCalled.current = true;
 
     const color = "#1da32b";
     const svgString = `

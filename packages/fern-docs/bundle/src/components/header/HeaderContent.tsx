@@ -58,12 +58,12 @@ export function HeaderContent({
         >
           {navbarLinks}
           {loginButton}
-          <ThemeSwitch iconOnly variant="ghost" className="-mr-2 ml-2" />
+          <ThemeSwitch iconOnly variant="ghost" className="ml-2" />
         </nav>
       </FernButtonGroup>
 
       <div className="flex flex-1 items-center justify-end lg:hidden">
-        <MobileMenuButton className="-mx-2" />
+        <MobileMenuButton />
       </div>
     </div>
   );

@@ -187,6 +187,8 @@ function CloseButton() {
       rounded
       variant="outlined"
       href={pathname.replace("/~explorer", "")}
+      replace
+      scroll={false}
     />
   );
 }

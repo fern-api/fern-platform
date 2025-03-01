@@ -102,7 +102,9 @@ const nextConfig: NextConfig = {
   assetPrefix: cdnUri != null ? cdnUri.href : undefined,
   compiler: {
     removeConsole:
-      process.env.VERCEL_ENV === "production" ? { exclude: ["error"] } : false,
+      process.env.VERCEL_ENV === "production"
+        ? { exclude: ["error", "log"] }
+        : false,
     styledJsx: true,
   },
   logging: {

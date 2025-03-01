@@ -1,37 +1,34 @@
-import "server-only";
-
 import { getFernToken } from "@/app/fern-token";
-import { PlaygroundKeyboardTrigger } from "@/components/playground/PlaygroundKeyboardTrigger";
+import { PlaygroundDrawer } from "@/components/playground/PlaygroundDrawer";
 import { HorizontalSplitPane } from "@/components/playground/VerticalSplitPane";
-import { PlaygroundEndpointSelectorContent } from "@/components/playground/endpoint/PlaygroundEndpointSelectorContent";
+import { PlaygroundEndpointSelectorContent } from "@/components/playground/endpoint";
 import { flattenApiSection } from "@/components/playground/utils/flatten-apis";
 import { createCachedDocsLoader } from "@/server/docs-loader";
 import { ApiExplorerFlags } from "@/state/api-explorer-flags";
 
-export default async function Layout({
-  params,
+export default async function ExplorerLayout({
   children,
+  params,
 }: {
   children: React.ReactNode;
   params: Promise<{ host: string; domain: string }>;
 }) {
   const { host, domain } = await params;
 
-  console.debug(`[${domain}] Loading API Explorer layout`);
   const loader = await createCachedDocsLoader(
     host,
     domain,
     await getFernToken()
   );
-  const [root, edgeFlags] = await Promise.all([
-    loader.getRoot(),
+  const [edgeFlags, root] = await Promise.all([
     loader.getEdgeFlags(),
+    loader.getRoot(),
   ]);
+
   const apiGroups = flattenApiSection(root);
 
   return (
-    <main className="fixed inset-0">
-      <PlaygroundKeyboardTrigger />
+    <PlaygroundDrawer>
       <ApiExplorerFlags
         isFileForgeHackEnabled={edgeFlags.isFileForgeHackEnabled}
         isProxyDisabled={edgeFlags.isProxyDisabled}
@@ -43,9 +40,10 @@ export default async function Layout({
           edgeFlags.isBinaryOctetStreamAudioPlayer
         }
       />
+
       <HorizontalSplitPane
         mode="pixel"
-        className="size-full"
+        className="w-full flex-1 overflow-y-auto"
         leftClassName="border-border-default border-r hidden lg:block"
       >
         <PlaygroundEndpointSelectorContent
@@ -54,6 +52,6 @@ export default async function Layout({
         />
         {children}
       </HorizontalSplitPane>
-    </main>
+    </PlaygroundDrawer>
   );
 }

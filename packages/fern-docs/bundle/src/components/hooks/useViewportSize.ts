@@ -1,5 +1,7 @@
 import { useLayoutEffect, useState } from "react";
 
+import { useIsomorphicLayoutEffect } from "@fern-ui/react-commons";
+
 export function useViewportSize(): { width: number; height: number } {
   const [width, setViewportWidth] = useState<number>(() =>
     typeof window !== "undefined" ? window.innerWidth : 0
@@ -26,4 +28,27 @@ export function useViewportSize(): { width: number; height: number } {
   }
 
   return { width, height };
+}
+
+export function useHeaderHeight(): number {
+  const [headerHeight, setHeaderHeight] = useState<number>(0);
+  useIsomorphicLayoutEffect(() => {
+    const header = document.getElementById("fern-header");
+    if (header) {
+      setHeaderHeight(header.clientHeight);
+    }
+    const resizeObserver = new ResizeObserver(() => {
+      const header = document.getElementById("fern-header");
+      console.log(header);
+      if (header) {
+        setHeaderHeight(header.clientHeight);
+      }
+    });
+    resizeObserver.observe(document.body);
+    return () => {
+      resizeObserver.disconnect();
+    };
+  }, []);
+
+  return headerHeight;
 }

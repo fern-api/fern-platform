@@ -62,7 +62,7 @@
 
   .code-block-line-group:not(.highlight-focus) .code-block-line.highlight {
     @apply transition-[background];
-    background-color: var(--accent-2);
+    background-color: var(--accent-a5);
   }
 
   .dark .code-block-line-content span {

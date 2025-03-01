@@ -114,12 +114,12 @@ const SidebarLinkInternal = React.forwardRef<
 
   const sharedClassName = cn(
     "text-(color:--grayscale-a11) lg:rounded-2 group flex w-full items-center gap-3 px-4 py-2 text-left text-base leading-tight lg:p-2 lg:text-sm",
-    "[&_svg]:size-icon-md lg:[&_svg]:size-icon [&_svg]:text-(color:--grayscale-a9) [&_svg]:shrink-0",
+    "[&_svg]:size-icon [&_svg]:text-(color:--grayscale-a9) [&_svg]:shrink-0",
     "hover:text-(color:--grayscale-a12) hover:bg-(color:--grayscale-a3) transition-colors hover:transition-none",
     "data-[state=active]:text-(color:--accent-a11) data-[state=active]:bg-(color:--accent-a3) data-[state=active]:[&_svg]:text-(color:--accent-a9) data-[state=active]:font-medium",
     { "opacity-50": hidden },
     depth > 0 &&
-      "data-[state=active]:max-lg:border-(color:--accent-a6) max-lg:pl-2 data-[state=active]:max-lg:-ml-px data-[state=active]:max-lg:border-l lg:py-1.5",
+      "data-[state=active]:max-lg:border-(color:--accent-a6) data-[state=active]:max-lg:-ml-px data-[state=active]:max-lg:border-l lg:py-1.5",
     className
   );
 

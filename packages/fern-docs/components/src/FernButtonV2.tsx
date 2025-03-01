@@ -26,7 +26,8 @@ const buttonVariants = cva(
           "bg-(color:--grayscale-a3) text-(color:--accent-12) hover:bg-(color:--grayscale-a4)",
         ghost:
           "text-(color:--grayscale-a11) hover:bg-(color:--accent-a3) hover:text-(color:--accent-11)",
-        ghostSuccess: "bg-(color:--green-a9) hover:bg-(color:--green-a10)",
+        success:
+          "bg-(color:--green-a9) hover:bg-(color:--green-a10) text-(color:--green-1)",
         link: "text-(color:--accent-6) underline-offset-4 hover:underline",
       },
       size: {
