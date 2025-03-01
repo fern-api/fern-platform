@@ -21,37 +21,43 @@ export const FernCollapse: FC<PropsWithChildren<FernCollapseProps>> = ({
   trigger,
   ...props
 }) => {
-  const contentRef = React.useRef<HTMLDivElement>(null);
-  const animationFrameRef = React.useRef<number | null>(null);
   return (
     <Collapsible.Root {...props}>
       {trigger && <Collapsible.Trigger asChild>{trigger}</Collapsible.Trigger>}
       <Collapsible.Content
-        ref={contentRef}
         className="fern-collapsible"
-        onAnimationStart={() => {
-          if (animationFrameRef.current != null) {
-            cancelAnimationFrame(animationFrameRef.current);
-          }
-          animationFrameRef.current = requestAnimationFrame(() => {
-            if (contentRef.current != null) {
-              contentRef.current.style.overflow = "hidden";
-            }
-          });
-        }}
-        onAnimationEnd={() => {
-          if (animationFrameRef.current != null) {
-            cancelAnimationFrame(animationFrameRef.current);
-          }
-          animationFrameRef.current = requestAnimationFrame(() => {
-            if (contentRef.current != null) {
-              contentRef.current.style.overflow = "visible";
-            }
-          });
-        }}
+        {...useFernCollapseOverflow()}
       >
         <div className="fern-collapsible-child">{children}</div>
       </Collapsible.Content>
     </Collapsible.Root>
   );
 };
+
+export function useFernCollapseOverflow() {
+  const ref = React.useRef<HTMLDivElement>(null);
+  const animationFrameRef = React.useRef<number | null>(null);
+  return {
+    ref,
+    onAnimationStart: () => {
+      if (animationFrameRef.current != null) {
+        cancelAnimationFrame(animationFrameRef.current);
+      }
+      animationFrameRef.current = requestAnimationFrame(() => {
+        if (ref.current != null) {
+          ref.current.style.overflow = "hidden";
+        }
+      });
+    },
+    onAnimationEnd: () => {
+      if (animationFrameRef.current != null) {
+        cancelAnimationFrame(animationFrameRef.current);
+      }
+      animationFrameRef.current = requestAnimationFrame(() => {
+        if (ref.current != null) {
+          ref.current.style.overflow = "visible";
+        }
+      });
+    },
+  };
+}
