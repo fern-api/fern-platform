@@ -878,8 +878,8 @@ importers:
         specifier: ^5.0.0
         version: 5.0.0(react@19.0.0)
       react-medium-image-zoom:
-        specifier: ^5.2.13
-        version: 5.2.13(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+        specifier: ^5.2.14
+        version: 5.2.14(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       react-remove-scroll:
         specifier: ^2.6.3
         version: 2.6.3(@types/react@19.0.10)(react@19.0.0)
@@ -13122,8 +13122,8 @@ packages:
       '@types/react': '>=18'
       react: 19.0.0
 
-  react-medium-image-zoom@5.2.13:
-    resolution: {integrity: sha512-KcBL4OsoUQJgIFh6vQgt/6sRGqDy6bQBcsbhGD2tsy4B5Pw3dWrboocVOyIm76RRALEZ6Qwp3EDvIvfEv0m5sg==}
+  react-medium-image-zoom@5.2.14:
+    resolution: {integrity: sha512-nfTVYcAUnBzXQpPDcZL+cG/e6UceYUIG+zDcnemL7jtAqbJjVVkA85RgneGtJeni12dTyiRPZVM6Szkmwd/o8w==}
     peerDependencies:
       react: 19.0.0
       react-dom: 19.0.0
@@ -28981,7 +28981,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  react-medium-image-zoom@5.2.13(react-dom@19.0.0(react@19.0.0))(react@19.0.0):
+  react-medium-image-zoom@5.2.14(react-dom@19.0.0(react@19.0.0))(react@19.0.0):
     dependencies:
       react: 19.0.0
       react-dom: 19.0.0(react@19.0.0)
