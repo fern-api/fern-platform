@@ -4,7 +4,7 @@ import React from "react";
 
 import { cn } from "@fern-docs/components";
 
-import { FernAnchor } from "@/components/components/FernAnchor";
+import { FernAnchor } from "@/components/FernAnchor";
 import { isomorphicRequestIdleCallback } from "@/components/util/isomorphicRequestIdleCallback";
 
 import {

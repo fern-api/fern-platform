@@ -7,9 +7,8 @@ import { TabChild, hasRedirect } from "@fern-api/fdr-sdk/navigation";
 import { cn } from "@fern-docs/components";
 import { addLeadingSlash } from "@fern-docs/utils";
 
+import { FernLink } from "@/components/FernLink";
 import { FaIconServer } from "@/components/fa-icon-server";
-
-import { FernLink } from "../components/FernLink";
 
 export function HeaderTabsList({
   tabs,

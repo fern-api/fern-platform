@@ -9,13 +9,13 @@ import { isNonNullish } from "@fern-api/ui-core-utils";
 import { type TableOfContentsItem, makeToc, toTree } from "@fern-docs/mdx";
 import { addLeadingSlash } from "@fern-docs/utils";
 
+import { FernLink } from "@/components/FernLink";
+import { PageHeader } from "@/components/PageHeader";
 import { Markdown } from "@/mdx/components/Markdown";
 import { MdxContent } from "@/mdx/components/MdxContent";
 import { DocsLoader } from "@/server/docs-loader";
 import { MdxSerializer } from "@/server/mdx-serializer";
 
-import { FernLink } from "../components/FernLink";
-import { PageHeader } from "../components/PageHeader";
 import ChangelogPageClient from "./ChangelogPageClient";
 
 export default async function ChangelogPage({

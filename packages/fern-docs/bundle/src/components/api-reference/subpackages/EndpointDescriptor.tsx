@@ -3,8 +3,8 @@ import { MouseEventHandler } from "react";
 import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
 import { visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
 
-import { HttpMethodIcon } from "../../components/HttpMethodIcon";
-import { MonospaceText } from "../../components/MonospaceText";
+import { HttpMethodIcon } from "@/components/HttpMethodIcon";
+import { MonospaceText } from "@/components/MonospaceText";
 
 export declare namespace EndpointDescriptor {
   export interface Props {

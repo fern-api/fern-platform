@@ -70,7 +70,6 @@ export function FernAnchor({
             sideOffset={sideOffset}
             collisionPadding={6}
             side="left"
-            asChild
           >
             <FernLink
               className="fern-anchor"

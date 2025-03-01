@@ -8,11 +8,11 @@ import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import type { TableOfContentsItem } from "@fern-docs/mdx";
 
+import { PageHeader } from "@/components/PageHeader";
 import { MdxSerializer } from "@/server/mdx-serializer";
 import { SetLayout } from "@/state/layout";
 
 import { BuiltWithFern } from "../built-with-fern";
-import { PageHeader } from "../components/PageHeader";
 import { CustomLayout } from "./CustomLayout";
 import { FooterLayout } from "./FooterLayout";
 import { GuideLayout } from "./GuideLayout";

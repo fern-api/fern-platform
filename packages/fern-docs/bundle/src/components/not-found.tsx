@@ -5,7 +5,7 @@ import { Undo2 } from "lucide-react";
 import { Badge } from "@fern-docs/components";
 import { addLeadingSlash, conformTrailingSlash } from "@fern-docs/utils";
 
-import { FernLinkButton } from "@/components/components/FernLinkButton";
+import { FernLinkButton } from "@/components/FernLinkButton";
 import { Logo } from "@/components/logo";
 import { createCachedDocsLoader } from "@/server/docs-loader";
 import { getDocsDomainApp, getDocsHostApp } from "@/server/xfernhost/app";

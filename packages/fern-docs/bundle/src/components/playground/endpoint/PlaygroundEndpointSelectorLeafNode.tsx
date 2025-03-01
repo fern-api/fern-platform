@@ -7,7 +7,7 @@ import { cn } from "@fern-docs/components";
 import { FernTooltip } from "@fern-docs/components";
 import { HttpMethodBadge } from "@fern-docs/components/badges";
 
-import { FernLinkButton } from "@/components/components/FernLinkButton";
+import { FernLinkButton } from "@/components/FernLinkButton";
 
 import { conformExplorerRoute } from "../utils/explorer-route";
 

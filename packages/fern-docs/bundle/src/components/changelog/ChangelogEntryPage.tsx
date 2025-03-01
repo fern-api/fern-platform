@@ -6,13 +6,13 @@ import type { FernNavigation } from "@fern-api/fdr-sdk";
 import { Badge } from "@fern-docs/components";
 import { addLeadingSlash } from "@fern-docs/utils";
 
+import { FernLink } from "@/components/FernLink";
+import { Separator } from "@/components/Separator";
 import { HideBuiltWithFern } from "@/components/built-with-fern";
 import { DocsLoader } from "@/server/docs-loader";
 import { MdxSerializer } from "@/server/mdx-serializer";
 import { SetLayout } from "@/state/layout";
 
-import { FernLink } from "../components/FernLink";
-import { Separator } from "../components/Separator";
 import { FooterLayout } from "../layouts/FooterLayout";
 import { ChangelogContentLayout } from "./ChangelogContentLayout";
 

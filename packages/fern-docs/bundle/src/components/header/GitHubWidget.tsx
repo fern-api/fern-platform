@@ -8,7 +8,7 @@ import useSWRImmutable from "swr/immutable";
 
 import { cn } from "@fern-docs/components";
 
-import { FernLinkButton } from "@/components/components/FernLinkButton";
+import { FernLinkButton } from "@/components/FernLinkButton";
 
 /* eslint-disable @typescript-eslint/no-deprecated */
 

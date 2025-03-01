@@ -10,9 +10,9 @@ import {
 } from "react";
 import Zoom from "react-medium-image-zoom";
 
-import { FernImage } from "../../../components/components/FernImage";
-import { useFrontmatter } from "../../../components/contexts/frontmatter";
-import { toPixelValue } from "../../../components/util/to-pixel-value";
+import { FernImage } from "@/components/FernImage";
+import { useFrontmatter } from "@/components/contexts/frontmatter";
+import { toPixelValue } from "@/components/util/to-pixel-value";
 
 const NoZoomContext = createContext<boolean>(false);
 

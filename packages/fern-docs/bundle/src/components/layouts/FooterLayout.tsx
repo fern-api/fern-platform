@@ -1,7 +1,7 @@
 import { cn } from "@fern-docs/components";
 
+import { EditThisPageButton } from "../EditThisPage";
 import { BuiltWithFern } from "../built-with-fern";
-import { EditThisPageButton } from "../components/EditThisPage";
 import { Feedback } from "../feedback/Feedback";
 
 export function FooterLayout({

@@ -2,7 +2,7 @@ import { ReactElement } from "react";
 
 import { Edit } from "lucide-react";
 
-import { ButtonLink } from "../components/FernLinkButton";
+import { ButtonLink } from "@/components/FernLinkButton";
 
 const EDIT_THIS_PAGE_TEXT = "Edit this page";
 

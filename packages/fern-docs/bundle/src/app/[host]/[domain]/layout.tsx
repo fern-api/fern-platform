@@ -16,12 +16,12 @@ import {
   getSeoDisabled,
 } from "@fern-docs/edge-config";
 
+import { BgImageGradient } from "@/components/BgImageGradient";
+import { JavascriptProvider } from "@/components/JavascriptProvider";
 import { CustomerAnalytics } from "@/components/analytics/CustomerAnalytics";
-import { BgImageGradient } from "@/components/components/BgImageGradient";
-import { JavascriptProvider } from "@/components/components/JavascriptProvider";
-import { withJsConfig } from "@/components/components/with-js-config";
 import { FeatureFlagProvider } from "@/components/feature-flags/FeatureFlagProvider";
 import SearchV2 from "@/components/search";
+import { withJsConfig } from "@/components/with-js-config";
 import { DocsLoader, createCachedDocsLoader } from "@/server/docs-loader";
 import { DarkCode } from "@/state/dark-code";
 import { Domain } from "@/state/domain";

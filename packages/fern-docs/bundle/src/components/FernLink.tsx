@@ -1,6 +1,6 @@
 "use client";
 
-import Link, { LinkProps } from "next/link";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
 
@@ -98,14 +98,6 @@ const FernExternalLink = React.forwardRef<
 });
 
 FernExternalLink.displayName = "FernExternalLink";
-
-const LinkWith404Fallback = React.forwardRef<HTMLAnchorElement, LinkProps>(
-  (props, ref) => {
-    return <Link ref={ref} {...props} />;
-  }
-);
-
-LinkWith404Fallback.displayName = "LinkWith404Fallback";
 
 export function toUrlObject(url: string | UrlObject): UrlObject {
   if (url == null) {

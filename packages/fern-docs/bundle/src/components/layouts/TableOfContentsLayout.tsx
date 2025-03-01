@@ -3,7 +3,7 @@ import type { TableOfContentsItem } from "@fern-docs/mdx";
 
 import { SetEmptyTableOfContents } from "@/state/layout";
 
-import { TableOfContents } from "../components/table-of-contents/TableOfContents";
+import { TableOfContents } from "../table-of-contents/TableOfContents";
 
 interface TableOfContentsLayoutProps {
   tableOfContents: TableOfContentsItem[] | undefined;

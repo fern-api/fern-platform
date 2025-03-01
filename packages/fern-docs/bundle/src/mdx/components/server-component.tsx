@@ -2,9 +2,9 @@ import "server-only";
 
 import React from "react";
 
+import { ErrorBoundary } from "@/components/error-boundary";
 import { MdxSerializer } from "@/server/mdx-serializer";
 
-import { ErrorBoundary } from "../../components/error-boundary";
 import { MdxContent } from "./MdxContent";
 import { Prose } from "./prose";
 

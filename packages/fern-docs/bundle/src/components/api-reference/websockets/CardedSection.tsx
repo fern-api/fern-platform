@@ -5,9 +5,8 @@ import React from "react";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { addLeadingSlash } from "@fern-docs/utils";
 
+import { FernAnchor } from "@/components/FernAnchor";
 import { getSlugFromChildren } from "@/components/util/getSlugFromText";
-
-import { FernAnchor } from "../../components/FernAnchor";
 
 export function CardedSection({
   // number: num,

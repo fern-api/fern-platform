@@ -11,7 +11,7 @@ import {
 } from "@fern-docs/components";
 import { useBooleanState } from "@fern-ui/react-commons";
 
-import { ChipSizeProvider } from "@/components/components/Chip";
+import { ChipSizeProvider } from "@/components/Chip";
 
 import { EnumDefinitionDetails } from "./EnumDefinitionDetails";
 import { FernCollapseWithButton } from "./FernCollapseWithButton";

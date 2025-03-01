@@ -2,7 +2,7 @@ import { ReactElement, memo, useEffect, useRef } from "react";
 
 import { cn } from "@fern-docs/components";
 
-import { FernLink } from "../FernLink";
+import { FernLink } from "@/components/FernLink";
 
 export interface TableOfContentsItemProps {
   text: string;

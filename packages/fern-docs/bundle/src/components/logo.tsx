@@ -5,8 +5,8 @@ import { DEFAULT_LOGO_HEIGHT } from "@fern-docs/utils";
 
 import type { LogoConfiguration } from "@/state/types";
 
-import { FernImage } from "./components/FernImage";
-import { MaybeFernLink } from "./components/FernLink";
+import { FernImage } from "./FernImage";
+import { MaybeFernLink } from "./FernLink";
 
 export function Logo({
   logo,

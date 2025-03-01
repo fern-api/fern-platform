@@ -18,10 +18,10 @@ import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { FernTooltip, cn } from "@fern-docs/components";
 import { addLeadingSlash } from "@fern-docs/utils";
 
+import { FernLink } from "@/components/FernLink";
 import { useIsSelectedSidebarNode } from "@/state/navigation";
 import { useScrollSidebarNodeIntoView } from "@/state/sidebar-scroll";
 
-import { FernLink } from "../components/FernLink";
 import { scrollToRoute } from "../util/anchor";
 
 interface SidebarSlugLinkProps {
@@ -82,10 +82,7 @@ const SidebarLinkInternal = React.forwardRef<
 
   const expandButton = (!!onToggleExpand || expanded) && (
     <ChevronDown
-      className={cn(
-        "data-[state=active]:text-(color:--accent-a11) data-[state=active]:bg-(color:--accent-a3) data-[state=active]:rounded-1 cursor-default transition-transform",
-        expanded ? "rotate-0" : "-rotate-90"
-      )}
+      className={cn("expand-indicator", expanded ? "rotate-0" : "-rotate-90")}
       data-state={showIndicator ? "active" : "inactive"}
       onClickCapture={(e) => {
         e.preventDefault();
@@ -113,13 +110,9 @@ const SidebarLinkInternal = React.forwardRef<
   };
 
   const sharedClassName = cn(
-    "text-(color:--grayscale-a11) lg:rounded-2 group flex w-full items-center gap-3 px-4 py-2 text-left text-base leading-tight lg:p-2 lg:text-sm",
-    "[&_svg]:size-icon [&_svg]:text-(color:--grayscale-a9) [&_svg]:shrink-0",
-    "hover:text-(color:--grayscale-a12) hover:bg-(color:--grayscale-a3) transition-colors hover:transition-none",
-    "data-[state=active]:text-(color:--accent-a11) data-[state=active]:bg-(color:--accent-a3) data-[state=active]:[&_svg]:text-(color:--accent-a9) data-[state=active]:font-medium",
+    "fern-sidebar-link",
     { "opacity-50": hidden },
-    depth > 0 &&
-      "data-[state=active]:max-lg:border-(color:--accent-a6) data-[state=active]:max-lg:-ml-px data-[state=active]:max-lg:border-l lg:py-1.5",
+    depth > 0 && "nested",
     className
   );
 

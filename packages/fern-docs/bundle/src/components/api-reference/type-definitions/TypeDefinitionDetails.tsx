@@ -1,6 +1,6 @@
 import React, { Fragment, ReactElement } from "react";
 
-import { Separator } from "@/components/components/Separator";
+import { Separator } from "@/components/Separator";
 
 export declare namespace TypeDefinitionDetails {
   export interface Props {

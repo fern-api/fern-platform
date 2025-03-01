@@ -2,11 +2,8 @@ import React from "react";
 
 import { cn } from "@fern-docs/components";
 
-import {
-  DisableFernAnchor,
-  FernAnchor,
-} from "@/components/components/FernAnchor";
-import { FernLink } from "@/components/components/FernLink";
+import { DisableFernAnchor, FernAnchor } from "@/components/FernAnchor";
+import { FernLink } from "@/components/FernLink";
 
 import { NoZoom, isImageElement } from "./image";
 

@@ -11,14 +11,14 @@ import { Badge } from "@fern-docs/components";
 import { addLeadingSlash } from "@fern-docs/utils";
 import { useIsomorphicLayoutEffect } from "@fern-ui/react-commons";
 
+import { FernLink } from "@/components/FernLink";
+import { Separator } from "@/components/Separator";
 import { HideBuiltWithFern } from "@/components/built-with-fern";
 import { useCurrentAnchor } from "@/hooks/use-anchor";
 import { SetLayout } from "@/state/layout";
 import { SCROLL_BODY_ATOM } from "@/state/viewport";
 
 import { BottomNavigationClient } from "../bottom-nav-client";
-import { FernLink } from "../components/FernLink";
-import { Separator } from "../components/Separator";
 import { FooterLayout } from "../layouts/FooterLayout";
 import { ChangelogContentLayout } from "./ChangelogContentLayout";
 

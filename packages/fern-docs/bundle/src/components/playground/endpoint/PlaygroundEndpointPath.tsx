@@ -25,10 +25,10 @@ import { CopyToClipboardButton } from "@fern-docs/components";
 import { HttpMethodBadge } from "@fern-docs/components/badges";
 import { useBooleanState } from "@fern-ui/react-commons";
 
-import { FernLinkButton } from "@/components/components/FernLinkButton";
+import { FernLinkButton } from "@/components/FernLinkButton";
+import { MaybeEnvironmentDropdown } from "@/components/MaybeEnvironmentDropdown";
 import { useAllEnvironmentIds } from "@/state/environment";
 
-import { MaybeEnvironmentDropdown } from "../../components/MaybeEnvironmentDropdown";
 import { PlaygroundSendRequestButton } from "../PlaygroundSendRequestButton";
 import { PlaygroundRequestFormState } from "../types";
 
