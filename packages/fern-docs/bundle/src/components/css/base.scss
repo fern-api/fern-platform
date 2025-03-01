@@ -2,7 +2,7 @@
   html,
   body {
     @apply font-body text-body text-base;
-    background-color: var(--theme-color, lightdark(#fff, #000));
+    background-color: var(--background, lightdark(#fff, #000));
   }
 
   code,

@@ -25,11 +25,14 @@ export function ThemeSwitch({
   size?: "sm" | "default";
   iconOnly?: boolean;
 }) {
-  const { setTheme, theme = "system" } = useTheme();
+  const { setTheme, theme = "system", forcedTheme } = useTheme();
   const mounted = useMounted();
   const selectedOption = themeSwitchOptions.find(
     (option) => option.value === (mounted ? theme : "light")
   );
+  if (forcedTheme) {
+    return null;
+  }
   return (
     <FernDropdown
       className={className}

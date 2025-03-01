@@ -24,7 +24,6 @@ export function BgImageGradient({
           !hasLightBackground && !hasLightBackgroundImage,
         "dark:from-(color:--accent)/20 dark:to-(color:--accent)/10 dark:bg-gradient-to-b":
           !hasDarkBackground && !hasDarkBackgroundImage,
-        "dark:from-transparent": !hasDarkBackground && !hasDarkBackgroundImage,
         "fern-background-image": hasLightBackgroundImage,
         "fern-background-image-dark": hasDarkBackgroundImage,
       })}
