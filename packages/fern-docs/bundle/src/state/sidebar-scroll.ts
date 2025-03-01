@@ -57,9 +57,16 @@ export function useScrollSidebarNodeIntoView(
           let offsetTop = 0;
           let currentElement: HTMLElement | null = element;
 
-          while (currentElement && currentElement !== container) {
+          while (
+            currentElement &&
+            currentElement.id !== "sidebar-scroll-area"
+          ) {
             offsetTop += currentElement.offsetTop;
             currentElement = currentElement.offsetParent as HTMLElement | null;
+          }
+
+          if (!currentElement || currentElement.id !== "sidebar-scroll-area") {
+            return -1;
           }
 
           return offsetTop;
@@ -67,6 +74,11 @@ export function useScrollSidebarNodeIntoView(
 
         // Get the vertical position of the node relative to the container
         const nodeOffsetTop = getOffsetTop(sidebarNode);
+
+        if (nodeOffsetTop < 0) {
+          return;
+        }
+
         const containerScrollTop = container.scrollTop;
         const containerHeight = container.offsetHeight;
 
