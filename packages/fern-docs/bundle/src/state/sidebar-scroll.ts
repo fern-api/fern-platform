@@ -91,7 +91,6 @@ export function useScrollSidebarNodeIntoView(
         if (isAbove || isBelow) {
           container.scrollTo({
             top: nodeOffsetTop - containerHeight / 2 + container.offsetTop / 2,
-            behavior: "smooth",
           });
         }
       } catch (error) {
