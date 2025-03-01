@@ -74,6 +74,7 @@ export const PlaygroundUniscriminatedUnionForm =
               // todo: handle availability
               tooltip:
                 variant.description != null ? (
+                  // todo: server-side render this
                   <Markdown size="xs" mdx={variant.description} />
                 ) : undefined,
             };

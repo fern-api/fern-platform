@@ -83,7 +83,7 @@ const SidebarLinkInternal = React.forwardRef<
   const expandButton = (!!onToggleExpand || expanded) && (
     <ChevronDown
       className={cn(
-        "data-[state=active]:text-(color:--accent-a11) data-[state=active]:bg-(color:--accent-a3) data-[state=active]:rounded-1 ml-auto cursor-default transition-transform",
+        "data-[state=active]:text-(color:--accent-a11) data-[state=active]:bg-(color:--accent-a3) data-[state=active]:rounded-1 cursor-default transition-transform",
         expanded ? "rotate-0" : "-rotate-90"
       )}
       data-state={showIndicator ? "active" : "inactive"}
@@ -148,7 +148,7 @@ const SidebarLinkInternal = React.forwardRef<
         data-state={selected ? "active" : "inactive"}
       >
         {icon}
-        {title}
+        <span className="mr-auto">{title}</span>
         {authed ? <Lock /> : rightElement}
         {expandButton}
       </FernLink>
@@ -168,7 +168,7 @@ const SidebarLinkInternal = React.forwardRef<
         data-state={selected ? "active" : "inactive"}
       >
         {icon}
-        {title}
+        <span className="mr-auto">{title}</span>
         {authed ? <Lock /> : rightElement}
         {expandButton}
       </button>

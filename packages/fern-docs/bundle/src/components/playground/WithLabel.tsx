@@ -111,6 +111,7 @@ export const WithLabelInternal: FC<
 
           {description != null && (
             <FernTooltip
+              // todo: server-side render this
               content={<Markdown mdx={description} size="xs" />}
               delayDuration={0}
             >

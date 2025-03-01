@@ -6,10 +6,9 @@ import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { PageHeader } from "@/components/components/PageHeader";
 import { FooterLayout } from "@/components/layouts/FooterLayout";
 import { ReferenceLayout } from "@/components/layouts/ReferenceLayout";
-import { ScrollToTop } from "@/components/layouts/ScrollToTop";
 import { renderTypeShorthand } from "@/components/type-shorthand";
-import { Markdown } from "@/mdx/components/Markdown";
 import { Prose } from "@/mdx/components/prose";
+import { MdxServerComponentProseSuspense } from "@/mdx/components/server-component";
 import { MdxSerializer } from "@/server/mdx-serializer";
 import { SetLayout } from "@/state/layout";
 
@@ -113,8 +112,10 @@ export async function WebhookContent({
       footer={<FooterLayout bottomNavigation={bottomNavigation} />}
     >
       <SetLayout value="reference" />
-      <ScrollToTop />
-      <Markdown className="leading-6" mdx={webhook.description} />
+      <MdxServerComponentProseSuspense
+        serialize={serialize}
+        mdx={webhook.description}
+      />
     </ReferenceLayout>
   );
 }

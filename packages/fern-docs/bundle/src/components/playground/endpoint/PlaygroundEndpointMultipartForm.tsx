@@ -246,6 +246,7 @@ export function PlaygroundEndpointMultipartForm({
                   labelClassName: "font-mono",
                   tooltip:
                     field.description != null ? (
+                      // todo: server-side render this
                       <Markdown size="xs" mdx={field.description} />
                     ) : undefined,
                 })

@@ -175,6 +175,7 @@ export const PlaygroundObjectPropertiesForm =
           labelClassName: "font-mono",
           tooltip:
             property.description != null ? (
+              // todo: server-side render this
               <Markdown size="xs" mdx={property.description} />
             ) : undefined,
         })

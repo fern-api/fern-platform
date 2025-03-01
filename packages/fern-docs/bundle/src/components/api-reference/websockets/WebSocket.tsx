@@ -12,8 +12,8 @@ import { AvailabilityBadge } from "@fern-docs/components/badges";
 import { PageHeader } from "@/components/components/PageHeader";
 import { FooterLayout } from "@/components/layouts/FooterLayout";
 import { ReferenceLayout } from "@/components/layouts/ReferenceLayout";
-import { ScrollToTop } from "@/components/layouts/ScrollToTop";
-import { Markdown } from "@/mdx/components/Markdown";
+import { PlaygroundKeyboardTrigger } from "@/components/playground/PlaygroundKeyboardTrigger";
+import { MdxServerComponentProseSuspense } from "@/mdx/components/server-component";
 import { MdxSerializer } from "@/server/mdx-serializer";
 import { SetLayout } from "@/state/layout";
 
@@ -252,8 +252,11 @@ export async function WebSocketContent({
       footer={<FooterLayout bottomNavigation={bottomNavigation} />}
     >
       <SetLayout value="reference" />
-      <ScrollToTop />
-      <Markdown className="mt-4 leading-6" mdx={channel.description} />
+      <PlaygroundKeyboardTrigger />
+      <MdxServerComponentProseSuspense
+        serialize={serialize}
+        mdx={channel.description}
+      />
     </ReferenceLayout>
   );
 }

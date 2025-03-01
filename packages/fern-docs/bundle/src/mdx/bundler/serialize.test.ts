@@ -92,3 +92,10 @@ it("should serialize hume-next-js.mdx", async () => {
   );
   expect(deterministic(result?.code)).toMatchSnapshot();
 });
+
+it("should serialize websocket.mdx", async () => {
+  const result = await serializeMdx(
+    readFileSync(join(__dirname, "tests", "websocket.mdx"), "utf-8")
+  );
+  expect(deterministic(result?.code)).toMatchSnapshot();
+});

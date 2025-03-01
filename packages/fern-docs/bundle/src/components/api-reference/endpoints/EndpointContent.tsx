@@ -9,7 +9,6 @@ import { AvailabilityBadge } from "@fern-docs/components/badges";
 import { PageHeader } from "@/components/components/PageHeader";
 import { FooterLayout } from "@/components/layouts/FooterLayout";
 import { ReferenceLayout } from "@/components/layouts/ReferenceLayout";
-import { ScrollToTop } from "@/components/layouts/ScrollToTop";
 import { PlaygroundKeyboardTrigger } from "@/components/playground/PlaygroundKeyboardTrigger";
 import { MdxServerComponentProseSuspense } from "@/mdx/components/server-component";
 import { MdxSerializer } from "@/server/mdx-serializer";
@@ -86,7 +85,6 @@ export async function EndpointContent({
       >
         <PlaygroundKeyboardTrigger />
         <SetLayout value="reference" />
-        <ScrollToTop />
         <MdxServerComponentProseSuspense
           serialize={serialize}
           mdx={endpoint.description}
