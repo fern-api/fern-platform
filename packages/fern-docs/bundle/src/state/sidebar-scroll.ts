@@ -89,8 +89,17 @@ export function useScrollSidebarNodeIntoView(
           containerScrollTop + containerHeight;
 
         if (isAbove || isBelow) {
+          const top =
+            nodeOffsetTop - containerHeight / 2 + container.offsetTop / 2;
+          if (top < 0) {
+            return;
+          }
           container.scrollTo({
-            top: nodeOffsetTop - containerHeight / 2 + container.offsetTop / 2,
+            top,
+            behavior:
+              Math.abs(container.scrollTop - top) < container.offsetHeight / 2
+                ? "smooth"
+                : "auto",
           });
         }
       } catch (error) {
