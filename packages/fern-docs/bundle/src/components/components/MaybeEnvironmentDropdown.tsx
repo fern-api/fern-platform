@@ -8,10 +8,8 @@ import { cn } from "@fern-docs/components";
 import { FernButton, FernDropdown, FernInput } from "@fern-docs/components";
 import { useBooleanState } from "@fern-ui/react-commons";
 
-import {
-  PLAYGROUND_ENVIRONMENT_ATOM,
-  SELECTED_ENVIRONMENT_ATOM,
-} from "../atoms";
+import { SELECTED_ENVIRONMENT_ATOM } from "@/state/environment";
+import { PLAYGROUND_ENVIRONMENT_ATOM } from "@/state/playground";
 
 interface MaybeEnvironmentDropdownProps {
   baseUrl?: string;

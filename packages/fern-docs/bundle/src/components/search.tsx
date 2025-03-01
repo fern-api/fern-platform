@@ -29,9 +29,8 @@ import { useApiRouteSWRImmutable } from "@/components/hooks/useApiRouteSWR";
 import { useSetTheme, useThemeSwitchEnabled } from "@/hooks/use-theme";
 import { useIsDarkCode } from "@/state/dark-code";
 import { useFernUser } from "@/state/fern-user";
-
-import { searchDialogOpenAtom, searchInitializedAtom } from "../state/search";
-import { atomWithStorageString } from "./atoms/utils/atomWithStorageString";
+import { searchDialogOpenAtom, searchInitializedAtom } from "@/state/search";
+import { atomWithStorageString } from "@/state/utils/atomWithStorageString";
 
 const ALGOLIA_USER_TOKEN_KEY = "algolia-user-token";
 

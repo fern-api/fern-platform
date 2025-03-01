@@ -32,6 +32,7 @@ import {
   getAllSidebarRootNodes,
   getSidebarRootNodeIdToChildToParentsMap,
 } from "@/state/navigation-server";
+import { Whitelabeled } from "@/state/whitelabeled";
 
 import { GlobalStyles } from "../../global-styles";
 import { toImageDescriptor } from "../../seo";
@@ -100,6 +101,7 @@ export default async function Layout({
           <DefaultLanguage language={config.defaultLanguage} />
         )}
         <DarkCode value={edgeFlags.isDarkCodeEnabled} />
+        <Whitelabeled value={edgeFlags.isWhitelabeled} />
         {/* <FernUser domain={domain} fern_token={fern_token} /> */}
         <BgImageGradient colors={colors} />
         <GlobalStyles

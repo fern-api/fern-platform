@@ -6,12 +6,9 @@ import { ArrowRight } from "lucide-react";
 
 import { cn } from "@fern-docs/components";
 
-import type {
-  NavbarLink,
-  NavbarLink as NavbarLinkType,
-} from "@/components/atoms";
 import { FaIconServer } from "@/components/fa-icon-server";
 import { DocsLoader } from "@/server/docs-loader";
+import type { NavbarLink, NavbarLink as NavbarLinkType } from "@/state/types";
 
 import { FernLinkButton } from "../components/FernLinkButton";
 import { GitHubWidget, getGitHubRepo } from "./GitHubWidget";

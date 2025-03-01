@@ -132,7 +132,7 @@ export function SetCurrentNavigationNode({
     if (nodeId && sidebarRootNodeId) {
       dispatch({ type: "expand", nodeId }, sidebarRootNodeId);
     }
-  }, [nodeId && sidebarRootNodeId]);
+  }, [nodeId, sidebarRootNodeId]);
 
   return null;
 }
@@ -303,21 +303,20 @@ function reduceExpandedNodes(
         : "expand"
       : action.type;
 
-  if (
-    (actionType === "expand" || actionType === "expand-soft") &&
-    !isExpanded
-  ) {
+  if (actionType === "expand" || actionType === "expand-soft") {
     const expandedNodes = new Set(prev.expandedNodes);
     const implicitExpandedNodes = new Set(prev.implicitExpandedNodes);
-    // add this node and all children to the expanded set
-    expandedNodes.add(action.nodeId);
+
+    if (actionType === "expand-soft") {
+      implicitExpandedNodes.add(action.nodeId);
+    } else {
+      expandedNodes.add(action.nodeId);
+    }
+
     prev.childToParentsMap.get(action.nodeId)?.forEach((parent) => {
-      if (actionType === "expand-soft") {
-        implicitExpandedNodes.add(parent);
-      } else {
-        expandedNodes.add(parent);
-      }
+      implicitExpandedNodes.add(parent);
     });
+
     return {
       expandedNodes,
       implicitExpandedNodes,
@@ -325,7 +324,7 @@ function reduceExpandedNodes(
     };
   }
 
-  if (actionType === "collapse" && isExpanded) {
+  if (actionType === "collapse") {
     const expandedNodes = new Set(prev.expandedNodes);
     const implicitExpandedNodes = new Set(prev.implicitExpandedNodes);
     // remove this node and all children from the expanded set

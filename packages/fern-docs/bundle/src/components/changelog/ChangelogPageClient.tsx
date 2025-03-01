@@ -14,8 +14,8 @@ import { useIsomorphicLayoutEffect } from "@fern-ui/react-commons";
 import { HideBuiltWithFern } from "@/components/built-with-fern";
 import { useCurrentAnchor } from "@/hooks/use-anchor";
 import { SetLayout } from "@/state/layout";
+import { SCROLL_BODY_ATOM } from "@/state/viewport";
 
-import { SCROLL_BODY_ATOM } from "../atoms";
 import { BottomNavigationClient } from "../bottom-nav-client";
 import { FernLink } from "../components/FernLink";
 import { Separator } from "../components/Separator";

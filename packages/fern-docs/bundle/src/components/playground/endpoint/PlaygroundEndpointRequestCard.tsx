@@ -10,13 +10,13 @@ import {
   FernCard,
 } from "@fern-docs/components";
 
-import {
-  PLAYGROUND_AUTH_STATE_ATOM,
-  PLAYGROUND_AUTH_STATE_OAUTH_ATOM,
-} from "@/components/atoms";
 import { isFileForgeHackEnabledAtom } from "@/state/api-explorer-flags";
 import { jotaiStore } from "@/state/jotai-provider";
 import { useProgrammingLanguage } from "@/state/language";
+import {
+  PLAYGROUND_AUTH_STATE_ATOM,
+  PLAYGROUND_AUTH_STATE_OAUTH_ATOM,
+} from "@/state/playground";
 
 import { PlaygroundRequestPreview } from "../PlaygroundRequestPreview";
 import { PlaygroundCodeSnippetResolverBuilder } from "../code-snippets/resolver";

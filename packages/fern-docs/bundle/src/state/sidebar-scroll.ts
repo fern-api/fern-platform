@@ -49,16 +49,22 @@ export function useScrollSidebarNodeIntoView(
       try {
         const sidebarNodeRect = sidebarNode.getBoundingClientRect();
         const sidebarContainerRect = container.getBoundingClientRect();
+        console.log(sidebarNodeRect, sidebarContainerRect);
         if (
           sidebarNodeRect.top < sidebarContainerRect.top ||
           sidebarNodeRect.bottom > sidebarContainerRect.bottom
         ) {
+          const topPosition =
+            container.scrollTop -
+            sidebarContainerRect.top +
+            sidebarNodeRect.top;
+
           container.scrollTo({
             top:
-              sidebarNodeRect.top -
-              sidebarContainerRect.top -
-              sidebarContainerRect.height * 0.4,
-            behavior: "instant",
+              topPosition -
+              sidebarContainerRect.height / 2 +
+              sidebarContainerRect.top / 2,
+            behavior: "smooth",
           });
         }
       } catch (error) {

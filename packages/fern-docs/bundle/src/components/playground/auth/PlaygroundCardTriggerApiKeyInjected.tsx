@@ -10,11 +10,11 @@ import { APIKeyInjectionConfigEnabled } from "@fern-docs/auth";
 import { FernButton, FernCard } from "@fern-docs/components";
 
 import { Callout } from "@/mdx/components/callout";
-
 import {
   PLAYGROUND_AUTH_STATE_ATOM,
   PLAYGROUND_AUTH_STATE_BEARER_TOKEN_ATOM,
-} from "../../atoms";
+} from "@/state/playground";
+
 import { useApiRoute } from "../../hooks/useApiRoute";
 import { PlaygroundAuthorizationForm } from "./PlaygroundAuthorizationForm";
 

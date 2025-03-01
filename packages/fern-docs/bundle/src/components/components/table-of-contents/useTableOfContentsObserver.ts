@@ -4,7 +4,7 @@ import fastdom from "fastdom";
 import { useAtomValue } from "jotai";
 import { useCallbackOne } from "use-memo-one";
 
-import { SCROLL_BODY_ATOM } from "../../atoms";
+import { SCROLL_BODY_ATOM } from "@/state/viewport";
 
 function toIdQuerySelector(id: string): string {
   if (id.startsWith("#")) {

@@ -20,11 +20,11 @@ import {
 import { FernTooltipProvider } from "@fern-docs/components";
 import { usePrevious } from "@fern-ui/react-commons";
 
+import { jotaiStore } from "@/state/jotai-provider";
 import {
   PLAYGROUND_AUTH_STATE_ATOM,
   usePlaygroundWebsocketFormState,
-} from "@/components/atoms";
-import { jotaiStore } from "@/state/jotai-provider";
+} from "@/state/playground";
 
 import { usePlaygroundSettings } from "../../hooks/usePlaygroundSettings";
 import { PlaygroundEndpointPath } from "../endpoint/PlaygroundEndpointPath";

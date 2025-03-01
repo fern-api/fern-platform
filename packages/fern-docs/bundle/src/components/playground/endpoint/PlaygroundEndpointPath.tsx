@@ -26,8 +26,8 @@ import { HttpMethodBadge } from "@fern-docs/components/badges";
 import { useBooleanState } from "@fern-ui/react-commons";
 
 import { FernLinkButton } from "@/components/components/FernLinkButton";
+import { useAllEnvironmentIds } from "@/state/environment";
 
-import { useAllEnvironmentIds } from "../../atoms/environment";
 import { MaybeEnvironmentDropdown } from "../../components/MaybeEnvironmentDropdown";
 import { PlaygroundSendRequestButton } from "../PlaygroundSendRequestButton";
 import { PlaygroundRequestFormState } from "../types";

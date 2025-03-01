@@ -25,13 +25,13 @@ import {
 } from "@/state/api-explorer-flags";
 import { fernUserAtom } from "@/state/fern-user";
 import { jotaiStore } from "@/state/jotai-provider";
-
-import { track } from "../../analytics";
 import {
   PLAYGROUND_AUTH_STATE_ATOM,
   PLAYGROUND_AUTH_STATE_OAUTH_ATOM,
   usePlaygroundEndpointFormState,
-} from "../../atoms";
+} from "@/state/playground";
+
+import { track } from "../../analytics";
 import { usePlaygroundSettings } from "../../hooks/usePlaygroundSettings";
 import { executeProxyRest } from "../fetch-utils/executeProxyRest";
 import { executeProxyStream } from "../fetch-utils/executeProxyStream";

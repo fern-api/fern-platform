@@ -33,12 +33,12 @@ import {
   type PlaygroundEndpointRequestFormState,
   type PlaygroundRequestFormState,
   type PlaygroundWebSocketRequestFormState,
-} from "../playground/types";
+} from "../components/playground/types";
 import {
   getInitialEndpointRequestFormStateWithExample,
   getInitialWebSocketRequestFormState,
-} from "../playground/utils";
-import { pascalCaseHeaderKeys } from "../playground/utils/header-key-case";
+} from "../components/playground/utils";
+import { pascalCaseHeaderKeys } from "../components/playground/utils/header-key-case";
 import { atomWithStorageValidation } from "./utils/atomWithStorageValidation";
 
 export const PLAYGROUND_AUTH_STATE_ATOM =

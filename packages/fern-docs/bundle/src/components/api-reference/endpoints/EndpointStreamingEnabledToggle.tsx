@@ -6,7 +6,8 @@ import { useAtom } from "jotai";
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { addLeadingSlash } from "@fern-docs/utils";
 
-import { FERN_STREAM_ATOM } from "../../atoms";
+import { FERN_STREAM_ATOM } from "@/state/stream";
+
 import { StreamingEnabledToggle } from "./StreamingEnabledToggle";
 
 export function EndpointStreamingEnabledToggle({

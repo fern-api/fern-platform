@@ -9,7 +9,8 @@ import { useBooleanState } from "@fern-ui/react-commons";
 import {
   PLAYGROUND_AUTH_STATE_BEARER_TOKEN_ATOM,
   PLAYGROUND_AUTH_STATE_OAUTH_ATOM,
-} from "../../atoms";
+} from "@/state/playground";
+
 import { useApiKeyInjectionConfig } from "../../services/useApiKeyInjectionConfig";
 import { PlaygroundAuthorizationForm } from "./PlaygroundAuthorizationForm";
 import { PlaygroundCardTriggerApiKeyInjected } from "./PlaygroundCardTriggerApiKeyInjected";

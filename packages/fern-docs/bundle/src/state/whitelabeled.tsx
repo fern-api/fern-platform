@@ -7,6 +7,7 @@ const whitelabeledAtom = atom(false);
 
 export function Whitelabeled({ value }: { value: boolean }) {
   useHydrateAtoms([[whitelabeledAtom, value]]);
+  return null;
 }
 
 export function useIsWhitelabeled() {

@@ -3,7 +3,7 @@ import React from "react";
 import { cn } from "@fern-docs/components";
 import { DEFAULT_LOGO_HEIGHT } from "@fern-docs/utils";
 
-import type { LogoConfiguration } from "@/components/atoms";
+import type { LogoConfiguration } from "@/state/types";
 
 import { FernImage } from "./components/FernImage";
 import { MaybeFernLink } from "./components/FernLink";

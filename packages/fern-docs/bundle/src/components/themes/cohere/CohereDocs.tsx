@@ -8,7 +8,7 @@ import { useSetAtom } from "jotai";
 import { cn } from "@fern-docs/components";
 import { FernScrollArea } from "@fern-docs/components";
 
-import { SCROLL_BODY_ATOM } from "@/components/atoms";
+import { SCROLL_BODY_ATOM } from "@/state/viewport";
 
 import { HeaderContainer } from "./header-container";
 
