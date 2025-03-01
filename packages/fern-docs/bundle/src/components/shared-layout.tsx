@@ -78,7 +78,7 @@ export default async function SharedLayout({
           navbarLinks={<NavbarLinks loader={loader} />}
           loginButton={
             <React.Suspense fallback={null}>
-              <LoginButton loader={loader} size="sm" className="mx-2" />
+              <LoginButton loader={loader} size="sm" className="ml-2" />
             </React.Suspense>
           }
         />
