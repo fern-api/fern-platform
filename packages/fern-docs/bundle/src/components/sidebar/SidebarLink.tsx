@@ -141,7 +141,7 @@ const SidebarLinkInternal = React.forwardRef<
         data-state={selected ? "active" : "inactive"}
       >
         {icon}
-        <span className="mr-auto">{title}</span>
+        <span className="mr-auto hyphens-auto break-words">{title}</span>
         {authed ? <Lock /> : rightElement}
         {expandButton}
       </FernLink>

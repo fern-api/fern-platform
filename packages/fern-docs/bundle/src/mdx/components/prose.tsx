@@ -18,7 +18,7 @@ export function Prose({
   return (
     <div
       className={cn(
-        "fern-prose prose max-w-none break-words",
+        "fern-prose prose max-w-none hyphens-auto break-words",
         {
           "whitespace-pre-wrap": typeof children === "string" || pre,
           "text-xs": size === "xs",
