@@ -130,7 +130,7 @@ export function SetCurrentNavigationNode({
 
   useIsomorphicLayoutEffect(() => {
     if (nodeId && sidebarRootNodeId) {
-      dispatch({ type: "expand", nodeId }, sidebarRootNodeId);
+      dispatch({ type: "expand-soft", nodeId }, sidebarRootNodeId);
     }
   }, [nodeId, sidebarRootNodeId]);
 
