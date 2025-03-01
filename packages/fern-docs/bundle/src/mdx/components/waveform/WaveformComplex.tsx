@@ -72,7 +72,7 @@ export default function WaveformComplex({
   return (
     <LazyMotion features={domAnimation} strict>
       <m.div
-        className={cn("relative w-full", className, "h-[500px]")}
+        className={cn("relative w-full", className, "h-[400px]")}
         ref={canvasWrapper}
         animate={{
           filter: `blur(${blur}px)`,
