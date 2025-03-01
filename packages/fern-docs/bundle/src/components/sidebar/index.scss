@@ -14,10 +14,10 @@
   }
 
   .fern-sidebar-link {
-    @apply text-(color:--grayscale-a11) lg:rounded-2 flex w-full items-center gap-3 px-4 py-2 text-left text-base leading-tight lg:p-2 lg:text-sm;
+    @apply text-(color:--grayscale-a11) lg:rounded-2 flex w-full items-center gap-3 px-4 py-2 text-left text-base leading-tight transition-colors lg:p-2 lg:text-sm;
 
     @variant hover {
-      @apply text-(color:--grayscale-a12) bg-(color:--grayscale-a3) transition-colors transition-none;
+      @apply text-(color:--grayscale-a12) bg-(color:--grayscale-a3) transition-none;
     }
 
     svg {
