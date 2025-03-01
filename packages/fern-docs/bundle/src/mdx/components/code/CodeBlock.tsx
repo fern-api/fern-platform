@@ -67,9 +67,7 @@ export function CodeBlock(props: {
           </div>
         </div>
         <FernSyntaxHighlighter
-          {...props}
-          code={code}
-          language={language}
+          {...toSyntaxHighlighterProps(props)}
           className="rounded-b-[inherit]"
         />
       </div>
@@ -89,10 +87,10 @@ export function CodeBlock(props: {
 export function toSyntaxHighlighterProps(
   props: React.ComponentProps<typeof CodeBlock>
 ): React.ComponentProps<typeof FernSyntaxHighlighter> {
+  const highlight = props.highlight ?? props.focus ?? [];
   return {
     language: cleanLanguage(props.language ?? "plaintext"),
-    highlightLines:
-      typeof props.highlight === "number" ? [props.highlight] : props.highlight,
+    highlightLines: typeof highlight === "number" ? [highlight] : highlight,
     highlightStyle: props.focus != null ? "focus" : "highlight",
     code: props.code ?? "",
     maxLines: props.maxLines,
