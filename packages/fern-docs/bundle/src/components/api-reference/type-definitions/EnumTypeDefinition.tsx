@@ -11,6 +11,8 @@ import {
 } from "@fern-docs/components";
 import { useBooleanState } from "@fern-ui/react-commons";
 
+import { ChipSizeProvider } from "@/components/components/Chip";
+
 import { EnumDefinitionDetails } from "./EnumDefinitionDetails";
 import { FernCollapseWithButton } from "./FernCollapseWithButton";
 
@@ -51,11 +53,13 @@ export function EnumTypeDefinition({
         <div className="text-(color:--grayscale-a11) flex items-baseline gap-2">
           <span className="shrink-0 text-sm">Allowed values:</span>
           <FernTooltipProvider>
-            <span className="inline-flex flex-wrap gap-2">
-              {elements.map((element, key) => (
-                <React.Fragment key={key}>{element.element}</React.Fragment>
-              ))}
-            </span>
+            <ChipSizeProvider size="sm">
+              <span className="inline-flex flex-wrap gap-2">
+                {elements.map((element, key) => (
+                  <React.Fragment key={key}>{element.element}</React.Fragment>
+                ))}
+              </span>
+            </ChipSizeProvider>
           </FernTooltipProvider>
         </div>
       ) : (
