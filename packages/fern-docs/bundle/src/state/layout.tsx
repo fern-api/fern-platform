@@ -15,6 +15,10 @@ export function SetIsSidebarFixed({ value }: { value: boolean }) {
   return null;
 }
 
+export function useIsSidebarFixed() {
+  return useAtomValue(isSidebarFixedAtom);
+}
+
 const layoutAtom = atom<FernDocs.Layout>("guide");
 
 export function SetLayout({ value }: { value: FernDocs.Layout }) {
@@ -67,4 +71,18 @@ export function useShouldHideAsides() {
   }
 
   return emptySidebar && emptyTableOfContents;
+}
+
+export function HideAsides({ force }: { force?: boolean }) {
+  const hideAsides = useShouldHideAsides();
+  return hideAsides || force ? (
+    <style jsx global>{`
+      #fern-toc,
+      #fern-sidebar[data-state="sticky"],
+      #fern-sidebar[data-state="fixed"],
+      #fern-sidebar-spacer {
+        display: none;
+      }
+    `}</style>
+  ) : null;
 }

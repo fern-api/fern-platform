@@ -5,6 +5,8 @@ import React, { ComponentPropsWithoutRef } from "react";
 import { cn } from "@fern-docs/components";
 import { tunnel, useIsMobile, useLazyRef } from "@fern-ui/react-commons";
 
+import { SetLayout } from "@/state/layout";
+
 import { AsideAwareDiv } from "./AsideAwareDiv";
 
 interface ReferenceLayoutProps {
@@ -26,8 +28,9 @@ export const ReferenceLayout = React.forwardRef<
   const slot = useLazyRef(() => tunnel()).current;
   const isMobile = useIsMobile();
   return (
-    <AsideAwareDiv className="px-page-padding mx-auto min-w-0 shrink">
-      <slot.In only>
+    <AsideAwareDiv className="pl-page-padding mx-auto min-w-0 shrink pr-[calc(var(--page-padding)+var(--aside-offset))]">
+      <SetLayout value="reference" />
+      <slot.In>
         <aside className="order-last flex max-h-[calc(100svh-var(--header-height)-6rem)] shrink-0 md:sticky md:top-[calc(var(--header-height)+1.5rem)] md:h-fit md:max-h-[calc(100vh-var(--header-height)-3rem)]">
           {aside}
         </aside>

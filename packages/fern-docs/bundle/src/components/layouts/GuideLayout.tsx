@@ -1,6 +1,5 @@
-import type { ReactElement } from "react";
-
 import { Prose } from "@/mdx/components/prose";
+import { SetLayout } from "@/state/layout";
 
 import { AsideAwareDiv } from "./AsideAwareDiv";
 
@@ -16,9 +15,10 @@ export function GuideLayout({
   toc,
   children,
   footer,
-}: GuideLayoutProps): ReactElement<any> {
+}: GuideLayoutProps) {
   return (
     <>
+      <SetLayout value="guide" />
       {toc}
       <AsideAwareDiv className="px-page-padding mx-auto mb-12 min-w-0 shrink space-y-8">
         <article className="w-content-width max-w-full">

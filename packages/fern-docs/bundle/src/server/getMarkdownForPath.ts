@@ -18,7 +18,7 @@ export async function getMarkdownForPath(
   loader: DocsLoader
 ): Promise<{ content: string; contentType: "markdown" | "mdx" } | undefined> {
   if (FernNavigation.isApiLeaf(node)) {
-    const apiDefinition = await loader.getApi(node.apiDefinitionId);
+    const apiDefinition = await loader.getPrunedApi(node.apiDefinitionId, node);
     if (apiDefinition == null) {
       return undefined;
     }

@@ -1,6 +1,7 @@
 import React from "react";
 
 import { Prose } from "@/mdx/components/prose";
+import { SetLayout } from "@/state/layout";
 
 import { AsideAwareDiv } from "./AsideAwareDiv";
 
@@ -19,6 +20,7 @@ export function OverviewLayout({
 }: OverviewLayoutProps) {
   return (
     <>
+      <SetLayout value="overview" />
       {toc}
       <AsideAwareDiv className="px-page-padding mx-auto mb-12 min-w-0 shrink space-y-8">
         <article className="w-content-wide-width max-w-full">

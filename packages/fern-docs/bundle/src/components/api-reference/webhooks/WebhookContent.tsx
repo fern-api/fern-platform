@@ -10,7 +10,6 @@ import { renderTypeShorthand } from "@/components/type-shorthand";
 import { Prose } from "@/mdx/components/prose";
 import { MdxServerComponentProseSuspense } from "@/mdx/components/server-component";
 import { MdxSerializer } from "@/server/mdx-serializer";
-import { SetLayout } from "@/state/layout";
 
 import { EndpointSection } from "../endpoints/EndpointSection";
 import { ObjectProperty } from "../type-definitions/ObjectProperty";
@@ -111,7 +110,6 @@ export async function WebhookContent({
       }
       footer={<FooterLayout bottomNavigation={bottomNavigation} />}
     >
-      <SetLayout value="reference" />
       <MdxServerComponentProseSuspense
         serialize={serialize}
         mdx={webhook.description}

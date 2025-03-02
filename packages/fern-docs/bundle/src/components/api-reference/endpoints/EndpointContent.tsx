@@ -12,7 +12,6 @@ import { ReferenceLayout } from "@/components/layouts/ReferenceLayout";
 import { PlaygroundKeyboardTrigger } from "@/components/playground/PlaygroundKeyboardTrigger";
 import { MdxServerComponentProseSuspense } from "@/mdx/components/server-component";
 import { MdxSerializer } from "@/server/mdx-serializer";
-import { SetLayout } from "@/state/layout";
 
 import { TypeDefinitionRoot } from "../type-definitions/TypeDefinitionContext";
 import { TypeDefinitionSlotsServer } from "../type-definitions/TypeDefinitionSlotsServer";
@@ -84,7 +83,6 @@ export async function EndpointContent({
         footer={<FooterLayout bottomNavigation={bottomNavigation} />}
       >
         <PlaygroundKeyboardTrigger />
-        <SetLayout value="reference" />
         <MdxServerComponentProseSuspense
           serialize={serialize}
           mdx={endpoint.description}

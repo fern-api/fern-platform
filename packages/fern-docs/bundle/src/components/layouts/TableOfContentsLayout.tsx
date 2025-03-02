@@ -20,10 +20,10 @@ export function TableOfContentsLayout({
     tableOfContents.length > 0;
   return (
     <aside
-      role="directory"
+      id="fern-toc"
       className={cn(
         "top-header-height sticky order-last hidden h-fit max-h-[calc(100dvh-var(--spacing-header-height))] flex-col xl:flex",
-        "w-sidebar-width"
+        "w-(--sticky-aside-width) pr-(--aside-offset)"
       )}
     >
       <SetEmptyTableOfContents value={!showTableOfContents} />

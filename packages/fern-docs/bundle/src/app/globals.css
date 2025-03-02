@@ -16,6 +16,12 @@
 
 :root {
   --page-padding: 1rem;
+  --aside-offset: calc(
+    max((100vw - var(--page-width)) / 2 - var(--page-padding), 0px)
+  );
+  --sticky-aside-width: calc(
+    var(--spacing-sidebar-width) + var(--aside-offset)
+  );
 }
 
 @media (min-width: 768px) {

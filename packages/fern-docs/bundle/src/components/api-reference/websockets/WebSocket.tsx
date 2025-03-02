@@ -15,7 +15,6 @@ import { ReferenceLayout } from "@/components/layouts/ReferenceLayout";
 import { PlaygroundKeyboardTrigger } from "@/components/playground/PlaygroundKeyboardTrigger";
 import { MdxServerComponentProseSuspense } from "@/mdx/components/server-component";
 import { MdxSerializer } from "@/server/mdx-serializer";
-import { SetLayout } from "@/state/layout";
 
 import { PlaygroundButton } from "../../playground/PlaygroundButton";
 import { EndpointSection } from "../endpoints/EndpointSection";
@@ -251,7 +250,6 @@ export async function WebSocketContent({
       }
       footer={<FooterLayout bottomNavigation={bottomNavigation} />}
     >
-      <SetLayout value="reference" />
       <PlaygroundKeyboardTrigger />
       <MdxServerComponentProseSuspense
         serialize={serialize}

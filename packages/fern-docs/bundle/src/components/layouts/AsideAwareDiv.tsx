@@ -17,6 +17,7 @@ export const AsideAwareDiv = React.forwardRef<
       {...props}
       className={cn(props.className, {
         "lg:ml-0 xl:ml-auto": !hideAsides,
+        "pr-page-padding": hideAsides,
       })}
     >
       {children}

@@ -15,7 +15,7 @@ import { FernLink } from "@/components/FernLink";
 import { Separator } from "@/components/Separator";
 import { HideBuiltWithFern } from "@/components/built-with-fern";
 import { useCurrentAnchor } from "@/hooks/use-anchor";
-import { SetLayout } from "@/state/layout";
+import { HideAsides, SetLayout } from "@/state/layout";
 import { SCROLL_BODY_ATOM } from "@/state/viewport";
 
 import { BottomNavigationClient } from "../bottom-nav-client";
@@ -140,6 +140,7 @@ export default function ChangelogPageClient({
   return (
     <article className="max-w-page-width-padded px-page-padding mx-auto min-w-0 flex-1">
       <SetLayout value="page" />
+      <HideAsides force />
       <HideBuiltWithFern>
         <ChangelogContentLayout as="section" className="mb-8">
           {overview}

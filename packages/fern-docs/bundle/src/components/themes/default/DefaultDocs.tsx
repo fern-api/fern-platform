@@ -6,11 +6,12 @@ import { cn } from "@fern-docs/components";
 
 import { BgImageGradient } from "@/components/BgImageGradient";
 import { HeaderTabsRoot } from "@/components/header/HeaderTabsRoot";
-import { SetIsSidebarFixed, useShouldHideAsides } from "@/state/layout";
+import { SidebarProvider } from "@/components/layouts/sidebar";
+import { SetIsSidebarFixed } from "@/state/layout";
 
 import { FernHeader } from "./fern-header";
 import { MainCtx } from "./mobile-menu";
-import { SideNav } from "./side-nav";
+import { SidebarNav } from "./side-nav";
 
 export default function DefaultDocs({
   header,
@@ -30,9 +31,8 @@ export default function DefaultDocs({
   isHeaderDisabled?: boolean;
 }) {
   const mainRef = React.useRef<HTMLDivElement>(null);
-  const hideAsides = useShouldHideAsides();
   return (
-    <>
+    <SidebarProvider in={sidebar}>
       <SetIsSidebarFixed value={isSidebarFixed} />
       <FernHeader
         className={cn(
@@ -51,20 +51,14 @@ export default function DefaultDocs({
       </FernHeader>
 
       <MainCtx.Provider value={mainRef}>
-        <main ref={mainRef} className="mt-(--header-height) relative z-0">
-          <div
-            className={cn("max-w-page-width-padded mx-auto flex flex-row", {
-              "[&>aside]:lg:hidden": hideAsides,
-            })}
-          >
-            <SideNav fixed={isSidebarFixed}>{sidebar}</SideNav>
-            {children}
-          </div>
+        <main ref={mainRef} className="mt-(--header-height) relative z-0 flex">
+          <SidebarNav />
+          {children}
         </main>
       </MainCtx.Provider>
 
       {/* Enables footer DOM injection */}
       <footer id="fern-footer" />
-    </>
+    </SidebarProvider>
   );
 }

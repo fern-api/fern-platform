@@ -51,7 +51,7 @@ export default async function Page(props: {
     console.error(`[${loader.domain}] Found non-leaf node for slug: ${slug}`);
     notFound();
   }
-  const api = await loader.getApi(node.apiDefinitionId);
+  const api = await loader.getPrunedApi(node.apiDefinitionId, node);
 
   if (node.type === "endpoint") {
     const context = createEndpointContext(node, api);

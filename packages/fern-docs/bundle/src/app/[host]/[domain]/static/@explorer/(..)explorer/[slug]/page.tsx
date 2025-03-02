@@ -62,7 +62,7 @@ async function ExplorerContent({
   if (!FernNavigation.isApiLeaf(node)) {
     return <NoEndpointSelected />;
   }
-  const api = await loader.getApi(node.apiDefinitionId);
+  const api = await loader.getPrunedApi(node.apiDefinitionId, node);
 
   if (node.type === "endpoint") {
     const context = createEndpointContext(node, api);

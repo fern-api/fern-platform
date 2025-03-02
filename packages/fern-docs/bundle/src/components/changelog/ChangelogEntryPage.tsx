@@ -11,7 +11,7 @@ import { Separator } from "@/components/Separator";
 import { HideBuiltWithFern } from "@/components/built-with-fern";
 import { DocsLoader } from "@/server/docs-loader";
 import { MdxSerializer } from "@/server/mdx-serializer";
-import { SetLayout } from "@/state/layout";
+import { HideAsides, SetLayout } from "@/state/layout";
 
 import { FooterLayout } from "../layouts/FooterLayout";
 import { ChangelogContentLayout } from "./ChangelogContentLayout";
@@ -34,6 +34,7 @@ export default function ChangelogEntryPage({
   return (
     <article className="max-w-page-width-padded px-page-padding mx-auto min-w-0 flex-1">
       <SetLayout value="page" />
+      <HideAsides force />
       <HideBuiltWithFern>
         <ChangelogContentLayout as="section" className="mb-8">
           {overview}
