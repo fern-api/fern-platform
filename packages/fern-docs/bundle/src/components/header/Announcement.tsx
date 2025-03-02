@@ -1,5 +1,6 @@
 "use client";
 
+import { useServerInsertedHTML } from "next/navigation";
 import React from "react";
 
 import { X } from "lucide-react";
@@ -79,11 +80,49 @@ export function Announcement({
     (state) => state.announcement === announcement
   );
 
-  const [isClientSide, setIsClientSide] = React.useState(false);
+  const inserted = React.useRef(false);
+  useServerInsertedHTML(() => {
+    if (inserted.current) return null;
+    inserted.current = true;
+    return (
+      announcement && (
+        <script
+          key="fern-announcement"
+          type="text/javascript"
+          suppressHydrationWarning
+          dangerouslySetInnerHTML={{
+            __html: `(${String((announcement: string) => {
+              const dismissed = localStorage.getItem(
+                "fern-announcement-dismissed"
+              );
 
-  React.useEffect(() => {
-    setIsClientSide(true);
-  }, []);
+              if (
+                dismissed &&
+                JSON.parse(dismissed)?.state?.announcement === announcement
+              ) {
+                window.requestAnimationFrame(() => {
+                  const announcement =
+                    document.getElementById("fern-announcement");
+                  if (announcement) {
+                    announcement.remove();
+                  }
+
+                  const headerHeight =
+                    document.getElementById("fern-header")?.clientHeight;
+                  if (headerHeight != null) {
+                    document.documentElement.style.setProperty(
+                      "--header-height",
+                      `${String(headerHeight)}px`
+                    );
+                  }
+                });
+              }
+            })})(${JSON.stringify(announcement)})`,
+          }}
+        />
+      )
+    );
+  });
 
   if (!announcement) {
     return null;
@@ -92,13 +131,11 @@ export function Announcement({
   return (
     <LazyMotion features={domAnimation} strict>
       <AnimatePresence mode="popLayout">
-        {!isDismissed && isClientSide && (
+        {!isDismissed && (
           <MotionAnnouncement
+            id="fern-announcement"
             suppressHydrationWarning
-            className={cn(
-              "fern-announcement [&_.fern-mdx-link]:text-inherit",
-              className
-            )}
+            className={cn("[&_.fern-mdx-link]:text-inherit", className)}
             exit={{ height: 0 }}
             dismiss={() => {
               useAnnouncementStore.setState({ announcement });
