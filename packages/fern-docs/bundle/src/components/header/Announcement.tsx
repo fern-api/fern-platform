@@ -100,7 +100,7 @@ export function Announcement({
                 dismissed &&
                 JSON.parse(dismissed)?.state?.announcement === announcement
               ) {
-                window.requestAnimationFrame(() => {
+                (window.requestAnimationFrame ?? window.setTimeout)(() => {
                   const announcement =
                     document.getElementById("fern-announcement");
                   if (announcement) {
