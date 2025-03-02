@@ -42,9 +42,9 @@ export async function GET(
           );
         });
 
-      const root = await docs.unsafe_getFullRoot();
+      const root = await docs.getRoot();
       const collector = FernNavigation.NodeCollector.collect(root);
-      const batches = chunk(collector.slugs, 200);
+      const batches = chunk(collector.staticPageSlugs, 200);
 
       controller.enqueue(
         `revalidate-queued:urls=${collector.slugs.length};batches=${batches.length}\n`
