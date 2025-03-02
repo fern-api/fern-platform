@@ -26,6 +26,7 @@ export async function EndpointContent({
   showAuth,
   context,
   breadcrumb,
+  action,
   bottomNavigation,
 }: {
   serialize: MdxSerializer;
@@ -33,7 +34,7 @@ export async function EndpointContent({
   showAuth: boolean;
   context: EndpointContext;
   breadcrumb: readonly FernNavigation.BreadcrumbItem[];
-  streamToggle?: React.ReactNode;
+  action?: React.ReactNode;
   bottomNavigation?: React.ReactNode;
 }) {
   const { node, endpoint, types } = context;
@@ -46,6 +47,7 @@ export async function EndpointContent({
             serialize={serialize}
             breadcrumb={breadcrumb}
             title={node.title}
+            action={action}
             tags={
               endpoint.availability != null && (
                 <AvailabilityBadge

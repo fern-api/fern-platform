@@ -28,11 +28,13 @@ export async function WebhookContent({
   context,
   breadcrumb,
   bottomNavigation,
+  action,
 }: {
   serialize: MdxSerializer;
   context: ApiDefinition.WebhookContext;
   breadcrumb: readonly FernNavigation.BreadcrumbItem[];
   bottomNavigation: React.ReactNode;
+  action?: React.ReactNode;
 }) {
   const { node, webhook, types } = context;
 
@@ -49,6 +51,7 @@ export async function WebhookContent({
           serialize={serialize}
           breadcrumb={breadcrumb}
           title={node.title}
+          action={action}
         />
       }
       aside={webhookExample}

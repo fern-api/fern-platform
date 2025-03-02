@@ -27,6 +27,7 @@ export default async function ApiEndpointPage({
   loader: DocsLoader;
   serialize: MdxSerializer;
   node: FernNavigation.NavigationNodeApiLeaf;
+  action?: React.ReactNode;
   breadcrumb: readonly FernNavigation.BreadcrumbItem[];
   bottomNavigation?: React.ReactNode;
 }) {
@@ -49,12 +50,14 @@ export default async function ApiEndpointPage({
 async function ApiEndpointContent({
   serialize,
   node,
+  action,
   apiDefinition,
   breadcrumb,
   bottomNavigation,
 }: {
   serialize: MdxSerializer;
   node: FernNavigation.NavigationNodeApiLeaf;
+  action?: React.ReactNode;
   apiDefinition: ApiDefinition;
   breadcrumb: readonly FernNavigation.BreadcrumbItem[];
   bottomNavigation?: React.ReactNode;
@@ -70,6 +73,7 @@ async function ApiEndpointContent({
           serialize={serialize}
           breadcrumb={breadcrumb}
           context={context}
+          action={action}
           showErrors
           bottomNavigation={bottomNavigation}
           showAuth
@@ -86,6 +90,7 @@ async function ApiEndpointContent({
           serialize={serialize}
           breadcrumb={breadcrumb}
           context={context}
+          action={action}
           bottomNavigation={bottomNavigation}
         />
       );
@@ -100,6 +105,7 @@ async function ApiEndpointContent({
           serialize={serialize}
           breadcrumb={breadcrumb}
           context={context}
+          action={action}
           bottomNavigation={bottomNavigation}
         />
       );

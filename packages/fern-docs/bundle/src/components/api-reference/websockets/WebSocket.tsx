@@ -38,11 +38,13 @@ export async function WebSocketContent({
   context,
   breadcrumb,
   bottomNavigation,
+  action,
 }: {
   serialize: MdxSerializer;
   context: WebSocketContext;
   breadcrumb: readonly FernNavigation.BreadcrumbItem[];
   bottomNavigation: React.ReactNode;
+  action?: React.ReactNode;
 }) {
   const { channel, node, types, globalHeaders } = context;
 
@@ -93,6 +95,7 @@ export async function WebSocketContent({
               <AvailabilityBadge availability={channel.availability} rounded />
             )
           }
+          action={action}
         >
           <EndpointUrlWithPlaygroundBaseUrl endpoint={channel} />
         </PageHeader>

@@ -2,9 +2,12 @@ import "server-only";
 
 import { notFound } from "next/navigation";
 
+import { last } from "es-toolkit/array";
+
 import { FernNavigation } from "@fern-api/fdr-sdk";
 
 import ApiEndpointPage from "@/components/api-reference/ApiEndpointPage";
+import { EndpointStreamingEnabledToggle } from "@/components/api-reference/endpoints/EndpointStreamingEnabledToggle";
 import { BottomNavigation } from "@/components/bottom-nav";
 import ChangelogEntryPage from "@/components/changelog/ChangelogEntryPage";
 import ChangelogPage, {
@@ -84,6 +87,7 @@ export async function DocsMainContent({
   }
 
   if (FernNavigation.isApiLeaf(node)) {
+    const parent = last(parents);
     return (
       <ApiEndpointPage
         loader={loader}
@@ -91,6 +95,11 @@ export async function DocsMainContent({
         node={node}
         breadcrumb={breadcrumb}
         bottomNavigation={bottomNavigation}
+        action={
+          parent?.type === "endpointPair" ? (
+            <EndpointStreamingEnabledToggle node={parent} />
+          ) : undefined
+        }
       />
     );
   }

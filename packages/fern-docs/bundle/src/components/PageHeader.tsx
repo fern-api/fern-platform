@@ -15,6 +15,7 @@ export function PageHeader({
   breadcrumb,
   title,
   titleHref,
+  action,
   tags,
   subtitle,
   children,
@@ -23,6 +24,7 @@ export function PageHeader({
   breadcrumb: readonly FernNavigation.BreadcrumbItem[];
   title: string;
   titleHref?: string;
+  action?: React.ReactNode;
   subtitle?: string;
   tags?: React.ReactNode;
   children?: React.ReactNode;
@@ -36,17 +38,19 @@ export function PageHeader({
         </div>
       )}
 
-      {titleHref == null ? (
-        <h1 className="fern-page-heading hyphens-auto text-balance break-words">
-          <MdxServerComponent serialize={serialize} mdx={title} />
-        </h1>
-      ) : (
-        <FernLink href={titleHref}>
+      <WithAction action={action}>
+        {titleHref == null ? (
           <h1 className="fern-page-heading hyphens-auto text-balance break-words">
             <MdxServerComponent serialize={serialize} mdx={title} />
           </h1>
-        </FernLink>
-      )}
+        ) : (
+          <FernLink href={titleHref}>
+            <h1 className="fern-page-heading hyphens-auto text-balance break-words">
+              <MdxServerComponent serialize={serialize} mdx={title} />
+            </h1>
+          </FernLink>
+        )}
+      </WithAction>
 
       {subtitle && (
         <div className="prose-p:text-(color:--grayscale-a11) mt-2 hyphens-auto break-words leading-7">
@@ -58,5 +62,24 @@ export function PageHeader({
 
       {children}
     </header>
+  );
+}
+
+function WithAction({
+  children,
+  action,
+}: {
+  children: React.ReactNode;
+  action?: React.ReactNode;
+}) {
+  if (!action) {
+    return children;
+  }
+
+  return (
+    <div className="flex items-center justify-between">
+      {children}
+      {action}
+    </div>
   );
 }
