@@ -18,7 +18,6 @@ import {
 import { useIsomorphicLayoutEffect } from "@fern-ui/react-commons";
 
 import { BgImageGradient } from "@/components/BgImageGradient";
-import { SidebarOut } from "@/components/layouts/sidebar";
 import { useIsDismissableSidebarOpen } from "@/state/mobile";
 
 export const MainCtx = React.createContext<
@@ -33,7 +32,7 @@ const transition = {
   duration: 0.3,
 };
 
-export function MobileMenu() {
+export function MobileMenu({ children }: { children: React.ReactNode }) {
   const [open, setOpen] = useIsDismissableSidebarOpen();
 
   // Close the sidebar when the path changes
@@ -238,7 +237,7 @@ export function MobileMenu() {
               <div className="clipped-background">
                 <BgImageGradient className="translate-y-[calc(var(--header-height)*-1)]" />
               </div>
-              <SidebarOut />
+              {children}
             </motion.div>
           )}
         </AnimatePresence>

@@ -4,22 +4,21 @@ import { cn } from "@fern-docs/components";
 import { useIsDesktop } from "@fern-ui/react-commons";
 
 import { BgImageGradient } from "@/components/BgImageGradient";
-import { SidebarOut } from "@/components/layouts/sidebar";
 import { HideAsides, useIsSidebarFixed } from "@/state/layout";
 
 import { MobileMenu } from "./mobile-menu";
 
-export function SidebarNav() {
+export function SidebarNav({ children }: { children: React.ReactNode }) {
   const isDesktop = useIsDesktop();
 
   if (!isDesktop) {
-    return <MobileMenu />;
+    return <MobileMenu>{children}</MobileMenu>;
   }
 
-  return <DesktopMenu />;
+  return <DesktopMenu>{children}</DesktopMenu>;
 }
 
-function DesktopMenu() {
+function DesktopMenu({ children }: { children: React.ReactNode }) {
   const fixed = useIsSidebarFixed();
   return (
     <>
@@ -44,7 +43,7 @@ function DesktopMenu() {
             <BgImageGradient className="translate-y-[calc(var(--header-height)*-1)]" />
           </div>
         )}
-        <SidebarOut />
+        {children}
       </aside>
       {fixed && (
         <aside

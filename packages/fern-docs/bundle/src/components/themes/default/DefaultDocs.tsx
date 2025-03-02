@@ -6,7 +6,6 @@ import { cn } from "@fern-docs/components";
 
 import { BgImageGradient } from "@/components/BgImageGradient";
 import { HeaderTabsRoot } from "@/components/header/HeaderTabsRoot";
-import { SidebarProvider } from "@/components/layouts/sidebar";
 import { SetIsSidebarFixed } from "@/state/layout";
 
 import { FernHeader } from "./fern-header";
@@ -34,7 +33,7 @@ export default function DefaultDocs({
 }) {
   const mainRef = React.useRef<HTMLDivElement>(null);
   return (
-    <SidebarProvider in={sidebar}>
+    <>
       <SetIsSidebarFixed value={isSidebarFixed} />
       <FernHeader
         className={cn(
@@ -56,13 +55,13 @@ export default function DefaultDocs({
 
       <MainCtx.Provider value={mainRef}>
         <main ref={mainRef} className="mt-(--header-height) relative z-0 flex">
-          <SidebarNav />
+          <SidebarNav>{sidebar}</SidebarNav>
           {children}
         </main>
       </MainCtx.Provider>
 
       {/* Enables footer DOM injection */}
       <footer id="fern-footer" />
-    </SidebarProvider>
+    </>
   );
 }

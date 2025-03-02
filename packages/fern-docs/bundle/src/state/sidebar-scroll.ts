@@ -3,7 +3,7 @@
 import React from "react";
 
 import {
-  isomorphicRequestAnimationFrame,
+  isomorphicRequestIdleCallback,
   useIsomorphicLayoutEffect,
 } from "@fern-ui/react-commons";
 
@@ -63,12 +63,12 @@ export function useScrollSidebarNodeIntoView(
       const isBelow = elementBounds.bottom > containerBounds.bottom;
 
       if (isAbove || isBelow) {
-        scrollToCenter(container, element, isBelow);
+        scrollToCenter(container, element);
       }
     };
 
     if (shouldScrollIntoView) {
-      return isomorphicRequestAnimationFrame(() => {
+      return isomorphicRequestIdleCallback(() => {
         scrollTo();
       });
     }
