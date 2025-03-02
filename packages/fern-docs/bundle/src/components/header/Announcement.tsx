@@ -11,6 +11,8 @@ import { createJSONStorage, persist } from "zustand/middleware";
 
 import { FernButton, cn } from "@fern-docs/components";
 
+import { ErrorBoundary } from "../error-boundary";
+
 type AnnouncementStore = {
   announcement: string | null;
   dismiss: (announcement: string) => void;
@@ -134,22 +136,24 @@ export function Announcement({
   }
 
   return (
-    <LazyMotion features={domAnimation} strict>
-      <AnimatePresence mode="popLayout">
-        {!isDismissed && (
-          <MotionAnnouncement
-            id="fern-announcement"
-            suppressHydrationWarning
-            className={cn("[&_.fern-mdx-link]:text-inherit", className)}
-            exit={{ height: 0 }}
-            dismiss={() => {
-              useAnnouncementStore.setState({ announcement });
-            }}
-          >
-            {children ?? announcement}
-          </MotionAnnouncement>
-        )}
-      </AnimatePresence>
-    </LazyMotion>
+    <ErrorBoundary fallback={false}>
+      <LazyMotion features={domAnimation} strict>
+        <AnimatePresence mode="popLayout">
+          {!isDismissed && (
+            <MotionAnnouncement
+              id="fern-announcement"
+              suppressHydrationWarning
+              className={cn("[&_.fern-mdx-link]:text-inherit", className)}
+              exit={{ height: 0 }}
+              dismiss={() => {
+                useAnnouncementStore.setState({ announcement });
+              }}
+            >
+              {children ?? announcement}
+            </MotionAnnouncement>
+          )}
+        </AnimatePresence>
+      </LazyMotion>
+    </ErrorBoundary>
   );
 }
