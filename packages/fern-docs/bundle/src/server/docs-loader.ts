@@ -33,6 +33,7 @@ import {
 import { findEndpoint } from "@/components/util/processRequestSnippetComponents";
 
 import { AuthState, createGetAuthState } from "./auth/getAuthState";
+import { cacheSeed } from "./cache-seed";
 import { generateFernColorPalette } from "./generateFernColors";
 import { FernFonts, generateFonts } from "./generateFonts";
 import { getDocsUrlMetadata } from "./getDocsUrlMetadata";
@@ -199,7 +200,7 @@ const createGetApiCached = (domain: string) =>
       const flags = await cachedGetEdgeFlags(domain);
       return ApiDefinitionV1ToLatest.from(v1, flags).migrate();
     },
-    [domain],
+    [domain, cacheSeed()],
     { tags: [domain, "api"] }
   );
 
@@ -212,7 +213,7 @@ const createGetPrunedApiCached = (domain: string) =>
       const api = await createGetApiCached(domain)(id);
       return prune(api, ...nodes);
     },
-    [domain],
+    [domain, cacheSeed()],
     { tags: [domain, "api"] }
   );
 
@@ -317,9 +318,13 @@ const unsafe_getFullRoot = async (domain: string) => {
 };
 
 const unsafe_getRootCached = async (domain: string) => {
-  return await unstable_cache(unsafe_getFullRoot, ["unsafe_getRoot"], {
-    tags: [domain, "unsafe_getRoot"],
-  })(domain);
+  return await unstable_cache(
+    unsafe_getFullRoot,
+    ["unsafe_getRoot", cacheSeed()],
+    {
+      tags: [domain, "unsafe_getRoot"],
+    }
+  )(domain);
 };
 
 const getRoot = async (
@@ -343,7 +348,7 @@ const getRootCached = async (
   authState: AuthState,
   authConfig: AuthEdgeConfig | undefined
 ) => {
-  return await unstable_cache(getRoot, [domain], {
+  return await unstable_cache(getRoot, [domain, cacheSeed()], {
     tags: [domain, "getRoot"],
   })(domain, authState, authConfig);
 };
@@ -523,18 +528,18 @@ export const createCachedDocsLoader = async (
     fern_token,
     getAuthConfig: () => authConfig,
     getBaseUrl: cache(
-      unstable_cache(() => getBaseUrl(domain), [domain], {
+      unstable_cache(() => getBaseUrl(domain), [domain, cacheSeed()], {
         tags: [domain, "getBaseUrl"],
       })
     ),
     getMetadata: () => metadata,
     getFiles: cache(
-      unstable_cache(() => getFiles(domain), [domain], {
+      unstable_cache(() => getFiles(domain), [domain, cacheSeed()], {
         tags: [domain, "files"],
       })
     ),
     getMdxBundlerFiles: cache(
-      unstable_cache(() => getMdxBundlerFiles(domain), [domain], {
+      unstable_cache(() => getMdxBundlerFiles(domain), [domain, cacheSeed()], {
         tags: [domain, "mdxBundlerFiles"],
       })
     ),
@@ -544,7 +549,7 @@ export const createCachedDocsLoader = async (
       unstable_cache(
         (method: HttpMethod, path: string, example?: string) =>
           getEndpointByLocator(domain, method, path, example),
-        [domain],
+        [domain, cacheSeed()],
         { tags: [domain, "endpointByLocator"] }
       )
     ),
@@ -556,33 +561,35 @@ export const createCachedDocsLoader = async (
     ),
     unsafe_getFullRoot: cache(() => unsafe_getRootCached(domain)),
     getConfig: cache(
-      unstable_cache(() => getConfig(domain), [domain], {
+      unstable_cache(() => getConfig(domain), [domain, cacheSeed()], {
         tags: [domain, "getConfig"],
       })
     ),
     getPage: cache(
-      unstable_cache((pageId: string) => getPage(domain, pageId), [domain], {
-        tags: [domain, "getPage"],
-      })
+      unstable_cache(
+        (pageId: string) => getPage(domain, pageId),
+        [domain, cacheSeed()],
+        { tags: [domain, "getPage"] }
+      )
     ),
     getColors: cache(
-      unstable_cache(() => getColors(domain), [domain], {
+      unstable_cache(() => getColors(domain), [domain, cacheSeed()], {
         tags: [domain, "getColors"],
       })
     ),
     getLayout: cache(
-      unstable_cache(() => getLayout(domain), [domain], {
+      unstable_cache(() => getLayout(domain), [domain, cacheSeed()], {
         tags: [domain, "getLayout"],
       })
     ),
     getFonts: cache(
-      unstable_cache(() => getFonts(domain), [domain], {
+      unstable_cache(() => getFonts(domain), [domain, cacheSeed()], {
         tags: [domain, "getFonts"],
       })
     ),
     getAuthState,
     getEdgeFlags: cache(
-      unstable_cache(() => cachedGetEdgeFlags(domain), [domain], {
+      unstable_cache(() => cachedGetEdgeFlags(domain), [domain, cacheSeed()], {
         tags: [domain, "getEdgeFlags"],
       })
     ),
