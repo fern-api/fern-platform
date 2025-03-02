@@ -2,7 +2,10 @@
 
 import React from "react";
 
+import { useIsomorphicLayoutEffect } from "@fern-ui/react-commons";
+
 import { isomorphicRequestIdleCallback } from "@/components/util/isomorphicRequestIdleCallback";
+import { scrollToCenter } from "@/components/util/scrollToCenter";
 
 import { useIsSelectedSidebarNode } from "./navigation";
 
@@ -43,67 +46,22 @@ export function useScrollSidebarNodeIntoView(
   nodeId?: string
 ) {
   const shouldScrollIntoView = useIsSelectedSidebarNode(nodeId ?? ("" as any));
-  React.useEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     const scrollTo = () => {
       const container = document.getElementById("sidebar-scroll-area");
-      const sidebarNode = ref.current;
-      if (!sidebarNode || !container) {
-        return;
-      }
-      try {
-        // Get the offset from the top without using getBoundingClientRect
-        // Calculate the offset by traversing the DOM tree and summing offsetTop values
-        const getOffsetTop = (element: HTMLElement): number => {
-          let offsetTop = 0;
-          let currentElement: HTMLElement | null = element;
+      if (!container) return;
 
-          while (
-            currentElement &&
-            currentElement.id !== "sidebar-scroll-area"
-          ) {
-            offsetTop += currentElement.offsetTop;
-            currentElement = currentElement.offsetParent as HTMLElement | null;
-          }
+      const element = ref.current;
+      if (!element) return;
 
-          if (!currentElement || currentElement.id !== "sidebar-scroll-area") {
-            return -1;
-          }
+      const containerBounds = container.getBoundingClientRect();
+      const elementBounds = element.getBoundingClientRect();
 
-          return offsetTop;
-        };
+      const isAbove = elementBounds.top < containerBounds.top;
+      const isBelow = elementBounds.bottom > containerBounds.bottom;
 
-        // Get the vertical position of the node relative to the container
-        const nodeOffsetTop = getOffsetTop(sidebarNode);
-
-        if (nodeOffsetTop < 0) {
-          return;
-        }
-
-        const containerScrollTop = container.scrollTop;
-        const containerHeight = container.offsetHeight;
-
-        // Check if the node is outside the visible area of the container
-        const isAbove = nodeOffsetTop < containerScrollTop;
-        const isBelow =
-          nodeOffsetTop + sidebarNode.offsetHeight >
-          containerScrollTop + containerHeight;
-
-        if (isAbove || isBelow) {
-          const top =
-            nodeOffsetTop - containerHeight / 2 + container.offsetTop / 2;
-          if (top < 0) {
-            return;
-          }
-          container.scrollTo({
-            top,
-            behavior:
-              Math.abs(container.scrollTop - top) < container.offsetHeight / 2
-                ? "smooth"
-                : "auto",
-          });
-        }
-      } catch (error) {
-        console.error(error);
+      if (isAbove || isBelow) {
+        scrollToCenter(container, element, isBelow);
       }
     };
 
@@ -114,6 +72,5 @@ export function useScrollSidebarNodeIntoView(
     }
 
     return;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [shouldScrollIntoView]);
 }
