@@ -23,8 +23,8 @@ export const ReferenceLayout = React.forwardRef<
   { header, aside, children, footer, reference, enableFullWidth, ...props },
   ref
 ) {
-  const isMobile = useIsMobile();
   const slot = useLazyRef(() => tunnel()).current;
+  const isMobile = useIsMobile();
   return (
     <AsideAwareDiv className="px-page-padding mx-auto min-w-0 shrink">
       <slot.In only>

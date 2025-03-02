@@ -30,6 +30,7 @@ export const PlaygroundButton: FC<{
         }
       >
         <ButtonLink
+          id={`playground-button:${state.slug}`}
           aria-description={
             settings?.button?.href
               ? "Opens an API Explorer in a new tab"
