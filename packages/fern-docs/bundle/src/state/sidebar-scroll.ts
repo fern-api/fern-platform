@@ -45,8 +45,6 @@ export function useDismountMeasureSidebarScrollPosition(
       // 16 seems to be the magic number for a scroll-to-top event
       if (target.scrollTop !== 16) {
         window._FERN_SIDEBAR_SCROLL_RESTORATION = target.scrollTop;
-      } else {
-        target.scrollTop = window._FERN_SIDEBAR_SCROLL_RESTORATION ?? 16;
       }
     };
 
