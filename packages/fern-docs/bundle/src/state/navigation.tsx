@@ -264,6 +264,7 @@ export function PathnameDispatcher() {
 const EMPTY_EXPANDED_NODES_STATE: ExpandedNodesState = {
   expandedNodes: new Set(),
   implicitExpandedNodes: new Set(),
+  collapsedNodes: new Set(),
   childToParentsMap: new Map(),
 };
 
@@ -295,6 +296,7 @@ function reduceExpandedNodes(
         invertParentChildMap(prev.childToParentsMap).keys()
       ),
       implicitExpandedNodes: new Set(),
+      collapsedNodes: new Set(),
       childToParentsMap: prev.childToParentsMap,
     };
   }
@@ -309,6 +311,7 @@ function reduceExpandedNodes(
     return {
       expandedNodes: prev.expandedNodes,
       implicitExpandedNodes,
+      collapsedNodes: new Set(),
       childToParentsMap: prev.childToParentsMap,
     };
   }
@@ -326,7 +329,10 @@ function reduceExpandedNodes(
 
   if (actionType === "expand" || actionType === "expand-soft") {
     const expandedNodes = new Set(prev.expandedNodes);
-    const implicitExpandedNodes = new Set(prev.implicitExpandedNodes);
+    const implicitExpandedNodes = new Set<FernNavigation.NodeId>();
+    const collapsedNodes = new Set(prev.collapsedNodes);
+
+    collapsedNodes.delete(action.nodeId);
 
     if (actionType === "expand-soft") {
       implicitExpandedNodes.add(action.nodeId);
@@ -338,9 +344,23 @@ function reduceExpandedNodes(
       implicitExpandedNodes.add(parent);
     });
 
+    prev.expandedNodes.forEach((nodeId) => {
+      const parents = prev.childToParentsMap.get(nodeId);
+      if (parents == null) {
+        return;
+      }
+      for (const parent of parents) {
+        if (collapsedNodes.has(parent)) {
+          break;
+        }
+        implicitExpandedNodes.add(parent);
+      }
+    });
+
     return {
       expandedNodes,
       implicitExpandedNodes,
+      collapsedNodes,
       childToParentsMap: prev.childToParentsMap,
     };
   }
@@ -348,12 +368,15 @@ function reduceExpandedNodes(
   if (actionType === "collapse") {
     const expandedNodes = new Set(prev.expandedNodes);
     const implicitExpandedNodes = new Set(prev.implicitExpandedNodes);
+    const collapsedNodes = new Set(prev.collapsedNodes);
     // remove this node and all children from the expanded set
     expandedNodes.delete(action.nodeId);
     implicitExpandedNodes.delete(action.nodeId);
+    collapsedNodes.add(action.nodeId);
     return {
       expandedNodes,
       implicitExpandedNodes,
+      collapsedNodes,
       childToParentsMap: prev.childToParentsMap,
     };
   }
