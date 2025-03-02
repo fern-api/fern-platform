@@ -70,7 +70,7 @@ function TableOfContentsSkeleton() {
       role="directory"
       className={cn(
         "top-header-height sticky order-last hidden h-fit max-h-[calc(100dvh-var(--spacing-header-height))] flex-col xl:flex",
-        "w-sidebar-width"
+        "w-(--sticky-aside-width) pr-(--aside-offset)"
       )}
     >
       <div className="space-y-4 px-4 pb-12 pt-8 lg:pr-5">
