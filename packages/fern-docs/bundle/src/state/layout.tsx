@@ -9,7 +9,9 @@ import { useIsomorphicLayoutEffect } from "@fern-ui/react-commons";
 const isSidebarFixedAtom = atom<boolean>(false);
 
 export function SetIsSidebarFixed({ value }: { value: boolean }) {
-  useHydrateAtoms([[isSidebarFixedAtom, value]]);
+  useHydrateAtoms([[isSidebarFixedAtom, value]], {
+    dangerouslyForceHydrate: true,
+  });
   return null;
 }
 

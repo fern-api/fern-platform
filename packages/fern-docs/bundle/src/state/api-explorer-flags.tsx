@@ -22,15 +22,18 @@ export function ApiExplorerFlags({
   usesApplicationJsonInFormDataValue: boolean;
   isBinaryOctetStreamAudioPlayer: boolean;
 }) {
-  useHydrateAtoms([
-    [isFileForgeHackEnabledAtom, isFileForgeHackEnabled],
-    [isProxyDisabledAtom, isProxyDisabled],
-    [hasVoiceIdPlaygroundFormAtom, hasVoiceIdPlaygroundForm],
+  useHydrateAtoms(
     [
-      usesApplicationJsonInFormDataValueAtom,
-      usesApplicationJsonInFormDataValue,
+      [isFileForgeHackEnabledAtom, isFileForgeHackEnabled],
+      [isProxyDisabledAtom, isProxyDisabled],
+      [hasVoiceIdPlaygroundFormAtom, hasVoiceIdPlaygroundForm],
+      [
+        usesApplicationJsonInFormDataValueAtom,
+        usesApplicationJsonInFormDataValue,
+      ],
+      [isBinaryOctetStreamAudioPlayerAtom, isBinaryOctetStreamAudioPlayer],
     ],
-    [isBinaryOctetStreamAudioPlayerAtom, isBinaryOctetStreamAudioPlayer],
-  ]);
+    { dangerouslyForceHydrate: true }
+  );
   return null;
 }

@@ -1,17 +1,11 @@
+"use client";
+
 import { cn } from "@fern-docs/components";
 
-import { FernColorTheme } from "@/server/types";
+import { useColors } from "@/state/colors";
 
-export function BgImageGradient({
-  className,
-  colors,
-}: {
-  className?: string;
-  colors: {
-    light?: FernColorTheme;
-    dark?: FernColorTheme;
-  };
-}) {
+export function BgImageGradient({ className }: { className?: string }) {
+  const colors = useColors();
   const hasDarkBackground = !!colors.dark?.background;
   const hasLightBackground = !!colors.light?.background;
   const hasDarkBackgroundImage = !!colors.dark?.backgroundImage;

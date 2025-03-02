@@ -11,6 +11,8 @@ import {
 import { cn } from "@fern-docs/components";
 import { CopyToClipboardButton, SemanticColor } from "@fern-docs/components";
 
+import { useIsDarkCode } from "@/state/dark-code";
+
 export declare namespace TitledExample {
   export interface Props {
     title: ReactNode;
@@ -39,11 +41,13 @@ export const TitledExample = forwardRef<
   },
   ref
 ) {
+  const isDarkCode = useIsDarkCode();
   return (
     <div
       className={cn(
-        "bg-card-solid border-card-border rounded-3 shadow-card-grayscale relative flex flex-col overflow-hidden border",
+        "bg-card-background border-card-border rounded-3 shadow-card-grayscale relative flex flex-col overflow-hidden border",
         "max-md:max-h-content-height-padded",
+        { "bg-card-solid dark": isDarkCode },
         className
       )}
       onClick={onClick}

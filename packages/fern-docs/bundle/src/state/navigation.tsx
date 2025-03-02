@@ -63,7 +63,9 @@ export function useBasePath() {
 }
 
 export function SetBasePath({ value }: { value: string }) {
-  useHydrateAtoms([[basepathAtom, value]]);
+  useHydrateAtoms([[basepathAtom, value]], {
+    dangerouslyForceHydrate: true,
+  });
   return null;
 }
 

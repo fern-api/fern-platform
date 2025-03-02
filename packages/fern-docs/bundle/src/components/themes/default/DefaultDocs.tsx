@@ -4,6 +4,7 @@ import React from "react";
 
 import { cn } from "@fern-docs/components";
 
+import { BgImageGradient } from "@/components/BgImageGradient";
 import { HeaderTabsRoot } from "@/components/header/HeaderTabsRoot";
 import { SetIsSidebarFixed, useShouldHideAsides } from "@/state/layout";
 
@@ -39,6 +40,9 @@ export default function DefaultDocs({
           { "lg:hidden": isHeaderDisabled }
         )}
       >
+        <div className="clipped-background opacity-50">
+          <BgImageGradient />
+        </div>
         {announcement}
         <div className="h-(--mobile-header-height-real) md:h-(--header-height-real) px-page-padding flex items-center">
           {header}

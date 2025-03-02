@@ -20,9 +20,11 @@ import { BgImageGradient } from "@/components/BgImageGradient";
 import { JavascriptProvider } from "@/components/JavascriptProvider";
 import { CustomerAnalytics } from "@/components/analytics/CustomerAnalytics";
 import { FeatureFlagProvider } from "@/components/feature-flags/FeatureFlagProvider";
+import { FernUser } from "@/components/fern-user";
 import SearchV2 from "@/components/search";
 import { withJsConfig } from "@/components/with-js-config";
 import { DocsLoader, createCachedDocsLoader } from "@/server/docs-loader";
+import { SetColors } from "@/state/colors";
 import { DarkCode } from "@/state/dark-code";
 import { Domain } from "@/state/domain";
 import { LaunchDarklyInfo } from "@/state/feature-flags";
@@ -102,8 +104,9 @@ export default async function Layout({
         )}
         <DarkCode value={edgeFlags.isDarkCodeEnabled} />
         <Whitelabeled value={edgeFlags.isWhitelabeled} />
-        {/* <FernUser domain={domain} fern_token={fern_token} /> */}
-        <BgImageGradient colors={colors} />
+        <SetColors colors={colors} />
+        <FernUser domain={domain} host={host} />
+        <BgImageGradient />
         <GlobalStyles
           domain={domain}
           layout={layout}
