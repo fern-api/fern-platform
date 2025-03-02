@@ -1,6 +1,9 @@
 import { revalidateTag } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
 
+import { chunk } from "es-toolkit/array";
+import { escapeRegExp } from "es-toolkit/string";
+
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { withDefaultProtocol } from "@fern-api/ui-core-utils";
 import {
@@ -30,43 +33,58 @@ export async function GET(
       const docs = await createCachedDocsLoader(host, domain);
       const reindexPromise = reindex(docs, host, domain)
         .then((services) => {
-          controller.enqueue(`reindex-queued:${services.join(",")}\n`);
+          controller.enqueue(`reindex-queued:services=${services.join(",")}\n`);
         })
         .catch((e: unknown) => {
           console.error(e);
-          controller.enqueue(`reindex-failed:${String(e)}\n`);
+          controller.enqueue(
+            `reindex-failed:error=${escapeRegExp(String(e))}\n`
+          );
         });
 
       const root = await docs.unsafe_getFullRoot();
       const collector = FernNavigation.NodeCollector.collect(root);
+      const batches = chunk(collector.slugs, 200);
 
-      controller.enqueue(`revalidate-queued:${collector.slugs.length}\n`);
+      controller.enqueue(
+        `revalidate-queued:urls=${collector.slugs.length};batches=${batches.length}\n`
+      );
 
-      const promises = collector.slugs.map(async (slug) => {
-        const url = withDefaultProtocol(
-          `${domain}${conformTrailingSlash(addLeadingSlash(slug))}`
+      for (let i = 0; i < batches.length; i++) {
+        controller.enqueue(
+          `revalidate-batch:${i * 200 + 1}-${Math.min(
+            (i + 1) * 200,
+            collector.slugs.length
+          )}/${collector.slugs.length}\n`
         );
-        try {
-          const res = await fetch(
-            `${req.nextUrl.origin}${conformTrailingSlash(addLeadingSlash(slug))}`,
-            {
-              method: "HEAD",
-              cache: "no-store",
-              headers: { [HEADER_X_FERN_HOST]: domain },
+        await Promise.all(
+          // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion, @typescript-eslint/no-non-null-assertion
+          batches[i]!.map(async (slug) => {
+            const url = withDefaultProtocol(
+              `${domain}${conformTrailingSlash(addLeadingSlash(slug))}`
+            );
+            try {
+              const res = await fetch(
+                `${req.nextUrl.origin}${conformTrailingSlash(addLeadingSlash(slug))}`,
+                {
+                  method: "HEAD",
+                  cache: "no-store",
+                  headers: { [HEADER_X_FERN_HOST]: domain },
+                }
+              );
+              if (!res.ok) {
+                throw new Error(`Failed to revalidate ${url}`);
+              }
+              controller.enqueue(`revalidated:${url}\n`);
+            } catch (e) {
+              console.error(e);
+              controller.enqueue(
+                `revalidate-failed:url=${url}:error=${escapeRegExp(String(e))}\n`
+              );
             }
-          );
-          if (!res.ok) {
-            throw new Error(`Failed to revalidate ${url}`);
-          }
-          controller.enqueue(`revalidated:${url}\n`);
-        } catch (e) {
-          console.error(e);
-          controller.enqueue(`revalidate-failed:${url}:${String(e)}\n`);
-        }
-      });
-
-      await Promise.all(promises);
-
+          })
+        );
+      }
       // finish reindexing before returning
       await reindexPromise;
 

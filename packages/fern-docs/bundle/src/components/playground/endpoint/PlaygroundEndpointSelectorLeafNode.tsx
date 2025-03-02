@@ -1,6 +1,6 @@
 import { ReactElement, forwardRef } from "react";
 
-import escapeStringRegexp from "escape-string-regexp";
+import { escapeRegExp } from "es-toolkit/string";
 
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { cn } from "@fern-docs/components";
@@ -120,9 +120,7 @@ function renderTextWithHighlight(
     return [<span key={0}>{text}</span>];
   }
   // Split text on higlight term, include term itself into parts, ignore case
-  const parts = text.split(
-    new RegExp(`(${escapeStringRegexp(highlight)})`, "gi")
-  );
+  const parts = text.split(new RegExp(`(${escapeRegExp(highlight)})`, "gi"));
   return parts.map((part, idx) =>
     part.toLowerCase() === highlight.toLowerCase() ? (
       <mark className="text-body bg-(color:--accent-a3)" key={idx}>
