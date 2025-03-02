@@ -16,7 +16,7 @@ export function BgImageGradient({ className }: { className?: string }) {
       className={cn(className, "fern-background", {
         "from-(color:--accent)/10 bg-gradient-to-b to-transparent":
           !hasLightBackground && !hasLightBackgroundImage,
-        "dark:from-(color:--accent)/20 dark:to-(color:--accent)/10 dark:bg-gradient-to-b":
+        "dark:to-(color:--accent)/10 dark:bg-gradient-to-b dark:from-transparent":
           !hasDarkBackground && !hasDarkBackgroundImage,
         "fern-background-image": hasLightBackgroundImage,
         "fern-background-image-dark": hasDarkBackgroundImage,
