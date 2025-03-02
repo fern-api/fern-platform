@@ -22,68 +22,76 @@ export async function GET(
 ): Promise<NextResponse> {
   const { host, domain } = await props.params;
 
-  revalidateTag(domain);
+  const stream = new ReadableStream({
+    async start(controller) {
+      revalidateTag(domain);
+      controller.enqueue(`revalidating:${domain}\n`);
 
-  const docs = await createCachedDocsLoader(host, domain);
-  const reindexPromise = reindex(docs, host, domain);
+      const docs = await createCachedDocsLoader(host, domain);
+      const reindexPromise = reindex(docs, host, domain)
+        .then((services) => {
+          controller.enqueue(`reindex-queued:${services.join(",")}\n`);
+        })
+        .catch((e: unknown) => {
+          console.error(e);
+          controller.enqueue(`reindex-failed:${String(e)}\n`);
+        });
 
-  const successfulRevalidations: string[] = [];
-  const failedRevalidations: string[] = [];
+      const root = await docs.unsafe_getFullRoot();
+      const collector = FernNavigation.NodeCollector.collect(root);
 
-  if (req.nextUrl.searchParams.get("regenerate") === "true") {
-    const root = await docs.unsafe_getFullRoot();
-    const collector = FernNavigation.NodeCollector.collect(root);
-
-    const promises = collector.slugs.map(async (slug) => {
-      const url = withDefaultProtocol(
-        `${domain}${conformTrailingSlash(addLeadingSlash(slug))}`
-      );
-      try {
-        const res = await fetch(
-          `${req.nextUrl.origin}${conformTrailingSlash(addLeadingSlash(slug))}`,
-          {
-            method: "HEAD",
-            cache: "no-store",
-            headers: { [HEADER_X_FERN_HOST]: domain },
-          }
+      const promises = collector.slugs.map(async (slug) => {
+        const url = withDefaultProtocol(
+          `${domain}${conformTrailingSlash(addLeadingSlash(slug))}`
         );
-        if (!res.ok) {
-          throw new Error(`Failed to revalidate ${url}`);
+        try {
+          const res = await fetch(
+            `${req.nextUrl.origin}${conformTrailingSlash(addLeadingSlash(slug))}`,
+            {
+              method: "HEAD",
+              cache: "no-store",
+              headers: { [HEADER_X_FERN_HOST]: domain },
+            }
+          );
+          if (!res.ok) {
+            throw new Error(`Failed to revalidate ${url}`);
+          }
+          controller.enqueue(`revalidated:${url}\n`);
+        } catch (e) {
+          console.error(e);
+          controller.enqueue(`revalidate-failed:${url}:${String(e)}\n`);
         }
-        successfulRevalidations.push(url);
-      } catch (e) {
-        failedRevalidations.push(url);
-        console.error(e);
-      }
-    });
+      });
 
-    await Promise.all(promises);
-  }
+      await Promise.all(promises);
 
-  // finish reindexing before returning
-  await reindexPromise;
+      // finish reindexing before returning
+      await reindexPromise;
 
-  return NextResponse.json({
-    message: `Revalidated ${domain}`,
-    successfulRevalidations: [],
-    failedRevalidations: [],
+      controller.close();
+    },
+  });
+
+  return new NextResponse(stream, {
+    headers: {
+      "Content-Type": "text/event-stream",
+    },
   });
 }
 
 async function reindex(loader: DocsLoader, host: string, domain: string) {
-  try {
-    const [{ basePath }, flags, orgMetadata] = await Promise.all([
-      loader.getBaseUrl(),
-      loader.getEdgeFlags(),
-      loader.getMetadata(),
-    ]);
-    if (orgMetadata.isPreview === false) {
-      await queueAlgoliaReindex(host, withoutStaging(domain), basePath);
-      if (flags.isAskAiEnabled) {
-        await queueTurbopufferReindex(host, withoutStaging(domain), basePath);
-      }
+  const [{ basePath }, flags, orgMetadata] = await Promise.all([
+    loader.getBaseUrl(),
+    loader.getEdgeFlags(),
+    loader.getMetadata(),
+  ]);
+  if (orgMetadata.isPreview === false) {
+    await queueAlgoliaReindex(host, withoutStaging(domain), basePath);
+    if (flags.isAskAiEnabled) {
+      await queueTurbopufferReindex(host, withoutStaging(domain), basePath);
+      return ["algolia", "turbopuffer"];
     }
-  } catch (err) {
-    console.error(err);
+    return ["algolia"];
   }
+  return [];
 }
