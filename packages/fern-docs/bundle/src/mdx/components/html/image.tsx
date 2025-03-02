@@ -42,6 +42,8 @@ export const Image = forwardRef<
     loading?: "eager" | "lazy" | undefined;
     blurDataURL?: string | undefined;
     unoptimized?: boolean | undefined;
+    // set by rehype-files.ts if image width or height property
+    __assigned_imageSize?: React.CSSProperties | undefined;
   }
 >((props, ref) => {
   const {
@@ -51,6 +53,7 @@ export const Image = forwardRef<
     noZoom: isImageZoomDisabledProp = false,
     enableZoom: isImageZoomEnabledOverride = false,
     style,
+    __assigned_imageSize,
     ...rest
   } = props;
 
@@ -70,6 +73,7 @@ export const Image = forwardRef<
       width={toPixelValue(width)}
       height={toPixelValue(height)}
       {...rest}
+      style={{ ...style, ...__assigned_imageSize }}
       alt={rest.alt ?? ""}
       className="mx-auto"
     />
