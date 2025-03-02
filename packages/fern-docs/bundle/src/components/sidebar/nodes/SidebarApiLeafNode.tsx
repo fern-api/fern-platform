@@ -33,7 +33,13 @@ export function SidebarApiLeafNode({
         depth={Math.max(0, depth - 1)}
         hidden={node.hidden}
         authed={node.authed}
-        icon={<ApiLeafBadge node={node} className="shrink-0" />}
+        icon={
+          <ApiLeafBadge
+            node={node}
+            className="shrink-0"
+            key={`${node.id}-badge`}
+          />
+        }
         shallow={shallow}
       />
     </WithFeatureFlags>
