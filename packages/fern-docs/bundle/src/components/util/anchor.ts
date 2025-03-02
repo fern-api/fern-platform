@@ -1,3 +1,5 @@
+import { getEnv } from "@vercel/functions";
+
 export function getAnchorId(anchorIdParts: readonly string[]): string {
   return anchorIdParts
     .map((anchorId) => encodeURIComponent(anchorId))
@@ -22,7 +24,8 @@ export function getRouteNodeWithAnchor(route: string): HTMLElement | undefined {
 }
 
 export function scrollToRoute(route: string, smooth = false): boolean {
-  if (process.env.NODE_ENV === "development") {
+  const { VERCEL_ENV } = getEnv();
+  if (VERCEL_ENV !== "production") {
     console.debug(`scrolling to route: ${route}`);
   }
   const node = getRouteNodeWithAnchor(route);

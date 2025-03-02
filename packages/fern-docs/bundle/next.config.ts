@@ -51,7 +51,9 @@ const nextConfig: NextConfig = {
     // "@fern-ui/react-commons",
   ],
   experimental: {
+    appNavFailHandling: true,
     scrollRestoration: true,
+    optimisticClientCache: true,
     optimizePackageImports: [
       "@fern-api/fdr-sdk",
       "@fern-docs/mdx",
@@ -101,18 +103,19 @@ const nextConfig: NextConfig = {
    */
   assetPrefix: cdnUri != null ? cdnUri.href : undefined,
   compiler: {
-    removeConsole:
-      process.env.VERCEL_ENV === "production"
-        ? { exclude: ["error", "log"] }
-        : false,
+    // Note: i think this removes console logs in server-side code?
+    // removeConsole:
+    //   process.env.VERCEL_ENV === "production"
+    //     ? { exclude: ["error", "log"] }
+    //     : false,
     styledJsx: true,
   },
   logging: {
-    // fetches: {
-    //   fullUrl: true,
-    //   hmrRefreshes: true,
-    // },
-    // incomingRequests: true,
+    fetches: {
+      fullUrl: true,
+      //   hmrRefreshes: true,
+    },
+    incomingRequests: true,
   },
   headers: async () => {
     const AccessControlHeaders = [

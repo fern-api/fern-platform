@@ -16,6 +16,7 @@ export const ApiReferenceButton: React.FC<{ slug: string }> = ({ slug }) => {
           variant="minimal"
           icon={<ArrowUpRight className="size-icon" />}
           href={href}
+          scroll={true}
         />
       </FernTooltip>
     </FernTooltipProvider>

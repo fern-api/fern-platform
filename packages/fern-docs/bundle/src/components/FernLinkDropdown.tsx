@@ -10,6 +10,9 @@ export function FernLinkDropdown(
   // dropdownMenuElement is cloned in FernDropdown and href is passed to the cloned element
   // TODO: make this more composeable
   return (
-    <FernDropdown {...props} dropdownMenuElement={<FernLink href={""} />} />
+    <FernDropdown
+      {...props}
+      dropdownMenuElement={<FernLink href={""} scroll={true} />}
+    />
   );
 }

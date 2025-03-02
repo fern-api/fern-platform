@@ -88,7 +88,7 @@ export const Card: React.FC<Card.Props> = ({
 
   if (href != null) {
     return (
-      <FernLinkCard className={className} href={href}>
+      <FernLinkCard className={className} scroll={true} href={href}>
         <NoZoom>
           <DisableFernAnchor>{content}</DisableFernAnchor>
         </NoZoom>

@@ -16,6 +16,8 @@ import { cn } from "@fern-docs/components";
 import { FernButton, FernDropdown } from "@fern-docs/components";
 import { useBooleanState } from "@fern-ui/react-commons";
 
+import { withErrorBoundary } from "@/components/error-boundary";
+
 import { renderTypeShorthandRoot } from "../../type-shorthand";
 import { castToRecord, getEmptyValueForType, isExpandable } from "../utils";
 import { PlaygroundAdditionalProperties } from "./PlaygroundAdditionalProperties";
@@ -38,7 +40,7 @@ interface PlaygroundObjectPropertyFormProps {
   defaultValue?: unknown;
 }
 
-export const PlaygroundObjectPropertyForm: FC<
+const PlaygroundObjectPropertyFormInternal: FC<
   PlaygroundObjectPropertyFormProps
 > = ({
   id,
@@ -89,6 +91,10 @@ export const PlaygroundObjectPropertyForm: FC<
   );
 };
 
+export const PlaygroundObjectPropertyForm = withErrorBoundary(
+  PlaygroundObjectPropertyFormInternal
+);
+
 interface PlaygroundObjectPropertiesFormProps {
   id: string;
   properties: readonly ObjectProperty[];
@@ -101,7 +107,7 @@ interface PlaygroundObjectPropertiesFormProps {
   disabled?: boolean;
 }
 
-export const PlaygroundObjectPropertiesForm =
+export const PlaygroundObjectPropertiesFormInternal =
   memo<PlaygroundObjectPropertiesFormProps>((props) => {
     const {
       id,
@@ -293,7 +299,13 @@ export const PlaygroundObjectPropertiesForm =
     );
   });
 
-PlaygroundObjectPropertiesForm.displayName = "PlaygroundObjectPropertiesForm";
+PlaygroundObjectPropertiesFormInternal.displayName =
+  "PlaygroundObjectPropertiesFormInternal";
+
+export const PlaygroundObjectPropertiesForm = withErrorBoundary(
+  PlaygroundObjectPropertiesFormInternal,
+  <div>Error rendering object properties form</div>
+);
 
 function shouldShowProperty(
   shape: ObjectProperty["valueShape"],

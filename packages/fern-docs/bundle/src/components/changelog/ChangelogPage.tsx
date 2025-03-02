@@ -149,7 +149,7 @@ export async function ChangelogPageEntry({
       title={
         title != null ? (
           <h2>
-            <FernLink href={node.slug} className="not-prose">
+            <FernLink href={node.slug} className="not-prose" scroll={true}>
               <MdxContent mdx={title} />
             </FernLink>
           </h2>

@@ -67,6 +67,7 @@ export function A({
     <FernLink
       className={cnCombined}
       href={href ?? {}}
+      scroll={true}
       {...rest}
       showExternalLinkIcon={!hideExternalLinkIcon}
     >

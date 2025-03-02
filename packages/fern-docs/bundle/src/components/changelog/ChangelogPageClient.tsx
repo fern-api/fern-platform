@@ -155,7 +155,7 @@ export default function ChangelogPageClient({
                 id={entry.date}
                 stickyContent={
                   <Badge asChild>
-                    <FernLink href={addLeadingSlash(entry.slug)}>
+                    <FernLink href={addLeadingSlash(entry.slug)} scroll={true}>
                       {entry.title}
                     </FernLink>
                   </Badge>

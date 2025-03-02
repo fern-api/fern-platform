@@ -22,8 +22,6 @@ import { FernLink } from "@/components/FernLink";
 import { useIsSelectedSidebarNode } from "@/state/navigation";
 import { useScrollSidebarNodeIntoView } from "@/state/sidebar-scroll";
 
-import { scrollToRoute } from "../util/anchor";
-
 interface SidebarSlugLinkProps {
   nodeId: FernNavigation.NodeId;
   icon?: React.ReactNode;
@@ -66,7 +64,7 @@ const SidebarLinkInternal = React.forwardRef<
     onToggleExpand,
     onClick,
     shallow,
-    scroll,
+    // scroll,
     href,
     selected,
     showIndicator,
@@ -121,7 +119,7 @@ const SidebarLinkInternal = React.forwardRef<
       <FernLink
         ref={forwardRef}
         href={href}
-        scroll={scroll}
+        scroll={true}
         shallow={shallow}
         target={target}
         rel={rel}
@@ -188,9 +186,9 @@ export const SidebarSlugLink = forwardRef<
       ref={composeRefs(forwardRef, ref)}
       href={href}
       onClick={composeEventHandlers(innerProps.onClick, () => {
-        if (href) {
-          scrollToRoute(href);
-        }
+        // if (href) {
+        //   scrollToRoute(href);
+        // }
       })}
       shallow={innerProps.shallow || selected}
       scroll={!innerProps.shallow}

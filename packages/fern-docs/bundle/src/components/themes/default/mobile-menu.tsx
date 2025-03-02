@@ -107,6 +107,31 @@ export function MobileMenu({ children }: { children: React.ReactNode }) {
         if (isInsidePopoverOrDialog) {
           return;
         }
+
+        // Don't trigger if the event is inside a container with horizontal scroll
+        const isInsideHorizontalScroll = (element: Element): boolean => {
+          let current = element;
+          while (current && current !== document.body) {
+            const style = window.getComputedStyle(current);
+            const hasHorizontalScroll =
+              current.scrollWidth > current.clientWidth &&
+              (style.overflowX === "auto" ||
+                style.overflowX === "scroll" ||
+                style.overflow === "auto" ||
+                style.overflow === "scroll");
+
+            if (hasHorizontalScroll) {
+              return true;
+            }
+
+            current = current.parentElement as Element;
+          }
+          return false;
+        };
+
+        if (isInsideHorizontalScroll(event.target)) {
+          return;
+        }
       }
 
       if (event.buttons === 1) {

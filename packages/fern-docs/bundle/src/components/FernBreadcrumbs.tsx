@@ -32,6 +32,7 @@ export function FernBreadcrumbs({
             <FernLink
               className="fern-breadcrumb-item"
               href={addLeadingSlash(breadcrumb.pointsTo)}
+              scroll={true}
             >
               {breadcrumb.title}
             </FernLink>

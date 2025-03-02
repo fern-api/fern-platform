@@ -91,7 +91,7 @@ export const SearchV2 = React.memo(function SearchV2({
   const router = useRouter();
 
   const handleNavigate = useEventCallback((path: string) => {
-    router.push(path);
+    router.push(path, { scroll: true });
     setOpen(false);
   });
 

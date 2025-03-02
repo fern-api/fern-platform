@@ -3,6 +3,7 @@
 import { cn } from "@fern-docs/components";
 
 import { useLayout } from "@/state/layout";
+import { useRestoreSidebarScrollPosition } from "@/state/sidebar-scroll";
 
 import {
   CustomLayout,
@@ -14,6 +15,7 @@ import {
 
 export default function LoadingDocs() {
   const layout = useLayout();
+  useRestoreSidebarScrollPosition();
 
   const header = <PageHeaderSkeleton />;
   const toc = <TableOfContentsSkeleton />;

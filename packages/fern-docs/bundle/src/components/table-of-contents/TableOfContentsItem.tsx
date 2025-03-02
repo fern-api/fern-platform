@@ -26,6 +26,7 @@ export const TableOfContentsItem = memo<TableOfContentsItemProps>(
     return (
       <li className="mb-2 last:mb-0" ref={ref} data-depth={depth}>
         <FernLink
+          scroll={false}
           className={cn(
             "block hyphens-auto break-words text-sm transition-colors hover:transition-none",
             {

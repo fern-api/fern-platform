@@ -33,6 +33,7 @@ export function SidebarTabsList({
                 ? tab.url
                 : addLeadingSlash(hasRedirect(tab) ? tab.pointsTo : tab.slug)
             }
+            scroll={true}
           >
             <span
               className={cn(

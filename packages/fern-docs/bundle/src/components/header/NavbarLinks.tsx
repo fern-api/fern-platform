@@ -91,6 +91,7 @@ function HeaderNavbarLink({ navbarLink }: { navbarLink: NavbarLinkType }) {
             : navbarLink.type
       }
       rounded={navbarLink.rounded}
+      scroll={true}
     >
       {navbarLink.text}
     </FernLinkButton>

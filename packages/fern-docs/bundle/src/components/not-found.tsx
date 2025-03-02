@@ -44,6 +44,7 @@ export default async function NotFound() {
             variant="filled"
             intent="primary"
             rightIcon={<Undo2 />}
+            scroll={true}
           >
             Return home
           </FernLinkButton>

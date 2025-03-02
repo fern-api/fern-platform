@@ -16,9 +16,8 @@
 
 :root {
   --page-padding: 1rem;
-  --aside-offset: calc(
-    max((100vw - var(--page-width)) / 2 - var(--page-padding), 0px)
-  );
+  --page-margin: calc((100vw - var(--page-width)) / 2);
+  --aside-offset: max(0px, calc(var(--page-margin) - var(--page-padding)));
   --sticky-aside-width: calc(
     var(--spacing-sidebar-width) + var(--aside-offset)
   );

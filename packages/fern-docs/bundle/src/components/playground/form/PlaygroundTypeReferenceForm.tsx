@@ -19,6 +19,7 @@ import {
   FernTextarea,
 } from "@fern-docs/components";
 
+import { withErrorBoundary } from "@/components/error-boundary";
 import { hasVoiceIdPlaygroundFormAtom } from "@/state/api-explorer-flags";
 
 import { WithLabel } from "../WithLabel";
@@ -48,7 +49,7 @@ interface PlaygroundTypeReferenceFormProps {
   indent?: boolean;
 }
 
-export const PlaygroundTypeReferenceForm =
+const PlaygroundTypeReferenceFormInternal =
   memo<PlaygroundTypeReferenceFormProps>((props) => {
     const hasVoiceIdPlaygroundForm = useAtomValue(hasVoiceIdPlaygroundFormAtom);
     const {
@@ -517,4 +518,9 @@ export const PlaygroundTypeReferenceForm =
     });
   });
 
-PlaygroundTypeReferenceForm.displayName = "PlaygroundTypeReferenceForm";
+PlaygroundTypeReferenceFormInternal.displayName =
+  "PlaygroundTypeReferenceFormInternal";
+
+export const PlaygroundTypeReferenceForm = withErrorBoundary(
+  PlaygroundTypeReferenceFormInternal
+);

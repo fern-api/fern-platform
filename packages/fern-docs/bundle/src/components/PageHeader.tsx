@@ -44,7 +44,7 @@ export function PageHeader({
             <MdxServerComponent serialize={serialize} mdx={title} />
           </h1>
         ) : (
-          <FernLink href={titleHref}>
+          <FernLink href={titleHref} scroll={true}>
             <h1 className="fern-page-heading hyphens-auto text-balance break-words">
               <MdxServerComponent serialize={serialize} mdx={title} />
             </h1>

@@ -42,6 +42,7 @@ export function Button({
       <DisableFernAnchor>
         <FernLinkButton
           href={href}
+          scroll={true}
           {...props}
           variant={variant}
           size={size}

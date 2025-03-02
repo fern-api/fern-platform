@@ -36,6 +36,7 @@ export function HeaderTabsList({
                 ? tab.url
                 : addLeadingSlash(hasRedirect(tab) ? tab.pointsTo : tab.slug)
             }
+            scroll={true}
           >
             {tab.type !== "link" && tab.authed ? (
               <Lock />

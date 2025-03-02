@@ -16,7 +16,8 @@ export function PlaygroundKeyboardTrigger() {
         router.replace(
           pathname.endsWith("/~explorer")
             ? pathname.slice(0, -10)
-            : `${pathname}/~explorer`
+            : `${pathname}/~explorer`,
+          { scroll: false }
         );
       }
     };

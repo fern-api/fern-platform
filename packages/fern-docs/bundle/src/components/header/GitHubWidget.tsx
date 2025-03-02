@@ -73,6 +73,7 @@ export function GitHubWidget({
       variant="minimal"
       id={id}
       className={cn("h-10", className)}
+      scroll={true}
     >
       <div className="font-medium">{repo}</div>
       <div className="flex gap-2 text-xs">
