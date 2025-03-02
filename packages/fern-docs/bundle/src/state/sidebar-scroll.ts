@@ -33,11 +33,7 @@ export function useDismountMeasureSidebarScrollPosition(
     const current = ref.current;
     window._FERN_SIDEBAR_SCROLL_RESTORATION ??= 0;
     if (current && window._FERN_SIDEBAR_SCROLL_RESTORATION > 0) {
-      console.log(
-        "restoring scroll position",
-        window._FERN_SIDEBAR_SCROLL_RESTORATION
-      );
-      current.scrollTo({ top: window._FERN_SIDEBAR_SCROLL_RESTORATION });
+      current.scrollTop = window._FERN_SIDEBAR_SCROLL_RESTORATION;
     }
 
     if (current == null) {
@@ -49,6 +45,8 @@ export function useDismountMeasureSidebarScrollPosition(
       // 16 seems to be the magic number for a scroll-to-top event
       if (target.scrollTop !== 16) {
         window._FERN_SIDEBAR_SCROLL_RESTORATION = target.scrollTop;
+      } else {
+        target.scrollTop = window._FERN_SIDEBAR_SCROLL_RESTORATION ?? 16;
       }
     };
 
