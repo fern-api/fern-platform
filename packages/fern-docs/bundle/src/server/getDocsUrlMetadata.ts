@@ -1,5 +1,6 @@
 import { unstable_cache } from "next/cache";
 import { notFound } from "next/navigation";
+import { cache } from "react";
 
 import { withoutStaging } from "@fern-docs/utils";
 
@@ -60,11 +61,11 @@ const uncachedGetDocsUrlMetadata = async (
   }
 };
 
-export const getDocsUrlMetadata = (domain: string) => {
+export const getDocsUrlMetadata = cache((domain: string) => {
   const get = unstable_cache(
     () => uncachedGetDocsUrlMetadata(domain),
     [domain, cacheSeed()],
     { tags: [domain, "getDocsUrlMetadata"] }
   );
   return get();
-};
+});

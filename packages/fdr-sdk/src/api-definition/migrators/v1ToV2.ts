@@ -761,9 +761,9 @@ export class ApiDefinitionV1ToLatest {
     const jsLang = flags.useJavaScriptAsTypeScript
       ? SupportedLanguage.Javascript
       : SupportedLanguage.Typescript;
-    const jsLangName = flags.useJavaScriptAsTypeScript
-      ? "JavaScript"
-      : "TypeScript";
+    // const jsLangName = flags.useJavaScriptAsTypeScript
+    //   ? "JavaScript"
+    //   : "TypeScript";
     if (
       !flags.alwaysEnableJavaScriptFetch &&
       !userProvidedLanguages.has(jsLang) &&

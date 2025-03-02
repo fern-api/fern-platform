@@ -16,6 +16,7 @@ import {
 import {
   ApiDefinitionV1ToLatest,
   PruningNodeType,
+  backfillSnippets,
   prune,
 } from "@fern-api/fdr-sdk/api-definition";
 import { ApiDefinitionId, PageId, Slug } from "@fern-api/fdr-sdk/navigation";
@@ -185,20 +186,28 @@ const getFiles = async (domain: string): Promise<Record<string, FileData>> => {
   });
 };
 
+const getApi = async (domain: string, id: string) => {
+  const response = await loadWithUrl(domain);
+  const latest = response.definition.apisV2[ApiDefinitionId(id)];
+  if (latest != null) {
+    return latest;
+  }
+  const v1 = response.definition.apis[ApiDefinitionId(id)];
+  if (v1 == null) {
+    notFound();
+  }
+  const flags = await cachedGetEdgeFlags(domain);
+  return ApiDefinitionV1ToLatest.from(v1, flags).migrate();
+};
+
 const createGetApiCached = (domain: string) =>
   unstable_cache(
     async (id: string): Promise<ApiDefinition.ApiDefinition> => {
-      const response = await loadWithUrl(domain);
-      const latest = response.definition.apisV2[ApiDefinitionId(id)];
-      if (latest != null) {
-        return latest;
-      }
-      const v1 = response.definition.apis[ApiDefinitionId(id)];
-      if (v1 == null) {
-        notFound();
-      }
-      const flags = await cachedGetEdgeFlags(domain);
-      return ApiDefinitionV1ToLatest.from(v1, flags).migrate();
+      const [api, flags] = await Promise.all([
+        getApi(domain, id),
+        cachedGetEdgeFlags(domain),
+      ]);
+      return backfillSnippets(api, flags);
     },
     [domain, cacheSeed()],
     { tags: [domain, "api"] }
@@ -210,8 +219,11 @@ const createGetPrunedApiCached = (domain: string) =>
       id: string,
       ...nodes: PruningNodeType[]
     ): Promise<ApiDefinition.ApiDefinition> => {
-      const api = await createGetApiCached(domain)(id);
-      return prune(api, ...nodes);
+      const [flags, api] = await Promise.all([
+        cachedGetEdgeFlags(domain),
+        getApi(domain, id),
+      ]);
+      return backfillSnippets(prune(api, ...nodes), flags);
     },
     [domain, cacheSeed()],
     { tags: [domain, "api"] }
@@ -275,15 +287,6 @@ const getEndpointByLocator = async (
 
 const unsafe_getFullRoot = async (domain: string) => {
   const response = await loadWithUrl(domain);
-  // let v1 = response.definition.config.root;
-
-  // if (!v1 && response.definition.config.navigation) {
-  //   v1 = FernNavigation.utils.toRootNode(response);
-  // }
-
-  // if (!v1) {
-  //   notFound();
-  // }
 
   let root: FernNavigation.RootNode | undefined;
 
@@ -321,9 +324,7 @@ const unsafe_getRootCached = async (domain: string) => {
   return await unstable_cache(
     unsafe_getFullRoot,
     ["unsafe_getRoot", cacheSeed()],
-    {
-      tags: [domain, "unsafe_getRoot"],
-    }
+    { tags: [domain, "unsafe_getRoot"] }
   )(domain);
 };
 

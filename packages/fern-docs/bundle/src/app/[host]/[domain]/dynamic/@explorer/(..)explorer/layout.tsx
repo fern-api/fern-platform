@@ -52,6 +52,7 @@ export default async function ExplorerLayout({
           apiGroups={apiGroups}
           className="h-full"
           shallow
+          replace
         />
         {children}
       </HorizontalSplitPane>

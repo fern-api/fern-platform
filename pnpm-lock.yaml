@@ -533,6 +533,9 @@ importers:
       form-data:
         specifier: 4.0.0
         version: 4.0.0
+      httpsnippet-lite:
+        specifier: ^3.0.5
+        version: 3.0.5
       js-base64:
         specifier: 3.7.7
         version: 3.7.7
@@ -9760,6 +9763,10 @@ packages:
     resolution: {integrity: sha512-wzsgA6WOq+09wrU1tsJ09udeR/YZRaeArL9e1wPbFg3GG2yDnC2ldKpxs4xunpFF9DgqCqOIra3bc1HWrJ37Ww==}
     engines: {node: '>=0.4.x'}
 
+  formdata-node@4.4.1:
+    resolution: {integrity: sha512-0iirZp3uVDjVGt9p49aTaqjk84TrglENEDuqfdlZQ1roC9CWlPk6Avf8EEnZNcAqPonwkG35x4n3ww/1THYAeQ==}
+    engines: {node: '>= 12.20'}
+
   formdata-node@6.0.3:
     resolution: {integrity: sha512-8e1++BCiTzUno9v5IZ2J6bv4RU+3UKDmqWUQD0MIMVCd9AdhWkO1gw57oo1mNEX1dMq2EGI+FbWz4B92pscSQg==}
     engines: {node: '>= 18'}
@@ -10311,6 +10318,10 @@ packages:
   https-proxy-agent@7.0.5:
     resolution: {integrity: sha512-1e4Wqeblerz+tMKPIq2EMGiiWW1dIjZOksyHWSUm1rmuvw/how9hBHZ38lAGj5ID4Ik6EdkOw7NmWPy6LAwalw==}
     engines: {node: '>= 14'}
+
+  httpsnippet-lite@3.0.5:
+    resolution: {integrity: sha512-So4qTXY5iFj5XtFDwyz2PicUu+8NWrI8e8h+ZeZoVtMNcFQp4FFIntBHUE+JPUG6QQU8o1VHCy+X4ETRDwt9CA==}
+    engines: {node: '>=14.13'}
 
   httpsnippet@3.0.1:
     resolution: {integrity: sha512-RJbzVu9Gq97Ti76MPKAb9AknKbRluRbzOqswM2qgEW48QUShVEIuJjl43dZG5q0Upj2SZlKqzR6B6ah1q5znfg==}
@@ -12041,6 +12052,10 @@ packages:
   node-cron@3.0.3:
     resolution: {integrity: sha512-dOal67//nohNgYWb+nWmg5dkFdIwDm8EpeGYMekPMrngV3637lqnX0lbUcCtgibHTz6SEz7DAIjKvKDFYCnO1A==}
     engines: {node: '>=6.0.0'}
+
+  node-domexception@1.0.0:
+    resolution: {integrity: sha512-/jKZoMpw0F8GRwl4/eLROPA3cfcXtLApP0QzLmUT/HuPCZWyB7IY9ZrMeKw2O/nFIqPQB3PVM9aYm0F312AXDQ==}
+    engines: {node: '>=10.5.0'}
 
   node-emoji@2.1.3:
     resolution: {integrity: sha512-E2WEOVsgs7O16zsURJ/eH8BqhF029wGpEOnv7Urwdo2wmQanOACwJQh0devF9D9RhoZru0+9JXIS0dBXIAz+lA==}
@@ -15184,6 +15199,10 @@ packages:
 
   web-namespaces@2.0.1:
     resolution: {integrity: sha512-bKr1DkiNa2krS7qxNtdrtHAmzuYGFQLiQ13TsorsdT6ULTkPLKuu5+GsFpDlg6JFjUTwX2DyhMPG2be8uPrqsQ==}
+
+  web-streams-polyfill@4.0.0-beta.3:
+    resolution: {integrity: sha512-QW95TCTaHmsYfHDybGMwO5IJIM93I/6vTRk+daHTWFPhwh+C8Cg7j7XyKrwrj8Ib6vYXe0ocYNrmzY4xAAN6ug==}
+    engines: {node: '>= 14'}
 
   web-vitals@4.2.3:
     resolution: {integrity: sha512-/CFAm1mNxSmOj6i0Co+iGFJ58OS4NRGVP+AWS/l509uIK5a1bSoIVaHz/ZumpHTfHSZBpgrJ+wjfpAOrTHok5Q==}
@@ -21396,14 +21415,6 @@ snapshots:
     optionalDependencies:
       vite: 5.4.14(@types/node@22.13.5)(less@4.2.0)(lightningcss@1.29.1)(sass@1.77.0)(stylus@0.62.0)(terser@5.39.0)
 
-  '@vitest/mocker@3.0.5(vite@6.1.0(@types/node@18.19.33)(jiti@2.4.2)(less@4.2.0)(lightningcss@1.29.1)(sass@1.77.0)(stylus@0.62.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0))':
-    dependencies:
-      '@vitest/spy': 3.0.5
-      estree-walker: 3.0.3
-      magic-string: 0.30.17
-    optionalDependencies:
-      vite: 6.1.0(@types/node@18.19.33)(jiti@2.4.2)(less@4.2.0)(lightningcss@1.29.1)(sass@1.77.0)(stylus@0.62.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0)
-
   '@vitest/mocker@3.0.5(vite@6.1.0(@types/node@18.19.76)(jiti@2.4.2)(less@4.2.0)(lightningcss@1.29.1)(sass@1.77.0)(stylus@0.62.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0))':
     dependencies:
       '@vitest/spy': 3.0.5
@@ -21411,6 +21422,14 @@ snapshots:
       magic-string: 0.30.17
     optionalDependencies:
       vite: 6.1.0(@types/node@18.19.76)(jiti@2.4.2)(less@4.2.0)(lightningcss@1.29.1)(sass@1.77.0)(stylus@0.62.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0)
+
+  '@vitest/mocker@3.0.5(vite@6.1.0(@types/node@22.13.5)(jiti@2.4.2)(less@4.2.0)(lightningcss@1.29.1)(sass@1.77.0)(stylus@0.62.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0))':
+    dependencies:
+      '@vitest/spy': 3.0.5
+      estree-walker: 3.0.3
+      magic-string: 0.30.17
+    optionalDependencies:
+      vite: 6.1.0(@types/node@22.13.5)(jiti@2.4.2)(less@4.2.0)(lightningcss@1.29.1)(sass@1.77.0)(stylus@0.62.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0)
 
   '@vitest/mocker@3.0.7(vite@6.1.0(@types/node@18.19.76)(jiti@2.4.2)(less@4.2.0)(lightningcss@1.29.1)(sass@1.77.0)(stylus@0.62.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0))':
     dependencies:
@@ -24929,6 +24948,11 @@ snapshots:
 
   format@0.2.2: {}
 
+  formdata-node@4.4.1:
+    dependencies:
+      node-domexception: 1.0.0
+      web-streams-polyfill: 4.0.0-beta.3
+
   formdata-node@6.0.3: {}
 
   forwarded@0.2.0: {}
@@ -25683,6 +25707,12 @@ snapshots:
       debug: 4.4.0
     transitivePeerDependencies:
       - supports-color
+
+  httpsnippet-lite@3.0.5:
+    dependencies:
+      '@types/har-format': 1.2.15
+      formdata-node: 4.4.1
+      stringify-object: 3.3.0
 
   httpsnippet@3.0.1:
     dependencies:
@@ -27929,6 +27959,8 @@ snapshots:
   node-cron@3.0.3:
     dependencies:
       uuid: 8.3.2
+
+  node-domexception@1.0.0: {}
 
   node-emoji@2.1.3:
     dependencies:
@@ -31478,7 +31510,7 @@ snapshots:
   vitest@3.0.5(@edge-runtime/vm@5.0.0)(@types/debug@4.1.12)(@types/node@18.19.33)(jiti@2.4.2)(jsdom@24.0.0)(less@4.2.0)(lightningcss@1.29.1)(sass@1.77.0)(stylus@0.62.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0):
     dependencies:
       '@vitest/expect': 3.0.5
-      '@vitest/mocker': 3.0.5(vite@6.1.0(@types/node@18.19.33)(jiti@2.4.2)(less@4.2.0)(lightningcss@1.29.1)(sass@1.77.0)(stylus@0.62.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0))
+      '@vitest/mocker': 3.0.5(vite@6.1.0(@types/node@18.19.76)(jiti@2.4.2)(less@4.2.0)(lightningcss@1.29.1)(sass@1.77.0)(stylus@0.62.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0))
       '@vitest/pretty-format': 3.0.5
       '@vitest/runner': 3.0.5
       '@vitest/snapshot': 3.0.5
@@ -31519,7 +31551,7 @@ snapshots:
   vitest@3.0.5(@edge-runtime/vm@5.0.0)(@types/debug@4.1.12)(@types/node@22.13.5)(jiti@2.4.2)(jsdom@24.0.0)(less@4.2.0)(lightningcss@1.29.1)(sass@1.77.0)(stylus@0.62.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0):
     dependencies:
       '@vitest/expect': 3.0.5
-      '@vitest/mocker': 3.0.5(vite@6.1.0(@types/node@18.19.76)(jiti@2.4.2)(less@4.2.0)(lightningcss@1.29.1)(sass@1.77.0)(stylus@0.62.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0))
+      '@vitest/mocker': 3.0.5(vite@6.1.0(@types/node@22.13.5)(jiti@2.4.2)(less@4.2.0)(lightningcss@1.29.1)(sass@1.77.0)(stylus@0.62.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0))
       '@vitest/pretty-format': 3.0.5
       '@vitest/runner': 3.0.5
       '@vitest/snapshot': 3.0.5
@@ -31686,6 +31718,8 @@ snapshots:
       defaults: 1.0.4
 
   web-namespaces@2.0.1: {}
+
+  web-streams-polyfill@4.0.0-beta.3: {}
 
   web-vitals@4.2.3: {}
 
