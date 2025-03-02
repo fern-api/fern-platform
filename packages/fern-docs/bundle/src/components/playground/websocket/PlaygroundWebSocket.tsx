@@ -1,13 +1,6 @@
 "use client";
 
-import {
-  FC,
-  ReactElement,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { FC, useCallback, useEffect, useRef, useState } from "react";
 
 import { Wifi, WifiOff } from "lucide-react";
 import urlJoin from "url-join";
@@ -38,11 +31,13 @@ const WEBSOCKET_PROXY_URI = "wss://proxy.ferndocs.com/";
 
 interface PlaygroundWebSocketProps {
   context: WebSocketContext;
+  authForm: React.ReactNode;
 }
 
 export const PlaygroundWebSocket: FC<PlaygroundWebSocketProps> = ({
   context,
-}): ReactElement<any> => {
+  authForm,
+}) => {
   const [formState, setFormState] = usePlaygroundWebsocketFormState(context);
   const websocketMessageLimit = usePlaygroundSettings(context.node.id)?.[
     "limit-websocket-messages-per-connection"
@@ -256,6 +251,7 @@ export const PlaygroundWebSocket: FC<PlaygroundWebSocketProps> = ({
             clearMessages={clearMessages}
             connected={connectedState === "opened"}
             error={error}
+            authForm={authForm}
           />
         </div>
       </div>

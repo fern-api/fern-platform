@@ -1,3 +1,5 @@
+"use client";
+
 import { ReactElement, useState } from "react";
 
 import { useAtom } from "jotai";
@@ -5,7 +7,6 @@ import { HelpCircle, Key, User } from "lucide-react";
 
 import { EndpointContext } from "@fern-api/fdr-sdk/api-definition";
 import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
-import { visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
 import {
   FernButton,
   FernDropdown,
@@ -22,15 +23,13 @@ import {
 
 import { PasswordInputGroup } from "../PasswordInputGroup";
 import { PlaygroundEndpointForm } from "../endpoint";
-import { useOAuthEndpointContext } from "../hooks/useOAuthEndpointContext";
 import { oAuthClientCredentialReferencedEndpointLoginFlow } from "../utils/oauth";
 import { usePlaygroundBaseUrl } from "../utils/select-environment";
-import { PlaygroundBearerAuthForm } from "./PlaygroundBearerAuthForm";
+import { useClosePlaygroundAuthorizationFormCard } from "./PlaygroundAuthorizationFormCardRoot";
 
-function FoundOAuthReferencedEndpointForm({
+export function FoundOAuthReferencedEndpointForm({
   context,
   referencedEndpoint,
-  closeContainer,
   disabled,
 }: {
   /**
@@ -38,9 +37,9 @@ function FoundOAuthReferencedEndpointForm({
    */
   context: EndpointContext;
   referencedEndpoint: APIV1Read.OAuthClientCredentials.ReferencedEndpoint;
-  closeContainer: () => void;
   disabled?: boolean;
 }): ReactElement<any> {
+  const closeContainer = useClosePlaygroundAuthorizationFormCard();
   const [value, setValue] = useAtom(PLAYGROUND_AUTH_STATE_OAUTH_ATOM);
   const [formState, setFormState] = usePlaygroundEndpointFormState(context);
   const [baseUrl] = usePlaygroundBaseUrl(context.endpoint);
@@ -181,68 +180,4 @@ function FoundOAuthReferencedEndpointForm({
       </li>
     </>
   );
-}
-
-function OAuthReferencedEndpointForm({
-  referencedEndpoint,
-  closeContainer,
-  disabled,
-}: {
-  referencedEndpoint: APIV1Read.OAuthClientCredentials.ReferencedEndpoint;
-  closeContainer: () => void;
-  disabled?: boolean;
-}) {
-  const { context, isLoading } = useOAuthEndpointContext(referencedEndpoint);
-
-  if (context == null) {
-    if (!isLoading) {
-      console.error(
-        "Could not find OAuth endpoint for referenced endpoint",
-        referencedEndpoint
-      );
-    }
-    return (
-      <PlaygroundBearerAuthForm
-        bearerAuth={{ tokenName: "token" }}
-        disabled={disabled}
-      />
-    );
-  }
-
-  return (
-    <FoundOAuthReferencedEndpointForm
-      context={context}
-      referencedEndpoint={referencedEndpoint}
-      closeContainer={closeContainer}
-      disabled={disabled}
-    />
-  );
-}
-
-export function PlaygroundOAuthForm({
-  oAuth,
-  closeContainer,
-  disabled,
-}: {
-  oAuth: APIV1Read.ApiAuth.OAuth;
-  closeContainer: () => void;
-  disabled?: boolean;
-}): ReactElement<any> | false {
-  return visitDiscriminatedUnion(oAuth.value, "type")._visit({
-    clientCredentials: (clientCredentials) => {
-      return visitDiscriminatedUnion(clientCredentials.value, "type")._visit<
-        ReactElement<any> | false
-      >({
-        referencedEndpoint: (referencedEndpoint) => (
-          <OAuthReferencedEndpointForm
-            referencedEndpoint={referencedEndpoint}
-            closeContainer={closeContainer}
-            disabled={disabled}
-          />
-        ),
-        _other: () => false,
-      });
-    },
-    _other: () => false,
-  });
 }

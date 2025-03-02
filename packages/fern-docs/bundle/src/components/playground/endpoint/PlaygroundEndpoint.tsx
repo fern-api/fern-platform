@@ -1,6 +1,6 @@
 "use client";
 
-import { ReactElement, useCallback, useState } from "react";
+import { useCallback, useState } from "react";
 
 import { mapValues } from "es-toolkit/object";
 import { useAtomValue, useSetAtom } from "jotai";
@@ -48,9 +48,11 @@ import { PlaygroundEndpointPath } from "./PlaygroundEndpointPath";
 
 export const PlaygroundEndpoint = ({
   context,
+  authForm,
 }: {
   context: EndpointContext;
-}): ReactElement<any> => {
+  authForm: React.ReactNode;
+}) => {
   const user = useAtomValue(fernUserAtom);
   const { node, endpoint, auth } = context;
 
@@ -236,6 +238,7 @@ export const PlaygroundEndpoint = ({
         </div>
         <div className="flex min-h-0 flex-1 shrink">
           <PlaygroundEndpointContent
+            authForm={authForm}
             context={context}
             formState={formState}
             setFormState={setFormState}

@@ -26,6 +26,7 @@ interface PlaygroundWebSocketSessionFormProps {
   startSession: () => void;
   connected: boolean;
   error: string | null;
+  authForm: React.ReactNode;
 }
 
 export const PlaygroundWebSocketSessionForm: FC<
@@ -39,6 +40,7 @@ export const PlaygroundWebSocketSessionForm: FC<
   clearMessages,
   connected,
   error,
+  authForm,
 }) => {
   const { messages } = useWebsocketMessages(context.node.id);
 
@@ -72,6 +74,7 @@ export const PlaygroundWebSocketSessionForm: FC<
             setFormState={setFormState}
             error={error}
             disabled={connected}
+            authForm={authForm}
           />
 
           {context.channel.messages

@@ -15,13 +15,22 @@ import {
 } from "@fern-api/fdr-sdk";
 import {
   ApiDefinitionV1ToLatest,
+  AuthScheme,
+  ObjectProperty,
   PruningNodeType,
+  TypeDefinition,
   backfillSnippets,
   prune,
 } from "@fern-api/fdr-sdk/api-definition";
-import { ApiDefinitionId, PageId, Slug } from "@fern-api/fdr-sdk/navigation";
+import {
+  ApiDefinitionId,
+  EndpointId,
+  PageId,
+  Slug,
+  TypeId,
+} from "@fern-api/fdr-sdk/navigation";
 import { CONTINUE, SKIP } from "@fern-api/fdr-sdk/traversers";
-import { isPlainObject } from "@fern-api/ui-core-utils";
+import { isNonNullish, isPlainObject } from "@fern-api/ui-core-utils";
 import { AuthEdgeConfig } from "@fern-docs/auth";
 import { HttpMethod } from "@fern-docs/components";
 import { getAuthEdgeConfig, getEdgeFlags } from "@fern-docs/edge-config";
@@ -91,7 +100,21 @@ export interface DocsLoader {
   ) => Promise<ApiDefinition.ApiDefinition>;
 
   /**
-   * @returns endpoint definition for the given endpoint locator
+   * @returns the endpoint definition for the given api definition id and endpoint id
+   */
+  getEndpointById: (
+    apiDefinitionId: string,
+    endpointId: EndpointId
+  ) => Promise<{
+    endpoint: ApiDefinition.EndpointDefinition;
+    nodes: FernNavigation.EndpointNode[];
+    globalHeaders: ObjectProperty[];
+    authSchemes: AuthScheme[];
+    types: Record<TypeId, TypeDefinition>;
+  }>;
+
+  /**
+   * @returns the endpoint definition for the given endpoint locator
    */
   getEndpointByLocator: (
     method: HttpMethod,
@@ -243,6 +266,44 @@ const getAllApisForDomain = async (
   return Object.values(response.definition.apis).map((v1) =>
     ApiDefinitionV1ToLatest.from(v1, flags).migrate()
   );
+};
+
+const getEndpointById = async (
+  domain: string,
+  apiDefinitionId: string,
+  endpointId: EndpointId
+): Promise<{
+  endpoint: ApiDefinition.EndpointDefinition;
+  nodes: FernNavigation.EndpointNode[];
+  globalHeaders: ObjectProperty[];
+  authSchemes: AuthScheme[];
+  types: Record<TypeId, TypeDefinition>;
+}> => {
+  const api = await createGetPrunedApiCached(domain)(apiDefinitionId, {
+    type: "endpoint",
+    endpointId,
+  });
+  const endpoint = api.endpoints[endpointId];
+  if (endpoint == null) {
+    notFound();
+  }
+  const root = await unsafe_getFullRoot(domain);
+  return {
+    endpoint,
+    nodes: FernNavigation.NodeCollector.collect(root)
+      .getNodesInOrder()
+      .filter(FernNavigation.hasMetadata)
+      .filter(
+        (node): node is FernNavigation.EndpointNode =>
+          node.type === "endpoint" &&
+          node.apiDefinitionId === api.id &&
+          node.endpointId === endpoint.id
+      ),
+    globalHeaders: api.globalHeaders ?? [],
+    authSchemes:
+      endpoint.auth?.map((id) => api.auths[id]).filter(isNonNullish) ?? [],
+    types: api.types,
+  };
 };
 
 const getEndpointByLocator = async (
@@ -546,6 +607,14 @@ export const createCachedDocsLoader = async (
     ),
     getApi: cache(createGetApiCached(domain)),
     getPrunedApi: cache(createGetPrunedApiCached(domain)),
+    getEndpointById: cache(
+      unstable_cache(
+        (apiDefinitionId: string, endpointId: EndpointId) =>
+          getEndpointById(domain, apiDefinitionId, endpointId),
+        [domain, cacheSeed()],
+        { tags: [domain, "endpointById"] }
+      )
+    ),
     getEndpointByLocator: cache(
       unstable_cache(
         (method: HttpMethod, path: string, example?: string) =>

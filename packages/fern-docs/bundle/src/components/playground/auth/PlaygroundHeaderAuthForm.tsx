@@ -1,3 +1,5 @@
+"use client";
+
 import type { ReactElement, SetStateAction } from "react";
 
 import { atom } from "jotai";

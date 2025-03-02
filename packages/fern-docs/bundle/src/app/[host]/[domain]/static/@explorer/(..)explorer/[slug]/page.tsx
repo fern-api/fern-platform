@@ -14,6 +14,7 @@ import {
 import { NavigationNodePage } from "@fern-api/fdr-sdk/navigation";
 import { conformTrailingSlash } from "@fern-docs/utils";
 
+import { PlaygroundAuthorizationFormCard } from "@/components/playground/auth/PlaygroundAuthorizationFormCard";
 import { PlaygroundEndpoint } from "@/components/playground/endpoint/PlaygroundEndpoint";
 import { conformExplorerRoute } from "@/components/playground/utils/explorer-route";
 import { PlaygroundWebSocket } from "@/components/playground/websocket/PlaygroundWebSocket";
@@ -67,11 +68,25 @@ async function ExplorerContent({
   if (node.type === "endpoint") {
     const context = createEndpointContext(node, api);
     if (!context) return null;
-    return <PlaygroundEndpoint context={context} />;
+    const authForm = context.auth != null && (
+      <PlaygroundAuthorizationFormCard
+        loader={loader}
+        apiDefinitionId={node.apiDefinitionId}
+        auth={context.auth}
+      />
+    );
+    return <PlaygroundEndpoint context={context} authForm={authForm} />;
   } else if (node.type === "webSocket") {
     const context = createWebSocketContext(node, api);
     if (!context) return null;
-    return <PlaygroundWebSocket context={context} />;
+    const authForm = context.auth != null && (
+      <PlaygroundAuthorizationFormCard
+        loader={loader}
+        apiDefinitionId={node.apiDefinitionId}
+        auth={context.auth}
+      />
+    );
+    return <PlaygroundWebSocket context={context} authForm={authForm} />;
   }
   return <NoEndpointSelected />;
 }

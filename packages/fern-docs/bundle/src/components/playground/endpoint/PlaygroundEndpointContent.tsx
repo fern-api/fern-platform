@@ -8,10 +8,8 @@ import {
 import type { EndpointContext } from "@fern-api/fdr-sdk/api-definition";
 import { Loadable } from "@fern-ui/loadable";
 
-import { PlaygroundAuthorizationFormCard } from "../auth";
 import { PlaygroundEndpointRequestFormState } from "../types";
 import { PlaygroundResponse } from "../types/playgroundResponse";
-import { shouldRenderAuth } from "../utils/should-render-auth";
 import { PlaygroundEndpointContentLayout } from "./PlaygroundEndpointContentLayout";
 import { PlaygroundEndpointForm } from "./PlaygroundEndpointForm";
 import { PlaygroundEndpointFormButtons } from "./PlaygroundEndpointFormButtons";
@@ -26,6 +24,7 @@ interface PlaygroundEndpointContentProps {
   resetWithoutExample: () => void;
   response: Loadable<PlaygroundResponse>;
   sendRequest: () => void;
+  authForm?: React.ReactNode;
 }
 
 export function PlaygroundEndpointContent({
@@ -36,18 +35,13 @@ export function PlaygroundEndpointContent({
   resetWithoutExample,
   response,
   sendRequest,
+  authForm,
 }: PlaygroundEndpointContentProps): ReactElement<any> {
   const deferredFormState = useDeferredValue(formState);
 
   const form = (
     <div className="mx-auto w-full max-w-5xl space-y-6 pt-6 max-sm:pt-0 sm:pb-20">
-      {context.auth != null &&
-        shouldRenderAuth(context.endpoint, context.auth) && (
-          <PlaygroundAuthorizationFormCard
-            auth={context.auth}
-            disabled={false}
-          />
-        )}
+      {authForm}
 
       <div className="col-span-2 space-y-8">
         <PlaygroundEndpointForm

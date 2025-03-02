@@ -12,6 +12,7 @@ import {
 import { COOKIE_FERN_TOKEN, conformTrailingSlash } from "@fern-docs/utils";
 
 import { getFernToken } from "@/app/fern-token";
+import { PlaygroundAuthorizationFormCard } from "@/components/playground/auth/PlaygroundAuthorizationFormCard";
 import { PlaygroundEndpoint } from "@/components/playground/endpoint/PlaygroundEndpoint";
 import { conformExplorerRoute } from "@/components/playground/utils/explorer-route";
 import { PlaygroundWebSocket } from "@/components/playground/websocket/PlaygroundWebSocket";
@@ -61,7 +62,14 @@ export default async function Page(props: {
       );
       notFound();
     }
-    return <PlaygroundEndpoint context={context} />;
+    const authForm = context.auth != null && (
+      <PlaygroundAuthorizationFormCard
+        loader={loader}
+        apiDefinitionId={node.apiDefinitionId}
+        auth={context.auth}
+      />
+    );
+    return <PlaygroundEndpoint context={context} authForm={authForm} />;
   } else if (node.type === "webSocket") {
     const context = createWebSocketContext(node, api);
     if (context == null) {
@@ -70,7 +78,14 @@ export default async function Page(props: {
       );
       notFound();
     }
-    return <PlaygroundWebSocket context={context} />;
+    const authForm = context.auth != null && (
+      <PlaygroundAuthorizationFormCard
+        loader={loader}
+        apiDefinitionId={node.apiDefinitionId}
+        auth={context.auth}
+      />
+    );
+    return <PlaygroundWebSocket context={context} authForm={authForm} />;
   }
   console.error(
     `[${loader.domain}] Found non-visitable node for slug: ${slug}`,
