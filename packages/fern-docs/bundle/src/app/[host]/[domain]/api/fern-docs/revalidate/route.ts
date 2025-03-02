@@ -23,6 +23,8 @@ export async function GET(
   req: NextRequest,
   props: { params: Promise<{ host: string; domain: string }> }
 ): Promise<NextResponse> {
+  const start = performance.now();
+
   const { host, domain } = await props.params;
 
   const stream = new ReadableStream({
@@ -87,6 +89,10 @@ export async function GET(
       }
       // finish reindexing before returning
       await reindexPromise;
+
+      const end = performance.now();
+      console.log(`Reindex took ${end - start}ms`);
+      controller.enqueue(`revalidate-finished:${end - start}ms\n`);
 
       controller.close();
     },
