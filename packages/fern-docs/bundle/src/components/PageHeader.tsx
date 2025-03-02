@@ -31,8 +31,12 @@ export function PageHeader({
 }) {
   return (
     <header className="my-8 space-y-2">
-      {tags && <div className="float-right">{tags}</div>}
-      {breadcrumb.length > 0 && <FernBreadcrumbs breadcrumb={breadcrumb} />}
+      {(breadcrumb.length > 0 || tags) && (
+        <div className="flex justify-between">
+          <FernBreadcrumbs breadcrumb={breadcrumb} />
+          {tags}
+        </div>
+      )}
 
       <WithAction action={action}>
         {titleHref == null ? (
