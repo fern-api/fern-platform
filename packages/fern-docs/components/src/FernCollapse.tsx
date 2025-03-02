@@ -2,6 +2,9 @@ import { FC, PropsWithChildren, ReactNode } from "react";
 import React from "react";
 
 import * as Collapsible from "@radix-ui/react-collapsible";
+import { noop } from "es-toolkit/function";
+
+import { isomorphicRequestAnimationFrame } from "@fern-ui/react-commons";
 
 interface FernCollapseProps extends Collapsible.CollapsibleProps {
   open?: boolean;
@@ -36,24 +39,20 @@ export const FernCollapse: FC<PropsWithChildren<FernCollapseProps>> = ({
 
 export function useFernCollapseOverflow() {
   const ref = React.useRef<HTMLDivElement>(null);
-  const animationFrameRef = React.useRef<number | null>(null);
+  const animationFrameRef = React.useRef<() => void>(noop);
   return {
     ref,
     onAnimationStart: () => {
-      if (animationFrameRef.current != null) {
-        cancelAnimationFrame(animationFrameRef.current);
-      }
-      animationFrameRef.current = requestAnimationFrame(() => {
+      animationFrameRef.current();
+      animationFrameRef.current = isomorphicRequestAnimationFrame(() => {
         if (ref.current != null) {
           ref.current.style.overflow = "hidden";
         }
       });
     },
     onAnimationEnd: () => {
-      if (animationFrameRef.current != null) {
-        cancelAnimationFrame(animationFrameRef.current);
-      }
-      animationFrameRef.current = requestAnimationFrame(() => {
+      animationFrameRef.current();
+      animationFrameRef.current = isomorphicRequestAnimationFrame(() => {
         if (ref.current != null) {
           ref.current.style.overflow = "visible";
         }

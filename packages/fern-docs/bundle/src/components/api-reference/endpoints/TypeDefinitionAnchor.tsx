@@ -3,9 +3,9 @@
 import React from "react";
 
 import { cn } from "@fern-docs/components";
+import { isomorphicRequestIdleCallback } from "@fern-ui/react-commons";
 
 import { FernAnchor } from "@/components/FernAnchor";
-import { isomorphicRequestIdleCallback } from "@/components/util/isomorphicRequestIdleCallback";
 
 import {
   useHref,

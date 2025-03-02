@@ -238,27 +238,9 @@ export function RootNodeProvider({
   );
   return (
     <RootNodeStoreContext.Provider value={store.current}>
-      <PathnameDispatcher />
       {children}
     </RootNodeStoreContext.Provider>
   );
-}
-
-export function PathnameDispatcher() {
-  const currentNodeId = useCurrentNodeId();
-  const currentSidebarRootNodeId = useCurrentSidebarRootNodeId();
-  const useStore = React.useContext(RootNodeStoreContext);
-  const dispatch = useStore((s) => s.dispatch);
-  useIsomorphicLayoutEffect(() => {
-    if (currentNodeId == null || currentSidebarRootNodeId == null) {
-      return;
-    }
-    dispatch(
-      { type: "expand", nodeId: currentNodeId },
-      currentSidebarRootNodeId
-    );
-  }, [currentNodeId, currentSidebarRootNodeId]);
-  return null;
 }
 
 const EMPTY_EXPANDED_NODES_STATE: ExpandedNodesState = {

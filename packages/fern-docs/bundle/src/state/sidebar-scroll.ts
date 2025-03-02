@@ -2,9 +2,11 @@
 
 import React from "react";
 
-import { useIsomorphicLayoutEffect } from "@fern-ui/react-commons";
+import {
+  isomorphicRequestAnimationFrame,
+  useIsomorphicLayoutEffect,
+} from "@fern-ui/react-commons";
 
-import { isomorphicRequestIdleCallback } from "@/components/util/isomorphicRequestIdleCallback";
 import { scrollToCenter } from "@/components/util/scrollToCenter";
 
 import { useIsSelectedSidebarNode } from "./navigation";
@@ -66,7 +68,7 @@ export function useScrollSidebarNodeIntoView(
     };
 
     if (shouldScrollIntoView) {
-      return isomorphicRequestIdleCallback(() => {
+      return isomorphicRequestAnimationFrame(() => {
         scrollTo();
       });
     }

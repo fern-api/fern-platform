@@ -1,5 +1,6 @@
 import React from "react";
 
+import { isomorphicRequestAnimationFrame } from "./request-callback";
 import { useIsomorphicLayoutEffect } from "./useIsomorphicLayoutEffect";
 
 const MOBILE_BREAKPOINT = 768;
@@ -12,7 +13,7 @@ export function useMinWidth(breakpoint: number): boolean {
     );
 
   useIsomorphicLayoutEffect(() => {
-    requestAnimationFrame(() => {
+    isomorphicRequestAnimationFrame(() => {
       window.innerWidth >= breakpoint;
     });
 

@@ -2,7 +2,10 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 
+import { noop } from "es-toolkit/function";
 import fixWebmDuration from "webm-duration-fix";
+
+import { isomorphicRequestAnimationFrame } from "@fern-ui/react-commons";
 
 interface AudioRecorderState {
   isRecording: boolean;
@@ -27,7 +30,7 @@ export function useAudioRecorder(
     null
   );
   const analyserRef = useRef<AnalyserNode | null>(null);
-  const animationFrameRef = useRef<number>(undefined);
+  const animationFrameRef = useRef<() => void>(noop);
   const chunksRef = useRef<Blob[]>([]);
   const [audioUrl, setAudioUrl] = useState<string | null>(null);
   const mimeType = "audio/webm;codecs=opus";
@@ -60,7 +63,8 @@ export function useAudioRecorder(
           dataArray.reduce((acc, val) => acc + val, 0) / dataArray.length;
         const normalizedVolume = Math.min(average / 20, 1);
         setVolume(normalizedVolume);
-        animationFrameRef.current = requestAnimationFrame(updateVolume);
+        animationFrameRef.current =
+          isomorphicRequestAnimationFrame(updateVolume);
       };
       updateVolume();
 
@@ -107,9 +111,7 @@ export function useAudioRecorder(
       mediaRecorder.stream.getTracks().forEach((track) => track.stop());
       setMediaRecorder(null);
       setIsRecording(false);
-      if (animationFrameRef.current) {
-        cancelAnimationFrame(animationFrameRef.current);
-      }
+      animationFrameRef.current();
       analyserRef.current = null;
       setVolume(0.2);
       chunksRef.current = [];

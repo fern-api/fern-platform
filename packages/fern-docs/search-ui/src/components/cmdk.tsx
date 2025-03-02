@@ -27,7 +27,10 @@ import { useIsomorphicLayoutEffect } from "swr/_internal";
 import { noop } from "ts-essentials";
 import { z } from "zod";
 
-import { useDebouncedCallback } from "@fern-ui/react-commons";
+import {
+  isomorphicRequestAnimationFrame,
+  useDebouncedCallback,
+} from "@fern-ui/react-commons";
 
 import { commandScore } from "./command-score";
 
@@ -1062,9 +1065,9 @@ const List = forwardRef<HTMLDivElement, ListProps>((props, forwardedRef) => {
     if (height.current && ref.current) {
       const el = height.current;
       const wrapper = ref.current;
-      let animationFrame: number;
+      let animationFrame: () => void;
       const observer = new ResizeObserver(() => {
-        animationFrame = requestAnimationFrame(() => {
+        animationFrame = isomorphicRequestAnimationFrame(() => {
           const height = el.offsetHeight;
           wrapper.style.setProperty(
             "--cmdk-list-height",
@@ -1074,7 +1077,7 @@ const List = forwardRef<HTMLDivElement, ListProps>((props, forwardedRef) => {
       });
       observer.observe(el);
       return () => {
-        cancelAnimationFrame(animationFrame);
+        animationFrame();
         observer.unobserve(el);
       };
     }
