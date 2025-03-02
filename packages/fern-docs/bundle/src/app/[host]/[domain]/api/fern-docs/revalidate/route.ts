@@ -40,6 +40,8 @@ export async function GET(
       const root = await docs.unsafe_getFullRoot();
       const collector = FernNavigation.NodeCollector.collect(root);
 
+      controller.enqueue(`revalidate-queued:${collector.slugs.length}\n`);
+
       const promises = collector.slugs.map(async (slug) => {
         const url = withDefaultProtocol(
           `${domain}${conformTrailingSlash(addLeadingSlash(slug))}`
