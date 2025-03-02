@@ -48,6 +48,11 @@ const AnnouncementInternal = React.forwardRef<
         className="bg-(color:--accent) text-(color:--accent-contrast) flex min-h-8 items-center px-4 md:px-6 lg:px-8"
         exit={{ y: "-100%" }}
       >
+        <style jsx global>{`
+          :root {
+            --bprogress-color: var(--accent-contrast);
+          }
+        `}</style>
         <div className="max-w-page-width mx-auto flex-1 text-center">
           {children}
         </div>

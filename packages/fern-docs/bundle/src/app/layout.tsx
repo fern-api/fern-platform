@@ -2,6 +2,7 @@ import { Metadata, Viewport } from "next/types";
 import { experimental_taintUniqueValue } from "react";
 
 import { ConsoleMessage } from "@/components/console-message";
+import { ScrollToTop } from "@/components/layouts/ScrollToTop";
 
 import "./globals.css";
 import { Providers } from "./providers";
@@ -56,7 +57,7 @@ export default function DashboardLayout({
       </head>
       <body className="antialiased">
         <ConsoleMessage />
-        {/* <ScrollToTop /> */}
+        <ScrollToTop />
         <Providers>{children}</Providers>
       </body>
     </html>
