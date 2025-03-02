@@ -42,13 +42,10 @@ const getSignedUrl = async ({
 
 // this function cannot be cached because the response can be > 2MB
 export const loadDocsDefinitionFromS3 = cache(
-  async ({
-    domain,
-    docsBucketName,
-  }: {
-    domain: string;
-    docsBucketName: string;
-  }): Promise<FdrAPI.docs.v2.read.LoadDocsForUrlResponse | undefined> => {
+  async (
+    domain: string,
+    docsBucketName: string
+  ): Promise<FdrAPI.docs.v2.read.LoadDocsForUrlResponse | undefined> => {
     try {
       const cleanDomain = domain.replace(/^https?:\/\//, "");
       const s3Key = getS3KeyForV1DocsDefinition(cleanDomain);
@@ -59,16 +56,9 @@ export const loadDocsDefinitionFromS3 = cache(
         expiresIn: 60 * 60, // 1 hour
       });
 
-      const fetchSignedUrl = () =>
-        fetch(signedUrl, {
-          next: { tags: [domain, "loadDocsDefinitionFromS3"] },
-        });
-
-      const response = await retryablePromiseWithBackoff(
-        fetchSignedUrl,
-        3,
-        1_000
-      );
+      const response = await fetch(signedUrl, {
+        next: { tags: [domain, "loadDocsDefinitionFromS3"] },
+      });
 
       if (response.ok) {
         console.debug(
@@ -87,27 +77,3 @@ export const loadDocsDefinitionFromS3 = cache(
     }
   }
 );
-
-async function retryablePromiseWithBackoff<T>(
-  fn: () => Promise<T>,
-  maxAttempts: number,
-  backoffFactor: number
-): Promise<T> {
-  let attempts = 0;
-  while (attempts < maxAttempts) {
-    try {
-      return await fn();
-    } catch (error) {
-      console.error(error);
-      attempts++;
-      const backoffTime = backoffFactor * attempts;
-      console.warn(
-        `Retry attempt ${attempts} failed. Retrying in ${backoffTime}ms...`
-      );
-      await new Promise((resolve) => setTimeout(resolve, backoffTime));
-    }
-  }
-  throw new Error(
-    `Failed to execute retryable function after ${maxAttempts} attempts`
-  );
-}
