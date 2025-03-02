@@ -63,14 +63,17 @@ export function useScrollSidebarNodeIntoView(
       const isBelow = elementBounds.bottom > containerBounds.bottom;
 
       if (isAbove || isBelow) {
-        scrollToCenter(container, element);
+        scrollToCenter(container, element, isBelow);
       }
     };
 
     if (shouldScrollIntoView) {
-      return isomorphicRequestIdleCallback(() => {
+      window.__FERN_CANCEL_SCROLL_SIDEBAR_NODE_INTO_VIEW?.();
+      const cancel = isomorphicRequestIdleCallback(() => {
         scrollTo();
       });
+      window.__FERN_CANCEL_SCROLL_SIDEBAR_NODE_INTO_VIEW = cancel;
+      return cancel;
     }
 
     return;
