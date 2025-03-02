@@ -75,8 +75,7 @@ export function VerticalSplitPane({
       </div>
       <div
         className="shink-0 group relative flex h-3 flex-none cursor-row-resize touch-none items-center px-3 opacity-0 transition-opacity after:absolute after:inset-x-0 after:-top-1 after:h-6 after:content-[''] hover:opacity-100 hover:delay-300"
-        onMouseDown={resizeY.onMouseDown}
-        onTouchStart={resizeY.onTouchStart}
+        onPointerDown={resizeY.onPointerDown}
       >
         <div className="bg-(color:--accent-a5) group-active:bg-(color:--accent) relative z-10 mx-auto h-0.5 w-full rounded-full group-active:transition-[background]" />
       </div>
@@ -159,8 +158,7 @@ export function HorizontalSplitPane({
             "-mx-1.5": rizeBarHeight == null,
           }
         )}
-        onMouseDown={resizeX.onMouseDown}
-        onTouchStart={resizeX.onTouchStart}
+        onPointerDown={resizeX.onPointerDown}
         style={{ height: rizeBarHeight ?? "100%" }}
       >
         <div className="bg-(color:--accent-a5) group-active:bg-(color:--accent) relative z-10 h-full w-0.5 rounded-full group-active:transition-[background]" />

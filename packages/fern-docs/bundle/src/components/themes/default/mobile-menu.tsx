@@ -99,6 +99,16 @@ export function MobileMenu({ children }: { children: React.ReactNode }) {
     let maybeIsDragging = false;
 
     const handlePointerDown = (event: PointerEvent) => {
+      // Don't trigger if the event is inside a Radix popover/dropdown
+      if (event.target instanceof Element) {
+        const isInsidePopoverOrDialog = event.target.closest(
+          '[data-radix-popper-content-wrapper], [role="dialog"]'
+        );
+        if (isInsidePopoverOrDialog) {
+          return;
+        }
+      }
+
       if (event.buttons === 1) {
         maybeIsDragging = true;
       }
