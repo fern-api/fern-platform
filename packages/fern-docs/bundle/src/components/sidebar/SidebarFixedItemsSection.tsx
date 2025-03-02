@@ -9,7 +9,6 @@ export function SidebarFixedItemsSection({
   logo,
   versionSelect,
   className,
-  showBorder,
   showSearchBar,
   showHeaderInSidebar,
 }: {
@@ -28,14 +27,7 @@ export function SidebarFixedItemsSection({
     return null;
   }
   return (
-    <div
-      className={cn(
-        "flex flex-col px-4 lg:pl-5",
-        !showSearchBar && "border-b",
-        showBorder ? "border-border-default" : "border-transparent",
-        className
-      )}
-    >
+    <div className={cn("flex flex-col px-4 lg:pl-5", className)}>
       {showHeaderInSidebar && (
         <div className="fern-sidebar-header">
           <div className="relative flex h-full min-w-fit flex-1 shrink-0 items-center gap-2 py-1">
@@ -47,9 +39,10 @@ export function SidebarFixedItemsSection({
         </div>
       )}
 
-      {showSearchBar && (
-        <SearchV2Trigger aria-label="Search" className="mt-3 w-full lg:mt-2" />
-      )}
+      <SearchV2Trigger
+        aria-label="Search"
+        className={cn("w-full", !showHeaderInSidebar && "mt-3 lg:mt-2")}
+      />
     </div>
   );
 }

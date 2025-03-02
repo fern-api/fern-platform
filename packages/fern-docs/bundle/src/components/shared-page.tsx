@@ -168,8 +168,9 @@ export default async function SharedPage({
         nodeId={found.node.id}
         sidebarRootNodeId={found.sidebar?.id}
         tabId={found.currentTab?.id}
-        versionId={found.currentVersion?.id}
+        versionId={found.currentVersion?.versionId}
         versionSlug={found.currentVersion?.slug}
+        versionIsDefault={found.isCurrentVersionDefault}
       />
       <DocsMainContent
         loader={loader}

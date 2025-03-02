@@ -6,7 +6,6 @@ import { FernScrollArea, cn } from "@fern-docs/components";
 
 import { useDismountMeasureSidebarScrollPosition } from "@/state/sidebar-scroll";
 
-import { useIsScrolled } from "../hooks/useIsScrolled";
 import { MobileSidebarHeaderLinks } from "./MobileSidebarHeaderLinks";
 import { SidebarFixedItemsSection } from "./SidebarFixedItemsSection";
 import { ThemeSwitch } from "./theme-switch";
@@ -29,7 +28,6 @@ export const SidebarContainer = React.memo(function SidebarContainer({
   children: React.ReactNode;
 }) {
   const ref = React.useRef<HTMLDivElement>(null);
-  const isScrolled = useIsScrolled(ref);
   useDismountMeasureSidebarScrollPosition(ref);
 
   return (
@@ -37,7 +35,6 @@ export const SidebarContainer = React.memo(function SidebarContainer({
       <SidebarFixedItemsSection
         logo={logo}
         versionSelect={versionSelect}
-        showBorder={isScrolled}
         showSearchBar={showSearchBar}
         showHeaderInSidebar={showHeaderInSidebar}
       />

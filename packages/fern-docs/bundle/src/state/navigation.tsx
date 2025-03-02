@@ -78,8 +78,13 @@ const currentSidebarRootNodeIdAtom = atom<FernNavigation.NodeId | undefined>(
 );
 const currentNodeIdAtom = atom<FernNavigation.NodeId | undefined>(undefined);
 const currentTabIdAtom = atom<FernNavigation.NodeId | undefined>(undefined);
-const currentVersionIdAtom = atom<FernNavigation.NodeId | undefined>(undefined);
+const currentVersionIdAtom = atom<FernNavigation.VersionId | undefined>(
+  undefined
+);
 const currentVersionSlugAtom = atom<FernNavigation.Slug | undefined>(undefined);
+
+// if true, the current version is the default version
+const currentVersionIsDefaultAtom = atom<boolean>(false);
 
 export function useCurrentSidebarRootNodeId() {
   return useAtomValue(currentSidebarRootNodeIdAtom);
@@ -101,18 +106,24 @@ export function useCurrentVersionSlug() {
   return useAtomValue(currentVersionSlugAtom);
 }
 
+export function useCurrentVersionIsDefault() {
+  return useAtomValue(currentVersionIsDefaultAtom);
+}
+
 export function SetCurrentNavigationNode({
   sidebarRootNodeId,
   nodeId,
   tabId,
   versionId,
   versionSlug,
+  versionIsDefault,
 }: {
   sidebarRootNodeId?: FernNavigation.NodeId;
   nodeId?: FernNavigation.NodeId;
   tabId?: FernNavigation.NodeId;
-  versionId?: FernNavigation.NodeId;
+  versionId?: FernNavigation.VersionId;
   versionSlug?: FernNavigation.Slug;
+  versionIsDefault?: boolean;
 }) {
   const useStore = React.useContext(RootNodeStoreContext);
   const dispatch = useStore((s) => s.dispatch);
@@ -121,14 +132,22 @@ export function SetCurrentNavigationNode({
   const setCurrentTabId = useSetAtom(currentTabIdAtom);
   const setCurrentVersionId = useSetAtom(currentVersionIdAtom);
   const setCurrentVersionSlug = useSetAtom(currentVersionSlugAtom);
-
+  const setCurrentVersionIsDefault = useSetAtom(currentVersionIsDefaultAtom);
   useIsomorphicLayoutEffect(() => {
     setCurrentSidebarRootNodeId(sidebarRootNodeId);
     setCurrentNodeId(nodeId);
     setCurrentTabId(tabId);
     setCurrentVersionId(versionId);
     setCurrentVersionSlug(versionSlug);
-  }, [nodeId, tabId, sidebarRootNodeId, versionId, versionSlug]);
+    setCurrentVersionIsDefault(versionIsDefault ?? false);
+  }, [
+    nodeId,
+    tabId,
+    sidebarRootNodeId,
+    versionId,
+    versionSlug,
+    versionIsDefault,
+  ]);
 
   useIsomorphicLayoutEffect(() => {
     if (nodeId && sidebarRootNodeId) {

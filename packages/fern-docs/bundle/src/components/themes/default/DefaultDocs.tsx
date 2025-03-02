@@ -21,6 +21,7 @@ export default function DefaultDocs({
   tabs,
   isSidebarFixed = false,
   isHeaderDisabled = false,
+  showSearchBarInTabs = false,
 }: {
   header: React.ReactNode;
   sidebar: React.ReactNode;
@@ -29,6 +30,7 @@ export default function DefaultDocs({
   tabs?: React.ReactNode;
   isSidebarFixed?: boolean;
   isHeaderDisabled?: boolean;
+  showSearchBarInTabs?: boolean;
 }) {
   const mainRef = React.useRef<HTMLDivElement>(null);
   return (
@@ -47,7 +49,9 @@ export default function DefaultDocs({
         <div className="h-(--mobile-header-height-real) md:h-(--header-height-real) px-page-padding flex items-center">
           {header}
         </div>
-        <HeaderTabsRoot>{tabs}</HeaderTabsRoot>
+        <HeaderTabsRoot showSearchBar={showSearchBarInTabs}>
+          {tabs}
+        </HeaderTabsRoot>
       </FernHeader>
 
       <MainCtx.Provider value={mainRef}>

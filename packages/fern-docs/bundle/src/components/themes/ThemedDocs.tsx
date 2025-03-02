@@ -16,6 +16,7 @@ export function ThemedDocs({
   tabs,
   isSidebarFixed = false,
   isHeaderDisabled = false,
+  showSearchBarInTabs = false,
 }: {
   theme?: FernTheme;
   announcement?: React.ReactNode;
@@ -25,6 +26,7 @@ export function ThemedDocs({
   tabs?: React.ReactNode;
   isSidebarFixed?: boolean;
   isHeaderDisabled?: boolean;
+  showSearchBarInTabs?: boolean;
 }) {
   const Docs = THEMES[theme];
   return (
@@ -35,6 +37,7 @@ export function ThemedDocs({
       tabs={tabs}
       isSidebarFixed={isSidebarFixed}
       isHeaderDisabled={isHeaderDisabled}
+      showSearchBarInTabs={showSearchBarInTabs}
     >
       {children}
     </Docs>

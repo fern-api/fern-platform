@@ -20,6 +20,10 @@ export declare namespace Node {
     root: FernNavigation.RootNode;
     versions: readonly FernNavigation.VersionNode[];
     currentVersion: FernNavigation.VersionNode | undefined;
+    /**
+     * This is true if the current version is the default version node (without the version slug prefix)
+     */
+    isCurrentVersionDefault: boolean;
     currentTab:
       | FernNavigation.TabNode
       | FernNavigation.ChangelogNode
@@ -135,6 +139,9 @@ export function findNode(
       versions, // this is used to render the version switcher
       tabs: tabbedNode?.children ?? [],
       currentVersion,
+      isCurrentVersionDefault: currentVersion?.default
+        ? currentVersion === collector.defaultVersionNode
+        : false,
       currentTab,
       sidebar,
       apiReference,
