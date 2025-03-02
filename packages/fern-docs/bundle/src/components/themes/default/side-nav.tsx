@@ -32,9 +32,11 @@ export function SideNav({
             "top-(--header-height) hidden"
           )}
         >
-          <div className="clipped-background opacity-70">
-            <BgImageGradient />
-          </div>
+          {fixed && (
+            <div className="clipped-background opacity-70">
+              <BgImageGradient className="translate-y-[calc(var(--header-height)*-1)]" />
+            </div>
+          )}
           {children}
         </aside>
       )}
