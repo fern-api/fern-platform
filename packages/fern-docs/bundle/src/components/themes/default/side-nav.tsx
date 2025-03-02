@@ -3,6 +3,8 @@
 import { cn } from "@fern-docs/components";
 import { useIsDesktop } from "@fern-ui/react-commons";
 
+import { BgImageGradient } from "@/components/BgImageGradient";
+
 import { MobileMenu } from "./mobile-menu";
 
 export function SideNav({
@@ -25,11 +27,14 @@ export function SideNav({
             !fixed &&
               "sticky h-fit max-h-[calc(100dvh-var(--header-height))] border-r-0",
             fixed &&
-              "border-border-concealed bg-background/70 fixed bottom-0 left-0 border-r backdrop-blur-xl",
+              "border-border-concealed fixed bottom-0 left-0 border-r backdrop-blur-xl",
             "w-(--spacing-sidebar-width)",
             "top-(--header-height) hidden"
           )}
         >
+          <div className="clipped-background opacity-70">
+            <BgImageGradient />
+          </div>
           {children}
         </aside>
       )}

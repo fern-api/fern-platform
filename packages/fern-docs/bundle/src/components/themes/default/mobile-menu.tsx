@@ -17,6 +17,7 @@ import {
 
 import { useIsomorphicLayoutEffect } from "@fern-ui/react-commons";
 
+import { BgImageGradient } from "@/components/BgImageGradient";
 import { useIsDismissableSidebarOpen } from "@/state/mobile";
 
 export const MainCtx = React.createContext<
@@ -192,7 +193,7 @@ export function MobileMenu({ children }: { children: React.ReactNode }) {
             <motion.div
               layoutRoot
               id="fern-sidebar"
-              className="sm:w-sidebar-width bg-background/70 border-border-concealed pointer-events-auto fixed inset-y-0 right-0 top-[calc(var(--header-height)+1px)] z-40 flex w-full max-w-[calc(100dvw-3rem)] flex-col border-l backdrop-blur-xl"
+              className="sm:w-sidebar-width border-border-concealed pointer-events-auto fixed inset-y-0 right-0 top-[calc(var(--header-height)+1px)] z-40 flex w-full max-w-[calc(100dvw-3rem)] flex-col border-l backdrop-blur-xl"
               key="sidebar"
               onPointerDown={(event) => dragControls.start(event)}
               onDragStart={() => {
@@ -223,6 +224,9 @@ export function MobileMenu({ children }: { children: React.ReactNode }) {
               exit={{ x: "100%" }}
               transition={transition}
             >
+              <div className="clipped-background opacity-70">
+                <BgImageGradient />
+              </div>
               {children}
             </motion.div>
           )}
