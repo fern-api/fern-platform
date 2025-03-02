@@ -224,7 +224,7 @@ export function MobileMenu({ children }: { children: React.ReactNode }) {
               exit={{ x: "100%" }}
               transition={transition}
             >
-              <div className="clipped-background opacity-70">
+              <div className="clipped-background">
                 <BgImageGradient className="translate-y-[calc(var(--header-height)*-1)]" />
               </div>
               {children}
