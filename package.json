@@ -46,6 +46,7 @@
     "eslint-config-next": "15.1.2",
     "instantsearch.js": "4.75.4",
     "jsonpath-plus": "10.2.0",
+    "katex": "0.16.21",
     "markdown-to-jsx": "7.4.0",
     "micromatch": "4.0.8",
     "postcss": "8.4.31",
