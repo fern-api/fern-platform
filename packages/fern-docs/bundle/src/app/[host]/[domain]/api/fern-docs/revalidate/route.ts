@@ -123,7 +123,22 @@ export async function GET(
 
           keys[`${domain}:mdx-bundler-files`] = docs.definition.jsFiles ?? {};
 
-          await kv.mset(keys);
+          const promises = [];
+
+          for (const [key, value] of Object.entries(keys)) {
+            promises.push(kv.set(key, value));
+          }
+
+          const results = await Promise.allSettled(promises);
+
+          results.forEach((result, index) => {
+            if (result.status === "rejected") {
+              console.error(
+                `Failed to set kv key ${Object.keys(keys)[index]}: ${result.reason}`
+              );
+            }
+          });
+
           controller.enqueue(
             `revalidate-kv-keys-set:${Object.keys(keys).length}\n`
           );
