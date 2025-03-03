@@ -1,8 +1,8 @@
 {
   "id": "test-uuid-replacement",
   "endpoints": {
-    "endpoint_.getExample": {
-      "id": "endpoint_.getExample",
+    "endpoint_.defaultAndValidationRules": {
+      "id": "endpoint_.defaultAndValidationRules",
       "displayName": "Default and validation rules",
       "method": "GET",
       "path": [
@@ -80,12 +80,18 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "integer",
-                  "minimum": 10,
-                  "maximum": 100,
-                  "default": 50
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "integer",
+                      "minimum": 10,
+                      "maximum": 100,
+                      "default": 50
+                    }
+                  }
                 }
               }
             },
@@ -96,12 +102,18 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "integer",
-                  "minimum": -2147483649,
-                  "maximum": 2147483648,
-                  "default": 50
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "integer",
+                      "minimum": -2147483649,
+                      "maximum": 2147483648,
+                      "default": 50
+                    }
+                  }
                 }
               }
             },
@@ -112,13 +124,19 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "regex": "^[a-zA-Z0-9]*$",
-                  "minLength": 3,
-                  "maxLength": 10,
-                  "default": "type"
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "regex": "^[a-zA-Z0-9]*$",
+                      "minLength": 3,
+                      "maxLength": 10,
+                      "default": "type"
+                    }
+                  }
                 }
               }
             },
@@ -129,12 +147,18 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "double",
-                  "minimum": 1.1,
-                  "maximum": 2.2,
-                  "default": 1.1
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "double",
+                      "minimum": 1.1,
+                      "maximum": 2.2,
+                      "default": 1.1
+                    }
+                  }
                 }
               }
             },
@@ -159,6 +183,7 @@
             }
           },
           {
+            "displayName": "Response Body 2",
             "shape": {
               "type": "object",
               "extends": [],
@@ -168,9 +193,15 @@
                   "valueShape": {
                     "type": "alias",
                     "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string"
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        }
                       }
                     }
                   }

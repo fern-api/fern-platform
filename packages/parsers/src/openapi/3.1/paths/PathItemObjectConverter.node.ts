@@ -11,6 +11,14 @@ import { XFernBasePathConverterNode } from "../extensions/XFernBasePathConverter
 import { OperationObjectConverterNode } from "./OperationObjectConverter.node";
 import { ServerObjectConverterNode } from "./ServerObjectConverter.node";
 
+type ConstructorArgs =
+  BaseOpenApiV3_1ConverterNodeConstructorArgs<OpenAPIV3_1.PathItemObject> & {
+    servers: ServerObjectConverterNode[] | undefined;
+    globalAuth: SecurityRequirementObjectConverterNode | undefined;
+    basePath: XFernBasePathConverterNode | undefined;
+    isWebhook: boolean | undefined;
+  };
+
 export class PathItemObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
   OpenAPIV3_1.PathItemObject,
   (
@@ -26,21 +34,15 @@ export class PathItemObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
   delete: OperationObjectConverterNode | undefined;
   path: string | undefined;
 
-  constructor(
-    args: BaseOpenApiV3_1ConverterNodeConstructorArgs<OpenAPIV3_1.PathItemObject>,
-    protected servers: ServerObjectConverterNode[] | undefined,
-    protected globalAuth: SecurityRequirementObjectConverterNode | undefined,
-    protected basePath: XFernBasePathConverterNode | undefined,
-    protected isWebhook: boolean | undefined
-  ) {
+  constructor(args: ConstructorArgs) {
     super(args);
-    this.safeParse();
+    this.safeParse(args);
   }
 
-  parse(): void {
+  parse({ servers, globalAuth, basePath, isWebhook }: ConstructorArgs): void {
     this.description = this.input.description;
-    this.servers = coalesceServers(
-      this.servers,
+    const coalescedServers = coalesceServers(
+      servers,
       this.input.servers,
       this.context,
       this.accessPath
@@ -50,81 +52,74 @@ export class PathItemObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
       : this.pathId;
 
     if (this.input.get != null) {
-      this.get = new OperationObjectConverterNode(
-        {
-          input: this.input.get,
-          context: this.context,
-          accessPath: this.accessPath,
-          pathId: "get",
-        },
-        this.servers,
-        this.globalAuth,
+      this.get = new OperationObjectConverterNode({
+        input: this.input.get,
+        context: this.context,
+        accessPath: this.accessPath,
+        pathId: "get",
+        servers: coalescedServers,
+        globalAuth,
         path,
-        "GET",
-        this.basePath,
-        this.isWebhook
-      );
+        method: "GET",
+        basePath,
+        isWebhook,
+      });
     }
     if (this.input.post != null) {
-      this.post = new OperationObjectConverterNode(
-        {
-          input: this.input.post,
-          context: this.context,
-          accessPath: this.accessPath,
-          pathId: "post",
-        },
-        this.servers,
-        this.globalAuth,
+      this.post = new OperationObjectConverterNode({
+        input: this.input.post,
+        context: this.context,
+        accessPath: this.accessPath,
+        pathId: "post",
+        servers: coalescedServers,
+        globalAuth,
         path,
-        "POST",
-        this.basePath,
-        this.isWebhook
-      );
+        method: "POST",
+        basePath,
+        isWebhook,
+      });
     }
     if (this.input.put != null) {
-      this.put = new OperationObjectConverterNode(
-        {
-          input: this.input.put,
-          context: this.context,
-          accessPath: this.accessPath,
-          pathId: "put",
-        },
-        this.servers,
-        this.globalAuth,
+      this.put = new OperationObjectConverterNode({
+        input: this.input.put,
+        context: this.context,
+        accessPath: this.accessPath,
+        pathId: "put",
+        servers: coalescedServers,
+        globalAuth,
         path,
-        "PUT",
-        this.basePath
-      );
+        method: "PUT",
+        basePath,
+        isWebhook: false,
+      });
     }
     if (this.input.patch != null) {
-      this.patch = new OperationObjectConverterNode(
-        {
-          input: this.input.patch,
-          context: this.context,
-          accessPath: this.accessPath,
-          pathId: "patch",
-        },
-        this.servers,
-        this.globalAuth,
+      this.patch = new OperationObjectConverterNode({
+        input: this.input.patch,
+        context: this.context,
+        accessPath: this.accessPath,
+        pathId: "patch",
+        servers: coalescedServers,
+        globalAuth,
         path,
-        "PATCH",
-        this.basePath
-      );
+        method: "PATCH",
+        basePath,
+        isWebhook: false,
+      });
     }
     if (this.input.delete != null) {
-      this.delete = new OperationObjectConverterNode(
-        {
-          input: this.input.delete,
-          context: this.context,
-          accessPath: this.accessPath,
-          pathId: "delete",
-        },
-        this.servers,
-        this.globalAuth,
+      this.delete = new OperationObjectConverterNode({
+        input: this.input.delete,
+        context: this.context,
+        accessPath: this.accessPath,
+        pathId: "delete",
+        servers: coalescedServers,
+        globalAuth,
         path,
-        "DELETE",
-        this.basePath
-      );
+        method: "DELETE",
+        basePath,
+        isWebhook: false,
+      });
     }
   }
 
@@ -135,11 +130,11 @@ export class PathItemObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
       )[]
     | undefined {
     return [
-      this.get?.convert(),
-      this.post?.convert(),
-      this.put?.convert(),
-      this.patch?.convert(),
-      this.delete?.convert(),
+      ...(this.get?.convert() ?? []),
+      ...(this.post?.convert() ?? []),
+      ...(this.put?.convert() ?? []),
+      ...(this.patch?.convert() ?? []),
+      ...(this.delete?.convert() ?? []),
     ].filter(isNonNullish);
   }
 }

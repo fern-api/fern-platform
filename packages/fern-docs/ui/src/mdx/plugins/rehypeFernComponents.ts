@@ -35,6 +35,8 @@ export function rehypeFernComponents(): (tree: Hast.Root) => void {
         } else if (node.name === "table") {
           // DO NOT coerce <table> into <Table> (see: https://buildwithfern.slack.com/archives/C06QKJWD4VD/p1722602687550179)
           // node.name = "Table";
+        } else if (node.name === "a") {
+          node.name = "A";
         }
       }
     });
@@ -197,10 +199,8 @@ function transformAccordionGroup(
     .filter(isMdxJsxElementHast)
     .filter((child) => child.name === "Accordion");
 
-  items.forEach((tab, index) => {
-    const title = getTitle(tab) ?? `Untitled ${index + 1}`;
-    applyGeneratedId(tab, title);
-    visit(tab, visitor);
+  items.forEach((accordion, index) => {
+    transformAccordion(accordion, index, node, visitor);
   });
 
   const child = {
@@ -298,13 +298,59 @@ function transformAccordion(
   parent: Hast.Root | Hast.Element | Hast.MdxJsxElement,
   visitor: Visitor
 ): VisitorResult {
-  const title = getTitle(node) ?? "Untitled";
+  const title = getTitle(node) ?? `Untitled ${index + 1}`;
   applyGeneratedId(node, title);
+
+  const nestedHeaders: string[] = [];
+
+  if (node.children.length > 0) {
+    const collectHeaders = (items: (Hast.Element | Hast.MdxJsxElement)[]) => {
+      items.forEach((item) => {
+        if (item.type === "element") {
+          if (item.properties?.id) {
+            nestedHeaders.push(item.properties.id as string);
+          }
+
+          if (item.children) {
+            collectHeaders(
+              item.children.filter(
+                (child): child is Hast.Element | Hast.MdxJsxElement =>
+                  child.type === "element" || child.type === "mdxJsxFlowElement"
+              )
+            );
+          }
+        } else if (item.type === "mdxJsxFlowElement") {
+          const itemId = item.attributes
+            .filter(isMdxJsxAttribute)
+            .find((attr) => attr.name === "id");
+          if (itemId?.value && typeof itemId.value === "string") {
+            nestedHeaders.push(itemId.value);
+          }
+
+          if (item.children) {
+            collectHeaders(
+              item.children.filter(
+                (child): child is Hast.Element | Hast.MdxJsxElement =>
+                  child.type === "element" || child.type === "mdxJsxFlowElement"
+              )
+            );
+          }
+        }
+      });
+    };
+
+    collectHeaders(
+      node.children.filter(
+        (child): child is Hast.Element | Hast.MdxJsxElement =>
+          child.type === "element" || child.type === "mdxJsxFlowElement"
+      )
+    );
+  }
+
   visit(node, visitor);
 
   const { props } = hastMdxJsxElementHastToProps(node);
-
-  const items = [props];
+  const items = [{ ...props, nestedHeaders }];
 
   const child = {
     type: "mdxJsxFlowElement" as const,

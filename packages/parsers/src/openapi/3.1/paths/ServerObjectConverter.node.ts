@@ -21,7 +21,10 @@ export class ServerObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
   }
 
   parse(): void {
-    this.url = this.input.url;
+    this.url =
+      Object.entries(this.input.variables ?? {}).reduce((url, [key, value]) => {
+        return url.replace(`{${key}}`, value.default);
+      }, this.input.url) ?? this.input.url;
     this.serverName = new XFernServerNameConverterNode({
       input: this.input,
       context: this.context,
@@ -37,7 +40,6 @@ export class ServerObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
     }
 
     return {
-      // TODO: url validation here
       id: FernRegistry.EnvironmentId(serverName),
       baseUrl: this.url,
     };

@@ -61,15 +61,21 @@
           {
             "key": "status",
             "valueShape": {
-              "type": "enum",
-              "values": [
-                {
-                  "value": "success"
-                },
-                {
-                  "value": "failure"
+              "type": "alias",
+              "value": {
+                "type": "optional",
+                "shape": {
+                  "type": "enum",
+                  "values": [
+                    {
+                      "value": "success"
+                    },
+                    {
+                      "value": "failure"
+                    }
+                  ]
                 }
-              ]
+              }
             }
           },
           {
@@ -77,9 +83,15 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
                 }
               }
             }
@@ -89,22 +101,28 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "map",
-                "keyShape": {
+                "type": "optional",
+                "shape": {
                   "type": "alias",
                   "value": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string"
+                    "type": "map",
+                    "keyShape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "valueShape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string"
+                        }
+                      }
                     }
                   }
                 }

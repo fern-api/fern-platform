@@ -45,9 +45,15 @@
                 "valueShape": {
                   "type": "alias",
                   "value": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string"
+                    "type": "optional",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string"
+                        }
+                      }
                     }
                   }
                 }
@@ -57,9 +63,15 @@
                 "valueShape": {
                   "type": "alias",
                   "value": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string"
+                    "type": "optional",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string"
+                        }
+                      }
                     }
                   }
                 }
@@ -68,7 +80,19 @@
           }
         }
       ],
-      "examples": [],
+      "examples": [
+        {
+          "path": "/v1/users",
+          "responseStatusCode": 200,
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "public_property": "public_property",
+              "private_property": "private_property"
+            }
+          }
+        }
+      ],
       "protocol": {
         "type": "rest"
       }
@@ -88,9 +112,15 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "uuid"
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "uuid"
+                    }
+                  }
                 }
               }
             }

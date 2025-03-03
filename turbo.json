@@ -81,6 +81,7 @@
         "QSTASH_NEXT_SIGNING_KEY",
         "QSTASH_TOKEN",
         "QSTASH_URL",
+        "SLACK_TOKEN",
         "TRAILING_SLASH",
         "TURBOPUFFER_API_KEY",
         "VERCEL",

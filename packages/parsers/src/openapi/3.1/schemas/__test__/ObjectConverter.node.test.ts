@@ -20,6 +20,7 @@ describe("ObjectConverterNode", () => {
         accessPath: [],
         pathId: "test",
         seenSchemas: new Set(),
+        schemaName: undefined,
       });
       expect(node.extends).toEqual([]);
       expect(node.properties).toEqual({});
@@ -40,6 +41,7 @@ describe("ObjectConverterNode", () => {
         accessPath: [],
         pathId: "test",
         seenSchemas: new Set(),
+        schemaName: undefined,
       });
       expect(Object.keys(node.properties ?? {})).toEqual(["name", "age"]);
       expect(node.properties?.name).toBeInstanceOf(SchemaConverterNode);
@@ -61,12 +63,32 @@ describe("ObjectConverterNode", () => {
         accessPath: [],
         pathId: "test",
         seenSchemas: new Set(),
+        schemaName: undefined,
       });
       expect(node.extraProperties).toBeDefined();
-      const converted = node.convert()[0]?.extraProperties;
+      const maybeConverted = node.convert()[0];
+      const converted =
+        maybeConverted?.type === "object"
+          ? maybeConverted?.extraProperties
+          : undefined;
       expect(converted).toEqual({
-        type: "unknown",
-        displayName: "TestObject",
+        type: "map",
+        keyShape: {
+          type: "alias",
+          value: {
+            type: "primitive",
+            value: {
+              type: "string",
+            },
+          },
+        },
+        valueShape: {
+          type: "alias",
+          value: {
+            type: "unknown",
+            displayName: "TestObject",
+          },
+        },
       });
     });
 
@@ -81,6 +103,7 @@ describe("ObjectConverterNode", () => {
         accessPath: [],
         pathId: "test",
         seenSchemas: new Set(),
+        schemaName: undefined,
       });
       expect(node.extraProperties).toBeUndefined();
     });
@@ -96,6 +119,7 @@ describe("ObjectConverterNode", () => {
         accessPath: [],
         pathId: "test",
         seenSchemas: new Set(),
+        schemaName: undefined,
       });
       expect(node.extraProperties).toBeInstanceOf(SchemaConverterNode);
     });
@@ -115,6 +139,7 @@ describe("ObjectConverterNode", () => {
         accessPath: [],
         pathId: "test",
         seenSchemas: new Set(),
+        schemaName: undefined,
       });
       const converted = node.convert();
       expect(converted).toEqual([
@@ -146,6 +171,7 @@ describe("ObjectConverterNode", () => {
         accessPath: [],
         pathId: "test",
         seenSchemas: new Set(),
+        schemaName: undefined,
       });
       const converted = node.convert();
       expect(converted).toEqual([

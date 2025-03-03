@@ -29,6 +29,7 @@ import { ClientLibraries } from "./client-libraries";
 import { CodeBlock } from "./code/CodeBlock";
 import { CodeGroup } from "./code/CodeGroup";
 import { Column, ColumnGroup } from "./columns";
+import { Download } from "./download";
 import { Feature } from "./feature";
 import { Frame } from "./frame";
 import { A, HeadingRenderer, Image, Li, Ol, Strong, Ul } from "./html";
@@ -39,7 +40,11 @@ import { Json } from "./json";
 import { Mermaid } from "./mermaid";
 import { ParamField } from "./mintlify";
 import { ReferenceLayoutAside, ReferenceLayoutMain } from "./reference-layout";
-import { EndpointRequestSnippet, EndpointResponseSnippet } from "./snippets";
+import {
+  EndpointRequestSnippet,
+  EndpointResponseSnippet,
+  EndpointSchemaSnippet,
+} from "./snippets";
 import { Step, StepGroup } from "./steps";
 import { TabGroup } from "./tabs";
 import { Tooltip } from "./tooltip";
@@ -63,8 +68,10 @@ const FERN_COMPONENTS = {
   CodeGroup, // note: alias is handled in rehypeFernCode
   Column,
   ColumnGroup,
+  Download,
   EndpointRequestSnippet,
   EndpointResponseSnippet,
+  EndpointSchemaSnippet,
   Feature,
   Frame,
   Icon: RemoteFontAwesomeIcon,

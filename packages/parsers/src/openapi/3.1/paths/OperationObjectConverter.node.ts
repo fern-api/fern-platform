@@ -10,6 +10,7 @@ import { coalesceServers } from "../../utils/3.1/coalesceServers";
 import { resolveParameterReference } from "../../utils/3.1/resolveParameterReference";
 import { getEndpointId } from "../../utils/getEndpointId";
 import { getExampleName } from "../../utils/getExampleName";
+import { maybeSingleValueToArray } from "../../utils/maybeSingleValueToArray";
 import { mergeSnippets } from "../../utils/mergeSnippets";
 import { mergeXFernAndResponseExamples } from "../../utils/mergeXFernAndResponsesExamples";
 import { SecurityRequirementObjectConverterNode } from "../auth/SecurityRequirementObjectConverter.node";
@@ -20,6 +21,7 @@ import { XFernGroupNameConverterNode } from "../extensions/XFernGroupNameConvert
 import { XFernSdkMethodNameConverterNode } from "../extensions/XFernSdkMethodNameConverter.node";
 import { XFernWebhookConverterNode } from "../extensions/XFernWebhookConverter.node";
 import { RedocExampleConverterNode } from "../extensions/examples/RedocExampleConverter.node";
+import { X_FERN_GROUP_NAME } from "../extensions/fernExtension.consts";
 import { isReferenceObject } from "../guards/isReferenceObject";
 import { ExampleObjectConverterNode } from "./ExampleObjectConverter.node";
 import { ServerObjectConverterNode } from "./ServerObjectConverter.node";
@@ -28,14 +30,32 @@ import {
   convertOperationObjectProperties,
 } from "./parameters/ParameterBaseObjectConverter.node";
 import { RequestBodyObjectConverterNode } from "./request/RequestBodyObjectConverter.node";
+import { RequestMediaTypeObjectConverterNode } from "./request/RequestMediaTypeObjectConverter.node";
 import { ResponsesObjectConverterNode } from "./response/ResponsesObjectConverter.node";
+
+type ConstructorArgs =
+  BaseOpenApiV3_1ConverterNodeConstructorArgs<OpenAPIV3_1.OperationObject> & {
+    servers: ServerObjectConverterNode[] | undefined;
+    globalAuth: SecurityRequirementObjectConverterNode | undefined;
+    path: string;
+    method: HttpMethod;
+    basePath: XFernBasePathConverterNode | undefined;
+    isWebhook: boolean | undefined;
+  };
 
 export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
   OpenAPIV3_1.OperationObject,
-  | FernRegistry.api.latest.EndpointDefinition
-  | FernRegistry.api.latest.WebhookDefinition
+  | FernRegistry.api.latest.EndpointDefinition[]
+  | FernRegistry.api.latest.WebhookDefinition[]
 > {
-  endpointId: string | undefined;
+  servers: ServerObjectConverterNode[] | undefined;
+  globalAuth: SecurityRequirementObjectConverterNode | undefined;
+  path: string;
+  method: HttpMethod;
+  basePath: XFernBasePathConverterNode | undefined;
+  isWebhook: boolean | undefined;
+
+  endpointIds: string[] | undefined;
   description: string | undefined;
   displayName: string | undefined;
   operationId: string | undefined;
@@ -46,22 +66,54 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
   responses: ResponsesObjectConverterNode | undefined;
   availability: AvailabilityConverterNode | undefined;
   auth: SecurityRequirementObjectConverterNode | undefined;
-  namespace: XFernGroupNameConverterNode | undefined;
+  namespaces: XFernGroupNameConverterNode[] | undefined;
   xFernExamplesNode: XFernEndpointExampleConverterNode | undefined;
   redocExamplesNode: RedocExampleConverterNode | undefined;
   emptyResponseExamples: ExampleObjectConverterNode[] | undefined;
 
-  constructor(
-    args: BaseOpenApiV3_1ConverterNodeConstructorArgs<OpenAPIV3_1.OperationObject>,
-    protected servers: ServerObjectConverterNode[] | undefined,
-    protected globalAuth: SecurityRequirementObjectConverterNode | undefined,
-    protected path: string,
-    protected method: HttpMethod,
-    protected basePath: XFernBasePathConverterNode | undefined,
-    protected isWebhook?: boolean
-  ) {
+  constructor(args: ConstructorArgs) {
     super(args);
+    this.servers = args.servers;
+    this.globalAuth = args.globalAuth;
+    this.path = args.path;
+    this.method = args.method;
+    this.basePath = args.basePath;
+    this.isWebhook = args.isWebhook;
     this.safeParse();
+  }
+
+  pushEmptyResponseExample(
+    requestExample:
+      | OpenAPIV3_1.ReferenceObject
+      | OpenAPIV3_1.ExampleObject
+      | undefined,
+    requestBody: RequestMediaTypeObjectConverterNode | undefined,
+    requestExampleName: string | undefined
+  ) {
+    this.emptyResponseExamples ??= [];
+    this.emptyResponseExamples.push(
+      new ExampleObjectConverterNode(
+        {
+          input: {
+            requestExample: requestExample,
+            responseExample: undefined,
+          },
+          context: this.context,
+          accessPath: this.accessPath,
+          pathId: "examples",
+        },
+        this.path,
+        // Since there is no response, we can use any status code, so we use 200
+        200,
+        getExampleName(requestExampleName, undefined),
+        {
+          requestBody,
+          pathParameters: this.pathParameters,
+          queryParameters: this.queryParameters,
+          requestHeaders: this.requestHeaders,
+        }
+      )
+    );
   }
 
   parse(): void {
@@ -123,6 +175,7 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
               context: this.context,
               accessPath: this.accessPath,
               pathId: ["parameters", `${index}`],
+              parameterName: parameter.name,
             });
         }
         // this.pathParameters.push(parameter.name);
@@ -135,6 +188,7 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
               context: this.context,
               accessPath: this.accessPath,
               pathId: ["parameters", `${index}`],
+              parameterName: parameter.name,
             });
         }
       } else if (parameter.in === "header") {
@@ -146,6 +200,7 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
               context: this.context,
               accessPath: this.accessPath,
               pathId: ["parameters", `${index}`],
+              parameterName: parameter.name,
             });
         }
       }
@@ -169,16 +224,14 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
 
     this.requests =
       this.input.requestBody != null
-        ? new RequestBodyObjectConverterNode(
-            {
-              input: this.input.requestBody,
-              context: this.context,
-              accessPath: this.accessPath,
-              pathId: "requestBody",
-            },
-            this.method,
-            this.path
-          )
+        ? new RequestBodyObjectConverterNode({
+            input: this.input.requestBody,
+            context: this.context,
+            accessPath: this.accessPath,
+            pathId: "requestBody",
+            method: this.method,
+            path: this.path,
+          })
         : undefined;
 
     this.responses =
@@ -203,35 +256,38 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
 
     if (this.responses == null) {
       const requestBodiesByContent = this.requests?.requestBodiesByContentType;
-      if (requestBodiesByContent != null) {
+      if (
+        requestBodiesByContent == null ||
+        Object.keys(requestBodiesByContent).length === 0
+      ) {
+        // Push an example
+        this.pushEmptyResponseExample(undefined, undefined, undefined);
+      } else {
         Object.values(requestBodiesByContent).forEach((requestBody) => {
-          Object.entries(requestBody.examples ?? {}).forEach(
-            ([requestExampleName, requestExample]) => {
-              this.emptyResponseExamples ??= [];
-              this.emptyResponseExamples.push(
-                new ExampleObjectConverterNode(
-                  {
-                    input: {
-                      requestExample: requestExample,
-                      responseExample: undefined,
-                    },
-                    context: this.context,
-                    accessPath: this.accessPath,
-                    pathId: "examples",
-                  },
-                  this.path,
-                  0,
-                  getExampleName(requestExampleName, undefined),
-                  {
-                    requestBody: requestBody,
-                    pathParameters: this.pathParameters,
-                    queryParameters: this.queryParameters,
-                    requestHeaders: this.requestHeaders,
-                  }
-                )
+          if (Object.keys(requestBody.examples ?? {}).length === 0) {
+            const example = requestBody.schema?.example({
+              includeOptionals: false,
+              override: undefined,
+            });
+
+            if (example != null) {
+              this.pushEmptyResponseExample(
+                { value: example },
+                requestBody,
+                undefined
               );
             }
-          );
+          } else {
+            Object.entries(requestBody.examples ?? {}).forEach(
+              ([requestExampleName, requestExample]) => {
+                this.pushEmptyResponseExample(
+                  requestExample,
+                  requestBody,
+                  requestExampleName
+                );
+              }
+            );
+          }
         });
       }
     }
@@ -259,15 +315,30 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
       });
     }
 
-    this.namespace = new XFernGroupNameConverterNode({
-      input: this.input,
-      context: this.context,
-      accessPath: this.accessPath,
-      pathId: "x-fern-group-name",
-    });
+    this.namespaces = [
+      new XFernGroupNameConverterNode({
+        input: this.input,
+        context: this.context,
+        accessPath: this.accessPath,
+        pathId: "x-fern-group-name",
+      }),
+    ];
 
-    if (this.namespace?.groupName == null && this.input.tags != null) {
-      this.namespace.groupName = this.input.tags;
+    if (
+      this.namespaces?.every((namespace) => namespace.groupName == null) &&
+      this.input.tags != null
+    ) {
+      // TODO: review if tags multiplex endpoint definitions, or if there should
+      // be some cascading behavior
+      this.namespaces = this.input.tags.slice(0, 1).map((tag, index) => {
+        const newNamespaceNode = new XFernGroupNameConverterNode({
+          input: { [X_FERN_GROUP_NAME]: tag },
+          context: this.context,
+          accessPath: this.accessPath,
+          pathId: ["tags", `${index}`],
+        });
+        return newNamespaceNode;
+      });
     }
 
     const sdkMethodName = new XFernSdkMethodNameConverterNode({
@@ -277,13 +348,19 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
       pathId: "x-fern-sdk-method-name",
     });
 
-    this.endpointId = getEndpointId(
-      this.namespace?.groupName,
-      this.path,
-      this.method,
-      sdkMethodName.sdkMethodName,
-      this.input.operationId
-    );
+    this.endpointIds = this.namespaces
+      .map((namespace) =>
+        getEndpointId({
+          namespace: maybeSingleValueToArray(namespace?.groupName),
+          path: this.path,
+          method: this.method,
+          sdkMethodName: sdkMethodName.sdkMethodName,
+          operationId: this.input.operationId,
+          displayName: this.displayName,
+          isWebhook: this.isWebhook,
+        })
+      )
+      .filter(isNonNullish);
 
     // TODO: figure out how to merge user specified examples with success response
     this.xFernExamplesNode = new XFernEndpointExampleConverterNode(
@@ -350,14 +427,14 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
   }
 
   convert():
-    | FernRegistry.api.latest.EndpointDefinition
-    | FernRegistry.api.latest.WebhookDefinition
+    | FernRegistry.api.latest.EndpointDefinition[]
+    | FernRegistry.api.latest.WebhookDefinition[]
     | undefined {
     if (this.path == null) {
       return undefined;
     }
 
-    if (this.endpointId == null) {
+    if (this.endpointIds == null) {
       return undefined;
     }
 
@@ -387,25 +464,34 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
     });
 
     if (this.isWebhook) {
-      if (this.method !== "POST" && this.method !== "GET") {
-        return undefined;
-      }
-
-      return {
-        id: FernRegistry.WebhookId(this.endpointId),
-        description: this.description,
-        availability: this.availability?.convert(),
-        displayName: this.displayName,
-        operationId: this.operationId,
-        namespace: this.namespace?.convert(),
-        method: this.method,
-        path:
-          this.convertPathToPathParts()?.map((part) => part.value.toString()) ??
-          [],
-        headers: convertOperationObjectProperties(this.requestHeaders)?.flat(),
-        payloads: this.requests?.convertToWebhookPayload(),
-        examples: [this.requests?.webhookExample()].filter(isNonNullish),
-      };
+      return this.endpointIds
+        .map((endpointId, index) => {
+          if (this.method !== "POST" && this.method !== "GET") {
+            return undefined;
+          }
+          return {
+            id: FernRegistry.WebhookId(endpointId),
+            description: this.description,
+            availability: this.availability?.convert(),
+            displayName: this.displayName,
+            operationId: this.operationId,
+            namespace: this.namespaces?.[index]?.convert(),
+            method: this.method,
+            path:
+              this.convertPathToPathParts()?.map((part) =>
+                part.value.toString()
+              ) ?? [],
+            queryParameters: convertOperationObjectProperties(
+              this.queryParameters
+            )?.flat(),
+            headers: convertOperationObjectProperties(
+              this.requestHeaders
+            )?.flat(),
+            payloads: this.requests?.convertToWebhookPayload(),
+            examples: [this.requests?.webhookExample()].filter(isNonNullish),
+          };
+        })
+        .filter(isNonNullish);
     }
 
     const environments = this.servers
@@ -426,11 +512,13 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
       ?.flatMap((response) => response.headers)
       .filter(isNonNullish);
 
-    return {
-      id: FernRegistry.EndpointId(this.endpointId),
+    return this.endpointIds.map((endpointId, index) => ({
+      id: FernRegistry.EndpointId(endpointId),
       description: this.description,
       availability: this.availability?.convert(),
-      namespace: this.namespace?.convert(),
+      namespace: this.namespaces?.[index]
+        ?.convert()
+        ?.map((id) => FernRegistry.api.v1.SubpackageId(id)),
       displayName: this.displayName,
       operationId: this.operationId,
       method: this.method,
@@ -459,6 +547,6 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
       protocol: {
         type: "rest",
       },
-    };
+    }));
   }
 }

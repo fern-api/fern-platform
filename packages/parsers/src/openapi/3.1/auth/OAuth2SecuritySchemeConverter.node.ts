@@ -70,17 +70,22 @@ export class OAuth2SecuritySchemeConverterNode extends BaseOpenApiV3_1ConverterN
   convert(): FernRegistry.api.latest.AuthScheme | undefined {
     const accessTokenLocator = this.accessTokenLocatorNode?.convert();
     if (accessTokenLocator == null || this.authorizationUrl == null) {
-      return undefined;
+      return {
+        type: "bearerAuth",
+        tokenName: undefined,
+      };
     }
 
     // TODO: revisit this -- this is not correct
-    const endpointId = getEndpointId(
-      undefined,
-      this.authorizationUrl,
-      "POST",
-      undefined,
-      undefined
-    );
+    const endpointId = getEndpointId({
+      namespace: undefined,
+      path: this.authorizationUrl,
+      method: "POST",
+      sdkMethodName: undefined,
+      operationId: undefined,
+      displayName: undefined,
+      isWebhook: undefined,
+    });
     if (endpointId == null) {
       return undefined;
     }

@@ -17,6 +17,8 @@ export function getPackageNameFromSdkSnippetsCreate(
       return create.sdk.package;
     case "ruby":
       return create.sdk.gem;
+    case "csharp":
+      return create.sdk.package;
     default:
       assertNever(create);
   }
@@ -34,6 +36,8 @@ export function getPackageNameFromSdkRequest(sdk: FdrAPI.SdkRequest): string {
       return sdk.package;
     case "ruby":
       return sdk.gem;
+    case "csharp":
+      return sdk.package;
     default:
       assertNever(sdk);
   }
@@ -90,5 +94,7 @@ export function getLanguageFromRequest({ sdk }: { sdk: SdkRequest }): Language {
       return Language.RUBY;
     case "java":
       return Language.JAVA;
+    case "csharp":
+      return Language.CSHARP;
   }
 }

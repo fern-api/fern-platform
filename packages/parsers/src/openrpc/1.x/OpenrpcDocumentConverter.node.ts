@@ -71,7 +71,7 @@ export class OpenrpcDocumentConverterNode extends BaseOpenrpcConverterNode<
 
   convert(): FernRegistry.api.latest.ApiDefinition | undefined {
     const apiDefinitionId = v4();
-    const types = this.components?.convert();
+    const { types } = this.components?.convert() ?? {};
 
     const methods = this.methods
       ?.map((method) => {
@@ -87,15 +87,14 @@ export class OpenrpcDocumentConverterNode extends BaseOpenrpcConverterNode<
 
     return {
       id: FernRegistry.ApiDefinitionId(apiDefinitionId),
-      types: Object.fromEntries(
-        Object.entries(types ?? {}).map(([id, type]) => [id, type])
-      ),
+      types: types ?? {},
       endpoints,
       websockets: {},
       webhooks: {},
       subpackages,
       auths: {},
       globalHeaders: [],
+      snippetsConfiguration: undefined,
     };
   }
 }

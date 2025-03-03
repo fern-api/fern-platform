@@ -22,6 +22,8 @@ describe("SchemaConverterNode", () => {
         accessPath: [],
         pathId: "test",
         seenSchemas: new Set(),
+        nullable: undefined,
+        schemaName: undefined,
       });
       expect(node.typeShapeNode).toBeInstanceOf(ReferenceConverterNode);
     });
@@ -39,6 +41,8 @@ describe("SchemaConverterNode", () => {
         accessPath: [],
         pathId: "test",
         seenSchemas: new Set(),
+        nullable: undefined,
+        schemaName: undefined,
       });
       expect(node.typeShapeNode).toBeInstanceOf(ObjectConverterNode);
     });
@@ -53,6 +57,8 @@ describe("SchemaConverterNode", () => {
         accessPath: [],
         pathId: "test",
         seenSchemas: new Set(),
+        nullable: undefined,
+        schemaName: undefined,
       });
       expect(node.typeShapeNode).toBeDefined();
     });
@@ -67,6 +73,8 @@ describe("SchemaConverterNode", () => {
         accessPath: [],
         pathId: "test",
         seenSchemas: new Set(),
+        nullable: undefined,
+        schemaName: undefined,
       });
       expect(node.typeShapeNode).toBeDefined();
     });
@@ -81,6 +89,8 @@ describe("SchemaConverterNode", () => {
         accessPath: [],
         pathId: "test",
         seenSchemas: new Set(),
+        nullable: undefined,
+        schemaName: undefined,
       });
       expect(node.typeShapeNode).toBeDefined();
     });
@@ -95,6 +105,8 @@ describe("SchemaConverterNode", () => {
         accessPath: [],
         pathId: "test",
         seenSchemas: new Set(),
+        nullable: undefined,
+        schemaName: undefined,
       });
       expect(node.typeShapeNode).toBeDefined();
     });
@@ -112,6 +124,8 @@ describe("SchemaConverterNode", () => {
         accessPath: [],
         pathId: "test",
         seenSchemas: new Set(),
+        nullable: undefined,
+        schemaName: undefined,
       });
       expect(node.typeShapeNode).toBeDefined();
     });
@@ -127,6 +141,8 @@ describe("SchemaConverterNode", () => {
         accessPath: [],
         pathId: "test",
         seenSchemas: new Set(),
+        nullable: undefined,
+        schemaName: undefined,
       });
       expect(node.typeShapeNode).toBeDefined();
     });
@@ -141,6 +157,8 @@ describe("SchemaConverterNode", () => {
         accessPath: [],
         pathId: "test",
         seenSchemas: new Set(),
+        nullable: undefined,
+        schemaName: undefined,
       });
       expect(node.typeShapeNode).toBeDefined();
     });
@@ -158,6 +176,8 @@ describe("SchemaConverterNode", () => {
         accessPath: [],
         pathId: "test",
         seenSchemas: new Set(),
+        nullable: undefined,
+        schemaName: undefined,
       });
       expect(node.typeShapeNode).toBeDefined();
     });
@@ -173,6 +193,8 @@ describe("SchemaConverterNode", () => {
         accessPath: [],
         pathId: "test",
         seenSchemas: new Set(),
+        nullable: undefined,
+        schemaName: undefined,
       });
       expect(node.description).toBe("test description");
     });
@@ -189,6 +211,8 @@ describe("SchemaConverterNode", () => {
         accessPath: [],
         pathId: "test",
         seenSchemas: new Set(),
+        nullable: undefined,
+        schemaName: undefined,
       });
       const result = node.convert();
       expect(result).toEqual({
@@ -213,6 +237,8 @@ describe("SchemaConverterNode", () => {
         accessPath: [],
         pathId: "test",
         seenSchemas: new Set(),
+        nullable: undefined,
+        schemaName: undefined,
       });
       expect(node.convert()).toEqual({
         type: "alias",
@@ -235,6 +261,7 @@ describe("SchemaConverterNode", () => {
         pathId: "test",
         seenSchemas: new Set(),
         nullable: true,
+        schemaName: undefined,
       });
       expect(node.nullable).toBe(false);
     });
@@ -250,6 +277,7 @@ describe("SchemaConverterNode", () => {
         pathId: "test",
         seenSchemas: new Set(),
         nullable: true,
+        schemaName: undefined,
       });
       expect(node.nullable).toBe(true);
     });

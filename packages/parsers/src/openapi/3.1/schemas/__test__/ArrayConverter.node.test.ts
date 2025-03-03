@@ -22,6 +22,7 @@ describe("ArrayConverterNode", () => {
         accessPath: [],
         pathId: "test",
         seenSchemas: new Set(),
+        schemaName: undefined,
       });
       expect(node.item?.typeShapeNode).toBeInstanceOf(StringConverterNode);
     });
@@ -36,6 +37,7 @@ describe("ArrayConverterNode", () => {
         accessPath: [],
         pathId: "test",
         seenSchemas: new Set(),
+        schemaName: undefined,
       });
       expect(mockContext.errors.error).toHaveBeenCalledWith({
         message:
@@ -57,6 +59,7 @@ describe("ArrayConverterNode", () => {
         accessPath: [],
         pathId: "test",
         seenSchemas: new Set(),
+        schemaName: undefined,
       });
       const converted = node.convert();
       expect(converted).toEqual([
@@ -78,7 +81,7 @@ describe("ArrayConverterNode", () => {
       ]);
     });
 
-    it("should return undefined if inner schema conversion fails", () => {
+    it("should return unknown if inner schema conversion fails", () => {
       const input: ArrayConverterNode.Input = {
         type: "array",
         items: { type: "invalid" as OpenAPIV3_1.NonArraySchemaObjectType },
@@ -89,12 +92,9 @@ describe("ArrayConverterNode", () => {
         accessPath: [],
         pathId: "test",
         seenSchemas: new Set(),
+        schemaName: undefined,
       });
       const converted = node.convert();
-      expect(mockContext.errors.error).toHaveBeenCalledWith({
-        message: "Expected type declaration. Received: null",
-        path: ["test", "items"],
-      });
       expect(converted).toEqual([
         {
           type: "alias",

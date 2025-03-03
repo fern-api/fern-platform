@@ -37,17 +37,15 @@ describe("PathsObjectConverterNode", () => {
         },
       };
 
-      const node = new PathsObjectConverterNode(
-        {
-          input,
-          context: mockContext,
-          accessPath: [],
-          pathId: "test",
-        },
-        undefined,
-        undefined,
-        undefined
-      );
+      const node = new PathsObjectConverterNode({
+        input,
+        context: mockContext,
+        accessPath: [],
+        pathId: "test",
+        servers: undefined,
+        globalAuth: undefined,
+        basePath: undefined,
+      });
 
       const result = node.convert() ?? { endpoints: {} };
 
@@ -65,17 +63,15 @@ describe("PathsObjectConverterNode", () => {
     it("should handle empty paths object", () => {
       const input: OpenAPIV3_1.PathsObject = {};
 
-      const node = new PathsObjectConverterNode(
-        {
-          input,
-          context: mockContext,
-          accessPath: [],
-          pathId: "test",
-        },
-        undefined,
-        undefined,
-        undefined
-      );
+      const node = new PathsObjectConverterNode({
+        input,
+        context: mockContext,
+        accessPath: [],
+        pathId: "test",
+        servers: undefined,
+        globalAuth: undefined,
+        basePath: undefined,
+      });
 
       const result = node.convert();
       expect(result).toEqual({
@@ -89,17 +85,15 @@ describe("PathsObjectConverterNode", () => {
         "/test": undefined,
       };
 
-      const node = new PathsObjectConverterNode(
-        {
-          input,
-          context: mockContext,
-          accessPath: [],
-          pathId: "test",
-        },
-        undefined,
-        undefined,
-        undefined
-      );
+      const node = new PathsObjectConverterNode({
+        input,
+        context: mockContext,
+        accessPath: [],
+        pathId: "test",
+        servers: undefined,
+        globalAuth: undefined,
+        basePath: undefined,
+      });
 
       const result = node.convert();
       expect(result).toEqual({
@@ -127,17 +121,15 @@ describe("PathsObjectConverterNode", () => {
         },
       };
 
-      const node = new PathsObjectConverterNode(
-        {
-          input,
-          context: mockContext,
-          accessPath: [],
-          pathId: "test",
-        },
-        undefined,
-        undefined,
-        undefined
-      );
+      const node = new PathsObjectConverterNode({
+        input,
+        context: mockContext,
+        accessPath: [],
+        pathId: "test",
+        servers: undefined,
+        globalAuth: undefined,
+        basePath: undefined,
+      });
 
       const result = node.convert() ?? { endpoints: {} };
       expect(result).toBeDefined();

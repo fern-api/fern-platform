@@ -5,7 +5,7 @@
       "id": "endpoint_chats.chat",
       "description": "Create a chat while specifying the default retrieval parameters used by the prompt.",
       "namespace": [
-        "Chats"
+        "chats"
       ],
       "displayName": "Start a chat",
       "operationId": "createChat",
@@ -118,9 +118,12 @@
         {
           "path": "/v2/chats",
           "responseStatusCode": 200,
-          "headers": {
-            "Request-Timeout": 0,
-            "Request-Timeout-Millis": 0
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "query": "How can I use the Vectara platform?",
+              "stream_response": false
+            }
           },
           "responseBody": {
             "type": "json",
@@ -134,9 +137,12 @@
         {
           "path": "/v2/chats",
           "responseStatusCode": 200,
-          "headers": {
-            "Request-Timeout": 0,
-            "Request-Timeout-Millis": 0
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "query": "How can I use the Vectara platform?",
+              "stream_response": false
+            }
           },
           "responseBody": {
             "type": "json",
@@ -148,9 +154,12 @@
         {
           "path": "/v2/chats",
           "responseStatusCode": 200,
-          "headers": {
-            "Request-Timeout": 0,
-            "Request-Timeout-Millis": 0
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "query": "How can I use the Vectara platform?",
+              "stream_response": false
+            }
           },
           "responseBody": {
             "type": "json",
@@ -164,9 +173,12 @@
         {
           "path": "/v2/chats",
           "responseStatusCode": 200,
-          "headers": {
-            "Request-Timeout": 0,
-            "Request-Timeout-Millis": 0
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "query": "How can I use the Vectara platform?",
+              "stream_response": false
+            }
           },
           "responseBody": {
             "type": "json",
@@ -237,9 +249,15 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
                 }
               }
             },
@@ -250,9 +268,15 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
                 }
               }
             },
@@ -263,9 +287,15 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
                 }
               }
             },
@@ -286,9 +316,15 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
                 }
               }
             },
@@ -302,7 +338,7 @@
   "subpackages": {
     "chats": {
       "id": "chats",
-      "name": "Chats",
+      "name": "chats",
       "displayName": "Chats"
     }
   },

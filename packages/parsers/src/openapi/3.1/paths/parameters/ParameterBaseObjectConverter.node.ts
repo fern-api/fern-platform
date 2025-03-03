@@ -22,7 +22,7 @@ export function convertOperationObjectProperties(
   return convertToObjectProperties(
     properties,
     Object.entries(properties ?? {})
-      .map(([key, header]) => (header.required ? key : undefined))
+      .map(([key, property]) => (property.required ? key : undefined))
       .filter(isNonNullish)
   );
 }
@@ -40,13 +40,13 @@ export class ParameterBaseObjectConverterNode extends BaseOpenApiV3_1ConverterNo
   constructor(
     args: BaseOpenApiV3_1ConverterNodeConstructorArgs<
       OpenAPIV3_1.ParameterBaseObject | OpenAPIV3_1.ReferenceObject
-    >
+    > & { parameterName: string | undefined }
   ) {
     super(args);
-    this.safeParse();
+    this.safeParse(args.parameterName);
   }
 
-  parse(): void {
+  parse(parameterName: string): void {
     this.description = this.input.description;
 
     let schema:
@@ -79,6 +79,8 @@ export class ParameterBaseObjectConverterNode extends BaseOpenApiV3_1ConverterNo
       accessPath: this.accessPath,
       pathId: "schema",
       seenSchemas: new Set(),
+      nullable: undefined,
+      schemaName: parameterName,
     });
 
     // TODO: support multiple examples

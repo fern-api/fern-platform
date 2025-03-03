@@ -1,6 +1,69 @@
 {
   "id": "test-uuid-replacement",
-  "endpoints": {},
+  "endpoints": {
+    "endpoint_auth/user.get": {
+      "id": "endpoint_auth/user.get",
+      "description": "This endpoint should be in `auth/user.yml`",
+      "namespace": [
+        "auth",
+        "user"
+      ],
+      "method": "GET",
+      "path": [
+        {
+          "type": "literal",
+          "value": "/"
+        },
+        {
+          "type": "literal",
+          "value": "auth"
+        },
+        {
+          "type": "literal",
+          "value": "/"
+        },
+        {
+          "type": "literal",
+          "value": "user"
+        }
+      ],
+      "environments": [],
+      "responses": [
+        {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "User"
+            }
+          },
+          "description": "Success"
+        }
+      ],
+      "errors": [],
+      "examples": [
+        {
+          "path": "/auth/user",
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "id": "id",
+              "associatedPersons": [
+                {
+                  "id": "id"
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "protocol": {
+        "type": "rest"
+      }
+    }
+  },
   "websockets": {},
   "webhooks": {},
   "types": {
@@ -39,9 +102,15 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "uuid"
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "uuid"
+                    }
+                  }
                 }
               }
             }
@@ -51,12 +120,18 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "list",
-                "itemShape": {
+                "type": "optional",
+                "shape": {
                   "type": "alias",
                   "value": {
-                    "type": "id",
-                    "id": "Person"
+                    "type": "list",
+                    "itemShape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "id",
+                        "id": "Person"
+                      }
+                    }
                   }
                 }
               }
@@ -77,9 +152,15 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "uuid"
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "uuid"
+                    }
+                  }
                 }
               }
             }
@@ -88,6 +169,17 @@
       }
     }
   },
-  "subpackages": {},
+  "subpackages": {
+    "auth": {
+      "id": "auth",
+      "name": "auth",
+      "displayName": "Auth"
+    },
+    "auth.user": {
+      "id": "auth.user",
+      "name": "user",
+      "displayName": "User"
+    }
+  },
   "auths": {}
 }

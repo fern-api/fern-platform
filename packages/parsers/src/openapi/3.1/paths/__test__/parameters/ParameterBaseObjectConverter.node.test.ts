@@ -24,6 +24,7 @@ describe("ParameterBaseObjectConverterNode", () => {
       context: mockContext,
       accessPath: [],
       pathId: "test",
+      parameterName: undefined,
     });
 
     expect(converter.schema).toBeDefined();
@@ -48,6 +49,7 @@ describe("ParameterBaseObjectConverterNode", () => {
       context: mockContext,
       accessPath: [],
       pathId: "test",
+      parameterName: undefined,
     });
 
     expect(converter.schema).toBeDefined();
@@ -67,6 +69,7 @@ describe("ParameterBaseObjectConverterNode", () => {
       context: mockContext,
       accessPath: [],
       pathId: "test",
+      parameterName: undefined,
     }).convert();
 
     expect(converted).toEqual({
@@ -94,6 +97,7 @@ describe("ParameterBaseObjectConverterNode", () => {
       context: mockContext,
       accessPath: [],
       pathId: "test",
+      parameterName: undefined,
     });
 
     const result = converter.convert();

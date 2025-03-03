@@ -58,6 +58,13 @@
         {
           "path": "/completions/chat",
           "responseStatusCode": 200,
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "stream": false,
+              "prompt": "prompt"
+            }
+          },
           "responseBody": {
             "type": "json",
             "value": "string"
@@ -122,9 +129,15 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
                 }
               }
             }
@@ -143,9 +156,15 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
                 }
               }
             }
@@ -158,8 +177,20 @@
     "chatCompletions": {
       "id": "chatCompletions",
       "name": "chatCompletions",
-      "displayName": "chatCompletions"
+      "displayName": "Chat Completions"
     }
   },
-  "auths": {}
+  "auths": {
+    "api_key": {
+      "type": "bearerAuth",
+      "tokenName": "apiKey"
+    },
+    "custom_header": {
+      "type": "header",
+      "headerWireValue": "X-API-Key"
+    },
+    "access_token": {
+      "type": "bearerAuth"
+    }
+  }
 }

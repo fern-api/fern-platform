@@ -1,5 +1,5 @@
 import { isNonNullish } from "@fern-api/ui-core-utils";
-import { camelCase, mapValues } from "es-toolkit";
+import { camelCase, mapValues } from "es-toolkit/compat";
 import { OpenAPIV3_1 } from "openapi-types";
 import { UnreachableCaseError } from "ts-essentials";
 import { FernRegistry } from "../../../../client/generated";
@@ -71,7 +71,7 @@ export class ResponseMediaTypeObjectConverterNode extends BaseOpenApiV3_1Convert
     >,
     matchedExampleNames: Set<string>
   ) {
-    for (const request of this.requests) {
+    for (const request of requests) {
       for (const [requestExampleName, requestExample] of Object.entries(
         request?.examples ?? {}
       )) {
@@ -257,6 +257,52 @@ export class ResponseMediaTypeObjectConverterNode extends BaseOpenApiV3_1Convert
     }
   }
 
+  pushResponseExample(
+    responseExamples: Record<
+      string,
+      (OpenAPIV3_1.ReferenceObject | OpenAPIV3_1.ExampleObject | undefined)[]
+    >,
+    request: RequestMediaTypeObjectConverterNode | undefined,
+    requestExampleName: string | undefined,
+    requestExample:
+      | OpenAPIV3_1.ReferenceObject
+      | OpenAPIV3_1.ExampleObject
+      | undefined
+  ) {
+    const resExamples = responseExamples[GLOBAL_EXAMPLE_NAME];
+    if (resExamples == null) {
+      return;
+    }
+    for (const responseExample of resExamples) {
+      this.examples?.push(
+        new ExampleObjectConverterNode(
+          {
+            input: {
+              requestExample,
+              responseExample,
+            },
+            context: this.context,
+            accessPath: this.accessPath,
+            pathId:
+              requestExampleName != null && requestExampleName !== ""
+                ? ["examples", requestExampleName]
+                : "examples",
+          },
+          this.path,
+          this.statusCode,
+          getExampleName(requestExampleName, undefined),
+          {
+            requestBody: request,
+            responseBody: this,
+            pathParameters: this.shapes.pathParameters,
+            queryParameters: this.shapes.queryParameters,
+            requestHeaders: this.shapes.requestHeaders,
+          }
+        )
+      );
+    }
+  }
+
   addGlobalFallbackExample(
     requests: RequestMediaTypeObjectConverterNode[],
     responseExamples: Record<
@@ -264,41 +310,33 @@ export class ResponseMediaTypeObjectConverterNode extends BaseOpenApiV3_1Convert
       (OpenAPIV3_1.ReferenceObject | OpenAPIV3_1.ExampleObject | undefined)[]
     >
   ) {
-    for (const request of requests) {
-      for (const [requestExampleName, requestExample] of Object.entries(
-        request?.examples ?? {}
-      )) {
-        const resExamples = responseExamples[GLOBAL_EXAMPLE_NAME];
-        if (resExamples == null) {
-          break;
-        }
-        for (const responseExample of resExamples) {
-          this.examples?.push(
-            new ExampleObjectConverterNode(
-              {
-                input: {
-                  requestExample,
-                  responseExample,
-                },
-                context: this.context,
-                accessPath: this.accessPath,
-                pathId:
-                  requestExampleName != null && requestExampleName !== ""
-                    ? ["examples", requestExampleName]
-                    : "examples",
-              },
-              this.path,
-              this.statusCode,
-              getExampleName(requestExampleName, undefined),
-              {
-                requestBody: request,
-                responseBody: this,
-                pathParameters: this.shapes.pathParameters,
-                queryParameters: this.shapes.queryParameters,
-                requestHeaders: this.shapes.requestHeaders,
-              }
-            )
+    if (requests == null || requests.length === 0) {
+      this.pushResponseExample(
+        responseExamples,
+        undefined,
+        undefined,
+        undefined
+      );
+    } else {
+      for (const request of requests) {
+        if (Object.keys(request.examples ?? {}).length === 0) {
+          this.pushResponseExample(
+            responseExamples,
+            request,
+            undefined,
+            undefined
           );
+        } else {
+          for (const [requestExampleName, requestExample] of Object.entries(
+            request.examples ?? {}
+          )) {
+            this.pushResponseExample(
+              responseExamples,
+              request,
+              requestExampleName,
+              requestExample
+            );
+          }
         }
       }
     }
@@ -326,6 +364,8 @@ export class ResponseMediaTypeObjectConverterNode extends BaseOpenApiV3_1Convert
             accessPath: this.accessPath,
             pathId: "type",
             seenSchemas: new Set(),
+            nullable: undefined,
+            schemaName: "Response Body",
           });
         }
       } else if (mediaType?.isOctetStream()) {
@@ -350,6 +390,8 @@ export class ResponseMediaTypeObjectConverterNode extends BaseOpenApiV3_1Convert
             accessPath: this.accessPath,
             pathId: this.pathId,
             seenSchemas: new Set(),
+            nullable: undefined,
+            schemaName: "Response Body",
           });
         }
       }
@@ -438,7 +480,11 @@ export class ResponseMediaTypeObjectConverterNode extends BaseOpenApiV3_1Convert
     for (const request of this.requests) {
       filteredRequestExamples.push(
         ...Object.entries(request.examples ?? {})
-          .filter(([exampleName]) => !matchedExampleNames.has(exampleName))
+          .filter(
+            ([exampleName]) =>
+              !matchedExampleNames.has(exampleName) &&
+              exampleName !== GLOBAL_EXAMPLE_NAME
+          )
           .map<
             [
               RequestMediaTypeObjectConverterNode,
@@ -451,15 +497,28 @@ export class ResponseMediaTypeObjectConverterNode extends BaseOpenApiV3_1Convert
 
     const filteredResponseExamples = Object.entries(responseExamples).filter(
       ([exampleName, examples]) =>
-        !matchedExampleNames.has(exampleName) && isNonNullish(examples)
+        !matchedExampleNames.has(exampleName) &&
+        isNonNullish(examples) &&
+        exampleName !== GLOBAL_EXAMPLE_NAME
     );
 
-    // Match based on index, saturating examples at the end of lists if mismatched
-    this.matchExamplesByIndex(
-      filteredRequestExamples,
-      filteredResponseExamples
-    );
-    if (!matchedExampleNames.has(GLOBAL_EXAMPLE_NAME)) {
+    if (
+      !Object.keys(responseExamples).every(
+        (exampleName) => exampleName === GLOBAL_EXAMPLE_NAME
+      )
+    ) {
+      // Match based on index, saturating examples at the end of lists if mismatched
+      this.matchExamplesByIndex(
+        filteredRequestExamples,
+        filteredResponseExamples
+      );
+    }
+
+    // Fallback to a generated example if no examples were matched
+    if (
+      !matchedExampleNames.has(GLOBAL_EXAMPLE_NAME) &&
+      this.examples.length === 0
+    ) {
       this.addGlobalFallbackExample(this.requests, responseExamples);
     }
 

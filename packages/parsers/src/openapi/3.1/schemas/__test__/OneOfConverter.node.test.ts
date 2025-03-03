@@ -36,6 +36,7 @@ describe("OneOfConverterNode", () => {
         accessPath: [],
         pathId: "test",
         seenSchemas: new Set(),
+        schemaName: undefined,
       });
       expect(node.discriminated).toBe(false);
       expect(node.undiscriminatedMapping?.length).toBe(2);
@@ -58,6 +59,7 @@ describe("OneOfConverterNode", () => {
         accessPath: [],
         pathId: "test",
         seenSchemas: new Set(),
+        schemaName: undefined,
       });
       expect(node.discriminated).toBe(true);
       expect(node.discriminant).toBe("type");
@@ -83,6 +85,7 @@ describe("OneOfConverterNode", () => {
         accessPath: [],
         pathId: "test",
         seenSchemas: new Set(),
+        schemaName: undefined,
       });
       const result = node.convert()[0];
       expect(result?.type).toBe("discriminatedUnion");
@@ -93,8 +96,16 @@ describe("OneOfConverterNode", () => {
       const input: OpenAPIV3_1.NonArraySchemaObject = {
         type: "object",
         oneOf: [
-          { type: "object", properties: { a: { type: "string" } } },
-          { type: "object", properties: { b: { type: "string" } } },
+          {
+            type: "object",
+            properties: { a: { type: "string" } },
+            required: ["a"],
+          },
+          {
+            type: "object",
+            properties: { b: { type: "string" } },
+            required: ["b"],
+          },
         ],
       };
       const node = new OneOfConverterNode({
@@ -103,6 +114,7 @@ describe("OneOfConverterNode", () => {
         accessPath: [],
         pathId: "test",
         seenSchemas: new Set(),
+        schemaName: undefined,
       });
       const result = node.convert()[0];
       expect(result?.type).toBe("undiscriminatedUnion");
@@ -110,6 +122,7 @@ describe("OneOfConverterNode", () => {
         type: "undiscriminatedUnion",
         variants: [
           {
+            displayName: "Variant 1",
             shape: {
               type: "object",
               extends: [],
@@ -130,6 +143,7 @@ describe("OneOfConverterNode", () => {
             },
           },
           {
+            displayName: "Variant 2",
             shape: {
               type: "object",
               extends: [],
@@ -163,6 +177,7 @@ describe("OneOfConverterNode", () => {
         accessPath: [],
         pathId: "test",
         seenSchemas: new Set(),
+        schemaName: undefined,
       });
       const result = node.convert();
       expect(result).toBeUndefined();

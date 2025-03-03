@@ -54,6 +54,7 @@ export class XFernGlobalHeadersConverterNode extends BaseOpenApiV3_1ConverterNod
           context: this.context,
           accessPath: this.accessPath,
           pathId: this.pathId,
+          parameterName: headerName,
         }),
       ];
     });

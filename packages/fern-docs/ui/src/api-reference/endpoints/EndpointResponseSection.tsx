@@ -5,6 +5,34 @@ import { Markdown } from "../../mdx/Markdown";
 import { renderTypeShorthand } from "../../type-shorthand";
 import { JsonPropertyPath } from "../examples/JsonPropertyPath";
 import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";
+import { maybeWrapTypeWithUndiscriminatedUnion } from "../utils/maybeWrapTypeWithUndiscriminatedUnion";
+
+const STREAMING_TEXT_SHAPE: ApiDefinition.TypeShape = {
+  type: "alias",
+  value: {
+    type: "primitive",
+    value: {
+      type: "string",
+      format: "text",
+      default: undefined,
+      regex: undefined,
+      minLength: undefined,
+      maxLength: undefined,
+    },
+  },
+};
+
+const FILE_DOWNLOAD_SHAPE: ApiDefinition.TypeShape = {
+  type: "alias",
+  value: {
+    type: "primitive",
+    value: {
+      type: "base64",
+      default: undefined,
+      mimeType: undefined,
+    },
+  },
+};
 
 export declare namespace EndpointResponseSection {
   export interface Props {
@@ -75,9 +103,45 @@ function EndpointResponseSectionContent({
 }: EndpointResponseSectionContentProps) {
   switch (body.type) {
     case "empty":
+      return (
+        <span className="t-muted my-4 inline-flex items-baseline gap-2 text-xs">
+          No content
+        </span>
+      );
     case "fileDownload":
+      return (
+        <TypeReferenceDefinitions
+          shape={maybeWrapTypeWithUndiscriminatedUnion(
+            FILE_DOWNLOAD_SHAPE,
+            types,
+            "File Download"
+          )}
+          isCollapsible={false}
+          onHoverProperty={onHoverProperty}
+          anchorIdParts={anchorIdParts}
+          slug={slug}
+          applyErrorStyles={false}
+          types={types}
+          isResponse={true}
+        />
+      );
     case "streamingText":
-      return null;
+      return (
+        <TypeReferenceDefinitions
+          shape={maybeWrapTypeWithUndiscriminatedUnion(
+            STREAMING_TEXT_SHAPE,
+            types,
+            "Streaming Text"
+          )}
+          isCollapsible={false}
+          onHoverProperty={onHoverProperty}
+          anchorIdParts={anchorIdParts}
+          slug={slug}
+          applyErrorStyles={false}
+          types={types}
+          isResponse={true}
+        />
+      );
     case "stream":
       return (
         <TypeReferenceDefinitions
@@ -91,10 +155,10 @@ function EndpointResponseSectionContent({
           isResponse={true}
         />
       );
-    default:
+    default: {
       return (
         <TypeReferenceDefinitions
-          shape={body}
+          shape={maybeWrapTypeWithUndiscriminatedUnion(body, types)}
           isCollapsible={false}
           onHoverProperty={onHoverProperty}
           anchorIdParts={anchorIdParts}
@@ -104,6 +168,7 @@ function EndpointResponseSectionContent({
           isResponse={true}
         />
       );
+    }
   }
 }
 

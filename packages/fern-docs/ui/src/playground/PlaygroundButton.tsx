@@ -12,12 +12,13 @@ import { usePlaygroundSettings } from "../hooks/usePlaygroundSettings";
 
 export const PlaygroundButton: FC<{
   state: FernNavigation.NavigationNodeApiLeaf;
-}> = ({ state }) => {
+  className?: string;
+}> = ({ state, className }) => {
   const openPlayground = useOpenPlayground();
   const isPlaygroundEnabled = useAtomValue(IS_PLAYGROUND_ENABLED_ATOM);
-  const settings = usePlaygroundSettings(state.id);
+  const settings = usePlaygroundSettings(state.id ?? state);
 
-  if (!isPlaygroundEnabled) {
+  if (!isPlaygroundEnabled || settings?.disabled) {
     return null;
   }
 
@@ -48,12 +49,13 @@ export const PlaygroundButton: FC<{
             }
           }}
           rightIcon={<PlaySolid />}
-          variant="outlined"
+          variant="filled"
           intent="primary"
           size="small"
           mono={true}
+          className={className}
         >
-          Play
+          Try it
         </FernButton>
       </FernTooltip>
     </FernTooltipProvider>

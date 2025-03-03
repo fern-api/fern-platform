@@ -27,9 +27,15 @@
                 "valueShape": {
                   "type": "alias",
                   "value": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "boolean"
+                    "type": "optional",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "boolean"
+                        }
+                      }
                     }
                   }
                 }
@@ -58,6 +64,12 @@
         {
           "path": "/send",
           "responseStatusCode": 200,
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "send": false
+            }
+          },
           "responseBody": {
             "type": "json",
             "value": "string"

@@ -48,6 +48,10 @@ export class ResponsesObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
   parse(): void {
     const defaultResponse = this.input.default;
     Object.entries(this.input).forEach(([statusCode, response]) => {
+      if (statusCode === "default") {
+        return;
+      }
+
       if (parseInt(statusCode) >= 400) {
         this.errorsByStatusCode ??= {};
         this.errorsByStatusCode[statusCode] = new ResponseObjectConverterNode(
@@ -71,10 +75,7 @@ export class ResponsesObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
         this.responsesByStatusCode[statusCode] =
           new ResponseObjectConverterNode(
             {
-              input: {
-                ...defaultResponse,
-                ...response,
-              },
+              input: response,
               context: this.context,
               accessPath: this.accessPath,
               pathId: "responses",

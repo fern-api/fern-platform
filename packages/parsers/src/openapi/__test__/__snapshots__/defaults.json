@@ -162,10 +162,16 @@
                 "valueShape": {
                   "type": "alias",
                   "value": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "boolean",
-                      "default": true
+                    "type": "optional",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "boolean",
+                          "default": true
+                        }
+                      }
                     }
                   }
                 }
@@ -175,10 +181,16 @@
                 "valueShape": {
                   "type": "alias",
                   "value": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "boolean",
-                      "default": "true"
+                    "type": "optional",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "boolean",
+                          "default": "true"
+                        }
+                      }
                     }
                   }
                 }
@@ -188,10 +200,16 @@
                 "valueShape": {
                   "type": "alias",
                   "value": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "default": "defaultValue"
+                    "type": "optional",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "default": "defaultValue"
+                        }
+                      }
                     }
                   }
                 }
@@ -201,10 +219,16 @@
                 "valueShape": {
                   "type": "alias",
                   "value": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "double",
-                      "default": 3.14
+                    "type": "optional",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "double",
+                          "default": 3.14
+                        }
+                      }
                     }
                   }
                 }
@@ -219,15 +243,6 @@
         {
           "path": "/test",
           "responseStatusCode": 200,
-          "queryParameters": {
-            "boolParam1": true,
-            "boolParam2": "true",
-            "boolParam3": false,
-            "boolParam4": "false",
-            "stringParam": "defaultString",
-            "numberParam": 42,
-            "integerParam": 100
-          },
           "responseBody": {
             "type": "json",
             "value": {

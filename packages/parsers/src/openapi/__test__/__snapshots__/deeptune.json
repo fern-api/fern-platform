@@ -5,7 +5,7 @@
       "id": "endpoint_textToSpeech.generate",
       "description": "API that converts text into lifelike speech with best-in-class latency & uses the most advanced AI audio model ever. Create voiceovers for your videos, audiobooks, or create AI chatbots for free.",
       "namespace": [
-        "text_to_speech"
+        "textToSpeech"
       ],
       "displayName": "Text to Speech",
       "operationId": "textToSpeech",
@@ -65,6 +65,15 @@
         {
           "path": "/v1/text-to-speech",
           "responseStatusCode": 200,
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "text": "text",
+              "voice": "voice",
+              "language_code": "language_code",
+              "seed": null
+            }
+          },
           "responseBody": {
             "type": "json",
             "value": {
@@ -77,11 +86,11 @@
         "type": "rest"
       }
     },
-    "endpoint_textToSpeech.generateFromPrompt": {
-      "id": "endpoint_textToSpeech.generateFromPrompt",
+    "endpoint_textToSpeech.generate_from_prompt": {
+      "id": "endpoint_textToSpeech.generate_from_prompt",
       "description": "If you prefer to manage voices on your own, you can use your own audio file as a reference for the voice clone.x",
       "namespace": [
-        "text_to_speech"
+        "textToSpeech"
       ],
       "displayName": "Text to Speech (via prompt audio)",
       "operationId": "textToSpeechFromPrompt",
@@ -149,6 +158,15 @@
         {
           "path": "/v1/text-to-speech/from-prompt",
           "responseStatusCode": 200,
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "text": "text",
+              "prompt_audio": "prompt_audio",
+              "language_code": "language_code",
+              "seed": null
+            }
+          },
           "responseBody": {
             "type": "json",
             "value": {
@@ -294,6 +312,23 @@
         {
           "path": "/v1/voices",
           "responseStatusCode": 200,
+          "requestBody": {
+            "type": "form",
+            "value": {
+              "name": {
+                "type": "json",
+                "value": "name"
+              },
+              "file": {
+                "type": "filename",
+                "value": "file"
+              },
+              "description": {
+                "type": "json",
+                "value": "description"
+              }
+            }
+          },
           "responseBody": {
             "type": "json",
             "value": {
@@ -491,6 +526,23 @@
           "responseStatusCode": 200,
           "pathParameters": {
             "voice_id": "voice_id"
+          },
+          "requestBody": {
+            "type": "form",
+            "value": {
+              "name": {
+                "type": "json",
+                "value": "name"
+              },
+              "file": {
+                "type": "filename",
+                "value": "file"
+              },
+              "description": {
+                "type": "json",
+                "value": "description"
+              }
+            }
           },
           "responseBody": {
             "type": "json",
@@ -955,9 +1007,15 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
                 }
               }
             },
@@ -968,9 +1026,15 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "base64"
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "base64"
+                    }
+                  }
                 }
               }
             },
@@ -981,9 +1045,15 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
                 }
               }
             },
@@ -1006,14 +1076,20 @@
   "subpackages": {
     "textToSpeech": {
       "id": "textToSpeech",
-      "name": "text_to_speech",
-      "displayName": "text_to_speech"
+      "name": "textToSpeech",
+      "displayName": "Text to Speech"
     },
     "voices": {
       "id": "voices",
       "name": "voices",
-      "displayName": "voices"
+      "displayName": "Voices"
     }
   },
-  "auths": {}
+  "auths": {
+    "apiKeyAuth": {
+      "type": "header",
+      "nameOverride": "apiKey",
+      "headerWireValue": "X_API_KEY"
+    }
+  }
 }

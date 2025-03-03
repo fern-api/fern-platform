@@ -273,16 +273,6 @@
             "id": "id",
             "active_id": "active_id",
             "x-fern-availability_path_param": "x-fern-availability_path_param"
-          },
-          "queryParameters": {
-            "deprecated_lang": "deprecated_lang",
-            "active_lang": "active_lang",
-            "x-fern-availability_query_param": "x-fern-availability_query_param"
-          },
-          "headers": {
-            "X-Deprecated-Header": "X-Deprecated-Header",
-            "X-Active-Header": "X-Active-Header",
-            "x-fern-availability_header": "x-fern-availability_header"
           }
         }
       ],
@@ -334,6 +324,12 @@
         {
           "path": "/success-ref",
           "responseStatusCode": 200,
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "new_setting": false
+            }
+          },
           "responseBody": {
             "type": "json",
             "value": {
@@ -372,9 +368,15 @@
                 "valueShape": {
                   "type": "alias",
                   "value": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "boolean"
+                    "type": "optional",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "boolean"
+                        }
+                      }
                     }
                   }
                 },
@@ -385,9 +387,15 @@
                 "valueShape": {
                   "type": "alias",
                   "value": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "boolean"
+                    "type": "optional",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "boolean"
+                        }
+                      }
                     }
                   }
                 }
@@ -414,6 +422,12 @@
         {
           "path": "/success-inline-property-deprecation",
           "responseStatusCode": 200,
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "new_setting": false
+            }
+          },
           "responseBody": {
             "type": "json",
             "value": {
@@ -453,9 +467,15 @@
                 "valueShape": {
                   "type": "alias",
                   "value": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "boolean"
+                    "type": "optional",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "boolean"
+                        }
+                      }
                     }
                   }
                 }
@@ -521,9 +541,15 @@
                 "valueShape": {
                   "type": "alias",
                   "value": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "boolean"
+                    "type": "optional",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "boolean"
+                        }
+                      }
                     }
                   }
                 }
@@ -550,6 +576,12 @@
         {
           "path": "/success-inline-beta-body",
           "responseStatusCode": 200,
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "fine_setting": false
+            }
+          },
           "responseBody": {
             "type": "json",
             "value": {
@@ -589,9 +621,15 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "boolean"
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "boolean"
+                    }
+                  }
                 }
               }
             },
@@ -602,9 +640,15 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "boolean"
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "boolean"
+                    }
+                  }
                 }
               }
             }
@@ -623,9 +667,15 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "boolean"
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "boolean"
+                    }
+                  }
                 }
               }
             }
@@ -644,9 +694,15 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "boolean"
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "boolean"
+                    }
+                  }
                 }
               }
             }

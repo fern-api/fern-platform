@@ -1,8 +1,8 @@
 {
   "id": "test-uuid-replacement",
   "endpoints": {
-    "endpoint_auth.getToken": {
-      "id": "endpoint_auth.getToken",
+    "endpoint_auth.get-token": {
+      "id": "endpoint_auth.get-token",
       "description": "Exchange credentials or refresh token for an access token",
       "namespace": [
         "auth"
@@ -158,9 +158,15 @@
                 "valueShape": {
                   "type": "alias",
                   "value": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string"
+                    "type": "optional",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string"
+                        }
+                      }
                     }
                   }
                 }
@@ -170,9 +176,15 @@
                 "valueShape": {
                   "type": "alias",
                   "value": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string"
+                    "type": "optional",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string"
+                        }
+                      }
                     }
                   }
                 }
@@ -182,9 +194,15 @@
                 "valueShape": {
                   "type": "alias",
                   "value": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "integer"
+                    "type": "optional",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "integer"
+                        }
+                      }
                     }
                   }
                 },
@@ -195,9 +213,15 @@
                 "valueShape": {
                   "type": "alias",
                   "value": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string"
+                    "type": "optional",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string"
+                        }
+                      }
                     }
                   }
                 }
@@ -212,6 +236,17 @@
         {
           "path": "/oauth/token",
           "responseStatusCode": 200,
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "grant_type": "password",
+              "username": "username",
+              "password": "password",
+              "refresh_token": "refresh_token",
+              "client_id": "client_id",
+              "client_secret": "client_secret"
+            }
+          },
           "responseBody": {
             "type": "json",
             "value": {
@@ -235,8 +270,12 @@
     "auth": {
       "id": "auth",
       "name": "auth",
-      "displayName": "auth"
+      "displayName": "Auth"
     }
   },
-  "auths": {}
+  "auths": {
+    "oauth2": {
+      "type": "bearerAuth"
+    }
+  }
 }

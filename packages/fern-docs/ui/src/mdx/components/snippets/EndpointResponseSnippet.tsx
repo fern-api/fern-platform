@@ -67,7 +67,6 @@ function EndpointResponseSnippetRenderer({
     <div className="mb-5 mt-3">
       <CodeSnippetExample
         title="Response"
-        // actions={undefined}
         code={responseJsonString}
         language="json"
         json={responseJson}

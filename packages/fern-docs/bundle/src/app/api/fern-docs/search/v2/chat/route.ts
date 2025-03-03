@@ -12,7 +12,16 @@ import {
   toDocuments,
 } from "@fern-docs/search-server/turbopuffer";
 import { COOKIE_FERN_TOKEN, withoutStaging } from "@fern-docs/utils";
-import { embed, EmbeddingModel, streamText, tool } from "ai";
+import { WebClient } from "@slack/web-api";
+import {
+  embed,
+  EmbeddingModel,
+  InvalidToolArgumentsError,
+  NoSuchToolError,
+  streamText,
+  tool,
+  ToolExecutionError,
+} from "ai";
 import { initLogger, wrapAISDKModel } from "braintrust";
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
@@ -20,6 +29,7 @@ import { z } from "zod";
 
 export const maxDuration = 60;
 export const revalidate = 0;
+const engNotifsSlackChannel = "#engineering-notifs";
 
 export async function POST(req: NextRequest) {
   const _logger = initLogger({
@@ -37,7 +47,7 @@ export async function POST(req: NextRequest) {
   );
 
   const openai = createOpenAI({ apiKey: openaiApiKey() });
-  const embeddingModel = openai.embedding("text-embedding-3-small");
+  const embeddingModel = openai.embedding("text-embedding-3-large");
 
   const domain = getDocsDomainEdge(req);
   const namespace = `${withoutStaging(domain)}_${embeddingModel.modelId}`;
@@ -132,7 +142,40 @@ export async function POST(req: NextRequest) {
     },
   });
 
-  const response = result.toDataStreamResponse();
+  const response = result.toDataStreamResponse({
+    getErrorMessage: (error) => {
+      if (error == null) {
+        return "";
+      }
+
+      let errorKind = "UnknownError";
+      if (NoSuchToolError.isInstance(error)) {
+        errorKind = "NoSuchToolError";
+      } else if (InvalidToolArgumentsError.isInstance(error)) {
+        errorKind = "InvalidToolArgumentsError";
+      } else if (ToolExecutionError.isInstance(error)) {
+        errorKind = "ToolExecutionError";
+      }
+
+      const msg = `encountered a ${errorKind} for query '${lastUserMessage}: ${error}'`;
+      console.error(msg);
+      const slackToken = process.env.SLACK_TOKEN;
+      if (slackToken) {
+        const slackMsg = `:rotating_light: [${domain}] \`Ask AI\` encountered a ${errorKind} for query '${lastUserMessage}': \`${error}\``;
+        const webClient = new WebClient(slackToken);
+        webClient.chat
+          .postMessage({
+            channel: engNotifsSlackChannel,
+            text: slackMsg,
+          })
+          .catch((err: unknown) => {
+            console.error(err);
+          });
+      }
+      return msg;
+    },
+  });
+
   response.headers.set("Access-Control-Allow-Origin", "*");
   response.headers.set("Access-Control-Allow-Methods", "POST, OPTIONS");
   response.headers.set("Access-Control-Allow-Headers", "Content-Type");
@@ -154,7 +197,7 @@ async function runQueryTurbopuffer(
     : await queryTurbopuffer(query, {
         namespace: opts.namespace,
         apiKey: turbopufferApiKey(),
-        topK: opts.topK ?? 20,
+        topK: opts.topK ?? 10,
         vectorizer: async (text) => {
           const embedding = await embed({
             model: opts.embeddingModel,

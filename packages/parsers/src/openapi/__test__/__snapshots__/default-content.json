@@ -39,35 +39,9 @@
           }
         }
       ],
-      "responses": [
-        {
-          "statusCode": null,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "GenerateContentResponse"
-            }
-          },
-          "description": "Successful operation"
-        }
-      ],
+      "responses": [],
       "errors": [],
-      "examples": [
-        {
-          "path": "/generateContent",
-          "responseStatusCode": null,
-          "pathParameters": {
-            "model": "model"
-          },
-          "responseBody": {
-            "type": "json",
-            "value": {
-              "bar": "bar"
-            }
-          }
-        }
-      ],
+      "examples": [],
       "protocol": {
         "type": "rest"
       }
@@ -87,9 +61,15 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
                 }
               }
             }
@@ -102,7 +82,7 @@
     "generativelanguage": {
       "id": "generativelanguage",
       "name": "generativelanguage",
-      "displayName": "generativelanguage"
+      "displayName": "Generativelanguage"
     }
   },
   "auths": {}

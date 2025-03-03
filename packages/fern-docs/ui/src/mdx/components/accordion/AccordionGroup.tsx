@@ -13,6 +13,7 @@ export interface AccordionItemProps {
   title: string;
   id: string;
   toc?: boolean;
+  nestedHeaders?: string[];
   children: ReactNode;
 }
 
@@ -26,15 +27,37 @@ export const AccordionGroup = forwardRef<HTMLDivElement, AccordionGroupProps>(
   ({ items = [] }, forwardedRef) => {
     const [activeTabs, setActiveTabs] = useState<string[]>([]);
     const [anchor, setAnchor] = useAtom(ANCHOR_ATOM);
+
+    const findParentAccordion = useCallback(
+      (anchor: string) => {
+        // Direct match
+        if (items.some((tab) => tab.id === anchor)) {
+          return anchor;
+        }
+
+        const parentAccordion = items.find((tab) =>
+          tab.nestedHeaders?.includes(anchor)
+        );
+
+        if (parentAccordion) {
+          return parentAccordion.id;
+        }
+
+        return undefined;
+      },
+      [items]
+    );
+
     useEffect(() => {
       if (anchor != null) {
-        if (items.some((tab) => tab.id === anchor)) {
+        const parentAccordion = findParentAccordion(anchor);
+        if (parentAccordion) {
           setActiveTabs((prev) =>
-            prev.includes(anchor) ? prev : [...prev, anchor]
+            prev.includes(parentAccordion) ? prev : [...prev, parentAccordion]
           );
         }
       }
-    }, [anchor, items]);
+    }, [anchor, findParentAccordion]);
 
     const handleValueChange = useCallback(
       (nextActiveTabs: string[]) => {
@@ -43,6 +66,12 @@ export const AccordionGroup = forwardRef<HTMLDivElement, AccordionGroupProps>(
           if (added[0] != null) {
             setAnchor(added[0]);
           }
+
+          const removed = prev.filter((tab) => !nextActiveTabs.includes(tab));
+          if (removed[0] != null) {
+            setAnchor(undefined);
+          }
+
           return nextActiveTabs;
         });
       },

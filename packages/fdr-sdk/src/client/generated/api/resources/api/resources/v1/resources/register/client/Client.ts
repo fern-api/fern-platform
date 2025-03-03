@@ -525,6 +525,12 @@ export class Register {
      *                     version: {
      *                         "key": "value"
      *                     }
+     *                 },
+     *                 csharpSdk: {
+     *                     package: "string",
+     *                     version: {
+     *                         "key": "value"
+     *                     }
      *                 }
      *             },
      *             navigation: {
@@ -658,6 +664,9 @@ export class Register {
      *                     headers: [{
      *                             "key": "value"
      *                         }],
+     *                     queryParameters: [{
+     *                             "key": "value"
+     *                         }],
      *                     payloads: [{
      *                             "key": "value"
      *                         }],
@@ -706,7 +715,45 @@ export class Register {
      *                     },
      *                     description: "string",
      *                     availability: "Stable"
-     *                 }]
+     *                 }],
+     *             snippetsConfiguration: {
+     *                 typescriptSdk: {
+     *                     package: "string",
+     *                     version: {
+     *                         "key": "value"
+     *                     }
+     *                 },
+     *                 pythonSdk: {
+     *                     package: "string",
+     *                     version: {
+     *                         "key": "value"
+     *                     }
+     *                 },
+     *                 goSdk: {
+     *                     githubRepo: "string",
+     *                     version: {
+     *                         "key": "value"
+     *                     }
+     *                 },
+     *                 javaSdk: {
+     *                     coordinate: "string",
+     *                     version: {
+     *                         "key": "value"
+     *                     }
+     *                 },
+     *                 rubySdk: {
+     *                     gem: "string",
+     *                     version: {
+     *                         "key": "value"
+     *                     }
+     *                 },
+     *                 csharpSdk: {
+     *                     package: "string",
+     *                     version: {
+     *                         "key": "value"
+     *                     }
+     *                 }
+     *             }
      *         },
      *         sources: {
      *             "string": {

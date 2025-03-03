@@ -1,0 +1,6 @@
+[
+  {
+    "message": "Expected 'paths' or 'webhooks' property to be specified",
+    "path": [],
+  },
+]

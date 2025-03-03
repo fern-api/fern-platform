@@ -12,4 +12,8 @@
   .card-icon.fa-icon {
     @apply bg-accent;
   }
+
+  a.fern-card {
+    text-decoration: unset;
+  }
 }

@@ -45,6 +45,12 @@
         {
           "path": "/settings",
           "responseStatusCode": 200,
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "separator": "/"
+            }
+          },
           "responseBody": {
             "type": "json",
             "value": {
@@ -72,8 +78,14 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "id",
-                "id": "DocumentIDSeparators"
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "DocumentIDSeparators"
+                  }
+                }
               }
             }
           }

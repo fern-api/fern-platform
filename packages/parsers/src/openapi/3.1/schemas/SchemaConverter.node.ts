@@ -61,15 +61,17 @@ export class SchemaConverterNode extends BaseOpenApiV3_1ConverterNodeWithTrackin
   name: string | undefined;
   examples: unknown | undefined;
   availability: AvailabilityConverterNode | undefined;
-  nullable?: boolean | undefined;
+  nullable: boolean | undefined;
+  schemaName: string | undefined;
 
   constructor(
     args: BaseOpenApiV3_1ConverterNodeWithTrackingConstructorArgs<
       OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject
-    > & { nullable?: boolean | undefined }
+    > & { nullable: boolean | undefined; schemaName: string | undefined }
   ) {
     super(args);
     this.nullable = args.nullable;
+    this.schemaName = args.schemaName;
     this.safeParse();
   }
 
@@ -81,6 +83,7 @@ export class SchemaConverterNode extends BaseOpenApiV3_1ConverterNodeWithTrackin
       accessPath: this.accessPath,
       pathId: "x-fern-availability",
     });
+
     // check if nullable is set. If nullable is false, we will set it, otherwise we will ignore it
     if (isNonArraySchema(this.input) && isNullableSchema(this.input)) {
       this.nullable =
@@ -106,22 +109,22 @@ export class SchemaConverterNode extends BaseOpenApiV3_1ConverterNodeWithTrackin
       }
       this.seenSchemas.add(refPath);
 
-      this.typeShapeNode = new ReferenceConverterNode(
-        {
-          input: this.input,
-          context: this.context,
-          accessPath: this.accessPath,
-          pathId: refPath,
-          seenSchemas: this.seenSchemas,
-        },
-        this.nullable,
-        this.description,
-        this.availability
-      );
+      this.typeShapeNode = new ReferenceConverterNode({
+        input: this.input,
+        context: this.context,
+        accessPath: this.accessPath,
+        pathId: refPath,
+        seenSchemas: this.seenSchemas,
+        nullable: this.nullable,
+        schemaName: this.schemaName,
+        description: this.description,
+        availability: this.availability,
+      });
     } else {
       // If the object is not a reference object, then it is a schema object, gather all appropriate variables
       this.name = this.input.title;
       this.examples = this.input.example;
+
       if (this.input.const != null) {
         this.typeShapeNode = new ConstConverterNode({
           input: this.input,
@@ -136,6 +139,7 @@ export class SchemaConverterNode extends BaseOpenApiV3_1ConverterNodeWithTrackin
           accessPath: this.accessPath,
           pathId: this.pathId,
           seenSchemas: this.seenSchemas,
+          schemaName: this.schemaName,
         });
       } else if (
         isNonArraySchema(this.input) &&
@@ -147,6 +151,7 @@ export class SchemaConverterNode extends BaseOpenApiV3_1ConverterNodeWithTrackin
           accessPath: this.accessPath,
           pathId: this.pathId,
           seenSchemas: this.seenSchemas,
+          schemaName: this.schemaName,
         });
         // here, isObjectSchema also supports null type
       } else if (isObjectSchema(this.input) && this.input.allOf != null) {
@@ -157,6 +162,7 @@ export class SchemaConverterNode extends BaseOpenApiV3_1ConverterNodeWithTrackin
           accessPath: this.accessPath,
           pathId: this.pathId,
           seenSchemas: this.seenSchemas,
+          schemaName: this.schemaName,
         });
       } else if (isNonArraySchema(this.input) && this.input.enum != null) {
         this.typeShapeNode = new EnumConverterNode({
@@ -168,87 +174,100 @@ export class SchemaConverterNode extends BaseOpenApiV3_1ConverterNodeWithTrackin
         });
       }
       // We assume that if one of is defined, it is an object node
-      else if (typeof this.input.type === "string") {
-        switch (this.input.type) {
-          case "object":
-            if (isObjectSchema(this.input)) {
-              this.typeShapeNode = new ObjectConverterNode({
-                input: this.input,
-                context: this.context,
-                accessPath: this.accessPath,
-                pathId: this.pathId,
-                seenSchemas: this.seenSchemas,
-              });
-            }
-            break;
-          case "array":
-            if (isArraySchema(this.input)) {
-              this.typeShapeNode = new ArrayConverterNode({
-                input: this.input,
-                context: this.context,
-                accessPath: this.accessPath,
-                pathId: this.pathId,
-                seenSchemas: this.seenSchemas,
-              });
-            }
-            break;
-          case "boolean":
-            if (isBooleanSchema(this.input)) {
-              this.typeShapeNode = new BooleanConverterNode({
-                input: this.input,
-                context: this.context,
-                accessPath: this.accessPath,
-                pathId: this.pathId,
-                nullable: this.nullable,
-              });
-            }
-            break;
-          case "integer":
-            if (isIntegerSchema(this.input)) {
-              this.typeShapeNode = new IntegerConverterNode({
-                input: this.input,
-                context: this.context,
-                accessPath: this.accessPath,
-                pathId: this.pathId,
-                nullable: this.nullable,
-              });
-            }
-            break;
-          case "number":
-            if (isNumberSchema(this.input)) {
-              this.typeShapeNode = new NumberConverterNode({
-                input: this.input,
-                context: this.context,
-                accessPath: this.accessPath,
-                pathId: this.pathId,
-                nullable: this.nullable,
-              });
-            }
-            break;
-          case "string":
-            if (isStringSchema(this.input)) {
-              this.typeShapeNode = new StringConverterNode({
-                input: this.input,
-                context: this.context,
-                accessPath: this.accessPath,
-                pathId: this.pathId,
-                nullable: this.nullable,
-              });
-            }
-            break;
-          case "null":
-            if (isNullSchema(this.input)) {
-              this.typeShapeNode = new NullConverterNode({
-                input: this.input,
-                context: this.context,
-                accessPath: this.accessPath,
-                pathId: this.pathId,
-              });
-            }
-            break;
-          default:
-            new UnreachableCaseError(this.input.type);
-            break;
+      else if (
+        typeof this.input.type === "string" ||
+        (Array.isArray(this.input.type) && this.input.type.length === 1)
+      ) {
+        this.input.type = Array.isArray(this.input.type)
+          ? this.input.type[0]
+          : this.input.type;
+
+        if (!Array.isArray(this.input.type)) {
+          switch (this.input.type) {
+            case "object":
+              if (isObjectSchema(this.input)) {
+                this.typeShapeNode = new ObjectConverterNode({
+                  input: this.input,
+                  context: this.context,
+                  accessPath: this.accessPath,
+                  pathId: this.pathId,
+                  seenSchemas: this.seenSchemas,
+                  schemaName: this.schemaName,
+                });
+              }
+              break;
+            case "array":
+              if (isArraySchema(this.input)) {
+                this.typeShapeNode = new ArrayConverterNode({
+                  input: this.input,
+                  context: this.context,
+                  accessPath: this.accessPath,
+                  pathId: this.pathId,
+                  seenSchemas: this.seenSchemas,
+                  schemaName: this.schemaName,
+                });
+              }
+              break;
+            case "boolean":
+              if (isBooleanSchema(this.input)) {
+                this.typeShapeNode = new BooleanConverterNode({
+                  input: this.input,
+                  context: this.context,
+                  accessPath: this.accessPath,
+                  pathId: this.pathId,
+                  nullable: this.nullable,
+                });
+              }
+              break;
+            case "integer":
+              if (isIntegerSchema(this.input)) {
+                this.typeShapeNode = new IntegerConverterNode({
+                  input: this.input,
+                  context: this.context,
+                  accessPath: this.accessPath,
+                  pathId: this.pathId,
+                  nullable: this.nullable,
+                });
+              }
+              break;
+            case "number":
+              if (isNumberSchema(this.input)) {
+                this.typeShapeNode = new NumberConverterNode({
+                  input: this.input,
+                  context: this.context,
+                  accessPath: this.accessPath,
+                  pathId: this.pathId,
+                  nullable: this.nullable,
+                });
+              }
+              break;
+            case "string":
+              if (isStringSchema(this.input)) {
+                this.typeShapeNode = new StringConverterNode({
+                  input: this.input,
+                  context: this.context,
+                  accessPath: this.accessPath,
+                  pathId: this.pathId,
+                  nullable: this.nullable,
+                });
+              }
+              break;
+            case "null":
+              if (isNullSchema(this.input)) {
+                this.typeShapeNode = new NullConverterNode({
+                  input: this.input,
+                  context: this.context,
+                  accessPath: this.accessPath,
+                  pathId: this.pathId,
+                });
+              }
+              break;
+            case undefined:
+              break;
+            default:
+              new UnreachableCaseError(this.input.type);
+              break;
+          }
         }
       } else if (
         Array.isArray(this.input.type) &&
@@ -268,6 +287,7 @@ export class SchemaConverterNode extends BaseOpenApiV3_1ConverterNodeWithTrackin
             pathId: this.pathId,
             seenSchemas: this.seenSchemas,
             nullable: true,
+            schemaName: this.schemaName,
           });
         }
       } else if (this.input.properties != null) {
@@ -277,6 +297,7 @@ export class SchemaConverterNode extends BaseOpenApiV3_1ConverterNodeWithTrackin
           accessPath: this.accessPath,
           pathId: this.pathId,
           seenSchemas: this.seenSchemas,
+          schemaName: this.schemaName,
         });
       }
     }
@@ -288,10 +309,16 @@ export class SchemaConverterNode extends BaseOpenApiV3_1ConverterNodeWithTrackin
         accessPath: this.accessPath,
         pathId: this.pathId,
       });
-      this.context.errors.error({
-        message: "Expected type declaration. Received: null",
-        path: this.accessPath,
-      });
+      if (
+        !isReferenceObject(this.input) &&
+        ((!isArraySchema(this.input) && this.input == null) ||
+          (isArraySchema(this.input) && this.input.items == null))
+      ) {
+        this.context.errors.error({
+          message: "Expected type declaration. Received: null",
+          path: this.accessPath,
+        });
+      }
     }
   }
 

@@ -1,0 +1,306 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`setDimension > should do nothing with non-numeric strings 1`] = `
+{
+  "attributes": [
+    {
+      "name": "src",
+      "type": "mdxJsxAttribute",
+      "value": "file:123",
+    },
+    {
+      "name": "width",
+      "type": "mdxJsxAttribute",
+      "value": "100px",
+    },
+    {
+      "name": "height",
+      "type": "mdxJsxAttribute",
+      "value": "100px",
+    },
+  ],
+  "children": [],
+  "data": {
+    "_mdxExplicitJsx": true,
+  },
+  "name": "img",
+  "type": "mdxJsxFlowElement",
+}
+`;
+
+exports[`setDimension > should leave node as-is if no intrinsic size is set 1`] = `
+{
+  "attributes": [
+    {
+      "name": "src",
+      "type": "mdxJsxAttribute",
+      "value": "file:123",
+    },
+  ],
+  "children": [],
+  "data": {
+    "_mdxExplicitJsx": true,
+  },
+  "name": "img",
+  "type": "mdxJsxFlowElement",
+}
+`;
+
+exports[`setDimension > should preserve image with both width and height set 1`] = `
+{
+  "attributes": [
+    {
+      "name": "__assigned_imageSize",
+      "type": "mdxJsxAttribute",
+      "value": {
+        "data": {
+          "estree": {
+            "body": [
+              {
+                "expression": {
+                  "properties": [
+                    {
+                      "computed": false,
+                      "key": {
+                        "type": "Literal",
+                        "value": "width",
+                      },
+                      "kind": "init",
+                      "method": false,
+                      "shorthand": false,
+                      "type": "Property",
+                      "value": {
+                        "type": "Literal",
+                        "value": "100px",
+                      },
+                    },
+                    {
+                      "computed": false,
+                      "key": {
+                        "type": "Literal",
+                        "value": "height",
+                      },
+                      "kind": "init",
+                      "method": false,
+                      "shorthand": false,
+                      "type": "Property",
+                      "value": {
+                        "type": "Literal",
+                        "value": "100px",
+                      },
+                    },
+                  ],
+                  "type": "ObjectExpression",
+                },
+                "type": "ExpressionStatement",
+              },
+            ],
+            "sourceType": "module",
+            "type": "Program",
+          },
+        },
+        "type": "mdxJsxAttributeValueExpression",
+        "value": "__expression__",
+      },
+    },
+    {
+      "name": "src",
+      "type": "mdxJsxAttribute",
+      "value": "file:123",
+    },
+    {
+      "name": "width",
+      "type": "mdxJsxAttribute",
+      "value": "200",
+    },
+    {
+      "name": "height",
+      "type": "mdxJsxAttribute",
+      "value": "200",
+    },
+  ],
+  "children": [],
+  "data": {
+    "_mdxExplicitJsx": true,
+  },
+  "name": "img",
+  "type": "mdxJsxFlowElement",
+}
+`;
+
+exports[`setDimension > should properly assign height when only width is set 1`] = `
+{
+  "attributes": [
+    {
+      "name": "height",
+      "type": "mdxJsxAttribute",
+      "value": "200",
+    },
+    {
+      "name": "__assigned_imageSize",
+      "type": "mdxJsxAttribute",
+      "value": {
+        "data": {
+          "estree": {
+            "body": [
+              {
+                "expression": {
+                  "properties": [
+                    {
+                      "computed": false,
+                      "key": {
+                        "type": "Literal",
+                        "value": "width",
+                      },
+                      "kind": "init",
+                      "method": false,
+                      "shorthand": false,
+                      "type": "Property",
+                      "value": {
+                        "type": "Literal",
+                        "value": "100px",
+                      },
+                    },
+                  ],
+                  "type": "ObjectExpression",
+                },
+                "type": "ExpressionStatement",
+              },
+            ],
+            "sourceType": "module",
+            "type": "Program",
+          },
+        },
+        "type": "mdxJsxAttributeValueExpression",
+        "value": "__expression__",
+      },
+    },
+    {
+      "name": "src",
+      "type": "mdxJsxAttribute",
+      "value": "file:123",
+    },
+    {
+      "name": "width",
+      "type": "mdxJsxAttribute",
+      "value": "200",
+    },
+  ],
+  "children": [],
+  "data": {
+    "_mdxExplicitJsx": true,
+  },
+  "name": "img",
+  "type": "mdxJsxFlowElement",
+}
+`;
+
+exports[`setDimension > should properly assign width when only height is set 1`] = `
+{
+  "attributes": [
+    {
+      "name": "width",
+      "type": "mdxJsxAttribute",
+      "value": "200",
+    },
+    {
+      "name": "__assigned_imageSize",
+      "type": "mdxJsxAttribute",
+      "value": {
+        "data": {
+          "estree": {
+            "body": [
+              {
+                "expression": {
+                  "properties": [
+                    {
+                      "computed": false,
+                      "key": {
+                        "type": "Literal",
+                        "value": "height",
+                      },
+                      "kind": "init",
+                      "method": false,
+                      "shorthand": false,
+                      "type": "Property",
+                      "value": {
+                        "type": "Literal",
+                        "value": "100px",
+                      },
+                    },
+                    {
+                      "computed": false,
+                      "key": {
+                        "type": "Literal",
+                        "value": "width",
+                      },
+                      "kind": "init",
+                      "method": false,
+                      "shorthand": false,
+                      "type": "Property",
+                      "value": {
+                        "type": "Literal",
+                        "value": "auto",
+                      },
+                    },
+                  ],
+                  "type": "ObjectExpression",
+                },
+                "type": "ExpressionStatement",
+              },
+            ],
+            "sourceType": "module",
+            "type": "Program",
+          },
+        },
+        "type": "mdxJsxAttributeValueExpression",
+        "value": "__expression__",
+      },
+    },
+    {
+      "name": "src",
+      "type": "mdxJsxAttribute",
+      "value": "file:123",
+    },
+    {
+      "name": "height",
+      "type": "mdxJsxAttribute",
+      "value": "200",
+    },
+  ],
+  "children": [],
+  "data": {
+    "_mdxExplicitJsx": true,
+  },
+  "name": "img",
+  "type": "mdxJsxFlowElement",
+}
+`;
+
+exports[`setDimension > should set width and height when neither is set 1`] = `
+{
+  "attributes": [
+    {
+      "name": "width",
+      "type": "mdxJsxAttribute",
+      "value": "200",
+    },
+    {
+      "name": "height",
+      "type": "mdxJsxAttribute",
+      "value": "200",
+    },
+    {
+      "name": "src",
+      "type": "mdxJsxAttribute",
+      "value": "file:123",
+    },
+  ],
+  "children": [],
+  "data": {
+    "_mdxExplicitJsx": true,
+  },
+  "name": "img",
+  "type": "mdxJsxFlowElement",
+}
+`;

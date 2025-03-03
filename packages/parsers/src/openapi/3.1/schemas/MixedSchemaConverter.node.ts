@@ -25,11 +25,15 @@ export class MixedSchemaConverterNode extends BaseOpenApiV3_1ConverterNodeWithTr
 > {
   typeNodes: SchemaConverterNode[] | undefined;
   nullable: boolean | undefined;
+  schemaName: string | undefined;
 
   constructor(
-    args: BaseOpenApiV3_1ConverterNodeWithTrackingConstructorArgs<MixedSchemaConverterNode.Input>
+    args: BaseOpenApiV3_1ConverterNodeWithTrackingConstructorArgs<MixedSchemaConverterNode.Input> & {
+      schemaName: string | undefined;
+    }
   ) {
     super(args);
+    this.schemaName = args.schemaName;
     this.parse();
   }
 
@@ -45,6 +49,8 @@ export class MixedSchemaConverterNode extends BaseOpenApiV3_1ConverterNodeWithTr
             accessPath: this.accessPath,
             pathId: this.pathId,
             seenSchemas: this.seenSchemas,
+            nullable: this.nullable,
+            schemaName: this.schemaName,
           });
         }
         return undefined;

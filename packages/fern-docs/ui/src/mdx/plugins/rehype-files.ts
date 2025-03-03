@@ -9,6 +9,7 @@ import {
   isMdxJsxAttribute,
   isMdxJsxElementHast,
   mdxJsxAttributeToString,
+  unknownToMdxJsxAttribute,
   visit,
 } from "@fern-docs/mdx";
 import { walk } from "estree-walker";
@@ -70,27 +71,7 @@ export function rehypeFiles(
           srcAttribute.value = newSrc;
         }
 
-        if (
-          height != null &&
-          !attributes.find((attr) => attr.name === "height")
-        ) {
-          node.attributes.unshift({
-            name: "height",
-            value: String(height),
-            type: "mdxJsxAttribute",
-          });
-        }
-
-        if (
-          width != null &&
-          !attributes.find((attr) => attr.name === "width")
-        ) {
-          node.attributes.unshift({
-            name: "width",
-            value: String(width),
-            type: "mdxJsxAttribute",
-          });
-        }
+        setDimension(node, attributes, width, height);
 
         if (
           blurDataURL &&
@@ -190,4 +171,65 @@ function getEstree(
     return attr.data?.estree;
   }
   return null;
+}
+
+export function setDimension(
+  node: Hast.MdxJsxElement,
+  attributes: MdxJsxAttribute[],
+  intrinsicWidth: number | undefined,
+  intrinsicHeight: number | undefined
+) {
+  // if the image has no intrinsic size, do nothing
+  if (!intrinsicWidth || !intrinsicHeight) {
+    return;
+  }
+
+  const attrWidth = attributes.find((attr) => attr.name === "width");
+  const attrHeight = attributes.find((attr) => attr.name === "height");
+
+  // validate width and height are numeric
+  if (
+    (attrWidth?.value && isNaN(Number(attrWidth.value))) ||
+    (attrHeight?.value && isNaN(Number(attrHeight.value)))
+  ) {
+    return;
+  }
+
+  // if the user has defined a height or width, add as style
+  if (attrWidth || attrHeight) {
+    const addStyle: React.CSSProperties = {
+      ...(attrWidth && { width: `${attrWidth.value}px` }),
+      ...(attrHeight && { height: `${attrHeight.value}px` }),
+      ...(!attrWidth && attrHeight && { width: "auto" }),
+    };
+
+    node.attributes.unshift(
+      unknownToMdxJsxAttribute("__assigned_imageSize", addStyle)
+    );
+  }
+
+  // replace the actual attribute height and width with the true image size
+  if (intrinsicHeight != null) {
+    if (!attrHeight) {
+      node.attributes.unshift({
+        name: "height",
+        value: String(intrinsicHeight),
+        type: "mdxJsxAttribute",
+      });
+    } else {
+      attrHeight.value = String(intrinsicHeight);
+    }
+  }
+
+  if (intrinsicWidth != null) {
+    if (!attrWidth) {
+      node.attributes.unshift({
+        name: "width",
+        value: String(intrinsicWidth),
+        type: "mdxJsxAttribute",
+      });
+    } else {
+      attrWidth.value = String(intrinsicWidth);
+    }
+  }
 }
