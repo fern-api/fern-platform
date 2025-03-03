@@ -110,7 +110,7 @@ export class ExampleObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
           }
         : undefined);
     const fallbackResponseExample = this.shapes.responseBody?.schema?.example({
-      includeOptionals: false,
+      includeOptionals: true,
       override: undefined,
     });
     this.resolvedResponseInput =
@@ -438,7 +438,7 @@ export class ExampleObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
         Object.entries(this.shapes.pathParameters ?? {}).map(([key, value]) => [
           key,
           value.example({
-            includeOptionals: false,
+            includeOptionals: true,
             override: key,
           }),
         ])

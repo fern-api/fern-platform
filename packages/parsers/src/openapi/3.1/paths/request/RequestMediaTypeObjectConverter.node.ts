@@ -151,7 +151,7 @@ export class RequestMediaTypeObjectConverterNode extends BaseOpenApiV3_1Converte
     // In order to create a consistent shape, we add a default string key for an example, which should be treated as a global example
     // If there is no global example, we try to generate an example from underlying schemas, which may have examples, or defaults or fallback values
     const generatedExample = this.schema?.example({
-      includeOptionals: true,
+      includeOptionals: false,
       override: undefined,
     });
 

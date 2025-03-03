@@ -326,9 +326,7 @@
           "responseStatusCode": 200,
           "requestBody": {
             "type": "json",
-            "value": {
-              "new_setting": false
-            }
+            "value": {}
           },
           "responseBody": {
             "type": "json",
@@ -424,9 +422,7 @@
           "responseStatusCode": 200,
           "requestBody": {
             "type": "json",
-            "value": {
-              "new_setting": false
-            }
+            "value": {}
           },
           "responseBody": {
             "type": "json",
@@ -578,9 +574,7 @@
           "responseStatusCode": 200,
           "requestBody": {
             "type": "json",
-            "value": {
-              "fine_setting": false
-            }
+            "value": {}
           },
           "responseBody": {
             "type": "json",
