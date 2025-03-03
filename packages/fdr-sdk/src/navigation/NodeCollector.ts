@@ -256,6 +256,25 @@ export class NodeCollector {
     return this.#getIndexablePageNodesWithAuth();
   }
 
+  #getHiddenPageSlugs = once((): string[] => {
+    return Array.from(
+      new Set(
+        [...this.slugToNode.values()]
+          .filter(({ node }) => FernNavigation.isPage(node))
+          .filter(
+            ({ node }) =>
+              node.hidden ||
+              node.authed ||
+              (FernNavigation.hasMarkdown(node) ? node.noindex : false)
+          )
+          .map(({ node }) => node.canonicalSlug ?? node.slug)
+      )
+    );
+  });
+  get hiddenPageSlugs(): string[] {
+    return this.#getHiddenPageSlugs();
+  }
+
   public getVersionNodes = (): FernNavigation.VersionNode[] => {
     return this.versionNodes;
   };

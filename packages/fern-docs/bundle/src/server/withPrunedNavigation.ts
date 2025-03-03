@@ -7,6 +7,11 @@ interface WithPrunedSidebarOpts {
   visibleNodeIds?: FernNavigation.NodeId[];
 
   /**
+   * If provided, all hidden nodes will not be pruned
+   */
+  showHidden?: boolean;
+
+  /**
    * If true, authenticated pages will not be pruned
    */
   authed: boolean;
@@ -23,7 +28,7 @@ interface WithPrunedSidebarOpts {
  */
 export function pruneNavigationPredicate(
   node: FernNavigation.NavigationNode,
-  { visibleNodeIds, authed, discoverable }: WithPrunedSidebarOpts
+  { visibleNodeIds, showHidden, authed, discoverable }: WithPrunedSidebarOpts
 ): boolean {
   // prune authenticated pages (unless the discoverable flag is turned on)
   if (FernNavigation.isPage(node) && node.authed && !authed && !discoverable) {
@@ -32,7 +37,7 @@ export function pruneNavigationPredicate(
 
   // then, prune hidden nodes, unless it is the current node
   if (FernNavigation.hasMetadata(node) && node.hidden) {
-    return visibleNodeIds?.includes(node.id) ?? false;
+    return (showHidden || visibleNodeIds?.includes(node.id)) ?? false;
   }
 
   // finally, prune nodes that are not pages and have no children (avoid pruning links)
