@@ -7,7 +7,7 @@ import { withoutStaging } from "@fern-docs/utils";
 import { cacheSeed } from "./cache-seed";
 import { fernToken_admin, getFdrOrigin } from "./env-variables";
 
-const uncachedGetDocsUrlMetadata = async (
+export const uncachedGetDocsUrlMetadata = async (
   domain: string
 ): Promise<{
   url: string;

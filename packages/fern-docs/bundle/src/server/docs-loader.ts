@@ -4,6 +4,7 @@ import { unstable_cache } from "next/cache";
 import { notFound } from "next/navigation";
 import { cache } from "react";
 
+import { kv } from "@vercel/kv";
 import { mapValues } from "es-toolkit/object";
 import { UnreachableCaseError } from "ts-essentials";
 
@@ -190,6 +191,14 @@ const getBaseUrl = async (domain: string): Promise<DocsV2Read.BaseUrl> => {
 };
 
 const getFiles = async (domain: string): Promise<Record<string, FileData>> => {
+  try {
+    const cached = await kv.get<Record<string, FileData>>(`${domain}:files`);
+    if (cached != null) {
+      return cached;
+    }
+  } catch {
+    // do nothing
+  }
   const response = await loadWithUrl(domain);
   return mapValues(response.definition.filesV2, (file) => {
     if (file.type === "url") {
@@ -242,15 +251,38 @@ const createGetPrunedApiCached = (domain: string) =>
       id: string,
       ...nodes: PruningNodeType[]
     ): Promise<ApiDefinition.ApiDefinition> => {
-      const [flags, api] = await Promise.all([
-        cachedGetEdgeFlags(domain),
-        getApi(domain, id),
-      ]);
-      return backfillSnippets(prune(api, ...nodes), flags);
+      const flagsPromise = cachedGetEdgeFlags(domain);
+      try {
+        if (nodes.length === 1 && nodes[0]) {
+          const key = `${domain}:api:${id}:${createEndpointCacheKey(nodes[0])}`;
+          const cached = await kv.get<ApiDefinition.ApiDefinition>(key);
+          if (cached != null) {
+            return await backfillSnippets(cached, await flagsPromise);
+          }
+        }
+      } catch {
+        // do nothing
+      }
+
+      const api = await getApi(domain, id);
+      return backfillSnippets(prune(api, ...nodes), await flagsPromise);
     },
     [domain, cacheSeed()],
     { tags: [domain, "api"] }
   );
+
+function createEndpointCacheKey(pruneType: PruningNodeType) {
+  switch (pruneType.type) {
+    case "endpoint":
+      return `endpoint:${pruneType.endpointId}`;
+    case "webSocket":
+      return `websocket:${pruneType.webSocketId}`;
+    case "webhook":
+      return `webhook:${pruneType.webhookId}`;
+    default:
+      throw new UnreachableCaseError(pruneType);
+  }
+}
 
 const getAllApisForDomain = async (
   domain: string
@@ -346,9 +378,10 @@ const getEndpointByLocator = async (
   notFound();
 };
 
-const unsafe_getFullRoot = async (domain: string) => {
-  const response = await loadWithUrl(domain);
-
+export function convertResponseToRootNode(
+  response: DocsV2Read.LoadDocsForUrlResponse,
+  edgeFlags: EdgeFlags
+) {
   let root: FernNavigation.RootNode | undefined;
 
   if (response.definition.config.root) {
@@ -356,7 +389,6 @@ const unsafe_getFullRoot = async (domain: string) => {
       response.definition.config.root
     );
   } else if (response.definition.config.navigation) {
-    const edgeFlags = await cachedGetEdgeFlags(domain);
     root = FernNavigation.utils.toRootNode(
       response,
       edgeFlags.isBatchStreamToggleDisabled,
@@ -364,11 +396,7 @@ const unsafe_getFullRoot = async (domain: string) => {
     );
   }
 
-  if (root == null) {
-    notFound();
-  }
-
-  if ((await cachedGetEdgeFlags(domain)).isApiScrollingDisabled) {
+  if (root && edgeFlags.isApiScrollingDisabled) {
     FernNavigation.traverseBF(root, (node) => {
       if (node.type === "apiReference") {
         node.paginated = true;
@@ -378,6 +406,26 @@ const unsafe_getFullRoot = async (domain: string) => {
     });
   }
 
+  return root;
+}
+
+const unsafe_getFullRoot = async (domain: string) => {
+  try {
+    const cached = await kv.get<FernNavigation.RootNode>(`${domain}:root`);
+    if (cached != null) {
+      return cached;
+    }
+  } catch {
+    // do nothing
+  }
+  const response = await loadWithUrl(domain);
+  const root = convertResponseToRootNode(
+    response,
+    await cachedGetEdgeFlags(domain)
+  );
+  if (root == null) {
+    notFound();
+  }
   return root;
 };
 
@@ -431,12 +479,36 @@ const getNavigationNode = async (
 };
 
 const getConfig = async (domain: string) => {
+  try {
+    const cached = await kv.get<
+      Omit<DocsV1Read.DocsDefinition["config"], "navigation" | "root">
+    >(`${domain}:config`);
+    if (cached != null) {
+      return cached;
+    }
+  } catch {
+    // do nothing
+  }
   const response = await loadWithUrl(domain);
   const { navigation, root, ...config } = response.definition.config;
   return config;
 };
 
 const getPage = async (domain: string, pageId: string) => {
+  try {
+    const page = await kv.get<DocsV1Read.PageContent>(
+      `${domain}:page:${pageId}`
+    );
+    if (page != null && isPlainObject(page) && "markdown" in page) {
+      return {
+        filename: pageId,
+        markdown: page.markdown,
+        editThisPageUrl: page.editThisPageUrl,
+      };
+    }
+  } catch {
+    // do nothing
+  }
   const response = await loadWithUrl(domain);
   const page = response.definition.pages[pageId as PageId];
   if (page == null) {
@@ -450,6 +522,16 @@ const getPage = async (domain: string, pageId: string) => {
 };
 
 const getMdxBundlerFiles = async (domain: string) => {
+  try {
+    const cached = await kv.get<Record<string, string>>(
+      `${domain}:mdx-bundler-files`
+    );
+    if (cached != null) {
+      return cached;
+    }
+  } catch {
+    // do nothing
+  }
   const response = await loadWithUrl(domain);
   return response.definition.jsFiles ?? {};
 };
