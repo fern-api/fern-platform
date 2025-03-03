@@ -149,48 +149,51 @@ export async function GET(
           );
         }
 
-        const collector = FernNavigation.NodeCollector.collect(root);
-        const batches = chunk(collector.staticPageSlugs, 200);
+        if (req.nextUrl.searchParams.get("regenerate") !== "false") {
+          const collector = FernNavigation.NodeCollector.collect(root);
+          const batches = chunk(collector.staticPageSlugs, 200);
 
-        controller.enqueue(
-          `revalidate-queued:urls=${collector.slugs.length};batches=${batches.length}\n`
-        );
-
-        for (let i = 0; i < batches.length; i++) {
           controller.enqueue(
-            `revalidate-batch:${i * 200 + 1}-${Math.min(
-              (i + 1) * 200,
-              collector.slugs.length
-            )}/${collector.slugs.length}\n`
+            `revalidate-queued:urls=${collector.slugs.length};batches=${batches.length}\n`
           );
-          await Promise.all(
-            // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion, @typescript-eslint/no-non-null-assertion
-            batches[i]!.map(async (slug) => {
-              const url = withDefaultProtocol(
-                `${domain}${conformTrailingSlash(addLeadingSlash(slug))}`
-              );
-              try {
-                const res = await fetch(
-                  `${req.nextUrl.origin}${conformTrailingSlash(addLeadingSlash(slug))}`,
-                  {
-                    method: "HEAD",
-                    cache: "no-store",
-                    headers: { [HEADER_X_FERN_HOST]: domain },
+
+          for (let i = 0; i < batches.length; i++) {
+            controller.enqueue(
+              `revalidate-batch:${i * 200 + 1}-${Math.min(
+                (i + 1) * 200,
+                collector.slugs.length
+              )}/${collector.slugs.length}\n`
+            );
+            await Promise.all(
+              // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion, @typescript-eslint/no-non-null-assertion
+              batches[i]!.map(async (slug) => {
+                const url = withDefaultProtocol(
+                  `${domain}${conformTrailingSlash(addLeadingSlash(slug))}`
+                );
+                try {
+                  const res = await fetch(
+                    `${req.nextUrl.origin}${conformTrailingSlash(addLeadingSlash(slug))}`,
+                    {
+                      method: "HEAD",
+                      cache: "no-store",
+                      headers: { [HEADER_X_FERN_HOST]: domain },
+                    }
+                  );
+                  if (!res.ok) {
+                    throw new Error(`Failed to revalidate ${url}`);
                   }
-                );
-                if (!res.ok) {
-                  throw new Error(`Failed to revalidate ${url}`);
+                  controller.enqueue(`revalidated:${url}\n`);
+                } catch (e) {
+                  console.error(e);
+                  controller.enqueue(
+                    `revalidate-failed:url=${url}:error=${escapeRegExp(String(e))}\n`
+                  );
                 }
-                controller.enqueue(`revalidated:${url}\n`);
-              } catch (e) {
-                console.error(e);
-                controller.enqueue(
-                  `revalidate-failed:url=${url}:error=${escapeRegExp(String(e))}\n`
-                );
-              }
-            })
-          );
+              })
+            );
+          }
         }
+
         // finish reindexing before returning
         await reindexPromise;
 
