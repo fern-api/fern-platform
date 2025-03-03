@@ -38,12 +38,16 @@ export async function POST(req: NextRequest) {
   });
 
   const bedrock = createAmazonBedrock({
-    region: "us-west-2",
+    region: "us-east-1",
     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
   });
   const languageModel = wrapAISDKModel(
-    bedrock("anthropic.claude-3-5-sonnet-20241022-v2:0")
+    bedrock("us.anthropic.claude-3-7-sonnet-20250219-v1:0", {
+      additionalModelRequestFields: {
+        reasoning: false,
+      },
+    })
   );
 
   const openai = createOpenAI({ apiKey: openaiApiKey() });
