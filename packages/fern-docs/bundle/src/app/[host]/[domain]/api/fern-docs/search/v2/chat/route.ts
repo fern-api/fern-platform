@@ -86,6 +86,7 @@ export async function POST(req: NextRequest) {
     namespace,
     authed: user != null,
     roles: user?.roles ?? [],
+    topK: 5,
   });
   const documents = toDocuments(searchResults).join("\n\n");
   const system = createDefaultSystemPrompt({
