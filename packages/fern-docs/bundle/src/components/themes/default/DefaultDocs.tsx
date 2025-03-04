@@ -37,7 +37,7 @@ export default function DefaultDocs({
       <SetIsSidebarFixed value={isSidebarFixed} />
       <FernHeader
         className={cn(
-          "bg-header-background border-border-concealed pointer-events-auto fixed inset-x-0 top-0 z-30 border-b backdrop-blur-lg",
+          "bg-header-background border-border-concealed [&>*]:width-before-scroll-bar pointer-events-auto fixed inset-x-0 top-0 z-30 border-b backdrop-blur-lg",
           { "lg:hidden": isHeaderDisabled }
         )}
       >
