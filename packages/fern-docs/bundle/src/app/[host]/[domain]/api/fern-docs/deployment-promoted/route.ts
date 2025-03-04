@@ -7,13 +7,13 @@ import { withDefaultProtocol } from "@fern-api/ui-core-utils";
 
 import { getMetadata } from "@/server/docs-loader";
 
-export async function POST(request: NextRequest) {
-  if (
-    request.headers.get("x-vercel-signature") !==
-    process.env.DEPLOYMENT_PROMOTED_WEBHOOK_SECRET
-  ) {
-    return new Response("Unauthorized", { status: 401 });
-  }
+export async function POST(_request: NextRequest) {
+  // if (
+  //   request.headers.get("x-vercel-signature") !==
+  //   process.env.DEPLOYMENT_PROMOTED_WEBHOOK_SECRET
+  // ) {
+  //   return new Response("Unauthorized", { status: 401 });
+  // }
 
   const promises: Promise<Response>[] = [];
 
