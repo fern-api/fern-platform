@@ -68,7 +68,7 @@
   }
 
   .fern-api-property-header {
-    @apply flex items-baseline gap-2;
+    @apply flex flex-wrap items-baseline gap-2;
   }
 
   .fern-api-property-key {
