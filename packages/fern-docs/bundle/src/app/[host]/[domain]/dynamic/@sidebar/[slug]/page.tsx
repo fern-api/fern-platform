@@ -21,6 +21,7 @@ export default async function SidebarPage({
     domain,
     await getFernToken()
   );
+
   const [root, layout, authState, edgeFlags] = await Promise.all([
     loader.getRoot(),
     loader.getLayout(),

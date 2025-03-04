@@ -25,8 +25,10 @@ import {
   withoutStaging,
 } from "@fern-docs/utils";
 
-import { convertResponseToRootNode } from "@/server/docs-loader";
-import { uncachedGetDocsUrlMetadata } from "@/server/getDocsUrlMetadata";
+import {
+  convertResponseToRootNode,
+  getMetadataFromResponse,
+} from "@/server/docs-loader";
 import { loadWithUrl } from "@/server/loadWithUrl";
 import {
   queueAlgoliaReindex,
@@ -47,14 +49,16 @@ export async function GET(
         revalidateTag(domain);
         controller.enqueue(`revalidating:${domain}\n`);
 
-        const [docs, edgeFlags, orgMetadata] = await Promise.all([
-          loadWithUrl(domain),
+        const loadWithUrlPromise = loadWithUrl(domain);
+
+        const [docs, edgeFlags, metadata] = await Promise.all([
+          loadWithUrlPromise,
           getEdgeFlags(domain),
-          uncachedGetDocsUrlMetadata(domain),
+          getMetadataFromResponse(withoutStaging(domain), loadWithUrlPromise),
         ]);
 
         let reindexPromise: Promise<void> | undefined;
-        if (!orgMetadata.isPreview) {
+        if (!metadata.isPreview) {
           reindexPromise = reindex(docs, host, domain, edgeFlags)
             .then((services) => {
               controller.enqueue(
@@ -73,6 +77,8 @@ export async function GET(
 
         try {
           const keys: Record<string, unknown> = {};
+
+          keys[`${domain}:metadata`] = metadata;
 
           if (root != null) {
             keys[`${domain}:root`] = root;
@@ -139,6 +145,8 @@ export async function GET(
             }
           });
 
+          // these are generated from docs-cache, so we need to delete them for now
+          // TODO: handle this in the future more gracefully
           await kv.del(`${domain}:fonts`, `${domain}:colors`);
 
           controller.enqueue(

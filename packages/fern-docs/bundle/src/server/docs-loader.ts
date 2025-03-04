@@ -6,7 +6,7 @@ import { cache } from "react";
 
 import { kv } from "@vercel/kv";
 import { mapValues } from "es-toolkit/object";
-import { UnreachableCaseError } from "ts-essentials";
+import { AsyncOrSync, UnreachableCaseError } from "ts-essentials";
 
 import {
   ApiDefinition,
@@ -54,6 +54,14 @@ import { pruneWithAuthState } from "./withRbac";
 
 const loadWithUrl = uncachedLoadWithUrl;
 
+interface DocsMetadata {
+  domain: string;
+  basePath: string | undefined;
+  url: string;
+  org: string;
+  isPreview: boolean;
+}
+
 export interface DocsLoader {
   domain: string;
   fern_token: string | undefined;
@@ -61,21 +69,9 @@ export interface DocsLoader {
   getAuthConfig: () => Promise<AuthEdgeConfig | undefined>;
 
   /**
-   * @returns the base url (including base path) of the docs
+   * @returns the metadata for the given url, including the domain, base path, url, org, and isPreview
    */
-  getBaseUrl: () => Promise<{
-    domain: string;
-    basePath: string | undefined;
-  }>;
-
-  /**
-   * @returns the metadata for the given url
-   */
-  getMetadata: () => Promise<{
-    url: string;
-    org: string;
-    isPreview: boolean;
-  }>;
+  getMetadata: () => Promise<DocsMetadata>;
 
   /**
    * @returns a map of file names to their contents
@@ -177,47 +173,76 @@ const cachedGetEdgeFlags = cache(async (domain: string) => {
   return await getEdgeFlags(domain);
 });
 
-const getBaseUrl = async (domain: string): Promise<DocsV2Read.BaseUrl> => {
-  const response = await loadWithUrl(domain);
+export const getMetadataFromResponse = async (
+  domain: string,
+  responsePromise: AsyncOrSync<DocsV2Read.LoadDocsForUrlResponse>
+): Promise<DocsMetadata> => {
+  const [response, docsUrlMetadata] = await Promise.all([
+    responsePromise,
+    getDocsUrlMetadata(domain),
+  ]);
   return {
     domain: response.baseUrl.domain,
     basePath: response.baseUrl.basePath,
+    url: docsUrlMetadata.url,
+    org: docsUrlMetadata.org,
+    isPreview: docsUrlMetadata.isPreview,
   };
 };
 
-const getFiles = async (domain: string): Promise<Record<string, FileData>> => {
+const getMetadata = cache(async (domain: string): Promise<DocsMetadata> => {
   try {
-    const cached = await kv.get<Record<string, FileData>>(`${domain}:files`);
+    const cached = await kv.get<DocsMetadata>(`${domain}:metadata`);
     if (cached != null) {
       return cached;
     }
   } catch {
     // do nothing
   }
-  const response = await loadWithUrl(domain);
-  const files = mapValues(response.definition.filesV2, (file) => {
-    if (file.type === "url") {
-      return {
-        src: file.url,
-      };
-    } else if (file.type === "image") {
-      return {
-        src: file.url,
-        width: file.width,
-        height: file.height,
-        blurDataURL: file.blurDataUrl,
-        alt: file.alt,
-      };
-    }
-    throw new UnreachableCaseError(file);
-  });
+  const metadata = getMetadataFromResponse(domain, loadWithUrl(domain));
   try {
-    await kv.set(`${domain}:files`, files);
+    await kv.set(`${domain}:metadata`, metadata);
   } catch {
     // do nothing
   }
-  return files;
-};
+  return metadata;
+});
+
+const getFiles = cache(
+  async (domain: string): Promise<Record<string, FileData>> => {
+    try {
+      const cached = await kv.get<Record<string, FileData>>(`${domain}:files`);
+      if (cached != null) {
+        return cached;
+      }
+    } catch {
+      // do nothing
+    }
+    const response = await loadWithUrl(domain);
+    const files = mapValues(response.definition.filesV2, (file) => {
+      if (file.type === "url") {
+        return {
+          src: file.url,
+        };
+      } else if (file.type === "image") {
+        return {
+          src: file.url,
+          width: file.width,
+          height: file.height,
+          blurDataURL: file.blurDataUrl,
+          alt: file.alt,
+        };
+      }
+      throw new UnreachableCaseError(file);
+    });
+    try {
+      await kv.set(`${domain}:files`, files);
+    } catch {
+      // do nothing
+    }
+    return files;
+  }
+);
 
 // the api reference may be too large to cache, so we don't cache it in the KV store
 const getApi = async (domain: string, id: string) => {
@@ -432,13 +457,13 @@ const unsafe_getFullRoot = async (domain: string) => {
   return root;
 };
 
-const unsafe_getRootCached = async (domain: string) => {
+const unsafe_getRootCached = cache(async (domain: string) => {
   return await unstable_cache(
     unsafe_getFullRoot,
     ["unsafe_getRoot", cacheSeed()],
     { tags: [domain, "unsafe_getRoot"] }
   )(domain);
-};
+});
 
 const getRoot = async (
   domain: string,
@@ -456,32 +481,36 @@ const getRoot = async (
   return root;
 };
 
-const getRootCached = async (
-  domain: string,
-  authState: AuthState,
-  authConfig: AuthEdgeConfig | undefined
-) => {
-  return await unstable_cache(getRoot, [domain, cacheSeed()], {
-    tags: [domain, "getRoot"],
-  })(domain, authState, authConfig);
-};
-
-const getNavigationNode = async (
-  domain: string,
-  id: string,
-  authState: AuthState,
-  authConfig: AuthEdgeConfig | undefined
-) => {
-  const root = await getRootCached(domain, authState, authConfig);
-  const collector = FernNavigation.NodeCollector.collect(root);
-  const node = collector.get(FernNavigation.NodeId(id));
-  if (node == null) {
-    notFound();
+const getRootCached = cache(
+  async (
+    domain: string,
+    authState: AuthState,
+    authConfig: AuthEdgeConfig | undefined
+  ) => {
+    return await unstable_cache(getRoot, [domain, cacheSeed()], {
+      tags: [domain, "getRoot"],
+    })(domain, authState, authConfig);
   }
-  return node;
-};
+);
 
-const getConfig = async (domain: string) => {
+const getNavigationNode = cache(
+  async (
+    domain: string,
+    id: string,
+    authState: AuthState,
+    authConfig: AuthEdgeConfig | undefined
+  ) => {
+    const root = await getRootCached(domain, authState, authConfig);
+    const collector = FernNavigation.NodeCollector.collect(root);
+    const node = collector.get(FernNavigation.NodeId(id));
+    if (node == null) {
+      notFound();
+    }
+    return node;
+  }
+);
+
+const getConfig = cache(async (domain: string) => {
   try {
     const cached = await kv.get<
       Omit<DocsV1Read.DocsDefinition["config"], "navigation" | "root">
@@ -500,9 +529,9 @@ const getConfig = async (domain: string) => {
     // do nothing
   }
   return config;
-};
+});
 
-const getPage = async (domain: string, pageId: string) => {
+const getPage = cache(async (domain: string, pageId: string) => {
   try {
     const page = await kv.get<DocsV1Read.PageContent>(
       `${domain}:page:${pageId}`
@@ -532,9 +561,9 @@ const getPage = async (domain: string, pageId: string) => {
     markdown: page.markdown,
     editThisPageUrl: page.editThisPageUrl,
   };
-};
+});
 
-const getMdxBundlerFiles = async (domain: string) => {
+const getMdxBundlerFiles = cache(async (domain: string) => {
   try {
     const cached = await kv.get<Record<string, string>>(
       `${domain}:mdx-bundler-files`
@@ -553,9 +582,9 @@ const getMdxBundlerFiles = async (domain: string) => {
     // do nothing
   }
   return files;
-};
+});
 
-const getColors = async (domain: string) => {
+const getColors = cache(async (domain: string) => {
   try {
     const cached = await kv.get<{
       light: FernColorTheme | undefined;
@@ -637,9 +666,9 @@ const getColors = async (domain: string) => {
     // do nothing
   }
   return colors;
-};
+});
 
-const getFonts = async (domain: string) => {
+const getFonts = cache(async (domain: string) => {
   try {
     const cached = await kv.get<FernFonts>(`${domain}:fonts`);
     if (cached != null) {
@@ -659,9 +688,9 @@ const getFonts = async (domain: string) => {
     // do nothing
   }
   return fonts;
-};
+});
 
-const getLayout = async (domain: string) => {
+const getLayout = cache(async (domain: string) => {
   const config = await getConfig(domain);
   if (!config) {
     notFound();
@@ -687,7 +716,7 @@ const getLayout = async (domain: string) => {
     searchbarPlacement,
     isHeaderDisabled: config.layout?.disableHeader ?? false,
   };
-};
+});
 
 const getAuthConfig = getAuthEdgeConfig;
 
@@ -703,7 +732,7 @@ export const createCachedDocsLoader = async (
   fern_token?: string
 ): Promise<DocsLoader> => {
   const authConfig = getAuthConfig(domain);
-  const metadata = getDocsUrlMetadata(withoutStaging(domain));
+  const metadata = getMetadata(withoutStaging(domain));
 
   const getAuthState = cache(async (pathname?: string) => {
     const { getAuthState } = await createGetAuthState(
@@ -721,23 +750,9 @@ export const createCachedDocsLoader = async (
     domain,
     fern_token,
     getAuthConfig: () => authConfig,
-    getBaseUrl: cache(
-      unstable_cache(() => getBaseUrl(domain), [domain, cacheSeed()], {
-        tags: [domain, "getBaseUrl"],
-      })
-    ),
     getMetadata: () => metadata,
-    getFiles: cache(
-      unstable_cache(() => getFiles(domain), [domain, cacheSeed()], {
-        tags: [domain, "files"],
-      })
-    ),
-    getMdxBundlerFiles: cache(
-      unstable_cache(() => getMdxBundlerFiles(domain), [domain, cacheSeed()], {
-        tags: [domain, "mdxBundlerFiles"],
-      })
-    ),
-    // getApi: cache(createGetApiCached(domain)),
+    getFiles: () => getFiles(domain),
+    getMdxBundlerFiles: () => getMdxBundlerFiles(domain),
     getPrunedApi: cache(createGetPrunedApiCached(domain)),
     getEndpointById: cache(
       unstable_cache(
@@ -755,46 +770,18 @@ export const createCachedDocsLoader = async (
         { tags: [domain, "endpointByLocator"] }
       )
     ),
-    getRoot: cache(async () =>
-      getRootCached(domain, await getAuthState(), await authConfig)
-    ),
-    getNavigationNode: cache(async (id: string) =>
-      getNavigationNode(domain, id, await getAuthState(), await authConfig)
-    ),
-    unsafe_getFullRoot: cache(() => unsafe_getRootCached(domain)),
-    getConfig: cache(
-      unstable_cache(() => getConfig(domain), [domain, cacheSeed()], {
-        tags: [domain, "getConfig"],
-      })
-    ),
-    getPage: cache(
-      unstable_cache(
-        (pageId: string) => getPage(domain, pageId),
-        [domain, cacheSeed()],
-        { tags: [domain, "getPage"] }
-      )
-    ),
-    getColors: cache(
-      unstable_cache(() => getColors(domain), [domain, cacheSeed()], {
-        tags: [domain, "getColors"],
-      })
-    ),
-    getLayout: cache(
-      unstable_cache(() => getLayout(domain), [domain, cacheSeed()], {
-        tags: [domain, "getLayout"],
-      })
-    ),
-    getFonts: cache(
-      unstable_cache(() => getFonts(domain), [domain, cacheSeed()], {
-        tags: [domain, "getFonts"],
-      })
-    ),
+    getRoot: async () =>
+      getRootCached(domain, await getAuthState(), await authConfig),
+    getNavigationNode: async (id: string) =>
+      getNavigationNode(domain, id, await getAuthState(), await authConfig),
+    unsafe_getFullRoot: () => unsafe_getRootCached(domain),
+    getConfig: () => getConfig(domain),
+    getPage: (pageId) => getPage(domain, pageId),
+    getColors: () => getColors(domain),
+    getLayout: () => getLayout(domain),
+    getFonts: () => getFonts(domain),
     getAuthState,
-    getEdgeFlags: cache(
-      unstable_cache(() => cachedGetEdgeFlags(domain), [domain, cacheSeed()], {
-        tags: [domain, "getEdgeFlags"],
-      })
-    ),
+    getEdgeFlags: () => cachedGetEdgeFlags(domain),
   };
 };
 

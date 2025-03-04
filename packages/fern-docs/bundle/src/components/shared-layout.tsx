@@ -31,7 +31,7 @@ export default async function SharedLayout({
   const serialize = createCachedMdxSerializer(loader);
   const [{ basePath }, config, edgeFlags, files, colors, layout] =
     await Promise.all([
-      loader.getBaseUrl(),
+      loader.getMetadata(),
       loader.getConfig(),
       loader.getEdgeFlags(),
       loader.getFiles(),

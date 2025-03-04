@@ -62,7 +62,7 @@ export default async function Layout({
     deprecated_customerAnalytics,
     launchDarkly,
   ] = await Promise.all([
-    loader.getBaseUrl(),
+    loader.getMetadata(),
     loader.getConfig(),
     loader.unsafe_getFullRoot(),
     getEdgeFlags(domain),

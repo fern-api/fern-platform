@@ -15,7 +15,7 @@ export default async function NotFound() {
   const domain = await getDocsDomainApp();
   const loader = await createCachedDocsLoader(host, domain);
   const [baseUrl, colors, config] = await Promise.all([
-    loader.getBaseUrl(),
+    loader.getMetadata(),
     loader.getColors(),
     loader.getConfig(),
   ]);

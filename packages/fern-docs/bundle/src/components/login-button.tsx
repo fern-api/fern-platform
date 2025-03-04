@@ -22,7 +22,7 @@ export async function LoginButton({
   const [authConfig, authState, { basePath }] = await Promise.all([
     loader.getAuthConfig(),
     loader.getAuthState(),
-    loader.getBaseUrl(),
+    loader.getMetadata(),
   ]);
 
   if (!authConfig) {

@@ -44,7 +44,7 @@ export default async function SharedPage({
 
   // start loading the root node early
   const rootPromise = loader.getRoot();
-  const baseUrlPromise = loader.getBaseUrl();
+  const baseUrlPromise = loader.getMetadata();
   const configPromise = loader.getConfig();
   const authStatePromise = loader.getAuthState(
     conformTrailingSlash(addLeadingSlash(slug))
