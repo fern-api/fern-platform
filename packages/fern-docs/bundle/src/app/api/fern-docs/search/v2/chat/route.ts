@@ -7,10 +7,7 @@ import { createAmazonBedrock } from "@ai-sdk/amazon-bedrock";
 import { createOpenAI } from "@ai-sdk/openai";
 import { getAuthEdgeConfig, getEdgeFlags } from "@fern-docs/edge-config";
 import { createDefaultSystemPrompt } from "@fern-docs/search-server";
-import {
-  queryTurbopuffer,
-  toDocuments,
-} from "@fern-docs/search-server/turbopuffer";
+import { queryTurbopuffer } from "@fern-docs/search-server/turbopuffer";
 import { COOKIE_FERN_TOKEN, withoutStaging } from "@fern-docs/utils";
 import { WebClient } from "@slack/web-api";
 import {
@@ -43,11 +40,7 @@ export async function POST(req: NextRequest) {
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
   });
   const languageModel = wrapAISDKModel(
-    bedrock("us.anthropic.claude-3-7-sonnet-20250219-v1:0", {
-      additionalModelRequestFields: {
-        reasoning: false,
-      },
-    })
+    bedrock("us.anthropic.claude-3-7-sonnet-20250219-v1:0")
   );
 
   const openai = createOpenAI({ apiKey: openaiApiKey() });
@@ -88,24 +81,25 @@ export async function POST(req: NextRequest) {
     (message: any) => message.role === "user"
   )?.content;
 
-  const searchResults = await runQueryTurbopuffer(lastUserMessage, {
-    embeddingModel,
-    namespace,
-    authed: user != null,
-    roles: user?.roles ?? [],
-  });
-  const documents = toDocuments(searchResults).join("\n\n");
+  // const searchResults = await runQueryTurbopuffer(lastUserMessage, {
+  //   embeddingModel,
+  //   namespace,
+  //   authed: user != null,
+  //   roles: user?.roles ?? [],
+  //   topK: 1,
+  // });
+  // const documents = toDocuments(searchResults).join("\n\n");
   const system = createDefaultSystemPrompt({
     domain,
     date: new Date().toDateString(),
-    documents,
+    documents: "",
   });
   const result = streamText({
     model: languageModel,
     system,
     messages,
     maxSteps: 10,
-    maxRetries: 3,
+    maxRetries: 10,
     tools: {
       search: tool({
         description:
@@ -201,7 +195,7 @@ async function runQueryTurbopuffer(
     : await queryTurbopuffer(query, {
         namespace: opts.namespace,
         apiKey: turbopufferApiKey(),
-        topK: opts.topK ?? 10,
+        topK: opts.topK ?? 5,
         vectorizer: async (text) => {
           const embedding = await embed({
             model: opts.embeddingModel,
