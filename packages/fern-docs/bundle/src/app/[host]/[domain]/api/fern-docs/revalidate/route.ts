@@ -96,6 +96,7 @@ export async function GET(
         }
 
         try {
+          await kv.del(domain);
           const keys: Record<string, unknown> = {};
 
           keys.metadata = metadata;
@@ -164,10 +165,6 @@ export async function GET(
               );
             }
           });
-
-          // these are generated from docs-cache, so we need to delete them for now
-          // TODO: handle this in the future more gracefully
-          await kv.hdel(domain, "fonts", "colors");
 
           controller.enqueue(
             `revalidate-kv-keys-set:${Object.keys(keys).length}\n`

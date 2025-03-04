@@ -224,7 +224,7 @@ const getFiles = cache(
   async (domain: string): Promise<Record<string, FileData>> => {
     try {
       const cached = await kv.hget<Record<string, FileData>>(domain, "files");
-      if (cached != null) {
+      if (cached) {
         return cached;
       }
     } catch (error) {
@@ -584,7 +584,7 @@ const getMdxBundlerFiles = cache(async (domain: string) => {
       domain,
       "mdx-bundler-files"
     );
-    if (cached != null) {
+    if (cached) {
       return cached;
     }
   } catch (error) {
@@ -605,7 +605,7 @@ const getColors = cache(async (domain: string) => {
       light: FernColorTheme | undefined;
       dark: FernColorTheme | undefined;
     }>(domain, "colors");
-    if (cached != null) {
+    if (cached) {
       return cached;
     }
   } catch (error) {
