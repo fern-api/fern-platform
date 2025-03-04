@@ -1,6 +1,7 @@
 import { revalidateTag } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
 
+import { waitUntil } from "@vercel/functions";
 import { kv } from "@vercel/kv";
 import { chunk } from "es-toolkit/array";
 import { mapValues } from "es-toolkit/object";
@@ -48,6 +49,8 @@ export async function GET(
     async start(controller) {
       try {
         revalidateTag(domain);
+        waitUntil(kv.sadd("domains", domain));
+
         controller.enqueue(`revalidating:${domain}\n`);
 
         const loadWithUrlPromise = loadWithUrl(domain);
@@ -95,23 +98,23 @@ export async function GET(
         try {
           const keys: Record<string, unknown> = {};
 
-          keys[`${domain}:metadata`] = metadata;
+          keys.metadata = metadata;
 
           if (root != null) {
-            keys[`${domain}:root`] = root;
+            keys.root = root;
           }
 
           const { navigation, root: _, ...config } = docs.definition.config;
-          keys[`${domain}:config`] = config;
+          keys.config = config;
 
           Object.entries(docs.definition.pages).forEach(([id, page]) => {
-            keys[`${domain}:page:${id}`] = page;
+            keys[`page:${id}`] = page;
           });
 
           Object.values(docs.definition.apisV2).forEach((api) => {
             const prunedApi = createPrunedApi(api);
             prunedApi.forEach((value, key) => {
-              keys[`${domain}:api:${key}`] = value;
+              keys[`api:${key}`] = value;
             });
           });
 
@@ -120,7 +123,7 @@ export async function GET(
               ApiDefinitionV1ToLatest.from(api, edgeFlags).migrate()
             );
             prunedApi.forEach((value, key) => {
-              keys[`${domain}:api:${key}`] = value;
+              keys[`api:${key}`] = value;
             });
           });
 
@@ -144,12 +147,12 @@ export async function GET(
             }
           );
 
-          keys[`${domain}:mdx-bundler-files`] = docs.definition.jsFiles ?? {};
+          keys[`mdx-bundler-files`] = docs.definition.jsFiles ?? {};
 
           const promises = [];
 
           for (const [key, value] of Object.entries(keys)) {
-            promises.push(kv.set(key, value));
+            promises.push(kv.hset(domain, { [key]: value }));
           }
 
           const results = await Promise.allSettled(promises);
@@ -164,7 +167,7 @@ export async function GET(
 
           // these are generated from docs-cache, so we need to delete them for now
           // TODO: handle this in the future more gracefully
-          await kv.del(`${domain}:fonts`, `${domain}:colors`);
+          await kv.hdel(domain, "fonts", "colors");
 
           controller.enqueue(
             `revalidate-kv-keys-set:${Object.keys(keys).length}\n`

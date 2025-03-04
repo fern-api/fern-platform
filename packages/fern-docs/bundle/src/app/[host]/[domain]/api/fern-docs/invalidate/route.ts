@@ -35,13 +35,13 @@ export async function GET(
           const keys = new Set<string>();
 
           Object.entries(docs.definition.pages).forEach(([id]) => {
-            keys.add(`${domain}:page:${id}`);
+            keys.add(`page:${id}`);
           });
 
           Object.values(docs.definition.apisV2).forEach((api) => {
             const prunedApi = createApiDefinitionCacheKeys(api);
             prunedApi.forEach((key) => {
-              keys.add(`${domain}:api:${key}`);
+              keys.add(`api:${key}`);
             });
           });
 
@@ -50,26 +50,21 @@ export async function GET(
               ApiDefinitionV1ToLatest.from(api, edgeFlags).migrate()
             );
             prunedApi.forEach((key) => {
-              keys.add(`${domain}:api:${key}`);
+              keys.add(`api:${key}`);
             });
           });
 
-          const promises = [];
-
-          for (const [key, value] of Object.entries(keys)) {
-            promises.push(kv.set(key, value));
-          }
-
           // these are generated from docs-cache, so we need to delete them for now
           // TODO: handle this in the future more gracefully
-          await kv.del(
-            `${domain}:root`,
-            `${domain}:config`,
-            `${domain}:metadata`,
-            `${domain}:files`,
-            `${domain}:mdx-bundler-files`,
-            `${domain}:fonts`,
-            `${domain}:colors`,
+          await kv.hdel(
+            domain,
+            "root",
+            "config",
+            "metadata",
+            "files",
+            "mdx-bundler-files",
+            "fonts",
+            "colors",
             ...Array.from(keys)
           );
 

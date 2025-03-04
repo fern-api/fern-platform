@@ -170,10 +170,10 @@ export interface DocsLoader {
   getEdgeFlags: () => Promise<EdgeFlags>;
 }
 
-function kvSet(key: string, value: unknown) {
+function kvSet(domain: string, key: string, value: unknown) {
   after(async () => {
     try {
-      await kv.set(key, value);
+      await kv.hset(domain, { [key]: value });
     } catch (error) {
       console.warn(`Failed to set kv key ${key}: ${value}`, error);
     }
@@ -201,27 +201,29 @@ export const getMetadataFromResponse = async (
   };
 };
 
-const getMetadata = cache(async (domain: string): Promise<DocsMetadata> => {
-  try {
-    const cached = await kv.get<DocsMetadata>(`${domain}:metadata`);
-    if (cached != null) {
-      return cached;
+export const getMetadata = cache(
+  async (domain: string): Promise<DocsMetadata> => {
+    try {
+      const cached = await kv.hget<DocsMetadata>(domain, "metadata");
+      if (cached != null) {
+        return cached;
+      }
+    } catch (error) {
+      console.warn(
+        `Failed to get metadata for ${domain}, fallback to uncached`,
+        error
+      );
     }
-  } catch (error) {
-    console.warn(
-      `Failed to get metadata for ${domain}, fallback to uncached`,
-      error
-    );
+    const metadata = getMetadataFromResponse(domain, loadWithUrl(domain));
+    kvSet(domain, "metadata", metadata);
+    return metadata;
   }
-  const metadata = getMetadataFromResponse(domain, loadWithUrl(domain));
-  kvSet(`${domain}:metadata`, metadata);
-  return metadata;
-});
+);
 
 const getFiles = cache(
   async (domain: string): Promise<Record<string, FileData>> => {
     try {
-      const cached = await kv.get<Record<string, FileData>>(`${domain}:files`);
+      const cached = await kv.hget<Record<string, FileData>>(domain, "files");
       if (cached != null) {
         return cached;
       }
@@ -248,7 +250,7 @@ const getFiles = cache(
       }
       throw new UnreachableCaseError(file);
     });
-    kvSet(`${domain}:files`, files);
+    kvSet(domain, "files", files);
     return files;
   }
 );
@@ -280,7 +282,10 @@ const createGetPrunedApiCached = (domain: string) =>
       try {
         if (nodes.length === 1 && nodes[0]) {
           const key = `${domain}:api:${id}:${createEndpointCacheKey(nodes[0])}`;
-          const cached = await kv.get<ApiDefinition.ApiDefinition>(key);
+          const cached = await kv.hget<ApiDefinition.ApiDefinition>(
+            domain,
+            key
+          );
           if (cached != null) {
             return await backfillSnippets(cached, await flagsPromise);
           }
@@ -298,7 +303,7 @@ const createGetPrunedApiCached = (domain: string) =>
       // if there is only one node, and it's an endpoint, try to cache the result
       if (nodes.length === 1 && nodes[0]) {
         const key = `${domain}:api:${id}:${createEndpointCacheKey(nodes[0])}`;
-        kvSet(key, pruned);
+        kvSet(domain, key, pruned);
       }
 
       return backfillSnippets(pruned, await flagsPromise);
@@ -447,7 +452,7 @@ export function convertResponseToRootNode(
 
 const unsafe_getFullRoot = async (domain: string) => {
   try {
-    const cached = await kv.get<FernNavigation.RootNode>(`${domain}:root`);
+    const cached = await kv.hget<FernNavigation.RootNode>(domain, "root");
     if (cached != null) {
       return cached;
     }
@@ -523,9 +528,9 @@ const getNavigationNode = cache(
 
 const getConfig = cache(async (domain: string) => {
   try {
-    const cached = await kv.get<
+    const cached = await kv.hget<
       Omit<DocsV1Read.DocsDefinition["config"], "navigation" | "root">
-    >(`${domain}:config`);
+    >(domain, "config");
     if (cached != null) {
       return cached;
     }
@@ -537,14 +542,15 @@ const getConfig = cache(async (domain: string) => {
   }
   const response = await loadWithUrl(domain);
   const { navigation, root, ...config } = response.definition.config;
-  kvSet(`${domain}:config`, config);
+  kvSet(domain, "config", config);
   return config;
 });
 
 const getPage = cache(async (domain: string, pageId: string) => {
   try {
-    const page = await kv.get<DocsV1Read.PageContent>(
-      `${domain}:page:${pageId}`
+    const page = await kv.hget<DocsV1Read.PageContent>(
+      domain,
+      `page:${pageId}`
     );
     if (page != null && isPlainObject(page) && "markdown" in page) {
       return {
@@ -564,7 +570,7 @@ const getPage = cache(async (domain: string, pageId: string) => {
   if (page == null) {
     notFound();
   }
-  kvSet(`${domain}:page:${pageId}`, page);
+  kvSet(domain, `page:${pageId}`, page);
   return {
     filename: pageId,
     markdown: page.markdown,
@@ -574,8 +580,9 @@ const getPage = cache(async (domain: string, pageId: string) => {
 
 const getMdxBundlerFiles = cache(async (domain: string) => {
   try {
-    const cached = await kv.get<Record<string, string>>(
-      `${domain}:mdx-bundler-files`
+    const cached = await kv.hget<Record<string, string>>(
+      domain,
+      "mdx-bundler-files"
     );
     if (cached != null) {
       return cached;
@@ -588,16 +595,16 @@ const getMdxBundlerFiles = cache(async (domain: string) => {
   }
   const response = await loadWithUrl(domain);
   const files = response.definition.jsFiles ?? {};
-  kvSet(`${domain}:mdx-bundler-files`, files);
+  kvSet(domain, "mdx-bundler-files", files);
   return files;
 });
 
 const getColors = cache(async (domain: string) => {
   try {
-    const cached = await kv.get<{
+    const cached = await kv.hget<{
       light: FernColorTheme | undefined;
       dark: FernColorTheme | undefined;
-    }>(`${domain}:colors`);
+    }>(domain, "colors");
     if (cached != null) {
       return cached;
     }
@@ -671,13 +678,13 @@ const getColors = cache(async (domain: string) => {
         }
       : undefined,
   };
-  kvSet(`${domain}:colors`, colors);
+  kvSet(domain, "colors", colors);
   return colors;
 });
 
 const getFonts = cache(async (domain: string) => {
   try {
-    const cached = await kv.get<FernFonts>(`${domain}:fonts`);
+    const cached = await kv.hget<FernFonts>(domain, "fonts");
     if (cached != null) {
       return cached;
     }
@@ -692,7 +699,7 @@ const getFonts = cache(async (domain: string) => {
     response.definition.config.typographyV2,
     await getFiles(domain)
   );
-  kvSet(`${domain}:fonts`, fonts);
+  kvSet(domain, "fonts", fonts);
   return fonts;
 });
 
