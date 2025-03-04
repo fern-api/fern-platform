@@ -40,7 +40,7 @@ export default async function ExplorerLayout({
 
       <HorizontalSplitPane
         mode="pixel"
-        className="w-full flex-1 overflow-y-auto"
+        className="w-full flex-1 overflow-y-auto overscroll-contain"
         leftClassName="border-border-default border-r hidden lg:block"
       >
         <PlaygroundEndpointSelectorContent

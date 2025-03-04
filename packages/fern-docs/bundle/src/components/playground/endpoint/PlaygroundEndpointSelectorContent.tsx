@@ -138,7 +138,7 @@ export const PlaygroundEndpointSelectorContent = forwardRef<
         </div>
         <FernScrollArea
           rootClassName="min-h-0 flex-1 shrink w-full"
-          className="mask-grad-y-6 !flex w-full"
+          className="mask-grad-y-6 !flex w-full overscroll-contain"
           scrollbars="vertical"
           asChild
         >
