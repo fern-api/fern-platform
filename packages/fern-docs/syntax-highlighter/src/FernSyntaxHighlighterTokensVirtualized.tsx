@@ -18,12 +18,13 @@ import {
   fernSyntaxHighlighterTokenPropsAreEqual,
 } from "./FernSyntaxHighlighterTokens";
 import { HastToJSX } from "./HastToJsx";
-import { flattenHighlightLines, getLineHeight, getMaxHeight } from "./utils";
+import { flattenLineNumbers, getLineHeight, getMaxHeight } from "./utils";
 
 interface CodeBlockContext {
   fontSize: "sm" | "base" | "lg";
   highlightStyle: "highlight" | "focus" | undefined;
   highlightedLines: number[];
+  promptLineNumbers: number[];
   lang: string;
   wordWrap?: boolean;
 }
@@ -98,6 +99,7 @@ export const FernSyntaxHighlighterTokensVirtualized = memo(
       tokens,
       maxLines,
       wordWrap,
+      promptLines,
     } = props;
 
     const virtuosoRef = useRef<TableVirtuosoHandle>(null);
@@ -166,10 +168,18 @@ export const FernSyntaxHighlighterTokensVirtualized = memo(
         fontSize,
         lang: tokens.lang,
         highlightStyle,
-        highlightedLines: flattenHighlightLines(highlightLines ?? []),
+        highlightedLines: flattenLineNumbers(highlightLines ?? []),
         wordWrap,
+        promptLineNumbers: flattenLineNumbers(promptLines ?? [0]),
       }),
-      [fontSize, highlightLines, highlightStyle, tokens.lang, wordWrap]
+      [
+        fontSize,
+        highlightLines,
+        highlightStyle,
+        tokens.lang,
+        wordWrap,
+        promptLines,
+      ]
     );
 
     const lang = tokens.lang;
@@ -185,7 +195,11 @@ export const FernSyntaxHighlighterTokensVirtualized = memo(
           {!plaintext && (
             <td className="code-block-line-gutter">
               <span>
-                {gutterCli ? (lineNumber === 0 ? "$" : ">") : lineNumber + 1}
+                {gutterCli
+                  ? context.promptLineNumbers.includes(lineNumber)
+                    ? "$"
+                    : ">"
+                  : lineNumber + 1}
               </span>
             </td>
           )}
@@ -194,7 +208,7 @@ export const FernSyntaxHighlighterTokensVirtualized = memo(
           </td>
         </>
       ),
-      [gutterCli, plaintext]
+      [gutterCli, plaintext, context.promptLineNumbers]
     );
 
     return (

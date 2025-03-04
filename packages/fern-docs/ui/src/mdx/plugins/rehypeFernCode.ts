@@ -96,6 +96,7 @@ export function rehypeFernCode(): (tree: Hast.Root) => void {
             maxLines: meta.maxLines,
             wordWrap: meta.wordWrap,
             matchLanguage: meta.matchLanguage,
+            promptLines: meta.promptLines,
           };
           if (meta.title == null) {
             parent?.children.splice(index, 1, {
@@ -135,6 +136,7 @@ interface CodeBlockItem {
   title: string | undefined;
   wordWrap: boolean | undefined;
   matchLanguage: string | undefined;
+  promptLines: number[];
 }
 
 function visitCodeBlockNodes(nodeToVisit: MdxJsxElementHast) {
@@ -166,6 +168,7 @@ function visitCodeBlockNodes(nodeToVisit: MdxJsxElementHast) {
                     : undefined),
               wordWrap: meta.wordWrap,
               matchLanguage: meta.matchLanguage,
+              promptLines: meta.promptLines,
             });
           }
         }
@@ -191,6 +194,7 @@ function visitCodeBlockNodes(nodeToVisit: MdxJsxElementHast) {
           title: meta.title,
           wordWrap: meta.wordWrap,
           matchLanguage: meta.matchLanguage,
+          promptLines: meta.promptLines,
         });
       }
     }
@@ -226,6 +230,7 @@ interface FernCodeMeta {
   wordWrap?: boolean;
   highlights: number[];
   matchLanguage: string | undefined;
+  promptLines: number[];
 }
 
 function maybeParseInt(str: string | null | undefined): number | undefined {
@@ -290,6 +295,14 @@ export function parseBlockMetaString(
   const match = matchLanguage?.[1] ?? matchLanguage?.[2];
   meta = meta.replace(matchLanguage?.[0] ?? "", "");
 
+  const promptLinesMatch = meta.match(/promptLines=\{(.*?)\}/);
+  const promptLines = promptLinesMatch?.[1]
+    ? rangeParser(promptLinesMatch[1])
+    : [];
+  meta = meta
+    .replace(promptLinesMatch?.[0] ?? "", "")
+    .replace(promptLinesMatch?.[1] ?? "", "");
+
   const [highlights, strippedMeta] = parseHighlightedLineNumbers(meta);
   meta = strippedMeta;
 
@@ -318,6 +331,7 @@ export function parseBlockMetaString(
     wordWrap: wordWrap != null,
     highlights,
     matchLanguage: match,
+    promptLines,
   };
 }
 

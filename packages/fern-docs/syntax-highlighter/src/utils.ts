@@ -1,5 +1,5 @@
 // [number, number] is a range of lines to highlight
-export type HighlightLine = number | [number, number];
+export type LineNumbers = number | [number, number];
 
 export function getLineHeight(fontSize: "sm" | "base" | "lg"): number {
   return 1.625 * (fontSize === "sm" ? 12 : fontSize === "base" ? 14 : 16);
@@ -18,10 +18,8 @@ export function getMaxHeight(
   return maxLines * lineHeight + (fontSize === "sm" ? 8 : 12) * 2;
 }
 
-export function flattenHighlightLines(
-  highlightLines: HighlightLine[]
-): number[] {
-  return highlightLines.flatMap((lineNumber) => {
+export function flattenLineNumbers(lineNumbers: LineNumbers[]): number[] {
+  return lineNumbers.flatMap((lineNumber) => {
     if (Array.isArray(lineNumber)) {
       const [start, end] = lineNumber;
       return Array.from({ length: end - start + 1 }, (_, i) => start + i - 1);

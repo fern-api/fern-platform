@@ -6,11 +6,7 @@ import type { Element } from "hast";
 import { forwardRef, memo, useImperativeHandle, useMemo, useRef } from "react";
 import { HastToJSX } from "./HastToJsx";
 import { HighlightedTokens } from "./fernShiki";
-import {
-  flattenHighlightLines,
-  getMaxHeight,
-  type HighlightLine,
-} from "./utils";
+import { flattenLineNumbers, getMaxHeight, type LineNumbers } from "./utils";
 
 export interface ScrollToHandle {
   scrollTo: (options: ScrollToOptions) => void;
@@ -22,7 +18,7 @@ export interface ScrollToHandle {
 export interface FernSyntaxHighlighterTokensProps {
   tokens: HighlightedTokens;
   fontSize?: "sm" | "base" | "lg";
-  highlightLines?: HighlightLine[];
+  highlightLines?: LineNumbers[];
   highlightStyle?: "highlight" | "focus";
 
   className?: string;
@@ -30,6 +26,7 @@ export interface FernSyntaxHighlighterTokensProps {
   viewportRef?: React.RefObject<ScrollToHandle>;
   maxLines?: number;
   wordWrap?: boolean;
+  promptLines?: LineNumbers[];
 }
 
 export function fernSyntaxHighlighterTokenPropsAreEqual(
@@ -38,6 +35,7 @@ export function fernSyntaxHighlighterTokenPropsAreEqual(
 ): boolean {
   return (
     isEqual(prevProps.highlightLines, nextProps.highlightLines) &&
+    isEqual(prevProps.promptLines, nextProps.promptLines) &&
     isEqual(prevProps.style, nextProps.style) &&
     prevProps.fontSize === nextProps.fontSize &&
     prevProps.highlightStyle === nextProps.highlightStyle &&
@@ -60,6 +58,7 @@ export const FernSyntaxHighlighterTokens = memo(
       tokens,
       maxLines,
       wordWrap,
+      promptLines,
     } = props;
     const scrollAreaRef = useRef<HTMLDivElement>(null);
 
@@ -104,8 +103,12 @@ export const FernSyntaxHighlighterTokens = memo(
     }, [tokens.hast]);
 
     const highlightedLines = useMemo(
-      () => flattenHighlightLines(highlightLines ?? []),
+      () => flattenLineNumbers(highlightLines ?? []),
       [highlightLines]
+    );
+    const promptLineNumbers = useMemo(
+      () => flattenLineNumbers(promptLines ?? [0]),
+      [promptLines]
     );
     const lines = useMemo(() => {
       const lines: Element[] = [];
@@ -172,7 +175,7 @@ export const FernSyntaxHighlighterTokens = memo(
                         <td className="code-block-line-gutter">
                           <span>
                             {gutterCli
-                              ? lineNumber === 0
+                              ? promptLineNumbers.includes(lineNumber)
                                 ? "$"
                                 : ">"
                               : lineNumber + 1}
