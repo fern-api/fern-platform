@@ -21,7 +21,6 @@
   --sticky-aside-width: calc(
     var(--spacing-sidebar-width) + var(--aside-offset)
   );
-  --bprogress-color: var(--accent);
 }
 
 @media (min-width: 768px) {

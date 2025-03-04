@@ -88,11 +88,6 @@ export interface DocsLoader {
   getMdxBundlerFiles: () => Promise<Record<string, string>>;
 
   /**
-   * @returns the api definition for the given id
-   */
-  getApi: (id: string) => Promise<ApiDefinition.ApiDefinition>;
-
-  /**
    * @returns the api definition for the given id, pruned to the given nodes
    */
   getPrunedApi: (
@@ -200,7 +195,7 @@ const getFiles = async (domain: string): Promise<Record<string, FileData>> => {
     // do nothing
   }
   const response = await loadWithUrl(domain);
-  return mapValues(response.definition.filesV2, (file) => {
+  const files = mapValues(response.definition.filesV2, (file) => {
     if (file.type === "url") {
       return {
         src: file.url,
@@ -216,8 +211,15 @@ const getFiles = async (domain: string): Promise<Record<string, FileData>> => {
     }
     throw new UnreachableCaseError(file);
   });
+  try {
+    await kv.set(`${domain}:files`, files);
+  } catch {
+    // do nothing
+  }
+  return files;
 };
 
+// the api reference may be too large to cache, so we don't cache it in the KV store
 const getApi = async (domain: string, id: string) => {
   const response = await loadWithUrl(domain);
   const latest = response.definition.apisV2[ApiDefinitionId(id)];
@@ -232,19 +234,6 @@ const getApi = async (domain: string, id: string) => {
   return ApiDefinitionV1ToLatest.from(v1, flags).migrate();
 };
 
-const createGetApiCached = (domain: string) =>
-  unstable_cache(
-    async (id: string): Promise<ApiDefinition.ApiDefinition> => {
-      const [api, flags] = await Promise.all([
-        getApi(domain, id),
-        cachedGetEdgeFlags(domain),
-      ]);
-      return backfillSnippets(api, flags);
-    },
-    [domain, cacheSeed()],
-    { tags: [domain, "api"] }
-  );
-
 const createGetPrunedApiCached = (domain: string) =>
   unstable_cache(
     async (
@@ -252,6 +241,8 @@ const createGetPrunedApiCached = (domain: string) =>
       ...nodes: PruningNodeType[]
     ): Promise<ApiDefinition.ApiDefinition> => {
       const flagsPromise = cachedGetEdgeFlags(domain);
+
+      // if there is only one node, and it's an endpoint, try to load from cache
       try {
         if (nodes.length === 1 && nodes[0]) {
           const key = `${domain}:api:${id}:${createEndpointCacheKey(nodes[0])}`;
@@ -265,7 +256,19 @@ const createGetPrunedApiCached = (domain: string) =>
       }
 
       const api = await getApi(domain, id);
-      return backfillSnippets(prune(api, ...nodes), await flagsPromise);
+      const pruned = prune(api, ...nodes);
+
+      // if there is only one node, and it's an endpoint, try to cache the result
+      try {
+        if (nodes.length === 1 && nodes[0]) {
+          const key = `${domain}:api:${id}:${createEndpointCacheKey(nodes[0])}`;
+          await kv.set(key, pruned);
+        }
+      } catch {
+        // do nothing
+      }
+
+      return backfillSnippets(pruned, await flagsPromise);
     },
     [domain, cacheSeed()],
     { tags: [domain, "api"] }
@@ -491,6 +494,11 @@ const getConfig = async (domain: string) => {
   }
   const response = await loadWithUrl(domain);
   const { navigation, root, ...config } = response.definition.config;
+  try {
+    await kv.set(`${domain}:config`, config);
+  } catch {
+    // do nothing
+  }
   return config;
 };
 
@@ -514,6 +522,11 @@ const getPage = async (domain: string, pageId: string) => {
   if (page == null) {
     notFound();
   }
+  try {
+    await kv.set(`${domain}:page:${pageId}`, page);
+  } catch {
+    // do nothing
+  }
   return {
     filename: pageId,
     markdown: page.markdown,
@@ -533,10 +546,27 @@ const getMdxBundlerFiles = async (domain: string) => {
     // do nothing
   }
   const response = await loadWithUrl(domain);
-  return response.definition.jsFiles ?? {};
+  const files = response.definition.jsFiles ?? {};
+  try {
+    await kv.set(`${domain}:mdx-bundler-files`, files);
+  } catch {
+    // do nothing
+  }
+  return files;
 };
 
 const getColors = async (domain: string) => {
+  try {
+    const cached = await kv.get<{
+      light: FernColorTheme | undefined;
+      dark: FernColorTheme | undefined;
+    }>(`${domain}:colors`);
+    if (cached != null) {
+      return cached;
+    }
+  } catch {
+    // do nothing
+  }
   const [config, files] = await Promise.all([
     getConfig(domain),
     getFiles(domain),
@@ -563,7 +593,7 @@ const getColors = async (domain: string) => {
         ? config.colorsV3.dark
         : undefined;
 
-  return {
+  const colors = {
     light: light
       ? {
           logo: light.logo ? files[light.logo] : undefined,
@@ -601,14 +631,34 @@ const getColors = async (domain: string) => {
         }
       : undefined,
   };
+  try {
+    await kv.set(`${domain}:colors`, colors);
+  } catch {
+    // do nothing
+  }
+  return colors;
 };
 
 const getFonts = async (domain: string) => {
+  try {
+    const cached = await kv.get<FernFonts>(`${domain}:fonts`);
+    if (cached != null) {
+      return cached;
+    }
+  } catch {
+    // do nothing
+  }
   const response = await loadWithUrl(domain);
-  return generateFonts(
+  const fonts = generateFonts(
     response.definition.config.typographyV2,
     await getFiles(domain)
   );
+  try {
+    await kv.set(`${domain}:fonts`, fonts);
+  } catch {
+    // do nothing
+  }
+  return fonts;
 };
 
 const getLayout = async (domain: string) => {
@@ -687,7 +737,7 @@ export const createCachedDocsLoader = async (
         tags: [domain, "mdxBundlerFiles"],
       })
     ),
-    getApi: cache(createGetApiCached(domain)),
+    // getApi: cache(createGetApiCached(domain)),
     getPrunedApi: cache(createGetPrunedApiCached(domain)),
     getEndpointById: cache(
       unstable_cache(

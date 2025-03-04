@@ -17,7 +17,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
           <Toaster />
           <ProgressProvider
             height="3px"
-            color="var(--bprogress-color)"
+            color="var(--accent)"
             options={{ showSpinner: false }}
             disableSameURL
             delay={300}

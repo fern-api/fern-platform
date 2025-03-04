@@ -139,6 +139,8 @@ export async function GET(
             }
           });
 
+          await kv.del(`${domain}:fonts`, `${domain}:colors`);
+
           controller.enqueue(
             `revalidate-kv-keys-set:${Object.keys(keys).length}\n`
           );
