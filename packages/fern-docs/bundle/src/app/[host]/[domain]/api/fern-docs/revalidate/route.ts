@@ -16,7 +16,7 @@ import {
   prune,
 } from "@fern-api/fdr-sdk/api-definition";
 import { withDefaultProtocol } from "@fern-api/ui-core-utils";
-import { getEdgeFlags } from "@fern-docs/edge-config";
+import { getAuthEdgeConfig, getEdgeFlags } from "@fern-docs/edge-config";
 import {
   EdgeFlags,
   HEADER_X_FERN_HOST,
@@ -34,6 +34,7 @@ import {
   queueAlgoliaReindex,
   queueTurbopufferReindex,
 } from "@/server/queue-reindex";
+import { pruneWithAuthState } from "@/server/withRbac";
 
 export async function GET(
   req: NextRequest,
@@ -51,10 +52,11 @@ export async function GET(
 
         const loadWithUrlPromise = loadWithUrl(domain);
 
-        const [docs, edgeFlags, metadata] = await Promise.all([
+        const [docs, edgeFlags, metadata, authConfig] = await Promise.all([
           loadWithUrlPromise,
           getEdgeFlags(domain),
           getMetadataFromResponse(withoutStaging(domain), loadWithUrlPromise),
+          getAuthEdgeConfig(domain),
         ]);
 
         let reindexPromise: Promise<void> | undefined;
@@ -73,7 +75,21 @@ export async function GET(
             });
         }
 
-        const root = convertResponseToRootNode(docs, edgeFlags);
+        let root = convertResponseToRootNode(docs, edgeFlags);
+
+        // maybe prune the root node if we have an auth config
+        if (root && authConfig) {
+          root = pruneWithAuthState(
+            {
+              authed: false,
+              authorizationUrl: undefined,
+              partner: undefined,
+              ok: true,
+            },
+            authConfig,
+            root
+          );
+        }
 
         try {
           const keys: Record<string, unknown> = {};
