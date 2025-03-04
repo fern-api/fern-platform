@@ -2,25 +2,16 @@
 
 import { SquareTerminal, ChevronUp } from "lucide-react";
 
-import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { FernTooltip, FernTooltipProvider } from "@fern-docs/components";
 
 import { ButtonLink } from "@/components/FernLinkButton";
 
-import { usePlaygroundSettings } from "../hooks/usePlaygroundSettings";
 import { conformExplorerRoute } from "./utils/explorer-route";
-import { getEdgeFlags } from "@fern-docs/edge-config";
-import { useCurrentNodeId } from "@/state/navigation";
+import { useCurrentVersionSlug } from "@/state/navigation";
 
+// todo (catherine): add this to the endpoint content
 export const PlaygroundFloatingButton = () => {
-  const isPlaygroundEnabled = getEdgeFlags("isApiPlaygroundEnabled");
-  const nodeId = useCurrentNodeId();
-  const settings = usePlaygroundSettings(nodeId ?? undefined);
-  const apiLeaf = nodeId && FernNavigation.isApiLeaf(nodeId);
-
-  if (!isPlaygroundEnabled || settings?.disabled || !apiLeaf) {
-    return null;
-  }
+  const slug = useCurrentVersionSlug();
 
   return (
     <FernTooltipProvider>
@@ -36,7 +27,7 @@ export const PlaygroundFloatingButton = () => {
       >
         <ButtonLink
           id="playground-floating-button"
-          href={settings?.button?.href ?? conformExplorerRoute(node.slug)}
+          href={slug ? conformExplorerRoute(slug) : "/~explorer"}
         >
           <SquareTerminal height={16} width={16} />
 

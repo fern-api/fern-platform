@@ -81,7 +81,8 @@ function EndpointRequestSnippetInternal({
             options={endpoint.environments}
           />
         }
-        actions={
+        // include both dropdown and api ref button for proper placement
+        languageDropdown={
           <>
             {availableLanguages.length > 1 && (
               <CodeExampleClientDropdown
