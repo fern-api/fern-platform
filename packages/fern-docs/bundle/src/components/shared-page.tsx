@@ -50,18 +50,12 @@ export default async function SharedPage({
     conformTrailingSlash(addLeadingSlash(slug))
   );
   const edgeFlagsPromise = loader.getEdgeFlags();
-  const [baseUrl, config] = await Promise.all([
-    baseUrlPromise,
-    configPromise,
-    authStatePromise,
-    edgeFlagsPromise,
-  ]);
 
   // check for redirects
   const configuredRedirect = getRedirectForPath(
     conformTrailingSlash(addLeadingSlash(slug)),
-    baseUrl,
-    config.redirects
+    await baseUrlPromise,
+    (await configPromise).redirects
   );
 
   if (configuredRedirect != null) {

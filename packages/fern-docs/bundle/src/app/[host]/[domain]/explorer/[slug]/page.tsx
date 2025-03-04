@@ -1,7 +1,6 @@
 import "server-only";
 
 import { Metadata } from "next";
-import { cookies } from "next/headers";
 import { notFound, redirect } from "next/navigation";
 
 import { FernNavigation } from "@fern-api/fdr-sdk";
@@ -9,7 +8,7 @@ import {
   createEndpointContext,
   createWebSocketContext,
 } from "@fern-api/fdr-sdk/api-definition";
-import { COOKIE_FERN_TOKEN, conformTrailingSlash } from "@fern-docs/utils";
+import { conformTrailingSlash } from "@fern-docs/utils";
 
 import { getFernToken } from "@/app/fern-token";
 import { PlaygroundAuthorizationFormCard } from "@/components/playground/auth/PlaygroundAuthorizationFormCard";
@@ -21,15 +20,15 @@ import { createCachedDocsLoader } from "@/server/docs-loader";
 export default async function Page(props: {
   params: Promise<{ host: string; domain: string; slug: string }>;
 }) {
-  const [{ host, domain, slug: slugProp }, cookieJar] = await Promise.all([
-    props.params,
-    cookies(),
-  ]);
+  const { host, domain, slug: slugProp } = await props.params;
   console.debug(`[${domain}] Loading API Explorer page`);
 
   const slug = FernNavigation.slugjoin(slugProp);
-  const fern_token = cookieJar.get(COOKIE_FERN_TOKEN)?.value;
-  const loader = await createCachedDocsLoader(host, domain, fern_token);
+  const loader = await createCachedDocsLoader(
+    host,
+    domain,
+    await getFernToken()
+  );
 
   console.debug(`[${loader.domain}] Loading API Explorer for slug: ${slug}`);
   const root = await loader.getRoot();

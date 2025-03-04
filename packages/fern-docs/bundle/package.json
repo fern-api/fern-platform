@@ -163,6 +163,7 @@
     "@storybook/nextjs": "^8.6.0",
     "@storybook/react": "^8.6.0",
     "@storybook/test": "^8.6.0",
+    "@szmarczak/http-timer": "^5.0.1",
     "@tailwindcss/postcss": "^4.0.9",
     "@tailwindcss/typography": "^0.5.16",
     "@testing-library/jest-dom": "^6.6.3",
@@ -172,6 +173,8 @@
     "@types/react-dom": "19.0.4",
     "@types/three": "^0.173.0",
     "@types/tinycolor2": "^1.4.6",
+    "@types/xml2js": "^0.4.14",
+    "axios": "^1.8.1",
     "chromatic": "^11.26.1",
     "depcheck": "^1.4.7",
     "glslify-import": "^3.1.0",
@@ -184,6 +187,7 @@
     "tailwindcss": "^4.0.9",
     "ts-essentials": "^10.0.1",
     "typescript": "5.7.2",
-    "vitest": "^3.0.5"
+    "vitest": "^3.0.5",
+    "xml2js": "^0.6.2"
   }
 }

@@ -4,10 +4,9 @@ import { FernNavigation } from "@fern-api/fdr-sdk";
 import { slugjoin } from "@fern-api/fdr-sdk/navigation";
 
 import { SidebarTabsList } from "@/components/sidebar/SidebarTabsList";
-import { SidebarTabsRoot } from "@/components/sidebar/SidebarTabsRoot";
+import { SidebarTabsRootServer } from "@/components/sidebar/SidebarTabsRootServer";
 import { SidebarRootNode } from "@/components/sidebar/nodes/SidebarRootNode";
 import { createCachedDocsLoader } from "@/server/docs-loader";
-import { withPrunedNavigation } from "@/server/withPrunedNavigation";
 
 export default async function SidebarPage({
   params,
@@ -16,38 +15,30 @@ export default async function SidebarPage({
 }) {
   const { host, domain, slug } = await params;
   const loader = await createCachedDocsLoader(host, domain);
-  const [root, layout, authState, edgeFlags] = await Promise.all([
-    loader.getRoot(),
-    loader.getLayout(),
-    loader.getAuthState(),
-    loader.getEdgeFlags(),
-  ]);
 
-  const foundNode = FernNavigation.utils.findNode(root, slugjoin(slug));
+  const rootPromise = loader.getRoot();
+
+  // preload:
+  loader.getLayout();
+  loader.getAuthState();
+  loader.getEdgeFlags();
+
+  const foundNode = FernNavigation.utils.findNode(
+    await rootPromise,
+    slugjoin(slug)
+  );
   if (foundNode.type !== "found") {
     return null;
   }
 
-  // TODO: how do we handle hidden tabs?
-  const sidebar = withPrunedNavigation(foundNode.sidebar, {
-    visibleNodeIds: [foundNode.node.id],
-    authed: authState.authed,
-    // when true, all unauthed pages are visible, but rendered with a LOCK button
-    // so they're not actually "pruned" from the sidebar
-    // TODO: move this out of a feature flag and into the navigation node metadata
-    discoverable: edgeFlags.isAuthenticatedPagesDiscoverable
-      ? (true as const)
-      : undefined,
-  });
-
   return (
     <>
       {foundNode.tabs && foundNode.tabs.length > 0 && (
-        <SidebarTabsRoot mobileOnly={layout.tabsPlacement !== "SIDEBAR"}>
+        <SidebarTabsRootServer loader={loader}>
           <SidebarTabsList tabs={foundNode.tabs} />
-        </SidebarTabsRoot>
+        </SidebarTabsRootServer>
       )}
-      <SidebarRootNode root={sidebar} />
+      <SidebarRootNode root={foundNode.sidebar} loader={loader} />
     </>
   );
 }
