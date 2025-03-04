@@ -75,11 +75,12 @@ export async function GET(
             });
         }
 
-        let root = convertResponseToRootNode(docs, edgeFlags);
+        const root = convertResponseToRootNode(docs, edgeFlags);
+        let staticRoot = root;
 
         // maybe prune the root node if we have an auth config
-        if (root && authConfig) {
-          root = pruneWithAuthState(
+        if (staticRoot && authConfig) {
+          staticRoot = pruneWithAuthState(
             {
               authed: false,
               authorizationUrl: undefined,
@@ -87,7 +88,7 @@ export async function GET(
               ok: true,
             },
             authConfig,
-            root
+            staticRoot
           );
         }
 
@@ -176,7 +177,7 @@ export async function GET(
         }
 
         if (req.nextUrl.searchParams.get("regenerate") !== "false") {
-          const collector = FernNavigation.NodeCollector.collect(root);
+          const collector = FernNavigation.NodeCollector.collect(staticRoot);
           const batches = chunk(collector.staticPageSlugs, 200);
 
           controller.enqueue(
