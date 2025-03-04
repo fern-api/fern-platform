@@ -83,10 +83,3 @@ export function GitHubWidget({
     </FernLinkButton>
   );
 }
-
-export const getGitHubRepo = (url: string): string | null => {
-  return (
-    url.match(/^https:\/\/(www\.)?github\.com\/([\w-]+\/[\w-]+)\/?$/)?.[2] ??
-    null
-  );
-};

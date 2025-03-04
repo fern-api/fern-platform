@@ -11,7 +11,7 @@ import { FaIconServer } from "@/components/fa-icon-server";
 import { DocsLoader } from "@/server/docs-loader";
 import type { NavbarLink, NavbarLink as NavbarLinkType } from "@/state/types";
 
-import { GitHubWidget, getGitHubRepo } from "./GitHubWidget";
+import { GitHubWidget } from "./GitHubWidget";
 import { WithReturnTo } from "./WithReturnTo";
 
 export async function NavbarLinks({ loader }: { loader: DocsLoader }) {
@@ -50,6 +50,13 @@ export async function NavbarLinks({ loader }: { loader: DocsLoader }) {
     </>
   );
 }
+
+const getGitHubRepo = (url: string): string | null => {
+  return (
+    url.match(/^https:\/\/(www\.)?github\.com\/([\w-]+\/[\w-]+)\/?$/)?.[2] ??
+    null
+  );
+};
 
 function HeaderNavbarLink({ navbarLink }: { navbarLink: NavbarLinkType }) {
   if (navbarLink.type === "github") {
