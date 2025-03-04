@@ -8,17 +8,37 @@ import { HideAsides, useIsSidebarFixed } from "@/state/layout";
 
 import { MobileMenu } from "./mobile-menu";
 
-export function SidebarNav({ children }: { children: React.ReactNode }) {
+export function SidebarNav({
+  children,
+  hasSidebarBackgroundColor,
+}: {
+  children: React.ReactNode;
+  hasSidebarBackgroundColor?: boolean;
+}) {
   const isDesktop = useIsDesktop();
 
   if (!isDesktop) {
-    return <MobileMenu>{children}</MobileMenu>;
+    return (
+      <MobileMenu hasSidebarBackgroundColor={hasSidebarBackgroundColor}>
+        {children}
+      </MobileMenu>
+    );
   }
 
-  return <DesktopMenu>{children}</DesktopMenu>;
+  return (
+    <DesktopMenu hasSidebarBackgroundColor={hasSidebarBackgroundColor}>
+      {children}
+    </DesktopMenu>
+  );
 }
 
-function DesktopMenu({ children }: { children: React.ReactNode }) {
+function DesktopMenu({
+  children,
+  hasSidebarBackgroundColor,
+}: {
+  children: React.ReactNode;
+  hasSidebarBackgroundColor?: boolean;
+}) {
   const fixed = useIsSidebarFixed();
   return (
     <>
@@ -35,10 +55,11 @@ function DesktopMenu({ children }: { children: React.ReactNode }) {
             "sticky h-fit max-h-[calc(100dvh-var(--header-height))] shrink-0 border-r-0",
           fixed &&
             "border-border-concealed fixed bottom-0 left-0 border-r backdrop-blur-xl",
-          "top-(--header-height) hidden"
+          "top-(--header-height) hidden",
+          { "bg-(color:--sidebar-background)": hasSidebarBackgroundColor }
         )}
       >
-        {fixed && (
+        {fixed && !hasSidebarBackgroundColor && (
           <div className="clipped-background opacity-70">
             <BgImageGradient className="translate-y-[calc(var(--header-height)*-1)]" />
           </div>

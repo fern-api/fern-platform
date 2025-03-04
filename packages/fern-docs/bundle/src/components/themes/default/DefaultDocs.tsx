@@ -21,6 +21,7 @@ export default function DefaultDocs({
   isSidebarFixed = false,
   isHeaderDisabled = false,
   showSearchBarInTabs = false,
+  hasSidebarBackgroundColor = false,
 }: {
   header: React.ReactNode;
   sidebar: React.ReactNode;
@@ -30,6 +31,7 @@ export default function DefaultDocs({
   isSidebarFixed?: boolean;
   isHeaderDisabled?: boolean;
   showSearchBarInTabs?: boolean;
+  hasSidebarBackgroundColor?: boolean;
 }) {
   const mainRef = React.useRef<HTMLDivElement>(null);
   return (
@@ -55,7 +57,9 @@ export default function DefaultDocs({
 
       <MainCtx.Provider value={mainRef}>
         <main ref={mainRef} className="mt-(--header-height) relative z-0 flex">
-          <SidebarNav>{sidebar}</SidebarNav>
+          <SidebarNav hasSidebarBackgroundColor={hasSidebarBackgroundColor}>
+            {sidebar}
+          </SidebarNav>
           {children}
         </main>
       </MainCtx.Provider>

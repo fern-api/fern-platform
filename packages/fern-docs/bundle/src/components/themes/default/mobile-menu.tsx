@@ -15,6 +15,7 @@ import {
   useTransform,
 } from "motion/react";
 
+import { cn } from "@fern-docs/components";
 import { useIsomorphicLayoutEffect } from "@fern-ui/react-commons";
 
 import { BgImageGradient } from "@/components/BgImageGradient";
@@ -32,7 +33,13 @@ const transition = {
   duration: 0.3,
 };
 
-export function MobileMenu({ children }: { children: React.ReactNode }) {
+export function MobileMenu({
+  children,
+  hasSidebarBackgroundColor,
+}: {
+  children: React.ReactNode;
+  hasSidebarBackgroundColor?: boolean;
+}) {
   const [open, setOpen] = useIsDismissableSidebarOpen();
 
   // Close the sidebar when the path changes
@@ -228,7 +235,10 @@ export function MobileMenu({ children }: { children: React.ReactNode }) {
             <motion.div
               layoutRoot
               id="fern-sidebar"
-              className="sm:w-sidebar-width border-border-concealed pointer-events-auto fixed inset-y-0 right-0 top-[calc(var(--header-height)+1px)] z-40 flex w-full max-w-[calc(100dvw-3rem)] flex-col border-l backdrop-blur-xl"
+              className={cn(
+                "sm:w-sidebar-width border-border-concealed pointer-events-auto fixed inset-y-0 right-0 top-[calc(var(--header-height)+1px)] z-40 flex w-full max-w-[calc(100dvw-3rem)] flex-col border-l backdrop-blur-xl",
+                { "bg-(color:--sidebar-background)": hasSidebarBackgroundColor }
+              )}
               key="sidebar"
               onPointerDown={(event) => dragControls.start(event)}
               onDragStart={() => {
@@ -259,9 +269,11 @@ export function MobileMenu({ children }: { children: React.ReactNode }) {
               exit={{ x: "100%" }}
               transition={transition}
             >
-              <div className="clipped-background">
-                <BgImageGradient className="translate-y-[calc(var(--header-height)*-1)]" />
-              </div>
+              {!hasSidebarBackgroundColor && (
+                <div className="clipped-background">
+                  <BgImageGradient className="translate-y-[calc(var(--header-height)*-1)]" />
+                </div>
+              )}
               {children}
             </motion.div>
           )}

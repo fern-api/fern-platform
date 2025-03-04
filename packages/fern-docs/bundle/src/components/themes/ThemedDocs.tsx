@@ -17,6 +17,7 @@ export function ThemedDocs({
   isSidebarFixed = false,
   isHeaderDisabled = false,
   showSearchBarInTabs = false,
+  hasSidebarBackgroundColor = false,
 }: {
   theme?: FernTheme;
   announcement?: React.ReactNode;
@@ -27,6 +28,7 @@ export function ThemedDocs({
   isSidebarFixed?: boolean;
   isHeaderDisabled?: boolean;
   showSearchBarInTabs?: boolean;
+  hasSidebarBackgroundColor?: boolean;
 }) {
   const Docs = THEMES[theme];
   return (

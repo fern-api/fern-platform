@@ -51,6 +51,9 @@ export default async function SharedLayout({
         !layout.pageWidth ||
         layout.isHeaderDisabled
       }
+      hasSidebarBackgroundColor={
+        !!colors.dark?.sidebarBackground || !!colors.light?.sidebarBackground
+      }
       isHeaderDisabled={layout.isHeaderDisabled}
       announcement={
         announcementText && (
