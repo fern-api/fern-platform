@@ -119,7 +119,8 @@ export function GlobalStyles({
             ? "#000"
             : (root?.border ?? "initial")};
           --sidebar-background: ${root?.sidebarBackground ?? "initial"};
-          --header-background: ${root?.headerBackground ?? "initial"};
+          --header-background: ${root?.headerBackground ??
+          "color-mix(in srgb, var(--background), transparent 30%)"};
           --card-background: ${root?.cardBackground ?? "initial"};
           --theme-color: ${root?.themeColor};
         }
@@ -132,7 +133,7 @@ export function GlobalStyles({
             domain.includes("nominal") ? "#fff" : (dark.border ?? "initial")
           };
           --sidebar-background: ${dark.sidebarBackground ?? "initial"};
-          --header-background: ${dark.headerBackground ?? "initial"};
+          --header-background: ${dark.headerBackground ?? "color-mix(in srgb, var(--background), transparent 30%)"};
           --card-background: ${dark.cardBackground ?? "initial"};
           --theme-color: ${dark.themeColor};
         }`
