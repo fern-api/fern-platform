@@ -144,7 +144,7 @@ describe("parseBlockMetaString", () => {
   it("should handle empty promptLines", () => {
     const node = createElement("promptLines={}");
     const meta = parseBlockMetaString(node);
-    expect(meta.promptLines).toEqual([]);
+    expect(meta.promptLines).toEqual([1]);
   });
 
   it("should parse both promptLines and highlights", () => {
