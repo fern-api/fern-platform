@@ -45,7 +45,9 @@ export const MdxAside = React.memo<{
     return (
       <ErrorBoundary>
         <MDXProvider components={createMdxComponents(jsxElements)}>
-          <Aside />
+          <div className="flex flex-col">
+            <Aside />
+          </div>
         </MDXProvider>
       </ErrorBoundary>
     );
