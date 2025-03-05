@@ -7,7 +7,7 @@ import { FernSyntaxHighlighterTokensVirtualized } from "./FernSyntaxHighlighterT
 import { createRawTokens, highlightTokens, useHighlighter } from "./fernShiki";
 
 // [number, number] is a range of lines to highlight
-type LineNumbers = number | [number, number];
+type LineNumber = number | [number, number];
 
 export interface FernSyntaxHighlighterProps {
   className?: string;
@@ -16,13 +16,13 @@ export interface FernSyntaxHighlighterProps {
   code: string;
   language: string;
   fontSize?: "sm" | "base" | "lg";
-  highlightLines?: LineNumbers[];
+  highlightLines?: LineNumber[];
   highlightStyle?: "highlight" | "focus";
   viewportRef?: React.RefObject<ScrollToHandle>;
   maxLines?: number;
   wordWrap?: boolean;
   matchLanguage?: string;
-  promptLines?: LineNumbers[];
+  promptLines?: LineNumber[];
 }
 
 export const FernSyntaxHighlighter = forwardRef<

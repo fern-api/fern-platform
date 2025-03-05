@@ -153,7 +153,7 @@ describe("parseBlockMetaString", () => {
     expect(meta.promptLines).toEqual([1, 2]);
     expect(meta.highlights).toEqual([3, 4, 5]);
   });
-  
+
   it("should parse both promptLines and highlights in the reverse order", () => {
     const node = createElement("{3,4,5} promptLines={1,2}");
     const meta = parseBlockMetaString(node);
@@ -162,7 +162,9 @@ describe("parseBlockMetaString", () => {
   });
 
   it("should parse promptLines and highlights with other properties", () => {
-    const node = createElement("title='Example' promptLines={1,2} {3,4} focused wordWrap");
+    const node = createElement(
+      "title='Example' promptLines={1,2} {3,4} focused wordWrap"
+    );
     const meta = parseBlockMetaString(node);
     expect(meta.promptLines).toEqual([1, 2]);
     expect(meta.highlights).toEqual([3, 4]);

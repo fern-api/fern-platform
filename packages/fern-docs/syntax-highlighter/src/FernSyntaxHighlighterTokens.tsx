@@ -6,7 +6,7 @@ import type { Element } from "hast";
 import { forwardRef, memo, useImperativeHandle, useMemo, useRef } from "react";
 import { HastToJSX } from "./HastToJsx";
 import { HighlightedTokens } from "./fernShiki";
-import { flattenLineNumbers, getMaxHeight, type LineNumbers } from "./utils";
+import { flattenLineNumbers, getMaxHeight, type LineNumber } from "./utils";
 
 export interface ScrollToHandle {
   scrollTo: (options: ScrollToOptions) => void;
@@ -18,7 +18,7 @@ export interface ScrollToHandle {
 export interface FernSyntaxHighlighterTokensProps {
   tokens: HighlightedTokens;
   fontSize?: "sm" | "base" | "lg";
-  highlightLines?: LineNumbers[];
+  highlightLines?: LineNumber[];
   highlightStyle?: "highlight" | "focus";
 
   className?: string;
@@ -26,7 +26,7 @@ export interface FernSyntaxHighlighterTokensProps {
   viewportRef?: React.RefObject<ScrollToHandle>;
   maxLines?: number;
   wordWrap?: boolean;
-  promptLines?: LineNumbers[];
+  promptLines?: LineNumber[];
 }
 
 export function fernSyntaxHighlighterTokenPropsAreEqual(
