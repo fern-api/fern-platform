@@ -5,6 +5,7 @@ import React, { ComponentPropsWithoutRef } from "react";
 import { cn } from "@fern-docs/components";
 import { tunnel, useIsMobile, useLazyRef } from "@fern-ui/react-commons";
 
+import { Prose } from "@/mdx/components/prose";
 import { SetLayout } from "@/state/layout";
 
 import { AsideAwareDiv } from "./AsideAwareDiv";
