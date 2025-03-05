@@ -114,6 +114,62 @@ describe("parseBlockMetaString", () => {
     expect(meta.wordWrap).not.toBe(true);
     expect(meta.title).toBe("wordWrap");
   });
+
+  it("should parse promptLines meta with single value", () => {
+    const node = createElement("promptLines={1}");
+    const meta = parseBlockMetaString(node);
+    expect(meta.promptLines).toEqual([1]);
+  });
+
+  it("should parse promptLines meta with multiple values", () => {
+    const node = createElement("promptLines={1,2,3}");
+    const meta = parseBlockMetaString(node);
+    expect(meta.promptLines).toEqual([1, 2, 3]);
+  });
+
+  it("should parse promptLines meta with spaces", () => {
+    const node = createElement("promptLines={1, 2, 3}");
+    const meta = parseBlockMetaString(node);
+    expect(meta.promptLines).toEqual([1, 2, 3]);
+  });
+
+  it("should parse promptLines meta along with other properties", () => {
+    const node = createElement("title='Example' promptLines={1,2} focused");
+    const meta = parseBlockMetaString(node);
+    expect(meta.promptLines).toEqual([1, 2]);
+    expect(meta.title).toEqual("Example");
+    expect(meta.focused).toBe(true);
+  });
+
+  it("should handle empty promptLines", () => {
+    const node = createElement("promptLines={}");
+    const meta = parseBlockMetaString(node);
+    expect(meta.promptLines).toEqual([]);
+  });
+
+  it("should parse both promptLines and highlights", () => {
+    const node = createElement("promptLines={1,2} {3,4,5}");
+    const meta = parseBlockMetaString(node);
+    expect(meta.promptLines).toEqual([1, 2]);
+    expect(meta.highlights).toEqual([3, 4, 5]);
+  });
+  
+  it("should parse both promptLines and highlights in the reverse order", () => {
+    const node = createElement("{3,4,5} promptLines={1,2}");
+    const meta = parseBlockMetaString(node);
+    expect(meta.promptLines).toEqual([1, 2]);
+    expect(meta.highlights).toEqual([3, 4, 5]);
+  });
+
+  it("should parse promptLines and highlights with other properties", () => {
+    const node = createElement("title='Example' promptLines={1,2} {3,4} focused wordWrap");
+    const meta = parseBlockMetaString(node);
+    expect(meta.promptLines).toEqual([1, 2]);
+    expect(meta.highlights).toEqual([3, 4]);
+    expect(meta.title).toEqual("Example");
+    expect(meta.focused).toBe(true);
+    expect(meta.wordWrap).toBe(true);
+  });
 });
 
 function createElement(metastring: string, lang = "plaintext"): Hast.Element {

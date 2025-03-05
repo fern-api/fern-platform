@@ -298,7 +298,7 @@ export function parseBlockMetaString(
   const promptLinesMatch = meta.match(/promptLines=\{(.*?)\}/);
   const promptLines = promptLinesMatch?.[1]
     ? rangeParser(promptLinesMatch[1])
-    : [];
+    : [1];
   meta = meta
     .replace(promptLinesMatch?.[0] ?? "", "")
     .replace(promptLinesMatch?.[1] ?? "", "");
