@@ -50,10 +50,18 @@ export default async function SharedLayout({
         !!colors.light?.sidebarBackground ||
         layout.isHeaderDisabled
       }
-      lightSidebarClassName={colors.light?.sidebarBackgroundTheme}
-      darkSidebarClassName={colors.dark?.sidebarBackgroundTheme}
-      lightHeaderClassName={colors.light?.headerBackgroundTheme}
-      darkHeaderClassName={colors.dark?.headerBackgroundTheme}
+      lightSidebarClassName={
+        colors.light?.sidebarBackgroundTheme === "dark" ? "dark" : undefined
+      }
+      darkSidebarClassName={
+        colors.dark?.sidebarBackgroundTheme === "light" ? "light" : undefined
+      }
+      lightHeaderClassName={
+        colors.light?.headerBackgroundTheme === "dark" ? "dark" : undefined
+      }
+      darkHeaderClassName={
+        colors.dark?.headerBackgroundTheme === "light" ? "light" : undefined
+      }
       isHeaderDisabled={layout.isHeaderDisabled}
       announcement={
         announcementText && (

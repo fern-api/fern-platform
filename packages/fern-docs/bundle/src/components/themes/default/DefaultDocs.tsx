@@ -57,15 +57,14 @@ export default function DefaultDocs({
         )}
       >
         {announcement}
-        <div className="h-(--mobile-header-height-real) md:h-(--header-height-real) px-page-padding width-before-scroll-bar flex items-center">
-          {header}
+        <div className="width-before-scroll-bar">
+          <div className="h-(--mobile-header-height-real) md:h-(--header-height-real) px-page-padding flex items-center">
+            {header}
+          </div>
+          <HeaderTabsRoot showSearchBar={showSearchBarInTabs}>
+            {tabs}
+          </HeaderTabsRoot>
         </div>
-        <HeaderTabsRoot
-          showSearchBar={showSearchBarInTabs}
-          className="width-before-scroll-bar"
-        >
-          {tabs}
-        </HeaderTabsRoot>
       </FernHeader>
 
       <MainCtx.Provider value={mainRef}>

@@ -928,9 +928,6 @@ importers:
       three:
         specifier: ^0.173.0
         version: 0.173.0
-      tinycolor2:
-        specifier: ^1.6.0
-        version: 1.6.0
       ts-essentials:
         specifier: ^10.0.1
         version: 10.0.1(typescript@5.7.3)
@@ -1022,9 +1019,6 @@ importers:
       '@types/three':
         specifier: ^0.173.0
         version: 0.173.0
-      '@types/tinycolor2':
-        specifier: ^1.4.6
-        version: 1.4.6
       '@types/xml2js':
         specifier: ^0.4.14
         version: 0.4.14
