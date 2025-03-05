@@ -12,9 +12,12 @@ import { ButtonLink } from "@/components/FernLinkButton";
 import { usePlaygroundSettings } from "../hooks/usePlaygroundSettings";
 import { conformExplorerRoute } from "./utils/explorer-route";
 
+import { cn } from "@fern-docs/components";
+
 export const PlaygroundButton: FC<{
   state: FernNavigation.NavigationNodeApiLeaf;
-}> = ({ state }) => {
+  className?: string;
+}> = ({ state, className }) => {
   const settings = usePlaygroundSettings(state.id);
 
   return (
@@ -40,7 +43,7 @@ export const PlaygroundButton: FC<{
           target={settings?.button?.href ? "_blank" : undefined}
           variant="default"
           size="xs"
-          className="font-mono"
+          className={cn("font-mono", className)}
           scroll={false}
         >
           <Play className="fill-current" />

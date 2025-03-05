@@ -16,7 +16,7 @@ import {
 
 import { WebSocketMessages } from "@/components/api-reference/websockets/WebSocketMessages";
 
-import { PlaygroundButton } from "../../playground/PlaygroundButton";
+import { PlaygroundButtonTray } from "../../playground/PlaygroundButtonTray";
 import { usePlaygroundBaseUrl } from "../../playground/utils/select-environment";
 import { AudioExample } from "../examples/AudioExample";
 import {
@@ -168,15 +168,19 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<
         onClick={(e) => {
           e.stopPropagation();
         }}
-        actions={
+        tryIt={
           <>
             {node != null && (
-              <PlaygroundButton
+              <PlaygroundButtonTray
                 state={node}
 
                 // example={selectedExample?.exampleCall}
               />
             )}
+          </>
+        }
+        languageDropdown={
+          <>
             {languages.length > 1 && (
               <CodeExampleClientDropdown
                 languages={languages}
