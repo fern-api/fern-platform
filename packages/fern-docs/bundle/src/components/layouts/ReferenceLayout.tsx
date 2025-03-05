@@ -31,7 +31,7 @@ export const ReferenceLayout = React.forwardRef<
     <AsideAwareDiv className="pl-page-padding mx-auto min-w-0 shrink pr-[calc(var(--page-padding)+var(--aside-offset))]">
       <SetLayout value="reference" />
       <slot.In>
-        <aside className="order-last flex max-h-[calc(100svh-var(--header-height)-6rem)] shrink-0 flex-col md:sticky md:top-[calc(var(--header-height)+1.5rem)] md:h-fit md:max-h-[calc(100vh-var(--header-height)-3rem)]">
+        <aside className="order-last flex max-h-[calc(100svh-var(--header-height)-6rem)] shrink-0 md:flex-col md:sticky md:top-[calc(var(--header-height)+1.5rem)] md:h-fit md:max-h-[calc(100vh-var(--header-height)-3rem)]">
           {aside}
         </aside>
       </slot.In>
