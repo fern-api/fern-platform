@@ -138,6 +138,18 @@ export function GlobalStyles({
         }`
           : ""}
 
+        ${root?.backgroundGradient || root?.backgroundImage
+          ? `.fern-background-image {
+          background-image: ${root?.backgroundImage?.src ? `url(${root?.backgroundImage?.src})` : light ? "linear-gradient(to bottom, color-mix(in srgb, var(--accent), var(--background) 90%) 0, var(--background) 100%)" : "linear-gradient(to bottom, var(--background) 0, color-mix(in srgb, var(--accent), var(--background) 90%) 100%)"};
+        }`
+          : ""}
+
+      ${hasTheme && (light?.backgroundGradient || light?.backgroundImage)
+          ? `.dark .fern-background-image {
+          background-image: ${light?.backgroundImage?.src ? `url(${light?.backgroundImage?.src})` : "linear-gradient(to bottom, var(--background) 0, color-mix(in srgb, var(--accent), var(--background) 90%) 100%)"};
+        }`
+          : ""}
+
         ${fonts.additionalCss}
 
         ${inlineCss.join("\n")}

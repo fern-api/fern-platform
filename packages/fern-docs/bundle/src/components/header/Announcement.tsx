@@ -44,10 +44,13 @@ const AnnouncementInternal = React.forwardRef<
       suppressHydrationWarning
       ref={forwardedRef}
       {...props}
-      className={cn("overflow-hidden", className)}
+      className={cn(
+        "bg-(color:--accent) text-(color:--accent-contrast) overflow-hidden",
+        className
+      )}
     >
       <m.div
-        className="bg-(color:--accent) text-(color:--accent-contrast) flex min-h-8 items-center px-4 md:px-6 lg:px-8"
+        className="width-before-scroll-bar flex min-h-8 items-center px-4 md:px-6 lg:px-8"
         exit={{ y: "-100%" }}
       >
         <style jsx global>{`

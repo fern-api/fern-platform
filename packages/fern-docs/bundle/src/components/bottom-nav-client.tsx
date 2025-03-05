@@ -8,8 +8,6 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { MaybeFernLink } from "@/components/FernLink";
 import { Separator } from "@/components/Separator";
 
-import { BgImageGradient } from "./BgImageGradient";
-
 export function BottomNavigationClient({
   prev,
   next,
@@ -79,13 +77,10 @@ export function BottomNavigationClient({
       {next && (
         <MaybeFernLink
           href={next.href}
-          className="bg-card-solid hover:border-(color:--accent-a9) border-(color:--grayscale-a6) relative flex h-16 min-w-0 flex-1 shrink items-center justify-end gap-4 overflow-clip border px-3 transition-all hover:transition-none"
+          className="bg-card-solid hover:border-(color:--accent-a9) border-(color:--grayscale-a6) fern-background-image relative flex h-16 min-w-0 flex-1 shrink items-center justify-end gap-4 overflow-clip border px-3 transition-all hover:transition-none"
           shallow={next.shallow}
           onClick={next.onClick}
         >
-          <div className="clipped-background after:bg-card-background after:fixed after:inset-0">
-            <BgImageGradient />
-          </div>
           <div className="relative min-w-0 shrink pl-4 text-right">
             <h4 className="text-(color:--grayscale-a12) truncate text-base font-bold [&_*]:truncate">
               {next.title}

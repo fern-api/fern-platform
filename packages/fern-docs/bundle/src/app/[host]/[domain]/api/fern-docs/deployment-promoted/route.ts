@@ -1,13 +1,14 @@
 import { NextRequest } from "next/server";
 
 import { kv } from "@vercel/kv";
-import urlJoin from "url-join";
+import { uniq } from "es-toolkit/array";
 
-import { withDefaultProtocol } from "@fern-api/ui-core-utils";
+import { slugjoin } from "@fern-api/fdr-sdk/navigation";
+import { withoutStaging } from "@fern-docs/utils";
 
 import { getMetadata } from "@/server/docs-loader";
 
-export async function POST(_request: NextRequest) {
+export async function POST(request: NextRequest) {
   // if (
   //   request.headers.get("x-vercel-signature") !==
   //   process.env.DEPLOYMENT_PROMOTED_WEBHOOK_SECRET
@@ -15,25 +16,24 @@ export async function POST(_request: NextRequest) {
   //   return new Response("Unauthorized", { status: 401 });
   // }
 
+  console.log(await request.json());
+
   const promises: Promise<Response>[] = [];
 
-  const domains = await kv.smembers("domains");
+  const domains = uniq((await kv.smembers("domains")).map(withoutStaging));
 
   for (const domain of domains) {
-    getMetadata(domain).then((metadata) => {
-      promises.push(
+    promises.push(
+      getMetadata(domain).then((metadata) =>
         fetch(
-          urlJoin(
-            withDefaultProtocol(metadata.domain),
+          `https://${metadata.domain}/${slugjoin(
             metadata.basePath ?? "",
-            `/api/fern-docs/revalidate`
-          ),
-          {
-            method: "GET",
-          }
+            "api/fern-docs/revalidate"
+          )}`,
+          { cache: "no-cache" }
         )
-      );
-    });
+      )
+    );
   }
 
   const results = await Promise.allSettled(promises);

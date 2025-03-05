@@ -1065,9 +1065,9 @@ const List = forwardRef<HTMLDivElement, ListProps>((props, forwardedRef) => {
     if (height.current && ref.current) {
       const el = height.current;
       const wrapper = ref.current;
-      let animationFrame: () => void;
+      let cancelAnimationFrame: () => void = noop;
       const observer = new ResizeObserver(() => {
-        animationFrame = isomorphicRequestAnimationFrame(() => {
+        cancelAnimationFrame = isomorphicRequestAnimationFrame(() => {
           const height = el.offsetHeight;
           wrapper.style.setProperty(
             "--cmdk-list-height",
@@ -1077,7 +1077,7 @@ const List = forwardRef<HTMLDivElement, ListProps>((props, forwardedRef) => {
       });
       observer.observe(el);
       return () => {
-        animationFrame();
+        cancelAnimationFrame();
         observer.unobserve(el);
       };
     }

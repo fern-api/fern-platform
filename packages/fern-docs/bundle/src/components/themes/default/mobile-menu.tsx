@@ -18,7 +18,6 @@ import {
 import { cn } from "@fern-docs/components";
 import { useIsomorphicLayoutEffect } from "@fern-ui/react-commons";
 
-import { BgImageGradient } from "@/components/BgImageGradient";
 import { useIsDismissableSidebarOpen } from "@/state/mobile";
 
 export const MainCtx = React.createContext<
@@ -35,10 +34,10 @@ const transition = {
 
 export function MobileMenu({
   children,
-  hasSidebarBackgroundColor,
+  className,
 }: {
   children: React.ReactNode;
-  hasSidebarBackgroundColor?: boolean;
+  className?: string;
 }) {
   const [open, setOpen] = useIsDismissableSidebarOpen();
 
@@ -236,8 +235,8 @@ export function MobileMenu({
               layoutRoot
               id="fern-sidebar"
               className={cn(
-                "sm:w-sidebar-width border-border-concealed pointer-events-auto fixed inset-y-0 right-0 top-[calc(var(--header-height)+1px)] z-40 flex w-full max-w-[calc(100dvw-3rem)] flex-col border-l backdrop-blur-xl",
-                { "bg-(color:--sidebar-background)": hasSidebarBackgroundColor }
+                "sm:w-sidebar-width fern-background-image border-border-concealed pointer-events-auto fixed inset-y-0 right-0 top-[calc(var(--header-height)+1px)] z-40 flex w-full max-w-[calc(100dvw-3rem)] flex-col border-l backdrop-blur-xl",
+                className
               )}
               key="sidebar"
               onPointerDown={(event) => dragControls.start(event)}
@@ -269,11 +268,6 @@ export function MobileMenu({
               exit={{ x: "100%" }}
               transition={transition}
             >
-              {!hasSidebarBackgroundColor && (
-                <div className="clipped-background">
-                  <BgImageGradient className="translate-y-[calc(var(--header-height)*-1)]" />
-                </div>
-              )}
               {children}
             </motion.div>
           )}

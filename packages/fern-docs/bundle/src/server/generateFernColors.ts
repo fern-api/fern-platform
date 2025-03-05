@@ -127,7 +127,9 @@ export interface FernColorPalette extends Omit<ColorPalette, "background"> {
   border?: string;
   accent: string;
   sidebarBackground?: string;
+  sidebarBackgroundTheme?: "light" | "dark";
   headerBackground?: string;
+  headerBackgroundTheme?: "light" | "dark";
   cardBackground?: string;
   background?: string;
   themeColor: string;
@@ -158,6 +160,10 @@ export function generateFernColorPalette({
     border,
     sidebarBackground,
     headerBackground,
+    sidebarBackgroundTheme:
+      sidebarBackground != null ? getTheme(sidebarBackground) : undefined,
+    headerBackgroundTheme:
+      headerBackground != null ? getTheme(headerBackground) : undefined,
     cardBackground,
     background,
     themeColor: toHex(background ?? accent),
@@ -166,4 +172,10 @@ export function generateFernColorPalette({
 
 function toHex(color: string): string {
   return new Color(color).toString({ format: "hex" });
+}
+
+function getTheme(colorProp: string): "light" | "dark" {
+  const color = new Color(colorProp);
+  const lightness = color.to("oklch").l;
+  return lightness < 0.5 ? "dark" : "light";
 }
