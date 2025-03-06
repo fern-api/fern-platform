@@ -1,7 +1,8 @@
 @layer base {
   kbd {
-    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
-      "Liberation Mono", "Courier New", monospace !important;
+    font-family:
+      ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+      "Courier New", monospace !important;
     font-variant-numeric: slashed-zero;
     font-weight: 700;
   }

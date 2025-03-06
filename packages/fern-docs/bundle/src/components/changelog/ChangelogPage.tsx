@@ -31,6 +31,7 @@ export default async function ChangelogPage({
 }) {
   const node = await loader.getNavigationNode(nodeId);
   if (node.type !== "changelog") {
+    console.debug("Attempting to render changelog page for non-changelog node");
     notFound();
   }
 

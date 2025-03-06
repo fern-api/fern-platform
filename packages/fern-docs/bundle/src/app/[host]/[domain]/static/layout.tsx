@@ -8,7 +8,7 @@ export default async function Layout({
   params,
   headertabs,
   sidebar,
-  explorer
+  explorer,
 }: {
   children: React.ReactNode;
   params: Promise<{ host: string; domain: string }>;

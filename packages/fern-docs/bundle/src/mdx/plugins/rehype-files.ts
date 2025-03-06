@@ -55,9 +55,11 @@ export const rehypeFiles: Unified.Plugin<[RehypeFilesOptions?], Hast.Root> = ({
 
         // TODO: do we need to add support for `href` and `<object data=...>`?
         const srcAttribute = attributes.find((attr) => attr.name === "src");
-        
+
         // TODO: handle more gracefully, temporary fix for jambonz
-        const playsInlineAttribute = attributes.find((attr) => attr.name === "playsinline");
+        const playsInlineAttribute = attributes.find(
+          (attr) => attr.name === "playsinline"
+        );
         if (playsInlineAttribute) {
           playsInlineAttribute.name = "playsInline";
         }

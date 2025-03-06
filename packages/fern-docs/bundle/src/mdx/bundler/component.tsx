@@ -5,8 +5,9 @@ import React from "react";
 import { MDXProvider, useMDXComponents } from "@mdx-js/react";
 import { getMDXExport } from "mdx-bundler/client";
 
-import { ErrorBoundary } from "@/components/error-boundary";
 import { FernScrollArea } from "@fern-docs/components";
+
+import { ErrorBoundary } from "@/components/error-boundary";
 
 import { createMdxComponents } from "../components";
 
