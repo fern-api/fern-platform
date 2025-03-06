@@ -46,7 +46,7 @@ export const MdxAside = React.memo<{
     return (
       <ErrorBoundary>
         <MDXProvider components={createMdxComponents(jsxElements)}>
-          <FernScrollArea>
+          <FernScrollArea rootClassName="pb-12">
             <Aside />
           </FernScrollArea>
         </MDXProvider>
