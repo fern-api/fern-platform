@@ -175,7 +175,9 @@ export async function getAuthState(
   authConfig ??= await getAuthEdgeConfig(domain);
   const orgMetadata = domain.includes("workato")
     ? { isPreviewUrl: isPreviewDomain(domain), orgId: "workato" }
-    : undefined;
+    : domain.includes("spscommerce")
+      ? { isPreviewUrl: isPreviewDomain(domain), orgId: "spscommerce" }
+      : undefined;
   const previewAuthConfig =
     orgMetadata != null
       ? await getPreviewUrlAuthConfig(orgMetadata)
