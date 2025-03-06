@@ -129,16 +129,16 @@ export function migrateMeta(metastring: string): string {
   if (metastring === "") {
     return metastring;
   }
-
+  
   // migrate {1-3} to {[1, 2, 3]}
   // but do NOT migrate {1} to {[1]}
-  metastring = metastring.replaceAll(/\{([0-9,-]+)\}/g, (original, expr) => {
+  metastring = metastring.replaceAll(/\{([0-9,\s-]+)\}/g, (original, expr) => {
     if (expr?.includes(",") || expr?.includes("-")) {
       return `{[${parseNumericRange(expr ?? "")}]}`;
     }
     return original;
   });
-
+  
   // if matches {[, it must be preceded by a `=` otherwise prefix with `highlight=`
   const match = metastring.search(/\{[^}]+\}/);
   if (match !== -1 && metastring.slice(match + 1, match + 3) !== "...") {
@@ -147,16 +147,16 @@ export function migrateMeta(metastring: string): string {
         metastring.slice(0, match) + "highlight=" + metastring.slice(match);
     }
   }
-
+  
   // migrate test=123 to test={123}
   metastring = metastring.replaceAll(/=([0-9]+)/g, (_original, expr) => {
     return `={${expr}}`;
   });
-
+  
   metastring = metastring.replaceAll(/=([a-zA-Z]+)/g, (_original, expr) => {
     return `="${expr}"`;
   });
-
+  
   // migrate "abcd" to title="abcd"
   if (metastring.startsWith('"') && metastring.endsWith('"')) {
     return `title=${metastring}`;
@@ -178,12 +178,24 @@ export function migrateMeta(metastring: string): string {
   metastring = metastring.replaceAll(
     /^(.*?)(?=[a-zA-Z]+=)/g,
     (_original, text) => {
+      console.log("original: ", _original);
+      console.log("text: ", text);
       if (text.trim() === "") {
         return "";
       }
       return `title="${text.trim()}" `;
     }
   );
-
+  
+  // if a title hasn't been found so far, make sure it is not hidden in meta string
+  if (!metastring.includes("title=")) {
+    const parseForTitle = metastring
+      .replaceAll("wordWrap", "")
+      .replaceAll(/([^=]+)={(.*?)}/g, "")
+    if (parseForTitle !== "") {
+      metastring = metastring.replace(parseForTitle, ` title="${parseForTitle.trim()}"`)
+    }
+  }
+  
   return metastring;
 }
