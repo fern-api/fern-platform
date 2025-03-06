@@ -22,7 +22,8 @@ export function withDefaultProtocol(
   }
 
   if (endpoint === "") {
-    throw new Error(`URL is empty`);
+    console.error("URL is empty");
+    return("https://");
   }
 
   // matches any protocol scheme at the beginning of the string (e.g., "http://", "https://", "ftp://")
