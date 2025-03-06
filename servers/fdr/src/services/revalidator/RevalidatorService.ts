@@ -52,7 +52,9 @@ export class RevalidatorServiceImpl implements RevalidatorService {
       //   basePath: baseUrl.path != null ? baseUrl.path : "",
       //   xFernHost: baseUrl.hostname,
       // });
-      await fetch(`https://${baseUrl.hostname}${baseUrl.path || ""}/api/fern-docs/revalidate-all/v3`);
+      await fetch(
+        `https://${baseUrl.hostname}${baseUrl.path || ""}/api/fern-docs/revalidate-all/v3`
+      );
       return {
         successful: [],
         failed: [],
