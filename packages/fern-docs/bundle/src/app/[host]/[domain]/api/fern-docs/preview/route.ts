@@ -22,6 +22,10 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
     VERCEL_ENV === "production" &&
     req.nextUrl.hostname !== "canary.ferndocs.com"
   ) {
+    console.debug(
+      "Blocking preview request in production for hostname:",
+      req.nextUrl.hostname
+    );
     return notFound();
   }
 
@@ -50,5 +54,6 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
     return redirectResponse(req.nextUrl.origin);
   }
 
+  console.debug("Rejecting preview request - missing or invalid parameters");
   notFound();
 }

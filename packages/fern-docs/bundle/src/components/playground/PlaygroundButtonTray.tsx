@@ -3,6 +3,7 @@
 import { FC } from "react";
 
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
+
 import { PlaygroundButton } from "./PlaygroundButton";
 
 export const PlaygroundButtonTray: FC<{
