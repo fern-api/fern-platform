@@ -187,6 +187,7 @@ export function migrateMeta(metastring: string): string {
     }
   );
   
+  // if a title hasn't been found so far, make sure it is not hidden in meta string
   if (!metastring.includes("title=")) {
     const parseForTitle = metastring
       .replaceAll("wordWrap", "")
