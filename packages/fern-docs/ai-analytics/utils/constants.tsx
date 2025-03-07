@@ -28,4 +28,6 @@ export const DOMAINS = [
   "nansen.ai",
   "chrt",
   "explorium",
+  "hume",
+  "vellum"
 ];
