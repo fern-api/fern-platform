@@ -6,9 +6,8 @@ export function renderSegmentSnippet(
   domain: string,
   customSegmentWriteKey?: string
 ): string {
-  const apiKey = process.env.NEXT_PUBLIC_SEGMENT_API_KEY?.trim();
   const opts = {
-    apiKey: customSegmentWriteKey ? customSegmentWriteKey : apiKey,
+    apiKey: customSegmentWriteKey,
     page: true,
   };
   // Skip rendering the snippet for certain domains

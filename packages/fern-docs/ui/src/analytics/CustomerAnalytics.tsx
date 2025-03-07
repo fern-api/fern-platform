@@ -47,13 +47,15 @@ export const CustomerAnalytics = memo(
 
     return (
       <>
-        {/* renders either segment with our write key or segment with the customer's write key */}
-        <Script
-          id="segment-script"
-          dangerouslySetInnerHTML={{
-            __html: renderSegmentSnippet(domain, config.segment?.writeKey),
-          }}
-        />
+        {/* renders segment with the customer's write key */}
+        {config.segment?.writeKey != null && (
+          <Script
+            id="segment-script"
+            dangerouslySetInnerHTML={{
+              __html: renderSegmentSnippet(domain, config.segment?.writeKey),
+            }}
+          />
+        )}
         <Posthog customerConfig={config.posthog} />
         <IntercomScript config={config.intercom} />
         <FullstoryScript config={config.fullstory} />
