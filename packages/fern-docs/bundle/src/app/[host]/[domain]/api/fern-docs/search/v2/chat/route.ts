@@ -41,7 +41,7 @@ export async function POST(req: NextRequest) {
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
   });
   const languageModel = wrapAISDKModel(
-    bedrock("anthropic.claude-3-5-sonnet-20241022-v2:0")
+    bedrock("us.anthropic.claude-3-5-sonnet-20241022-v2:0")
   );
 
   const openai = createOpenAI({ apiKey: openaiApiKey() });
