@@ -7,6 +7,8 @@ import React from "react";
 import { ExternalLinkIcon } from "lucide-react";
 import { type UrlObject, format, parse, resolve } from "url";
 
+import { FernNavigation } from "@fern-api/fdr-sdk";
+
 import { useDomain } from "@/state/domain";
 
 export const FernLink = React.forwardRef<
@@ -117,6 +119,14 @@ export function formatUrlString(url: string | UrlObject): string {
 }
 
 export function resolveRelativeUrl(pathName: string, href: string): string {
+  if (pathName.includes("/static/")) {
+    const adjustedPathname = FernNavigation.slugjoin(
+      pathName.split("/").slice(3)
+    );
+    const pathname = resolve(adjustedPathname, href);
+    return pathname;
+  }
+
   // if the href is "../" or "./" or missing an initial slash, we want to resolve it relative to the current page
   if (
     href.startsWith(".") ||
