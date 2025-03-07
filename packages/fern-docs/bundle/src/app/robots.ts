@@ -43,7 +43,7 @@ export default async function robots(): Promise<MetadataRoute.Robots> {
     rules: {
       userAgent: "*",
       allow: "/",
-      disallow: "*/~explorer*",
+      disallow: "*/~explorer",
     },
     sitemap,
     host: domain,
