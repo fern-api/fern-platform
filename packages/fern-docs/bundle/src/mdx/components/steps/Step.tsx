@@ -1,5 +1,6 @@
 "use client";
 
+import { usePathname } from "next/navigation";
 import React, {
   ComponentProps,
   ReactElement,
@@ -12,6 +13,7 @@ import { AnimatePresence, LazyMotion, domAnimation } from "motion/react";
 import * as m from "motion/react-m";
 
 import { cn } from "@fern-docs/components";
+import { addLeadingSlash } from "@fern-docs/utils";
 import { useCopyToClipboard } from "@fern-ui/react-commons";
 
 import { useIsFernAnchorDisabled } from "@/components/FernAnchor";
@@ -31,7 +33,8 @@ export function Step({
   ...props
 }: StepProps): ReactElement<any> {
   const index = useContext(StepCtx);
-  const href = `#${id}`;
+  const currentPath = usePathname();
+  const href = addLeadingSlash(`${currentPath}#${id}`);
   const { copyToClipboard, wasJustCopied } = useCopyToClipboard(() =>
     new URL(href, window.location.href).toString()
   );

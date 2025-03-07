@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation";
 import { ReactElement, memo, useEffect, useRef } from "react";
 
 import { cn } from "@fern-docs/components";
+import { addLeadingSlash } from "@fern-docs/utils";
 
 import { FernLink } from "@/components/FernLink";
 
@@ -20,7 +21,6 @@ export const TableOfContentsItem = memo<TableOfContentsItemProps>(
     const { text, anchorString, active, setActiveRef, depth = 0 } = props;
     const ref = useRef<HTMLLIElement>(null);
     const currentPath = usePathname();
-
     useEffect(() => {
       if (active && ref.current != null) {
         setActiveRef?.(ref.current);
@@ -38,7 +38,7 @@ export const TableOfContentsItem = memo<TableOfContentsItemProps>(
               "text-(color:--accent-a11) font-semibold tracking-tight": active,
             }
           )}
-          href={`${currentPath}#${anchorString}`}
+          href={`${addLeadingSlash(currentPath)}#${anchorString}`}
           style={{
             paddingLeft: `${depth * 12}px`,
           }}
