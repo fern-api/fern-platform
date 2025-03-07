@@ -122,35 +122,65 @@ export function PlaygroundResponseCard({
               Loading...
             </div>
           ),
-        loaded: (response) =>
-          response.type !== "file" ||
-          response.contentType.startsWith("text") ||
-          response.contentType.startsWith("application/xml") ? (
-            <PlaygroundResponsePreview response={response} />
-          ) : response.contentType.startsWith("audio/") ||
+        loaded: (response) => {
+          // Handle JSON content type
+          try {
+            JSON.parse(JSON.stringify(response.response.body));
+            return <PlaygroundResponsePreview response={response} />;
+          } catch {
+            // If JSON parsing fails, continue to next handler
+          }
+
+          // Handle text-based content
+          if (
+            response.type !== "file" ||
+            response.contentType.startsWith("text") ||
+            response.contentType.startsWith("application/xml")
+          ) {
+            return <PlaygroundResponsePreview response={response} />;
+          }
+
+          // Handle audio content
+          if (
+            response.contentType.startsWith("audio/") ||
             (isBinaryOctetStreamAudioPlayer &&
-              response.contentType === "binary/octet-stream") ? (
-            <FernAudioPlayer
-              src={response.response.body}
-              className="flex h-full items-center justify-center p-4"
-            />
-          ) : response.contentType.includes("application/pdf") ? (
-            <iframe
-              src={response.response.body}
-              className="size-full"
-              title="PDF preview"
-              allowFullScreen
-            />
-          ) : response.response.status === 204 ? (
-            <PlaygroundResponsePreview response={response} />
-          ) : (
+              response.contentType === "binary/octet-stream")
+          ) {
+            return (
+              <FernAudioPlayer
+                src={response.response.body}
+                className="flex h-full items-center justify-center p-4"
+              />
+            );
+          }
+
+          // Handle PDF content
+          if (response.contentType.includes("application/pdf")) {
+            return (
+              <iframe
+                src={response.response.body}
+                className="size-full"
+                title="PDF preview"
+                allowFullScreen
+              />
+            );
+          }
+
+          // Handle 204 status
+          if (response.response.status === 204) {
+            return <PlaygroundResponsePreview response={response} />;
+          }
+
+          // Default case - unsupported file type
+          return (
             <FernErrorTag
               component="PlaygroundEndpointContent"
               error={`File preview not supported for ${response.contentType}`}
               className="flex h-full items-center justify-center"
               showError
             />
-          ),
+          );
+        },
         failed: (e) => (
           <FernErrorTag
             component="PlaygroundEndpointContent"

@@ -24,13 +24,22 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
   const domain = getDocsDomainEdge(req);
 
   try {
+    console.debug("Reindex algolia for domain:", domain);
     const orgMetadata = await getOrgMetadataForDomain(withoutStaging(domain));
+    // note: org-for-metadata is not always available, so we'll just continue to reindex assuming the domain is production
+    // if (orgMetadata == null) {
+    //   return NextResponse.json("Not found", { status: 404 });
+    // }
+
     if (orgMetadata == null) {
-      return NextResponse.json("Not found", { status: 404 });
+      console.debug(
+        "getOrgMetadataForDomain failed. Assuming domain is production"
+      );
     }
 
     // If the domain is a preview URL, we don't want to reindex
-    if (orgMetadata.isPreviewUrl) {
+    if (orgMetadata?.isPreviewUrl) {
+      console.debug("Domain is a preview URL, skipping reindex");
       return NextResponse.json({
         added: 0,
         updated: 0,
@@ -38,7 +47,6 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
         unindexable: 0,
       });
     }
-
     const start = Date.now();
     const [authEdgeConfig, edgeFlags] = await Promise.all([
       getAuthEdgeConfig(domain),

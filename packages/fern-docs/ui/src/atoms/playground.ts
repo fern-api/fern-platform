@@ -507,8 +507,8 @@ export function useOpenPlayground(): (
             formStateAtom,
             getInitialEndpointRequestFormStateWithExample(
               context,
-              // HACKHACK: twelvelabs
-              domain.includes("twelvelabs")
+              // HACKHACK: twelvelabs and spscommerce
+              domain.includes("twelvelabs") || domain.includes("spscommerce")
                 ? undefined
                 : context.endpoint.examples?.[0],
               playgroundInitialState
