@@ -120,10 +120,10 @@ export function formatUrlString(url: string | UrlObject): string {
 
 export function resolveRelativeUrl(pathName: string, href: string): string {
   if (pathName.includes("/static/")) {
-    // Find the index after "/static/"
-    const staticIndex = pathName.indexOf("/static/") + "/static/".length;
-    // Take everything after /static/ as the base path
-    const basePath = pathName.slice(staticIndex).replace("%2F", "-");
+    // Find the index after "#"
+    const hashIndex = pathName.indexOf("#") + 1;
+    // Take everything after "#" as the base path
+    const basePath = pathName.slice(hashIndex).replace("%2F", "-");
     const pathname = resolve(basePath, href);
     return pathname;
   }
