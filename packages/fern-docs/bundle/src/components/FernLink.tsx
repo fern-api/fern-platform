@@ -121,7 +121,7 @@ export function formatUrlString(url: string | UrlObject): string {
 export function resolveRelativeUrl(pathName: string, href: string): string {
   if (pathName.includes("/static/")) {
     const adjustedPathname = FernNavigation.slugjoin(
-      pathName.split("/").slice(3)
+      pathName.split("/").slice(4)
     ).replace("%2F", "-");
     const pathname = resolve(adjustedPathname, href);
     return pathname;
