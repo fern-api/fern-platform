@@ -120,10 +120,11 @@ export function formatUrlString(url: string | UrlObject): string {
 
 export function resolveRelativeUrl(pathName: string, href: string): string {
   if (pathName.includes("/static/")) {
-    const adjustedPathname = FernNavigation.slugjoin(
-      pathName.split("/").slice(4)
-    ).replace("%2F", "-");
-    const pathname = resolve(adjustedPathname, href);
+    // Find the index after "/static/"
+    const staticIndex = pathName.indexOf("/static/") + "/static/".length;
+    // Take everything after /static/ as the base path
+    const basePath = pathName.slice(staticIndex).replace("%2F", "-");
+    const pathname = resolve(basePath, href);
     return pathname;
   }
 
