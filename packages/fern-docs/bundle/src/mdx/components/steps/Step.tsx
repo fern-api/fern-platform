@@ -1,6 +1,5 @@
 "use client";
 
-import { usePathname } from "next/navigation";
 import React, {
   ComponentProps,
   ReactElement,
@@ -33,8 +32,7 @@ export function Step({
   ...props
 }: StepProps): ReactElement<any> {
   const index = useContext(StepCtx);
-  const currentPath = usePathname();
-  const href = addLeadingSlash(`${currentPath}#${id}`);
+  const href = `#${id}`;
   const { copyToClipboard, wasJustCopied } = useCopyToClipboard(() =>
     new URL(href, window.location.href).toString()
   );
