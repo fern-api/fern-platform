@@ -77,6 +77,5 @@ export async function generateMetadata({
     },
     description:
       "Browse, explore, and try out API endpoints without leaving the documentation.",
-    robots: "noindex, nofollow",
   };
 }
