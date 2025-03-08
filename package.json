@@ -36,7 +36,7 @@
   },
   "resolutions": {
     "@babel/core": "7.26.0",
-    "@zag-js/core": "0.50.0",
+    "@zag-js/core": "0.51.0",
     "clipboardy": "4.0.0",
     "colorjs.io": "^0.5.2",
     "cookie": "0.7.0",
