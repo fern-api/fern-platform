@@ -28,6 +28,7 @@ import {
 
 import {
   convertResponseToRootNode,
+  createEndpointCacheKey,
   getMetadataFromResponse,
 } from "@/server/docs-loader";
 import { loadWithUrl } from "@/server/loadWithUrl";
@@ -302,21 +303,33 @@ async function reindex(
 function createPrunedApi(api: ApiDefinition.ApiDefinition) {
   const apis = new Map<string, ApiDefinition.ApiDefinition>();
   Object.keys(api.endpoints).forEach((endpointId) => {
+    const pruneKey = {
+      type: "endpoint",
+      endpointId: endpointId as EndpointId,
+    } as const;
     apis.set(
-      `${api.id}:endpoint:${endpointId}`,
-      prune(api, { type: "endpoint", endpointId: endpointId as EndpointId })
+      `${api.id}:${createEndpointCacheKey(pruneKey)}`,
+      prune(api, pruneKey)
     );
   });
   Object.keys(api.websockets).forEach((webSocketId) => {
+    const pruneKey = {
+      type: "webSocket",
+      webSocketId: webSocketId as WebSocketId,
+    } as const;
     apis.set(
-      `${api.id}:websocket:${webSocketId}`,
-      prune(api, { type: "webSocket", webSocketId: webSocketId as WebSocketId })
+      `${api.id}:${createEndpointCacheKey(pruneKey)}`,
+      prune(api, pruneKey)
     );
   });
   Object.keys(api.webhooks).forEach((webhookId) => {
+    const pruneKey = {
+      type: "webhook",
+      webhookId: webhookId as WebhookId,
+    } as const;
     apis.set(
-      `${api.id}:webhook:${webhookId}`,
-      prune(api, { type: "webhook", webhookId: webhookId as WebhookId })
+      `${api.id}:${createEndpointCacheKey(pruneKey)}`,
+      prune(api, pruneKey)
     );
   });
   return apis;

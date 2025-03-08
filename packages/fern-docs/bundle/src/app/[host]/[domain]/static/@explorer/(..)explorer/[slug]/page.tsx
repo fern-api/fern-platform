@@ -18,7 +18,11 @@ import { PlaygroundAuthorizationFormCard } from "@/components/playground/auth/Pl
 import { PlaygroundEndpoint } from "@/components/playground/endpoint/PlaygroundEndpoint";
 import { conformExplorerRoute } from "@/components/playground/utils/explorer-route";
 import { PlaygroundWebSocket } from "@/components/playground/websocket/PlaygroundWebSocket";
-import { DocsLoader, createCachedDocsLoader } from "@/server/docs-loader";
+import {
+  DocsLoader,
+  createCachedDocsLoader,
+  createPruneKey,
+} from "@/server/docs-loader";
 
 export default async function ExplorerPage({
   params,
@@ -67,7 +71,10 @@ async function ExplorerContent({
   if (!FernNavigation.isApiLeaf(node)) {
     return <NoEndpointSelected />;
   }
-  const api = await loader.getPrunedApi(node.apiDefinitionId, node);
+  const api = await loader.getPrunedApi(
+    node.apiDefinitionId,
+    createPruneKey(node)
+  );
 
   if (node.type === "endpoint") {
     const context = createEndpointContext(node, api);

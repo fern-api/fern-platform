@@ -2,7 +2,6 @@ import "server-only";
 
 import {
   ApiDefinition,
-  PruningNodeType,
   createEndpointContext,
   createWebSocketContext,
   createWebhookContext,
@@ -10,7 +9,7 @@ import {
 } from "@fern-api/fdr-sdk/api-definition";
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 
-import { DocsLoader } from "@/server/docs-loader";
+import { DocsLoader, createPruneKey } from "@/server/docs-loader";
 import { MdxSerializer } from "@/server/mdx-serializer";
 
 import { EndpointContent } from "./endpoints/EndpointContent";
@@ -112,29 +111,5 @@ async function ApiEndpointContent({
     }
     default:
       return null;
-  }
-}
-
-function createPruneKey(
-  node: FernNavigation.NavigationNodeApiLeaf
-): PruningNodeType {
-  switch (node.type) {
-    case "endpoint":
-      return {
-        type: "endpoint",
-        endpointId: node.endpointId,
-      };
-    case "webSocket":
-      return {
-        type: "webSocket",
-        webSocketId: node.webSocketId,
-      };
-    case "webhook":
-      return {
-        type: "webhook",
-        webhookId: node.webhookId,
-      };
-    default:
-      throw new Error(`Unknown node type: ${node}`);
   }
 }

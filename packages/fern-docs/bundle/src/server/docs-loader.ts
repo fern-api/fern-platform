@@ -282,7 +282,7 @@ const createGetPrunedApiCached = (domain: string) =>
       // if there is only one node, and it's an endpoint, try to load from cache
       try {
         if (nodes.length === 1 && nodes[0]) {
-          const key = `${domain}:api:${id}:${createEndpointCacheKey(nodes[0])}`;
+          const key = `api:${id}:${createEndpointCacheKey(nodes[0])}`;
           const cached = await kv.hget<ApiDefinition.ApiDefinition>(
             domain,
             key
@@ -303,7 +303,7 @@ const createGetPrunedApiCached = (domain: string) =>
 
       // if there is only one node, and it's an endpoint, try to cache the result
       if (nodes.length === 1 && nodes[0]) {
-        const key = `${domain}:api:${id}:${createEndpointCacheKey(nodes[0])}`;
+        const key = `api:${id}:${createEndpointCacheKey(nodes[0])}`;
         kvSet(domain, key, pruned);
       }
 
@@ -313,7 +313,7 @@ const createGetPrunedApiCached = (domain: string) =>
     { tags: [domain, "api"] }
   );
 
-function createEndpointCacheKey(pruneType: PruningNodeType) {
+export function createEndpointCacheKey(pruneType: PruningNodeType) {
   switch (pruneType.type) {
     case "endpoint":
       return `endpoint:${pruneType.endpointId}`;
@@ -839,4 +839,28 @@ export function toPx(
     return config.value;
   }
   return config.value * 16;
+}
+
+export function createPruneKey(
+  node: FernNavigation.NavigationNodeApiLeaf
+): PruningNodeType {
+  switch (node.type) {
+    case "endpoint":
+      return {
+        type: "endpoint",
+        endpointId: node.endpointId,
+      };
+    case "webSocket":
+      return {
+        type: "webSocket",
+        webSocketId: node.webSocketId,
+      };
+    case "webhook":
+      return {
+        type: "webhook",
+        webhookId: node.webhookId,
+      };
+    default:
+      throw new Error(`Unknown node type: ${node}`);
+  }
 }
