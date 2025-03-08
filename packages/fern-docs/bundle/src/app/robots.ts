@@ -5,11 +5,7 @@ import urlJoin from "url-join";
 
 import { withDefaultProtocol } from "@fern-api/ui-core-utils";
 import { getSeoDisabled } from "@fern-docs/edge-config";
-import {
-  HEADER_HOST,
-  HEADER_X_FERN_HOST,
-  conformTrailingSlash,
-} from "@fern-docs/utils";
+import { HEADER_HOST, HEADER_X_FERN_HOST } from "@fern-docs/utils";
 
 export const runtime = "edge";
 
@@ -47,7 +43,6 @@ export default async function robots(): Promise<MetadataRoute.Robots> {
     rules: {
       userAgent: "*",
       allow: "/",
-      disallow: conformTrailingSlash("*/~explorer"),
     },
     sitemap,
     host: domain,
