@@ -223,6 +223,9 @@ export async function GET(
                       );
                       break;
                     } catch (e) {
+                      console.debug(
+                        `Failed to revalidate URL ${req.nextUrl.origin}${conformTrailingSlash(addLeadingSlash(slug))}, trying again...`
+                      );
                       attempts++;
                       if (attempts === 3) throw e;
                       // Add exponential backoff with jitter
