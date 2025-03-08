@@ -221,7 +221,11 @@ export async function GET(
                           headers: { [HEADER_X_FERN_HOST]: domain },
                         }
                       );
-                      break;
+                      // Only break if we get a successful response
+                      if (res.ok) {
+                        break;
+                      }
+                      throw new Error(`HTTP ${res.status}`);
                     } catch (e) {
                       console.debug(
                         `Failed to revalidate URL ${req.nextUrl.origin}${conformTrailingSlash(addLeadingSlash(slug))}, trying again...`
