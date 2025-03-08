@@ -201,8 +201,13 @@ export async function generateMetadata({
     (FernNavigation.hasMarkdown(node) && node.noindex) ||
     isSeoDisabled ||
     frontmatter?.noindex ||
+    slug.includes("~explorer") ||
     false;
-  const nofollow = isSeoDisabled || frontmatter?.nofollow || false;
+  const nofollow =
+    isSeoDisabled ||
+    frontmatter?.nofollow ||
+    slug.includes("~explorer") ||
+    false;
 
   return {
     title:
