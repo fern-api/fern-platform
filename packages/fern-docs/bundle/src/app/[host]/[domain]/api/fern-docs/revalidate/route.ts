@@ -48,7 +48,19 @@ export async function GET(
   const stream = new ReadableStream({
     async start(controller) {
       try {
+        try {
+          await kv.del(domain);
+        } catch (e) {
+          console.debug(
+            "Attempted to delete key",
+            domain,
+            "but failed with",
+            e
+          );
+        }
         revalidateTag(domain);
+
+        // note: adds to "domain" for deployment-promoted webhook
         waitUntil(kv.sadd("domains", domain));
 
         controller.enqueue(`revalidating:${domain}\n`);
@@ -96,7 +108,6 @@ export async function GET(
         }
 
         try {
-          await kv.del(domain);
           const keys: Record<string, unknown> = {};
 
           keys.metadata = metadata;
@@ -198,16 +209,37 @@ export async function GET(
                   `${domain}${conformTrailingSlash(addLeadingSlash(slug))}`
                 );
                 try {
-                  const res = await fetch(
-                    `${req.nextUrl.origin}${conformTrailingSlash(addLeadingSlash(slug))}`,
-                    {
-                      method: "HEAD",
-                      cache: "no-store",
-                      headers: { [HEADER_X_FERN_HOST]: domain },
+                  let res;
+                  let attempts = 0;
+                  while (attempts < 3) {
+                    try {
+                      res = await fetch(
+                        `${req.nextUrl.origin}${conformTrailingSlash(addLeadingSlash(slug))}`,
+                        {
+                          method: "HEAD",
+                          cache: "no-store",
+                          headers: { [HEADER_X_FERN_HOST]: domain },
+                        }
+                      );
+                      break;
+                    } catch (e) {
+                      attempts++;
+                      if (attempts === 3) throw e;
+                      // Add exponential backoff with jitter
+                      const backoffMs = Math.min(
+                        1000 * Math.pow(2, attempts - 1),
+                        4000
+                      );
+                      const jitter = Math.random() * 200;
+                      await new Promise((resolve) =>
+                        setTimeout(resolve, backoffMs + jitter)
+                      );
                     }
-                  );
-                  if (!res.ok) {
-                    throw new Error(`Failed to revalidate ${url}`);
+                  }
+                  if (!res?.ok) {
+                    throw new Error(
+                      `Failed to revalidate ${url}. Status code: ${res?.status}`
+                    );
                   }
                   controller.enqueue(`revalidated:${url}\n`);
                 } catch (e) {
