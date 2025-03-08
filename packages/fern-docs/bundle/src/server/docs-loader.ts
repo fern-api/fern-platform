@@ -264,6 +264,7 @@ const getApi = async (domain: string, id: string) => {
   }
   const v1 = response.definition.apis[ApiDefinitionId(id)];
   if (v1 == null) {
+    console.debug("Could not get API with ID", ApiDefinitionId(id));
     notFound();
   }
   const flags = await cachedGetEdgeFlags(domain);
@@ -358,6 +359,7 @@ const getEndpointById = async (
   });
   const endpoint = api.endpoints[endpointId];
   if (endpoint == null) {
+    console.debug("Could not find endpoint with ID", endpointId);
     notFound();
   }
   const root = await unsafe_getFullRoot(domain);
@@ -416,6 +418,8 @@ const getEndpointByLocator = async (
       };
     }
   }
+
+  console.debug(`Could not find endpoint ${method} ${path}`);
   notFound();
 };
 
@@ -468,6 +472,7 @@ const unsafe_getFullRoot = async (domain: string) => {
     await cachedGetEdgeFlags(domain)
   );
   if (root == null) {
+    console.debug("Could not find root node for domain", domain);
     notFound();
   }
   return root;
@@ -520,6 +525,7 @@ const getNavigationNode = cache(
     const collector = FernNavigation.NodeCollector.collect(root);
     const node = collector.get(FernNavigation.NodeId(id));
     if (node == null) {
+      console.debug(`Could not find node ${id} for domain ${domain}`);
       notFound();
     }
     return node;
@@ -568,6 +574,7 @@ const getPage = cache(async (domain: string, pageId: string) => {
   const response = await loadWithUrl(domain);
   const page = response.definition.pages[pageId as PageId];
   if (page == null) {
+    console.debug(`Could not find page with ID ${pageId}`);
     notFound();
   }
   kvSet(domain, `page:${pageId}`, page);
@@ -706,6 +713,7 @@ const getFonts = cache(async (domain: string) => {
 const getLayout = cache(async (domain: string) => {
   const config = await getConfig(domain);
   if (!config) {
+    console.debug("Could not find config for domain", domain);
     notFound();
   }
 

@@ -43,7 +43,11 @@ export default async function ExplorerPage({
 
   const found = FernNavigation.utils.findNode(root, slug);
   if (found.type !== "found") {
+    console.debug("Did not find node for slug", slug);
     if (found.redirect) {
+      console.debug(
+        `[${domain}] Redirecting to "${found.redirect}" in dynamic page`
+      );
       // this will allow us to redirect to the correct page in the same intercepted API Explorer page
       redirect(
         conformTrailingSlash(conformExplorerRoute(found.redirect)),
