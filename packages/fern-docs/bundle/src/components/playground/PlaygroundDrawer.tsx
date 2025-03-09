@@ -1,6 +1,5 @@
 "use client";
 
-import { usePathname } from "next/navigation";
 import React from "react";
 
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
@@ -9,12 +8,14 @@ import { Drawer } from "vaul";
 import { slugjoin } from "@fern-api/fdr-sdk/navigation";
 import { useIsomorphicLayoutEffect } from "@fern-ui/react-commons";
 
+import { useCurrentPathname } from "@/hooks/use-current-pathname";
+
 import { useHeaderHeight, useViewportSize } from "../hooks/useViewportSize";
 import { isExplorerRoute, withoutExplorerRoute } from "./utils/explorer-route";
 
 export function PlaygroundDrawer({ children }: { children: React.ReactNode }) {
   const [snap, setSnap] = React.useState<number | string | null>(1);
-  const pathname = usePathname();
+  const pathname = useCurrentPathname();
   const open = isExplorerRoute(pathname);
 
   const viewport = useViewportSize();

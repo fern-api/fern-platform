@@ -1,9 +1,10 @@
-import { usePathname } from "next/navigation";
 import { useEffect } from "react";
 
 import type { PostHog } from "posthog-js";
 
 import type { DocsV1Read } from "@fern-api/fdr-sdk";
+
+import { useCurrentPathname } from "@/hooks/use-current-pathname";
 
 import { useApiRoute } from "../hooks/useApiRoute";
 
@@ -176,7 +177,7 @@ export function useInitializePosthog(
   useEffect(() => {
     safeCall(() => initializePosthog(route, customerConfig));
   }, [customerConfig, route]);
-  const pathname = usePathname();
+  const pathname = useCurrentPathname();
   useEffect(() => {
     trackPageView(pathname);
   }, [pathname]);

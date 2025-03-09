@@ -70,6 +70,7 @@ export const middleware: NextMiddleware = async (request) => {
     });
   };
 
+  // this mutation is reversed in `useCurrentPathname` hook. if this changes, please update that hook.
   const withDomain = (pathname: string) => `/${host}/${domain}${pathname}`;
 
   const withoutBasepath = (splitter: string | RegExp) => {

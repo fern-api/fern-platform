@@ -1,6 +1,5 @@
 "use client";
 
-import { usePathname } from "next/navigation";
 import React from "react";
 import { RemoveScroll } from "react-remove-scroll";
 
@@ -18,6 +17,7 @@ import {
 import { cn } from "@fern-docs/components";
 import { useIsomorphicLayoutEffect } from "@fern-ui/react-commons";
 
+import { useCurrentPathname } from "@/hooks/use-current-pathname";
 import { useIsDismissableSidebarOpen } from "@/state/mobile";
 
 export const MainCtx = React.createContext<
@@ -42,7 +42,7 @@ export function MobileMenu({
   const [open, setOpen] = useIsDismissableSidebarOpen();
 
   // Close the sidebar when the path changes
-  const currentPath = usePathname();
+  const currentPath = useCurrentPathname();
   React.useEffect(() => {
     setOpen(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps

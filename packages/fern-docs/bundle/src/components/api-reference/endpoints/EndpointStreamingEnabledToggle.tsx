@@ -1,6 +1,6 @@
 "use client";
 
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 import { useAtom } from "jotai";
 
@@ -8,6 +8,7 @@ import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { addLeadingSlash } from "@fern-docs/utils";
 import { useIsomorphicLayoutEffect } from "@fern-ui/react-commons";
 
+import { useCurrentSlug } from "@/hooks/use-current-pathname";
 import { FERN_STREAM_ATOM } from "@/state/stream";
 
 import { StreamingEnabledToggle } from "./StreamingEnabledToggle";
@@ -19,7 +20,7 @@ export function EndpointStreamingEnabledToggle({
 }) {
   const router = useRouter();
   const [isStream, setIsStream] = useAtom(FERN_STREAM_ATOM);
-  const currentSlug = FernNavigation.slugjoin(usePathname());
+  const currentSlug = useCurrentSlug();
   // TODO: this is a hack to ensure the toggle is always in sync with the current slug
   useIsomorphicLayoutEffect(() => {
     if (currentSlug === node.stream.slug) {

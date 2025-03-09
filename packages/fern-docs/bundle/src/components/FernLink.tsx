@@ -1,14 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import React from "react";
 
 import { ExternalLinkIcon } from "lucide-react";
 import { type UrlObject, format, parse, resolve } from "url";
 
-import { FernNavigation } from "@fern-api/fdr-sdk";
-
+import { useCurrentPathname } from "@/hooks/use-current-pathname";
 import { useDomain } from "@/state/domain";
 
 export const FernLink = React.forwardRef<
@@ -47,7 +45,7 @@ const FernRelativeLink = React.forwardRef<
   HTMLAnchorElement,
   React.ComponentProps<typeof Link>
 >((props, ref) => {
-  const pathname = usePathname();
+  const pathname = useCurrentPathname();
   const href = resolveRelativeUrl(pathname, formatUrlString(props.href));
   return <Link ref={ref} prefetch={true} {...props} href={href} />;
 });
@@ -119,15 +117,6 @@ export function formatUrlString(url: string | UrlObject): string {
 }
 
 export function resolveRelativeUrl(pathName: string, href: string): string {
-  if (pathName.includes("/static/")) {
-    // Find the index of the last encoded forward slash
-    const lastSlashIndex = pathName.lastIndexOf("%2F");
-    // Take everything after the last encoded slash as the base path
-    const basePath = pathName.substring(lastSlashIndex + 3);
-    const pathname = resolve(basePath, href);
-    return pathname;
-  }
-
   // if the href is "../" or "./" or missing an initial slash, we want to resolve it relative to the current page
   if (
     href.startsWith(".") ||
