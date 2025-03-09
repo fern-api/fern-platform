@@ -30,6 +30,7 @@ import {
   PageId,
   Slug,
   TypeId,
+  slugjoin,
 } from "@fern-api/fdr-sdk/navigation";
 import { CONTINUE, SKIP } from "@fern-api/fdr-sdk/traversers";
 import { isNonNullish, isPlainObject } from "@fern-api/ui-core-utils";
@@ -39,6 +40,8 @@ import { getAuthEdgeConfig, getEdgeFlags } from "@fern-docs/edge-config";
 import {
   DEFAULT_LOGO_HEIGHT,
   EdgeFlags,
+  addLeadingSlash,
+  removeTrailingSlash,
   withoutStaging,
 } from "@fern-docs/utils";
 
@@ -57,7 +60,7 @@ const loadWithUrl = uncachedLoadWithUrl;
 
 interface DocsMetadata {
   domain: string;
-  basePath: string | undefined;
+  basePath: string;
   url: string;
   org: string;
   isPreview: boolean;
@@ -194,7 +197,9 @@ export const getMetadataFromResponse = async (
   ]);
   return {
     domain: response.baseUrl.domain,
-    basePath: response.baseUrl.basePath,
+    basePath: removeTrailingSlash(
+      addLeadingSlash(slugjoin(response.baseUrl.basePath))
+    ),
     url: docsUrlMetadata.url,
     org: docsUrlMetadata.org,
     isPreview: docsUrlMetadata.isPreview,
