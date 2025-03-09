@@ -1,6 +1,5 @@
 "use client";
 
-import { usePathname } from "next/navigation";
 import { Fragment, forwardRef, useEffect, useRef, useState } from "react";
 
 import { Search, Slash, X } from "lucide-react";
@@ -17,6 +16,7 @@ import {
 import { removeTrailingSlash } from "@fern-docs/utils";
 
 import { BuiltWithFern } from "@/components/built-with-fern";
+import { useCurrentPathname } from "@/hooks/use-current-pathname";
 
 import { conformExplorerRoute } from "../utils/explorer-route";
 import { ApiGroup } from "../utils/flatten-apis";
@@ -49,7 +49,7 @@ export const PlaygroundEndpointSelectorContent = forwardRef<
   HTMLDivElement,
   PlaygroundEndpointSelectorContentProps
 >(({ apiGroups, className, shallow, replace }, forwardedRef) => {
-  const pathname = usePathname();
+  const pathname = useCurrentPathname();
 
   const [filterValue, setFilterValue] = useState<string>("");
 

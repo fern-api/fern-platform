@@ -3,7 +3,6 @@ import { NextRequest } from "next/server";
 import { kv } from "@vercel/kv";
 import { uniq } from "es-toolkit/array";
 
-import { slugjoin } from "@fern-api/fdr-sdk/navigation";
 import { withoutStaging } from "@fern-docs/utils";
 
 import { getMetadata } from "@/server/docs-loader";
@@ -26,10 +25,7 @@ export async function POST(request: NextRequest) {
     promises.push(
       getMetadata(domain).then((metadata) =>
         fetch(
-          `https://${metadata.domain}/${slugjoin(
-            metadata.basePath ?? "",
-            "api/fern-docs/revalidate"
-          )}`,
+          `https://${metadata.domain}${metadata.basePath}/api/fern-docs/revalidate`,
           { cache: "no-cache" }
         )
       )
