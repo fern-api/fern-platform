@@ -45,8 +45,7 @@ import {
   withoutStaging,
 } from "@fern-docs/utils";
 
-import { findEndpoint } from "@/components/util/processRequestSnippetComponents";
-
+import { findEndpoint } from "../components/util/processRequestSnippetComponents";
 import { AuthState, createGetAuthState } from "./auth/getAuthState";
 import { cacheSeed } from "./cache-seed";
 import { generateFernColorPalette } from "./generateFernColors";
@@ -171,6 +170,8 @@ export interface DocsLoader {
   getAuthState: (pathname?: string) => Promise<AuthState>;
 
   getEdgeFlags: () => Promise<EdgeFlags>;
+
+  getBaseUrl: () => Promise<string>;
 }
 
 function kvSet(domain: string, key: string, value: unknown) {
@@ -187,6 +188,14 @@ const cachedGetEdgeFlags = cache(async (domain: string) => {
   return await getEdgeFlags(domain);
 });
 
+export function cleanBasePath(basePath: string | undefined) {
+  const basepath = removeTrailingSlash(addLeadingSlash(slugjoin(basePath)));
+  if (basepath === "/") {
+    return "";
+  }
+  return basepath;
+}
+
 export const getMetadataFromResponse = async (
   domain: string,
   responsePromise: AsyncOrSync<DocsV2Read.LoadDocsForUrlResponse>
@@ -197,9 +206,7 @@ export const getMetadataFromResponse = async (
   ]);
   return {
     domain: response.baseUrl.domain,
-    basePath: removeTrailingSlash(
-      addLeadingSlash(slugjoin(response.baseUrl.basePath))
-    ),
+    basePath: cleanBasePath(response.baseUrl.basePath),
     url: docsUrlMetadata.url,
     org: docsUrlMetadata.org,
     isPreview: docsUrlMetadata.isPreview,
@@ -808,6 +815,10 @@ export const createCachedDocsLoader = async (
     getFonts: () => getFonts(domain),
     getAuthState,
     getEdgeFlags: () => cachedGetEdgeFlags(domain),
+    getBaseUrl: async () => {
+      const m = await metadata;
+      return `https://${m.domain}${m.basePath}`;
+    },
   };
 };
 

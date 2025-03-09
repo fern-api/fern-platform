@@ -5,9 +5,8 @@ import { cache } from "react";
 import { APIResponse, FdrAPI } from "@fern-api/fdr-sdk/client/types";
 import { withoutStaging } from "@fern-docs/utils";
 
-import { provideRegistryService } from "@/server/registry";
-
 import { loadDocsDefinitionFromS3 } from "./loadDocsDefinitionFromS3";
+import { provideRegistryService } from "./registry";
 
 export type LoadWithUrlResponse = APIResponse<
   FdrAPI.docs.v2.read.LoadDocsForUrlResponse,

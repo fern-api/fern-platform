@@ -32,7 +32,7 @@ export async function ExplorerContent({
   } catch (error) {
     console.error(error);
     // TODO: don't revalidate too often
-    revalidate(loader);
+    revalidate(await loader.getBaseUrl());
   }
 
   if (api == null) {

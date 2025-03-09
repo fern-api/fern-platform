@@ -2,11 +2,8 @@ import "server-only";
 
 import { after } from "next/server";
 
-import { DocsLoader } from "./docs-loader";
-
-export function revalidate(loader: DocsLoader) {
+export function revalidate(baseUrl: string) {
   return after(async () => {
-    const { domain, basePath } = await loader.getMetadata();
-    await fetch(`https://${domain}${basePath}/api/fern-docs/revalidate`);
+    await fetch(`${baseUrl}/api/fern-docs/revalidate`);
   });
 }
