@@ -5,17 +5,17 @@ import { kv } from "@vercel/kv";
 import { escapeRegExp } from "es-toolkit/string";
 
 export async function GET(
-  req: NextRequest,
+  _req: NextRequest,
   props: { params: Promise<{ host: string; domain: string }> }
 ): Promise<NextResponse> {
   const start = performance.now();
 
   const { domain } = await props.params;
+  revalidateTag(domain);
 
   const stream = new ReadableStream({
     async start(controller) {
       try {
-        revalidateTag(domain);
         controller.enqueue(`invalidating:${domain}\n`);
 
         try {

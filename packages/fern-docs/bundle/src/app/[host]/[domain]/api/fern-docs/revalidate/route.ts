@@ -1,4 +1,4 @@
-import { revalidateTag } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
 
 import { waitUntil } from "@vercel/functions";
@@ -45,6 +45,7 @@ export async function GET(
   const start = performance.now();
 
   const { host, domain } = await props.params;
+  revalidateTag(domain);
 
   const stream = new ReadableStream({
     async start(controller) {
@@ -59,7 +60,6 @@ export async function GET(
             e
           );
         }
-        revalidateTag(domain);
 
         // note: adds to "domain" for deployment-promoted webhook
         waitUntil(kv.sadd("domains", domain));
@@ -208,6 +208,11 @@ export async function GET(
               batches[i]!.map(async (slug) => {
                 const url = withDefaultProtocol(
                   `${domain}${conformTrailingSlash(addLeadingSlash(slug))}`
+                );
+                // force revalidate the static page
+                revalidatePath(
+                  `/${host}/${domain}/static/${encodeURIComponent(conformTrailingSlash(addLeadingSlash(slug)))}`,
+                  "page"
                 );
                 try {
                   let res;
