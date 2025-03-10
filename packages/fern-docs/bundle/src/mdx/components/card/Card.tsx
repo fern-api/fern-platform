@@ -39,6 +39,10 @@ export const Card: React.FC<Card.Props> = ({
   href,
   badge,
 }) => {
+  if (isNaN(iconSize)) {
+    iconSize = 8;
+  }
+
   const className = cn(
     "not-prose rounded-3 relative block border p-6 text-base"
   );
