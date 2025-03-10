@@ -55,7 +55,7 @@ export default function DashboardLayout({
           fetchPriority="low"
         />
       </head>
-      <body className="antialiased">
+      <body className="antialiased" id="fern-docs">
         <ConsoleMessage />
         <ScrollToTop />
         <Providers>{children}</Providers>
