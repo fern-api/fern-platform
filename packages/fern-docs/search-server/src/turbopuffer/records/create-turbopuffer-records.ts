@@ -1,14 +1,23 @@
+import { ApiDefinition } from "@fern-api/fdr-sdk/api-definition";
 import {
+  ApiDefinitionId,
   NavigationNodePage,
   NodeCollector,
   PageId,
   RootNode,
   getPageId,
   hasMarkdown,
+  isApiLeaf,
 } from "@fern-api/fdr-sdk/navigation";
 import { flatten } from "es-toolkit/array";
 import { FernTurbopufferRecordWithoutVector } from "../types";
+import { createApiReferenceRecordHttp } from "./create-api-reference-record-http";
+import { createApiReferenceRecordWebSocket } from "./create-api-reference-record-web-socket";
+import { createApiReferenceRecordWebhook } from "./create-api-reference-record-webhook";
 import { createBaseRecord } from "./create-base-record";
+import { createEndpointBaseRecordHttp } from "./create-endpoint-record-http";
+import { createEndpointBaseRecordWebSocket } from "./create-endpoint-record-web-socket";
+import { createEndpointBaseRecordWebhook } from "./create-endpoint-record-webhook";
 import { createMarkdownRecords } from "./create-markdown-records";
 
 interface CreateTurbopufferRecordsOptions {
@@ -16,7 +25,7 @@ interface CreateTurbopufferRecordsOptions {
   domain: string;
   org_id: string;
   pages: Record<PageId, string>;
-  // apis: Record<ApiDefinitionId, ApiDefinition>;
+  apis: Record<ApiDefinitionId, ApiDefinition>;
   authed?: (node: NavigationNodePage) => boolean;
   splitText: (text: string) => Promise<string[]>;
 }
@@ -24,7 +33,7 @@ interface CreateTurbopufferRecordsOptions {
 export async function createTurbopufferRecords({
   root,
   pages,
-  // apis,
+  apis,
   domain,
   org_id,
   authed,
@@ -37,7 +46,7 @@ export async function createTurbopufferRecords({
   const pageNodes = collector.indexablePageNodesWithAuth;
 
   const markdownNodes = pageNodes.filter(hasMarkdown);
-  // const apiLeafNodes = pageNodes.filter(isApiLeaf);
+  const apiLeafNodes = pageNodes.filter(isApiLeaf);
 
   const markdownRecords = flatten(
     await Promise.all(
@@ -72,70 +81,95 @@ export async function createTurbopufferRecords({
     )
   );
 
-  // apiLeafNodes.forEach((node) => {
-  //     const apiDefinition = apis[node.apiDefinitionId];
+  const apiReferenceRecords: FernTurbopufferRecordWithoutVector[] = [];
+  apiLeafNodes.forEach((node) => {
+    const apiDefinition = apis[node.apiDefinitionId];
 
-  //     if (!apiDefinition) {
-  //         // eslint-disable-next-line no-console
-  //         console.error(
-  //             `API leaf node ${node.slug} has api definition id ${node.apiDefinitionId} but no api definition`,
-  //         );
-  //         return;
-  //     }
+    if (!apiDefinition) {
+      console.error(
+        `API leaf node ${node.slug} has api definition id ${node.apiDefinitionId} but no api definition`
+      );
+      return;
+    }
 
-  //     const base = createBaseRecord({
-  //         node,
-  //         parents: collector.getParents(node.id) ?? [],
-  //         domain,
-  //         org_id,
-  //         authed: authed?.(node) ?? false,
-  //         type: "api-reference",
-  //     });
+    const base = createBaseRecord({
+      node,
+      parents: collector.getParents(node.id) ?? [],
+      domain,
+      org_id,
+      authed: authed?.(node) ?? false,
+      type: "api-reference",
+    });
 
-  //     if (node.type === "endpoint") {
-  //         const endpoint = apiDefinition.endpoints[node.endpointId];
-  //         if (!endpoint) {
-  //             // eslint-disable-next-line no-console
-  //             console.error(`API leaf node ${node.slug} has endpoint id ${node.endpointId} but no endpoint`);
-  //             return;
-  //         }
+    if (node.type === "endpoint") {
+      const endpoint = apiDefinition.endpoints[node.endpointId];
+      if (!endpoint) {
+        console.error(
+          `API leaf node ${node.slug} has endpoint id ${node.endpointId} but no endpoint`
+        );
+        return;
+      }
 
-  //         const endpointBase = createEndpointBaseRecordHttp({ base, node, endpoint, types: apiDefinition.types });
-  //         records.push(...createApiReferenceRecordHttp({ endpointBase, endpoint }));
-  //         return;
-  //     }
+      const endpointBase = createEndpointBaseRecordHttp({
+        base,
+        node,
+        endpoint,
+        types: apiDefinition.types,
+      });
+      apiReferenceRecords.push(
+        ...createApiReferenceRecordHttp({ endpointBase, endpoint })
+      );
+      return;
+    }
 
-  //     if (node.type === "webSocket") {
-  //         const endpoint = apiDefinition.websockets[node.webSocketId];
-  //         if (!endpoint) {
-  //             // eslint-disable-next-line no-console
-  //             console.error(`API leaf node ${node.slug} has web socket id ${node.webSocketId} but no web socket`);
-  //             return;
-  //         }
+    if (node.type === "webSocket") {
+      const endpoint = apiDefinition.websockets[node.webSocketId];
+      if (!endpoint) {
+        console.error(
+          `API leaf node ${node.slug} has web socket id ${node.webSocketId} but no web socket`
+        );
+        return;
+      }
 
-  //         const endpointBase = createEndpointBaseRecordWebSocket({
-  //             base,
-  //             node,
-  //             endpoint,
-  //             types: apiDefinition.types,
-  //         });
-  //         records.push(createApiReferenceRecordWebSocket({ endpointBase }));
-  //         return;
-  //     }
+      const endpointBase = createEndpointBaseRecordWebSocket({
+        base,
+        node,
+        endpoint,
+        types: apiDefinition.types,
+      });
+      apiReferenceRecords.push(
+        createApiReferenceRecordWebSocket({ endpointBase })
+      );
+      return;
+    }
 
-  //     if (node.type === "webhook") {
-  //         const endpoint = apiDefinition.webhooks[node.webhookId];
-  //         if (!endpoint) {
-  //             // eslint-disable-next-line no-console
-  //             console.error(`API leaf node ${node.slug} has web hook id ${node.webhookId} but no web hook`);
-  //             return;
-  //         }
+    if (node.type === "webhook") {
+      const endpoint = apiDefinition.webhooks[node.webhookId];
+      if (!endpoint) {
+        console.error(
+          `API leaf node ${node.slug} has web hook id ${node.webhookId} but no web hook`
+        );
+        return;
+      }
 
-  //         const endpointBase = createEndpointBaseRecordWebhook({ base, node, endpoint, types: apiDefinition.types });
-  //         records.push(...createApiReferenceRecordWebhook({ endpointBase, endpoint }));
-  //         return;
-  //     }
-  // });
+      const endpointBase = createEndpointBaseRecordWebhook({
+        base,
+        node,
+        endpoint,
+        types: apiDefinition.types,
+      });
+      apiReferenceRecords.push(
+        ...createApiReferenceRecordWebhook({ endpointBase, endpoint })
+      );
+      return;
+    }
+  });
 
-  return markdownRecords;
+  const records = [...markdownRecords, ...apiReferenceRecords];
+  console.log(
+    "Total chunk length:",
+    records.reduce((sum, r) => sum + r.attributes.chunk.length, 0)
+  );
+  console.log("records.length", records.length);
+  return records;
 }
