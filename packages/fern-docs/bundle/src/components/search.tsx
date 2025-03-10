@@ -233,6 +233,10 @@ function useCommandTrigger(): [
 
   React.useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
+      if (open) {
+        return;
+      }
+
       setOpen((prev) => {
         if (prev) {
           return prev;
@@ -265,7 +269,7 @@ function useCommandTrigger(): [
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [setOpen]);
+  }, [open, setOpen]);
 
   return [open, setOpen];
 }

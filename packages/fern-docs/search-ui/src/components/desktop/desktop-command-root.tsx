@@ -88,6 +88,13 @@ export const DesktopCommandRoot = forwardRef<
           onKeyDownCapture={composeEventHandlers(
             props.onKeyDownCapture,
             (e) => {
+              if (
+                document.activeElement instanceof HTMLInputElement ||
+                document.activeElement instanceof HTMLTextAreaElement
+              ) {
+                return;
+              }
+
               // if input is alphanumeric, space, backspace, delete, arrow left, arrow right, then focus input
               // note: this func is onKeyDownCapture so it will fire before the input
               // which is important so that the first character typed isn't swallowed
