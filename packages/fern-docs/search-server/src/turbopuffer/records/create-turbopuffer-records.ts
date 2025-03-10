@@ -165,7 +165,8 @@ export async function createTurbopufferRecords({
     }
   });
 
-  const records = [...markdownRecords, ...apiReferenceRecords];
+  // const records = [...markdownRecords, ...apiReferenceRecords];
+  const records = [...markdownRecords];
   console.log(
     "Total chunk length:",
     records.reduce((sum, r) => sum + r.attributes.chunk.length, 0)
