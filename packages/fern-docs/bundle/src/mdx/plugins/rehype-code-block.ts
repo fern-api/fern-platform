@@ -140,7 +140,7 @@ export function migrateMeta(metastring: string): string {
   });
 
   // if matches {[, it must be preceded by a `=` otherwise prefix with `highlight=`
-  const match = metastring.search(/\{[^}]+\}/);
+  const match = metastring.search(/\{[0-9,\s[\]-]*\}/);
   if (match !== -1 && metastring.slice(match + 1, match + 3) !== "...") {
     if (match === 0 || metastring[match - 1] !== "=") {
       metastring =
@@ -153,7 +153,11 @@ export function migrateMeta(metastring: string): string {
     return `={${expr}}`;
   });
 
-  metastring = metastring.replaceAll(/=([a-zA-Z]+)/g, (_original, expr) => {
+  metastring = metastring.replaceAll(/=([a-zA-Z]+)/g, (original, expr) => {
+    // don't replace booleans
+    if (expr === "true" || expr === "false") {
+      return original;
+    }
     return `="${expr}"`;
   });
 
@@ -167,16 +171,18 @@ export function migrateMeta(metastring: string): string {
   }
 
   // migrate abcd to title="abcd"
+  // exclude any characters wrapped in {}
   if (
     !metastring.includes("={") &&
     !metastring.includes('="') &&
-    !metastring.includes("{...")
+    !metastring.includes("{...") &&
+    !/\{[^}]*[a-zA-Z][^}]*\}/.test(metastring)
   ) {
     return `title="${metastring.replace(/"/g, '\\"')}"`;
   }
 
   metastring = metastring.replaceAll(
-    /^(.*?)(?=[a-zA-Z]+=)/g,
+    /^([^{]*?)(?=[a-zA-Z]+=)/g,
     (_original, text) => {
       if (text.trim() === "") {
         return "";
@@ -187,13 +193,15 @@ export function migrateMeta(metastring: string): string {
 
   // if a title hasn't been found so far, make sure it is not hidden in meta string
   if (!metastring.includes("title=")) {
+    // ignore special words, anything in curly braces
     const parseForTitle = metastring
       .replaceAll("wordWrap", "")
-      .replaceAll(/([^=]+)={(.*?)}/g, "");
+      .replaceAll(/([^=]+)={(.*?)}/g, "")
+      .replaceAll(/{(.*?)}/g, "");
     if (parseForTitle !== "") {
       metastring = metastring.replace(
         parseForTitle,
-        ` title="${parseForTitle.trim()}"`
+        ` title="${parseForTitle.trim()}" `
       );
     }
   }
