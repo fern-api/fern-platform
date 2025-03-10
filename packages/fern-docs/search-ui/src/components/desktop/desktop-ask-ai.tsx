@@ -330,7 +330,10 @@ const DesktopAskAIChat = ({
   );
 
   useEffect(() => {
-    if (initialInput && !chat.messages.map((m) => m.content).includes(initialInput)) {
+    if (
+      initialInput &&
+      !chat.messages.map((m) => m.content).includes(initialInput)
+    ) {
       askAI(initialInput);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
