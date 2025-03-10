@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-import { RecursiveCharacterTextSplitter } from "@langchain/textsplitters";
-=======
 import { NavigationNodePage } from "@fern-api/fdr-sdk/navigation";
->>>>>>> aa7205f10 (hotfix: Change split-text to no-op (#2273))
 import { Turbopuffer } from "@turbopuffer/turbopuffer";
 
 import { NavigationNodePage } from "@fern-api/fdr-sdk/navigation";
