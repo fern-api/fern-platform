@@ -40,7 +40,7 @@ export async function turbopufferUpsertTask({
   payload,
   authed,
   vectorizer,
-  splitText = (text) => [text],
+  splitText = (text) => Promise.all([text]),
   deleteExisting = false,
 }: TurbopufferIndexerTaskOptions): Promise<number> {
   const tpuf = new Turbopuffer({
