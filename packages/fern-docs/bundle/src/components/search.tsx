@@ -1,6 +1,6 @@
 "use client";
 
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import React from "react";
 
 import { isEqual } from "es-toolkit/predicate";
@@ -26,6 +26,7 @@ import { useEventCallback, useLazyRef } from "@fern-ui/react-commons";
 import { Feedback } from "@/components/feedback/Feedback";
 import { useApiRoute } from "@/components/hooks/useApiRoute";
 import { useApiRouteSWRImmutable } from "@/components/hooks/useApiRouteSWR";
+import { useCurrentPathname } from "@/hooks/use-current-pathname";
 import { useSetTheme, useThemeSwitchEnabled } from "@/hooks/use-theme";
 import { useIsDarkCode } from "@/state/dark-code";
 import { useFernUser } from "@/state/fern-user";
@@ -120,7 +121,7 @@ export const SearchV2 = React.memo(function SearchV2({
   }, [data]);
 
   // close the search dialog when the pathname changes
-  const pathname = usePathname();
+  const pathname = useCurrentPathname();
   React.useEffect(() => {
     setOpen(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -232,6 +233,10 @@ function useCommandTrigger(): [
 
   React.useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
+      if (open) {
+        return;
+      }
+
       setOpen((prev) => {
         if (prev) {
           return prev;
@@ -264,7 +269,7 @@ function useCommandTrigger(): [
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [setOpen]);
+  }, [open, setOpen]);
 
   return [open, setOpen];
 }

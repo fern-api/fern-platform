@@ -3,22 +3,33 @@
 import { cn } from "@fern-docs/components";
 import { useIsDesktop } from "@fern-ui/react-commons";
 
-import { BgImageGradient } from "@/components/BgImageGradient";
 import { HideAsides, useIsSidebarFixed } from "@/state/layout";
 
 import { MobileMenu } from "./mobile-menu";
 
-export function SidebarNav({ children }: { children: React.ReactNode }) {
+export function SidebarNav({
+  children,
+  className,
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) {
   const isDesktop = useIsDesktop();
 
   if (!isDesktop) {
-    return <MobileMenu>{children}</MobileMenu>;
+    return <MobileMenu className={className}>{children}</MobileMenu>;
   }
 
-  return <DesktopMenu>{children}</DesktopMenu>;
+  return <DesktopMenu className={className}>{children}</DesktopMenu>;
 }
 
-function DesktopMenu({ children }: { children: React.ReactNode }) {
+function DesktopMenu({
+  children,
+  className,
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) {
   const fixed = useIsSidebarFixed();
   return (
     <>
@@ -34,15 +45,11 @@ function DesktopMenu({ children }: { children: React.ReactNode }) {
           !fixed &&
             "sticky h-fit max-h-[calc(100dvh-var(--header-height))] shrink-0 border-r-0",
           fixed &&
-            "border-border-concealed fixed bottom-0 left-0 border-r backdrop-blur-xl",
-          "top-(--header-height) hidden"
+            "border-border-concealed bg-(color:--sidebar-background) fixed bottom-0 left-0 border-r backdrop-blur-xl",
+          "top-(--header-height) hidden",
+          className
         )}
       >
-        {fixed && (
-          <div className="clipped-background opacity-70">
-            <BgImageGradient className="translate-y-[calc(var(--header-height)*-1)]" />
-          </div>
-        )}
         {children}
       </aside>
       {fixed && (

@@ -5,6 +5,7 @@ import React, { ComponentPropsWithoutRef } from "react";
 import { cn } from "@fern-docs/components";
 import { tunnel, useIsMobile, useLazyRef } from "@fern-ui/react-commons";
 
+import { Prose } from "@/mdx/components/prose";
 import { SetLayout } from "@/state/layout";
 
 import { AsideAwareDiv } from "./AsideAwareDiv";
@@ -50,7 +51,9 @@ export const ReferenceLayout = React.forwardRef<
         <div className="my-6 md:grid md:grid-cols-2 md:gap-8 lg:gap-12">
           {!isMobile && <slot.Out />}
           <div className="mb-12 space-y-12">
-            {children}
+            <Prose className="prose-h1:mt-[1.5em] first:prose-h1:mt-0 max-w-full">
+              {children}
+            </Prose>
             {isMobile && <slot.Out />}
             {reference}
             {footer}

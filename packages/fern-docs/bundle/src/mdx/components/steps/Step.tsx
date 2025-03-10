@@ -12,6 +12,7 @@ import { AnimatePresence, LazyMotion, domAnimation } from "motion/react";
 import * as m from "motion/react-m";
 
 import { cn } from "@fern-docs/components";
+import { addLeadingSlash } from "@fern-docs/utils";
 import { useCopyToClipboard } from "@fern-ui/react-commons";
 
 import { useIsFernAnchorDisabled } from "@/components/FernAnchor";

@@ -9,7 +9,7 @@ import {
 import { isNonNullish } from "@fern-api/ui-core-utils";
 import { removeLeadingSlash } from "@fern-docs/utils";
 
-import { DocsLoader } from "./docs-loader";
+import { DocsLoader, createPruneKey } from "./docs-loader";
 import { pascalCaseHeaderKey } from "./headerKeyCase";
 import { convertToLlmTxtMarkdown } from "./llm-txt-md";
 
@@ -18,7 +18,10 @@ export async function getMarkdownForPath(
   loader: DocsLoader
 ): Promise<{ content: string; contentType: "markdown" | "mdx" } | undefined> {
   if (FernNavigation.isApiLeaf(node)) {
-    const apiDefinition = await loader.getPrunedApi(node.apiDefinitionId, node);
+    const apiDefinition = await loader.getPrunedApi(
+      node.apiDefinitionId,
+      createPruneKey(node)
+    );
     if (apiDefinition == null) {
       return undefined;
     }

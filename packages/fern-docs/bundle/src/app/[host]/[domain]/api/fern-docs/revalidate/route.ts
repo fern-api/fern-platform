@@ -1,6 +1,7 @@
-import { revalidateTag } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
 
+import { waitUntil } from "@vercel/functions";
 import { kv } from "@vercel/kv";
 import { chunk } from "es-toolkit/array";
 import { mapValues } from "es-toolkit/object";
@@ -27,6 +28,7 @@ import {
 
 import {
   convertResponseToRootNode,
+  createEndpointCacheKey,
   getMetadataFromResponse,
 } from "@/server/docs-loader";
 import { loadWithUrl } from "@/server/loadWithUrl";
@@ -43,11 +45,25 @@ export async function GET(
   const start = performance.now();
 
   const { host, domain } = await props.params;
+  revalidateTag(domain);
 
   const stream = new ReadableStream({
     async start(controller) {
       try {
-        revalidateTag(domain);
+        try {
+          await kv.del(domain);
+        } catch (e) {
+          console.debug(
+            "Attempted to delete key",
+            domain,
+            "but failed with",
+            e
+          );
+        }
+
+        // note: adds to "domain" for deployment-promoted webhook
+        waitUntil(kv.sadd("domains", domain));
+
         controller.enqueue(`revalidating:${domain}\n`);
 
         const loadWithUrlPromise = loadWithUrl(domain);
@@ -75,11 +91,12 @@ export async function GET(
             });
         }
 
-        let root = convertResponseToRootNode(docs, edgeFlags);
+        const root = convertResponseToRootNode(docs, edgeFlags);
+        let staticRoot = root;
 
         // maybe prune the root node if we have an auth config
-        if (root && authConfig) {
-          root = pruneWithAuthState(
+        if (staticRoot && authConfig) {
+          staticRoot = pruneWithAuthState(
             {
               authed: false,
               authorizationUrl: undefined,
@@ -87,30 +104,30 @@ export async function GET(
               ok: true,
             },
             authConfig,
-            root
+            staticRoot
           );
         }
 
         try {
           const keys: Record<string, unknown> = {};
 
-          keys[`${domain}:metadata`] = metadata;
+          keys.metadata = metadata;
 
           if (root != null) {
-            keys[`${domain}:root`] = root;
+            keys.root = root;
           }
 
           const { navigation, root: _, ...config } = docs.definition.config;
-          keys[`${domain}:config`] = config;
+          keys.config = config;
 
           Object.entries(docs.definition.pages).forEach(([id, page]) => {
-            keys[`${domain}:page:${id}`] = page;
+            keys[`page:${id}`] = page;
           });
 
           Object.values(docs.definition.apisV2).forEach((api) => {
             const prunedApi = createPrunedApi(api);
             prunedApi.forEach((value, key) => {
-              keys[`${domain}:api:${key}`] = value;
+              keys[`api:${key}`] = value;
             });
           });
 
@@ -119,7 +136,7 @@ export async function GET(
               ApiDefinitionV1ToLatest.from(api, edgeFlags).migrate()
             );
             prunedApi.forEach((value, key) => {
-              keys[`${domain}:api:${key}`] = value;
+              keys[`api:${key}`] = value;
             });
           });
 
@@ -143,12 +160,12 @@ export async function GET(
             }
           );
 
-          keys[`${domain}:mdx-bundler-files`] = docs.definition.jsFiles ?? {};
+          keys[`mdx-bundler-files`] = docs.definition.jsFiles ?? {};
 
           const promises = [];
 
           for (const [key, value] of Object.entries(keys)) {
-            promises.push(kv.set(key, value));
+            promises.push(kv.hset(domain, { [key]: value }));
           }
 
           const results = await Promise.allSettled(promises);
@@ -161,10 +178,6 @@ export async function GET(
             }
           });
 
-          // these are generated from docs-cache, so we need to delete them for now
-          // TODO: handle this in the future more gracefully
-          await kv.del(`${domain}:fonts`, `${domain}:colors`);
-
           controller.enqueue(
             `revalidate-kv-keys-set:${Object.keys(keys).length}\n`
           );
@@ -176,7 +189,7 @@ export async function GET(
         }
 
         if (req.nextUrl.searchParams.get("regenerate") !== "false") {
-          const collector = FernNavigation.NodeCollector.collect(root);
+          const collector = FernNavigation.NodeCollector.collect(staticRoot);
           const batches = chunk(collector.staticPageSlugs, 200);
 
           controller.enqueue(
@@ -196,17 +209,49 @@ export async function GET(
                 const url = withDefaultProtocol(
                   `${domain}${conformTrailingSlash(addLeadingSlash(slug))}`
                 );
+                // force revalidate the static page
+                revalidatePath(
+                  `/${host}/${domain}/static/${encodeURIComponent(conformTrailingSlash(addLeadingSlash(slug)))}`,
+                  "page"
+                );
                 try {
-                  const res = await fetch(
-                    `${req.nextUrl.origin}${conformTrailingSlash(addLeadingSlash(slug))}`,
-                    {
-                      method: "HEAD",
-                      cache: "no-store",
-                      headers: { [HEADER_X_FERN_HOST]: domain },
+                  let res;
+                  let attempts = 0;
+                  while (attempts < 3) {
+                    try {
+                      res = await fetch(
+                        `${req.nextUrl.origin}${conformTrailingSlash(addLeadingSlash(slug))}`,
+                        {
+                          method: "HEAD",
+                          cache: "no-store",
+                          headers: { [HEADER_X_FERN_HOST]: domain },
+                        }
+                      );
+                      // break if we get a successful response
+                      if (res.ok) {
+                        break;
+                      }
+                    } catch (e) {
+                      console.debug(
+                        `Failed to revalidate URL ${req.nextUrl.origin}${conformTrailingSlash(addLeadingSlash(slug))}, trying again...`
+                      );
+                      attempts++;
+                      if (attempts === 3) throw e;
+                      // Add exponential backoff with jitter
+                      const backoffMs = Math.min(
+                        1000 * Math.pow(2, attempts - 1),
+                        4000
+                      );
+                      const jitter = Math.random() * 200;
+                      await new Promise((resolve) =>
+                        setTimeout(resolve, backoffMs + jitter)
+                      );
                     }
-                  );
-                  if (!res.ok) {
-                    throw new Error(`Failed to revalidate ${url}`);
+                  }
+                  if (!res?.ok) {
+                    throw new Error(
+                      `Failed to revalidate ${url}. Status code: ${res?.status}`
+                    );
                   }
                   controller.enqueue(`revalidated:${url}\n`);
                 } catch (e) {
@@ -263,21 +308,33 @@ async function reindex(
 function createPrunedApi(api: ApiDefinition.ApiDefinition) {
   const apis = new Map<string, ApiDefinition.ApiDefinition>();
   Object.keys(api.endpoints).forEach((endpointId) => {
+    const pruneKey = {
+      type: "endpoint",
+      endpointId: endpointId as EndpointId,
+    } as const;
     apis.set(
-      `${api.id}:endpoint:${endpointId}`,
-      prune(api, { type: "endpoint", endpointId: endpointId as EndpointId })
+      `${api.id}:${createEndpointCacheKey(pruneKey)}`,
+      prune(api, pruneKey)
     );
   });
   Object.keys(api.websockets).forEach((webSocketId) => {
+    const pruneKey = {
+      type: "webSocket",
+      webSocketId: webSocketId as WebSocketId,
+    } as const;
     apis.set(
-      `${api.id}:websocket:${webSocketId}`,
-      prune(api, { type: "webSocket", webSocketId: webSocketId as WebSocketId })
+      `${api.id}:${createEndpointCacheKey(pruneKey)}`,
+      prune(api, pruneKey)
     );
   });
   Object.keys(api.webhooks).forEach((webhookId) => {
+    const pruneKey = {
+      type: "webhook",
+      webhookId: webhookId as WebhookId,
+    } as const;
     apis.set(
-      `${api.id}:webhook:${webhookId}`,
-      prune(api, { type: "webhook", webhookId: webhookId as WebhookId })
+      `${api.id}:${createEndpointCacheKey(pruneKey)}`,
+      prune(api, pruneKey)
     );
   });
   return apis;

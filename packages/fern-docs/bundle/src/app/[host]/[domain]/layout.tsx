@@ -16,7 +16,6 @@ import {
   getSeoDisabled,
 } from "@fern-docs/edge-config";
 
-import { BgImageGradient } from "@/components/BgImageGradient";
 import { JavascriptProvider } from "@/components/JavascriptProvider";
 import { CustomerAnalytics } from "@/components/analytics/CustomerAnalytics";
 import { FeatureFlagProvider } from "@/components/feature-flags/FeatureFlagProvider";
@@ -106,7 +105,6 @@ export default async function Layout({
         <Whitelabeled value={edgeFlags.isWhitelabeled} />
         <SetColors colors={colors} />
         <FernUser domain={domain} host={host} />
-        <BgImageGradient />
         <GlobalStyles
           domain={domain}
           layout={layout}

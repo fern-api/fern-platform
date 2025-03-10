@@ -22,6 +22,7 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
     VERCEL_ENV === "production" &&
     req.nextUrl.hostname !== "canary.ferndocs.com"
   ) {
+    console.debug("Production docs not hosted by canary.ferndocs.com detected");
     return notFound();
   }
 
@@ -50,5 +51,6 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
     return redirectResponse(req.nextUrl.origin);
   }
 
+  console.debug("No redirect returned");
   notFound();
 }

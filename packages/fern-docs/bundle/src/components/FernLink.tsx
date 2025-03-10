@@ -1,12 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import React from "react";
 
 import { ExternalLinkIcon } from "lucide-react";
 import { type UrlObject, format, parse, resolve } from "url";
 
+import { useCurrentPathname } from "@/hooks/use-current-pathname";
 import { useDomain } from "@/state/domain";
 
 export const FernLink = React.forwardRef<
@@ -45,7 +45,7 @@ const FernRelativeLink = React.forwardRef<
   HTMLAnchorElement,
   React.ComponentProps<typeof Link>
 >((props, ref) => {
-  const pathname = usePathname();
+  const pathname = useCurrentPathname();
   const href = resolveRelativeUrl(pathname, formatUrlString(props.href));
   return <Link ref={ref} prefetch={true} {...props} href={href} />;
 });

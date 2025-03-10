@@ -1,11 +1,10 @@
-import { FernNavigation } from "@fern-api/fdr-sdk";
 import { addLeadingSlash, removeTrailingSlash } from "@fern-docs/utils";
 
 /**
  * Conforms the slug to the explorer route.
  */
-export function conformExplorerRoute(slug: FernNavigation.Slug): string {
-  return addLeadingSlash(slug) + "/~explorer";
+export function conformExplorerRoute(slugOrPathname: string): string {
+  return addLeadingSlash(slugOrPathname) + "/~explorer";
 }
 
 export function isExplorerRoute(pathname: string): boolean {

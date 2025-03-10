@@ -13,7 +13,7 @@ export function useMinWidth(breakpoint: number): boolean {
     );
 
   useIsomorphicLayoutEffect(() => {
-    isomorphicRequestAnimationFrame(() => {
+    const cancelAnimationFrame = isomorphicRequestAnimationFrame(() => {
       window.innerWidth >= breakpoint;
     });
 
@@ -23,7 +23,10 @@ export function useMinWidth(breakpoint: number): boolean {
     };
 
     mql.addEventListener("change", onChange);
-    return () => mql.removeEventListener("change", onChange);
+    return () => {
+      cancelAnimationFrame();
+      mql.removeEventListener("change", onChange);
+    };
   }, [breakpoint]);
 
   return !!largerThanBreakpoint;

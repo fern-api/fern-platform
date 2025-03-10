@@ -17,6 +17,10 @@ export function ThemedDocs({
   isSidebarFixed = false,
   isHeaderDisabled = false,
   showSearchBarInTabs = false,
+  lightSidebarClassName,
+  darkSidebarClassName,
+  lightHeaderClassName,
+  darkHeaderClassName,
 }: {
   theme?: FernTheme;
   announcement?: React.ReactNode;
@@ -27,6 +31,10 @@ export function ThemedDocs({
   isSidebarFixed?: boolean;
   isHeaderDisabled?: boolean;
   showSearchBarInTabs?: boolean;
+  lightSidebarClassName?: string;
+  darkSidebarClassName?: string;
+  lightHeaderClassName?: string;
+  darkHeaderClassName?: string;
 }) {
   const Docs = THEMES[theme];
   return (
@@ -38,6 +46,10 @@ export function ThemedDocs({
       isSidebarFixed={isSidebarFixed}
       isHeaderDisabled={isHeaderDisabled}
       showSearchBarInTabs={showSearchBarInTabs}
+      lightSidebarClassName={lightSidebarClassName}
+      darkSidebarClassName={darkSidebarClassName}
+      lightHeaderClassName={lightHeaderClassName}
+      darkHeaderClassName={darkHeaderClassName}
     >
       {children}
     </Docs>

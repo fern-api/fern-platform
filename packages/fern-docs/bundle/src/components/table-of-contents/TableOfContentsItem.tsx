@@ -1,3 +1,5 @@
+"use client";
+
 import { ReactElement, memo, useEffect, useRef } from "react";
 
 import { cn } from "@fern-docs/components";
@@ -16,7 +18,6 @@ export const TableOfContentsItem = memo<TableOfContentsItemProps>(
   (props): ReactElement<any> => {
     const { text, anchorString, active, setActiveRef, depth = 0 } = props;
     const ref = useRef<HTMLLIElement>(null);
-
     useEffect(() => {
       if (active && ref.current != null) {
         setActiveRef?.(ref.current);
@@ -26,7 +27,6 @@ export const TableOfContentsItem = memo<TableOfContentsItemProps>(
     return (
       <li className="mb-2 last:mb-0" ref={ref} data-depth={depth}>
         <FernLink
-          scroll={false}
           className={cn(
             "block hyphens-auto break-words text-sm transition-colors hover:transition-none",
             {

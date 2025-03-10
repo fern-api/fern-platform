@@ -132,7 +132,7 @@ export function migrateMeta(metastring: string): string {
 
   // migrate {1-3} to {[1, 2, 3]}
   // but do NOT migrate {1} to {[1]}
-  metastring = metastring.replaceAll(/\{([0-9,-]+)\}/g, (original, expr) => {
+  metastring = metastring.replaceAll(/\{([0-9,\s-]+)\}/g, (original, expr) => {
     if (expr?.includes(",") || expr?.includes("-")) {
       return `{[${parseNumericRange(expr ?? "")}]}`;
     }
@@ -184,6 +184,19 @@ export function migrateMeta(metastring: string): string {
       return `title="${text.trim()}" `;
     }
   );
+
+  // if a title hasn't been found so far, make sure it is not hidden in meta string
+  if (!metastring.includes("title=")) {
+    const parseForTitle = metastring
+      .replaceAll("wordWrap", "")
+      .replaceAll(/([^=]+)={(.*?)}/g, "");
+    if (parseForTitle !== "") {
+      metastring = metastring.replace(
+        parseForTitle,
+        ` title="${parseForTitle.trim()}"`
+      );
+    }
+  }
 
   return metastring;
 }

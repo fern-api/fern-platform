@@ -1,4 +1,3 @@
-// import { usePathname } from "next/navigation";
 // import { ReactElement } from "react";
 
 // import { useAtomValue } from "jotai";
@@ -26,7 +25,7 @@
 //   breadcrumb,
 // }: EndpointPairProps): ReactElement<any> {
 //   const isStream = useAtomValue(FERN_STREAM_ATOM);
-//   const slug = slugjoin(usePathname());
+//   const slug = slugjoin(useCurrentPathname());
 
 //   useAtomEffect(
 //     useCallbackOne(

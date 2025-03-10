@@ -34,7 +34,11 @@ export function useAudioRecorder(
   const chunksRef = useRef<Blob[]>([]);
   const [audioUrl, setAudioUrl] = useState<string | null>(null);
   const mimeType = "audio/webm;codecs=opus";
-  const [isSupported] = useState(() => MediaRecorder.isTypeSupported(mimeType));
+  const [isSupported] = useState(() =>
+    typeof window !== "undefined"
+      ? MediaRecorder.isTypeSupported(mimeType)
+      : false
+  );
 
   const startRecording = useCallback(async () => {
     try {

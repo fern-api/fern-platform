@@ -1,20 +1,17 @@
 import "server-only";
 
 import { Metadata } from "next";
-import { notFound, redirect } from "next/navigation";
+import { redirect } from "next/navigation";
 
 import { FernNavigation } from "@fern-api/fdr-sdk";
-import {
-  createEndpointContext,
-  createWebSocketContext,
-} from "@fern-api/fdr-sdk/api-definition";
 import { conformTrailingSlash } from "@fern-docs/utils";
 
 import { getFernToken } from "@/app/fern-token";
-import { PlaygroundAuthorizationFormCard } from "@/components/playground/auth/PlaygroundAuthorizationFormCard";
-import { PlaygroundEndpoint } from "@/components/playground/endpoint/PlaygroundEndpoint";
+import {
+  ExplorerContent,
+  NoEndpointSelected,
+} from "@/components/playground/ExplorerContent";
 import { conformExplorerRoute } from "@/components/playground/utils/explorer-route";
-import { PlaygroundWebSocket } from "@/components/playground/websocket/PlaygroundWebSocket";
 import { createCachedDocsLoader } from "@/server/docs-loader";
 
 export default async function Page(props: {
@@ -44,53 +41,15 @@ export default async function Page(props: {
     }
 
     console.error(`[${loader.domain}] Could not find node for slug: ${slug}`);
-    notFound();
+    return <NoEndpointSelected />;
   }
   const node = found.node;
   if (!FernNavigation.isApiLeaf(node)) {
     console.error(`[${loader.domain}] Found non-leaf node for slug: ${slug}`);
-    notFound();
+    return <NoEndpointSelected />;
   }
-  const api = await loader.getPrunedApi(node.apiDefinitionId, node);
 
-  if (node.type === "endpoint") {
-    const context = createEndpointContext(node, api);
-    if (context == null) {
-      console.error(
-        `[${loader.domain}] Could not create endpoint context for slug: ${slug}`
-      );
-      notFound();
-    }
-    const authForm = context.auth != null && (
-      <PlaygroundAuthorizationFormCard
-        loader={loader}
-        apiDefinitionId={node.apiDefinitionId}
-        auth={context.auth}
-      />
-    );
-    return <PlaygroundEndpoint context={context} authForm={authForm} />;
-  } else if (node.type === "webSocket") {
-    const context = createWebSocketContext(node, api);
-    if (context == null) {
-      console.error(
-        `[${loader.domain}] Could not create web socket context for slug: ${slug}`
-      );
-      notFound();
-    }
-    const authForm = context.auth != null && (
-      <PlaygroundAuthorizationFormCard
-        loader={loader}
-        apiDefinitionId={node.apiDefinitionId}
-        auth={context.auth}
-      />
-    );
-    return <PlaygroundWebSocket context={context} authForm={authForm} />;
-  }
-  console.error(
-    `[${loader.domain}] Found non-visitable node for slug: ${slug}`,
-    node
-  );
-  notFound();
+  return <ExplorerContent loader={loader} node={node} />;
 }
 
 export async function generateMetadata({

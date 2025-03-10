@@ -1,15 +1,16 @@
 "use client";
 
-import { usePathname } from "next/navigation";
 import React from "react";
 
 import { usePrevious } from "@fern-ui/react-commons";
+
+import { useCurrentPathname } from "@/hooks/use-current-pathname";
 
 import { isExplorerRoute } from "../playground/utils/explorer-route";
 import { scrollToRoute } from "../util/anchor";
 
 export function ScrollToTop() {
-  const pathname = usePathname();
+  const pathname = useCurrentPathname();
   const previousPathname = usePrevious(pathname);
   React.useEffect(() => {
     if (isExplorerRoute(pathname) || isExplorerRoute(previousPathname)) {

@@ -31,6 +31,9 @@ export default async function ChangelogPage({
 }) {
   const node = await loader.getNavigationNode(nodeId);
   if (node.type !== "changelog") {
+    console.debug(
+      `[${loader.domain}] Found non-changelog node for nodeId: ${nodeId}`
+    );
     notFound();
   }
 
@@ -149,7 +152,11 @@ export async function ChangelogPageEntry({
       title={
         title != null ? (
           <h2>
-            <FernLink href={node.slug} className="not-prose" scroll={true}>
+            <FernLink
+              href={addLeadingSlash(node.slug)}
+              className="not-prose"
+              scroll={true}
+            >
               <MdxContent mdx={title} />
             </FernLink>
           </h2>

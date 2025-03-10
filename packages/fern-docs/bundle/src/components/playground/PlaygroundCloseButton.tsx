@@ -1,6 +1,5 @@
 "use client";
 
-import { usePathname } from "next/navigation";
 import { useRouter } from "next/navigation";
 import React from "react";
 
@@ -9,12 +8,14 @@ import { X } from "lucide-react";
 import { FernButton } from "@fern-docs/components";
 import { tunnel } from "@fern-ui/react-commons";
 
+import { useCurrentPathname } from "@/hooks/use-current-pathname";
+
 import { FernLinkButton } from "../FernLinkButton";
 
 export const closeButton = tunnel();
 
 export function PlaygroundCloseButton() {
-  const pathname = usePathname();
+  const pathname = useCurrentPathname();
   return (
     <closeButton.In>
       <FernLinkButton

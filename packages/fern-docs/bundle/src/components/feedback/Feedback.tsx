@@ -1,6 +1,5 @@
 "use client";
 
-import { usePathname } from "next/navigation";
 import { FC, useCallback, useEffect, useRef, useState } from "react";
 
 import { ThumbsDown, ThumbsUp } from "lucide-react";
@@ -8,6 +7,8 @@ import { ThumbsDown, ThumbsUp } from "lucide-react";
 import { Button, cn } from "@fern-docs/components";
 import { toast } from "@fern-docs/components";
 import { useKeyboardPress } from "@fern-ui/react-commons";
+
+import { useCurrentPathname } from "@/hooks/use-current-pathname";
 
 import { track } from "../analytics";
 import { registerPosthogProperties } from "../analytics/posthog";
@@ -36,7 +37,7 @@ export const Feedback: FC<FeedbackProps> = ({
   const ref = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-  const currentPathname = usePathname();
+  const currentPathname = useCurrentPathname();
   const pathname = pathnameProp ?? currentPathname;
 
   useEffect(() => {

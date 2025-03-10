@@ -30,6 +30,7 @@ import {
   PageId,
   Slug,
   TypeId,
+  slugjoin,
 } from "@fern-api/fdr-sdk/navigation";
 import { CONTINUE, SKIP } from "@fern-api/fdr-sdk/traversers";
 import { isNonNullish, isPlainObject } from "@fern-api/ui-core-utils";
@@ -39,11 +40,12 @@ import { getAuthEdgeConfig, getEdgeFlags } from "@fern-docs/edge-config";
 import {
   DEFAULT_LOGO_HEIGHT,
   EdgeFlags,
+  addLeadingSlash,
+  removeTrailingSlash,
   withoutStaging,
 } from "@fern-docs/utils";
 
-import { findEndpoint } from "@/components/util/processRequestSnippetComponents";
-
+import { findEndpoint } from "../components/util/processRequestSnippetComponents";
 import { AuthState, createGetAuthState } from "./auth/getAuthState";
 import { cacheSeed } from "./cache-seed";
 import { generateFernColorPalette } from "./generateFernColors";
@@ -57,7 +59,7 @@ const loadWithUrl = uncachedLoadWithUrl;
 
 interface DocsMetadata {
   domain: string;
-  basePath: string | undefined;
+  basePath: string;
   url: string;
   org: string;
   isPreview: boolean;
@@ -168,12 +170,14 @@ export interface DocsLoader {
   getAuthState: (pathname?: string) => Promise<AuthState>;
 
   getEdgeFlags: () => Promise<EdgeFlags>;
+
+  getBaseUrl: () => Promise<string>;
 }
 
-function kvSet(key: string, value: unknown) {
+function kvSet(domain: string, key: string, value: unknown) {
   after(async () => {
     try {
-      await kv.set(key, value);
+      await kv.hset(domain, { [key]: value });
     } catch (error) {
       console.warn(`Failed to set kv key ${key}: ${value}`, error);
     }
@@ -183,6 +187,14 @@ function kvSet(key: string, value: unknown) {
 const cachedGetEdgeFlags = cache(async (domain: string) => {
   return await getEdgeFlags(domain);
 });
+
+export function cleanBasePath(basePath: string | undefined) {
+  const basepath = removeTrailingSlash(addLeadingSlash(slugjoin(basePath)));
+  if (basepath === "/") {
+    return "";
+  }
+  return basepath;
+}
 
 export const getMetadataFromResponse = async (
   domain: string,
@@ -194,35 +206,37 @@ export const getMetadataFromResponse = async (
   ]);
   return {
     domain: response.baseUrl.domain,
-    basePath: response.baseUrl.basePath,
+    basePath: cleanBasePath(response.baseUrl.basePath),
     url: docsUrlMetadata.url,
     org: docsUrlMetadata.org,
     isPreview: docsUrlMetadata.isPreview,
   };
 };
 
-const getMetadata = cache(async (domain: string): Promise<DocsMetadata> => {
-  try {
-    const cached = await kv.get<DocsMetadata>(`${domain}:metadata`);
-    if (cached != null) {
-      return cached;
+export const getMetadata = cache(
+  async (domain: string): Promise<DocsMetadata> => {
+    try {
+      const cached = await kv.hget<DocsMetadata>(domain, "metadata");
+      if (cached != null) {
+        return cached;
+      }
+    } catch (error) {
+      console.warn(
+        `Failed to get metadata for ${domain}, fallback to uncached`,
+        error
+      );
     }
-  } catch (error) {
-    console.warn(
-      `Failed to get metadata for ${domain}, fallback to uncached`,
-      error
-    );
+    const metadata = getMetadataFromResponse(domain, loadWithUrl(domain));
+    kvSet(domain, "metadata", metadata);
+    return metadata;
   }
-  const metadata = getMetadataFromResponse(domain, loadWithUrl(domain));
-  kvSet(`${domain}:metadata`, metadata);
-  return metadata;
-});
+);
 
 const getFiles = cache(
   async (domain: string): Promise<Record<string, FileData>> => {
     try {
-      const cached = await kv.get<Record<string, FileData>>(`${domain}:files`);
-      if (cached != null) {
+      const cached = await kv.hget<Record<string, FileData>>(domain, "files");
+      if (cached) {
         return cached;
       }
     } catch (error) {
@@ -248,7 +262,7 @@ const getFiles = cache(
       }
       throw new UnreachableCaseError(file);
     });
-    kvSet(`${domain}:files`, files);
+    kvSet(domain, "files", files);
     return files;
   }
 );
@@ -262,6 +276,7 @@ const getApi = async (domain: string, id: string) => {
   }
   const v1 = response.definition.apis[ApiDefinitionId(id)];
   if (v1 == null) {
+    console.debug("Could not get API with ID", ApiDefinitionId(id));
     notFound();
   }
   const flags = await cachedGetEdgeFlags(domain);
@@ -279,8 +294,11 @@ const createGetPrunedApiCached = (domain: string) =>
       // if there is only one node, and it's an endpoint, try to load from cache
       try {
         if (nodes.length === 1 && nodes[0]) {
-          const key = `${domain}:api:${id}:${createEndpointCacheKey(nodes[0])}`;
-          const cached = await kv.get<ApiDefinition.ApiDefinition>(key);
+          const key = `api:${id}:${createEndpointCacheKey(nodes[0])}`;
+          const cached = await kv.hget<ApiDefinition.ApiDefinition>(
+            domain,
+            key
+          );
           if (cached != null) {
             return await backfillSnippets(cached, await flagsPromise);
           }
@@ -297,8 +315,8 @@ const createGetPrunedApiCached = (domain: string) =>
 
       // if there is only one node, and it's an endpoint, try to cache the result
       if (nodes.length === 1 && nodes[0]) {
-        const key = `${domain}:api:${id}:${createEndpointCacheKey(nodes[0])}`;
-        kvSet(key, pruned);
+        const key = `api:${id}:${createEndpointCacheKey(nodes[0])}`;
+        kvSet(domain, key, pruned);
       }
 
       return backfillSnippets(pruned, await flagsPromise);
@@ -307,7 +325,7 @@ const createGetPrunedApiCached = (domain: string) =>
     { tags: [domain, "api"] }
   );
 
-function createEndpointCacheKey(pruneType: PruningNodeType) {
+export function createEndpointCacheKey(pruneType: PruningNodeType) {
   switch (pruneType.type) {
     case "endpoint":
       return `endpoint:${pruneType.endpointId}`;
@@ -353,6 +371,7 @@ const getEndpointById = async (
   });
   const endpoint = api.endpoints[endpointId];
   if (endpoint == null) {
+    console.debug("Could not find endpoint with ID", endpointId);
     notFound();
   }
   const root = await unsafe_getFullRoot(domain);
@@ -411,6 +430,8 @@ const getEndpointByLocator = async (
       };
     }
   }
+
+  console.debug(`Could not find endpoint ${method} ${path}`);
   notFound();
 };
 
@@ -447,7 +468,7 @@ export function convertResponseToRootNode(
 
 const unsafe_getFullRoot = async (domain: string) => {
   try {
-    const cached = await kv.get<FernNavigation.RootNode>(`${domain}:root`);
+    const cached = await kv.hget<FernNavigation.RootNode>(domain, "root");
     if (cached != null) {
       return cached;
     }
@@ -463,6 +484,7 @@ const unsafe_getFullRoot = async (domain: string) => {
     await cachedGetEdgeFlags(domain)
   );
   if (root == null) {
+    console.debug("Could not find root node for domain", domain);
     notFound();
   }
   return root;
@@ -515,6 +537,7 @@ const getNavigationNode = cache(
     const collector = FernNavigation.NodeCollector.collect(root);
     const node = collector.get(FernNavigation.NodeId(id));
     if (node == null) {
+      console.debug(`Could not find node ${id} for domain ${domain}`);
       notFound();
     }
     return node;
@@ -523,9 +546,9 @@ const getNavigationNode = cache(
 
 const getConfig = cache(async (domain: string) => {
   try {
-    const cached = await kv.get<
+    const cached = await kv.hget<
       Omit<DocsV1Read.DocsDefinition["config"], "navigation" | "root">
-    >(`${domain}:config`);
+    >(domain, "config");
     if (cached != null) {
       return cached;
     }
@@ -537,14 +560,15 @@ const getConfig = cache(async (domain: string) => {
   }
   const response = await loadWithUrl(domain);
   const { navigation, root, ...config } = response.definition.config;
-  kvSet(`${domain}:config`, config);
+  kvSet(domain, "config", config);
   return config;
 });
 
 const getPage = cache(async (domain: string, pageId: string) => {
   try {
-    const page = await kv.get<DocsV1Read.PageContent>(
-      `${domain}:page:${pageId}`
+    const page = await kv.hget<DocsV1Read.PageContent>(
+      domain,
+      `page:${pageId}`
     );
     if (page != null && isPlainObject(page) && "markdown" in page) {
       return {
@@ -562,9 +586,10 @@ const getPage = cache(async (domain: string, pageId: string) => {
   const response = await loadWithUrl(domain);
   const page = response.definition.pages[pageId as PageId];
   if (page == null) {
+    console.debug(`Could not find page with ID ${pageId}`);
     notFound();
   }
-  kvSet(`${domain}:page:${pageId}`, page);
+  kvSet(domain, `page:${pageId}`, page);
   return {
     filename: pageId,
     markdown: page.markdown,
@@ -574,10 +599,11 @@ const getPage = cache(async (domain: string, pageId: string) => {
 
 const getMdxBundlerFiles = cache(async (domain: string) => {
   try {
-    const cached = await kv.get<Record<string, string>>(
-      `${domain}:mdx-bundler-files`
+    const cached = await kv.hget<Record<string, string>>(
+      domain,
+      "mdx-bundler-files"
     );
-    if (cached != null) {
+    if (cached) {
       return cached;
     }
   } catch (error) {
@@ -588,17 +614,17 @@ const getMdxBundlerFiles = cache(async (domain: string) => {
   }
   const response = await loadWithUrl(domain);
   const files = response.definition.jsFiles ?? {};
-  kvSet(`${domain}:mdx-bundler-files`, files);
+  kvSet(domain, "mdx-bundler-files", files);
   return files;
 });
 
 const getColors = cache(async (domain: string) => {
   try {
-    const cached = await kv.get<{
+    const cached = await kv.hget<{
       light: FernColorTheme | undefined;
       dark: FernColorTheme | undefined;
-    }>(`${domain}:colors`);
-    if (cached != null) {
+    }>(domain, "colors");
+    if (cached) {
       return cached;
     }
   } catch (error) {
@@ -671,13 +697,13 @@ const getColors = cache(async (domain: string) => {
         }
       : undefined,
   };
-  kvSet(`${domain}:colors`, colors);
+  kvSet(domain, "colors", colors);
   return colors;
 });
 
 const getFonts = cache(async (domain: string) => {
   try {
-    const cached = await kv.get<FernFonts>(`${domain}:fonts`);
+    const cached = await kv.hget<FernFonts>(domain, "fonts");
     if (cached != null) {
       return cached;
     }
@@ -692,13 +718,14 @@ const getFonts = cache(async (domain: string) => {
     response.definition.config.typographyV2,
     await getFiles(domain)
   );
-  kvSet(`${domain}:fonts`, fonts);
+  kvSet(domain, "fonts", fonts);
   return fonts;
 });
 
 const getLayout = cache(async (domain: string) => {
   const config = await getConfig(domain);
   if (!config) {
+    console.debug("Could not find config for domain", domain);
     notFound();
   }
 
@@ -788,6 +815,10 @@ export const createCachedDocsLoader = async (
     getFonts: () => getFonts(domain),
     getAuthState,
     getEdgeFlags: () => cachedGetEdgeFlags(domain),
+    getBaseUrl: async () => {
+      const m = await metadata;
+      return `https://${m.domain}${m.basePath}`;
+    },
   };
 };
 
@@ -824,4 +855,28 @@ export function toPx(
     return config.value;
   }
   return config.value * 16;
+}
+
+export function createPruneKey(
+  node: FernNavigation.NavigationNodeApiLeaf
+): PruningNodeType {
+  switch (node.type) {
+    case "endpoint":
+      return {
+        type: "endpoint",
+        endpointId: node.endpointId,
+      };
+    case "webSocket":
+      return {
+        type: "webSocket",
+        webSocketId: node.webSocketId,
+      };
+    case "webhook":
+      return {
+        type: "webhook",
+        webhookId: node.webhookId,
+      };
+    default:
+      throw new Error(`Unknown node type: ${node}`);
+  }
 }

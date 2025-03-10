@@ -199,10 +199,12 @@ export async function generateMetadata({
   const noindex =
     node == null ||
     (FernNavigation.hasMarkdown(node) && node.noindex) ||
+    node.hidden ||
     isSeoDisabled ||
     frontmatter?.noindex ||
     false;
-  const nofollow = isSeoDisabled || frontmatter?.nofollow || false;
+  const nofollow =
+    node?.hidden || isSeoDisabled || frontmatter?.nofollow || false;
 
   return {
     title:

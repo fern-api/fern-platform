@@ -48,8 +48,19 @@ export default async function SharedLayout({
       isSidebarFixed={
         !!colors.dark?.sidebarBackground ||
         !!colors.light?.sidebarBackground ||
-        !layout.pageWidth ||
         layout.isHeaderDisabled
+      }
+      lightSidebarClassName={
+        colors.light?.sidebarBackgroundTheme === "dark" ? "dark" : undefined
+      }
+      darkSidebarClassName={
+        colors.dark?.sidebarBackgroundTheme === "light" ? "light" : undefined
+      }
+      lightHeaderClassName={
+        colors.light?.headerBackgroundTheme === "dark" ? "dark" : undefined
+      }
+      darkHeaderClassName={
+        colors.dark?.headerBackgroundTheme === "light" ? "light" : undefined
       }
       isHeaderDisabled={layout.isHeaderDisabled}
       announcement={

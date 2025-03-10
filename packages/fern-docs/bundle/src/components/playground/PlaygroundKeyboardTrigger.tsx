@@ -1,12 +1,14 @@
 "use client";
 
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import React from "react";
 
 import { removeTrailingSlash } from "@fern-docs/utils";
 
+import { useCurrentPathname } from "@/hooks/use-current-pathname";
+
 export function PlaygroundKeyboardTrigger() {
-  const pathname = removeTrailingSlash(usePathname());
+  const pathname = removeTrailingSlash(useCurrentPathname());
   const router = useRouter();
   React.useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {

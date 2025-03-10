@@ -119,7 +119,8 @@ export function GlobalStyles({
             ? "#000"
             : (root?.border ?? "initial")};
           --sidebar-background: ${root?.sidebarBackground ?? "initial"};
-          --header-background: ${root?.headerBackground ?? "initial"};
+          --header-background: ${root?.headerBackground ??
+          "color-mix(in srgb, var(--background), transparent 30%)"};
           --card-background: ${root?.cardBackground ?? "initial"};
           --theme-color: ${root?.themeColor};
         }
@@ -132,9 +133,21 @@ export function GlobalStyles({
             domain.includes("nominal") ? "#fff" : (dark.border ?? "initial")
           };
           --sidebar-background: ${dark.sidebarBackground ?? "initial"};
-          --header-background: ${dark.headerBackground ?? "initial"};
+          --header-background: ${dark.headerBackground ?? "color-mix(in srgb, var(--background), transparent 30%)"};
           --card-background: ${dark.cardBackground ?? "initial"};
           --theme-color: ${dark.themeColor};
+        }`
+          : ""}
+
+        ${root?.backgroundGradient || root?.backgroundImage
+          ? `.fern-background-image {
+          background-image: ${root?.backgroundImage?.src ? `url(${root?.backgroundImage?.src})` : light ? "linear-gradient(to bottom, color-mix(in srgb, var(--accent), var(--background) 90%) 0, var(--background) 100%)" : "linear-gradient(to bottom, var(--background) 0, color-mix(in srgb, var(--accent), var(--background) 90%) 100%)"};
+        }`
+          : ""}
+
+      ${hasTheme && (light?.backgroundGradient || light?.backgroundImage)
+          ? `.dark .fern-background-image {
+          background-image: ${light?.backgroundImage?.src ? `url(${light?.backgroundImage?.src})` : "linear-gradient(to bottom, var(--background) 0, color-mix(in srgb, var(--accent), var(--background) 90%) 100%)"};
         }`
           : ""}
 

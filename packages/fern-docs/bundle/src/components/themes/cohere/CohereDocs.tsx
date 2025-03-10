@@ -1,6 +1,5 @@
 "use client";
 
-import { usePathname } from "next/navigation";
 import React, { useEffect, useRef } from "react";
 
 import { useSetAtom } from "jotai";
@@ -8,6 +7,7 @@ import { useSetAtom } from "jotai";
 import { cn } from "@fern-docs/components";
 import { FernScrollArea } from "@fern-docs/components";
 
+import { useCurrentPathname } from "@/hooks/use-current-pathname";
 import { SCROLL_BODY_ATOM } from "@/state/viewport";
 
 import { HeaderContainer } from "./header-container";
@@ -60,7 +60,7 @@ export default function CohereDocs({
     setScrollBody(mainRef.current);
   }, [setScrollBody]);
 
-  const pathname = usePathname();
+  const pathname = useCurrentPathname();
   useEffect(() => {
     mainRef.current?.scrollTo(0, 0);
   }, [pathname]);

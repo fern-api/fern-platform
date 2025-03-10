@@ -16,7 +16,8 @@ import { PlaygroundKeyboardTrigger } from "@/components/playground/PlaygroundKey
 import { MdxServerComponentProseSuspense } from "@/mdx/components/server-component";
 import { MdxSerializer } from "@/server/mdx-serializer";
 
-import { PlaygroundButton } from "../../playground/PlaygroundButton";
+import { PlaygroundButton } from "@/components/playground/PlaygroundButton";
+import { PlaygroundButtonTray } from "../../playground/PlaygroundButtonTray";
 import { EndpointSection } from "../endpoints/EndpointSection";
 import { EndpointUrlWithPlaygroundBaseUrl } from "../endpoints/EndpointUrlWithPlaygroundBaseUrl";
 import { TitledExample } from "../examples/TitledExample";
@@ -97,15 +98,18 @@ export async function WebSocketContent({
           }
           action={action}
         >
-          <EndpointUrlWithPlaygroundBaseUrl endpoint={channel} />
+          <EndpointUrlWithPlaygroundBaseUrl 
+            endpoint={channel}
+            className="hidden lg:flex"
+          />
         </PageHeader>
       }
       aside={
         <div className="grid grid-rows-[repeat(auto-fit,minmax(0,min-content))] gap-6">
           <TitledExample
             title="Handshake"
-            actions={
-              node != null ? <PlaygroundButton state={node} /> : undefined
+            tryIt={
+              node != null ? <PlaygroundButtonTray state={node} /> : undefined
             }
             disableClipboard={true}
           >
@@ -134,14 +138,21 @@ export async function WebSocketContent({
             <CardedSection
               number={1}
               title={
-                <span className="inline-flex items-center gap-2">
-                  {"Handshake"}
-                  <span className="bg-(color:--grayscale-a3) inline-block rounded-full p-1">
-                    <Wifi
-                      className="text-(color:--grayscale-a11) size-icon"
-                      strokeWidth={1.5}
-                    />
-                  </span>
+                <span className="flex w-full items-center justify-between">
+                  <span className="inline-flex items-center gap-2">
+                    {"Handshake"}
+                    <span className="bg-(color:--grayscale-a3) inline-block rounded-full p-1">
+                      <Wifi
+                        className="text-(color:--grayscale-a11) size-icon"
+                        strokeWidth={1.5}
+                      />
+                    </span>
+                    </span>
+                    {node != null && (
+                        <>
+                          <PlaygroundButton state={node} className="md:hidden" />
+                        </>
+                      )}
                 </span>
               }
               slug={node.slug}

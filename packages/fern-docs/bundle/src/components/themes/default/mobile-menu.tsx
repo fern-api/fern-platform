@@ -1,6 +1,5 @@
 "use client";
 
-import { usePathname } from "next/navigation";
 import React from "react";
 import { RemoveScroll } from "react-remove-scroll";
 
@@ -15,9 +14,10 @@ import {
   useTransform,
 } from "motion/react";
 
+import { cn } from "@fern-docs/components";
 import { useIsomorphicLayoutEffect } from "@fern-ui/react-commons";
 
-import { BgImageGradient } from "@/components/BgImageGradient";
+import { useCurrentPathname } from "@/hooks/use-current-pathname";
 import { useIsDismissableSidebarOpen } from "@/state/mobile";
 
 export const MainCtx = React.createContext<
@@ -32,11 +32,17 @@ const transition = {
   duration: 0.3,
 };
 
-export function MobileMenu({ children }: { children: React.ReactNode }) {
+export function MobileMenu({
+  children,
+  className,
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) {
   const [open, setOpen] = useIsDismissableSidebarOpen();
 
   // Close the sidebar when the path changes
-  const currentPath = usePathname();
+  const currentPath = useCurrentPathname();
   React.useEffect(() => {
     setOpen(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -228,7 +234,10 @@ export function MobileMenu({ children }: { children: React.ReactNode }) {
             <motion.div
               layoutRoot
               id="fern-sidebar"
-              className="sm:w-sidebar-width border-border-concealed pointer-events-auto fixed inset-y-0 right-0 top-[calc(var(--header-height)+1px)] z-40 flex w-full max-w-[calc(100dvw-3rem)] flex-col border-l backdrop-blur-xl"
+              className={cn(
+                "sm:w-sidebar-width fern-background-image border-border-concealed pointer-events-auto fixed inset-y-0 right-0 top-[calc(var(--header-height)+1px)] z-40 flex w-full max-w-[calc(100dvw-3rem)] flex-col border-l backdrop-blur-xl",
+                className
+              )}
               key="sidebar"
               onPointerDown={(event) => dragControls.start(event)}
               onDragStart={() => {
@@ -259,9 +268,6 @@ export function MobileMenu({ children }: { children: React.ReactNode }) {
               exit={{ x: "100%" }}
               transition={transition}
             >
-              <div className="clipped-background">
-                <BgImageGradient className="translate-y-[calc(var(--header-height)*-1)]" />
-              </div>
               {children}
             </motion.div>
           )}
