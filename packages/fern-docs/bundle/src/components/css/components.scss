@@ -49,7 +49,6 @@
   .custom-backdrop [data-rmiz-modal-overlay="visible"] {
     @apply bg-background-translucent;
 
-    /* stylelint-enable scss/at-rule-no-unknown */
     @variant dark {
       @apply bg-background-translucent;
     }
