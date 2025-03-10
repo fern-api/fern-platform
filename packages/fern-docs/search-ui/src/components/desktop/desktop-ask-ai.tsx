@@ -330,7 +330,10 @@ const DesktopAskAIChat = ({
   );
 
   useEffect(() => {
-    if (initialInput) {
+    if (
+      initialInput &&
+      !chat.messages.map((m) => m.content).includes(initialInput)
+    ) {
       askAI(initialInput);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -621,7 +624,7 @@ const AskAICommandItems = memo<{
     });
 
     if (chatError) {
-      let lastConvo = squeezedMessages.at(-1);
+      const lastConvo = squeezedMessages.at(-1);
       if (lastConvo != null && lastConvo.assistant == null) {
         lastConvo.assistant = {
           id: "error-msg-id",
