@@ -59,7 +59,6 @@
     "@fern-api/ui-core-utils": "workspace:*",
     "@fern-docs/mdx": "workspace:*",
     "@fern-docs/utils": "workspace:*",
-    "@langchain/textsplitters": "^0.1.0",
     "@turbopuffer/turbopuffer": "^0.5.11",
     "algoliasearch": "^5.20.3",
     "es-toolkit": "^1.32.0",

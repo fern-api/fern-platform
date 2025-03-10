@@ -19,7 +19,7 @@ const openai = createOpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-const model = openai.embedding("text-embedding-3-small");
+const model = openai.embedding("text-embedding-3-large");
 
 export const runReindexTurbopuffer = async (
   domain: string
