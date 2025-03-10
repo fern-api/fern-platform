@@ -10,6 +10,8 @@ import { Logo } from "@/components/logo";
 import { createCachedDocsLoader } from "@/server/docs-loader";
 import { getDocsDomainApp, getDocsHostApp } from "@/server/xfernhost/app";
 
+import { track } from "./analytics";
+
 export default async function NotFound() {
   const host = await getDocsHostApp();
   const domain = await getDocsDomainApp();
@@ -19,6 +21,8 @@ export default async function NotFound() {
     loader.getColors(),
     loader.getConfig(),
   ]);
+
+  track("not_found");
 
   return (
     <main className="h-screen">
