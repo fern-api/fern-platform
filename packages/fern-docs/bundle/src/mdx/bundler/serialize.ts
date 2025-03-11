@@ -247,7 +247,7 @@ export function serializeMdx(
         console.error("Serialize MDX timed out after 10 seconds");
         reject(new Error("Serialize MDX timed out"));
       }
-    }, 10_000);
+    }, 60_000);
 
     serializeMdxImpl(content, { ...options }).then(
       (result) => {
