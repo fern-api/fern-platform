@@ -5,3 +5,4 @@ export * from "./rehype-toc";
 export * from "./remark-inject-esm";
 export * from "./remark-sanitize-acorn";
 export * from "./rehype-slug";
+export * from "./rehype-expression-to-md";

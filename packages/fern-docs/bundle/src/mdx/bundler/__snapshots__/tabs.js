@@ -81,6 +81,7 @@ var Component = (() => {
   var Aside = AsideComponent;
   function _createMdxContent(props) {
     const _components = {
+      a: "a",
       h2: "h2",
       p: "p",
       ...useMDXComponents(),
@@ -145,10 +146,17 @@ var Component = (() => {
             })
           }), (0, import_jsx_runtime.jsx)(ErrorBoundary, {
             children: (0, import_jsx_runtime.jsx)(Tab, {
-              title: "Third Tab",
-              id: "third-tab",
+              title: (0, import_jsx_runtime.jsx)(import_jsx_runtime.Fragment, {
+                children: (0, import_jsx_runtime.jsx)(_components.p, {
+                  children: (0, import_jsx_runtime.jsx)(_components.a, {
+                    href: "https://github.com",
+                    children: "Third Tab"
+                  })
+                })
+              }),
+              id: "third-tabhttpsgithubcom",
               children: (0, import_jsx_runtime.jsx)(_components.p, {
-                children: "\u{1F4AA} Here\u2019s content that\u2019s only inside the third Tab."
+                children: "\u{1F4AA} Here\u2019s content that\u2019s only inside the third Tab. The title of this tab is\na link."
               })
             })
           })]

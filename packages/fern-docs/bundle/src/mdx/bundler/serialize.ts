@@ -25,6 +25,7 @@ import {
 } from "@fern-docs/mdx";
 import {
   rehypeAcornErrorBoundary,
+  rehypeExpressionToMd,
   rehypeMdxClassStyle,
   rehypeSlug,
   rehypeToc,
@@ -160,6 +161,19 @@ async function serializeMdxImpl(
         [
           rehypeSlug,
           { additionalJsxElements: ["Step", "Accordion", "Tab", "Card"] },
+        ],
+        [
+          rehypeExpressionToMd,
+          {
+            mdxJsxElementAllowlist: {
+              Frame: ["caption"],
+              Tab: ["title"],
+              Card: ["title"],
+              Callout: ["title"],
+              Step: ["title"],
+              Accordion: ["title"],
+            },
+          },
         ],
         rehypeButtons,
         [rehypeEndpointSnippets, { loader }],
