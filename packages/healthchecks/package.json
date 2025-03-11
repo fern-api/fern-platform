@@ -39,7 +39,7 @@
     "@fern-api/fdr-sdk": "workspace:*",
     "@fern-api/ui-core-utils": "workspace:*",
     "@fern-fern/vercel": "0.0.7",
-    "@types/jest": "^29.5.11",
+    "@types/jest": "^29.5.14",
     "@types/node": "^18.11.9",
     "@types/yargs": "^17.0.32",
     "depcheck": "^1.4.7",
