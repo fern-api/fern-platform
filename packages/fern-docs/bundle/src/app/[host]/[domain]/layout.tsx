@@ -18,6 +18,7 @@ import {
 
 import { JavascriptProvider } from "@/components/JavascriptProvider";
 import { CustomerAnalytics } from "@/components/analytics/CustomerAnalytics";
+import { ErrorBoundary } from "@/components/error-boundary";
 import { FeatureFlagProvider } from "@/components/feature-flags/FeatureFlagProvider";
 import { FernUser } from "@/components/fern-user";
 import SearchV2 from "@/components/search";
@@ -28,7 +29,7 @@ import { DarkCode } from "@/state/dark-code";
 import { Domain } from "@/state/domain";
 import { LaunchDarklyInfo } from "@/state/feature-flags";
 import { DefaultLanguage } from "@/state/language";
-import { RootNodeProvider, SetBasePath } from "@/state/navigation";
+import { RootNodeProvider } from "@/state/navigation";
 import {
   getAllSidebarRootNodes,
   getSidebarRootNodeIdToChildToParentsMap,
@@ -50,7 +51,6 @@ export default async function Layout({
 
   const loader = await createCachedDocsLoader(host, domain);
   const [
-    { basePath },
     config,
     unsafe_fullRoot,
     edgeFlags,
@@ -61,7 +61,6 @@ export default async function Layout({
     deprecated_customerAnalytics,
     launchDarkly,
   ] = await Promise.all([
-    loader.getMetadata(),
     loader.getConfig(),
     loader.unsafe_getFullRoot(),
     getEdgeFlags(domain),
@@ -97,7 +96,6 @@ export default async function Layout({
         }
       >
         <Domain value={domain} />
-        <SetBasePath value={basePath ?? ""} />
         {config.defaultLanguage != null && (
           <DefaultLanguage language={config.defaultLanguage} />
         )}
@@ -116,9 +114,14 @@ export default async function Layout({
         <FeatureFlagProvider featureFlagsConfig={{ launchDarkly }}>
           {children}
         </FeatureFlagProvider>
-        <React.Suspense fallback={null}>
-          <SearchV2 domain={domain} isAskAiEnabled={edgeFlags.isAskAiEnabled} />
-        </React.Suspense>
+        <ErrorBoundary>
+          <React.Suspense fallback={null}>
+            <SearchV2
+              domain={domain}
+              isAskAiEnabled={edgeFlags.isAskAiEnabled}
+            />
+          </React.Suspense>
+        </ErrorBoundary>
         {jsConfig != null && <JavascriptProvider config={jsConfig} />}
         {VERCEL_ENV === "production" && (
           <CustomerAnalytics

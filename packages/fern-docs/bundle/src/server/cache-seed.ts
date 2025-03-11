@@ -1,3 +1,5 @@
+import "server-only";
+
 import { getEnv } from "@vercel/functions";
 
 import { once } from "./once";
