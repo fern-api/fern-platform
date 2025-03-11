@@ -9,6 +9,7 @@ import {
   COOKIE_FERN_TOKEN,
   HEADER_X_FERN_BASEPATH,
   HEADER_X_FERN_HOST,
+  HEADER_X_FORWARDED_HOST,
   conformTrailingSlash,
   removeLeadingSlash,
   removeTrailingSlash,
@@ -44,6 +45,7 @@ export const middleware: NextMiddleware = async (request) => {
 
   const headers = new Headers(request.headers);
   headers.set(HEADER_X_FERN_HOST, domain);
+  headers.set(HEADER_X_FORWARDED_HOST, domain);
 
   const rewrite = (
     newPathname: string,
