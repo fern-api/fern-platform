@@ -4,7 +4,7 @@ import z from "zod";
 
 import { getFernToken } from "@/app/fern-token";
 import { createCachedDocsLoader } from "@/server/docs-loader";
-import { createMdxSerializer } from "@/server/mdx-serializer";
+import { createCachedMdxSerializer } from "@/server/mdx-serializer";
 
 const bodySchema = z.object({
   content: z.string(),
@@ -29,7 +29,7 @@ export async function POST(
     await getFernToken()
   );
 
-  const serializer = createMdxSerializer(loader, { scope });
+  const serializer = createCachedMdxSerializer(loader, { scope });
   const result = await serializer(content, { filename, toc, url });
   return Response.json(result);
 }
