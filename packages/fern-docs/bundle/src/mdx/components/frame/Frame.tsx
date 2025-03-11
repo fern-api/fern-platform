@@ -4,7 +4,7 @@ import { cn } from "@fern-docs/components";
 
 export declare namespace Frame {
   export interface Props {
-    caption?: React.ReactNode;
+    caption?: string;
     background?: "default" | "subtle";
   }
 }
