@@ -189,6 +189,14 @@ async function serializeMdxImpl(
 
     esbuildOptions: (o) => {
       o.minify = process.env.NODE_ENV === "production";
+      o.sourcemap = false;
+      o.logLevel = 'error'; // Reduce logging overhead
+
+      o.logLimit = 0; // Disable logging to reduce file operations
+      o.metafile = false; // Don't generate metafile (reduces file operations)
+
+      // Add write to memory instead of disk when possible
+      o.write = false;
       return o;
     },
   });
