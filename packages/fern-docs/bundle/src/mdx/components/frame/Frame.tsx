@@ -4,7 +4,7 @@ import { cn } from "@fern-docs/components";
 
 export declare namespace Frame {
   export interface Props {
-    caption?: string;
+    caption?: React.ReactNode;
     background?: "default" | "subtle";
   }
 }
@@ -25,7 +25,7 @@ export const Frame: FC<PropsWithChildren<Frame.Props>> = ({
         {children}
       </div>
       {caption && (
-        <figcaption className="text-(color:--grayscale-a11) relative mt-3 flex justify-center px-8 pb-2 pt-0 text-sm">
+        <figcaption className="prose text-(color:--grayscale-a11) relative mt-3 flex justify-center px-8 pb-2 pt-0 text-sm">
           {caption}
         </figcaption>
       )}

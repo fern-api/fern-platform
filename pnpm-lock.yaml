@@ -841,6 +841,9 @@ importers:
       lucide-react:
         specifier: ^0.460.0
         version: 0.460.0(react@19.0.0)
+      mdast-util-to-hast:
+        specifier: ^13.2.0
+        version: 13.2.0
       mdx-bundler:
         specifier: ^10.1.0
         version: 10.1.0(esbuild@0.25.0)

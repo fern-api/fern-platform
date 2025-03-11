@@ -42,6 +42,7 @@ import { rehypeCollectJsx } from "../plugins/rehype-collect-jsx";
 import { rehypeEndpointSnippets } from "../plugins/rehype-endpoint-snippets";
 import { rehypeExtractAsides } from "../plugins/rehype-extract-asides";
 import { rehypeFiles } from "../plugins/rehype-files";
+import { rehypeFrames } from "../plugins/rehype-frames";
 import { rehypeMigrateJsx } from "../plugins/rehype-migrate-jsx";
 import { rehypeSteps } from "../plugins/rehype-steps";
 import { rehypeTabs } from "../plugins/rehype-tabs";
@@ -149,6 +150,7 @@ async function serializeMdxImpl(
         rehypeMdxClassStyle,
         rehypeCodeBlock,
         rehypeSteps,
+        rehypeFrames,
         rehypeAccordions,
         rehypeTabs,
         rehypeCards,
