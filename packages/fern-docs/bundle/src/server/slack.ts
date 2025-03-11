@@ -5,6 +5,8 @@ import { kv } from "@vercel/kv";
 
 export function postToEngineeringNotifs(message: string) {
   return after(async () => {
+    console.log("posting to engineering notifs:", message);
+
     if (!process.env.SLACK_TOKEN) {
       return;
     }
