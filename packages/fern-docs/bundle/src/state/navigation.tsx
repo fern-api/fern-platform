@@ -3,7 +3,6 @@
 import React from "react";
 
 import { atom, useAtomValue, useSetAtom } from "jotai";
-import { useHydrateAtoms } from "jotai/utils";
 import { StoreApi, UseBoundStore, create } from "zustand";
 
 import { FernNavigation } from "@fern-api/fdr-sdk";
@@ -54,19 +53,6 @@ export function createRootNodeStore(
         ),
       })),
   }));
-}
-
-const basepathAtom = atom<string>("");
-
-export function useBasePath() {
-  return useAtomValue(basepathAtom);
-}
-
-export function SetBasePath({ value }: { value: string }) {
-  useHydrateAtoms([[basepathAtom, value]], {
-    dangerouslyForceHydrate: true,
-  });
-  return null;
 }
 
 const RootNodeStoreContext = React.createContext<

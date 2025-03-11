@@ -218,6 +218,7 @@ export const getMetadata = cache(
     try {
       const cached = await kv.hget<DocsMetadata>(domain, "metadata");
       if (cached != null) {
+        console.log("[getMetadata] cache hit:", cached);
         return cached;
       }
     } catch (error) {
@@ -228,6 +229,7 @@ export const getMetadata = cache(
     }
     const metadata = getMetadataFromResponse(domain, loadWithUrl(domain));
     kvSet(domain, "metadata", metadata);
+    console.log("[getMetadata] cache miss:", metadata);
     return metadata;
   }
 );

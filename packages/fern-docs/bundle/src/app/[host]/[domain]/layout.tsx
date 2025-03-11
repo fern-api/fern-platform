@@ -29,7 +29,7 @@ import { DarkCode } from "@/state/dark-code";
 import { Domain } from "@/state/domain";
 import { LaunchDarklyInfo } from "@/state/feature-flags";
 import { DefaultLanguage } from "@/state/language";
-import { RootNodeProvider, SetBasePath } from "@/state/navigation";
+import { RootNodeProvider } from "@/state/navigation";
 import {
   getAllSidebarRootNodes,
   getSidebarRootNodeIdToChildToParentsMap,
@@ -51,7 +51,6 @@ export default async function Layout({
 
   const loader = await createCachedDocsLoader(host, domain);
   const [
-    { basePath },
     config,
     unsafe_fullRoot,
     edgeFlags,
@@ -62,7 +61,6 @@ export default async function Layout({
     deprecated_customerAnalytics,
     launchDarkly,
   ] = await Promise.all([
-    loader.getMetadata(),
     loader.getConfig(),
     loader.unsafe_getFullRoot(),
     getEdgeFlags(domain),
@@ -98,7 +96,6 @@ export default async function Layout({
         }
       >
         <Domain value={domain} />
-        <SetBasePath value={basePath ?? ""} />
         {config.defaultLanguage != null && (
           <DefaultLanguage language={config.defaultLanguage} />
         )}
