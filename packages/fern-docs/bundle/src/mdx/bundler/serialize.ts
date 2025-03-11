@@ -23,6 +23,7 @@ import {
 } from "@fern-docs/mdx";
 import {
   rehypeAcornErrorBoundary,
+  rehypeExpressionToMd,
   rehypeMdxClassStyle,
   rehypeSlug,
   rehypeToc,
@@ -42,7 +43,6 @@ import { rehypeCollectJsx } from "../plugins/rehype-collect-jsx";
 import { rehypeEndpointSnippets } from "../plugins/rehype-endpoint-snippets";
 import { rehypeExtractAsides } from "../plugins/rehype-extract-asides";
 import { rehypeFiles } from "../plugins/rehype-files";
-import { rehypeFrames } from "../plugins/rehype-frames";
 import { rehypeMigrateJsx } from "../plugins/rehype-migrate-jsx";
 import { rehypeSteps } from "../plugins/rehype-steps";
 import { rehypeTabs } from "../plugins/rehype-tabs";
@@ -150,13 +150,25 @@ async function serializeMdxImpl(
         rehypeMdxClassStyle,
         rehypeCodeBlock,
         rehypeSteps,
-        rehypeFrames,
         rehypeAccordions,
         rehypeTabs,
         rehypeCards,
         [
           rehypeSlug,
           { additionalJsxElements: ["Step", "Accordion", "Tab", "Card"] },
+        ],
+        [
+          rehypeExpressionToMd,
+          {
+            mdxJsxElementAllowlist: {
+              Frame: ["caption"],
+              Tab: ["title"],
+              Card: ["title"],
+              Callout: ["title"],
+              Step: ["title"],
+              Accordion: ["title"],
+            },
+          },
         ],
         rehypeButtons,
         [rehypeEndpointSnippets, { loader }],
