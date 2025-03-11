@@ -67,6 +67,7 @@ interface DocsMetadata {
 
 export interface DocsLoader {
   domain: string;
+  host: string;
   fern_token: string | undefined;
 
   getAuthConfig: () => Promise<AuthEdgeConfig | undefined>;
@@ -780,6 +781,7 @@ export const createCachedDocsLoader = async (
   });
 
   return {
+    host,
     domain,
     fern_token,
     getAuthConfig: () => authConfig,
