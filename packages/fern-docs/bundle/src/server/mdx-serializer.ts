@@ -78,7 +78,7 @@ export function createCachedMdxSerializer(
           console.error("Error serializing mdx", error);
 
           postToEngineeringNotifs(
-            `:rotating_light: [${domain}] \`Serialize MDX\` encountered an error: \`${String(error)}\` (url: \`${url ?? "unknown"}\ with the content ${content}`)`
+            `:rotating_light: [${domain}] \`Serialize MDX\` encountered an error: \`${String(error)}\` (url: \`${url ?? "unknown"}\ with the content ${content}`
           );
 
           return undefined;
