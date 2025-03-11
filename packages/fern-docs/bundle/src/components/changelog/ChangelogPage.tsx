@@ -114,6 +114,7 @@ export async function ChangelogPageOverview({
       : undefined;
   const mdx = await serialize(page?.markdown, {
     filename: page?.filename,
+    url: `https://${loader.domain}/${node.slug}`,
   });
 
   return (
@@ -142,9 +143,12 @@ export async function ChangelogPageEntry({
   const page = await loader.getPage(node.pageId);
   const mdx = await serialize(page.markdown, {
     filename: node.pageId,
+    url: `https://${loader.domain}/${node.slug}`,
   });
 
-  const title = await serialize(mdx?.frontmatter?.title);
+  const title = await serialize(mdx?.frontmatter?.title, {
+    url: `https://${loader.domain}/${node.slug}`,
+  });
 
   return (
     <Markdown

@@ -114,6 +114,7 @@ export async function DocsMainContent({
         pageId={pageId}
         breadcrumb={breadcrumb}
         bottomNavigation={bottomNavigation}
+        slug={node.slug}
       />
     );
   }

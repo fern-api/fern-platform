@@ -9,6 +9,7 @@ import { serializeMdx as internalSerializeMdx } from "@/mdx/bundler/serialize";
 import { createCachedDocsLoader } from "@/server/docs-loader";
 
 import { cacheSeed } from "./cache-seed";
+import { postToEngineeringNotifs } from "./slack";
 
 export type MdxSerializerOptions = {
   /**
@@ -23,6 +24,10 @@ export type MdxSerializerOptions = {
    * The scope to inject into the mdx.
    */
   scope?: Record<string, unknown>;
+  /**
+   * The URL of the page being serialized.
+   */
+  url?: string;
 };
 
 export type MdxSerializer = (
@@ -55,7 +60,7 @@ export function createCachedMdxSerializer(
     }
     // this lets us key on just
     const cachedSerializer = unstable_cache(
-      async ({ filename, toc, scope }: MdxSerializerOptions) => {
+      async ({ filename, toc, scope, url }: MdxSerializerOptions) => {
         const authState = await loader.getAuthState();
 
         try {
@@ -71,6 +76,11 @@ export function createCachedMdxSerializer(
           });
         } catch (error) {
           console.error("Error serializing mdx", error);
+
+          postToEngineeringNotifs(
+            `:rotating_light: [${domain}] \`Serialize MDX\` encountered an error: \`${String(error)}\` (url: \`${url ?? "unknown"}\`)`
+          );
+
           return undefined;
         }
       },
