@@ -62,6 +62,24 @@ const nextConfig: NextConfig = {
       "es-toolkit",
       "ts-essentials",
       "lucide-react",
+
+      /**
+       * optimize imports for all rehype and unist related packages.
+       */
+      "@mdx-js/esbuild",
+      "@mdx-js/mdx",
+      "@mdx-js/react",
+      "estree-util-is-identifier-name",
+      "estree-util-value-to-estree",
+      "estree-walker",
+      "rehype-katex",
+      "remark-frontmatter",
+      "remark-gemoji",
+      "remark-gfm",
+      "remark-math",
+      "remark-mdx-frontmatter",
+      "remark-smartypants",
+      "remark-squeeze-paragraphs",
     ],
     optimizeServerReact: Boolean(process.env.VERCEL),
     authInterrupts: true,
