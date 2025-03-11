@@ -1,6 +1,8 @@
 import "server-only";
 
 import { mapKeys } from "es-toolkit/object";
+import fs from "fs";
+import { gracefulify } from "graceful-fs";
 import { bundleMDX } from "mdx-bundler";
 import path from "path";
 import rehypeKatex from "rehype-katex";
@@ -46,6 +48,9 @@ import { rehypeMigrateJsx } from "../plugins/rehype-migrate-jsx";
 import { rehypeSteps } from "../plugins/rehype-steps";
 import { rehypeTabs } from "../plugins/rehype-tabs";
 import { remarkExtractTitle } from "../plugins/remark-extract-title";
+
+// gracefulify fs to avoid EMFILE errors on Vercel
+gracefulify(fs);
 
 export interface SerializeMdxResponse {
   code: string;
