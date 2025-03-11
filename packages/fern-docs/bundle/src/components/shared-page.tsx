@@ -27,7 +27,7 @@ import { createFindNode } from "@/server/find-node";
 import { withLaunchDarkly } from "@/server/ld-adapter";
 import {
   MdxSerializer,
-  createRemoteMdxSerializer,
+  createCachedMdxSerializer,
 } from "@/server/mdx-serializer";
 import { SetCurrentNavigationNode } from "@/state/navigation";
 
@@ -108,7 +108,7 @@ export default async function SharedPage({
     redirect(prepareRedirect(found.redirect));
   }
 
-  const serialize = createRemoteMdxSerializer(loader, {
+  const serialize = createCachedMdxSerializer(loader, {
     scope: {
       version: found?.currentVersion?.versionId,
       tab: found?.currentTab?.title,

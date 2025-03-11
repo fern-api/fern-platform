@@ -11,7 +11,7 @@ import { ThemedDocs } from "@/components/themes/ThemedDocs";
 import { MdxServerComponent } from "@/mdx/components/server-component";
 import { DocsLoader } from "@/server/docs-loader";
 import { createFileResolver } from "@/server/file-resolver";
-import { createRemoteMdxSerializer } from "@/server/mdx-serializer";
+import { createCachedMdxSerializer } from "@/server/mdx-serializer";
 import { withLogo } from "@/server/withLogo";
 
 import { VersionDropdown } from "./header/VersionDropdown";
@@ -28,7 +28,7 @@ export default async function SharedLayout({
   sidebar: React.ReactNode;
   loader: DocsLoader;
 }) {
-  const serialize = createRemoteMdxSerializer(loader);
+  const serialize = createCachedMdxSerializer(loader);
   const [{ basePath }, config, edgeFlags, files, colors, layout] =
     await Promise.all([
       loader.getMetadata(),

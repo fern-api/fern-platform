@@ -20,8 +20,7 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
   // Only allow preview in dev and preview deployments, or if the hostname is canary.ferndocs.com
   if (
     VERCEL_ENV === "production" &&
-    req.nextUrl.hostname !== "canary.ferndocs.com" &&
-    !req.nextUrl.hostname.endsWith(".vercel.app")
+    req.nextUrl.hostname !== "canary.ferndocs.com"
   ) {
     console.debug("Production docs not hosted by canary.ferndocs.com detected");
     return notFound();
