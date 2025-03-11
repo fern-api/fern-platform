@@ -10,7 +10,7 @@ export type FacetsResponse = Partial<
 
 async function fetchFacetValues(opts: {
   client: Algoliasearch;
-  filters: string[];
+  filters: readonly string[];
 }): Promise<Partial<Record<FacetName, { value: string; count: number }[]>>> {
   const { client, filters } = opts;
   const response: FacetsResponse = {

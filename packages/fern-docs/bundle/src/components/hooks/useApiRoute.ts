@@ -1,4 +1,6 @@
-import { useBasePath } from "@/state/navigation";
+import useSWRImmutable from "swr/immutable";
+
+import { getMetadataAction } from "@/server/actions/metadata";
 
 import { getApiRouteSupplier } from "../util/getApiRouteSupplier";
 
@@ -13,6 +15,6 @@ export function useApiRoute(
   route: FernDocsApiRoute,
   options?: Options
 ): string {
-  const basepath = useBasePath();
-  return getApiRouteSupplier({ basepath, ...options })(route);
+  const { data } = useSWRImmutable("metadata", getMetadataAction);
+  return getApiRouteSupplier({ basepath: data?.basePath, ...options })(route);
 }

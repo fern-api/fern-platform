@@ -57,7 +57,7 @@ import { pruneWithAuthState } from "./withRbac";
 
 const loadWithUrl = uncachedLoadWithUrl;
 
-interface DocsMetadata {
+export interface DocsMetadata {
   domain: string;
   basePath: string;
   url: string;

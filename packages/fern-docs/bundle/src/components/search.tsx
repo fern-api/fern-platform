@@ -5,7 +5,7 @@ import React from "react";
 
 import { isEqual } from "es-toolkit/predicate";
 import { atom, useAtom, useAtomValue, useSetAtom } from "jotai";
-import { z } from "zod";
+import useSWRImmutable from "swr/immutable";
 
 import {
   CommandActions,
@@ -25,9 +25,12 @@ import { useEventCallback, useLazyRef } from "@fern-ui/react-commons";
 
 import { Feedback } from "@/components/feedback/Feedback";
 import { useApiRoute } from "@/components/hooks/useApiRoute";
-import { useApiRouteSWRImmutable } from "@/components/hooks/useApiRouteSWR";
 import { useCurrentPathname } from "@/hooks/use-current-pathname";
 import { useSetTheme, useThemeSwitchEnabled } from "@/hooks/use-theme";
+import {
+  fetchFacetValuesAction,
+  getSearchKeyAction,
+} from "@/server/actions/search";
 import { useIsDarkCode } from "@/state/dark-code";
 import { useFernUser } from "@/state/fern-user";
 import { searchDialogOpenAtom, searchInitializedAtom } from "@/state/search";
@@ -35,16 +38,11 @@ import { atomWithStorageString } from "@/state/utils/atomWithStorageString";
 
 const ALGOLIA_USER_TOKEN_KEY = "algolia-user-token";
 
-const ApiKeySchema = z.object({
-  appId: z.string(),
-  apiKey: z.string(),
-});
-
 function useAlgoliaUserToken() {
   const userTokenRef = useLazyRef(() =>
     atomWithStorageString(
       ALGOLIA_USER_TOKEN_KEY,
-      `anonymous-user-${crypto.randomUUID()}`,
+      `anonymous-user-${typeof crypto !== "undefined" ? crypto.randomUUID() : Math.floor(Math.random() * 1_000_000)}`,
       { getOnInit: true }
     )
   );
@@ -70,15 +68,12 @@ export const SearchV2 = React.memo(function SearchV2({
   const [askAi, setAskAi] = useAtom(askAiAtom);
   const [initialInput, setInitialInput] = React.useState("");
 
-  const { data } = useApiRouteSWRImmutable("/api/fern-docs/search/v2/key", {
-    request: { headers: { "X-User-Token": userToken } },
-    validate: ApiKeySchema,
-    // api key expires 24 hours, so we refresh it every hour
-    refreshInterval: 60 * 60 * 1000,
-    preload: true,
-  });
+  const { data } = useSWRImmutable(
+    "search-v2-key",
+    () => getSearchKeyAction(userToken),
+    { refreshInterval: 60 * 60 * 1000 }
+  );
 
-  const facetApiEndpoint = useApiRoute("/api/fern-docs/search/v2/facet");
   let chatEndpoint = useApiRoute("/api/fern-docs/search/v2/chat");
   let suggestEndpoint = useApiRoute("/api/fern-docs/search/v2/suggest");
 
@@ -101,16 +96,10 @@ export const SearchV2 = React.memo(function SearchV2({
       if (!data) {
         return {};
       }
-      const searchParams = new URLSearchParams();
-      searchParams.append("apiKey", data.apiKey);
-      filters.forEach((filter) => searchParams.append("filters", filter));
-      const search = String(searchParams);
-      const res = await fetch(`${facetApiEndpoint}?${search}`, {
-        method: "GET",
-      });
-      return res.json();
+      return fetchFacetValuesAction(data.apiKey, filters);
     },
-    [data, facetApiEndpoint]
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [data?.apiKey]
   );
 
   const setInitialized = useSetAtom(searchInitializedAtom);

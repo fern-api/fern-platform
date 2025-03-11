@@ -18,6 +18,7 @@ import {
 
 import { JavascriptProvider } from "@/components/JavascriptProvider";
 import { CustomerAnalytics } from "@/components/analytics/CustomerAnalytics";
+import { ErrorBoundary } from "@/components/error-boundary";
 import { FeatureFlagProvider } from "@/components/feature-flags/FeatureFlagProvider";
 import { FernUser } from "@/components/fern-user";
 import SearchV2 from "@/components/search";
@@ -116,9 +117,14 @@ export default async function Layout({
         <FeatureFlagProvider featureFlagsConfig={{ launchDarkly }}>
           {children}
         </FeatureFlagProvider>
-        <React.Suspense fallback={null}>
-          <SearchV2 domain={domain} isAskAiEnabled={edgeFlags.isAskAiEnabled} />
-        </React.Suspense>
+        <ErrorBoundary>
+          <React.Suspense fallback={null}>
+            <SearchV2
+              domain={domain}
+              isAskAiEnabled={edgeFlags.isAskAiEnabled}
+            />
+          </React.Suspense>
+        </ErrorBoundary>
         {jsConfig != null && <JavascriptProvider config={jsConfig} />}
         {VERCEL_ENV === "production" && (
           <CustomerAnalytics
