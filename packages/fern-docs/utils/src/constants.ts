@@ -8,6 +8,7 @@ export const COOKIE_EMAIL = "email"; // for api key injection
 export const HEADER_HOST = "host";
 export const HEADER_X_FERN_HOST = "x-fern-host";
 export const HEADER_X_FERN_BASEPATH = "x-fern-basepath";
+export const HEADER_X_FORWARDED_HOST = "x-forwarded-host";
 export const HEADER_X_MATCHED_PATH = "x-matched-path";
 export const HEADER_X_VERCEL_PROTECTION_BYPASS = "x-vercel-protection-bypass";
 
