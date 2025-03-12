@@ -12,7 +12,7 @@ import {
   streamText,
   tool,
 } from "ai";
-import { wrapAISDKModel } from "braintrust";
+import { initLogger, wrapAISDKModel } from "braintrust";
 import { z } from "zod";
 
 import { getAuthEdgeConfig, getEdgeFlags } from "@fern-docs/edge-config";
@@ -35,13 +35,18 @@ export const revalidate = 0;
 const engNotifsSlackChannel = "#engineering-notifs";
 
 export async function POST(req: NextRequest) {
+  initLogger({
+    projectName: "Braintrust Evaluation",
+    apiKey: process.env.BRAINTRUST_API_KEY,
+  });
+
   const bedrock = createAmazonBedrock({
-    region: "us-west-2",
+    region: "us-east-1",
     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
   });
   const languageModel = wrapAISDKModel(
-    bedrock("us.anthropic.claude-3-5-sonnet-20241022-v2:0")
+    bedrock("us.anthropic.claude-3-7-sonnet-20250219-v1:0")
   );
 
   const openai = createOpenAI({ apiKey: openaiApiKey() });
