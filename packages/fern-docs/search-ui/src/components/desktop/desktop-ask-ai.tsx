@@ -640,6 +640,17 @@ const AskAICommandItems = memo<{
       }
     });
 
+    if (chatError) {
+      const lastConvo = squeezedMessages.at(-1);
+      if (lastConvo != null && lastConvo.assistant == null) {
+        lastConvo.assistant = {
+          id: "error-msg-id",
+          content:
+            "I wasn't able to complete your request. Please try again in a few seconds.",
+        };
+      }
+    }
+
     if (squeezedMessages.length === 0) {
       return (
         <>
