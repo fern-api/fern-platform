@@ -62,7 +62,9 @@ export function useShouldHideAsides() {
     useAtomValue(emptyTableOfContentsAtom) ||
     (layout !== "guide" && layout !== "overview");
 
-  if (isSidebarFixed) {
+  // the sidebar is always fixed if the color is set
+  // so check if it's empty to determine if it should be hidden
+  if (isSidebarFixed && !emptySidebar) {
     return false;
   }
 
