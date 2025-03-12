@@ -75,7 +75,7 @@ export default function DefaultDocs({
       </MainCtx.Provider>
 
       {/* Enables footer DOM injection */}
-      <footer id="fern-footer width-before-scroll-bar" />
+      <footer id="fern-footer" className="width-before-scroll-bar" />
     </>
   );
 }
