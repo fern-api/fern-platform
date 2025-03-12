@@ -1,6 +1,6 @@
 import "server-only";
 
-import { unstable_cache } from "next/cache";
+import { unstable_cache, unstable_cacheTag } from "next/cache";
 import { notFound } from "next/navigation";
 import { after } from "next/server";
 import { cache } from "react";
@@ -8,6 +8,7 @@ import { cache } from "react";
 import { kv } from "@vercel/kv";
 import { mapValues } from "es-toolkit/object";
 import { AsyncOrSync, UnreachableCaseError } from "ts-essentials";
+import { z } from "zod";
 
 import {
   ApiDefinition,
@@ -57,13 +58,15 @@ import { pruneWithAuthState } from "./withRbac";
 
 const loadWithUrl = uncachedLoadWithUrl;
 
-interface DocsMetadata {
-  domain: string;
-  basePath: string;
-  url: string;
-  org: string;
-  isPreview: boolean;
-}
+const DocsMetadataSchema = z.object({
+  domain: z.string(),
+  basePath: z.string(),
+  url: z.string(),
+  org: z.string(),
+  isPreview: z.boolean(),
+});
+
+type DocsMetadata = z.infer<typeof DocsMetadataSchema>;
 
 export interface DocsLoader {
   domain: string;
@@ -215,19 +218,27 @@ export const getMetadataFromResponse = async (
 
 export const getMetadata = cache(
   async (domain: string): Promise<DocsMetadata> => {
+    "use cache";
+
+    unstable_cacheTag(domain, "getMetadata");
+
     try {
-      const cached = await kv.hget<DocsMetadata>(domain, "metadata");
-      if (cached != null) {
-        return cached;
+      const cached = DocsMetadataSchema.safeParse(
+        await kv.hget<DocsMetadata>(domain, "metadata")
+      );
+      if (cached.success) {
+        console.log("[getMetadata] cache hit:", cached.data);
+        return cached.data;
       }
     } catch (error) {
       console.warn(
-        `Failed to get metadata for ${domain}, fallback to uncached`,
+        `Failed to get metadata for ${domain} from kv, fallback to uncached`,
         error
       );
     }
     const metadata = getMetadataFromResponse(domain, loadWithUrl(domain));
     kvSet(domain, "metadata", metadata);
+    console.log("[getMetadata] cache miss:", metadata);
     return metadata;
   }
 );
