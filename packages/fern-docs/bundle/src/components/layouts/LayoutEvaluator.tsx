@@ -9,7 +9,6 @@ import { MdxAside } from "@/mdx/bundler/component";
 import { MdxContent } from "@/mdx/components/MdxContent";
 import { DocsLoader } from "@/server/docs-loader";
 import { MdxSerializer } from "@/server/mdx-serializer";
-import { SetIsLandingPage } from "@/state/layout";
 
 import { asToc, getMDXExport } from "../../mdx/get-mdx-export";
 import { LayoutEvaluatorContent } from "./LayoutEvaluatorContent";
@@ -22,7 +21,6 @@ export async function LayoutEvaluator({
   breadcrumb,
   bottomNavigation,
   slug,
-  isLandingPage,
 }: {
   loader: DocsLoader;
   serialize: MdxSerializer;
@@ -31,7 +29,6 @@ export async function LayoutEvaluator({
   breadcrumb: readonly FernNavigation.BreadcrumbItem[];
   bottomNavigation?: React.ReactNode;
   slug: string;
-  isLandingPage: boolean;
 }) {
   const { filename, markdown, editThisPageUrl } = await loader.getPage(pageId);
   const mdx = await serialize(markdown, {
@@ -50,24 +47,21 @@ export async function LayoutEvaluator({
   frontmatter["edit-this-page-url"] ??= editThisPageUrl;
 
   return (
-    <>
-      <SetIsLandingPage value={isLandingPage} />
-      <LayoutEvaluatorContent
-        serialize={serialize}
-        title={frontmatter?.title ?? fallbackTitle}
-        subtitle={frontmatter?.subtitle ?? frontmatter?.excerpt}
-        frontmatter={frontmatter}
-        breadcrumb={breadcrumb}
-        tableOfContents={toc}
-        aside={
-          mdx && exports?.Aside ? (
-            <MdxAside code={mdx.code} jsxElements={mdx.jsxElements} />
-          ) : undefined
-        }
-        bottomNavigation={bottomNavigation}
-      >
-        <MdxContent mdx={mdx} fallback={markdown} />
-      </LayoutEvaluatorContent>
-    </>
+    <LayoutEvaluatorContent
+      serialize={serialize}
+      title={frontmatter?.title ?? fallbackTitle}
+      subtitle={frontmatter?.subtitle ?? frontmatter?.excerpt}
+      frontmatter={frontmatter}
+      breadcrumb={breadcrumb}
+      tableOfContents={toc}
+      aside={
+        mdx && exports?.Aside ? (
+          <MdxAside code={mdx.code} jsxElements={mdx.jsxElements} />
+        ) : undefined
+      }
+      bottomNavigation={bottomNavigation}
+    >
+      <MdxContent mdx={mdx} fallback={markdown} />
+    </LayoutEvaluatorContent>
   );
 }

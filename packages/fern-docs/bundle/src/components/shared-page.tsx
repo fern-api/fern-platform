@@ -29,6 +29,7 @@ import {
   MdxSerializer,
   createCachedMdxSerializer,
 } from "@/server/mdx-serializer";
+import { SetIsLandingPage } from "@/state/layout";
 import { SetCurrentNavigationNode } from "@/state/navigation";
 
 import { DocsMainContent } from "../app/[host]/[domain]/main";
@@ -166,6 +167,7 @@ export default async function SharedPage({
         versionSlug={found.currentVersion?.slug}
         versionIsDefault={found.isCurrentVersionDefault}
       />
+      <SetIsLandingPage value={found.node.type === "landingPage"} />
       <DocsMainContent
         loader={loader}
         serialize={serialize}
