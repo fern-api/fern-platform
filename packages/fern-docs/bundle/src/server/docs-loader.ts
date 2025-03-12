@@ -236,7 +236,7 @@ export const getMetadata = cache(
         error
       );
     }
-    const metadata = getMetadataFromResponse(domain, loadWithUrl(domain));
+    const metadata = await getMetadataFromResponse(domain, loadWithUrl(domain));
     kvSet(domain, "metadata", metadata);
     console.log("[getMetadata] cache miss:", metadata);
     return metadata;
