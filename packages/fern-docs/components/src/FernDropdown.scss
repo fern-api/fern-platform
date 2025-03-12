@@ -13,6 +13,10 @@
       .fern-dropdown-item-indicator {
         @apply mr-1 flex h-full w-4 flex-none items-center justify-center;
       }
+
+      &[data-highlighted] .fern-api-property-meta {
+        color: var(--accent-contrast) !important;
+      }
     }
   }
 }
