@@ -158,10 +158,7 @@ async function serializeMdxImpl(
         rehypeAccordions,
         rehypeTabs,
         rehypeCards,
-        [
-          rehypeSlug,
-          { additionalJsxElements: ["Step", "Accordion", "Tab", "Card"] },
-        ],
+        [rehypeSlug, { additionalJsxElements: ["Step", "Accordion", "Tab"] }],
         [
           rehypeExpressionToMd,
           {
