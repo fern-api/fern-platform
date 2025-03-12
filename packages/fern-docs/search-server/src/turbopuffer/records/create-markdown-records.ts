@@ -81,17 +81,19 @@ export async function createMarkdownRecords({
     },
   };
 
-  return chunked_content.map((chunk, i) => {
-    return {
-      ...base_markdown_record,
-      id: createHash("sha256")
-        .update(`${base_markdown_record.id}-chunk:${i}`)
-        .digest("hex"),
-      attributes: {
-        ...base_markdown_record.attributes,
-        chunk,
-        page_position: i + 1,
-      },
-    };
-  });
+  return chunked_content
+    .filter((chunk) => chunk.length > 10)
+    .map((chunk, i) => {
+      return {
+        ...base_markdown_record,
+        id: createHash("sha256")
+          .update(`${base_markdown_record.id}-chunk:${i}`)
+          .digest("hex"),
+        attributes: {
+          ...base_markdown_record.attributes,
+          chunk,
+          page_position: i + 1,
+        },
+      };
+    });
 }
