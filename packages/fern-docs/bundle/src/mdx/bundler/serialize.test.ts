@@ -2,6 +2,7 @@
  * @vitest-environment node
  */
 import { readFileSync } from "node:fs";
+import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 
 import { serializeMdx } from "./serialize";
@@ -155,4 +156,23 @@ it("should return undefined when importing a file that does not exist", async ()
       filename: "a/b/c/d.mdx",
     })
   ).rejects.toThrow();
+});
+
+it("should serialize openrouter-proivder.mdx", async () => {
+  const result = await serializeMdx(
+    readFileSync(join(__dirname, "tests", "openrouter-provider.mdx"), "utf-8"),
+    {
+      filename: "content/pages/features/provider-routing.mdx",
+      loader: {
+        getMdxBundlerFiles: () =>
+          readFile(
+            join(__dirname, "tests", "openrouter-imports.json"),
+            "utf-8"
+          ).then(JSON.parse),
+      },
+    }
+  );
+  await expect(deterministic(result?.code)).toMatchFileSnapshot(
+    join(__dirname, "__snapshots__", "openrouter-provider.js")
+  );
 });

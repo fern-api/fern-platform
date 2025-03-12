@@ -1,3 +1,5 @@
+"use client";
+
 import { ReactElement, useMemo } from "react";
 
 import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";

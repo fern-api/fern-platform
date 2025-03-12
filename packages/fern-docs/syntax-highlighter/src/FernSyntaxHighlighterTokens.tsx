@@ -1,3 +1,5 @@
+"use client";
+
 import { forwardRef, memo, useImperativeHandle, useMemo, useRef } from "react";
 
 import { isEqual } from "es-toolkit/predicate";

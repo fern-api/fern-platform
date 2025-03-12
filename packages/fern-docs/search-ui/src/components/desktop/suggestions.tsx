@@ -1,3 +1,5 @@
+"use client";
+
 import { ReactNode, useEffect, useMemo, useState } from "react";
 
 import { experimental_useObject } from "ai/react";
