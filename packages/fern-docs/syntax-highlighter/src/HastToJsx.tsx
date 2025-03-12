@@ -1,3 +1,5 @@
+"use client";
+
 import { FC, memo, useMemo } from "react";
 import { Fragment, jsx, jsxs } from "react/jsx-runtime";
 
