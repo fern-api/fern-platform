@@ -1,5 +1,6 @@
 import { ApiDefinition, FernNavigation } from "@fern-api/fdr-sdk";
 import { truncateToBytes, withDefaultProtocol } from "@fern-api/ui-core-utils";
+import { createHash } from "crypto";
 import { compact, flatten } from "es-toolkit/array";
 import { maybePrepareMdxContent } from "../../utils/prepare-mdx-content";
 import { toDescription } from "../../utils/to-description";
@@ -67,6 +68,9 @@ export function createEndpointBaseRecordHttp({
     keywords.push(response_type);
   }
 
+  // TODO: optimize keywords
+  const keywords_as_string = keywords.join(" ");
+
   ApiDefinition.Transformer.with({
     TypeShape: (type) => {
       if (type.type === "alias" && type.value.type === "id") {
@@ -86,6 +90,7 @@ export function createEndpointBaseRecordHttp({
 
   return {
     ...base,
+    id: createHash("sha256").update(node.endpointId).digest("hex"),
     attributes: {
       ...base.attributes,
       chunk: prepared.content?.slice(0, 50) ?? "",
@@ -125,7 +130,7 @@ export function createEndpointBaseRecordHttp({
         ]) ?? []
       ),
       default_environment_id: endpoint.defaultEnvironment,
-      keywords: keywords.length > 0 ? keywords : undefined,
+      keywords: keywords_as_string,
     },
   };
 }

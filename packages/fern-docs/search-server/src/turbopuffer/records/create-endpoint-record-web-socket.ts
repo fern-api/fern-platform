@@ -1,5 +1,6 @@
 import { ApiDefinition, FernNavigation } from "@fern-api/fdr-sdk";
 import { truncateToBytes, withDefaultProtocol } from "@fern-api/ui-core-utils";
+import { createHash } from "crypto";
 import { compact, flatten } from "es-toolkit/array";
 import { maybePrepareMdxContent } from "../../utils/prepare-mdx-content";
 import { toDescription } from "../../utils/to-description";
@@ -65,6 +66,8 @@ export function createEndpointBaseRecordWebSocket({
     },
   }).webSocketChannel(endpoint, endpoint.id);
 
+  const keywords_as_string = keywords.join(" ");
+
   const endpoint_path = ApiDefinition.toColonEndpointPathLiteral(endpoint.path);
   const endpoint_path_curly = ApiDefinition.toCurlyBraceEndpointPathLiteral(
     endpoint.path
@@ -72,6 +75,7 @@ export function createEndpointBaseRecordWebSocket({
 
   return {
     ...base,
+    id: createHash("sha256").update(node.webSocketId).digest("hex"),
     attributes: {
       ...base.attributes,
       chunk: prepared.content?.slice(0, 50) ?? "",
@@ -110,7 +114,7 @@ export function createEndpointBaseRecordWebSocket({
         ]) ?? []
       ),
       default_environment_id: endpoint.defaultEnvironment,
-      keywords: keywords.length > 0 ? keywords : undefined,
+      keywords: keywords_as_string,
     },
   };
 }

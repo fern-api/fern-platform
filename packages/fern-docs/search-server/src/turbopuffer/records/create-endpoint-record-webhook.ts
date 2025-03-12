@@ -1,5 +1,6 @@
 import { ApiDefinition, FernNavigation } from "@fern-api/fdr-sdk";
 import { truncateToBytes } from "@fern-api/ui-core-utils";
+import { createHash } from "crypto";
 import { compact, flatten } from "es-toolkit/array";
 import { maybePrepareMdxContent } from "../../utils/prepare-mdx-content";
 import { toDescription } from "../../utils/to-description";
@@ -65,8 +66,11 @@ export function createEndpointBaseRecordWebhook({
     },
   }).webhookDefinition(endpoint, endpoint.id);
 
+  const keywords_as_string = keywords.join(" ");
+
   return {
     ...base,
+    id: createHash("sha256").update(node.webhookId).digest("hex"),
     attributes: {
       ...base.attributes,
       chunk: prepared.content?.slice(0, 50) ?? "",
@@ -82,7 +86,7 @@ export function createEndpointBaseRecordWebhook({
           : undefined,
       code_snippets: code_snippets.length > 0 ? code_snippets : undefined,
       availability: endpoint.availability,
-      keywords: keywords.length > 0 ? keywords : undefined,
+      keywords: keywords_as_string,
     },
   };
 }

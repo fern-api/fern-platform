@@ -45,7 +45,9 @@ export async function createTurbopufferRecords({
 
   const pageNodes = collector.indexablePageNodesWithAuth;
 
-  const markdownNodes = pageNodes.filter(hasMarkdown);
+  const markdownNodes = pageNodes
+    .filter((node) => !isApiLeaf(node))
+    .filter(hasMarkdown);
   const apiLeafNodes = pageNodes.filter(isApiLeaf);
 
   const markdownRecords = flatten(
@@ -165,8 +167,16 @@ export async function createTurbopufferRecords({
     }
   });
 
-  // const records = [...markdownRecords, ...apiReferenceRecords];
-  const records = [...markdownRecords];
+  const records = [...markdownRecords, ...apiReferenceRecords];
+  const nodeIds = new Set<string>();
+  records.forEach((r) => {
+    if (nodeIds.has(r.id)) {
+      console.log("Duplicate node id", r.id);
+    } else {
+      nodeIds.add(r.id);
+    }
+  });
+  // const records = [...markdownRecords];
   console.log(
     "Total chunk length:",
     records.reduce((sum, r) => sum + r.attributes.chunk.length, 0)

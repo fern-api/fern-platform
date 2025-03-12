@@ -1,5 +1,6 @@
 import { ApiDefinition } from "@fern-api/fdr-sdk";
 import { truncateToBytes } from "@fern-api/ui-core-utils";
+import { createHash } from "crypto";
 import { flatten } from "es-toolkit/array";
 import { maybePrepareMdxContent } from "../../utils/prepare-mdx-content";
 import { toDescription } from "../../utils/to-description";
@@ -54,6 +55,9 @@ export function createApiReferenceRecordHttp({
   ) {
     records.push({
       ...base,
+      id: createHash("sha256")
+        .update(base.id + request_description)
+        .digest("hex"),
       attributes: {
         ...base.attributes,
         hash: "#request",
@@ -87,6 +91,9 @@ export function createApiReferenceRecordHttp({
   ) {
     records.push({
       ...base,
+      id: createHash("sha256")
+        .update(base.id + response_description)
+        .digest("hex"),
       attributes: {
         ...base.attributes,
         hash: "#response",
