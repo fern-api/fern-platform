@@ -78,7 +78,7 @@ async function FooterLayoutWithEditThisPageUrl({
   // all this does is get the edit this page url from the mdx frontmatter, but hopefully the mdx was already serialized and cached
   const page = await loader.getPage(pageId);
   const mdx = await serialize(page.markdown, {
-    filename: pageId,
+    filename: page.filename,
   });
   const editThisPageUrl =
     mdx?.frontmatter?.["edit-this-page-url"] ?? page.editThisPageUrl;

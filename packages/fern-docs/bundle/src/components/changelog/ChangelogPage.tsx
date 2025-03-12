@@ -142,7 +142,7 @@ export async function ChangelogPageEntry({
 }) {
   const page = await loader.getPage(node.pageId);
   const mdx = await serialize(page.markdown, {
-    filename: node.pageId,
+    filename: page.filename,
     url: `https://${loader.domain}/${node.slug}`,
   });
 

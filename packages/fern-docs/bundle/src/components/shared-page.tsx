@@ -295,7 +295,9 @@ async function getNeighbor(
   }
   try {
     const page = await loader.getPage(pageId);
-    const mdx = await serialize(page.markdown);
+    const mdx = await serialize(page.markdown, {
+      filename: page.filename,
+    });
     const excerpt = mdx?.frontmatter?.subtitle ?? mdx?.frontmatter?.excerpt;
     return {
       href: addLeadingSlash(node.slug),
