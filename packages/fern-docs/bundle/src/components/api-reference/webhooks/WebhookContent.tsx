@@ -52,6 +52,7 @@ export async function WebhookContent({
           breadcrumb={breadcrumb}
           title={node.title}
           action={action}
+          slug={node.slug}
         />
       }
       aside={webhookExample}

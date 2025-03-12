@@ -250,6 +250,10 @@ export const getMetadata = cache(
 
 const getFiles = cache(
   async (domain: string): Promise<Record<string, FileData>> => {
+    "use cache";
+
+    unstable_cacheTag(domain, "getFiles");
+
     try {
       const cached = await kv.hget<Record<string, FileData>>(domain, "files");
       if (cached) {
@@ -285,6 +289,10 @@ const getFiles = cache(
 
 // the api reference may be too large to cache, so we don't cache it in the KV store
 const getApi = async (domain: string, id: string) => {
+  "use cache";
+
+  unstable_cacheTag(domain, "getApi", id);
+
   const response = await loadWithUrl(domain);
   const latest = response.definition.apisV2[ApiDefinitionId(id)];
   if (latest != null) {
@@ -381,6 +389,10 @@ const getEndpointById = async (
   authSchemes: AuthScheme[];
   types: Record<TypeId, TypeDefinition>;
 }> => {
+  "use cache";
+
+  unstable_cacheTag(domain, "getEndpointById", apiDefinitionId, endpointId);
+
   const api = await createGetPrunedApiCached(domain)(apiDefinitionId, {
     type: "endpoint",
     endpointId,
@@ -614,6 +626,10 @@ const getPage = cache(async (domain: string, pageId: string) => {
 });
 
 const getMdxBundlerFiles = cache(async (domain: string) => {
+  "use cache";
+
+  unstable_cacheTag(domain, "getMdxBundlerFiles");
+
   try {
     const cached = await kv.hget<Record<string, string>>(
       domain,
@@ -635,6 +651,10 @@ const getMdxBundlerFiles = cache(async (domain: string) => {
 });
 
 const getColors = cache(async (domain: string) => {
+  "use cache";
+
+  unstable_cacheTag(domain, "getColors");
+
   try {
     const cached = await kv.hget<{
       light: FernColorTheme | undefined;
@@ -718,6 +738,10 @@ const getColors = cache(async (domain: string) => {
 });
 
 const getFonts = cache(async (domain: string) => {
+  "use cache";
+
+  unstable_cacheTag(domain, "getFonts");
+
   try {
     const cached = await kv.hget<FernFonts>(domain, "fonts");
     if (cached != null) {
@@ -739,6 +763,10 @@ const getFonts = cache(async (domain: string) => {
 });
 
 const getLayout = cache(async (domain: string) => {
+  "use cache";
+
+  unstable_cacheTag(domain, "getLayout");
+
   const config = await getConfig(domain);
   if (!config) {
     console.debug("Could not find config for domain", domain);

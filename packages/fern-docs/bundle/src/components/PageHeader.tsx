@@ -11,6 +11,7 @@ import { FernBreadcrumbs } from "./FernBreadcrumbs";
 import { FernLink } from "./FernLink";
 
 export function PageHeader({
+  slug,
   serialize,
   breadcrumb,
   title,
@@ -20,6 +21,7 @@ export function PageHeader({
   subtitle,
   children,
 }: {
+  slug: string;
   serialize: MdxSerializer;
   breadcrumb: readonly FernNavigation.BreadcrumbItem[];
   title: string;
@@ -41,12 +43,16 @@ export function PageHeader({
       <WithAction action={action}>
         {titleHref == null ? (
           <h1 className="fern-page-heading hyphens-auto text-balance break-words">
-            <MdxServerComponent serialize={serialize} mdx={title} />
+            <MdxServerComponent serialize={serialize} mdx={title} slug={slug} />
           </h1>
         ) : (
           <FernLink href={titleHref} scroll={true}>
             <h1 className="fern-page-heading hyphens-auto text-balance break-words">
-              <MdxServerComponent serialize={serialize} mdx={title} />
+              <MdxServerComponent
+                serialize={serialize}
+                mdx={title}
+                slug={slug}
+              />
             </h1>
           </FernLink>
         )}
@@ -55,7 +61,11 @@ export function PageHeader({
       {subtitle && (
         <div className="prose-p:text-(color:--grayscale-a11) mt-2 hyphens-auto break-words leading-7">
           <React.Suspense fallback={subtitle}>
-            <MdxServerComponent serialize={serialize} mdx={subtitle} />
+            <MdxServerComponent
+              serialize={serialize}
+              mdx={subtitle}
+              slug={slug}
+            />
           </React.Suspense>
         </div>
       )}

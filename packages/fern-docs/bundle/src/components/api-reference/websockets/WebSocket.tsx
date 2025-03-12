@@ -12,11 +12,11 @@ import { AvailabilityBadge } from "@fern-docs/components/badges";
 import { PageHeader } from "@/components/PageHeader";
 import { FooterLayout } from "@/components/layouts/FooterLayout";
 import { ReferenceLayout } from "@/components/layouts/ReferenceLayout";
+import { PlaygroundButton } from "@/components/playground/PlaygroundButton";
 import { PlaygroundKeyboardTrigger } from "@/components/playground/PlaygroundKeyboardTrigger";
 import { MdxServerComponentProseSuspense } from "@/mdx/components/server-component";
 import { MdxSerializer } from "@/server/mdx-serializer";
 
-import { PlaygroundButton } from "@/components/playground/PlaygroundButton";
 import { PlaygroundButtonTray } from "../../playground/PlaygroundButtonTray";
 import { EndpointSection } from "../endpoints/EndpointSection";
 import { EndpointUrlWithPlaygroundBaseUrl } from "../endpoints/EndpointUrlWithPlaygroundBaseUrl";
@@ -97,8 +97,9 @@ export async function WebSocketContent({
             )
           }
           action={action}
+          slug={node.slug}
         >
-          <EndpointUrlWithPlaygroundBaseUrl 
+          <EndpointUrlWithPlaygroundBaseUrl
             endpoint={channel}
             className="hidden lg:flex"
           />
@@ -147,12 +148,12 @@ export async function WebSocketContent({
                         strokeWidth={1.5}
                       />
                     </span>
-                    </span>
-                    {node != null && (
-                        <>
-                          <PlaygroundButton state={node} className="md:hidden" />
-                        </>
-                      )}
+                  </span>
+                  {node != null && (
+                    <>
+                      <PlaygroundButton state={node} className="md:hidden" />
+                    </>
+                  )}
                 </span>
               }
               slug={node.slug}
