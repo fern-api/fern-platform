@@ -40,7 +40,7 @@
     "@fern-platform/configs": "workspace:*",
     "@types/node": "^18.11.9",
     "depcheck": "^1.4.7",
-    "next": "15.2.0",
+    "next": "15.3.0-canary.1",
     "stylelint": "^16.1.0",
     "typescript": "^5",
     "vitest": "^3.0.5"
