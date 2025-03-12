@@ -45,7 +45,9 @@ export const middleware: NextMiddleware = async (request) => {
 
   const headers = new Headers(request.headers);
   headers.set(HEADER_X_FERN_HOST, domain);
-  headers.set(HEADER_X_FORWARDED_HOST, domain);
+  if (domain !== host) {
+    headers.set(HEADER_X_FORWARDED_HOST, domain);
+  }
 
   const rewrite = (
     newPathname: string,
