@@ -36,11 +36,12 @@ export const FERN_DOCS_BUILDWITHFERN_COM = "docs.buildwithfern.com";
 /**
  * Layout constants
  */
-export const DEFAULT_LOGO_HEIGHT = 20;
-export const DEFAULT_SIDEBAR_WIDTH = 288;
-export const DEFAULT_HEADER_HEIGHT = 64;
-export const DEFAULT_PAGE_WIDTH = 1_408;
-export const DEFAULT_CONTENT_WIDTH = 640;
+export const DEFAULT_LOGO_HEIGHT = 20; // 1.25rem
+export const DEFAULT_SIDEBAR_WIDTH = 288; // 18rem
+export const DEFAULT_GUTTER_WIDTH = 32; // 2rem
+export const DEFAULT_HEADER_HEIGHT = 64; // 4rem
+export const DEFAULT_PAGE_WIDTH = 1_408; // 88rem
+export const DEFAULT_CONTENT_WIDTH = 640; // 40rem
 
 export const FERN_COLOR_ACCENT = "oklch(62.42% 0.1929 143.94)";
 export const FERN_COLOR_AIR = "oklch(99.56% 0.0078 139.44)";
