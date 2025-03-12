@@ -39,7 +39,12 @@ import { AuthEdgeConfig } from "@fern-docs/auth";
 import { HttpMethod } from "@fern-docs/components";
 import { getAuthEdgeConfig, getEdgeFlags } from "@fern-docs/edge-config";
 import {
+  DEFAULT_CONTENT_WIDTH,
+  DEFAULT_GUTTER_WIDTH,
+  DEFAULT_HEADER_HEIGHT,
   DEFAULT_LOGO_HEIGHT,
+  DEFAULT_PAGE_WIDTH,
+  DEFAULT_SIDEBAR_WIDTH,
   EdgeFlags,
   addLeadingSlash,
   removeTrailingSlash,
@@ -741,13 +746,17 @@ const getLayout = cache(async (domain: string) => {
   }
 
   const logoHeight = config.logoHeight ?? DEFAULT_LOGO_HEIGHT;
-  const sidebarWidth = toPx(config.layout?.sidebarWidth) ?? 288;
+  const sidebarWidth =
+    toPx(config.layout?.sidebarWidth) ?? DEFAULT_SIDEBAR_WIDTH;
+  const contentWidth =
+    toPx(config.layout?.contentWidth) ?? DEFAULT_CONTENT_WIDTH;
   const pageWidth =
     config.layout?.pageWidth?.type === "full"
       ? undefined
-      : (toPx(config.layout?.pageWidth) ?? 1_408);
-  const headerHeight = toPx(config.layout?.headerHeight) ?? 64;
-  const contentWidth = toPx(config.layout?.contentWidth) ?? 640;
+      : (toPx(config.layout?.pageWidth) ??
+        calcDefaultPageWidth(sidebarWidth, contentWidth));
+  const headerHeight =
+    toPx(config.layout?.headerHeight) ?? DEFAULT_HEADER_HEIGHT;
   const tabsPlacement = config.layout?.tabsPlacement ?? "SIDEBAR";
   const searchbarPlacement = config.layout?.searchbarPlacement ?? "HEADER";
   return {
@@ -761,6 +770,26 @@ const getLayout = cache(async (domain: string) => {
     isHeaderDisabled: config.layout?.disableHeader ?? false,
   };
 });
+
+/**
+ * The default page width should be at least 1408px (88rem), and should be able to fit 1 content + 2 sidebars
+ *
+ * The default width for content is 40rem, and the default width for a sidebar is 18rem,
+ * so the 2x sidebar + 1x content + 2x gutter = 76rem (1280px),
+ * which happens to be the `xl` breakpoint in tailwind as well as the resolution of a 13 inch macbook air.
+ *
+ * The reason the page width is bumped up to 88rem instead of 76rem is to create a little more breathing room between
+ * content and sidebars on a larger screen (such as a 16 inch macbook pro). This is a 8rem (128px) true gutter between the content and sidebars.
+ *
+ * The 16 inch macbook pro has 1728px (108rem) of width, which results in a 10rem (160px) gutter _around_ the entire page.
+ *
+ */
+function calcDefaultPageWidth(sidebarWidth: number, contentWidth: number) {
+  return Math.max(
+    DEFAULT_PAGE_WIDTH,
+    sidebarWidth * 2 + contentWidth + DEFAULT_GUTTER_WIDTH
+  );
+}
 
 const getAuthConfig = getAuthEdgeConfig;
 
