@@ -32,18 +32,18 @@ export const revalidate = 0;
 const engNotifsSlackChannel = "#engineering-notifs";
 
 export async function POST(req: NextRequest) {
-  const _logger = initLogger({
+  initLogger({
     projectName: "Braintrust Evaluation",
     apiKey: process.env.BRAINTRUST_API_KEY,
   });
 
   const bedrock = createAmazonBedrock({
-    region: "us-west-2",
+    region: "us-east-1",
     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
   });
   const languageModel = wrapAISDKModel(
-    bedrock("us.anthropic.claude-3-5-sonnet-20241022-v2:0")
+    bedrock("us.anthropic.claude-3-7-sonnet-20250219-v1:0")
   );
 
   const openai = createOpenAI({ apiKey: openaiApiKey() });
@@ -77,7 +77,7 @@ export async function POST(req: NextRequest) {
     throw new Error(`Ask AI is not enabled for ${domain}`);
   }
 
-  const fern_token = cookies().get(COOKIE_FERN_TOKEN)?.value;
+  const fern_token = (await cookies()).get(COOKIE_FERN_TOKEN)?.value;
   const user = await safeVerifyFernJWTConfig(fern_token, authEdgeConfig);
 
   const lastUserMessage: string | undefined = messages.findLast(
