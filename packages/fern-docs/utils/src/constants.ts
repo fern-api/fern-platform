@@ -35,6 +35,9 @@ export const FERN_DOCS_BUILDWITHFERN_COM = "docs.buildwithfern.com";
 
 /**
  * Layout constants
+ *
+ * Note: content page width = 40rem is agressive, but it's close to the ~65ch rule of thumb for web typography
+ * Most pages will be 40rem. overview pages are 150% (60rem), and endpoint pages are 200% (80rem) to account for 2 columns.
  */
 export const DEFAULT_LOGO_HEIGHT = 20; // 1.25rem
 export const DEFAULT_SIDEBAR_WIDTH = 288; // 18rem
