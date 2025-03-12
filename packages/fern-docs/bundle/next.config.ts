@@ -95,6 +95,9 @@ const nextConfig: NextConfig = {
       static: 180,
     },
     serverComponentsHmrCache: true,
+    serverActions: {
+      allowedOrigins: ["*"],
+    },
   },
   expireTime: 3600, // 1 hour
 
