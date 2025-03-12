@@ -41,7 +41,7 @@ export async function turbopufferUpsertTask({
   payload,
   authed,
   vectorizer,
-  splitText = (text) => Promise.all([text]),
+  splitText = (text) => Promise.resolve([text]),
   deleteExisting = false,
 }: TurbopufferIndexerTaskOptions): Promise<number> {
   const tpuf = new Turbopuffer({
@@ -51,13 +51,14 @@ export async function turbopufferUpsertTask({
   const ns = tpuf.namespace(namespace);
 
   // load the docs
-  const { org_id, root, pages, domain } = await loadDocsWithUrl(payload);
+  const { org_id, root, pages, apis, domain } = await loadDocsWithUrl(payload);
 
   const unvectorizedRecords = await createTurbopufferRecords({
     root,
     domain,
     org_id,
     pages,
+    apis,
     authed,
     splitText,
   });
