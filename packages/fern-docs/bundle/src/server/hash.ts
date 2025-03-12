@@ -1,5 +1,3 @@
-import "server-only";
-
 import crypto from "crypto";
 
 export function hash(content: string): string {
