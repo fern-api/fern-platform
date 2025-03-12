@@ -35,20 +35,20 @@ const nextConfig: NextConfig = {
      *
      * pnpm list --filter=@fern-docs/bundle --only-projects --prod --recursive --depth=Infinity --json | jq -r '[.. | objects | select(.version | .!=null) | select(.version | startswith("link:")) | .from] | unique'
      */
-    // "@fern-api/fdr-sdk",
-    // "@fern-api/template-resolver",
-    // "@fern-api/ui-core-utils",
-    // "@fern-docs/auth",
-    // "@fern-docs/components",
-    // "@fern-docs/edge-config",
-    // "@fern-docs/mdx",
-    // "@fern-docs/search-server",
-    // "@fern-docs/search-ui",
-    // "@fern-docs/syntax-highlighter",
-    // "@fern-docs/utils",
-    // "@fern-platform/fdr-utils",
-    // "@fern-ui/loadable",
-    // "@fern-ui/react-commons",
+    "@fern-api/fdr-sdk",
+    "@fern-api/template-resolver",
+    "@fern-api/ui-core-utils",
+    "@fern-docs/auth",
+    "@fern-docs/components",
+    "@fern-docs/edge-config",
+    "@fern-docs/mdx",
+    "@fern-docs/search-server",
+    "@fern-docs/search-ui",
+    "@fern-docs/syntax-highlighter",
+    "@fern-docs/utils",
+    "@fern-platform/fdr-utils",
+    "@fern-ui/loadable",
+    "@fern-ui/react-commons",
   ],
   experimental: {
     appNavFailHandling: true,
@@ -62,6 +62,24 @@ const nextConfig: NextConfig = {
       "es-toolkit",
       "ts-essentials",
       "lucide-react",
+
+      /**
+       * optimize imports for all rehype and unist related packages.
+       */
+      "@mdx-js/esbuild",
+      "@mdx-js/mdx",
+      "@mdx-js/react",
+      "estree-util-is-identifier-name",
+      "estree-util-value-to-estree",
+      "estree-walker",
+      "rehype-katex",
+      "remark-frontmatter",
+      "remark-gemoji",
+      "remark-gfm",
+      "remark-math",
+      "remark-mdx-frontmatter",
+      "remark-smartypants",
+      "remark-squeeze-paragraphs",
     ],
     optimizeServerReact: Boolean(process.env.VERCEL),
     authInterrupts: true,
@@ -77,6 +95,9 @@ const nextConfig: NextConfig = {
       static: 180,
     },
     serverComponentsHmrCache: true,
+    serverActions: {
+      allowedOrigins: ["*"],
+    },
   },
   expireTime: 3600, // 1 hour
 

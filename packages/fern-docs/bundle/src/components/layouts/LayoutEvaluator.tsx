@@ -20,6 +20,7 @@ export async function LayoutEvaluator({
   pageId,
   breadcrumb,
   bottomNavigation,
+  slug,
 }: {
   loader: DocsLoader;
   serialize: MdxSerializer;
@@ -27,11 +28,13 @@ export async function LayoutEvaluator({
   pageId: FernNavigation.PageId;
   breadcrumb: readonly FernNavigation.BreadcrumbItem[];
   bottomNavigation?: React.ReactNode;
+  slug: string;
 }) {
   const { filename, markdown, editThisPageUrl } = await loader.getPage(pageId);
   const mdx = await serialize(markdown, {
     filename,
     toc: true,
+    url: `https://${loader.domain}/${slug}`,
   });
 
   const exports = getMDXExport(mdx);

@@ -1,6 +1,8 @@
 import "server-only";
 
 import { mapKeys } from "es-toolkit/object";
+import fs from "fs";
+import { gracefulify } from "graceful-fs";
 import { bundleMDX } from "mdx-bundler";
 import path from "path";
 import rehypeKatex from "rehype-katex";
@@ -23,6 +25,7 @@ import {
 } from "@fern-docs/mdx";
 import {
   rehypeAcornErrorBoundary,
+  rehypeExpressionToMd,
   rehypeMdxClassStyle,
   rehypeSlug,
   rehypeToc,
@@ -46,6 +49,9 @@ import { rehypeMigrateJsx } from "../plugins/rehype-migrate-jsx";
 import { rehypeSteps } from "../plugins/rehype-steps";
 import { rehypeTabs } from "../plugins/rehype-tabs";
 import { remarkExtractTitle } from "../plugins/remark-extract-title";
+
+// gracefulify fs to avoid EMFILE errors on Vercel
+gracefulify(fs);
 
 export interface SerializeMdxResponse {
   code: string;
@@ -152,9 +158,19 @@ async function serializeMdxImpl(
         rehypeAccordions,
         rehypeTabs,
         rehypeCards,
+        [rehypeSlug, { additionalJsxElements: ["Step", "Accordion", "Tab"] }],
         [
-          rehypeSlug,
-          { additionalJsxElements: ["Step", "Accordion", "Tab", "Card"] },
+          rehypeExpressionToMd,
+          {
+            mdxJsxElementAllowlist: {
+              Frame: ["caption"],
+              Tab: ["title"],
+              Card: ["title"],
+              Callout: ["title"],
+              Step: ["title"],
+              Accordion: ["title"],
+            },
+          },
         ],
         rehypeButtons,
         [rehypeEndpointSnippets, { loader }],
@@ -202,6 +218,14 @@ async function serializeMdxImpl(
     esbuildOptions: (o) => {
       o.minify = process.env.NODE_ENV === "production";
       o.sourcemap = false;
+
+      o.logLevel = 'error'; // Reduce logging overhead
+
+      o.logLimit = 0; // Disable logging to reduce file operations
+      o.metafile = false; // Don't generate metafile (reduces file operations)
+
+      // Add write to memory instead of disk when possible
+      o.write = false;
       return o;
     },
   });
@@ -242,7 +266,7 @@ export function serializeMdx(
         console.error("Serialize MDX timed out after 10 seconds");
         reject(new Error("Serialize MDX timed out"));
       }
-    }, 10_000);
+    }, 60_000);
 
     serializeMdxImpl(content, { ...options }).then(
       (result) => {

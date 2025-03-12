@@ -97,7 +97,7 @@ export default async function Layout({
         }
       >
         <Domain value={domain} />
-        <SetBasePath value={basePath ?? ""} />
+        <SetBasePath value={basePath} />
         {config.defaultLanguage != null && (
           <DefaultLanguage language={config.defaultLanguage} />
         )}

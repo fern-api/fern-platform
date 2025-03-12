@@ -222,6 +222,28 @@ var Component = (() => {
           })
         })
       }), "\n", (0, import_jsx_runtime.jsx)(_components.h3, {
+        id: "link-in-title",
+        children: "Link in title"
+      }), "\n", (0, import_jsx_runtime.jsx)(ErrorBoundary, {
+        children: (0, import_jsx_runtime.jsx)(CardGroup, {
+          children: (0, import_jsx_runtime.jsx)(ErrorBoundary, {
+            children: (0, import_jsx_runtime.jsx)(Card, {
+              title: (0, import_jsx_runtime.jsx)(import_jsx_runtime.Fragment, {
+                children: (0, import_jsx_runtime.jsx)(_components.p, {
+                  children: (0, import_jsx_runtime.jsx)(_components.a, {
+                    href: "https://github.com/fern-api/fern/tree/main/generators/python",
+                    children: "Python"
+                  })
+                })
+              }),
+              id: "pythonhttpsgithubcomfern-apiferntreemaingeneratorspython",
+              children: (0, import_jsx_runtime.jsx)(_components.p, {
+                children: "The title text can be a link."
+              })
+            })
+          })
+        })
+      }), "\n", (0, import_jsx_runtime.jsx)(_components.h3, {
         id: "icon-position",
         children: "Icon position"
       }), "\n", (0, import_jsx_runtime.jsx)(ErrorBoundary, {

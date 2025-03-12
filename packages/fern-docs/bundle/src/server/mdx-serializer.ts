@@ -9,6 +9,8 @@ import { serializeMdx as internalSerializeMdx } from "@/mdx/bundler/serialize";
 import { createCachedDocsLoader } from "@/server/docs-loader";
 
 import { cacheSeed } from "./cache-seed";
+import { Semaphore } from "./semaphore";
+import { postToEngineeringNotifs } from "./slack";
 
 export type MdxSerializerOptions = {
   /**
@@ -23,6 +25,10 @@ export type MdxSerializerOptions = {
    * The scope to inject into the mdx.
    */
   scope?: Record<string, unknown>;
+  /**
+   * The URL of the page being serialized.
+   */
+  url?: string;
 };
 
 export type MdxSerializer = (
@@ -36,6 +42,8 @@ export type MdxSerializer = (
     }
   | undefined
 >;
+
+const monitor = new Semaphore(10);
 
 export function createCachedMdxSerializer(
   loader: Awaited<ReturnType<typeof createCachedDocsLoader>>,
@@ -53,9 +61,12 @@ export function createCachedMdxSerializer(
     if (content == null) {
       return;
     }
+
+    await monitor.acquire();
+
     // this lets us key on just
     const cachedSerializer = unstable_cache(
-      async ({ filename, toc, scope }: MdxSerializerOptions) => {
+      async ({ filename, toc, scope, url }: MdxSerializerOptions) => {
         const authState = await loader.getAuthState();
 
         try {
@@ -71,6 +82,11 @@ export function createCachedMdxSerializer(
           });
         } catch (error) {
           console.error("Error serializing mdx", error);
+
+          postToEngineeringNotifs(
+            `:rotating_light: [${domain}] \`Serialize MDX\` encountered an error: \`${String(error)}\` (url: \`${url ?? "unknown"}\` with the content ${content}`
+          );
+
           return undefined;
         }
       },
@@ -78,19 +94,23 @@ export function createCachedMdxSerializer(
       { tags: [domain, "serializeMdx"] }
     );
 
-    // merge the scope from the page with the scope from the serializer
-    const result = await cachedSerializer({
-      ...options,
-      scope: { ...options.scope, ...scope },
-    });
+    try {
+      // merge the scope from the page with the scope from the serializer
+      const result = await cachedSerializer({
+        ...options,
+        scope: { ...options.scope, ...scope },
+      });
 
-    // if the result is undefined, we need to revalidate the cache
-    // NOTE: you cannot do this because you cant revalidate the cache in a render function
-    // if (result == null) {
-    //   revalidateTag(key);
-    // }
+      // if the result is undefined, we need to revalidate the cache
+      // NOTE: you cannot do this because you cant revalidate the cache in a render function
+      // if (result == null) {
+      //   revalidateTag(key);
+      // }
 
-    return result;
+      return result;
+    } finally {
+      monitor.release();
+    }
   };
 
   return cache(serializer);
