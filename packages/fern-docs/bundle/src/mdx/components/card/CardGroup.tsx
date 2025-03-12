@@ -1,17 +1,13 @@
-import React, { FC, type PropsWithChildren } from "react";
+import React from "react";
 
 import { cn } from "@fern-docs/components";
 
-export declare namespace CardGroup {
-  export interface Props {
-    cols?: number; // default 2, max 6
-  }
-}
-
-export const CardGroup: FC<PropsWithChildren<CardGroup.Props>> = ({
+export function CardGroup({
   children,
   cols,
-}) => {
+}: React.PropsWithChildren<{
+  cols?: number;
+}>) {
   if (!cols) {
     cols = Math.min(React.Children.count(children), 2);
   }
@@ -30,4 +26,4 @@ export const CardGroup: FC<PropsWithChildren<CardGroup.Props>> = ({
       {children}
     </div>
   );
-};
+}
