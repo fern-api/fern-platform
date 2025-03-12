@@ -35,12 +35,16 @@ export const FERN_DOCS_BUILDWITHFERN_COM = "docs.buildwithfern.com";
 
 /**
  * Layout constants
+ *
+ * Note: content page width = 40rem is agressive, but it's close to the ~65ch rule of thumb for web typography
+ * Most pages will be 40rem. overview pages are 150% (60rem), and endpoint pages are 200% (80rem) to account for 2 columns.
  */
-export const DEFAULT_LOGO_HEIGHT = 20;
-export const DEFAULT_SIDEBAR_WIDTH = 288;
-export const DEFAULT_HEADER_HEIGHT = 64;
-export const DEFAULT_PAGE_WIDTH = 1_408;
-export const DEFAULT_CONTENT_WIDTH = 640;
+export const DEFAULT_LOGO_HEIGHT = 20; // 1.25rem
+export const DEFAULT_SIDEBAR_WIDTH = 288; // 18rem
+export const DEFAULT_GUTTER_WIDTH = 32; // 2rem
+export const DEFAULT_HEADER_HEIGHT = 64; // 4rem
+export const DEFAULT_PAGE_WIDTH = 1_408; // 88rem
+export const DEFAULT_CONTENT_WIDTH = 640; // 40rem
 
 export const FERN_COLOR_ACCENT = "oklch(62.42% 0.1929 143.94)";
 export const FERN_COLOR_AIR = "oklch(99.56% 0.0078 139.44)";

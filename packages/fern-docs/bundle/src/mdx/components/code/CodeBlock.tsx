@@ -93,7 +93,7 @@ export function toSyntaxHighlighterProps(
     highlightLines: typeof highlight === "number" ? [highlight] : highlight,
     highlightStyle: props.focus != null ? "focus" : "highlight",
     code: props.code ?? "",
-    maxLines: props.maxLines,
+    maxLines: props.maxLines ?? 20,
     wordWrap: props.wordWrap,
   };
 }
