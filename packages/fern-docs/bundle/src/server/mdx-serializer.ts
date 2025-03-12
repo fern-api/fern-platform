@@ -26,9 +26,9 @@ export type MdxSerializerOptions = {
    */
   scope?: Record<string, unknown>;
   /**
-   * The URL of the page being serialized.
+   * The slug of the page being serialized.
    */
-  url?: string;
+  slug?: string;
 };
 
 export type MdxSerializer = (
@@ -66,7 +66,7 @@ export function createCachedMdxSerializer(
 
     // this lets us key on just
     const cachedSerializer = unstable_cache(
-      async ({ filename, toc, scope, url }: MdxSerializerOptions) => {
+      async ({ filename, toc, scope, slug }: MdxSerializerOptions) => {
         const authState = await loader.getAuthState();
 
         try {
@@ -84,7 +84,7 @@ export function createCachedMdxSerializer(
           console.error("Error serializing mdx", error);
 
           postToEngineeringNotifs(
-            `:rotating_light: [${domain}] \`Serialize MDX\` encountered an error: \`${String(error)}\` (url: \`${url ?? "unknown"}\``,
+            `:rotating_light: [${domain}] \`Serialize MDX\` encountered an error: \`${String(error)}\` (url: \`https://${domain}/${slug ?? "UNKNOWN"}\`)`,
             {
               message: content,
               mrkdwn: true,

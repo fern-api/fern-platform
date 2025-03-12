@@ -12,10 +12,12 @@ export async function MdxServerComponent({
   serialize,
   mdx,
   filename,
+  slug,
 }: {
   serialize: MdxSerializer;
   mdx: string | null | undefined;
   filename?: string;
+  slug?: string;
 }) {
   if (!mdx) {
     return null;
@@ -23,6 +25,7 @@ export async function MdxServerComponent({
 
   const parsed_mdx = await serialize(mdx, {
     filename,
+    slug,
   });
 
   return <MdxContent mdx={parsed_mdx} fallback={mdx} />;
@@ -34,6 +37,7 @@ export function MdxServerComponentProse({
   size,
   className,
   filename,
+  slug,
   fallback,
 }: {
   serialize: MdxSerializer;
@@ -41,6 +45,7 @@ export function MdxServerComponentProse({
   size?: "xs" | "sm" | "base" | "lg";
   className?: string;
   filename?: string;
+  slug?: string;
   fallback?: React.ReactNode;
 }) {
   if (!mdx) {
@@ -53,7 +58,12 @@ export function MdxServerComponentProse({
 
   return (
     <Prose size={size} className={className}>
-      <MdxServerComponent mdx={mdx} serialize={serialize} filename={filename} />
+      <MdxServerComponent
+        mdx={mdx}
+        serialize={serialize}
+        filename={filename}
+        slug={slug}
+      />
     </Prose>
   );
 }
@@ -65,12 +75,14 @@ export function MdxServerComponentProseSuspense({
   className,
   fallback,
   filename,
+  slug,
 }: {
   serialize: MdxSerializer;
   mdx: string | null | undefined;
   size?: "xs" | "sm" | "base" | "lg";
   className?: string;
   filename?: string;
+  slug?: string;
   fallback?: React.ReactNode;
 }) {
   return (
@@ -95,6 +107,7 @@ export function MdxServerComponentProseSuspense({
           className={className}
           fallback={fallback}
           filename={filename}
+          slug={slug}
         />
       </React.Suspense>
     </ErrorBoundary>

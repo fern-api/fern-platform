@@ -56,6 +56,7 @@ export async function EndpointContent({
                 />
               )
             }
+            slug={node.slug}
           >
             <EndpointUrlWithPlaygroundBaseUrl
               endpoint={endpoint}

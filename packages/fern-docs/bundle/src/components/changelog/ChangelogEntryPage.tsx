@@ -55,6 +55,7 @@ export default function ChangelogEntryPage({
         </ChangelogContentLayout>
       </HideBuiltWithFern>
       <FooterLayoutWithEditThisPageUrl
+        slug={node.slug}
         pageId={node.pageId}
         loader={loader}
         serialize={serialize}
@@ -68,17 +69,20 @@ async function FooterLayoutWithEditThisPageUrl({
   pageId,
   loader,
   serialize,
+  slug,
   bottomNavigation,
 }: {
   pageId: string;
   loader: DocsLoader;
   serialize: MdxSerializer;
+  slug: string;
   bottomNavigation: React.ReactNode;
 }) {
   // all this does is get the edit this page url from the mdx frontmatter, but hopefully the mdx was already serialized and cached
   const page = await loader.getPage(pageId);
   const mdx = await serialize(page.markdown, {
     filename: page.filename,
+    slug,
   });
   const editThisPageUrl =
     mdx?.frontmatter?.["edit-this-page-url"] ?? page.editThisPageUrl;
