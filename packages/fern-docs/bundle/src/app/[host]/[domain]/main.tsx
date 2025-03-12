@@ -115,6 +115,7 @@ export async function DocsMainContent({
         breadcrumb={breadcrumb}
         bottomNavigation={bottomNavigation}
         slug={node.slug}
+        isLandingPage={node.type === "landingPage"}
       />
     );
   }

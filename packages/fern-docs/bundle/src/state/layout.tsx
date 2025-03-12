@@ -19,6 +19,15 @@ export function useIsSidebarFixed() {
   return useAtomValue(isSidebarFixedAtom);
 }
 
+const isLandingPageAtom = atom<boolean>(false);
+
+export function SetIsLandingPage({ value }: { value: boolean }) {
+  useHydrateAtoms([[isLandingPageAtom, value]], {
+    dangerouslyForceHydrate: true,
+  });
+  return null;
+}
+
 const layoutAtom = atom<FernDocs.Layout>("guide");
 
 export function SetLayout({ value }: { value: FernDocs.Layout }) {
@@ -56,6 +65,7 @@ export function useShouldHideAsides() {
   const isSidebarFixed = useAtomValue(isSidebarFixedAtom);
   const layout = useLayout();
   const emptySidebar = useAtomValue(emptySidebarAtom);
+  const isLandingPage = useAtomValue(isLandingPageAtom);
 
   // only guides and overviews currently have table of contents
   const emptyTableOfContents =
@@ -63,7 +73,7 @@ export function useShouldHideAsides() {
     (layout !== "guide" && layout !== "overview");
 
   // page layout should supersede a fixed sidebar
-  if (layout === "custom" || layout === "page") {
+  if (layout === "custom" || layout === "page" || isLandingPage) {
     return true;
   }
 
