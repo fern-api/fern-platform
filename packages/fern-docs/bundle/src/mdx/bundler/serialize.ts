@@ -115,11 +115,6 @@ async function serializeMdxImpl(
     return filename;
   });
 
-  console.debug("filename", filename);
-  console.debug("cwd", cwd);
-  console.debug("files", Object.keys(files));
-  console.log(content);
-
   const bundled = await bundleMDX({
     source: content,
     files,
