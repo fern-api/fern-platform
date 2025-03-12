@@ -62,14 +62,13 @@ export function useShouldHideAsides() {
     useAtomValue(emptyTableOfContentsAtom) ||
     (layout !== "guide" && layout !== "overview");
 
-  // the sidebar is always fixed if the color is set
-  // so check if it's empty to determine if it should be hidden
-  if (isSidebarFixed && !emptySidebar) {
-    return false;
-  }
-
+  // page layout should supersede a fixed sidebar
   if (layout === "custom" || layout === "page") {
     return true;
+  }
+
+  if (isSidebarFixed) {
+    return false;
   }
 
   return emptySidebar && emptyTableOfContents;
