@@ -27,7 +27,6 @@ export const MdxComponent = React.memo<{
 }>(
   function MdxComponent({ code, jsxElements }) {
     const { default: Component } = getMDXExport(code, globals);
-    console.log(globals);
     return (
       <ErrorBoundary>
         <MDXProvider components={createMdxComponents(jsxElements)}>
