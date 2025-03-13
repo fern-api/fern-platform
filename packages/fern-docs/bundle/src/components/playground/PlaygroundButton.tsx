@@ -47,7 +47,7 @@ export const PlaygroundButton: FC<{
           scroll={false}
         >
           <Play className="fill-current" />
-          Play
+          Try it
         </ButtonLink>
       </FernTooltip>
     </FernTooltipProvider>
