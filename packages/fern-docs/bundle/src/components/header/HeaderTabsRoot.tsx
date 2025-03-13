@@ -20,10 +20,7 @@ export function HeaderTabsRoot({
   return (
     <Tabs.Root
       value={currentTabId}
-      className={cn(
-        "w-page-width-padded px-page-padding mx-auto hidden max-w-full select-none lg:flex lg:justify-between",
-        className
-      )}
+      className={cn("fern-header-tabs", className)}
     >
       {children}
       {showSearchBar && (

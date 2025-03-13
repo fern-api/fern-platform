@@ -20,13 +20,8 @@ export function FooterLayout({
   className?: string;
 }) {
   return (
-    <footer
-      className={cn(
-        "w-content-width mx-auto my-12 max-w-full space-y-8",
-        className
-      )}
-    >
-      <div className="flex gap-4 gap-y-8 max-sm:flex-col sm:justify-between">
+    <footer className={cn("fern-layout-footer", className)}>
+      <div className="fern-layout-footer-toolbar">
         <div>{!hideFeedback && <Feedback pathname={pathname} />}</div>
         <EditThisPageButton editThisPageUrl={editThisPageUrl} />
       </div>

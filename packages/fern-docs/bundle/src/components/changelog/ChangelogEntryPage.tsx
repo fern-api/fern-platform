@@ -32,7 +32,7 @@ export default function ChangelogEntryPage({
   children: React.ReactNode;
 }): ReactElement<any> {
   return (
-    <article className="max-w-page-width-padded px-page-padding mx-auto min-w-0 flex-1">
+    <article className="fern-layout-page">
       <SetLayout value="page" />
       <HideAsides force />
       <HideBuiltWithFern>
