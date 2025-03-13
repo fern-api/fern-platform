@@ -52,9 +52,6 @@ export async function POST(request: NextRequest) {
     .filter((result) => result.status === "fulfilled")
     .map((fulfilled) => fulfilled.value);
 
-  /**
-   * queueName must be alphanumeric, hyphen, underscore, or period
-   */
   await batchQueue({
     queueName: `domain-promoted.${VERCEL_DEPLOYMENT_ID}`,
     parallelism: 10, // slow down the rate of requests to better balance the load on Vercel
