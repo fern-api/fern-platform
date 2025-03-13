@@ -172,7 +172,7 @@ export const middleware: NextMiddleware = async (request) => {
   const authState = await getAuthState(pathname);
 
   const getResponse = () => {
-    if (authState.authed) {
+    if (authState.authed || request.nextUrl.searchParams.has("error")) {
       return rewrite(withDomain(`/dynamic/${encodeURIComponent(pathname)}`));
     }
     if (!authState.ok && authState.authorizationUrl) {
