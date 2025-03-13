@@ -106,7 +106,7 @@
     "jose": "^5.9.6",
     "jotai": "^2.12.1",
     "jotai-effect": "^1.1.6",
-    "jsonpath-plus": "10.0.7",
+    "jsonpath-plus": "10.3.0",
     "launchdarkly-react-client-sdk": "^3.6.0",
     "lucide-react": "^0.460.0",
     "mdx-bundler": "^10.1.1",
