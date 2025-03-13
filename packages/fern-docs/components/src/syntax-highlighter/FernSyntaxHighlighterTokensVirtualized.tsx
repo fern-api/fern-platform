@@ -13,10 +13,10 @@ import { ItemProps, TableVirtuoso, TableVirtuosoHandle } from "react-virtuoso";
 
 import type { Element } from "hast";
 
-import { cn } from "@fern-docs/components";
-import { FernScrollArea } from "@fern-docs/components";
 import { parseStringStyle, visit } from "@fern-docs/mdx";
 
+import { FernScrollArea } from "../FernScrollArea";
+import { cn } from "../cn";
 import {
   FernSyntaxHighlighterTokensProps,
   ScrollToHandle,
@@ -103,6 +103,7 @@ export const FernSyntaxHighlighterTokensVirtualized = memo(
       tokens,
       maxLines,
       wordWrap,
+      template,
     } = props;
 
     const virtuosoRef = useRef<TableVirtuosoHandle>(null);
@@ -195,11 +196,11 @@ export const FernSyntaxHighlighterTokensVirtualized = memo(
             </td>
           )}
           <td className="code-block-line-content">
-            <HastToJSX hast={line} />
+            <HastToJSX hast={line} template={template} />
           </td>
         </>
       ),
-      [gutterCli, plaintext]
+      [gutterCli, plaintext, template]
     );
 
     return (

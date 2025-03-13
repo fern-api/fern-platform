@@ -13,6 +13,7 @@ import {
 } from "shiki";
 
 import { additionalLanguages } from "./syntaxes";
+import { templateTransformer } from "./transformers/template";
 
 let highlighter: Highlighter;
 
@@ -80,16 +81,18 @@ export interface HighlightedTokens {
 export function highlightTokens(
   highlighter: Highlighter,
   code: string,
-  rawLang: string
+  lang: string,
+  templateVariables?: Set<string>
 ): HighlightedTokens {
   code = trimCode(code);
-  const lang = parseLang(rawLang);
+  lang = parseLang(lang);
   const hast = highlighter.codeToHast(code, {
     lang,
     themes: {
       light: THEMES.light[lang] ?? THEMES.light[DEFAULT],
       dark: THEMES.dark[lang] ?? THEMES.dark[DEFAULT],
     },
+    transformers: [templateTransformer(templateVariables)],
   });
   return { code, lang, hast };
 }

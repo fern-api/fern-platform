@@ -1,6 +1,7 @@
 import React, { PropsWithChildren } from "react";
 
-import { CopyToClipboardButton, cn } from "@fern-docs/components";
+import { CopyToClipboardButton } from "../CopyToClipboardButton";
+import { cn } from "../cn";
 
 type CodeBlockWithClipboardButtonProps = {
   code: string | (() => string | Promise<string>);

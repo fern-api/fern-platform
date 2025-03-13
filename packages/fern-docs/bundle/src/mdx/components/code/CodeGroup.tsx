@@ -5,7 +5,7 @@ import * as Tabs from "@radix-ui/react-tabs";
 
 import { cleanLanguage } from "@fern-api/fdr-sdk/api-definition";
 import { CopyToClipboardButton, cn } from "@fern-docs/components";
-import { FernSyntaxHighlighter } from "@fern-docs/syntax-highlighter";
+import { FernSyntaxHighlighter } from "@fern-docs/components/syntax-highlighter";
 
 import { HorizontalOverflowMask } from "@/components/HorizontalOverflowMask";
 import { getLanguageDisplayName } from "@/components/api-reference/examples/code-example";
@@ -14,11 +14,22 @@ import { useProgrammingLanguage } from "@/state/language";
 
 import { unwrapChildren } from "../../common/unwrap-children";
 import { CodeBlock, toSyntaxHighlighterProps } from "./CodeBlock";
+import { Template, applyTemplates, useTemplate } from "./Template";
 
-export function CodeGroup({ children }: { children: React.ReactNode }) {
+export function CodeGroup({
+  children,
+  template: templateProp,
+  tooltips: tooltipsProp,
+}: {
+  children: React.ReactNode;
+  template?: Record<string, string>;
+  tooltips?: Record<string, React.ReactNode>;
+}) {
   const isDarkCode = useIsDarkCode();
 
   const items = unwrapChildren(children, CodeBlock);
+  const template = { ...useTemplate().template, ...templateProp };
+  const tooltips = { ...useTemplate().tooltips, ...tooltipsProp };
 
   const [selectedTabIndex, setSelectedTabIndex] = useState(0);
   const [selectedLanguage, setSelectedLanguage] = useProgrammingLanguage();
@@ -86,7 +97,11 @@ export function CodeGroup({ children }: { children: React.ReactNode }) {
   };
 
   if (items.length === 1 && items[0] != null) {
-    return items[0];
+    return (
+      <Template data={template} tooltips={tooltips}>
+        {items[0]}
+      </Template>
+    );
   }
 
   return (
@@ -121,7 +136,12 @@ export function CodeGroup({ children }: { children: React.ReactNode }) {
 
           <CopyToClipboardButton
             className="ml-2 mr-1"
-            content={items[selectedTabIndex]?.props.code ?? ""}
+            content={() =>
+              applyTemplates(
+                items[selectedTabIndex]?.props.code ?? "",
+                template
+              )
+            }
           />
         </div>
       </div>
@@ -132,7 +152,13 @@ export function CodeGroup({ children }: { children: React.ReactNode }) {
           className="rounded-b-[inherit] rounded-t-none"
           asChild
         >
-          <FernSyntaxHighlighter {...toSyntaxHighlighterProps(item.props)} />
+          <FernSyntaxHighlighter
+            {...toSyntaxHighlighterProps({
+              ...item.props,
+              template,
+              tooltips,
+            })}
+          />
         </Tabs.Content>
       ))}
     </Tabs.Root>
