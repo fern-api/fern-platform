@@ -129,7 +129,7 @@ export async function POST(req: NextRequest) {
     },
     onFinish: async (e) => {
       const end = Date.now();
-      await track("ask_ai", {
+      track("ask_ai", {
         languageModel: languageModel.modelId,
         embeddingModel: embeddingModel.modelId,
         durationMs: end - start,

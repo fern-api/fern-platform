@@ -94,7 +94,7 @@ export async function POST(req: NextRequest): Promise<Response> {
     },
     onFinish: async (e) => {
       const end = Date.now();
-      await track("ask_ai_suggestions", {
+      track("ask_ai_suggestions", {
         languageModel: languageModel.modelId,
         durationMs: end - start,
         domain,

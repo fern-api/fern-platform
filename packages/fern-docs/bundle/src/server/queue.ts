@@ -81,6 +81,9 @@ export async function batchQueue<TBody = unknown>({
   disableVercelPreviewDeployment = false,
   ...baseRequest
 }: {
+  /**
+   * queueName must be alphanumeric, hyphen, underscore, or period
+   */
   queueName?: string;
   parallelism?: number;
   endpoint: `/api/fern-docs/${string}`;
@@ -99,6 +102,9 @@ export async function batchQueue<TBody = unknown>({
      */
     basepath?: string;
 
+    /**
+     * deduplicationId must be alphanumeric, hyphen, underscore, or period
+     */
     deduplicationId?: string;
   }[];
   body?: TBody;
