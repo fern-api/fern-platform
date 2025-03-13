@@ -3,7 +3,7 @@ import React, { PropsWithChildren } from "react";
 import { CopyToClipboardButton, cn } from "@fern-docs/components";
 
 type CodeBlockWithClipboardButtonProps = {
-  code: string;
+  code: string | (() => string | Promise<string>);
   className?: string;
 };
 

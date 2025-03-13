@@ -74,7 +74,10 @@ export function CodeBlock(props: {
                 </span>
               </div>
             </div>
-            <CopyToClipboardButton className="ml-2 mr-1" content={code} />
+            <CopyToClipboardButton
+              className="ml-2 mr-1"
+              content={() => applyTemplates(code, props.templates)}
+            />
           </div>
         </div>
         <FernSyntaxHighlighter
@@ -87,7 +90,7 @@ export function CodeBlock(props: {
 
   return (
     <CodeBlockWithClipboardButton
-      code={code}
+      code={() => applyTemplates(code, props.templates)}
       className={cn({ "bg-card-solid dark": isDarkCode }, className)}
     >
       <FernSyntaxHighlighter {...toSyntaxHighlighterProps(props)} />
