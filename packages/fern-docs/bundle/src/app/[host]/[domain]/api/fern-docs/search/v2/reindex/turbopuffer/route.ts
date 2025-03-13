@@ -15,6 +15,7 @@ import {
   openaiApiKey,
   turbopufferApiKey,
 } from "@/server/env-variables";
+import { postToEngineeringNotifs } from "@/server/slack";
 import { Gate, withBasicTokenAnonymous } from "@/server/withRbac";
 import { getDocsDomainEdge } from "@/server/xfernhost/edge";
 
@@ -93,7 +94,7 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
 
     const end = Date.now();
 
-    await track("turbopuffer_reindex", {
+    track("turbopuffer_reindex", {
       embeddingModel: embeddingModel.modelId,
       durationMs: end - start,
       domain,
@@ -110,12 +111,16 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
   } catch (error) {
     console.error(error);
 
-    await track("turbopuffer_reindex_error", {
+    track("turbopuffer_reindex_error", {
       embeddingModel: embeddingModel.modelId,
       domain,
       namespace,
       error: String(error),
     });
+
+    postToEngineeringNotifs(
+      `:rotating_light: [TURBOPUFFER] Failed to reindex ${domain} with the following error: ${String(error)}`
+    );
 
     return NextResponse.json("Internal server error", { status: 500 });
   }

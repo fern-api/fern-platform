@@ -55,6 +55,7 @@ import { generateFernColorPalette } from "./generateFernColors";
 import { FernFonts, generateFonts } from "./generateFonts";
 import { getDocsUrlMetadata } from "./getDocsUrlMetadata";
 import { loadWithUrl as uncachedLoadWithUrl } from "./loadWithUrl";
+import { postToEngineeringNotifs } from "./slack";
 import { FernColorTheme, FernLayoutConfig, FileData } from "./types";
 import { cleanBasePath } from "./utils/clean-base-path";
 import { pruneWithAuthState } from "./withRbac";
@@ -231,10 +232,20 @@ export const getMetadata = cache(
         error
       );
     }
-    const metadata = await getMetadataFromResponse(domain, loadWithUrl(domain));
-    kvSet(domain, "metadata", metadata);
-    console.log("[getMetadata] cache miss:", metadata);
-    return metadata;
+    try {
+      const metadata = await getMetadataFromResponse(
+        domain,
+        loadWithUrl(domain)
+      );
+      kvSet(domain, "metadata", metadata);
+      console.log("[getMetadata] cache miss:", metadata);
+      return metadata;
+    } catch (error) {
+      postToEngineeringNotifs(
+        `:rotating_light: Failed to get metadata for ${domain} with the following error: ${String(error)}`
+      );
+      throw error;
+    }
   }
 );
 

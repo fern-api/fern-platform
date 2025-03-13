@@ -52,15 +52,18 @@ export async function POST(request: NextRequest) {
     .filter((result) => result.status === "fulfilled")
     .map((fulfilled) => fulfilled.value);
 
+  /**
+   * queueName must be alphanumeric, hyphen, underscore, or period
+   */
   await batchQueue({
-    queueName: `domain-promoted:${VERCEL_DEPLOYMENT_ID}`,
+    queueName: `domain-promoted.${VERCEL_DEPLOYMENT_ID}`,
     parallelism: 10, // slow down the rate of requests to better balance the load on Vercel
-    endpoint: "/api/fern-docs/revalidate",
+    endpoint: "/api/fern-docs/revalidate?reindex=false",
     requests: metadatas.map((metadata) => ({
       host: metadata.domain,
       domain: metadata.domain,
       basepath: metadata.basePath,
-      deduplicationId: `revalidate:${VERCEL_DEPLOYMENT_ID}:${metadata.domain}`,
+      deduplicationId: `revalidate.${VERCEL_DEPLOYMENT_ID}.${metadata.domain}`,
     })),
     method: "GET",
     retries: 1,

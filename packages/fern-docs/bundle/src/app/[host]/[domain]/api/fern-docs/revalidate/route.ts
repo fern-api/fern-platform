@@ -76,7 +76,11 @@ export async function GET(
         ]);
 
         let reindexPromise: Promise<void> | undefined;
-        if (!metadata.isPreview) {
+        if (
+          !metadata.isPreview &&
+          // reindex unless explicitly disabled
+          req.nextUrl.searchParams.get("reindex") !== "false"
+        ) {
           reindexPromise = reindex(docs, host, domain, edgeFlags)
             .then((services) => {
               controller.enqueue(
