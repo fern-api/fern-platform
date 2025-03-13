@@ -4,7 +4,7 @@ import {
   CodeBlockWithClipboardButton,
   FernSyntaxHighlighter,
   type FernSyntaxHighlighterProps,
-} from "@fern-docs/syntax-highlighter";
+} from "@fern-docs/components/syntax-highlighter";
 
 export const CodeBlock: FC<FernSyntaxHighlighterProps> = ({
   className,

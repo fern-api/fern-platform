@@ -1,9 +1,16 @@
 "use client";
 
-import { template } from "es-toolkit/compat";
 import React from "react";
 
-const TemplateCtx = React.createContext<Record<string, string>>({});
+import { template } from "es-toolkit/compat";
+
+const TemplateCtx = React.createContext<{
+  template: Record<string, string>;
+  tooltips: Record<string, React.ReactNode>;
+}>({
+  template: {},
+  tooltips: {},
+});
 
 /**
  * provides templates to the code block component
@@ -11,11 +18,19 @@ const TemplateCtx = React.createContext<Record<string, string>>({});
 export function Template({
   children,
   data,
+  tooltips,
 }: {
   children: React.ReactNode;
-  data: Record<string, string>;
+  data?: Record<string, string>;
+  tooltips?: Record<string, React.ReactNode>;
 }) {
-  return <TemplateCtx.Provider value={data}>{children}</TemplateCtx.Provider>;
+  return (
+    <TemplateCtx.Provider
+      value={{ template: data ?? {}, tooltips: tooltips ?? {} }}
+    >
+      {children}
+    </TemplateCtx.Provider>
+  );
 }
 
 export function useTemplate() {

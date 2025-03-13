@@ -1,13 +1,11 @@
 import React from "react";
 
-import { template } from "es-toolkit/compat";
-
 import { cleanLanguage } from "@fern-api/fdr-sdk/api-definition";
 import { CopyToClipboardButton, cn } from "@fern-docs/components";
 import {
   CodeBlockWithClipboardButton,
   FernSyntaxHighlighter,
-} from "@fern-docs/syntax-highlighter";
+} from "@fern-docs/components/syntax-highlighter";
 
 import { useIsDarkCode } from "@/state/dark-code";
 
@@ -43,7 +41,11 @@ export function CodeBlock(props: {
   /**
    * replaces handlebars in the code with the given values, i.e. {{API_KEY}} -> "1234567890"
    */
-  templates?: Record<string, string>;
+  template?: Record<string, string>;
+  /**
+   * enables rendering tooltips on handlebars in the code
+   */
+  tooltips?: Record<string, React.ReactNode>;
 }) {
   const {
     className,
@@ -51,11 +53,18 @@ export function CodeBlock(props: {
     title,
     filename,
     language = "plaintext",
+    template: templateProp,
+    tooltips: tooltipsProp,
   } = props;
   const isDarkCode = useIsDarkCode();
 
   // merge context templates with the ones passed in
-  props.templates = { ...useTemplate(), ...props.templates };
+  const template = { ...useTemplate().template, ...templateProp };
+  const tooltips = { ...useTemplate().tooltips, ...tooltipsProp };
+
+  if (!code) {
+    return null;
+  }
 
   if (title || filename) {
     return (
@@ -76,12 +85,12 @@ export function CodeBlock(props: {
             </div>
             <CopyToClipboardButton
               className="ml-2 mr-1"
-              content={() => applyTemplates(code, props.templates)}
+              content={() => applyTemplates(code, template)}
             />
           </div>
         </div>
         <FernSyntaxHighlighter
-          {...toSyntaxHighlighterProps(props)}
+          {...toSyntaxHighlighterProps({ ...props, template, tooltips })}
           className="rounded-b-[inherit]"
         />
       </div>
@@ -90,10 +99,12 @@ export function CodeBlock(props: {
 
   return (
     <CodeBlockWithClipboardButton
-      code={() => applyTemplates(code, props.templates)}
+      code={() => applyTemplates(code, template)}
       className={cn({ "bg-card-solid dark": isDarkCode }, className)}
     >
-      <FernSyntaxHighlighter {...toSyntaxHighlighterProps(props)} />
+      <FernSyntaxHighlighter
+        {...toSyntaxHighlighterProps({ ...props, template, tooltips })}
+      />
     </CodeBlockWithClipboardButton>
   );
 }
@@ -106,8 +117,10 @@ export function toSyntaxHighlighterProps(
     language: cleanLanguage(props.language ?? "plaintext"),
     highlightLines: typeof highlight === "number" ? [highlight] : highlight,
     highlightStyle: props.focus != null ? "focus" : "highlight",
-    code: applyTemplates(props.code ?? "", props.templates),
+    code: props.code ?? "",
     maxLines: props.maxLines ?? 20,
     wordWrap: props.wordWrap,
+    template: props.template,
+    tooltips: props.tooltips,
   };
 }

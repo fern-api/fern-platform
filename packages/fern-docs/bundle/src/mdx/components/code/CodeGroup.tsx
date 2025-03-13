@@ -5,7 +5,7 @@ import * as Tabs from "@radix-ui/react-tabs";
 
 import { cleanLanguage } from "@fern-api/fdr-sdk/api-definition";
 import { CopyToClipboardButton, cn } from "@fern-docs/components";
-import { FernSyntaxHighlighter } from "@fern-docs/syntax-highlighter";
+import { FernSyntaxHighlighter } from "@fern-docs/components/syntax-highlighter";
 
 import { HorizontalOverflowMask } from "@/components/HorizontalOverflowMask";
 import { getLanguageDisplayName } from "@/components/api-reference/examples/code-example";
@@ -14,19 +14,22 @@ import { useProgrammingLanguage } from "@/state/language";
 
 import { unwrapChildren } from "../../common/unwrap-children";
 import { CodeBlock, toSyntaxHighlighterProps } from "./CodeBlock";
-import { applyTemplates, Template, useTemplate } from "./Template";
+import { Template, applyTemplates, useTemplate } from "./Template";
 
 export function CodeGroup({
   children,
-  templates,
+  template: templateProp,
+  tooltips: tooltipsProp,
 }: {
   children: React.ReactNode;
-  templates?: Record<string, string>;
+  template?: Record<string, string>;
+  tooltips?: Record<string, React.ReactNode>;
 }) {
   const isDarkCode = useIsDarkCode();
 
   const items = unwrapChildren(children, CodeBlock);
-  templates = { ...useTemplate(), ...templates };
+  const template = { ...useTemplate().template, ...templateProp };
+  const tooltips = { ...useTemplate().tooltips, ...tooltipsProp };
 
   const [selectedTabIndex, setSelectedTabIndex] = useState(0);
   const [selectedLanguage, setSelectedLanguage] = useProgrammingLanguage();
@@ -94,7 +97,11 @@ export function CodeGroup({
   };
 
   if (items.length === 1 && items[0] != null) {
-    return <Template data={templates}>{items[0]}</Template>;
+    return (
+      <Template data={template} tooltips={tooltips}>
+        {items[0]}
+      </Template>
+    );
   }
 
   return (
@@ -132,7 +139,7 @@ export function CodeGroup({
             content={() =>
               applyTemplates(
                 items[selectedTabIndex]?.props.code ?? "",
-                templates
+                template
               )
             }
           />
@@ -146,7 +153,11 @@ export function CodeGroup({
           asChild
         >
           <FernSyntaxHighlighter
-            {...toSyntaxHighlighterProps({ ...item.props, templates })}
+            {...toSyntaxHighlighterProps({
+              ...item.props,
+              template,
+              tooltips,
+            })}
           />
         </Tabs.Content>
       ))}

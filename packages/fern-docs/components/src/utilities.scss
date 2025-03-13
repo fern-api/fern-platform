@@ -103,7 +103,7 @@
 }
 
 @utility fern-collapsible {
-  &[data-state="open"] {
+  [data-state="open"] {
     animation: collapsible-open 0.18s var(--ease-collapse) none;
 
     .fern-collapsible-child {
@@ -112,7 +112,7 @@
     }
   }
 
-  &[data-state="closed"] {
+  [data-state="closed"] {
     animation: collapsible-closed 0.18s var(--ease-collapse) none;
 
     .fern-collapsible-child {

@@ -124,7 +124,7 @@ export const FernSelectItem = forwardRef<
   return (
     <Select.Item
       className={cn(
-        "text-body data-[disabled]:text-(color:--grayscale-a10) relative flex h-8 select-none items-center rounded-[3px] pl-2 pr-4 text-sm leading-none data-[disabled]:pointer-events-none data-[highlighted]:outline-none",
+        "text-body data-[disabled]:text-(color:--grayscale-a10) rounded-3/4 relative flex h-8 select-none items-center pl-2 pr-4 text-sm leading-none data-[disabled]:pointer-events-none data-[highlighted]:outline-none",
         {
           "data-[highlighted]:bg-(color:--grayscale-a3)":
             intent === "none" || intent === "primary",

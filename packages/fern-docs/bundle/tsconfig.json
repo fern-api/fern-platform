@@ -41,9 +41,6 @@
       "path": "../search-server"
     },
     {
-      "path": "../syntax-highlighter"
-    },
-    {
       "path": "../utils"
     }
   ]

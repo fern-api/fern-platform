@@ -18,7 +18,6 @@
     "@fern-api/ui-core-utils": "workspace:*",
     "@fern-docs/components": "workspace:*",
     "@fern-docs/search-server": "workspace:*",
-    "@fern-docs/syntax-highlighter": "workspace:*",
     "@fern-ui/react-commons": "workspace:*",
     "@radix-ui/primitive": "^1.1.1",
     "@radix-ui/react-compose-refs": "^1.1.1",
