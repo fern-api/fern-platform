@@ -30,7 +30,9 @@ import {
 import { Card, CardGroup } from "./card";
 import { ClientLibraries } from "./client-libraries";
 import { CodeBlock } from "./code/CodeBlock";
+import { CodeBlocks } from "./code/CodeBlocks";
 import { CodeGroup } from "./code/CodeGroup";
+import { Template } from "./code/Template";
 import { Column, ColumnGroup } from "./columns";
 import { Feature } from "./feature";
 import { Frame } from "./frame";
@@ -79,6 +81,7 @@ const FERN_COMPONENTS = {
   StepGroup,
   Tab,
   TabGroup,
+  Template,
   Tooltip,
 
   // callout aliases
@@ -96,6 +99,13 @@ const FERN_COMPONENTS = {
 const INTERNAL_COMPONENTS = {
   ErrorBoundary,
   ElevenLabsWaveform,
+
+  /**
+   * deprecated but kept for backwards compatibility
+   */
+  Cards: CardGroup,
+  CodeBlocks,
+  Tabs: TabGroup,
 };
 
 const HTML_COMPONENTS = {
