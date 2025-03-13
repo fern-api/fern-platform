@@ -31,7 +31,6 @@ import {
   PageId,
   Slug,
   TypeId,
-  slugjoin,
 } from "@fern-api/fdr-sdk/navigation";
 import { CONTINUE, SKIP } from "@fern-api/fdr-sdk/traversers";
 import { isNonNullish, isPlainObject } from "@fern-api/ui-core-utils";
@@ -46,8 +45,6 @@ import {
   DEFAULT_PAGE_WIDTH,
   DEFAULT_SIDEBAR_WIDTH,
   EdgeFlags,
-  addLeadingSlash,
-  removeTrailingSlash,
   withoutStaging,
 } from "@fern-docs/utils";
 
@@ -59,6 +56,7 @@ import { FernFonts, generateFonts } from "./generateFonts";
 import { getDocsUrlMetadata } from "./getDocsUrlMetadata";
 import { loadWithUrl as uncachedLoadWithUrl } from "./loadWithUrl";
 import { FernColorTheme, FernLayoutConfig, FileData } from "./types";
+import { cleanBasePath } from "./utils/clean-base-path";
 import { pruneWithAuthState } from "./withRbac";
 
 const loadWithUrl = uncachedLoadWithUrl;
@@ -195,14 +193,6 @@ function kvSet(domain: string, key: string, value: unknown) {
 const cachedGetEdgeFlags = cache(async (domain: string) => {
   return await getEdgeFlags(domain);
 });
-
-export function cleanBasePath(basePath: string | undefined) {
-  const basepath = removeTrailingSlash(addLeadingSlash(slugjoin(basePath)));
-  if (basepath === "/") {
-    return "";
-  }
-  return basepath;
-}
 
 export const getMetadataFromResponse = async (
   domain: string,
