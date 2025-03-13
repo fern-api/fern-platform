@@ -1,5 +1,7 @@
 import React from "react";
 
+import { template } from "es-toolkit/compat";
+
 import { cleanLanguage } from "@fern-api/fdr-sdk/api-definition";
 import { CopyToClipboardButton, cn } from "@fern-docs/components";
 import {
@@ -8,6 +10,8 @@ import {
 } from "@fern-docs/syntax-highlighter";
 
 import { useIsDarkCode } from "@/state/dark-code";
+
+import { useTemplate } from "./Template";
 
 export function CodeBlock(props: {
   className?: string;
@@ -36,6 +40,10 @@ export function CodeBlock(props: {
   filename?: string;
   maxLines?: number;
   wordWrap?: boolean;
+  /**
+   * replaces handlebars in the code with the given values, i.e. {{API_KEY}} -> "1234567890"
+   */
+  templates?: Record<string, string>;
 }) {
   const {
     className,
@@ -45,6 +53,9 @@ export function CodeBlock(props: {
     language = "plaintext",
   } = props;
   const isDarkCode = useIsDarkCode();
+
+  // merge context templates with the ones passed in
+  props.templates = { ...useTemplate(), ...props.templates };
 
   if (title || filename) {
     return (
@@ -92,8 +103,21 @@ export function toSyntaxHighlighterProps(
     language: cleanLanguage(props.language ?? "plaintext"),
     highlightLines: typeof highlight === "number" ? [highlight] : highlight,
     highlightStyle: props.focus != null ? "focus" : "highlight",
-    code: props.code ?? "",
+    code: applyTemplates(props.code ?? "", props.templates),
     maxLines: props.maxLines ?? 20,
     wordWrap: props.wordWrap,
   };
+}
+
+export function applyTemplates(code: string, data?: Record<string, string>) {
+  if (!data || Object.keys(data).length === 0) {
+    return code;
+  }
+
+  try {
+    return template(code, { interpolate: /{{([^}]+)}}/g })(data);
+  } catch (error) {
+    console.error(error);
+    return code;
+  }
 }
