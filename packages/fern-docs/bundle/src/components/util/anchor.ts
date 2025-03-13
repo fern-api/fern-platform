@@ -29,6 +29,15 @@ export function scrollToRoute(route: string, smooth = false): boolean {
     console.debug(`scrolling to route: ${route}`);
   }
   const node = getRouteNodeWithAnchor(route);
-  node?.scrollIntoView({ behavior: smooth ? "smooth" : "auto" });
+  node?.scrollIntoView({
+    behavior: smooth ? "smooth" : "auto",
+    block: "start",
+  });
+  setTimeout(() => {
+    node?.scrollIntoView({
+      behavior: smooth ? "smooth" : "auto",
+      block: "start",
+    });
+  }, 500);
   return node != null;
 }

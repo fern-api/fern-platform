@@ -35,9 +35,11 @@ const transition = {
 export function MobileMenu({
   children,
   className,
+  ...props
 }: {
   children: React.ReactNode;
   className?: string;
+  "data-theme"?: string;
 }) {
   const [open, setOpen] = useIsDismissableSidebarOpen();
 
@@ -200,7 +202,7 @@ export function MobileMenu({
             ])
       }
     >
-      <Portal className="pointer-events-none fixed inset-0">
+      <Portal className="pointer-events-none fixed inset-0" {...props}>
         <AnimatePresence
           mode="popLayout"
           onExitComplete={() => {
@@ -214,7 +216,7 @@ export function MobileMenu({
           {open && (
             <motion.div
               layoutRoot
-              className="bg-background/70 pointer-events-auto fixed inset-0 top-[calc(var(--header-height)+1px)] z-30"
+              className="fern-mobile-menu-overlay"
               key="overlay"
               style={{ opacity, touchAction: "none" }}
               initial={{ opacity: 0 }}
@@ -234,10 +236,8 @@ export function MobileMenu({
             <motion.div
               layoutRoot
               id="fern-sidebar"
-              className={cn(
-                "sm:w-sidebar-width fern-background-image border-border-concealed pointer-events-auto fixed inset-y-0 right-0 top-[calc(var(--header-height)+1px)] z-40 flex w-full max-w-[calc(100dvw-3rem)] flex-col border-l backdrop-blur-xl",
-                className
-              )}
+              data-viewport="mobile"
+              className={cn("fern-background-image", className)}
               key="sidebar"
               onPointerDown={(event) => dragControls.start(event)}
               onDragStart={() => {

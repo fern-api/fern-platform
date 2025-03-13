@@ -10,17 +10,31 @@ import { MobileMenu } from "./mobile-menu";
 export function SidebarNav({
   children,
   className,
+  mobileClassName,
+  desktopClassName,
+  ...props
 }: {
   children: React.ReactNode;
   className?: string;
+  mobileClassName?: string;
+  desktopClassName?: string;
+  "data-theme"?: string;
 }) {
   const isDesktop = useIsDesktop();
 
   if (!isDesktop) {
-    return <MobileMenu className={className}>{children}</MobileMenu>;
+    return (
+      <MobileMenu className={cn(className, mobileClassName)} {...props}>
+        {children}
+      </MobileMenu>
+    );
   }
 
-  return <DesktopMenu className={className}>{children}</DesktopMenu>;
+  return (
+    <DesktopMenu className={cn(className, desktopClassName)} {...props}>
+      {children}
+    </DesktopMenu>
+  );
 }
 
 function DesktopMenu({
@@ -36,28 +50,13 @@ function DesktopMenu({
       <HideAsides />
       <aside
         id="fern-sidebar"
+        data-viewport="desktop"
         data-state={fixed ? "fixed" : "sticky"}
-        className={cn(
-          "pointer-events-auto",
-          "z-30",
-          "lg:flex lg:shrink-0 lg:translate-x-0 lg:flex-col",
-          "pl-(--aside-offset) w-(--sticky-aside-width)",
-          !fixed &&
-            "sticky h-fit max-h-[calc(100dvh-var(--header-height))] shrink-0 border-r-0",
-          fixed &&
-            "border-border-concealed bg-(color:--sidebar-background) fixed bottom-0 left-0 border-r backdrop-blur-xl",
-          "top-(--header-height) hidden",
-          className
-        )}
+        className={className}
       >
         {children}
       </aside>
-      {fixed && (
-        <aside
-          id="fern-sidebar-spacer"
-          className="w-(--sticky-aside-width) pointer-events-none hidden lg:block lg:shrink-0"
-        />
-      )}
+      {fixed && <aside id="fern-sidebar-spacer" />}
     </>
   );
 }

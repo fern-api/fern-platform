@@ -17,17 +17,12 @@ export function ChangelogContentLayout({
   return (
     <Component
       {...props}
-      className={cn(
-        "max-w-content-wide-width relative mx-auto grid w-full grid-cols-1 gap-4 lg:grid-cols-[1fr_minmax(0,var(--content-width))_1fr]",
-        props.className
-      )}
+      className={cn("fern-changelog-content", props.className)}
     >
-      <aside className="sticky top-[calc(var(--header-height)+var(--spacing)*4)] hidden h-fit lg:flex lg:justify-end">
-        {stickyContent}
-      </aside>
+      <aside>{stickyContent}</aside>
       <div className="max-w-content-width mx-auto w-full">
         {stickyContent != null && (
-          <div className="mb-4 lg:hidden">{stickyContent}</div>
+          <div className="eyebrow">{stickyContent}</div>
         )}
         {children}
       </div>

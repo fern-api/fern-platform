@@ -125,7 +125,7 @@ export function CodeGroup({
                     value={idx.toString()}
                     className="data-[state=active]:shadow-(color:--accent) group flex min-h-10 items-center px-2 py-1.5 data-[state=active]:shadow-[inset_0_-2px_0_0_rgba(0,0,0,0.1)]"
                   >
-                    <span className="text-(color:--grayscale-a11) group-data-[state=active]:text-default group-hover:bg-(color:--grayscale-a3) rounded-1 whitespace-nowrap px-2 py-1 text-sm group-data-[state=active]:font-semibold">
+                    <span className="text-(color:--grayscale-a11) group-data-[state=active]:text-body group-hover:bg-(color:--grayscale-a3) rounded-1 whitespace-nowrap px-2 py-1 text-sm group-data-[state=active]:font-semibold">
                       {title ?? getDisplayNameWithCount(language, items, idx)}
                     </span>
                   </Tabs.Trigger>

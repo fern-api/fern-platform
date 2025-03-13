@@ -786,8 +786,10 @@ const getLayout = cache(async (domain: string) => {
         calcDefaultPageWidth(sidebarWidth, contentWidth));
   const headerHeight =
     toPx(config.layout?.headerHeight) ?? DEFAULT_HEADER_HEIGHT;
-  const tabsPlacement = config.layout?.tabsPlacement ?? "SIDEBAR";
-  const searchbarPlacement = config.layout?.searchbarPlacement ?? "HEADER";
+  const tabsPlacement =
+    config.layout?.tabsPlacement ?? defaultTabsPlacement(domain);
+  const searchbarPlacement =
+    config.layout?.searchbarPlacement ?? defaultSearchbarPlacement(domain);
   return {
     logoHeight,
     sidebarWidth,
@@ -799,6 +801,20 @@ const getLayout = cache(async (domain: string) => {
     isHeaderDisabled: config.layout?.disableHeader ?? false,
   };
 });
+
+function defaultTabsPlacement(domain: string) {
+  if (domain.includes("cohere")) {
+    return "HEADER";
+  }
+  return "SIDEBAR";
+}
+
+function defaultSearchbarPlacement(domain: string) {
+  if (domain.includes("cohere")) {
+    return "HEADER_TABS";
+  }
+  return "HEADER";
+}
 
 /**
  * The default page width should be at least 1408px (88rem), and should be able to fit 1 content + 2 sidebars

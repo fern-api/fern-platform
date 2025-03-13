@@ -28,6 +28,7 @@ import { DarkCode } from "@/state/dark-code";
 import { Domain } from "@/state/domain";
 import { LaunchDarklyInfo } from "@/state/feature-flags";
 import { DefaultLanguage } from "@/state/language";
+import { SetLogoText } from "@/state/logo-text";
 import { RootNodeProvider, SetBasePath } from "@/state/navigation";
 import {
   getAllSidebarRootNodes,
@@ -98,6 +99,8 @@ export default async function Layout({
       >
         <Domain value={domain} />
         <SetBasePath value={basePath} />
+        {/** HACKHACK: this is a hack to set the logo text to "Docs" for Cohere, this needs to be moved into docs.yml */}
+        <SetLogoText text={domain.includes("cohere") ? "Docs" : undefined} />
         {config.defaultLanguage != null && (
           <DefaultLanguage language={config.defaultLanguage} />
         )}
