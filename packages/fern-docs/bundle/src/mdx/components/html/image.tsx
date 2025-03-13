@@ -10,6 +10,8 @@ import {
 } from "react";
 import Zoom from "react-medium-image-zoom";
 
+import { cn } from "@fern-docs/components";
+
 import { FernImage } from "@/components/FernImage";
 import { useFrontmatter } from "@/components/contexts/frontmatter";
 import { toPixelValue } from "@/components/util/to-pixel-value";
@@ -75,7 +77,7 @@ export const Image = forwardRef<
       {...rest}
       style={{ ...style, ...__assigned_imageSize }}
       alt={rest.alt ?? ""}
-      className="mx-auto"
+      className={cn("mx-auto", props.className)}
     />
   );
 
