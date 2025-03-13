@@ -1,4 +1,4 @@
-import { cleanBasePath } from "./docs-loader";
+import { cleanBasePath } from "./clean-base-path";
 
 vi.mock("server-only", () => ({}));
 
