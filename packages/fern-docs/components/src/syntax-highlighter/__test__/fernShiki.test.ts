@@ -1,6 +1,7 @@
-import { visit } from "unist-util-visit";
-import { getHighlighterInstance, highlightTokens } from "../fernShiki";
 import { Root } from "hast";
+import { visit } from "unist-util-visit";
+
+import { getHighlighterInstance, highlightTokens } from "../fernShiki";
 
 describe("fernShiki", () => {
   it("should highlight diff", async () => {
@@ -36,7 +37,7 @@ describe("fernShiki", () => {
 function collectTemplates(hast: Root): string[] {
   const templates: string[] = [];
   visit(hast, "element", (node) => {
-    if (node.properties && node.properties["data-template"]) {
+    if (node.properties?.["data-template"]) {
       const template = node.properties["data-template"];
       if (typeof template === "string") {
         templates.push(template);
@@ -162,5 +163,82 @@ describe("template", () => {
     const templates = collectTemplates(result.hast);
     expect(templates).toContain("name");
     expect(templates.length).toBe(1);
+  });
+
+  it("should preserve text surrounding a template in TypeScript", async () => {
+    const highlighter = await getHighlighterInstance("typescript");
+    const code = `console.log("prefix{{var}}suffix")`;
+    const result = highlightTokens(
+      highlighter,
+      code,
+      "typescript",
+      new Set(["var"])
+    );
+
+    const templates = collectTemplates(result.hast);
+    expect(templates).toContain("var");
+    expect(templates.length).toBe(1);
+
+    let textContent = "";
+    visit(result.hast, "text", (node) => {
+      textContent += node.value;
+    });
+
+    expect(textContent).toContain("console.log");
+    expect(textContent).toContain("prefix");
+    expect(textContent).toContain("suffix");
+  });
+
+  it("should preserve text surrounding a template in JavaScript string literals", async () => {
+    const highlighter = await getHighlighterInstance("javascript");
+    const code = `const message = \`Hello, {{name}}! Welcome to {{location}}.\``;
+    const result = highlightTokens(
+      highlighter,
+      code,
+      "javascript",
+      new Set(["name", "location"])
+    );
+
+    const templates = collectTemplates(result.hast);
+    expect(templates).toContain("name");
+    expect(templates).toContain("location");
+    expect(templates.length).toBe(2);
+
+    let textContent = "";
+    visit(result.hast, "text", (node) => {
+      textContent += node.value;
+    });
+
+    expect(textContent).toContain("const message");
+    expect(textContent).toContain("Hello,");
+    expect(textContent).toContain("Welcome to");
+  });
+
+  it("should preserve surrounding text in multiline code blocks", async () => {
+    const highlighter = await getHighlighterInstance("typescript");
+    const code = `function greet() {
+  // This function uses a template variable
+  return \`Hello, {{name}}!\`;
+}`;
+    const result = highlightTokens(
+      highlighter,
+      code,
+      "typescript",
+      new Set(["name"])
+    );
+
+    const templates = collectTemplates(result.hast);
+    expect(templates).toContain("name");
+    expect(templates.length).toBe(1);
+
+    let textContent = "";
+    visit(result.hast, "text", (node) => {
+      textContent += node.value;
+    });
+
+    expect(textContent).toContain("function greet()");
+    expect(textContent).toContain("// This function uses a template variable");
+    expect(textContent).toContain("return");
+    expect(textContent).toContain("Hello,");
   });
 });

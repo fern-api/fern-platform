@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unnecessary-type-assertion */
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import type { ShikiTransformer, ThemedToken } from "shiki";
 
 export function templateTransformer(
@@ -127,21 +129,21 @@ export function templateTransformer(
 }
 
 // Find template variables in a raw string regardless of tokenization
-function findTemplateVariables(text: string): Array<{
+function findTemplateVariables(text: string): {
   variableName: string;
   startIndex: number;
   endIndex: number;
-}> {
-  const results: Array<{
+}[] {
+  const results: {
     variableName: string;
     startIndex: number;
     endIndex: number;
-  }> = [];
+  }[] = [];
 
   const regex = /\{\{([^{}]+)\}\}/g;
   let match: RegExpExecArray | null;
 
-  while ((match = regex.exec(text)) !== null) {
+  while ((match = regex.exec(text)) != null) {
     results.push({
       variableName: match[1]!,
       startIndex: match.index,
@@ -155,20 +157,23 @@ function findTemplateVariables(text: string): Array<{
 // Process tokens with pre-identified template variables
 function processTokensWithTemplates(
   tokens: ThemedToken[],
-  templates: Array<{
+  templates: {
     variableName: string;
     startIndex: number;
     endIndex: number;
-  }>
+  }[]
 ): ThemedToken[] {
   // First, build a mapping of character indices to token indices
-  const charToTokenMap: Map<number, number> = new Map();
+  const charToTokenMap = new Map<number, number>();
+  // Track the start character index of each token
+  const tokenStartChars: number[] = [];
   let charIndex = 0;
 
   for (let i = 0; i < tokens.length; i++) {
     const token = tokens[i];
     if (!token) continue;
 
+    tokenStartChars[i] = charIndex;
     const tokenLength = token.content.length;
     for (let j = 0; j < tokenLength; j++) {
       charToTokenMap.set(charIndex + j, i);
@@ -176,82 +181,143 @@ function processTokensWithTemplates(
     charIndex += tokenLength;
   }
 
-  // Now process each template
-  const result: ThemedToken[] = [...tokens];
-  const processedTokens = new Set<number>();
-
   // Sort templates by start index in descending order to process from end to beginning
   // This prevents index shifts when modifying the array
   templates.sort((a, b) => b.startIndex - a.startIndex);
 
+  // Clone the tokens array to start with
+  let result: ThemedToken[] = [...tokens];
+
+  // Process each template
   for (const template of templates) {
     const startTokenIndex = charToTokenMap.get(template.startIndex) ?? 0;
     const endTokenIndex =
       charToTokenMap.get(template.endIndex - 1) ?? tokens.length - 1;
 
+    // Skip invalid indices
+    if (startTokenIndex >= tokens.length || endTokenIndex >= tokens.length)
+      continue;
+
     const startToken = tokens[startTokenIndex];
-    if (!startToken) continue;
+    const endToken = tokens[endTokenIndex];
+    if (!startToken || !endToken) continue;
 
     if (startTokenIndex === endTokenIndex) {
       // Template is contained within a single token
-      if (processedTokens.has(startTokenIndex)) continue;
+      // Split this token into three parts: before, template, after
+      const tokenStartChar = tokenStartChars[startTokenIndex] ?? 0;
 
-      result[startTokenIndex] = {
+      // Calculate positions within this token
+      const relativeStartPos = template.startIndex - tokenStartChar;
+      const relativeEndPos = template.endIndex - tokenStartChar;
+
+      // Get the content before and after the template
+      const beforeContent = startToken.content.substring(0, relativeStartPos);
+      const afterContent = startToken.content.substring(relativeEndPos);
+
+      // Create new tokens array with the split parts
+      const newTokens: ThemedToken[] = [];
+
+      // Add content before the template if it exists
+      if (beforeContent) {
+        newTokens.push({
+          ...startToken,
+          content: beforeContent,
+        });
+      }
+
+      // Add the template token
+      newTokens.push({
         content: `{{${template.variableName}}}`,
-        offset: startToken.offset,
+        offset: startToken.offset + (beforeContent.length || 0),
         htmlAttrs: {
           "data-template": template.variableName,
         },
-      };
-      processedTokens.add(startTokenIndex);
+      });
+
+      // Add content after the template if it exists
+      if (afterContent) {
+        newTokens.push({
+          ...startToken,
+          content: afterContent,
+          offset: startToken.offset + relativeEndPos,
+        });
+      }
+
+      // Replace the original token with our new tokens
+      result = [
+        ...result.slice(0, startTokenIndex),
+        ...newTokens,
+        ...result.slice(startTokenIndex + 1),
+      ];
     } else {
-      // Template spans multiple tokens
-      // Skip if any of these tokens has already been processed
-      let alreadyProcessed = false;
-      for (let i = startTokenIndex; i <= endTokenIndex; i++) {
-        if (processedTokens.has(i)) {
-          alreadyProcessed = true;
-          break;
-        }
-      }
-      if (alreadyProcessed) continue;
+      // Template spans multiple tokens - handle the start and end specially
+      const newTokens: ThemedToken[] = [];
 
-      // Replace the first token with the template and mark it
-      result[startTokenIndex] = {
+      // Process the first token - keep content before the template
+      const firstTokenStartChar = tokenStartChars[startTokenIndex] ?? 0;
+      const relativeStartPos = template.startIndex - firstTokenStartChar;
+
+      const beforeContent = startToken.content.substring(0, relativeStartPos);
+
+      // Add content before the template if it exists
+      if (beforeContent) {
+        newTokens.push({
+          ...startToken,
+          content: beforeContent,
+        });
+      }
+
+      // Add the template token
+      newTokens.push({
         content: `{{${template.variableName}}}`,
-        offset: startToken.offset,
+        offset: startToken.offset + (beforeContent.length || 0),
         htmlAttrs: {
           "data-template": template.variableName,
         },
-      };
-      processedTokens.add(startTokenIndex);
+      });
 
-      // Remove the remaining tokens that were part of this template
-      for (let i = startTokenIndex + 1; i <= endTokenIndex; i++) {
-        result[i] = { content: "", offset: 0 };
-        processedTokens.add(i);
+      // Process the last token - keep content after the template
+      const lastTokenStartChar = tokenStartChars[endTokenIndex] ?? 0;
+      const relativeEndPos = template.endIndex - lastTokenStartChar;
+
+      const afterContent = endToken.content.substring(relativeEndPos);
+
+      // Add content after the template if it exists
+      if (afterContent) {
+        newTokens.push({
+          ...endToken,
+          content: afterContent,
+          offset: endToken.offset + relativeEndPos,
+        });
       }
+
+      // Replace all the tokens involved with our new tokens
+      result = [
+        ...result.slice(0, startTokenIndex),
+        ...newTokens,
+        ...result.slice(endTokenIndex + 1),
+      ];
     }
   }
 
-  // Filter out empty tokens
-  return result.filter((token) => token.content !== "");
+  return result;
 }
 
 // Helper functions to handle various tokenization patterns
 
 function containsStart(content?: string): boolean {
-  return content != null && content.includes("{");
+  return content?.includes("{") ?? false;
 }
 
 function containsEnd(content?: string): boolean {
-  return content != null && content.includes("}");
+  return content?.includes("}") ?? false;
 }
 
 function extractOpenBraces(content: string): string {
   let result = "";
-  for (let i = 0; i < content.length; i++) {
-    if (content[i] === "{") {
+  for (const char of content) {
+    if (char === "{") {
       result += "{";
       if (result.length === 2) break;
     } else if (result.length > 0) {
@@ -285,10 +351,9 @@ function extractCloseBraces(content: string): string {
   if (index !== -1) {
     return "}}";
   }
-
   let result = "";
-  for (let i = 0; i < content.length; i++) {
-    if (content[i] === "}") {
+  for (const char of content) {
+    if (char === "}") {
       result += "}";
       if (result.length === 2) break;
     } else if (result.length > 0) {
