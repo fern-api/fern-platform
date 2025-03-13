@@ -15,6 +15,10 @@ export default function GlobalError({
   const searchParams = useSearchParams();
   const pathname = useCurrentPathname();
   if (!searchParams.has("error")) {
+    /**
+     * In the middleware, this will result in a redirect to the dynamic page,
+     * which will lazy-load the page and allow client-side error handling.
+     */
     redirect(`${pathname}?error=${error.message}`);
   }
   return (
