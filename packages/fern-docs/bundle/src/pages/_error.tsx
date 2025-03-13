@@ -6,12 +6,13 @@ import Error from "next/error";
 export const getServerSideProps: GetServerSideProps = async (context) => {
   if (isEmpty(context.query.error)) {
     const url = new URL(context.resolvedUrl);
-    const pathname = parseServerSidePathname(url.pathname);
+    url.pathname = parseServerSidePathname(url.pathname);
     const searchParams = new URLSearchParams(url.search);
     searchParams.set("error", "true");
+    url.search = String(searchParams);
     return {
       redirect: {
-        destination: pathname + "?" + searchParams.toString(),
+        destination: String(url),
         permanent: false,
       },
     };
