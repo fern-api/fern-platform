@@ -8,9 +8,11 @@ import { withoutStaging } from "@fern-docs/utils";
 
 import { getMetadata } from "@/server/docs-loader";
 import { batchQueue } from "@/server/queue";
+import { verifySignature } from "@/server/verify-signature";
 
 export async function POST(request: NextRequest) {
   const { VERCEL_ENV, VERCEL_DEPLOYMENT_ID } = getEnv();
+  const secret = process.env.DEPLOYMENT_PROMOTED_WEBHOOK_SECRET;
 
   if (VERCEL_ENV !== "production") {
     throw new Error(
@@ -18,18 +20,12 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  // if (
-  //   request.headers.get("x-vercel-signature") !==
-  //   process.env.DEPLOYMENT_PROMOTED_WEBHOOK_SECRET
-  // ) {
-  //   return new Response("Unauthorized", { status: 401 });
-  // }
-
-  console.debug(
-    "x-vercel-signature",
-    request.headers.get("x-vercel-signature")
-  );
-  console.debug(await request.json());
+  /**
+   * Verify the signature of the request.
+   */
+  if (!(await verifySignature(request, secret))) {
+    return new Response("Unauthorized", { status: 401 });
+  }
 
   const domains = uniq((await kv.smembers("domains")).map(withoutStaging));
 
