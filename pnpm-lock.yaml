@@ -50,8 +50,8 @@ importers:
         specifier: ^9.21.0
         version: 9.21.0
       '@playwright/test':
-        specifier: ^1.50.1
-        version: 1.50.1
+        specifier: ^1.51.0
+        version: 1.51.0
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.2
         version: 5.2.2(@vue/compiler-sfc@3.5.13)(prettier@3.5.2)(svelte@5.19.2)
@@ -633,7 +633,7 @@ importers:
         version: 3.744.0
       '@bprogress/next':
         specifier: ^3.1.3
-        version: 3.1.3(next@15.3.0-canary.1(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(@playwright/test@1.50.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+        version: 3.1.3(next@15.3.0-canary.1(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(@playwright/test@1.51.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       '@fern-api/fdr-sdk':
         specifier: workspace:*
         version: link:../../fdr-sdk
@@ -765,7 +765,7 @@ importers:
         version: 1.10.1(@opentelemetry/api-logs@0.57.0)(@opentelemetry/api@1.9.0)(@opentelemetry/instrumentation@0.57.0(@opentelemetry/api@1.9.0))(@opentelemetry/resources@1.30.0(@opentelemetry/api@1.9.0))(@opentelemetry/sdk-logs@0.57.0(@opentelemetry/api@1.9.0))(@opentelemetry/sdk-metrics@1.30.0(@opentelemetry/api@1.9.0))(@opentelemetry/sdk-trace-base@1.30.0(@opentelemetry/api@1.9.0))
       '@workos-inc/node':
         specifier: ^7.31.0
-        version: 7.31.0(express@4.21.2)(next@15.3.0-canary.1(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(@playwright/test@1.50.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.0))
+        version: 7.31.0(express@4.21.2)(next@15.3.0-canary.1(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(@playwright/test@1.51.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.0))
       ai:
         specifier: ^4.1.47
         version: 4.1.47(react@19.0.0)(zod@3.24.1)
@@ -852,7 +852,7 @@ importers:
         version: 12.4.7(@emotion/is-prop-valid@1.2.2)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       next:
         specifier: 15.3.0-canary.1
-        version: 15.3.0-canary.1(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(@playwright/test@1.50.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.0)
+        version: 15.3.0-canary.1(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(@playwright/test@1.51.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.0)
       next-themes:
         specifier: ^0.4.4
         version: 0.4.4(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
@@ -985,7 +985,7 @@ importers:
         version: 8.6.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(storybook@8.6.0(prettier@3.5.2))
       '@storybook/nextjs':
         specifier: ^8.6.0
-        version: 8.6.0(@swc/core@1.5.7(@swc/helpers@0.5.15))(esbuild@0.25.0)(next@15.3.0-canary.1(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(@playwright/test@1.50.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.0)(storybook@8.6.0(prettier@3.5.2))(type-fest@4.21.0)(typescript@5.7.3)(webpack-hot-middleware@2.26.1)(webpack@5.94.0(@swc/core@1.5.7(@swc/helpers@0.5.15))(esbuild@0.25.0))
+        version: 8.6.0(@swc/core@1.5.7(@swc/helpers@0.5.15))(esbuild@0.25.0)(next@15.3.0-canary.1(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(@playwright/test@1.51.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.0)(storybook@8.6.0(prettier@3.5.2))(type-fest@4.21.0)(typescript@5.7.3)(webpack-hot-middleware@2.26.1)(webpack@5.94.0(@swc/core@1.5.7(@swc/helpers@0.5.15))(esbuild@0.25.0))
       '@storybook/react':
         specifier: ^8.6.0
         version: 8.6.0(@storybook/test@8.6.0(storybook@8.6.0(prettier@3.5.2)))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(storybook@8.6.0(prettier@3.5.2))(typescript@5.7.3)
@@ -1208,7 +1208,7 @@ importers:
         version: 8.6.4(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(storybook@8.6.4(prettier@3.5.2))
       '@storybook/nextjs':
         specifier: ^8.6.0
-        version: 8.6.0(@swc/core@1.5.7(@swc/helpers@0.5.15))(esbuild@0.25.0)(next@15.3.0-canary.1(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(@playwright/test@1.50.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.0)(storybook@8.6.4(prettier@3.5.2))(type-fest@4.21.0)(typescript@5.7.3)(webpack-hot-middleware@2.26.1)(webpack@5.94.0(@swc/core@1.5.7(@swc/helpers@0.5.15))(esbuild@0.25.0))
+        version: 8.6.0(@swc/core@1.5.7(@swc/helpers@0.5.15))(esbuild@0.25.0)(next@15.3.0-canary.1(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(@playwright/test@1.51.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.0)(storybook@8.6.4(prettier@3.5.2))(type-fest@4.21.0)(typescript@5.7.3)(webpack-hot-middleware@2.26.1)(webpack@5.94.0(@swc/core@1.5.7(@swc/helpers@0.5.15))(esbuild@0.25.0))
       '@storybook/react':
         specifier: ^8.6.4
         version: 8.6.4(@storybook/test@8.6.4(storybook@8.6.4(prettier@3.5.2)))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(storybook@8.6.4(prettier@3.5.2))(typescript@5.7.3)
@@ -1390,7 +1390,7 @@ importers:
         version: 1.4.7
       next:
         specifier: 15.3.0-canary.1
-        version: 15.3.0-canary.1(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(@playwright/test@1.50.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.0)
+        version: 15.3.0-canary.1(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(@playwright/test@1.51.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.0)
       stylelint:
         specifier: ^16.1.0
         version: 16.5.0(typescript@5.7.3)
@@ -1689,7 +1689,7 @@ importers:
         version: 7.15.3(algoliasearch@5.20.3)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       react-instantsearch-nextjs:
         specifier: ^0.4.4
-        version: 0.4.4(next@15.3.0-canary.1(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(@playwright/test@1.50.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.0))(react-instantsearch@7.15.3(algoliasearch@5.20.3)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))
+        version: 0.4.4(next@15.3.0-canary.1(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(@playwright/test@1.51.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.0))(react-instantsearch@7.15.3(algoliasearch@5.20.3)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))
       react-markdown:
         specifier: ^9.0.1
         version: 9.0.1(@types/react@19.0.10)(react@19.0.0)
@@ -1753,7 +1753,7 @@ importers:
         version: 2.12.1(@types/react@19.0.10)(react@19.0.0)
       next:
         specifier: 15.3.0-canary.1
-        version: 15.3.0-canary.1(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(@playwright/test@1.50.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.0)
+        version: 15.3.0-canary.1(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(@playwright/test@1.51.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.0)
       postcss:
         specifier: ^8.5.2
         version: 8.5.2
@@ -1799,7 +1799,7 @@ importers:
         version: 1.4.7
       next:
         specifier: 15.3.0-canary.1
-        version: 15.3.0-canary.1(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(@playwright/test@1.50.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.0)
+        version: 15.3.0-canary.1(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(@playwright/test@1.51.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.0)
       stylelint:
         specifier: ^16.1.0
         version: 16.5.0(typescript@5.7.3)
@@ -2001,7 +2001,7 @@ importers:
     dependencies:
       next:
         specifier: 15.3.0-canary.1
-        version: 15.3.0-canary.1(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(@playwright/test@1.50.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.0)
+        version: 15.3.0-canary.1(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(@playwright/test@1.51.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.0)
       react:
         specifier: 19.0.0
         version: 19.0.0
@@ -2960,6 +2960,11 @@ packages:
     engines: {node: '>=6.0.0'}
     hasBin: true
 
+  '@babel/parser@7.26.10':
+    resolution: {integrity: sha512-6aQR2zGE/QFi8JpDLjUZEPYOs7+mhKXm86VaKFiLP35JQwQb6bwUE+XbvkH0EptsYhbNBSUGaUBLKqxH1xSgsA==}
+    engines: {node: '>=6.0.0'}
+    hasBin: true
+
   '@babel/parser@7.26.2':
     resolution: {integrity: sha512-DWMCZH9WA4Maitz2q21SRKHo9QXZxkDsbNZoVD62gusNtNBBqDg9i7uOhASfTfIGNzW+O+r7+jAlM8dwphcJKQ==}
     engines: {node: '>=6.0.0'}
@@ -3584,6 +3589,10 @@ packages:
     resolution: {integrity: sha512-6mQNsaLeXTw0nxYUYu+NSa4Hx4BlF1x1x8/PMFbiR+GBSr+2DkECc69b8hgy2frEodNcvPffeH8YfWd3LI6jhQ==}
     engines: {node: '>=6.9.0'}
 
+  '@babel/types@7.26.10':
+    resolution: {integrity: sha512-emqcG3vHrpxUKTrxcblR36dcrcoRDvKmnL/dCL6ZsHaShW80qxCAcNhzQZrpeM765VzEos+xOi4s+r4IXzTwdQ==}
+    engines: {node: '>=6.9.0'}
+
   '@babel/types@7.26.8':
     resolution: {integrity: sha512-eUuWapzEGWFEpHFxgEaBG8e3n6S8L3MSu0oda755rOfabWPnh0Our1AozNFVUxGFIhbKgd1ksprsoDGMinTOTA==}
     engines: {node: '>=6.9.0'}
@@ -3784,6 +3793,7 @@ packages:
 
   '@effect/schema@0.73.4':
     resolution: {integrity: sha512-Vjgu+EuG6eyh3oB21jpHv0l9ZgGZCyVZf3lXs+2X18UEUOkppvpw11heHiK02iJCVchgp3Qjw/GDPUqhQvKpSg==}
+    deprecated: this package has been merged into the main effect package
     peerDependencies:
       effect: ^3.8.3
 
@@ -4806,8 +4816,8 @@ packages:
     resolution: {integrity: sha512-cq8o4cWH0ibXh9VGi5P20Tu9XF/0fFXl9EUinr9QfTM7a7p0oTA4iJRCQWppXR1Pg8dSM0UCItCkPwsk9qWWYA==}
     engines: {node: ^12.20.0 || ^14.18.0 || >=16.0.0}
 
-  '@playwright/test@1.50.1':
-    resolution: {integrity: sha512-Jii3aBg+CEDpgnuDxEp/h7BimHcUTDlpEtce89xEumlJ5ef2hqepZ+PWp1DDpYC/VO9fmWVI1IlEaoI5fK9FXQ==}
+  '@playwright/test@1.51.0':
+    resolution: {integrity: sha512-dJ0dMbZeHhI+wb77+ljx/FeC8VBP6j/rj9OAojO08JI80wTZy6vRk9KvHKiDCUh4iMpEiseMgqRBIeW+eKX6RA==}
     engines: {node: '>=18'}
     hasBin: true
 
@@ -7432,6 +7442,11 @@ packages:
 
   acorn@8.14.0:
     resolution: {integrity: sha512-cl669nCJTZBsL97OF4kUQm5g5hC2uihk0NxY3WENAC0TYdILVkAyHymAntgxGkl7K+t0cXIrH5siy5S4XkFycA==}
+    engines: {node: '>=0.4.0'}
+    hasBin: true
+
+  acorn@8.14.1:
+    resolution: {integrity: sha512-OvQ/2pUDKmgfCg++xsTX1wGxfTaszcHVcTctW4UJB4hibJx2HXxxO5UmVgyjMa+ZDsiaf5wWLXYpRWMmBI0QHg==}
     engines: {node: '>=0.4.0'}
     hasBin: true
 
@@ -12621,8 +12636,18 @@ packages:
     engines: {node: '>=18'}
     hasBin: true
 
+  playwright-core@1.51.0:
+    resolution: {integrity: sha512-x47yPE3Zwhlil7wlNU/iktF7t2r/URR3VLbH6EknJd/04Qc/PSJ0EY3CMXipmglLG+zyRxW6HNo2EGbKLHPWMg==}
+    engines: {node: '>=18'}
+    hasBin: true
+
   playwright@1.50.1:
     resolution: {integrity: sha512-G8rwsOQJ63XG6BbKj2w5rHeavFjy5zynBA9zsJMMtBoe/Uf757oG12NXz6e6OirF7RCrTVAKFXbLmn1RbL7Qaw==}
+    engines: {node: '>=18'}
+    hasBin: true
+
+  playwright@1.51.0:
+    resolution: {integrity: sha512-442pTfGM0xxfCYxuBa/Pu6B2OqxqqaYq39JS8QDMGThUvIOCd6s0ANDog3uwA0cHavVlnTQzGCN7Id2YekDSXA==}
     engines: {node: '>=18'}
     hasBin: true
 
@@ -16717,6 +16742,10 @@ snapshots:
     dependencies:
       '@babel/types': 7.24.5
 
+  '@babel/parser@7.26.10':
+    dependencies:
+      '@babel/types': 7.26.10
+
   '@babel/parser@7.26.2':
     dependencies:
       '@babel/types': 7.26.9
@@ -17569,6 +17598,11 @@ snapshots:
       '@babel/helper-validator-identifier': 7.24.5
       to-fast-properties: 2.0.0
 
+  '@babel/types@7.26.10':
+    dependencies:
+      '@babel/helper-string-parser': 7.25.9
+      '@babel/helper-validator-identifier': 7.25.9
+
   '@babel/types@7.26.8':
     dependencies:
       '@babel/helper-string-parser': 7.25.9
@@ -17583,11 +17617,11 @@ snapshots:
 
   '@bprogress/core@1.1.18': {}
 
-  '@bprogress/next@3.1.3(next@15.3.0-canary.1(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(@playwright/test@1.50.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
+  '@bprogress/next@3.1.3(next@15.3.0-canary.1(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(@playwright/test@1.51.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
     dependencies:
       '@bprogress/core': 1.1.18
       '@bprogress/react': 1.1.4(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
-      next: 15.3.0-canary.1(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(@playwright/test@1.50.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.0)
+      next: 15.3.0-canary.1(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(@playwright/test@1.51.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.0)
       react: 19.0.0
       react-dom: 19.0.0(react@19.0.0)
 
@@ -18930,9 +18964,9 @@ snapshots:
 
   '@pkgr/core@0.1.1': {}
 
-  '@playwright/test@1.50.1':
+  '@playwright/test@1.51.0':
     dependencies:
-      playwright: 1.50.1
+      playwright: 1.51.0
 
   '@pmmmwh/react-refresh-webpack-plugin@0.5.13(react-refresh@0.14.2)(type-fest@4.21.0)(webpack-hot-middleware@2.26.1)(webpack@5.94.0(@swc/core@1.5.7(@swc/helpers@0.5.15))(esbuild@0.25.0))':
     dependencies:
@@ -20758,7 +20792,7 @@ snapshots:
     dependencies:
       storybook: 8.6.4(prettier@3.5.2)
 
-  '@storybook/nextjs@8.6.0(@swc/core@1.5.7(@swc/helpers@0.5.15))(esbuild@0.25.0)(next@15.3.0-canary.1(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(@playwright/test@1.50.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.0)(storybook@8.6.0(prettier@3.5.2))(type-fest@4.21.0)(typescript@5.7.3)(webpack-hot-middleware@2.26.1)(webpack@5.94.0(@swc/core@1.5.7(@swc/helpers@0.5.15))(esbuild@0.25.0))':
+  '@storybook/nextjs@8.6.0(@swc/core@1.5.7(@swc/helpers@0.5.15))(esbuild@0.25.0)(next@15.3.0-canary.1(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(@playwright/test@1.51.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.0)(storybook@8.6.0(prettier@3.5.2))(type-fest@4.21.0)(typescript@5.7.3)(webpack-hot-middleware@2.26.1)(webpack@5.94.0(@swc/core@1.5.7(@swc/helpers@0.5.15))(esbuild@0.25.0))':
     dependencies:
       '@babel/core': 7.26.9
       '@babel/plugin-syntax-bigint': 7.8.3(@babel/core@7.26.9)
@@ -20784,7 +20818,7 @@ snapshots:
       find-up: 5.0.0
       image-size: 1.1.1
       loader-utils: 3.2.1
-      next: 15.3.0-canary.1(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(@playwright/test@1.50.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.0)
+      next: 15.3.0-canary.1(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(@playwright/test@1.51.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.0)
       node-polyfill-webpack-plugin: 2.0.1(webpack@5.94.0(@swc/core@1.5.7(@swc/helpers@0.5.15))(esbuild@0.25.0))
       pnp-webpack-plugin: 1.7.0(typescript@5.7.3)
       postcss: 8.5.2
@@ -20823,7 +20857,7 @@ snapshots:
       - webpack-hot-middleware
       - webpack-plugin-serve
 
-  '@storybook/nextjs@8.6.0(@swc/core@1.5.7(@swc/helpers@0.5.15))(esbuild@0.25.0)(next@15.3.0-canary.1(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(@playwright/test@1.50.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.0)(storybook@8.6.4(prettier@3.5.2))(type-fest@4.21.0)(typescript@5.7.3)(webpack-hot-middleware@2.26.1)(webpack@5.94.0(@swc/core@1.5.7(@swc/helpers@0.5.15))(esbuild@0.25.0))':
+  '@storybook/nextjs@8.6.0(@swc/core@1.5.7(@swc/helpers@0.5.15))(esbuild@0.25.0)(next@15.3.0-canary.1(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(@playwright/test@1.51.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.0)(storybook@8.6.4(prettier@3.5.2))(type-fest@4.21.0)(typescript@5.7.3)(webpack-hot-middleware@2.26.1)(webpack@5.94.0(@swc/core@1.5.7(@swc/helpers@0.5.15))(esbuild@0.25.0))':
     dependencies:
       '@babel/core': 7.26.9
       '@babel/plugin-syntax-bigint': 7.8.3(@babel/core@7.26.9)
@@ -20849,7 +20883,7 @@ snapshots:
       find-up: 5.0.0
       image-size: 1.1.1
       loader-utils: 3.2.1
-      next: 15.3.0-canary.1(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(@playwright/test@1.50.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.0)
+      next: 15.3.0-canary.1(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(@playwright/test@1.51.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.0)
       node-polyfill-webpack-plugin: 2.0.1(webpack@5.94.0(@swc/core@1.5.7(@swc/helpers@0.5.15))(esbuild@0.25.0))
       pnp-webpack-plugin: 1.7.0(typescript@5.7.3)
       postcss: 8.5.2
@@ -22032,7 +22066,7 @@ snapshots:
 
   '@vue/compiler-core@3.5.13':
     dependencies:
-      '@babel/parser': 7.26.9
+      '@babel/parser': 7.26.10
       '@vue/shared': 3.5.13
       entities: 4.5.0
       estree-walker: 2.0.2
@@ -22062,7 +22096,7 @@ snapshots:
 
   '@vue/compiler-sfc@3.5.13':
     dependencies:
-      '@babel/parser': 7.26.9
+      '@babel/parser': 7.26.10
       '@vue/compiler-core': 3.5.13
       '@vue/compiler-dom': 3.5.13
       '@vue/compiler-ssr': 3.5.13
@@ -22186,9 +22220,9 @@ snapshots:
 
   '@webgpu/types@0.1.54': {}
 
-  '@workos-inc/node@7.31.0(express@4.21.2)(next@15.3.0-canary.1(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(@playwright/test@1.50.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.0))':
+  '@workos-inc/node@7.31.0(express@4.21.2)(next@15.3.0-canary.1(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(@playwright/test@1.51.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.0))':
     dependencies:
-      iron-session: 6.3.1(express@4.21.2)(next@15.3.0-canary.1(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(@playwright/test@1.50.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.0))
+      iron-session: 6.3.1(express@4.21.2)(next@15.3.0-canary.1(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(@playwright/test@1.51.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.0))
       jose: 5.6.3
       pluralize: 8.0.0
     transitivePeerDependencies:
@@ -22368,9 +22402,9 @@ snapshots:
     dependencies:
       acorn: 8.14.0
 
-  acorn-typescript@1.4.13(acorn@8.14.0):
+  acorn-typescript@1.4.13(acorn@8.14.1):
     dependencies:
-      acorn: 8.14.0
+      acorn: 8.14.1
 
   acorn-walk@8.3.2: {}
 
@@ -22379,6 +22413,8 @@ snapshots:
       acorn: 8.14.0
 
   acorn@8.14.0: {}
+
+  acorn@8.14.1: {}
 
   adjust-sourcemap-loader@4.0.0:
     dependencies:
@@ -26373,7 +26409,7 @@ snapshots:
 
   ipaddr.js@1.9.1: {}
 
-  iron-session@6.3.1(express@4.21.2)(next@15.3.0-canary.1(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(@playwright/test@1.50.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.0)):
+  iron-session@6.3.1(express@4.21.2)(next@15.3.0-canary.1(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(@playwright/test@1.51.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.0)):
     dependencies:
       '@peculiar/webcrypto': 1.5.0
       '@types/cookie': 0.5.4
@@ -26384,7 +26420,7 @@ snapshots:
       iron-webcrypto: 0.2.8
     optionalDependencies:
       express: 4.21.2
-      next: 15.3.0-canary.1(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(@playwright/test@1.50.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.0)
+      next: 15.3.0-canary.1(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(@playwright/test@1.51.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.0)
 
   iron-session@8.0.4:
     dependencies:
@@ -28393,7 +28429,7 @@ snapshots:
 
   next-tick@1.1.0: {}
 
-  next@15.3.0-canary.1(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(@playwright/test@1.50.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.0):
+  next@15.3.0-canary.1(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(@playwright/test@1.51.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.0):
     dependencies:
       '@next/env': 15.3.0-canary.1
       '@swc/counter': 0.1.3
@@ -28414,7 +28450,7 @@ snapshots:
       '@next/swc-win32-arm64-msvc': 15.3.0-canary.1
       '@next/swc-win32-x64-msvc': 15.3.0-canary.1
       '@opentelemetry/api': 1.9.0
-      '@playwright/test': 1.50.1
+      '@playwright/test': 1.51.0
       sass: 1.77.0
       sharp: 0.33.5
     transitivePeerDependencies:
@@ -28921,9 +28957,17 @@ snapshots:
 
   playwright-core@1.50.1: {}
 
+  playwright-core@1.51.0: {}
+
   playwright@1.50.1:
     dependencies:
       playwright-core: 1.50.1
+    optionalDependencies:
+      fsevents: 2.3.2
+
+  playwright@1.51.0:
+    dependencies:
+      playwright-core: 1.51.0
     optionalDependencies:
       fsevents: 2.3.2
 
@@ -29455,9 +29499,9 @@ snapshots:
       react: 19.0.0
       use-sync-external-store: 1.2.2(react@19.0.0)
 
-  react-instantsearch-nextjs@0.4.4(next@15.3.0-canary.1(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(@playwright/test@1.50.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.0))(react-instantsearch@7.15.3(algoliasearch@5.20.3)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)):
+  react-instantsearch-nextjs@0.4.4(next@15.3.0-canary.1(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(@playwright/test@1.51.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.0))(react-instantsearch@7.15.3(algoliasearch@5.20.3)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)):
     dependencies:
-      next: 15.3.0-canary.1(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(@playwright/test@1.50.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.0)
+      next: 15.3.0-canary.1(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(@playwright/test@1.51.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.0)
       react-instantsearch: 7.15.3(algoliasearch@5.20.3)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
 
   react-instantsearch@7.15.3(algoliasearch@5.20.3)(react-dom@19.0.0(react@19.0.0))(react@19.0.0):
@@ -30918,8 +30962,8 @@ snapshots:
       '@ampproject/remapping': 2.3.0
       '@jridgewell/sourcemap-codec': 1.5.0
       '@types/estree': 1.0.6
-      acorn: 8.14.0
-      acorn-typescript: 1.4.13(acorn@8.14.0)
+      acorn: 8.14.1
+      acorn-typescript: 1.4.13(acorn@8.14.1)
       aria-query: 5.3.2
       axobject-query: 4.1.0
       clsx: 2.1.1
