@@ -4,9 +4,9 @@ import { GetServerSideProps } from "next";
 import Error from "next/error";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  if (isEmpty(context.query.error)) {
-    const url = new URL(context.resolvedUrl);
-    url.pathname = parseServerSidePathname(url.pathname);
+  if (isEmpty(context.query.error) && context.req.url) {
+    const url = new URL(context.req.url);
+    url.pathname = parseServerSidePathname(context.resolvedUrl);
     const searchParams = new URLSearchParams(url.search);
     searchParams.set("error", "true");
     url.search = String(searchParams);
