@@ -10,7 +10,6 @@ import { TooltipPortal } from "@radix-ui/react-tooltip";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { X } from "lucide-react";
 
-import { cn } from "@fern-docs/components";
 import { Button } from "@fern-docs/components/button";
 
 import {
@@ -89,7 +88,7 @@ export const DesktopSearchDialog = memo(
         </DesktopCommandAfterInput>
 
         <Dialog.Portal>
-          <Dialog.Overlay className="bg-background-a3 fixed inset-0 z-40 backdrop-blur-md" />
+          <Dialog.Overlay id="fern-search-dialog-overlay" />
 
           <VisuallyHidden>
             <Dialog.Title>Search</Dialog.Title>
@@ -97,9 +96,7 @@ export const DesktopSearchDialog = memo(
           </VisuallyHidden>
 
           <Dialog.Content
-            className={cn(
-              "fixed inset-0 bottom-auto z-50 h-fit w-svw origin-center outline-none sm:left-1/2 sm:top-[15%] sm:w-[640px] sm:-translate-x-1/2"
-            )}
+            id="fern-search-dialog"
             asChild={asChild}
             onEscapeKeyDown={(e) => {
               e.preventDefault();
