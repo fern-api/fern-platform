@@ -6,7 +6,7 @@ import { uniqBy } from "es-toolkit/array";
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { CONTINUE, SKIP } from "@fern-api/fdr-sdk/traversers";
 import { isNonNullish } from "@fern-api/ui-core-utils";
-import { COOKIE_FERN_TOKEN, addLeadingSlash } from "@fern-docs/utils";
+import { COOKIE_FERN_TOKEN, slugToHref } from "@fern-docs/utils";
 
 import { createCachedDocsLoader } from "@/server/docs-loader";
 import { getMarkdownForPath } from "@/server/getMarkdownForPath";
@@ -18,7 +18,7 @@ export async function GET(
 ): Promise<NextResponse> {
   const { host, domain } = await props.params;
 
-  const path = addLeadingSlash(req.nextUrl.searchParams.get("slug") ?? "");
+  const path = slugToHref(req.nextUrl.searchParams.get("slug") ?? "");
   const fern_token = (await cookies()).get(COOKIE_FERN_TOKEN)?.value;
   const loader = await createCachedDocsLoader(host, domain, fern_token);
 

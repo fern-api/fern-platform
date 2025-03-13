@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { CONTINUE, SKIP } from "@fern-api/fdr-sdk/traversers";
 import { isNonNullish, withDefaultProtocol } from "@fern-api/ui-core-utils";
-import { addLeadingSlash } from "@fern-docs/utils";
+import { addLeadingSlash, slugToHref } from "@fern-docs/utils";
 
 import { createCachedDocsLoader } from "@/server/docs-loader";
 import { getMarkdownForPath } from "@/server/getMarkdownForPath";
@@ -37,7 +37,7 @@ export async function GET(
 ): Promise<NextResponse> {
   const { host, domain } = await props.params;
 
-  const path = addLeadingSlash(req.nextUrl.searchParams.get("slug") ?? "");
+  const path = slugToHref(req.nextUrl.searchParams.get("slug") ?? "");
   const loader = await createCachedDocsLoader(host, domain);
 
   const root = getSectionRoot(await loader.getRoot(), path);
@@ -155,7 +155,7 @@ export async function GET(
           title: pageInfo.nodeTitle,
           description: undefined,
           href: String(
-            new URL(addLeadingSlash(pageInfo.slug), withDefaultProtocol(domain))
+            new URL(slugToHref(pageInfo.slug), withDefaultProtocol(domain))
           ),
         };
       }
@@ -168,8 +168,9 @@ export async function GET(
         title: endpointPageInfo.nodeTitle,
         href: String(
           new URL(
-            addLeadingSlash(endpointPageInfo.slug) +
-              (endpointPageInfo.endpointId != null ? ".mdx" : ""),
+            endpointPageInfo.endpointId != null
+              ? addLeadingSlash(`${endpointPageInfo.slug}.mdx`)
+              : slugToHref(endpointPageInfo.slug),
             withDefaultProtocol(domain)
           )
         ),

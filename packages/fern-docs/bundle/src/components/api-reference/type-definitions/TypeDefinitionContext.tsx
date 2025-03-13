@@ -4,7 +4,7 @@ import { createContext, useContext, useMemo } from "react";
 import React from "react";
 
 import { TypeDefinition } from "@fern-api/fdr-sdk/api-definition";
-import { addLeadingSlash } from "@fern-docs/utils";
+import { slugToHref } from "@fern-docs/utils";
 import { useLazyRef } from "@fern-ui/react-commons";
 
 import { ErrorBoundary } from "@/components/error-boundary";
@@ -179,8 +179,7 @@ export function useAnchorId(): string | null {
 
 export function useHref(): string {
   const { slug, anchorIdParts } = useTypeDefinitionContext();
-  const pathname = addLeadingSlash(slug);
-  return `${pathname}${anchorIdParts.length > 0 ? `#${anchorIdParts.join(".")}` : ""}`;
+  return `${slugToHref(slug)}${anchorIdParts.length > 0 ? `#${anchorIdParts.join(".")}` : ""}`;
 }
 
 export function useIsActive(): boolean {

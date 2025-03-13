@@ -5,7 +5,7 @@ import { Fragment, ReactElement } from "react";
 import { ChevronRight } from "lucide-react";
 
 import type { FernNavigation } from "@fern-api/fdr-sdk";
-import { addLeadingSlash } from "@fern-docs/utils";
+import { slugToHref } from "@fern-docs/utils";
 
 import { FernLink } from "./FernLink";
 
@@ -31,7 +31,7 @@ export function FernBreadcrumbs({
           {breadcrumb.pointsTo != null ? (
             <FernLink
               className="fern-breadcrumb-item"
-              href={addLeadingSlash(breadcrumb.pointsTo)}
+              href={slugToHref(breadcrumb.pointsTo)}
               scroll={true}
             >
               {breadcrumb.title}

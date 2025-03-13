@@ -1,6 +1,5 @@
 "use client";
 
-import { Url } from "next/dist/shared/lib/router/router";
 import {
   HTMLAttributeAnchorTarget,
   PropsWithChildren,
@@ -16,7 +15,7 @@ import { ChevronDown, Lock } from "lucide-react";
 
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { FernTooltip, cn } from "@fern-docs/components";
-import { addLeadingSlash } from "@fern-docs/utils";
+import { slugToHref } from "@fern-docs/utils";
 
 import { FernLink } from "@/components/FernLink";
 import { useIsSelectedSidebarNode } from "@/state/navigation";
@@ -45,7 +44,7 @@ interface SidebarSlugLinkProps {
 type SidebarLinkProps = PropsWithChildren<
   Omit<SidebarSlugLinkProps, "registerScrolledToPathListener" | "slug"> & {
     // Link props
-    href?: Url;
+    href?: string;
     rel?: string | undefined;
     target?: HTMLAttributeAnchorTarget | undefined;
 
@@ -179,7 +178,7 @@ export const SidebarSlugLink = forwardRef<
   const ref = useRef<HTMLAnchorElement>(null);
   useScrollSidebarNodeIntoView(ref, props.nodeId);
   const selected = useIsSelectedSidebarNode(props.nodeId);
-  const href = slug ? addLeadingSlash(slug) : undefined;
+  const href = slug ? slugToHref(slug) : undefined;
   return (
     <SidebarLink
       {...innerProps}

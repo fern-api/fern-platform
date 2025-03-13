@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { useAtom } from "jotai";
 
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
-import { addLeadingSlash } from "@fern-docs/utils";
+import { slugToHref } from "@fern-docs/utils";
 import { useIsomorphicLayoutEffect } from "@fern-ui/react-commons";
 
 import { useCurrentSlug } from "@/hooks/use-current-pathname";
@@ -36,7 +36,7 @@ export function EndpointStreamingEnabledToggle({
       setValue={(value) => {
         setIsStream(value);
         router.replace(
-          addLeadingSlash(value ? node.stream.slug : node.nonStream.slug),
+          slugToHref(value ? node.stream.slug : node.nonStream.slug),
           { scroll: true }
         );
       }}

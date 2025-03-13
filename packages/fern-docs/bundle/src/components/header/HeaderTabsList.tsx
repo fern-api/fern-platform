@@ -5,7 +5,7 @@ import { Lock } from "lucide-react";
 
 import { TabChild, hasRedirect } from "@fern-api/fdr-sdk/navigation";
 import { cn } from "@fern-docs/components";
-import { addLeadingSlash } from "@fern-docs/utils";
+import { slugToHref } from "@fern-docs/utils";
 
 import { FernLink } from "@/components/FernLink";
 import { FaIconServer } from "@/components/fa-icon-server";
@@ -34,7 +34,7 @@ export function HeaderTabsList({
             href={
               tab.type === "link"
                 ? tab.url
-                : addLeadingSlash(hasRedirect(tab) ? tab.pointsTo : tab.slug)
+                : slugToHref(hasRedirect(tab) ? tab.pointsTo : tab.slug)
             }
             scroll={true}
           >

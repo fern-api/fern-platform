@@ -5,7 +5,7 @@ import { embedMany } from "ai";
 
 import { getAuthEdgeConfig, getEdgeFlags } from "@fern-docs/edge-config";
 import { turbopufferUpsertTask } from "@fern-docs/search-server/turbopuffer";
-import { addLeadingSlash, withoutStaging } from "@fern-docs/utils";
+import { slugToHref, withoutStaging } from "@fern-docs/utils";
 
 import { track } from "@/server/analytics/posthog";
 import { createCachedDocsLoader } from "@/server/docs-loader";
@@ -83,10 +83,8 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
         }
 
         return (
-          withBasicTokenAnonymous(
-            authEdgeConfig,
-            addLeadingSlash(node.slug)
-          ) === Gate.DENY
+          withBasicTokenAnonymous(authEdgeConfig, slugToHref(node.slug)) ===
+          Gate.DENY
         );
       },
       deleteExisting,

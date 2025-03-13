@@ -4,8 +4,7 @@ import { getEnv } from "@vercel/functions";
 import {
   HEADER_X_FERN_HOST,
   HEADER_X_VERCEL_PROTECTION_BYPASS,
-  addLeadingSlash,
-  conformTrailingSlash,
+  slugToHref,
 } from "@fern-docs/utils";
 
 import { qstashToken } from "@/server/env-variables";
@@ -62,7 +61,7 @@ export async function queue<TBody = unknown>({
   }
 
   const basepath = cleanBasePath(basepathProp);
-  const endpoint = addLeadingSlash(conformTrailingSlash(endpointProp));
+  const endpoint = slugToHref(endpointProp);
 
   const res = await q.publishJSON({
     url: `https://${host}${basepath}${endpoint}`,
@@ -141,9 +140,7 @@ export async function batchQueue<TBody = unknown>({
       }
 
       const basepath = cleanBasePath(basepathProp);
-      const endpoint = addLeadingSlash(
-        conformTrailingSlash(baseRequest.endpoint)
-      );
+      const endpoint = slugToHref(baseRequest.endpoint);
 
       return {
         queueName,
