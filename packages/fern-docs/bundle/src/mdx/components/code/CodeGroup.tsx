@@ -14,11 +14,19 @@ import { useProgrammingLanguage } from "@/state/language";
 
 import { unwrapChildren } from "../../common/unwrap-children";
 import { CodeBlock, toSyntaxHighlighterProps } from "./CodeBlock";
+import { applyTemplates, Template, useTemplate } from "./Template";
 
-export function CodeGroup({ children }: { children: React.ReactNode }) {
+export function CodeGroup({
+  children,
+  templates,
+}: {
+  children: React.ReactNode;
+  templates?: Record<string, string>;
+}) {
   const isDarkCode = useIsDarkCode();
 
   const items = unwrapChildren(children, CodeBlock);
+  templates = { ...useTemplate(), ...templates };
 
   const [selectedTabIndex, setSelectedTabIndex] = useState(0);
   const [selectedLanguage, setSelectedLanguage] = useProgrammingLanguage();
@@ -86,7 +94,7 @@ export function CodeGroup({ children }: { children: React.ReactNode }) {
   };
 
   if (items.length === 1 && items[0] != null) {
-    return items[0];
+    return <Template data={templates}>{items[0]}</Template>;
   }
 
   return (
@@ -121,7 +129,12 @@ export function CodeGroup({ children }: { children: React.ReactNode }) {
 
           <CopyToClipboardButton
             className="ml-2 mr-1"
-            content={items[selectedTabIndex]?.props.code ?? ""}
+            content={() =>
+              applyTemplates(
+                items[selectedTabIndex]?.props.code ?? "",
+                templates
+              )
+            }
           />
         </div>
       </div>
@@ -132,7 +145,9 @@ export function CodeGroup({ children }: { children: React.ReactNode }) {
           className="rounded-b-[inherit] rounded-t-none"
           asChild
         >
-          <FernSyntaxHighlighter {...toSyntaxHighlighterProps(item.props)} />
+          <FernSyntaxHighlighter
+            {...toSyntaxHighlighterProps({ ...item.props, templates })}
+          />
         </Tabs.Content>
       ))}
     </Tabs.Root>

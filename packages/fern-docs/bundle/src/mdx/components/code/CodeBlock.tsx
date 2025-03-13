@@ -11,7 +11,7 @@ import {
 
 import { useIsDarkCode } from "@/state/dark-code";
 
-import { useTemplate } from "./Template";
+import { applyTemplates, useTemplate } from "./Template";
 
 export function CodeBlock(props: {
   className?: string;
@@ -110,17 +110,4 @@ export function toSyntaxHighlighterProps(
     maxLines: props.maxLines ?? 20,
     wordWrap: props.wordWrap,
   };
-}
-
-export function applyTemplates(code: string, data?: Record<string, string>) {
-  if (!data || Object.keys(data).length === 0) {
-    return code;
-  }
-
-  try {
-    return template(code, { interpolate: /{{([^}]+)}}/g })(data);
-  } catch (error) {
-    console.error(error);
-    return code;
-  }
 }

@@ -1,5 +1,6 @@
 "use client";
 
+import { template } from "es-toolkit/compat";
 import React from "react";
 
 const TemplateCtx = React.createContext<Record<string, string>>({});
@@ -19,4 +20,17 @@ export function Template({
 
 export function useTemplate() {
   return React.useContext(TemplateCtx);
+}
+
+export function applyTemplates(code: string, data?: Record<string, string>) {
+  if (!data || Object.keys(data).length === 0) {
+    return code;
+  }
+
+  try {
+    return template(code, { interpolate: /{{([^}]+)}}/g })(data);
+  } catch (error) {
+    console.error(error);
+    return code;
+  }
 }

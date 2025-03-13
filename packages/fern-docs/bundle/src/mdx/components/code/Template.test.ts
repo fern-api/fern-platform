@@ -1,4 +1,4 @@
-import { applyTemplates } from "./CodeBlock";
+import { applyTemplates } from "./template";
 
 describe("applyTemplates", () => {
   it("should apply templates", () => {
