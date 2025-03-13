@@ -3,7 +3,7 @@ import React, { PropsWithChildren } from "react";
 import { useEdgeFlags } from "./SyntaxHighlighterEdgeFlags";
 
 type CodeBlockWithClipboardButtonProps = {
-  code: string;
+  code: string | (() => string | Promise<string>);
 };
 
 export const CodeBlockWithClipboardButton: React.FC<

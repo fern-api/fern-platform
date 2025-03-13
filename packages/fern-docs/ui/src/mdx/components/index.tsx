@@ -28,6 +28,7 @@ import { Card, CardGroup } from "./card";
 import { ClientLibraries } from "./client-libraries";
 import { CodeBlock } from "./code/CodeBlock";
 import { CodeGroup } from "./code/CodeGroup";
+import { Template } from "./code/Template";
 import { Column, ColumnGroup } from "./columns";
 import { Download } from "./download";
 import { Feature } from "./feature";
@@ -82,6 +83,7 @@ const FERN_COMPONENTS = {
   Step,
   StepGroup,
   TabGroup,
+  Template,
   Tooltip,
 
   // callout aliases

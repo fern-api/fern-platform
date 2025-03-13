@@ -11,6 +11,7 @@ import { useEffect, useRef, useState } from "react";
 import { getLanguageDisplayName } from "../../../api-reference/examples/code-example";
 import { FERN_LANGUAGE_ATOM, useEdgeFlags } from "../../../atoms";
 import { HorizontalOverflowMask } from "../../../components/HorizontalOverflowMask";
+import { applyTemplates, useTemplate } from "./Template";
 
 export declare namespace CodeGroup {
   export interface Item extends FernSyntaxHighlighterProps {
@@ -26,6 +27,7 @@ export declare namespace CodeGroup {
 export const CodeGroup: React.FC<React.PropsWithChildren<CodeGroup.Props>> = ({
   items,
 }) => {
+  const templates = useTemplate();
   const { isDarkCodeEnabled } = useEdgeFlags();
   const [selectedTabIndex, setSelectedTabIndex] = useState(0);
   const [selectedLanguage, setSelectedLanguage] = useAtom(FERN_LANGUAGE_ATOM);
@@ -112,11 +114,15 @@ export const CodeGroup: React.FC<React.PropsWithChildren<CodeGroup.Props>> = ({
             </div>
             <CopyToClipboardButton
               className="ml-2 mr-1"
-              content={items[0].code}
+              content={() => applyTemplates(items[0]?.code ?? "", templates)}
             />
           </div>
         </div>
-        <FernSyntaxHighlighter {...items[0]} className="rounded-b-[inherit]" />
+        <FernSyntaxHighlighter
+          {...items[0]}
+          className="rounded-b-[inherit]"
+          code={applyTemplates(items[0]?.code ?? "", templates)}
+        />
       </div>
     );
   }
@@ -148,7 +154,9 @@ export const CodeGroup: React.FC<React.PropsWithChildren<CodeGroup.Props>> = ({
 
           <CopyToClipboardButton
             className="ml-2 mr-1"
-            content={items[selectedTabIndex]?.code}
+            content={() =>
+              applyTemplates(items[selectedTabIndex]?.code ?? "", templates)
+            }
           />
         </div>
       </div>
@@ -159,7 +167,10 @@ export const CodeGroup: React.FC<React.PropsWithChildren<CodeGroup.Props>> = ({
           className="rounded-t-0 rounded-b-[inherit]"
           asChild
         >
-          <FernSyntaxHighlighter {...item} />
+          <FernSyntaxHighlighter
+            {...item}
+            code={applyTemplates(item?.code ?? "", templates)}
+          />
         </Tabs.Content>
       ))}
     </Tabs.Root>
