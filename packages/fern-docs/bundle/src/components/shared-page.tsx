@@ -14,11 +14,7 @@ import { Slug } from "@fern-api/fdr-sdk/navigation";
 import { withDefaultProtocol } from "@fern-api/ui-core-utils";
 import { getSeoDisabled } from "@fern-docs/edge-config";
 import { getFrontmatter, markdownToString } from "@fern-docs/mdx";
-import {
-  addLeadingSlash,
-  conformTrailingSlash,
-  getRedirectForPath,
-} from "@fern-docs/utils";
+import { getRedirectForPath, slugToHref } from "@fern-docs/utils";
 
 import { toImageDescriptor } from "@/app/seo";
 import FeedbackPopover from "@/components/feedback/FeedbackPopover";
@@ -46,14 +42,12 @@ export default async function SharedPage({
   const rootPromise = loader.getRoot();
   const baseUrlPromise = loader.getMetadata();
   const configPromise = loader.getConfig();
-  const authStatePromise = loader.getAuthState(
-    conformTrailingSlash(addLeadingSlash(slug))
-  );
+  const authStatePromise = loader.getAuthState(slugToHref(slug));
   const edgeFlagsPromise = loader.getEdgeFlags();
 
   // check for redirects
   const configuredRedirect = getRedirectForPath(
-    conformTrailingSlash(addLeadingSlash(slug)),
+    slugToHref(slug),
     await baseUrlPromise,
     (await configPromise).redirects
   );
@@ -223,8 +217,8 @@ export async function generateMetadata({
       canonical:
         frontmatter?.["canonical-url"] ??
         (node != null
-          ? `${withDefaultProtocol(loader.domain)}${conformTrailingSlash(
-              addLeadingSlash(node.canonicalSlug ?? node.slug)
+          ? `${withDefaultProtocol(loader.domain)}${slugToHref(
+              node.canonicalSlug ?? node.slug
             )}`
           : undefined),
     },
@@ -266,7 +260,7 @@ function prepareRedirect(destination: string): string {
     const url = new URL(destination);
     destination = String(url);
   } else {
-    destination = encodeURI(addLeadingSlash(destination));
+    destination = encodeURI(slugToHref(destination));
   }
   return destination;
 }
@@ -289,7 +283,7 @@ async function getNeighbor(
   const pageId = FernNavigation.getPageId(node);
   if (pageId == null) {
     return {
-      href: addLeadingSlash(node.slug),
+      href: slugToHref(node.slug),
       title: node.title,
     };
   }
@@ -302,14 +296,14 @@ async function getNeighbor(
     });
     const excerpt = mdx?.frontmatter?.subtitle ?? mdx?.frontmatter?.excerpt;
     return {
-      href: addLeadingSlash(node.slug),
+      href: slugToHref(node.slug),
       title: mdx?.frontmatter?.title ?? node.title,
       excerpt,
     };
   } catch (error) {
     console.error(error);
     return {
-      href: addLeadingSlash(node.slug),
+      href: slugToHref(node.slug),
       title: node.title,
     };
   }

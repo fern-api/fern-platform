@@ -2,7 +2,7 @@ import "server-only";
 
 import type { FileIdOrUrl, Frontmatter } from "@fern-api/fdr-sdk/docs";
 import { isPlainObject } from "@fern-api/ui-core-utils";
-import { addLeadingSlash, conformTrailingSlash } from "@fern-docs/utils";
+import { slugToHref } from "@fern-docs/utils";
 
 import type { DocsLoader } from "./docs-loader";
 import type { FileData } from "./types";
@@ -21,9 +21,7 @@ export function withLogo(
   dark: FileData | undefined;
 } {
   const height = config.logoHeight;
-  const href =
-    config.logoHref ??
-    encodeURI(conformTrailingSlash(addLeadingSlash(basepath ?? "")));
+  const href = config.logoHref ?? encodeURI(slugToHref(basepath ?? ""));
 
   const frontmatterLogo = getLogoFromFrontmatter(frontmatter);
 

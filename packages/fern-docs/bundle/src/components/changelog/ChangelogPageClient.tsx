@@ -8,7 +8,7 @@ import { useAtomValue } from "jotai";
 import type { FernNavigation } from "@fern-api/fdr-sdk";
 import { EMPTY_ARRAY } from "@fern-api/ui-core-utils";
 import { Badge } from "@fern-docs/components";
-import { addLeadingSlash } from "@fern-docs/utils";
+import { slugToHref } from "@fern-docs/utils";
 import { useIsomorphicLayoutEffect } from "@fern-ui/react-commons";
 
 import { FernLink } from "@/components/FernLink";
@@ -155,7 +155,7 @@ export default function ChangelogPageClient({
                 id={entry.date}
                 stickyContent={
                   <Badge asChild>
-                    <FernLink href={addLeadingSlash(entry.slug)} scroll={true}>
+                    <FernLink href={slugToHref(entry.slug)} scroll={true}>
                       {entry.title}
                     </FernLink>
                   </Badge>

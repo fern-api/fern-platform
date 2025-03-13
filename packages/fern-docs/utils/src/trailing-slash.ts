@@ -3,7 +3,7 @@ function isTruthy(value: string | undefined) {
 }
 
 export const isTrailingSlashEnabled = (): boolean => {
-  return isTruthy(process.env.TRAILING_SLASH);
+  return isTruthy(process.env.NEXT_PUBLIC_TRAILING_SLASH);
 };
 
 export const addTrailingSlash = (pathname: string): string => {

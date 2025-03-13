@@ -7,7 +7,7 @@ import { compact } from "es-toolkit/compat";
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { isNonNullish } from "@fern-api/ui-core-utils";
 import { type TableOfContentsItem, makeToc, toTree } from "@fern-docs/mdx";
-import { addLeadingSlash } from "@fern-docs/utils";
+import { slugToHref } from "@fern-docs/utils";
 
 import { FernLink } from "@/components/FernLink";
 import { PageHeader } from "@/components/PageHeader";
@@ -122,7 +122,7 @@ export async function ChangelogPageOverview({
       <PageHeader
         serialize={serialize}
         title={mdx?.frontmatter?.title ?? node.title}
-        titleHref={addLeadingSlash(node.slug)}
+        titleHref={slugToHref(node.slug)}
         subtitle={mdx?.frontmatter?.subtitle ?? mdx?.frontmatter?.excerpt}
         breadcrumb={breadcrumb}
         slug={node.slug}
@@ -159,7 +159,7 @@ export async function ChangelogPageEntry({
         title != null ? (
           <h2>
             <FernLink
-              href={addLeadingSlash(node.slug)}
+              href={slugToHref(node.slug)}
               className="not-prose"
               scroll={true}
             >

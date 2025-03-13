@@ -4,7 +4,7 @@ import React, { ReactElement } from "react";
 
 import type { FernNavigation } from "@fern-api/fdr-sdk";
 import { Badge } from "@fern-docs/components";
-import { addLeadingSlash } from "@fern-docs/utils";
+import { slugToHref } from "@fern-docs/utils";
 
 import { FernLink } from "@/components/FernLink";
 import { Separator } from "@/components/Separator";
@@ -45,7 +45,7 @@ export default function ChangelogEntryPage({
           id={node.date}
           stickyContent={
             <Badge asChild>
-              <FernLink href={addLeadingSlash(node.slug)} scroll={true}>
+              <FernLink href={slugToHref(node.slug)} scroll={true}>
                 {node.title}
               </FernLink>
             </Badge>
