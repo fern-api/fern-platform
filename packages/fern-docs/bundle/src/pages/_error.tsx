@@ -5,14 +5,20 @@ import Error from "next/error";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   if (isEmpty(context.query.error) && context.req.url) {
-    const url = new URL(context.req.url);
-    url.pathname = parseServerSidePathname(context.resolvedUrl);
+    console.debug("resolvedUrl", context.resolvedUrl);
+    const url = new URL(
+      context.resolvedUrl,
+      `https://${context.req.headers.host}`
+    );
+    url.pathname = parseServerSidePathname(url.pathname);
     const searchParams = new URLSearchParams(url.search);
     searchParams.set("error", "true");
     url.search = String(searchParams);
+    const destination = String(url);
+    console.debug("destination", destination);
     return {
       redirect: {
-        destination: String(url),
+        destination,
         permanent: false,
       },
     };
