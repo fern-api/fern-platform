@@ -6,6 +6,10 @@
         @apply -mr-2;
       }
 
+      .fern-header-tabs {
+        @apply lg:items-center;
+      }
+
       [role="tablist"] {
         @apply flex items-center gap-3;
       }
