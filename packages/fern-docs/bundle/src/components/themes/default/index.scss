@@ -1,6 +1,16 @@
 @layer components {
   [data-theme="default"] {
     &#fern-header {
+      @apply bg-header-background border-border-concealed pointer-events-auto fixed inset-x-0 top-0 z-30 border-b backdrop-blur-lg;
+
+      .fern-header-content {
+        @apply h-(--mobile-header-height-real) md:h-(--header-height-real) px-page-padding flex items-center;
+      }
+
+      .fern-header-tabs {
+        @apply w-page-width-padded px-page-padding mx-auto;
+      }
+
       [role="tablist"] {
         @apply -mx-3 flex align-bottom text-sm;
       }
@@ -9,7 +19,7 @@
         @apply relative flex h-11 min-w-0 items-center justify-start space-x-2 px-3 font-medium;
 
         &::after {
-          @apply bg-(color:--accent-indicator) absolute inset-x-3 bottom-px h-0.5 opacity-0 content-[''];
+          @apply bg-(color:--accent-indicator) absolute inset-x-3 -bottom-px h-0.5 opacity-0 content-[''];
         }
 
         &[data-state="active"] {
@@ -35,10 +45,10 @@
     }
 
     #fern-sidebar[data-viewport="desktop"] {
+      @apply top-(--header-height) hidden;
       @apply pointer-events-auto z-30;
       @apply lg:flex lg:shrink-0 lg:translate-x-0 lg:flex-col;
       @apply pl-(--aside-offset) w-(--sticky-aside-width);
-      @apply top-(--header-height) hidden;
 
       &[data-state="fixed"] {
         @apply border-border-concealed bg-(color:--sidebar-background) fixed bottom-0 left-0 border-r backdrop-blur-xl;

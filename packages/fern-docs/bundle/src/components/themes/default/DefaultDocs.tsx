@@ -51,8 +51,7 @@ export default function DefaultDocs({
       <div className="fern-background-image pointer-events-none fixed inset-0" />
       <FernHeader
         className={cn(
-          "w-page-width-padded px-page-padding mx-auto",
-          "bg-header-background border-border-concealed fern-background-image pointer-events-auto fixed inset-x-0 top-0 z-30 border-b backdrop-blur-lg",
+          "fern-background-image",
           { "lg:hidden": isHeaderDisabled },
           headerClassName
         )}
@@ -60,9 +59,7 @@ export default function DefaultDocs({
       >
         {announcement}
         <div className="width-before-scroll-bar">
-          <div className="h-(--mobile-header-height-real) md:h-(--header-height-real) px-page-padding flex items-center">
-            {header}
-          </div>
+          <div className="fern-header-content">{header}</div>
           <HeaderTabsRoot showSearchBar={showSearchBarInTabs}>
             {tabs}
           </HeaderTabsRoot>
