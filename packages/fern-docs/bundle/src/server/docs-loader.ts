@@ -338,9 +338,7 @@ const createGetPrunedApiCached = (domain: string) =>
         );
       }
 
-      console.debug("@#$aab2", domain, id);
       const api = await getApi(domain, id);
-      console.debug("@#$aab3", api);
       const pruned = prune(api, ...nodes);
 
       // if there is only one node, and it's an endpoint, try to cache the result
@@ -350,7 +348,6 @@ const createGetPrunedApiCached = (domain: string) =>
       }
 
       for (const endpointK of Object.keys(pruned.endpoints)) {
-        console.debug("@#$aab4", endpointK);
         if (
           pruned.endpoints[endpointK as EndpointId]?.environments?.length === 0
         ) {
@@ -362,8 +359,6 @@ const createGetPrunedApiCached = (domain: string) =>
         }
       }
 
-      console.debug("@#$aac", pruned);
-      console.debug("@#$aac-envs", pruned.endpoints);
       return backfillSnippets(pruned, await flagsPromise);
     },
     [domain, cacheSeed()],
