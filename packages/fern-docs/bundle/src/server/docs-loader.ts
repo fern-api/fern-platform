@@ -317,8 +317,6 @@ const createGetPrunedApiCached = (domain: string) =>
     ): Promise<ApiDefinition.ApiDefinition> => {
       const flagsPromise = cachedGetEdgeFlags(domain);
 
-      console.debug("@#$aab", nodes);
-
       // if there is only one node, and it's an endpoint, try to load from cache
       try {
         if (nodes.length === 1 && nodes[0]) {
