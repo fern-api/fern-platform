@@ -32,7 +32,11 @@ export const ReferenceLayout = React.forwardRef<
     <AsideAwareDiv className="fern-layout-reference">
       <SetLayout value="reference" />
       <slot.In>
-        <aside className="fern-layout-reference-aside">{aside}</aside>
+        <aside className="fern-layout-reference-aside">
+          <Prose className="w-full">
+            {aside}
+          </Prose>
+        </aside>
       </slot.In>
       <article
         {...props}

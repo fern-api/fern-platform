@@ -2,7 +2,8 @@
   "compilerOptions": {
     "target": "ESNext",
     "moduleResolution": "Bundler",
-    "strict": true
+    "strict": true,
+    "jsx": "react"
   },
   "ts-node": {
     "compilerOptions": {
