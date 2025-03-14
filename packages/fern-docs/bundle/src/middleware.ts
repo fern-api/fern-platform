@@ -11,6 +11,7 @@ import {
   HEADER_X_FERN_HOST,
   HEADER_X_FORWARDED_HOST,
   conformTrailingSlash,
+  isTrailingSlashEnabled,
   removeLeadingSlash,
   removeTrailingSlash,
 } from "@fern-docs/utils";
@@ -75,7 +76,8 @@ export const middleware: NextMiddleware = async (request) => {
   };
 
   // this mutation is reversed in `useCurrentPathname` hook. if this changes, please update that hook.
-  const withDomain = (pathname: string) => `/${host}/${domain}${pathname}`;
+  const withDomain = (pathname: string) =>
+    `/${host}/${domain}${conformTrailingSlash(pathname)}`;
 
   const withoutBasepath = (splitter: string | RegExp) => {
     const [basepath, newPathname] = splitPathname(pathname, splitter);
@@ -157,11 +159,26 @@ export const middleware: NextMiddleware = async (request) => {
   }
 
   /**
+   * At this point, conform the trailing slash setting or else redirect
+   */
+  if (isTrailingSlashEnabled() !== request.nextUrl.pathname.endsWith("/")) {
+    const destination = request.nextUrl.clone();
+    destination.pathname = conformTrailingSlash(destination.pathname);
+    if (String(destination) !== String(request.nextUrl)) {
+      return NextResponse.redirect(destination);
+    }
+  }
+
+  /**
    * Rewrite .../~explorer to /[domain]/explorer/...
    */
   if (pathname.endsWith("/~explorer")) {
     const pathname = withoutEnding("/~explorer");
-    return rewrite(withDomain(`/explorer/${encodeURIComponent(pathname)}`));
+    return rewrite(
+      withDomain(
+        `/explorer/${encodeURIComponent(conformTrailingSlash(pathname))}`
+      )
+    );
   }
 
   let newToken: string | undefined;
@@ -172,14 +189,22 @@ export const middleware: NextMiddleware = async (request) => {
   const authState = await getAuthState(pathname);
 
   const getResponse = () => {
-    if (authState.authed) {
-      return rewrite(withDomain(`/dynamic/${encodeURIComponent(pathname)}`));
+    if (authState.authed || request.nextUrl.searchParams.has("error")) {
+      return rewrite(
+        withDomain(
+          `/dynamic/${encodeURIComponent(conformTrailingSlash(pathname))}`
+        )
+      );
     }
     if (!authState.ok && authState.authorizationUrl) {
       return NextResponse.redirect(authState.authorizationUrl);
     }
 
-    return rewrite(withDomain(`/static/${encodeURIComponent(pathname)}`));
+    return rewrite(
+      withDomain(
+        `/static/${encodeURIComponent(conformTrailingSlash(pathname))}`
+      )
+    );
   };
 
   const response = getResponse();

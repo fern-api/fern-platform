@@ -107,19 +107,17 @@ async function serializeMdxImpl(
   const jsxElements: string[] = [];
 
   remoteFiles = (await loader?.getFiles?.()) ?? {};
-
-  if (filename != null) {
-    files = (await loader?.getMdxBundlerFiles?.()) ?? {};
-  }
+  files = (await loader?.getMdxBundlerFiles?.()) ?? {};
+  files = mapKeys(files ?? {}, (_file, filename) => {
+    if (cwd != null) {
+      return path.relative(cwd, filename);
+    }
+    return filename;
+  });
 
   const bundled = await bundleMDX({
     source: content,
-    files: mapKeys(files ?? {}, (_file, filename) => {
-      if (cwd != null) {
-        return path.relative(cwd, filename);
-      }
-      return filename;
-    }),
+    files,
 
     globals: {
       "@mdx-js/react": {
@@ -219,7 +217,7 @@ async function serializeMdxImpl(
       o.minify = process.env.NODE_ENV === "production";
       o.sourcemap = false;
 
-      o.logLevel = 'error'; // Reduce logging overhead
+      o.logLevel = "error"; // Reduce logging overhead
 
       o.logLimit = 0; // Disable logging to reduce file operations
       o.metafile = false; // Don't generate metafile (reduces file operations)

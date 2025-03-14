@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import { NextRequest, NextResponse } from "next/server";
 
-import { addLeadingSlash } from "@fern-docs/utils";
+import { slugToHref } from "@fern-docs/utils";
 
 import { createCachedDocsLoader } from "@/server/docs-loader";
 import {
@@ -19,7 +19,7 @@ export async function GET(
 ): Promise<NextResponse> {
   const { host, domain } = await props.params;
 
-  const path = addLeadingSlash(req.nextUrl.searchParams.get("slug") ?? "");
+  const path = slugToHref(req.nextUrl.searchParams.get("slug") ?? "");
   const loader = await createCachedDocsLoader(host, domain);
 
   const node = getPageNodeForPath(await loader.getRoot(), path);

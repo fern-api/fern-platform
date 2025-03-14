@@ -11,7 +11,6 @@ const nextConfig: NextConfig = {
       "@fern-docs/components",
       "@fern-docs/mdx",
       "@fern-docs/search-server",
-      "@fern-docs/syntax-highlighter",
       "@fern-docs/utils",
       "@fern-ui/react-commons",
     ],

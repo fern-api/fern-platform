@@ -7,7 +7,7 @@ import { compact } from "es-toolkit/compat";
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { isNonNullish } from "@fern-api/ui-core-utils";
 import { type TableOfContentsItem, makeToc, toTree } from "@fern-docs/mdx";
-import { addLeadingSlash } from "@fern-docs/utils";
+import { slugToHref } from "@fern-docs/utils";
 
 import { FernLink } from "@/components/FernLink";
 import { PageHeader } from "@/components/PageHeader";
@@ -114,7 +114,7 @@ export async function ChangelogPageOverview({
       : undefined;
   const mdx = await serialize(page?.markdown, {
     filename: page?.filename,
-    url: `https://${loader.domain}/${node.slug}`,
+    slug: node.slug,
   });
 
   return (
@@ -122,9 +122,10 @@ export async function ChangelogPageOverview({
       <PageHeader
         serialize={serialize}
         title={mdx?.frontmatter?.title ?? node.title}
-        titleHref={addLeadingSlash(node.slug)}
+        titleHref={slugToHref(node.slug)}
         subtitle={mdx?.frontmatter?.subtitle ?? mdx?.frontmatter?.excerpt}
         breadcrumb={breadcrumb}
+        slug={node.slug}
       />
       <Markdown mdx={mdx} fallback={page?.markdown} />
     </>
@@ -142,12 +143,13 @@ export async function ChangelogPageEntry({
 }) {
   const page = await loader.getPage(node.pageId);
   const mdx = await serialize(page.markdown, {
-    filename: node.pageId,
-    url: `https://${loader.domain}/${node.slug}`,
+    filename: page.filename,
+    slug: node.slug,
   });
 
   const title = await serialize(mdx?.frontmatter?.title, {
-    url: `https://${loader.domain}/${node.slug}`,
+    filename: page.filename,
+    slug: node.slug,
   });
 
   return (
@@ -157,7 +159,7 @@ export async function ChangelogPageEntry({
         title != null ? (
           <h2>
             <FernLink
-              href={addLeadingSlash(node.slug)}
+              href={slugToHref(node.slug)}
               className="not-prose"
               scroll={true}
             >

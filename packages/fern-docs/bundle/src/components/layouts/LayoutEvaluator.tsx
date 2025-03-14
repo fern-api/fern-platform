@@ -34,7 +34,7 @@ export async function LayoutEvaluator({
   const mdx = await serialize(markdown, {
     filename,
     toc: true,
-    url: `https://${loader.domain}/${slug}`,
+    slug,
   });
 
   const exports = getMDXExport(mdx);
@@ -60,6 +60,7 @@ export async function LayoutEvaluator({
         ) : undefined
       }
       bottomNavigation={bottomNavigation}
+      slug={slug}
     >
       <MdxContent mdx={mdx} fallback={markdown} />
     </LayoutEvaluatorContent>

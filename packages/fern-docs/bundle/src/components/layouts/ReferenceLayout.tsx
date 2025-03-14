@@ -29,31 +29,29 @@ export const ReferenceLayout = React.forwardRef<
   const slot = useLazyRef(() => tunnel()).current;
   const isMobile = useIsMobile();
   return (
-    <AsideAwareDiv className="pl-page-padding mx-auto min-w-0 shrink pr-[calc(var(--page-padding)+var(--aside-offset))]">
+    <AsideAwareDiv className="fern-layout-reference">
       <SetLayout value="reference" />
       <slot.In>
-        <aside className="order-last flex max-h-[calc(100svh-var(--header-height)-6rem)] shrink-0 md:sticky md:top-[calc(var(--header-height)+1.5rem)] md:h-fit md:max-h-[calc(100vh-var(--header-height)-3rem)]">
-          {aside}
-        </aside>
+        <aside className="fern-layout-reference-aside">{aside}</aside>
       </slot.In>
       <article
         {...props}
         className={cn(
           "w-content-width md:w-endpoint-width max-w-full",
-          {
-            "xl:w-page-width": enableFullWidth,
-          },
+          { "xl:w-page-width": enableFullWidth },
           props.className
         )}
         ref={ref}
       >
         {header}
-        <div className="my-6 md:grid md:grid-cols-2 md:gap-8 lg:gap-12">
+        <div className="fern-layout-reference-content">
           {!isMobile && <slot.Out />}
           <div className="mb-12 space-y-12">
-            <Prose className="prose-h1:mt-[1.5em] first:prose-h1:mt-0 max-w-full">
-              {children}
-            </Prose>
+            {children && (
+              <Prose className="prose-h1:mt-[1.5em] first:prose-h1:mt-0 max-w-full">
+                {children}
+              </Prose>
+            )}
             {isMobile && <slot.Out />}
             {reference}
             {footer}

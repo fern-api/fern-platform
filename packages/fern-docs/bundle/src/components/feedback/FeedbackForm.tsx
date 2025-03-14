@@ -1,3 +1,5 @@
+"use client";
+
 import { FC, FormEvent, useCallback, useMemo, useRef, useState } from "react";
 
 import { useAtom } from "jotai";

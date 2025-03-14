@@ -1,6 +1,6 @@
 import "server-only";
 
-import { unstable_cache } from "next/cache";
+import { unstable_cache, unstable_cacheTag } from "next/cache";
 import { notFound } from "next/navigation";
 import { after } from "next/server";
 import { cache } from "react";
@@ -8,6 +8,7 @@ import { cache } from "react";
 import { kv } from "@vercel/kv";
 import { mapValues } from "es-toolkit/object";
 import { AsyncOrSync, UnreachableCaseError } from "ts-essentials";
+import { z } from "zod";
 
 import {
   ApiDefinition,
@@ -30,7 +31,6 @@ import {
   PageId,
   Slug,
   TypeId,
-  slugjoin,
 } from "@fern-api/fdr-sdk/navigation";
 import { CONTINUE, SKIP } from "@fern-api/fdr-sdk/traversers";
 import { isNonNullish, isPlainObject } from "@fern-api/ui-core-utils";
@@ -38,10 +38,13 @@ import { AuthEdgeConfig } from "@fern-docs/auth";
 import { HttpMethod } from "@fern-docs/components";
 import { getAuthEdgeConfig, getEdgeFlags } from "@fern-docs/edge-config";
 import {
+  DEFAULT_CONTENT_WIDTH,
+  DEFAULT_GUTTER_WIDTH,
+  DEFAULT_HEADER_HEIGHT,
   DEFAULT_LOGO_HEIGHT,
+  DEFAULT_PAGE_WIDTH,
+  DEFAULT_SIDEBAR_WIDTH,
   EdgeFlags,
-  addLeadingSlash,
-  removeTrailingSlash,
   withoutStaging,
 } from "@fern-docs/utils";
 
@@ -52,18 +55,22 @@ import { generateFernColorPalette } from "./generateFernColors";
 import { FernFonts, generateFonts } from "./generateFonts";
 import { getDocsUrlMetadata } from "./getDocsUrlMetadata";
 import { loadWithUrl as uncachedLoadWithUrl } from "./loadWithUrl";
+import { postToEngineeringNotifs } from "./slack";
 import { FernColorTheme, FernLayoutConfig, FileData } from "./types";
+import { cleanBasePath } from "./utils/clean-base-path";
 import { pruneWithAuthState } from "./withRbac";
 
 const loadWithUrl = uncachedLoadWithUrl;
 
-interface DocsMetadata {
-  domain: string;
-  basePath: string;
-  url: string;
-  org: string;
-  isPreview: boolean;
-}
+const DocsMetadataSchema = z.object({
+  domain: z.string(),
+  basePath: z.string(),
+  url: z.string(),
+  org: z.string(),
+  isPreview: z.boolean(),
+});
+
+type DocsMetadata = z.infer<typeof DocsMetadataSchema>;
 
 export interface DocsLoader {
   domain: string;
@@ -188,14 +195,6 @@ const cachedGetEdgeFlags = cache(async (domain: string) => {
   return await getEdgeFlags(domain);
 });
 
-export function cleanBasePath(basePath: string | undefined) {
-  const basepath = removeTrailingSlash(addLeadingSlash(slugjoin(basePath)));
-  if (basepath === "/") {
-    return "";
-  }
-  return basepath;
-}
-
 export const getMetadataFromResponse = async (
   domain: string,
   responsePromise: AsyncOrSync<DocsV2Read.LoadDocsForUrlResponse>
@@ -215,25 +214,47 @@ export const getMetadataFromResponse = async (
 
 export const getMetadata = cache(
   async (domain: string): Promise<DocsMetadata> => {
+    "use cache";
+
+    unstable_cacheTag(domain, "getMetadata");
+
     try {
-      const cached = await kv.hget<DocsMetadata>(domain, "metadata");
-      if (cached != null) {
-        return cached;
+      const cached = DocsMetadataSchema.safeParse(
+        await kv.hget<DocsMetadata>(domain, "metadata")
+      );
+      if (cached.success) {
+        console.log("[getMetadata] cache hit:", cached.data);
+        return cached.data;
       }
     } catch (error) {
       console.warn(
-        `Failed to get metadata for ${domain}, fallback to uncached`,
+        `Failed to get metadata for ${domain} from kv, fallback to uncached`,
         error
       );
     }
-    const metadata = getMetadataFromResponse(domain, loadWithUrl(domain));
-    kvSet(domain, "metadata", metadata);
-    return metadata;
+    try {
+      const metadata = await getMetadataFromResponse(
+        domain,
+        loadWithUrl(domain)
+      );
+      kvSet(domain, "metadata", metadata);
+      console.log("[getMetadata] cache miss:", metadata);
+      return metadata;
+    } catch (error) {
+      postToEngineeringNotifs(
+        `:rotating_light: Failed to get metadata for ${domain} with the following error: ${String(error)}`
+      );
+      throw error;
+    }
   }
 );
 
 const getFiles = cache(
   async (domain: string): Promise<Record<string, FileData>> => {
+    "use cache";
+
+    unstable_cacheTag(domain, "getFiles");
+
     try {
       const cached = await kv.hget<Record<string, FileData>>(domain, "files");
       if (cached) {
@@ -269,6 +290,10 @@ const getFiles = cache(
 
 // the api reference may be too large to cache, so we don't cache it in the KV store
 const getApi = async (domain: string, id: string) => {
+  "use cache";
+
+  unstable_cacheTag(domain, "getApi", id);
+
   const response = await loadWithUrl(domain);
   const latest = response.definition.apisV2[ApiDefinitionId(id)];
   if (latest != null) {
@@ -365,6 +390,10 @@ const getEndpointById = async (
   authSchemes: AuthScheme[];
   types: Record<TypeId, TypeDefinition>;
 }> => {
+  "use cache";
+
+  unstable_cacheTag(domain, "getEndpointById", apiDefinitionId, endpointId);
+
   const api = await createGetPrunedApiCached(domain)(apiDefinitionId, {
     type: "endpoint",
     endpointId,
@@ -598,6 +627,10 @@ const getPage = cache(async (domain: string, pageId: string) => {
 });
 
 const getMdxBundlerFiles = cache(async (domain: string) => {
+  "use cache";
+
+  unstable_cacheTag(domain, "getMdxBundlerFiles");
+
   try {
     const cached = await kv.hget<Record<string, string>>(
       domain,
@@ -619,6 +652,10 @@ const getMdxBundlerFiles = cache(async (domain: string) => {
 });
 
 const getColors = cache(async (domain: string) => {
+  "use cache";
+
+  unstable_cacheTag(domain, "getColors");
+
   try {
     const cached = await kv.hget<{
       light: FernColorTheme | undefined;
@@ -702,6 +739,10 @@ const getColors = cache(async (domain: string) => {
 });
 
 const getFonts = cache(async (domain: string) => {
+  "use cache";
+
+  unstable_cacheTag(domain, "getFonts");
+
   try {
     const cached = await kv.hget<FernFonts>(domain, "fonts");
     if (cached != null) {
@@ -723,6 +764,10 @@ const getFonts = cache(async (domain: string) => {
 });
 
 const getLayout = cache(async (domain: string) => {
+  "use cache";
+
+  unstable_cacheTag(domain, "getLayout");
+
   const config = await getConfig(domain);
   if (!config) {
     console.debug("Could not find config for domain", domain);
@@ -730,15 +775,21 @@ const getLayout = cache(async (domain: string) => {
   }
 
   const logoHeight = config.logoHeight ?? DEFAULT_LOGO_HEIGHT;
-  const sidebarWidth = toPx(config.layout?.sidebarWidth) ?? 288;
+  const sidebarWidth =
+    toPx(config.layout?.sidebarWidth) ?? DEFAULT_SIDEBAR_WIDTH;
+  const contentWidth =
+    toPx(config.layout?.contentWidth) ?? DEFAULT_CONTENT_WIDTH;
   const pageWidth =
     config.layout?.pageWidth?.type === "full"
       ? undefined
-      : (toPx(config.layout?.pageWidth) ?? 1_408);
-  const headerHeight = toPx(config.layout?.headerHeight) ?? 64;
-  const contentWidth = toPx(config.layout?.contentWidth) ?? 640;
-  const tabsPlacement = config.layout?.tabsPlacement ?? "SIDEBAR";
-  const searchbarPlacement = config.layout?.searchbarPlacement ?? "HEADER";
+      : (toPx(config.layout?.pageWidth) ??
+        calcDefaultPageWidth(sidebarWidth, contentWidth));
+  const headerHeight =
+    toPx(config.layout?.headerHeight) ?? DEFAULT_HEADER_HEIGHT;
+  const tabsPlacement =
+    config.layout?.tabsPlacement ?? defaultTabsPlacement(domain);
+  const searchbarPlacement =
+    config.layout?.searchbarPlacement ?? defaultSearchbarPlacement(domain);
   return {
     logoHeight,
     sidebarWidth,
@@ -750,6 +801,40 @@ const getLayout = cache(async (domain: string) => {
     isHeaderDisabled: config.layout?.disableHeader ?? false,
   };
 });
+
+function defaultTabsPlacement(domain: string) {
+  if (domain.includes("cohere")) {
+    return "HEADER";
+  }
+  return "SIDEBAR";
+}
+
+function defaultSearchbarPlacement(domain: string) {
+  if (domain.includes("cohere")) {
+    return "HEADER_TABS";
+  }
+  return "HEADER";
+}
+
+/**
+ * The default page width should be at least 1408px (88rem), and should be able to fit 1 content + 2 sidebars
+ *
+ * The default width for content is 40rem, and the default width for a sidebar is 18rem,
+ * so the 2x sidebar + 1x content + 2x gutter = 76rem (1280px),
+ * which happens to be the `xl` breakpoint in tailwind as well as the resolution of a 13 inch macbook air.
+ *
+ * The reason the page width is bumped up to 88rem instead of 76rem is to create a little more breathing room between
+ * content and sidebars on a larger screen (such as a 16 inch macbook pro). This is a 8rem (128px) true gutter between the content and sidebars.
+ *
+ * The 16 inch macbook pro has 1728px (108rem) of width, which results in a 10rem (160px) gutter _around_ the entire page.
+ *
+ */
+function calcDefaultPageWidth(sidebarWidth: number, contentWidth: number) {
+  return Math.max(
+    DEFAULT_PAGE_WIDTH,
+    sidebarWidth * 2 + contentWidth + DEFAULT_GUTTER_WIDTH
+  );
+}
 
 const getAuthConfig = getAuthEdgeConfig;
 

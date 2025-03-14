@@ -11,7 +11,7 @@ import {
 import { EMPTY_ARRAY } from "@fern-api/ui-core-utils";
 import type { PathnameViewerRules } from "@fern-docs/auth";
 import { EVERYONE_ROLE } from "@fern-docs/search-server";
-import { addLeadingSlash, matchPath } from "@fern-docs/utils";
+import { matchPath, slugToHref } from "@fern-docs/utils";
 
 import type { AuthState } from "./auth/getAuthState";
 
@@ -56,7 +56,7 @@ export function withBasicTokenAnonymousCheck(
   return (node, parents = EMPTY_ARRAY) => {
     if (
       hasMetadata(node) &&
-      withBasicTokenAnonymous(auth, addLeadingSlash(node.slug)) === Gate.ALLOW
+      withBasicTokenAnonymous(auth, slugToHref(node.slug)) === Gate.ALLOW
     ) {
       return Gate.ALLOW;
     }
@@ -66,7 +66,7 @@ export function withBasicTokenAnonymousCheck(
     // if (
     //     hasMetadata(node) &&
     //     !isPage(node as NavigationNode) &&
-    //     withBasicTokenAnonymous(auth, addLeadingSlash(node.slug)) === Gate.DENY
+    //     withBasicTokenAnonymous(auth, slugToHref(node.slug)) === Gate.DENY
     // ) {
     //     return Gate.DENY;
     // }
@@ -140,9 +140,8 @@ export function pruneWithBasicTokenAuthed(
     .hide(
       (n) =>
         n.hidden ||
-        auth.anonymous?.find((path) =>
-          matchPath(path, addLeadingSlash(n.slug))
-        ) != null
+        auth.anonymous?.find((path) => matchPath(path, slugToHref(n.slug))) !=
+          null
     )
     // mark all nodes as unauthed since we are currently authenticated
     .authed(() => false)

@@ -1,12 +1,14 @@
+"use client";
+
 import { forwardRef, memo, useImperativeHandle, useMemo, useRef } from "react";
 
 import { isEqual } from "es-toolkit/predicate";
 import type { Element } from "hast";
 
-import { cn } from "@fern-docs/components";
-import { FernScrollArea } from "@fern-docs/components";
 import { parseStringStyle, visit } from "@fern-docs/mdx";
 
+import { FernScrollArea } from "../FernScrollArea";
+import { cn } from "../cn";
 import { HastToJSX } from "./HastToJsx";
 import { HighlightedTokens } from "./fernShiki";
 import {
@@ -33,6 +35,7 @@ export interface FernSyntaxHighlighterTokensProps {
   viewportRef?: React.RefObject<ScrollToHandle | null>;
   maxLines?: number;
   wordWrap?: boolean;
+  template?: Record<string, string>;
 }
 
 export function fernSyntaxHighlighterTokenPropsAreEqual(
@@ -63,6 +66,7 @@ export const FernSyntaxHighlighterTokens = memo(
       tokens,
       maxLines,
       wordWrap,
+      template,
     } = props;
     const scrollAreaRef = useRef<HTMLDivElement>(null);
 
@@ -183,7 +187,7 @@ export const FernSyntaxHighlighterTokens = memo(
                         </td>
                       )}
                       <td className="code-block-line-content">
-                        <HastToJSX hast={line} />
+                        <HastToJSX hast={line} template={template} />
                       </td>
                     </tr>
                   ))}

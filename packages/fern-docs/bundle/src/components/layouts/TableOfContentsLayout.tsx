@@ -1,4 +1,4 @@
-import { FernScrollArea, cn } from "@fern-docs/components";
+import { FernScrollArea } from "@fern-docs/components";
 import type { TableOfContentsItem } from "@fern-docs/mdx";
 
 import { SetEmptyTableOfContents } from "@/state/layout";
@@ -19,13 +19,7 @@ export function TableOfContentsLayout({
     !hideTableOfContents &&
     tableOfContents.length > 0;
   return (
-    <aside
-      id="fern-toc"
-      className={cn(
-        "top-header-height sticky order-last hidden h-fit max-h-[calc(100dvh-var(--spacing-header-height))] flex-col xl:flex",
-        "w-(--sticky-aside-width) pr-(--aside-offset)"
-      )}
-    >
+    <aside id="fern-toc">
       <SetEmptyTableOfContents value={!showTableOfContents} />
       {showTableOfContents && (
         <FernScrollArea className="px-4 pb-12 pt-8 lg:pr-5">

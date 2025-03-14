@@ -62,7 +62,7 @@ export const PlaygroundEndpointPath: FC<PlaygroundEndpointPathProps> = ({
 
   return (
     <div className="playground-endpoint">
-      <div className="bg-(color:--grayscale-a3) rounded-2 flex h-10 min-w-0 flex-1 shrink items-center gap-2 px-4 py-2 max-sm:h-8 max-sm:px-2 max-sm:py-1 sm:rounded-[20px]">
+      <div className="bg-(color:--grayscale-a3) rounded-2 sm:rounded-5 flex h-10 min-w-0 flex-1 shrink items-center gap-2 px-4 py-2 max-sm:h-8 max-sm:px-2 max-sm:py-1">
         {method != null && (
           <HttpMethodBadge
             method={method}

@@ -1,6 +1,6 @@
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { isNonNullish } from "@fern-api/ui-core-utils";
-import { addLeadingSlash } from "@fern-docs/utils";
+import { slugToHref } from "@fern-docs/utils";
 
 import { createRoleFacet } from "../../shared/roles/create-role-facet";
 import {
@@ -57,7 +57,7 @@ export function createBaseRecord({
           )
           .map((metadata) => ({
             title: metadata.title,
-            pathname: addLeadingSlash(metadata.canonicalSlug ?? metadata.slug),
+            pathname: slugToHref(metadata.canonicalSlug ?? metadata.slug),
           }));
 
   const { roles, authed } = createViewersForNodes(
@@ -69,8 +69,8 @@ export function createBaseRecord({
     objectID: `${org_id}:${domain}:${node.id}`,
     org_id,
     domain,
-    canonicalPathname: addLeadingSlash(node.canonicalSlug ?? node.slug),
-    pathname: addLeadingSlash(node.slug),
+    canonicalPathname: slugToHref(node.canonicalSlug ?? node.slug),
+    pathname: slugToHref(node.slug),
     icon: node.icon,
     title: node.title,
     breadcrumb,

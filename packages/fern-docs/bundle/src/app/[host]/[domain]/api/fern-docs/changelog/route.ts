@@ -9,7 +9,7 @@ import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { NodeCollector } from "@fern-api/fdr-sdk/navigation";
 import { assertNever, withDefaultProtocol } from "@fern-api/ui-core-utils";
 import { getFrontmatter } from "@fern-docs/mdx";
-import { COOKIE_FERN_TOKEN, addLeadingSlash } from "@fern-docs/utils";
+import { COOKIE_FERN_TOKEN, slugToHref } from "@fern-docs/utils";
 
 import { createCachedDocsLoader } from "@/server/docs-loader";
 import { FileData } from "@/server/types";
@@ -23,7 +23,7 @@ export async function GET(
 ): Promise<NextResponse> {
   const { host, domain } = await props.params;
 
-  const path = addLeadingSlash(req.nextUrl.searchParams.get("slug") ?? "");
+  const path = slugToHref(req.nextUrl.searchParams.get("slug") ?? "");
   const format = getFormat(req);
 
   const fernToken = (await cookies()).get(COOKIE_FERN_TOKEN)?.value;

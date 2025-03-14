@@ -33,6 +33,7 @@ export const SearchV2Trigger = React.memo(function SearchV2Trigger(
   return (
     <DesktopSearchButton
       {...props}
+      id="fern-search-button"
       onClick={toggleSearchDialog}
       variant={isInitialized ? "default" : "loading"}
     />

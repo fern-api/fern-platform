@@ -6,8 +6,8 @@ import {
   TypeDefinition,
   TypeShape,
 } from "@fern-api/fdr-sdk/api-definition";
+import { slugjoin } from "@fern-api/fdr-sdk/navigation";
 import { isNonNullish } from "@fern-api/ui-core-utils";
-import { removeLeadingSlash } from "@fern-docs/utils";
 
 import { DocsLoader, createPruneKey } from "./docs-loader";
 import { pascalCaseHeaderKey } from "./headerKeyCase";
@@ -70,10 +70,7 @@ export function getPageNodeForPath(
   if (root == null) {
     return undefined;
   }
-  const found = FernNavigation.utils.findNode(
-    root,
-    FernNavigation.Slug(removeLeadingSlash(path))
-  );
+  const found = FernNavigation.utils.findNode(root, slugjoin(path));
   if (found.type !== "found" || !FernNavigation.isPage(found.node)) {
     return undefined;
   }

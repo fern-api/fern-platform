@@ -30,11 +30,7 @@ const secrets = [
   "VERCEL_AUTOMATION_BYPASS_SECRET",
 ];
 
-export default function DashboardLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function Layout({ children }: { children: React.ReactNode }) {
   for (const secret of secrets) {
     const secretValue = process.env[secret];
     if (secretValue != null) {

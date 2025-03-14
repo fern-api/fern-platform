@@ -5,7 +5,7 @@ import { FC, useEffect, useMemo, useRef } from "react";
 import {
   FernSyntaxHighlighter,
   type ScrollToHandle,
-} from "@fern-docs/syntax-highlighter";
+} from "@fern-docs/components/syntax-highlighter";
 
 import { PlaygroundResponse } from "./types/playgroundResponse";
 

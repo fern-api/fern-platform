@@ -3,7 +3,7 @@
 import React from "react";
 
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
-import { addLeadingSlash } from "@fern-docs/utils";
+import { slugToHref } from "@fern-docs/utils";
 
 import { FernAnchor } from "@/components/FernAnchor";
 import { getSlugFromChildren } from "@/components/util/getSlugFromText";
@@ -22,7 +22,7 @@ export function CardedSection({
   children: React.ReactNode | undefined;
   slug: FernNavigation.Slug;
 } & Omit<React.HTMLAttributes<HTMLDivElement>, "title">) {
-  const href = `${addLeadingSlash(slug)}#${getSlugFromChildren(title)}`;
+  const href = `${slugToHref(slug)}#${getSlugFromChildren(title)}`;
   return (
     <section
       {...props}

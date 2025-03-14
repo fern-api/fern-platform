@@ -4,7 +4,7 @@ import React, { ReactElement } from "react";
 
 import type { FernNavigation } from "@fern-api/fdr-sdk";
 import { Badge } from "@fern-docs/components";
-import { addLeadingSlash } from "@fern-docs/utils";
+import { slugToHref } from "@fern-docs/utils";
 
 import { FernLink } from "@/components/FernLink";
 import { Separator } from "@/components/Separator";
@@ -32,7 +32,7 @@ export default function ChangelogEntryPage({
   children: React.ReactNode;
 }): ReactElement<any> {
   return (
-    <article className="max-w-page-width-padded px-page-padding mx-auto min-w-0 flex-1">
+    <article className="fern-layout-page">
       <SetLayout value="page" />
       <HideAsides force />
       <HideBuiltWithFern>
@@ -45,7 +45,7 @@ export default function ChangelogEntryPage({
           id={node.date}
           stickyContent={
             <Badge asChild>
-              <FernLink href={addLeadingSlash(node.slug)} scroll={true}>
+              <FernLink href={slugToHref(node.slug)} scroll={true}>
                 {node.title}
               </FernLink>
             </Badge>
@@ -55,6 +55,7 @@ export default function ChangelogEntryPage({
         </ChangelogContentLayout>
       </HideBuiltWithFern>
       <FooterLayoutWithEditThisPageUrl
+        slug={node.slug}
         pageId={node.pageId}
         loader={loader}
         serialize={serialize}
@@ -68,17 +69,20 @@ async function FooterLayoutWithEditThisPageUrl({
   pageId,
   loader,
   serialize,
+  slug,
   bottomNavigation,
 }: {
   pageId: string;
   loader: DocsLoader;
   serialize: MdxSerializer;
+  slug: string;
   bottomNavigation: React.ReactNode;
 }) {
   // all this does is get the edit this page url from the mdx frontmatter, but hopefully the mdx was already serialized and cached
   const page = await loader.getPage(pageId);
   const mdx = await serialize(page.markdown, {
-    filename: pageId,
+    filename: page.filename,
+    slug,
   });
   const editThisPageUrl =
     mdx?.frontmatter?.["edit-this-page-url"] ?? page.editThisPageUrl;

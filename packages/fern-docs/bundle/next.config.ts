@@ -8,9 +8,7 @@ const cdnUri =
   process.env.NEXT_PUBLIC_CDN_URI != null
     ? new URL("/", process.env.NEXT_PUBLIC_CDN_URI)
     : undefined;
-const isTrailingSlashEnabled =
-  process.env.TRAILING_SLASH === "1" ||
-  process.env.NEXT_PUBLIC_TRAILING_SLASH === "1";
+const isTrailingSlashEnabled = process.env.NEXT_PUBLIC_TRAILING_SLASH === "1";
 
 // TODO: move this to a shared location (this is copied in FernImage.tsx)
 const NEXT_IMAGE_HOSTS = [
@@ -44,7 +42,6 @@ const nextConfig: NextConfig = {
     "@fern-docs/mdx",
     "@fern-docs/search-server",
     "@fern-docs/search-ui",
-    "@fern-docs/syntax-highlighter",
     "@fern-docs/utils",
     "@fern-platform/fdr-utils",
     "@fern-ui/loadable",

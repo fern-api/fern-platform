@@ -22,7 +22,7 @@ export function OverviewLayout({
     <>
       <SetLayout value="overview" />
       {toc}
-      <AsideAwareDiv className="px-page-padding mx-auto mb-12 min-w-0 shrink space-y-8">
+      <AsideAwareDiv className="fern-layout-overview">
         <article className="w-content-wide-width max-w-full">
           {header}
           <Prose className="prose-h1:mt-[1.5em] first:prose-h1:mt-0 max-w-full">

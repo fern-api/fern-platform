@@ -3,7 +3,7 @@
 import { ChevronDown, Lock } from "lucide-react";
 
 import { Availability, AvailabilityBadge, Badge } from "@fern-docs/components";
-import { addLeadingSlash } from "@fern-docs/utils";
+import { slugToHref } from "@fern-docs/utils";
 
 import { useCurrentVersionId, useCurrentVersionSlug } from "@/state/navigation";
 
@@ -56,7 +56,7 @@ export function VersionDropdownClient({
           ),
           value: versionId,
           disabled: availability == null,
-          href: addLeadingSlash(
+          href: slugToHref(
             pickVersionSlug({
               currentVersionSlug,
               defaultSlug,
