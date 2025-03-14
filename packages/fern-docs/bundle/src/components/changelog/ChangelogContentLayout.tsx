@@ -19,13 +19,15 @@ export function ChangelogContentLayout({
       {...props}
       className={cn("fern-changelog-content", props.className)}
     >
-      <aside>{stickyContent}</aside>
+      {/* hack: force the three-column layout */}
+      <aside />
       <div className="max-w-content-width mx-auto w-full">
         {stickyContent != null && (
           <div className="eyebrow">{stickyContent}</div>
         )}
         {children}
       </div>
+      <aside />
     </Component>
   );
 }

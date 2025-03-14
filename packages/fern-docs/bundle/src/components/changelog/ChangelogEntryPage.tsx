@@ -13,6 +13,7 @@ import { DocsLoader } from "@/server/docs-loader";
 import { MdxSerializer } from "@/server/mdx-serializer";
 import { HideAsides, SetLayout } from "@/state/layout";
 
+import { AsideAwareDiv } from "../layouts/AsideAwareDiv";
 import { FooterLayout } from "../layouts/FooterLayout";
 import { ChangelogContentLayout } from "./ChangelogContentLayout";
 
@@ -32,36 +33,38 @@ export default function ChangelogEntryPage({
   children: React.ReactNode;
 }): ReactElement<any> {
   return (
-    <article className="fern-layout-page">
+    <AsideAwareDiv className="fern-layout-aside-container mr-auto">
       <SetLayout value="page" />
       <HideAsides force />
-      <HideBuiltWithFern>
-        <ChangelogContentLayout as="section" className="mb-8">
-          {overview}
-        </ChangelogContentLayout>
-        <Separator className="max-w-content-width mx-auto my-12" />
-        <ChangelogContentLayout
-          as="article"
-          id={node.date}
-          stickyContent={
-            <Badge asChild>
-              <FernLink href={slugToHref(node.slug)} scroll={true}>
-                {node.title}
-              </FernLink>
-            </Badge>
-          }
-        >
-          {children}
-        </ChangelogContentLayout>
-      </HideBuiltWithFern>
-      <FooterLayoutWithEditThisPageUrl
-        slug={node.slug}
-        pageId={node.pageId}
-        loader={loader}
-        serialize={serialize}
-        bottomNavigation={bottomNavigation}
-      />
-    </article>
+      <article className="fern-layout-page">
+        <HideBuiltWithFern>
+          <ChangelogContentLayout as="section" className="mb-8">
+            {overview}
+          </ChangelogContentLayout>
+          <Separator className="max-w-content-width mx-auto my-12" />
+          <ChangelogContentLayout
+            as="article"
+            id={node.date}
+            stickyContent={
+              <Badge asChild>
+                <FernLink href={slugToHref(node.slug)} scroll={true}>
+                  {node.title}
+                </FernLink>
+              </Badge>
+            }
+          >
+            {children}
+          </ChangelogContentLayout>
+        </HideBuiltWithFern>
+        <FooterLayoutWithEditThisPageUrl
+          slug={node.slug}
+          pageId={node.pageId}
+          loader={loader}
+          serialize={serialize}
+          bottomNavigation={bottomNavigation}
+        />
+      </article>
+    </AsideAwareDiv>
   );
 }
 

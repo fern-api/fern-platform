@@ -49,12 +49,8 @@
   .fern-changelog-content {
     @apply max-w-content-wide-width relative mx-auto grid w-full grid-cols-1 gap-4 lg:grid-cols-[1fr_minmax(0,var(--content-width))_1fr];
 
-    & > aside {
-      @apply sticky hidden h-fit lg:flex lg:justify-end;
-    }
-
     .eyebrow {
-      @apply mb-4 lg:hidden;
+      @apply mb-4;
     }
   }
 }
