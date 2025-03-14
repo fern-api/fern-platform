@@ -13,6 +13,11 @@ import { X } from "lucide-react";
 import { Button } from "@fern-docs/components/button";
 
 import {
+  FERN_SEARCH_DIALOG_ID,
+  FERN_SEARCH_DIALOG_OVERLAY_ID,
+} from "@/constants";
+
+import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
@@ -88,7 +93,7 @@ export const DesktopSearchDialog = memo(
         </DesktopCommandAfterInput>
 
         <Dialog.Portal>
-          <Dialog.Overlay id="fern-search-dialog-overlay" />
+          <Dialog.Overlay id={FERN_SEARCH_DIALOG_OVERLAY_ID} />
 
           <VisuallyHidden>
             <Dialog.Title>Search</Dialog.Title>
@@ -96,7 +101,7 @@ export const DesktopSearchDialog = memo(
           </VisuallyHidden>
 
           <Dialog.Content
-            id="fern-search-dialog"
+            id={FERN_SEARCH_DIALOG_ID}
             asChild={asChild}
             onEscapeKeyDown={(e) => {
               e.preventDefault();

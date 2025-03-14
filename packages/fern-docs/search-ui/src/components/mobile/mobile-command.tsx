@@ -4,6 +4,8 @@ import { useSearchBox } from "react-instantsearch";
 import { cn } from "@fern-docs/components";
 import { Button } from "@fern-docs/components/button";
 
+import { FERN_SEARCH_MOBILE_COMMAND_ID } from "@/constants";
+
 import { FacetFilter } from "../../types";
 import { FACET_DISPLAY_NAME_MAP } from "../../utils/facet-display";
 import * as Command from "../cmdk";
@@ -45,7 +47,7 @@ export const MobileCommand = forwardRef<
     <Command.Root
       ref={ref}
       {...rest}
-      id="fern-search-mobile-command"
+      id={FERN_SEARCH_MOBILE_COMMAND_ID}
       className={cn("flex flex-col", rest.className)}
     >
       <div data-cmdk-fern-header="">

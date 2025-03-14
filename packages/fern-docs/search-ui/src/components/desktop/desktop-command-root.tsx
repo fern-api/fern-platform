@@ -10,6 +10,8 @@ import {
 import { composeEventHandlers } from "@radix-ui/primitive";
 import { composeRefs } from "@radix-ui/react-compose-refs";
 
+import { FERN_SEARCH_DESKTOP_COMMAND_ID } from "@/constants";
+
 import * as Command from "../cmdk";
 import { CommandUxProvider } from "../shared/command-ux";
 
@@ -55,7 +57,7 @@ export const DesktopCommandRoot = forwardRef<
           label="Search"
           ref={composeRefs(forwardedRef, ref)}
           {...props}
-          id="fern-search-desktop-command"
+          id={FERN_SEARCH_DESKTOP_COMMAND_ID}
           onKeyDown={composeEventHandlers(
             props.onKeyDown,
             (e) => {
