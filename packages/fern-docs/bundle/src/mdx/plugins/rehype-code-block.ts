@@ -43,8 +43,26 @@ export const rehypeCodeBlock: Unified.Plugin<[], Hast.Root> = () => {
         return;
       }
 
+      const language = compact(flatten([codeNode.properties?.className]))
+        .find(
+          (className): className is string =>
+            typeof className === "string" && className.startsWith("language-")
+        )
+        ?.replace("language-", "");
+
+      if (language === "mermaid" && codeNode.children[0]?.type === "text") {
+        parent?.children.splice(index, 1, {
+          type: "mdxJsxFlowElement",
+          name: "Mermaid",
+          attributes: [],
+          children: [{ type: "text", value: codeNode.children[0].value }],
+        });
+        return;
+      }
+
       const meta = codeNode.data?.meta ?? "";
       let replacement: Mdast.RootContent | undefined;
+
       try {
         replacement = mdastFromMarkdown(
           `<CodeBlock ${migrateMeta(meta)} />`,
@@ -62,19 +80,6 @@ export const rehypeCodeBlock: Unified.Plugin<[], Hast.Root> = () => {
         return;
       }
 
-      replacement.position = codeNode.position;
-      replacement.attributes.unshift(
-        ...propertiesToMdxJsxAttributes(node.properties),
-        ...propertiesToMdxJsxAttributes(codeNode.properties)
-      );
-
-      const language = compact(flatten([codeNode.properties?.className]))
-        .find(
-          (className): className is string =>
-            typeof className === "string" && className.startsWith("language-")
-        )
-        ?.replace("language-", "");
-
       if (language) {
         replacement.attributes.unshift({
           type: "mdxJsxAttribute",
@@ -82,6 +87,12 @@ export const rehypeCodeBlock: Unified.Plugin<[], Hast.Root> = () => {
           value: language,
         });
       }
+
+      replacement.position = codeNode.position;
+      replacement.attributes.unshift(
+        ...propertiesToMdxJsxAttributes(node.properties),
+        ...propertiesToMdxJsxAttributes(codeNode.properties)
+      );
 
       if (
         codeNode.children[0]?.type === "text" ||
