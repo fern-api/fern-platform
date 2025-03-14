@@ -6,11 +6,23 @@
 
   .fern-layout-aside-container {
     &[data-aside-state="hidden"] {
-      @apply lg:ml-0 xl:ml-auto;
+      @apply mx-auto min-w-0;
+
+      .eyebrow {
+        @apply flex lg:hidden;
+      }
+
+      .floating-tab {
+        @apply hidden lg:sticky lg:top-0;
+      }
     }
 
     &[data-aside-state="visible"] {
-      @apply pr-page-padding;
+      @apply pr-page-padding xl:ml-0 xl:mr-auto;
+
+      .floating-tab {
+        @apply hidden;
+      }
     }
   }
 
@@ -47,7 +59,7 @@
   }
 
   .fern-changelog-content {
-    @apply max-w-content-wide-width relative mx-auto grid w-full grid-cols-1 gap-4 lg:grid-cols-[1fr_minmax(0,var(--content-width))_1fr];
+    @apply max-w-content-wide-width relative mx-auto grid w-full grid-cols-1 gap-4;
 
     .eyebrow {
       @apply mb-4;

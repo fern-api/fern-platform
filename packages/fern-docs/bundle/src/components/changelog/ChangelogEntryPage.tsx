@@ -33,18 +33,19 @@ export default function ChangelogEntryPage({
   children: React.ReactNode;
 }): ReactElement<any> {
   return (
-    <AsideAwareDiv className="fern-layout-aside-container mr-auto">
+    <AsideAwareDiv className="fern-layout-aside-container">
       <SetLayout value="page" />
       <HideAsides force />
       <article className="fern-layout-page">
         <HideBuiltWithFern>
-          <ChangelogContentLayout as="section" className="mb-8">
+          <ChangelogContentLayout as="section" className="mb-8" fullWidth>
             {overview}
           </ChangelogContentLayout>
           <Separator className="max-w-content-width mx-auto my-12" />
           <ChangelogContentLayout
             as="article"
             id={node.date}
+            fullWidth
             stickyContent={
               <Badge asChild>
                 <FernLink href={slugToHref(node.slug)} scroll={true}>
