@@ -15,11 +15,13 @@ import { FernLink } from "@/components/FernLink";
 import { Separator } from "@/components/Separator";
 import { HideBuiltWithFern } from "@/components/built-with-fern";
 import { useCurrentAnchor } from "@/hooks/use-anchor";
-import { HideAsides, SetLayout } from "@/state/layout";
+import { SetLayout } from "@/state/layout";
 import { SCROLL_BODY_ATOM } from "@/state/viewport";
 
 import { BottomNavigationClient } from "../bottom-nav-client";
+import { AsideAwareDiv } from "../layouts/AsideAwareDiv";
 import { FooterLayout } from "../layouts/FooterLayout";
+import { TableOfContentsLayout } from "../layouts/TableOfContentsLayout";
 import { ChangelogContentLayout } from "./ChangelogContentLayout";
 
 function flattenChangelogEntries(
@@ -138,39 +140,49 @@ export default function ChangelogPageClient({
   }, [chunkedEntries.length, page]);
 
   return (
-    <article className="fern-layout-page">
-      <SetLayout value="page" />
-      <HideAsides force />
-      <HideBuiltWithFern>
-        <ChangelogContentLayout as="section" className="mb-8">
-          {overview}
-        </ChangelogContentLayout>
-
-        {visibleEntries.map((entry) => {
-          return (
-            <Fragment key={entry.id}>
-              <Separator className="max-w-content-width mx-auto my-12" />
-              <ChangelogContentLayout
-                as="article"
-                id={entry.date}
-                stickyContent={
-                  <Badge asChild>
-                    <FernLink href={slugToHref(entry.slug)} scroll={true}>
-                      {entry.title}
-                    </FernLink>
-                  </Badge>
-                }
-              >
-                {entries[entry.pageId]}
-              </ChangelogContentLayout>
-            </Fragment>
-          );
-        })}
-      </HideBuiltWithFern>
-      <FooterLayout
-        hideFeedback
-        bottomNavigation={<BottomNavigationClient prev={prev} next={next} />}
+    <>
+      <TableOfContentsLayout
+        tableOfContents={undefined}
+        hideTableOfContents={true}
       />
-    </article>
+      {/* TODO(cd): treat as a guide for now, update for large-screen changelog */}
+      <AsideAwareDiv className="fern-layout-changelog">
+        <article className="max-w-full">
+          <SetLayout value="guide" />
+          <HideBuiltWithFern>
+            <ChangelogContentLayout as="section" className="mb-8">
+              {overview}
+            </ChangelogContentLayout>
+
+            {visibleEntries.map((entry) => {
+              return (
+                <Fragment key={entry.id}>
+                  <Separator className="max-w-content-width mx-auto my-12" />
+                  <ChangelogContentLayout
+                    as="article"
+                    id={entry.date}
+                    stickyContent={
+                      <Badge asChild>
+                        <FernLink href={slugToHref(entry.slug)} scroll={true}>
+                          {entry.title}
+                        </FernLink>
+                      </Badge>
+                    }
+                  >
+                    {entries[entry.pageId]}
+                  </ChangelogContentLayout>
+                </Fragment>
+              );
+            })}
+          </HideBuiltWithFern>
+          <FooterLayout
+            hideFeedback
+            bottomNavigation={
+              <BottomNavigationClient prev={prev} next={next} />
+            }
+          />
+        </article>
+      </AsideAwareDiv>
+    </>
   );
 }
