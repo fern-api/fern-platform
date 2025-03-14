@@ -49,8 +49,12 @@
   .fern-layout-reference {
     @apply pl-page-padding mx-auto min-w-0 shrink pr-[calc(var(--page-padding)+var(--aside-offset))];
 
-    .fern-layout-reference-aside {
-      @apply order-last flex shrink-0 md:sticky md:h-fit;
+    aside.fern-layout-reference-aside {
+      @apply sticky order-last h-fit;
+    }
+
+    .fern-layout-reference-aside[data-kind="api"] {
+      @apply flex shrink-0;
     }
 
     .fern-layout-reference-content {

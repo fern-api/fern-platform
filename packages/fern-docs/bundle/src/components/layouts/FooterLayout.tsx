@@ -20,7 +20,7 @@ export function FooterLayout({
   className?: string;
 }) {
   return (
-    <footer className={cn("fern-layout-footer", className)}>
+    <footer className={cn("fern-layout-footer not-prose", className)}>
       <div className="fern-layout-footer-toolbar">
         <div>{!hideFeedback && <Feedback pathname={pathname} />}</div>
         <EditThisPageButton editThisPageUrl={editThisPageUrl} />

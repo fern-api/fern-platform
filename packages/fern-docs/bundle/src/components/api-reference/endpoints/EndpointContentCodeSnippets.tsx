@@ -133,6 +133,7 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<
   return (
     <div
       className={cn(
+        "not-prose",
         // note: .fern-endpoint-code-snippets class is used to detect clicks outside of the code snippets
         // this is used to clear the selected error when the user clicks outside of the error
         "fern-endpoint-code-snippets w-full",

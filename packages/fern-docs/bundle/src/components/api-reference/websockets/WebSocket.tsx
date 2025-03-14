@@ -106,7 +106,7 @@ export async function WebSocketContent({
         </PageHeader>
       }
       aside={
-        <div className="grid grid-rows-[repeat(auto-fit,minmax(0,min-content))] gap-6">
+        <div className="not-prose grid grid-rows-[repeat(auto-fit,minmax(0,min-content))] gap-6">
           <TitledExample
             title="Handshake"
             tryIt={

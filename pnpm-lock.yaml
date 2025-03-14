@@ -718,6 +718,9 @@ importers:
       '@radix-ui/react-portal':
         specifier: ^1.1.4
         version: 1.1.4(@types/react-dom@19.0.4(@types/react@19.0.10))(@types/react@19.0.10)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      '@radix-ui/react-primitive':
+        specifier: ^2.0.2
+        version: 2.0.2(@types/react-dom@19.0.4(@types/react@19.0.10))(@types/react@19.0.10)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       '@radix-ui/react-select':
         specifier: ^2.1.6
         version: 2.1.6(@types/react-dom@19.0.4(@types/react@19.0.10))(@types/react@19.0.10)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
@@ -834,7 +837,7 @@ importers:
         version: 1.1.6(jotai@2.12.1(@types/react@19.0.10)(react@19.0.0))
       jsonpath-plus:
         specifier: 10.0.7
-        version: 10.3.0
+        version: 10.0.7
       launchdarkly-react-client-sdk:
         specifier: ^3.6.0
         version: 3.6.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
@@ -11272,11 +11275,6 @@ packages:
 
   jsonpath-plus@10.0.7:
     resolution: {integrity: sha512-GDA8d8fu9+s4QzAzo5LMGiLL/9YjecAX+ytlnqdeXYpU55qME57StDgaHt9R2pA7Dr8U31nwzxNJMJiHkrkRgw==}
-    engines: {node: '>=18.0.0'}
-    hasBin: true
-
-  jsonpath-plus@10.3.0:
-    resolution: {integrity: sha512-8TNmfeTCk2Le33A3vRRwtuworG/L5RrgMvdjhKZxvyShO+mBu2fP50OWUjRLNtvw344DdDarFh9buFAZs5ujeA==}
     engines: {node: '>=18.0.0'}
     hasBin: true
 
@@ -27235,12 +27233,6 @@ snapshots:
       graceful-fs: 4.2.11
 
   jsonpath-plus@10.0.7:
-    dependencies:
-      '@jsep-plugin/assignment': 1.3.0(jsep@1.4.0)
-      '@jsep-plugin/regex': 1.0.4(jsep@1.4.0)
-      jsep: 1.4.0
-
-  jsonpath-plus@10.3.0:
     dependencies:
       '@jsep-plugin/assignment': 1.3.0(jsep@1.4.0)
       '@jsep-plugin/regex': 1.0.4(jsep@1.4.0)
