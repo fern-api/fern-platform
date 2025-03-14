@@ -15,8 +15,7 @@ import { Button } from "@fern-docs/components/button";
 import {
   FERN_SEARCH_DIALOG_ID,
   FERN_SEARCH_DIALOG_OVERLAY_ID,
-} from "@/constants";
-
+} from "../../constants";
 import {
   Tooltip,
   TooltipContent,

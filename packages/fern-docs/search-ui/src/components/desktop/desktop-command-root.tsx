@@ -10,8 +10,7 @@ import {
 import { composeEventHandlers } from "@radix-ui/primitive";
 import { composeRefs } from "@radix-ui/react-compose-refs";
 
-import { FERN_SEARCH_DESKTOP_COMMAND_ID } from "@/constants";
-
+import { FERN_SEARCH_DESKTOP_COMMAND_ID } from "../../constants";
 import * as Command from "../cmdk";
 import { CommandUxProvider } from "../shared/command-ux";
 
