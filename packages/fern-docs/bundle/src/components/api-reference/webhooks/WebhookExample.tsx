@@ -31,7 +31,7 @@ export const WebhookExample: React.FC<WebhookExample.Props> = ({
   );
 
   return (
-    <div className="flex min-h-0 min-w-0 flex-1 flex-col">
+    <div className="not-prose flex min-h-0 min-w-0 flex-1 flex-col">
       <div className="flex min-h-0 min-w-0 flex-1 shrink flex-col">
         {example.payload != null && (
           <CodeSnippetExample
