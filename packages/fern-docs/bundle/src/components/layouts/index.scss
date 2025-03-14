@@ -4,9 +4,13 @@
     @apply w-(--sticky-aside-width) pr-(--aside-offset);
   }
 
-  .fern-layout-aside-container {
+  .fern-layout-changelog {
     &[data-aside-state="hidden"] {
-      @apply max-w-page-width-padded px-page-padding mx-auto min-w-0 flex-1;
+      @apply max-w-page-width-padded px-page-padding mx-auto min-w-0;
+
+      > aside {
+        @apply w-page-width;
+      }
 
       .fern-changelog-content {
         @apply max-w-content-wide-width relative mx-auto grid w-full grid-cols-1 gap-4 lg:grid-cols-[1fr_minmax(0,var(--content-width))_1fr];
@@ -22,6 +26,12 @@
     }
 
     &[data-aside-state="visible"] {
+      @apply px-page-padding mx-auto mb-12 min-w-0 shrink space-y-8;
+
+      > aside {
+        @apply w-content-width;
+      }
+
       .fern-changelog-content > aside {
         @apply hidden;
       }

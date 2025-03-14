@@ -146,8 +146,8 @@ export default function ChangelogPageClient({
         hideTableOfContents={true}
       />
       {/* TODO(cd): treat as a guide for now, update for large-screen changelog */}
-      <AsideAwareDiv className="fern-layout-aside-container fern-layout-guide">
-        <article className="w-content-width max-w-full">
+      <AsideAwareDiv className="fern-layout-changelog">
+        <article className="max-w-full">
           <SetLayout value="guide" />
           <HideBuiltWithFern>
             <ChangelogContentLayout as="section" className="mb-8">
@@ -161,7 +161,6 @@ export default function ChangelogPageClient({
                   <ChangelogContentLayout
                     as="article"
                     id={entry.date}
-                    className="gap-0"
                     stickyContent={
                       <Badge asChild>
                         <FernLink href={slugToHref(entry.slug)} scroll={true}>

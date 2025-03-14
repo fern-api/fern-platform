@@ -33,7 +33,7 @@ export default function ChangelogEntryPage({
   children: React.ReactNode;
 }): ReactElement<any> {
   return (
-    <AsideAwareDiv className="fern-layout-aside-container">
+    <AsideAwareDiv className="fern-layout-changelog">
       <SetLayout value="page" />
       <HideAsides force />
       <article className="fern-layout-page">
