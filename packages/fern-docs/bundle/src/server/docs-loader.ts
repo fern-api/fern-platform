@@ -347,10 +347,10 @@ const createGetPrunedApiCached = (domain: string) =>
 
       for (const endpointK of Object.keys(pruned.endpoints)) {
         if (
-          pruned.endpoints[endpointK as EndpointId]?.environments?.length === 0
+          pruned.endpoints[EndpointId(endpointK)]?.environments?.length === 0
         ) {
           console.debug(endpointK, "has empty environments");
-          pruned.endpoints[endpointK as EndpointId]?.environments?.push({
+          pruned.endpoints[EndpointId(endpointK)]?.environments?.push({
             id: "Default" as EnvironmentId,
             baseUrl: "https://host.com",
           });
