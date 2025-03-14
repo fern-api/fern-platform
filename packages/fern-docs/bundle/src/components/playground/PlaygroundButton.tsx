@@ -42,7 +42,7 @@ export const PlaygroundButton: FC<{
           target={settings?.button?.href ? "_blank" : undefined}
           variant="default"
           size="xs"
-          className={cn("&[_svg]:size-3 font-mono", className)}
+          className={cn("font-mono [&_svg]:size-3", className)}
           scroll={false}
         >
           <Play className="fill-current" />
