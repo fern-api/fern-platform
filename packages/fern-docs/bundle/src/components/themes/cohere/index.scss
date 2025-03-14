@@ -65,7 +65,7 @@
       @apply top-4;
     }
 
-    .fern-mobile-menu-overlay {
+    #fern-sidebar-overlay {
       @apply bg-background/70 pointer-events-auto fixed inset-0 top-[calc(var(--header-height)+1.5rem)] z-30;
     }
   }

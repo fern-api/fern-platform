@@ -17,7 +17,11 @@ import {
 import { cn } from "@fern-docs/components";
 import { useIsomorphicLayoutEffect } from "@fern-ui/react-commons";
 
-import { FERN_SIDEBAR_ID } from "@/components/constants";
+import {
+  FERN_HEADER_ID,
+  FERN_SIDEBAR_ID,
+  FERN_SIDEBAR_OVERLAY_ID,
+} from "@/components/constants";
 import { useCurrentPathname } from "@/hooks/use-current-pathname";
 import { useIsDismissableSidebarOpen } from "@/state/mobile";
 
@@ -197,9 +201,9 @@ export function MobileMenu({
         typeof window === "undefined"
           ? []
           : compact([
-              document.getElementById("fern-header"),
-              document.getElementById("fern-sidebar"),
-              document.getElementById("fern-sidebar-overlay"),
+              document.getElementById(FERN_HEADER_ID),
+              document.getElementById(FERN_SIDEBAR_ID),
+              document.getElementById(FERN_SIDEBAR_OVERLAY_ID),
             ])
       }
     >
@@ -217,7 +221,7 @@ export function MobileMenu({
           {open && (
             <motion.div
               layoutRoot
-              className="fern-mobile-menu-overlay"
+              id={FERN_SIDEBAR_OVERLAY_ID}
               key="overlay"
               style={{ opacity, touchAction: "none" }}
               initial={{ opacity: 0 }}
@@ -291,7 +295,7 @@ function calculateWidth(value: number | string, sidebarWidth: number) {
 }
 
 function getSidebarWidth() {
-  const sidebar = document.getElementById("fern-sidebar");
+  const sidebar = document.getElementById(FERN_SIDEBAR_ID);
   if (!sidebar) return 0;
   return sidebar.clientWidth;
 }

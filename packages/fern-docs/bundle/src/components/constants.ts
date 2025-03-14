@@ -13,6 +13,7 @@ export const FERN_PLAYGROUND_FLOATING_BUTTON_ID =
   "fern-playground-floating-button";
 export const FERN_SEARCH_BUTTON_ID = "fern-search-button";
 export const FERN_SIDEBAR_ID = "fern-sidebar";
+export const FERN_SIDEBAR_OVERLAY_ID = "fern-sidebar-overlay";
 export const FERN_SIDEBAR_SCROLL_AREA_ID = "fern-sidebar-scroll-area";
 export const FERN_SIDEBAR_SPACER_ID = "fern-sidebar-spacer";
 export const FERN_TOC_ID = "fern-toc";
