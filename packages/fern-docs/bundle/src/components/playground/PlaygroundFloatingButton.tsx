@@ -1,15 +1,16 @@
 "use client";
 
-import { SquareTerminal, ChevronUp } from "lucide-react";
+import { ChevronUp, SquareTerminal } from "lucide-react";
 
 import { FernTooltip, FernTooltipProvider } from "@fern-docs/components";
 
 import { ButtonLink } from "@/components/FernLinkButton";
-
-import { conformExplorerRoute } from "./utils/explorer-route";
 import { useCurrentVersionSlug } from "@/state/navigation";
 
-// todo (catherine): add this to the endpoint content
+import { FERN_PLAYGROUND_FLOATING_BUTTON_ID } from "../constants";
+import { conformExplorerRoute } from "./utils/explorer-route";
+
+// TODO(catherine): add this to the endpoint content
 export const PlaygroundFloatingButton = () => {
   const slug = useCurrentVersionSlug();
 
@@ -26,7 +27,9 @@ export const PlaygroundFloatingButton = () => {
         }
       >
         <ButtonLink
-          id="playground-floating-button"
+          // TODO: ensure this button does not render multiple times, otherwise
+          // remove this ID.
+          id={FERN_PLAYGROUND_FLOATING_BUTTON_ID}
           href={slug ? conformExplorerRoute(slug) : "/~explorer"}
         >
           <SquareTerminal height={16} width={16} />

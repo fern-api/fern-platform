@@ -2,9 +2,12 @@
 
 import React from "react";
 
+import { composeEventHandlers } from "@radix-ui/primitive";
 import { atom, useAtomValue, useSetAtom } from "jotai";
 
 import { DesktopSearchButton } from "@fern-docs/search-ui";
+
+import { FERN_SEARCH_BUTTON_ID } from "@/components/constants";
 
 export const searchDialogOpenAtom = atom(false);
 export const searchInitializedAtom = atom(false);
@@ -32,9 +35,13 @@ export const SearchV2Trigger = React.memo(function SearchV2Trigger(
   const toggleSearchDialog = useToggleSearchDialog();
   return (
     <DesktopSearchButton
+      /**
+       * IMPORTANT: This component must be rendered only ONCE in the entire DOM tree,
+       * because the ID must be unique across the entire document.
+       */
+      id={FERN_SEARCH_BUTTON_ID}
       {...props}
-      id="fern-search-button"
-      onClick={toggleSearchDialog}
+      onClick={composeEventHandlers(props.onClick, toggleSearchDialog)}
       variant={isInitialized ? "default" : "loading"}
     />
   );

@@ -8,6 +8,7 @@ import { useSetAtom } from "jotai";
 import { cn } from "@fern-docs/components";
 import { FernScrollArea } from "@fern-docs/components";
 
+import { FERN_COHERE_CONTENT_ID, FERN_FOOTER_ID } from "@/components/constants";
 import { HeaderTabsRoot } from "@/components/header/HeaderTabsRoot";
 import { useCurrentPathname } from "@/hooks/use-current-pathname";
 import { SCROLL_BODY_ATOM } from "@/state/viewport";
@@ -126,10 +127,10 @@ export default function CohereDocs({
                 scrollbars="vertical"
                 className="scroll-pt-4"
               >
-                <div id="fern-cohere-content">{children}</div>
+                <div id={FERN_COHERE_CONTENT_ID}>{children}</div>
 
                 {/* Enables footer DOM injection */}
-                <footer id="fern-footer" />
+                <footer id={FERN_FOOTER_ID} />
               </FernScrollArea>
             </div>
           </main>

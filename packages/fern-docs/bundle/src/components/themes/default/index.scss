@@ -71,7 +71,7 @@
       @apply top-header-height max-h-[calc(100dvh-var(--spacing-header-height))];
     }
 
-    #sidebar-scroll-area {
+    #fern-sidebar-scroll-area {
       @apply px-4 py-6 pb-12 lg:pl-5;
     }
 
@@ -83,7 +83,7 @@
       @apply top-[calc(var(--header-height)+var(--spacing)*4)];
     }
 
-    .fern-mobile-menu-overlay {
+    #fern-sidebar-overlay {
       @apply bg-background/70 pointer-events-auto fixed inset-0 top-[calc(var(--header-height)+1px)] z-30;
     }
   }

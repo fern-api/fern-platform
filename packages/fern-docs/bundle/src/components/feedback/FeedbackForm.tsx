@@ -37,6 +37,8 @@ const SHOW_EMAIL_INPUT_ATOM = atomWithStorage<boolean | "indeterminate">(
 );
 const EMAIL_ATOM = atomWithStorage<string>("feedback-email", "");
 
+const FEEDBACK_FORM_REASON_ID = "feedback-reason";
+
 export const FeedbackForm: FC<FeedbackFormProps> = ({
   isHelpful,
   onSubmit,
@@ -129,7 +131,7 @@ export const FeedbackForm: FC<FeedbackFormProps> = ({
   return (
     <form onSubmit={handleSubmitFeedback} className="p-0">
       <label
-        htmlFor="feedbackReason"
+        htmlFor={FEEDBACK_FORM_REASON_ID}
         className={cn({
           "text-lg font-semibold": layoutDensity === "verbose",
           "text-(color:--grayscale-a11) text-sm font-medium":
@@ -143,7 +145,7 @@ export const FeedbackForm: FC<FeedbackFormProps> = ({
         <LazyMotion features={domAnimation} strict>
           <MotionFernRadioGroup
             layoutId={legend}
-            id="feedbackReason"
+            id={FEEDBACK_FORM_REASON_ID}
             className="mt-4"
             value={feedbackId}
             onValueChange={setFeedbackId}
