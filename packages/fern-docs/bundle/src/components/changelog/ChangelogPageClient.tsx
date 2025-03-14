@@ -156,10 +156,11 @@ export default function ChangelogPageClient({
             {visibleEntries.map((entry) => {
               return (
                 <Fragment key={entry.id}>
-                  <Separator className="max-w-content-width mx-4 my-12" />
+                  <Separator className="max-w-content-width mx-auto my-12" />
                   <ChangelogContentLayout
                     as="article"
                     id={entry.date}
+                    className="gap-0"
                     stickyContent={
                       <Badge asChild>
                         <FernLink href={slugToHref(entry.slug)} scroll={true}>
