@@ -19,6 +19,7 @@ import {
 import {
   ApiDefinitionV1ToLatest,
   AuthScheme,
+  EnvironmentId,
   ObjectProperty,
   PruningNodeType,
   TypeDefinition,
@@ -316,6 +317,8 @@ const createGetPrunedApiCached = (domain: string) =>
     ): Promise<ApiDefinition.ApiDefinition> => {
       const flagsPromise = cachedGetEdgeFlags(domain);
 
+      console.debug("@#$aab", nodes);
+
       // if there is only one node, and it's an endpoint, try to load from cache
       try {
         if (nodes.length === 1 && nodes[0]) {
@@ -335,7 +338,9 @@ const createGetPrunedApiCached = (domain: string) =>
         );
       }
 
+      console.debug("@#$aab2", domain, id);
       const api = await getApi(domain, id);
+      console.debug("@#$aab3", api);
       const pruned = prune(api, ...nodes);
 
       // if there is only one node, and it's an endpoint, try to cache the result
@@ -344,6 +349,21 @@ const createGetPrunedApiCached = (domain: string) =>
         kvSet(domain, key, pruned);
       }
 
+      for (const endpointK of Object.keys(pruned.endpoints)) {
+        console.debug("@#$aab4", endpointK);
+        if (
+          pruned.endpoints[endpointK as EndpointId]?.environments?.length === 0
+        ) {
+          console.debug(endpointK, "has empty environments");
+          pruned.endpoints[endpointK as EndpointId]?.environments?.push({
+            id: "Default" as EnvironmentId,
+            baseUrl: "https://host.com",
+          });
+        }
+      }
+
+      console.debug("@#$aac", pruned);
+      console.debug("@#$aac-envs", pruned.endpoints);
       return backfillSnippets(pruned, await flagsPromise);
     },
     [domain, cacheSeed()],
