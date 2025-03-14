@@ -349,7 +349,9 @@ const createGetPrunedApiCached = (domain: string) =>
         if (
           pruned.endpoints[EndpointId(endpointK)]?.environments?.length === 0
         ) {
-          console.debug(endpointK, "has empty environments");
+          console.debug(
+            `${endpointK} has empty environments, adding default URL.`
+          );
           pruned.endpoints[EndpointId(endpointK)]?.environments?.push({
             id: "Default" as EnvironmentId,
             baseUrl: "https://host.com",
