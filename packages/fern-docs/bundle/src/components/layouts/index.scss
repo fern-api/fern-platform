@@ -6,21 +6,23 @@
 
   .fern-layout-aside-container {
     &[data-aside-state="hidden"] {
-      @apply mx-auto min-w-0;
+      @apply max-w-page-width-padded px-page-padding mx-auto min-w-0 flex-1;
+
+      .fern-changelog-content {
+        @apply max-w-content-wide-width relative mx-auto grid w-full grid-cols-1 gap-4 lg:grid-cols-[1fr_minmax(0,var(--content-width))_1fr];
+      }
 
       .eyebrow {
         @apply flex lg:hidden;
       }
 
-      .floating-tab {
-        @apply hidden lg:sticky lg:top-0;
+      .fern-changelog-content > aside {
+        @apply sticky hidden h-fit lg:flex lg:justify-end;
       }
     }
 
     &[data-aside-state="visible"] {
-      @apply pr-page-padding xl:ml-0 xl:mr-auto;
-
-      .floating-tab {
+      .fern-changelog-content > aside {
         @apply hidden;
       }
     }

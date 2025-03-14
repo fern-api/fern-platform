@@ -145,7 +145,7 @@ export default function ChangelogPageClient({
         tableOfContents={undefined}
         hideTableOfContents={true}
       />
-      <AsideAwareDiv className="fern-layout-guide">
+      <AsideAwareDiv className="fern-layout-aside-container fern-layout-guide">
         <article className="w-content-width max-w-full">
           <SetLayout value="guide" />
           <HideBuiltWithFern>

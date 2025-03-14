@@ -38,14 +38,13 @@ export default function ChangelogEntryPage({
       <HideAsides force />
       <article className="fern-layout-page">
         <HideBuiltWithFern>
-          <ChangelogContentLayout as="section" className="mb-8" fullWidth>
+          <ChangelogContentLayout as="section" className="mb-8">
             {overview}
           </ChangelogContentLayout>
           <Separator className="max-w-content-width mx-auto my-12" />
           <ChangelogContentLayout
             as="article"
             id={node.date}
-            fullWidth
             stickyContent={
               <Badge asChild>
                 <FernLink href={slugToHref(node.slug)} scroll={true}>
