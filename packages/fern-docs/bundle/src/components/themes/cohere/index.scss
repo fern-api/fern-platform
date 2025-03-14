@@ -61,6 +61,10 @@
       @apply max-h-[calc(100svh-var(--header-height)-8.25rem-2px)] md:top-6 md:max-h-[calc(100vh-var(--header-height)-5.25rem-2px)];
     }
 
+    .fern-layout-reference-aside[data-kind="guide"] {
+      @apply top-6 pb-12;
+    }
+
     .fern-changelog-content > aside {
       @apply top-4;
     }

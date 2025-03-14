@@ -29,7 +29,7 @@
       @apply sticky order-last h-fit;
     }
 
-    .fern-layout-reference-aside {
+    .fern-layout-reference-aside[data-kind="api"] {
       @apply flex shrink-0;
     }
 
