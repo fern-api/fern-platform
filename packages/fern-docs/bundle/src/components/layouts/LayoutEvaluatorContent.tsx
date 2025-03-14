@@ -102,7 +102,12 @@ export async function LayoutEvaluatorContent({
       );
     case "reference":
       return (
-        <ReferenceLayout header={pageHeader} aside={aside} footer={footer}>
+        <ReferenceLayout
+          header={pageHeader}
+          aside={aside}
+          footer={footer}
+          kind="guide"
+        >
           {children}
         </ReferenceLayout>
       );

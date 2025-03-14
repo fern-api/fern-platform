@@ -75,8 +75,16 @@
       @apply px-4 py-6 pb-12 lg:pl-5;
     }
 
-    .fern-layout-reference-aside {
+    .fern-layout-reference-aside[data-kind="api"] {
       @apply max-h-[calc(100svh-var(--header-height)-6rem)] md:top-[calc(var(--header-height)+1.5rem)] md:max-h-[calc(100vh-var(--header-height)-3rem)];
+    }
+
+    aside.fern-layout-reference-aside[data-kind="guide"] {
+      @apply top-[calc(var(--header-height)+1.5rem)] pb-12;
+
+      & > * {
+        @apply min-w-0 shrink;
+      }
     }
 
     .fern-changelog-content > aside {

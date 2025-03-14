@@ -7,8 +7,6 @@ import _jsx_runtime from "react/jsx-runtime";
 import { MDXProvider, useMDXComponents } from "@mdx-js/react";
 import { getMDXExport } from "mdx-bundler/client";
 
-import { FernScrollArea } from "@fern-docs/components";
-
 import { ErrorBoundary } from "@/components/error-boundary";
 
 import { createMdxComponents } from "../components";
@@ -50,9 +48,7 @@ export const MdxAside = React.memo<{
     return (
       <ErrorBoundary>
         <MDXProvider components={createMdxComponents(jsxElements)}>
-          <FernScrollArea rootClassName="pb-12">
-            <Aside />
-          </FernScrollArea>
+          <Aside />
         </MDXProvider>
       </ErrorBoundary>
     );

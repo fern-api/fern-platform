@@ -3,7 +3,7 @@
 import React, { ComponentPropsWithoutRef } from "react";
 
 import { cn } from "@fern-docs/components";
-import { tunnel, useIsMobile, useLazyRef } from "@fern-ui/react-commons";
+import { useIsMobile } from "@fern-ui/react-commons";
 
 import { Prose } from "@/mdx/components/prose";
 import { SetLayout } from "@/state/layout";
@@ -17,27 +17,34 @@ interface ReferenceLayoutProps {
   reference?: React.ReactNode;
   footer?: React.ReactNode;
   enableFullWidth?: boolean;
+  /**
+   * If true, scrolling will be disabled on the reference sidebar
+   * so that the code examples are constrained and must implement
+   * scrolling within themselves.
+   */
+  kind?: "api" | "guide";
 }
 
 export const ReferenceLayout = React.forwardRef<
   HTMLDivElement,
   ComponentPropsWithoutRef<"article"> & ReferenceLayoutProps
 >(function ReferenceLayout(
-  { header, aside, children, footer, reference, enableFullWidth, ...props },
+  {
+    header,
+    aside,
+    children,
+    footer,
+    reference,
+    enableFullWidth,
+    kind = "api",
+    ...props
+  },
   ref
 ) {
-  const slot = useLazyRef(() => tunnel()).current;
   const isMobile = useIsMobile();
   return (
     <AsideAwareDiv className="fern-layout-reference">
       <SetLayout value="reference" />
-      <slot.In>
-        <aside className="fern-layout-reference-aside">
-          <Prose className="w-full">
-            {aside}
-          </Prose>
-        </aside>
-      </slot.In>
       <article
         {...props}
         className={cn(
@@ -49,17 +56,25 @@ export const ReferenceLayout = React.forwardRef<
       >
         {header}
         <div className="fern-layout-reference-content">
-          {!isMobile && <slot.Out />}
-          <div className="mb-12 space-y-12">
-            {children && (
-              <Prose className="prose-h1:mt-[1.5em] first:prose-h1:mt-0 max-w-full">
-                {children}
-              </Prose>
+          {!isMobile && (
+            <aside className="fern-layout-reference-aside" data-kind={kind}>
+              {kind === "api" ? (
+                aside
+              ) : (
+                <Prose className="relative">{aside}</Prose>
+              )}
+            </aside>
+          )}
+          <Prose className="mb-12 space-y-12">
+            {children}
+            {isMobile && (
+              <section className="fern-layout-reference-aside" data-kind={kind}>
+                {aside}
+              </section>
             )}
-            {isMobile && <slot.Out />}
             {reference}
             {footer}
-          </div>
+          </Prose>
         </div>
       </article>
     </AsideAwareDiv>
