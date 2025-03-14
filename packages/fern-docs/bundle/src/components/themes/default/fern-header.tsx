@@ -3,6 +3,8 @@
 import { useServerInsertedHTML } from "next/navigation";
 import React from "react";
 
+import { FERN_HEADER_ID } from "@/components/constants";
+
 export function FernHeader(props: React.ComponentPropsWithoutRef<"header">) {
   const ref = React.useRef<HTMLDivElement>(null);
 
@@ -52,7 +54,7 @@ export function FernHeader(props: React.ComponentPropsWithoutRef<"header">) {
   }, []);
 
   return (
-    <header ref={ref} id="fern-header" role="banner" {...props}>
+    <header ref={ref} id={FERN_HEADER_ID} role="banner" {...props}>
       <style jsx global key="__fern-header-scroll-padding">
         {`
           html,

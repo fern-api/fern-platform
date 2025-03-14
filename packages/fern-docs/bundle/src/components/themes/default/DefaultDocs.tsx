@@ -5,6 +5,7 @@ import React from "react";
 
 import { cn } from "@fern-docs/components";
 
+import { FERN_FOOTER_ID } from "@/components/constants";
 import { HeaderTabsRoot } from "@/components/header/HeaderTabsRoot";
 import { SetIsSidebarFixed } from "@/state/layout";
 
@@ -80,7 +81,7 @@ export default function DefaultDocs({
       </MainCtx.Provider>
 
       {/* Enables footer DOM injection */}
-      <footer id="fern-footer" className="width-before-scroll-bar" />
+      <footer id={FERN_FOOTER_ID} className="width-before-scroll-bar" />
     </>
   );
 }

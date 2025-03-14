@@ -8,6 +8,7 @@ import { useDomain } from "@/state/domain";
 import { useIsWhitelabeled } from "@/state/whitelabeled";
 
 import { trackInternal } from "./analytics";
+import { BUILTWITHFERN_ID } from "./constants";
 
 const HideBuiltWithFernContext = createContext(false);
 
@@ -58,7 +59,7 @@ export const BuiltWithFern: React.FC<{ className?: string }> = ({
       </style>
       <BuiltWithFernComponent
         ref={component}
-        id="builtwithfern"
+        id={BUILTWITHFERN_ID}
         utmCampaign="buildWith"
         utmMedium="docs"
         utmSource={domain}

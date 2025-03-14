@@ -4,6 +4,22 @@ import { ThemeProvider as NextThemeProvider, useTheme } from "next-themes";
 import { useServerInsertedHTML } from "next/navigation";
 import React from "react";
 
+/**
+ * These IDs are only used in this file to ensure that the theme color
+ * matches the local storage theme color value. This helps ensure that
+ * even if the system theme is changed, the browser will use the forced
+ * theme color value to render colors outside of the content that we control.
+ *
+ * This is relevant mainly to Safari because the browser window, and the background color
+ * when the user "overscrolls", are controlled by the theme-color meta tag.
+ *
+ * Chrome doesn't necessarily use this, nor does Arc, which detects the color based on the first
+ * pixel at the top of the viewport.
+ */
+const THEME_COLOR_PREFERENCE_LIGHT_ID = "fern-theme-color-preferred-light";
+const THEME_COLOR_PREFERENCE_DARK_ID = "fern-theme-color-preferred-dark";
+const THEME_COLOR_ID = "fern-theme-color";
+
 export function ThemeProvider({
   children,
   hasLight,
@@ -63,9 +79,9 @@ function ThemeColorStyle({
       <React.Fragment key="__fern-inserted-theme-colors">
         {lightThemeColor && (
           <meta
-            id="fern-theme-color-preferred-light"
+            id={THEME_COLOR_PREFERENCE_LIGHT_ID}
             suppressHydrationWarning
-            key="__fern-theme-color-preferred-light"
+            key={`__${THEME_COLOR_PREFERENCE_LIGHT_ID}`}
             name="theme-color"
             content={lightThemeColor}
             media="(prefers-color-scheme: light)"
@@ -73,9 +89,9 @@ function ThemeColorStyle({
         )}
         {darkThemeColor && (
           <meta
-            id="fern-theme-color-preferred-dark"
+            id={THEME_COLOR_PREFERENCE_DARK_ID}
             suppressHydrationWarning
-            key="__fern-theme-color-preferred-dark"
+            key={`__${THEME_COLOR_PREFERENCE_DARK_ID}`}
             name="theme-color"
             content={darkThemeColor}
             media="(prefers-color-scheme: dark)"
@@ -83,9 +99,9 @@ function ThemeColorStyle({
         )}
         {currentThemeColor && (
           <meta
-            id="fern-theme-color"
+            id={THEME_COLOR_ID}
             suppressHydrationWarning
-            key="__fern-theme-color"
+            key={`__${THEME_COLOR_ID}`}
             name="theme-color"
             content={currentThemeColor}
           />
@@ -97,11 +113,9 @@ function ThemeColorStyle({
   React.useEffect(() => {
     // Remove the theme color preferred meta tags if they are not needed.
     const prefersLight = document.getElementById(
-      "fern-theme-color-preferred-light"
+      THEME_COLOR_PREFERENCE_LIGHT_ID
     );
-    const prefersDark = document.getElementById(
-      "fern-theme-color-preferred-dark"
-    );
+    const prefersDark = document.getElementById(THEME_COLOR_PREFERENCE_DARK_ID);
     if (prefersLight) {
       prefersLight.parentNode?.removeChild(prefersLight);
     }
@@ -112,7 +126,7 @@ function ThemeColorStyle({
 
   React.useEffect(() => {
     // Remove the theme color meta tag if it is not needed.
-    const themeColorMeta = document.getElementById("fern-theme-color");
+    const themeColorMeta = document.getElementById(THEME_COLOR_ID);
     if (themeColorMeta && themeColorMeta instanceof HTMLMetaElement) {
       themeColorMeta.content = currentThemeColor ?? "";
     }

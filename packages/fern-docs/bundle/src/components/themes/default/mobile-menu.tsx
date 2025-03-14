@@ -17,6 +17,7 @@ import {
 import { cn } from "@fern-docs/components";
 import { useIsomorphicLayoutEffect } from "@fern-ui/react-commons";
 
+import { FERN_SIDEBAR_ID } from "@/components/constants";
 import { useCurrentPathname } from "@/hooks/use-current-pathname";
 import { useIsDismissableSidebarOpen } from "@/state/mobile";
 
@@ -235,7 +236,9 @@ export function MobileMenu({
           {open && (
             <motion.div
               layoutRoot
-              id="fern-sidebar"
+              // Note: if this component must not be rendered at the same time as the side-nav.tsx component,
+              // because they share the same ID.
+              id={FERN_SIDEBAR_ID}
               data-viewport="mobile"
               className={cn("fern-background-image", className)}
               key="sidebar"
