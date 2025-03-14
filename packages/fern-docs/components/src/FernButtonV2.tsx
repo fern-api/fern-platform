@@ -8,27 +8,29 @@ import { type VariantProps, cva } from "class-variance-authority";
 import { cn } from "./cn";
 
 const buttonVariants = cva(
-  "focus-visible:ring-(color:--accent) rounded-2 inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium transition-colors hover:transition-none focus-visible:outline-none focus-visible:ring-1 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
+  "focus-visible:ring-(color:--accent) rounded-2 inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium transition-colors hover:transition-none focus-visible:outline-none focus-visible:ring-1 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0",
   {
     variants: {
       variant: {
         default:
-          "bg-(color:--accent) hover:bg-(color:--accent-10) text-(color:--accent-contrast)",
+          "bg-(color:--accent) hover:bg-(color:--accent-10) text-(color:--accent-contrast) [&_svg]:size-4",
         destructive:
-          "bg-(color:--red-a9) text-(color:--red-a12) hover:bg-(color:--red-a10)",
+          "bg-(color:--red-a9) text-(color:--red-a12) hover:bg-(color:--red-a10) [&_svg]:size-4",
         outline:
-          "border-border-default text-(color:--grayscale-11) hover:bg-(color:--grayscale-a4) hover:text-(color:--grayscale-12) data-[state=active]:bg-(color:--grayscale-a4) data-[state=open]:bg-(color:--grayscale-a4) border",
+          "border-border-default text-(color:--grayscale-11) hover:bg-(color:--grayscale-a4) hover:text-(color:--grayscale-12) data-[state=active]:bg-(color:--grayscale-a4) data-[state=open]:bg-(color:--grayscale-a4) border [&_svg]:size-4",
         outlineSuccess:
-          "border-(color:--green-a6) bg-(color:--green-a2) text-(color:--green-11) hover:bg-(color:--green-a4) data-[state=active]:bg-(color:--green-a4) data-[state=open]:bg-(color:--green-a4) border",
+          "border-(color:--green-a6) bg-(color:--green-a2) text-(color:--green-11) hover:bg-(color:--green-a4) data-[state=active]:bg-(color:--green-a4) data-[state=open]:bg-(color:--green-a4) border [&_svg]:size-4",
         outlineDanger:
-          "border-(color:--red-a6) bg-(color:--red-a2) text-(color:--red-11) hover:bg-(color:--red-a4) data-[state=active]:bg-(color:--red-a4) data-[state=open]:bg-(color:--red-a4) border",
+          "border-(color:--red-a6) bg-(color:--red-a2) text-(color:--red-11) hover:bg-(color:--red-a4) data-[state=active]:bg-(color:--red-a4) data-[state=open]:bg-(color:--red-a4) border [&_svg]:size-4",
         secondary:
-          "bg-(color:--grayscale-a3) text-(color:--accent-12) hover:bg-(color:--grayscale-a4)",
+          "bg-(color:--grayscale-a3) text-(color:--accent-12) hover:bg-(color:--grayscale-a4) [&_svg]:size-4",
         ghost:
-          "text-(color:--grayscale-a11) hover:bg-(color:--accent-a3) hover:text-(color:--accent-11)",
+          "text-(color:--grayscale-a11) hover:bg-(color:--accent-a3) hover:text-(color:--accent-11) [&_svg]:size-4",
         success:
-          "bg-(color:--green-a9) hover:bg-(color:--green-a10) text-(color:--green-1)",
-        link: "text-(color:--accent-6) underline-offset-4 hover:underline",
+          "bg-(color:--green-a9) hover:bg-(color:--green-a10) text-(color:--green-11) [&_svg]:size-4",
+        link: "text-(color:--accent-6) underline-offset-4 hover:underline [&_svg]:size-4",
+        explorer:
+          "bg-(color:--accent) hover:bg-(color:--accent-10) text-(color:--accent-contrast) [&_svg]:size-3",
       },
       size: {
         default: "h-9 px-4 py-2",
