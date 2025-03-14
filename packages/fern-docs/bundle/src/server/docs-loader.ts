@@ -339,12 +339,6 @@ const createGetPrunedApiCached = (domain: string) =>
       const api = await getApi(domain, id);
       const pruned = prune(api, ...nodes);
 
-      // if there is only one node, and it's an endpoint, try to cache the result
-      if (nodes.length === 1 && nodes[0]) {
-        const key = `api:${id}:${createEndpointCacheKey(nodes[0])}`;
-        kvSet(domain, key, pruned);
-      }
-
       for (const endpointK of Object.keys(pruned.endpoints)) {
         if (
           pruned.endpoints[EndpointId(endpointK)]?.environments?.length === 0
@@ -357,6 +351,12 @@ const createGetPrunedApiCached = (domain: string) =>
             baseUrl: "https://host.com",
           });
         }
+      }
+
+      // if there is only one node, and it's an endpoint, try to cache the result
+      if (nodes.length === 1 && nodes[0]) {
+        const key = `api:${id}:${createEndpointCacheKey(nodes[0])}`;
+        kvSet(domain, key, pruned);
       }
 
       return backfillSnippets(pruned, await flagsPromise);
