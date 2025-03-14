@@ -19,6 +19,7 @@ import {
 import {
   ApiDefinitionV1ToLatest,
   AuthScheme,
+  EnvironmentId,
   ObjectProperty,
   PruningNodeType,
   TypeDefinition,
@@ -337,6 +338,20 @@ const createGetPrunedApiCached = (domain: string) =>
 
       const api = await getApi(domain, id);
       const pruned = prune(api, ...nodes);
+
+      for (const endpointK of Object.keys(pruned.endpoints)) {
+        if (
+          pruned.endpoints[EndpointId(endpointK)]?.environments?.length === 0
+        ) {
+          console.debug(
+            `${endpointK} has empty environments, adding default URL.`
+          );
+          pruned.endpoints[EndpointId(endpointK)]?.environments?.push({
+            id: "Default" as EnvironmentId,
+            baseUrl: "https://host.com",
+          });
+        }
+      }
 
       // if there is only one node, and it's an endpoint, try to cache the result
       if (nodes.length === 1 && nodes[0]) {
