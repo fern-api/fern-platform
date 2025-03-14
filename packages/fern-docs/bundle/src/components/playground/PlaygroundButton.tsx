@@ -40,9 +40,9 @@ export const PlaygroundButton: FC<{
           }
           href={settings?.button?.href ?? conformExplorerRoute(state.slug)}
           target={settings?.button?.href ? "_blank" : undefined}
-          variant="explorer"
+          variant="default"
           size="xs"
-          className={cn("font-mono", className)}
+          className={cn("&[_svg]:size-3 font-mono", className)}
           scroll={false}
         >
           <Play className="fill-current" />
