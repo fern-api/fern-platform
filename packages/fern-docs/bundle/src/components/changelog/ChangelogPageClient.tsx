@@ -145,6 +145,7 @@ export default function ChangelogPageClient({
         tableOfContents={undefined}
         hideTableOfContents={true}
       />
+      {/* TODO(cd): treat as a guide for now, update for large-screen changelog */}
       <AsideAwareDiv className="fern-layout-aside-container fern-layout-guide">
         <article className="w-content-width max-w-full">
           <SetLayout value="guide" />
