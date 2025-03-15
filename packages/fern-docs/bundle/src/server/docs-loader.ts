@@ -801,10 +801,12 @@ const getLayout = cache(async (domain: string) => {
         calcDefaultPageWidth(sidebarWidth, contentWidth));
   const headerHeight =
     toPx(config.layout?.headerHeight) ?? DEFAULT_HEADER_HEIGHT;
-  const tabsPlacement =
-    config.layout?.tabsPlacement ?? defaultTabsPlacement(domain);
-  const searchbarPlacement =
-    config.layout?.searchbarPlacement ?? defaultSearchbarPlacement(domain);
+  const tabsPlacement = config.layout?.disableHeader
+    ? "SIDEBAR"
+    : (config.layout?.tabsPlacement ?? defaultTabsPlacement(domain));
+  const searchbarPlacement = config.layout?.disableHeader
+    ? "SIDEBAR"
+    : (config.layout?.searchbarPlacement ?? defaultSearchbarPlacement(domain));
   return {
     logoHeight,
     sidebarWidth,
