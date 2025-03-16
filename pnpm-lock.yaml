@@ -598,6 +598,9 @@ importers:
         specifier: 19.0.0
         version: 19.0.0(react@19.0.0)
     devDependencies:
+      '@fern-platform/configs':
+        specifier: workspace:*
+        version: link:../configs
       '@tailwindcss/postcss':
         specifier: ^4.0.9
         version: 4.0.9
