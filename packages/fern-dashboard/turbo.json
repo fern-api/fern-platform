@@ -6,7 +6,7 @@
     "build": {
       "env": []
     },
-    "docs:build": {
+    "dashboard:build": {
       "outputs": [".next/**", "!.next/cache/**"],
       "inputs": ["$TURBO_DEFAULT$", ".env*"]
     },
@@ -14,7 +14,7 @@
       "dependsOn": ["^build", "^compile"]
     },
     "dashboard:start": {
-      "dependsOn": ["docs:build"]
+      "dependsOn": ["dashboard:build"]
     },
     "dashboard:lint": {
       "dependsOn": ["^build", "^compile"]
