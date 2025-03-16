@@ -1,0 +1,23 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "extends": ["//"],
+  "globalEnv": [],
+  "tasks": {
+    "build": {
+      "env": []
+    },
+    "dashboard:build": {
+      "outputs": [".next/**", "!.next/cache/**"],
+      "inputs": ["$TURBO_DEFAULT$", ".env*"]
+    },
+    "dashboard:dev": {
+      "dependsOn": ["^build", "^compile"]
+    },
+    "dashboard:start": {
+      "dependsOn": ["dashboard:build"]
+    },
+    "dashboard:lint": {
+      "dependsOn": ["^build", "^compile"]
+    }
+  }
+}

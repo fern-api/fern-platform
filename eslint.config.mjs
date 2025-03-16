@@ -3,6 +3,7 @@ import { FlatCompat } from "@eslint/eslintrc";
 import eslint from "@eslint/js";
 import eslintConfigPrettier from "eslint-config-prettier";
 import turboConfig from "eslint-config-turbo/flat";
+import reactHooks from "eslint-plugin-react-hooks";
 import unusedImports from "eslint-plugin-unused-imports";
 import vitest from "eslint-plugin-vitest";
 import tseslint from "typescript-eslint";
@@ -65,6 +66,7 @@ export default [
         next: {
           rootDir: [
             "packages/fern-docs/bundle",
+            "packages/fern-dashboard",
             "packages/fern-docs/search-ui",
             "playwright/forward-proxy/nextjs-proxy",
           ],
@@ -97,6 +99,9 @@ export default [
     },
 
     {
+      plugins: {
+        "react-hooks": reactHooks,
+      },
       rules: {
         "no-unused-vars": "off",
         "no-undef": "off",
@@ -162,6 +167,7 @@ export default [
     {
       files: [
         "packages/fern-docs/**/*",
+        "packages/fern-dashboard/**/*",
         "packages/commons/**/*",
         "packages/scripts/**/*",
         "packages/healthchecks/**/*",
