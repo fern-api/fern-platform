@@ -1,0 +1,9 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "devCommand": "pnpm turbo dashboard:dev",
+  "installCommand": "pnpm install",
+  "buildCommand": "pnpm turbo dashboard:build",
+  "git": {
+    "deploymentEnabled": true
+  }
+}
