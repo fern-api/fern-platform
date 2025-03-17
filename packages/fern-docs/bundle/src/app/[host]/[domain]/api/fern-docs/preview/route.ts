@@ -14,13 +14,20 @@ import { redirectResponse } from "@/server/serverResponse";
 
 export const runtime = "edge";
 
+const PREVIEWABLE_HOSTS = [
+  "canary.ferndocs.com",
+  "canary-slash.ferndocs.com",
+  "prod.ferndocs.com",
+  "prod-slash.ferndocs.com",
+];
+
 export async function GET(req: NextRequest): Promise<NextResponse> {
   const { VERCEL_ENV } = getEnv();
 
   // Only allow preview in dev and preview deployments, or if the hostname is canary.ferndocs.com
   if (
     VERCEL_ENV === "production" &&
-    req.nextUrl.hostname !== "canary.ferndocs.com" &&
+    !PREVIEWABLE_HOSTS.includes(req.nextUrl.hostname) &&
     !req.nextUrl.hostname.endsWith(".vercel.app")
   ) {
     console.debug("Production docs not hosted by canary.ferndocs.com detected");
