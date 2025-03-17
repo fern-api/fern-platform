@@ -1,4 +1,5 @@
 import { Turbopuffer } from "@turbopuffer/turbopuffer";
+
 import { NavigationNodePage } from "@fern-api/fdr-sdk/navigation";
 
 import {
@@ -62,6 +63,8 @@ export async function turbopufferUpsertTask({
     authed,
     splitText,
   });
+
+  console.log("test");
 
   const records = await vectorizeTurbopufferRecords(
     unvectorizedRecords,
