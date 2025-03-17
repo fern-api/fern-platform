@@ -329,7 +329,14 @@ const DesktopAskAIChat = ({
         );
         return;
       }
-      void chat.append({ role: "user", content: message });
+      void chat.append(
+        { role: "user", content: message },
+        {
+          body: {
+            url: document.location.href,
+          },
+        }
+      );
       chat.setInput("");
     },
 
