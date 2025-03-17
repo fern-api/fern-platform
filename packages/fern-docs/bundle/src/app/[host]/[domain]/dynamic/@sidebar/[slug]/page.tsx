@@ -43,7 +43,11 @@ export default async function SidebarPage({
           <SidebarTabsList tabs={foundNode.tabs} />
         </SidebarTabsRootServer>
       )}
-      <SidebarRootNode root={foundNode.sidebar} loader={loader} />
+      <SidebarRootNode
+        root={foundNode.sidebar}
+        currentNodeId={foundNode.node.id}
+        loader={loader}
+      />
     </>
   );
 }
