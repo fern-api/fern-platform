@@ -796,8 +796,8 @@ importers:
         specifier: ^4.0.18
         version: 4.0.18(react@18.3.1)(zod@3.24.1)
       algoliasearch:
-        specifier: ^5.13.0
-        version: 5.13.0
+        specifier: ^5.21.0
+        version: 5.21.0
       braintrust:
         specifier: ^0.0.182
         version: 0.0.182(@aws-sdk/credential-provider-web-identity@3.723.0(@aws-sdk/client-sts@3.682.0))(react@18.3.1)(sswr@2.1.0(svelte@5.19.2))(svelte@5.19.2)(vue@3.5.13(typescript@5.7.2))(zod@3.24.1)
