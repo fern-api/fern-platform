@@ -1,9 +1,6 @@
 import { zipWith } from "es-toolkit/array";
-<<<<<<< HEAD
-=======
 import { encode } from "gpt-tokenizer";
 
->>>>>>> 3d6d6f513 (hotfix: Stop /turbopuffer/reindex from crashing by sanitizing input tokens (#2353))
 import {
   FernTurbopufferRecord,
   FernTurbopufferRecordWithoutVector,
