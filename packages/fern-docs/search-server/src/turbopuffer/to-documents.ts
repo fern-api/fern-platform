@@ -5,8 +5,8 @@ export function toDocuments(results: FernTurbopufferRecord[]): string[] {
   return uniqBy(
     results.map((result) => {
       const code_snippets = zipWith(
-        result.attributes.code_snippets ?? [],
-        result.attributes.code_snippet_langs ?? [],
+        result.attributes.code_snippets?.filter((snippet) => snippet.length < 1000) ?? [],
+        result.attributes.code_snippet_langs?.filter((lang) => lang.length < 1000) ?? [],
         (snippet, lang) => {
           const lang_str: string = lang ?? "";
           return `\`\`\`${lang_str}\n${snippet}\n\`\`\``;
@@ -14,6 +14,7 @@ export function toDocuments(results: FernTurbopufferRecord[]): string[] {
       ).join("\n\n");
       return {
         canonicalPathname: result.attributes.canonicalPathname,
+        chunk: result.attributes.chunk,
         domain: result.attributes.domain,
         pathname: result.attributes.pathname,
         hash: result.attributes.hash,
@@ -31,6 +32,6 @@ export function toDocuments(results: FernTurbopufferRecord[]): string[] {
     (result) => `${result.pathname}${result.hash} - ${result.page_position}`
   ).map(
     (result) =>
-      `# ${result.title}\n Source: ${result.domain}${result.pathname}${result.hash ?? ""}\n\n${result.description}${result.content}${result.code_snippets}`
+      `# ${result.title}\n Source: ${result.domain}${result.pathname}${result.hash ?? ""}\n\n${result.chunk}${result.description}${result.content}${result.code_snippets}`
   );
 }
