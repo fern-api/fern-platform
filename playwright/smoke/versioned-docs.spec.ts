@@ -52,6 +52,9 @@ samples.forEach((sample) => {
     });
     expect(response?.status()).toBe(200);
 
+    // Wait until the page is interactive
+    await page.waitForLoadState("networkidle");
+
     // 3. check if the version dropdown is present
     const versionDropdown = page.getByTestId("version-dropdown");
     await versionDropdown.click();
