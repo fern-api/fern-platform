@@ -64,8 +64,6 @@ export async function turbopufferUpsertTask({
     splitText,
   });
 
-  console.log("test");
-
   const records = await vectorizeTurbopufferRecords(
     unvectorizedRecords,
     vectorizer
