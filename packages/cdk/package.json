@@ -25,7 +25,7 @@
     "@fern-fern/fern-cloud-sdk": "^0.0.305",
     "archiver": "^7.0.1",
     "aws-cdk-lib": "^2.179.0",
-    "constructs": "^10.3.0",
+    "constructs": "^10.4.2",
     "tsx": "^4.7.1"
   },
   "devDependencies": {

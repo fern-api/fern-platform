@@ -12,7 +12,7 @@
   "dependencies": {
     "@fern-fern/fern-cloud-sdk": "^0.0.305",
     "aws-cdk-lib": "^2.179.0",
-    "constructs": "^10.3.0",
+    "constructs": "^10.4.2",
     "redis": "^4.7.0",
     "source-map-support": "^0.5.21"
   },

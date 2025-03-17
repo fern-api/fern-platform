@@ -308,10 +308,10 @@ importers:
         version: 7.0.1
       aws-cdk-lib:
         specifier: ^2.179.0
-        version: 2.179.0(constructs@10.3.0)
+        version: 2.179.0(constructs@10.4.2)
       constructs:
-        specifier: ^10.3.0
-        version: 10.3.0
+        specifier: ^10.4.2
+        version: 10.4.2
       tsx:
         specifier: ^4.7.1
         version: 4.9.3
@@ -2247,10 +2247,10 @@ importers:
         version: 0.0.305
       aws-cdk-lib:
         specifier: ^2.179.0
-        version: 2.179.0(constructs@10.3.0)
+        version: 2.179.0(constructs@10.4.2)
       constructs:
-        specifier: ^10.3.0
-        version: 10.3.0
+        specifier: ^10.4.2
+        version: 10.4.2
       redis:
         specifier: ^4.7.0
         version: 4.7.0
@@ -8461,9 +8461,8 @@ packages:
   constants-browserify@1.0.0:
     resolution: {integrity: sha512-xFxOwqIzR/e1k1gLiWEophSCMqXcwVHIH7akf7b/vxcUeGunlj3hvZaaqxwHsTgn+IndtkQJgSztIDWeumWJDQ==}
 
-  constructs@10.3.0:
-    resolution: {integrity: sha512-vbK8i3rIb/xwZxSpTjz3SagHn1qq9BChLEfy5Hf6fB3/2eFbrwt2n9kHwQcS0CPTRBesreeAcsJfMq2229FnbQ==}
-    engines: {node: '>= 16.14.0'}
+  constructs@10.4.2:
+    resolution: {integrity: sha512-wsNxBlAott2qg8Zv87q3eYZYgheb9lchtBfjHzzLHtXbttwSrHPs1NNQbBrmbb1YZvYg2+Vh0Dor76w4mFxJkA==}
 
   content-disposition@0.5.4:
     resolution: {integrity: sha512-FveZTNuGw04cxlAiWbzi6zTAL/lhehaWbTtgluJh4/E95DqMwTmha3KZN1aAWA8cFIhHzMZUvLevkw5Rqk+tSQ==}
@@ -22836,12 +22835,12 @@ snapshots:
     dependencies:
       possible-typed-array-names: 1.1.0
 
-  aws-cdk-lib@2.179.0(constructs@10.3.0):
+  aws-cdk-lib@2.179.0(constructs@10.4.2):
     dependencies:
       '@aws-cdk/asset-awscli-v1': 2.2.224
       '@aws-cdk/asset-node-proxy-agent-v6': 2.1.0
       '@aws-cdk/cloud-assembly-schema': 39.2.20
-      constructs: 10.3.0
+      constructs: 10.4.2
 
   aws-cdk@2.179.0:
     optionalDependencies:
@@ -23607,7 +23606,7 @@ snapshots:
 
   constants-browserify@1.0.0: {}
 
-  constructs@10.3.0: {}
+  constructs@10.4.2: {}
 
   content-disposition@0.5.4:
     dependencies:
