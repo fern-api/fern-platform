@@ -1,4 +1,3 @@
-import { unstable_cache } from "next/cache";
 import { notFound } from "next/navigation";
 import { cache } from "react";
 
@@ -19,41 +18,75 @@ export type LoadWithUrlResponse = APIResponse<
  *
  * Note: this function cannot be stored in the data cache because the response can be > 2MB,
  */
+// export const loadWithUrl = cache(
+//   async (
+//     domain: string
+//   ): Promise<FdrAPI.docs.v2.read.LoadDocsForUrlResponse> => {
+//     return unstable_cache(
+//       async () => {
+//         const domainWithoutStaging = withoutStaging(domain);
+
+//         try {
+//           const response = await loadDocsDefinitionFromS3(
+//             domainWithoutStaging,
+//             getDocsDefinitionBucketName()
+//           );
+//           if (response != null) {
+//             return response;
+//           }
+//         } catch (error) {
+//           console.error("Failed to load docs definition:", error);
+//         }
+
+//         const response =
+//           await provideRegistryService().docs.v2.read.getDocsForUrl({
+//             url: FdrAPI.Url(domainWithoutStaging),
+//           });
+//         if (response.ok) {
+//           return response.body;
+//         }
+//         console.error("Failed to load docs", {
+//           cause: response.error,
+//         });
+//         notFound();
+//       },
+//       [domain],
+//       { tags: ["loadWithUrl", domain] }
+//     )();
+//   }
+// );
+
 export const loadWithUrl = cache(
   async (
     domain: string
   ): Promise<FdrAPI.docs.v2.read.LoadDocsForUrlResponse> => {
-    return unstable_cache(
-      async () => {
-        const domainWithoutStaging = withoutStaging(domain);
+    return (async () => {
+      const domainWithoutStaging = withoutStaging(domain);
 
-        try {
-          const response = await loadDocsDefinitionFromS3(
-            domainWithoutStaging,
-            getDocsDefinitionBucketName()
-          );
-          if (response != null) {
-            return response;
-          }
-        } catch (error) {
-          console.error("Failed to load docs definition:", error);
+      try {
+        const response = await loadDocsDefinitionFromS3(
+          domainWithoutStaging,
+          getDocsDefinitionBucketName()
+        );
+        if (response != null) {
+          return response;
         }
+      } catch (error) {
+        console.error("Failed to load docs definition:", error);
+      }
 
-        const response =
-          await provideRegistryService().docs.v2.read.getDocsForUrl({
-            url: FdrAPI.Url(domainWithoutStaging),
-          });
-        if (response.ok) {
-          return response.body;
-        }
-        console.error("Failed to load docs", {
-          cause: response.error,
+      const response =
+        await provideRegistryService().docs.v2.read.getDocsForUrl({
+          url: FdrAPI.Url(domainWithoutStaging),
         });
-        notFound();
-      },
-      [domain],
-      { tags: ["loadWithUrl", domain] }
-    )();
+      if (response.ok) {
+        return response.body;
+      }
+      console.error("Failed to load docs", {
+        cause: response.error,
+      });
+      notFound();
+    })();
   }
 );
 

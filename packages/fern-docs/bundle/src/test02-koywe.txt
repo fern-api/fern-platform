@@ -1,0 +1,176 @@
+* Proxying function: createGetAuthStateEdge *
+* Arguments start *
+ [
+  {
+  cookies: RequestCookies {"__next_hmr_refresh_hash__":{"name":"__next_hmr_refresh_hash__","value":"6efd43695e73155ba71476261b9a927542495432175fbe42"}},
+  nextUrl: {
+  href: 'http://localhost:3000/english/home',
+  origin: 'http://localhost:3000',
+  protocol: 'http:',
+  username: '',
+  password: '',
+  host: 'localhost:3000',
+  hostname: 'localhost',
+  port: '3000',
+  pathname: '/english/home',
+  search: '',
+  searchParams: URLSearchParams {  },
+  hash: ''
+},
+  url: 'http://localhost:3000/english/home',
+  bodyUsed: false,
+  cache: 'default',
+  credentials: 'same-origin',
+  destination: '',
+  headers: {
+  accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
+  accept-encoding: 'gzip, deflate, br, zstd',
+  accept-language: 'en-US,en;q=0.9',
+  connection: 'keep-alive',
+  cookie: '__next_hmr_refresh_hash__=6efd43695e73155ba71476261b9a927542495432175fbe42',
+  host: 'localhost:3000',
+  sec-ch-ua: '"Chromium";v="134", "Not:A-Brand";v="24", "Google Chrome";v="134"',
+  sec-ch-ua-mobile: '?0',
+  sec-ch-ua-platform: '"macOS"',
+  sec-fetch-dest: 'document',
+  sec-fetch-mode: 'navigate',
+  sec-fetch-site: 'none',
+  sec-fetch-user: '?1',
+  upgrade-insecure-requests: '1',
+  user-agent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36',
+  x-forwarded-for: '::1',
+  x-forwarded-host: 'localhost:3000',
+  x-forwarded-port: '3000',
+  x-forwarded-proto: 'http'
+},
+  integrity: '',
+  keepalive: false,
+  method: 'GET',
+  mode: 'cors',
+  redirect: 'follow',
+  referrer: 'about:client',
+  referrerPolicy: '',
+  signal: AbortSignal {
+  [Symbol(kEvents)]: SafeMap(0) {},
+  [Symbol(events.maxEventTargetListeners)]: 0,
+  [Symbol(events.maxEventTargetListenersWarned)]: false,
+  [Symbol(kHandlers)]: SafeMap(0) {},
+  [Symbol(kAborted)]: false,
+  [Symbol(kReason)]: undefined,
+  [Symbol(kComposite)]: false
+}
+},
+  [Function]
+] 
+* Arguments end *
+* Proxying function: getDocsDomainEdge *
+* Arguments start *
+ [
+  {
+  cookies: RequestCookies {"__next_hmr_refresh_hash__":{"name":"__next_hmr_refresh_hash__","value":"6efd43695e73155ba71476261b9a927542495432175fbe42"}},
+  nextUrl: {
+  href: 'http://localhost:3000/english/home',
+  origin: 'http://localhost:3000',
+  protocol: 'http:',
+  username: '',
+  password: '',
+  host: 'localhost:3000',
+  hostname: 'localhost',
+  port: '3000',
+  pathname: '/english/home',
+  search: '',
+  searchParams: URLSearchParams {  },
+  hash: ''
+},
+  url: 'http://localhost:3000/english/home',
+  bodyUsed: false,
+  cache: 'default',
+  credentials: 'same-origin',
+  destination: '',
+  headers: {
+  accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
+  accept-encoding: 'gzip, deflate, br, zstd',
+  accept-language: 'en-US,en;q=0.9',
+  connection: 'keep-alive',
+  cookie: '__next_hmr_refresh_hash__=6efd43695e73155ba71476261b9a927542495432175fbe42',
+  host: 'localhost:3000',
+  sec-ch-ua: '"Chromium";v="134", "Not:A-Brand";v="24", "Google Chrome";v="134"',
+  sec-ch-ua-mobile: '?0',
+  sec-ch-ua-platform: '"macOS"',
+  sec-fetch-dest: 'document',
+  sec-fetch-mode: 'navigate',
+  sec-fetch-site: 'none',
+  sec-fetch-user: '?1',
+  upgrade-insecure-requests: '1',
+  user-agent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36',
+  x-forwarded-for: '::1',
+  x-forwarded-host: 'localhost:3000',
+  x-forwarded-port: '3000',
+  x-forwarded-proto: 'http'
+},
+  integrity: '',
+  keepalive: false,
+  method: 'GET',
+  mode: 'cors',
+  redirect: 'follow',
+  referrer: 'about:client',
+  referrerPolicy: '',
+  signal: AbortSignal {
+  [Symbol(kEvents)]: SafeMap(0) {},
+  [Symbol(events.maxEventTargetListeners)]: 0,
+  [Symbol(events.maxEventTargetListenersWarned)]: false,
+  [Symbol(kHandlers)]: SafeMap(0) {},
+  [Symbol(kAborted)]: false,
+  [Symbol(kReason)]: undefined,
+  [Symbol(kComposite)]: false
+}
+}
+] 
+* Arguments end *
+** Proxy result: "koywe-preview-36052a73-1991-4ac3-81f6-531d385ba15f.docs.buildwithfern.com"
+
+* Proxying function: createGetAuthState *
+* Arguments start *
+ [
+  'localhost:3000',
+  'koywe-preview-36052a73-1991-4ac3-81f6-531d385ba15f.docs.buildwithfern.com',
+  undefined,
+  undefined,
+  undefined,
+  [Function]
+] 
+* Arguments end *
+* Proxying function: getAuthStateInternal *
+* Arguments start *
+ [
+  {
+  fernToken: undefined,
+  authConfig: undefined,
+  setFernToken: [Function],
+  previewAuthConfig: undefined,
+  domain: 'koywe-preview-36052a73-1991-4ac3-81f6-531d385ba15f.docs.buildwithfern.com',
+  host: 'localhost:3000'
+}
+] 
+* Arguments end *
+went through unauth path
+** Proxy result: undefined
+
+** Proxy result: {
+  "domain": "koywe-preview-36052a73-1991-4ac3-81f6-531d385ba15f.docs.buildwithfern.com",
+  "allowedDestinations": []
+}
+
+** Proxy result: {
+  "domain": "koywe-preview-36052a73-1991-4ac3-81f6-531d385ba15f.docs.buildwithfern.com",
+  "allowedDestinations": []
+}
+
+* Proxying function:  *
+* Arguments start *
+ [ '/english/home' ] 
+* Arguments end *
+** Proxy result: {
+  "authed": false,
+  "ok": true
+}

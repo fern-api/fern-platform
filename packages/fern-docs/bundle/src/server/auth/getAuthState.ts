@@ -11,6 +11,8 @@ import {
 } from "@fern-docs/edge-config";
 import { removeTrailingSlash } from "@fern-docs/utils";
 
+import { proxyF } from "@/debug_utils";
+
 import { safeVerifyFernJWTConfig } from "./FernJWT";
 import { getAllowedRedirectUrls } from "./allowed-redirects";
 import { preferPreview } from "./origin";
@@ -95,8 +97,9 @@ export async function getAuthStateInternal({
   if (!authConfig) {
     if (previewAuthConfig != null) {
       if (previewAuthConfig.type === "workos") {
+        console.log("really went through this path");
         return (pathname) =>
-          handleWorkosAuth({
+          proxyF(handleWorkosAuth)({
             host,
             domain,
             fernToken,
@@ -106,6 +109,7 @@ export async function getAuthStateInternal({
           });
       }
     }
+    console.log("went through unauth path");
     return () => ({
       authed: false,
       ok: true,
@@ -141,8 +145,9 @@ export async function getAuthStateInternal({
 
   // check if the user is logged in via WorkOS
   if (authConfig.type === "sso" && authConfig.partner === "workos") {
+    console.log("went through workos path");
     return (pathname) =>
-      handleWorkosAuth({
+      proxyF(handleWorkosAuth)({
         host,
         domain,
         fernToken,
@@ -188,6 +193,7 @@ export async function createGetAuthState(
 ): Promise<
   DomainAndHost & {
     getAuthState: (pathname?: string) => AsyncOrSync<AuthState>;
+    authConfig?: AuthEdgeConfig;
   }
 > {
   authConfig ??= await getAuthEdgeConfig(domain);
@@ -196,7 +202,7 @@ export async function createGetAuthState(
       ? await getPreviewUrlAuthConfig(orgMetadata)
       : undefined;
 
-  const getAuthState = await getAuthStateInternal({
+  const getAuthState = await proxyF(getAuthStateInternal)({
     fernToken,
     authConfig,
     setFernToken,
@@ -205,7 +211,7 @@ export async function createGetAuthState(
     host,
   });
 
-  const allowedDestinations = getAllowedRedirectUrls(
+  const allowedDestinations = proxyF(getAllowedRedirectUrls)(
     authConfig,
     previewAuthConfig
   );
@@ -214,6 +220,7 @@ export async function createGetAuthState(
     domain,
     allowedDestinations,
     getAuthState,
+    authConfig,
   };
 }
 

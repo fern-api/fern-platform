@@ -21,9 +21,11 @@ import { MARKDOWN_PATTERN, RSS_PATTERN } from "@/server/patterns";
 import { withPathname } from "@/server/withPathname";
 import { getDocsDomainEdge } from "@/server/xfernhost/edge";
 
+import { proxyF } from "./debug_utils";
 import { createGetAuthStateEdge } from "./server/auth/getAuthStateEdge";
 import { preferPreview } from "./server/auth/origin";
 import { withSecureCookie } from "./server/auth/with-secure-cookie";
+import { getRootMid } from "./server/docs-loader";
 
 function splitPathname(
   pathname: string,
@@ -183,10 +185,39 @@ export const middleware: NextMiddleware = async (request) => {
 
   let newToken: string | undefined;
 
-  const { getAuthState } = await createGetAuthStateEdge(request, (token) => {
-    newToken = token;
-  });
-  const authState = await getAuthState(pathname);
+  const { authConfig, getAuthState } = await proxyF(createGetAuthStateEdge)(
+    request,
+    (token) => {
+      newToken = token;
+    }
+  );
+  console.log("@#$authConfig", authConfig);
+  console.log("@#$pathname", pathname);
+  const authState = await proxyF(getAuthState)(pathname);
+  let root0;
+  const now = new Date();
+  try {
+    root0 = await proxyF(getRootMid)(domain, authState, authConfig);
+    // console.log("@#$root0", root0);
+  } catch (e: any) {
+    console.error("@#$Error caught at root0\n", e);
+  }
+  console.log("Elapsed:", new Date().getTime() - now.getTime());
+  if (root0) {
+    // console.log("@#$root0 keys", Object.keys(root0));
+    for (const k of Object.keys(root0)) {
+      if (k !== "child") {
+        console.log("@#$root0[", k, "]", root0[k]);
+      }
+    }
+  }
+  console.log("@#$authState", authState);
+
+  // if (pathname === "/docs/fundamentals/explore-skyflow") {
+  //   console.log("@#$pathname matches");
+  //   authState.authed = false;
+  //   authState.ok = true;
+  // }
 
   const getResponse = () => {
     if (authState.authed || request.nextUrl.searchParams.has("error")) {
@@ -196,9 +227,9 @@ export const middleware: NextMiddleware = async (request) => {
         )
       );
     }
-    if (!authState.ok && authState.authorizationUrl) {
-      return NextResponse.redirect(authState.authorizationUrl);
-    }
+    // if (!authState.ok && authState.authorizationUrl) {
+    //   return NextResponse.redirect(authState.authorizationUrl);
+    // }
 
     return rewrite(
       withDomain(

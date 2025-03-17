@@ -98,6 +98,10 @@ export function pruneWithBasicTokenAnonymous(
     .authed(withDenied(withBasicTokenAnonymousCheck(auth)))
     .get();
 
+  // console.log("@#$anon result", result);
+  console.log("@#$anon result", JSON.stringify(result, null, 4));
+  // logMessage(`@#$anon result: ${JSON.stringify(result)}`);
+
   // TODO: handle this more gracefully
   if (result == null) {
     throw new Error("Failed to prune navigation tree");
@@ -146,6 +150,9 @@ export function pruneWithBasicTokenAuthed(
     // mark all nodes as unauthed since we are currently authenticated
     .authed(() => false)
     .get();
+
+  console.log("@#$authed result", result);
+  // logMessage(`@#$authed result: ${JSON.stringify(result)}`);
 
   // TODO: handle this more gracefully
   if (result == null) {

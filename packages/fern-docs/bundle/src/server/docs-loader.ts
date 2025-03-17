@@ -49,6 +49,8 @@ import {
   withoutStaging,
 } from "@fern-docs/utils";
 
+import { proxyF } from "@/debug_utils";
+
 import { findEndpoint } from "../components/util/processRequestSnippetComponents";
 import { AuthState, createGetAuthState } from "./auth/getAuthState";
 import { cacheSeed } from "./cache-seed";
@@ -56,7 +58,7 @@ import { generateFernColorPalette } from "./generateFernColors";
 import { FernFonts, generateFonts } from "./generateFonts";
 import { getDocsUrlMetadata } from "./getDocsUrlMetadata";
 import { loadWithUrl as uncachedLoadWithUrl } from "./loadWithUrl";
-import { postToEngineeringNotifs } from "./slack";
+// import { postToEngineeringNotifs } from "./slack";
 import { FernColorTheme, FernLayoutConfig, FileData } from "./types";
 import { cleanBasePath } from "./utils/clean-base-path";
 import { pruneWithAuthState } from "./withRbac";
@@ -242,9 +244,10 @@ export const getMetadata = cache(
       console.log("[getMetadata] cache miss:", metadata);
       return metadata;
     } catch (error) {
-      postToEngineeringNotifs(
-        `:rotating_light: Failed to get metadata for ${domain} with the following error: ${String(error)}`
-      );
+      // postToEngineeringNotifs(
+      //   `:rotating_light: Failed to get metadata for ${domain} with the following error: ${String(error)}`
+      // );
+      console.error("temp", Error);
       throw error;
     }
   }
@@ -549,12 +552,34 @@ const getRoot = async (
 ) => {
   let root = await unsafe_getRootCached(domain);
 
+  console.log("@#$root loader", root);
   if (authConfig) {
-    root = pruneWithAuthState(authState, authConfig, root);
+    root = proxyF(pruneWithAuthState)(authState, authConfig, root);
   }
 
   FernNavigation.utils.mutableUpdatePointsTo(root);
 
+  // console.log("resolved root:", JSON.stringify(root, null, 2));
+  console.log("resolved root:", root);
+  return root;
+};
+
+export const getRootMid = async (
+  domain: string,
+  authState: AuthState,
+  authConfig: AuthEdgeConfig | undefined
+) => {
+  let root = await unsafe_getFullRoot(domain);
+
+  // console.log("@#$root", root);
+  if (authConfig) {
+    root = proxyF(pruneWithAuthState)(authState, authConfig, root);
+  }
+
+  FernNavigation.utils.mutableUpdatePointsTo(root);
+
+  // console.log("resolved root:", JSON.stringify(root, null, 2));
+  // console.log("resolved root:", root);
   return root;
 };
 

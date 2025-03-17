@@ -2,6 +2,8 @@ import { NextRequest } from "next/server";
 
 import { COOKIE_FERN_TOKEN } from "@fern-docs/utils";
 
+import { proxyF } from "@/debug_utils";
+
 import { getDocsDomainEdge } from "../xfernhost/edge";
 import { createGetAuthState } from "./getAuthState";
 
@@ -13,9 +15,9 @@ export async function createGetAuthStateEdge(
   request: NextRequest,
   setFernToken?: (token: string) => void
 ): ReturnType<typeof createGetAuthState> {
-  const domain = getDocsDomainEdge(request);
+  const domain = proxyF(getDocsDomainEdge)(request);
   const fern_token = request.cookies.get(COOKIE_FERN_TOKEN)?.value;
-  return createGetAuthState(
+  return proxyF(createGetAuthState)(
     request.nextUrl.host,
     domain,
     fern_token,

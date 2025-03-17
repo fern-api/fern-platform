@@ -7,6 +7,8 @@ import { UnreachableCaseError } from "ts-essentials";
 import { AuthEdgeConfig, OAuth2, SSOWorkOS } from "@fern-docs/auth";
 import { PreviewUrlAuth } from "@fern-docs/edge-config";
 
+import { proxyF } from "@/debug_utils";
+
 const WORKOS_API_URL = "https://api.workos.com";
 const WEBFLOW_API_URL = "https://webflow.com";
 
@@ -15,8 +17,8 @@ export function getAllowedRedirectUrls(
   previewAuthConfig?: PreviewUrlAuth | undefined
 ): string[] {
   return [
-    ...getAllowedRedirectUrlsForAuthConfig(authConfig),
-    ...getAllowedRedirectUrlsForPreviewAuthConfig(previewAuthConfig),
+    ...proxyF(getAllowedRedirectUrlsForAuthConfig)(authConfig),
+    ...proxyF(getAllowedRedirectUrlsForPreviewAuthConfig)(previewAuthConfig),
   ];
 }
 
