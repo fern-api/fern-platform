@@ -1,6 +1,6 @@
 import { FernNavigation } from "@fern-api/fdr-sdk";
 
-import { getNodesUnderCurrentVersionAscending } from "../withVersionSwitcherInfo";
+import { getNodesUnderCurrentVersionAscending } from "./withVersionSwitcherInfo";
 
 describe("getNodesUnderCurrentVersionAscending", () => {
   it("should return nodes under the current version in ascending order", () => {

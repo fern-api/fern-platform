@@ -4,8 +4,8 @@ import {
   TypeShape,
 } from "@fern-api/fdr-sdk/api-definition";
 
-import { PlaygroundFormStateBody } from "../../types";
-import { serializeFormStateBody } from "../serialize";
+import { PlaygroundFormStateBody } from "../types";
+import { serializeFormStateBody } from "./serialize";
 
 const STRING_VALUE_SHAPE: TypeShape = {
   type: "alias",
