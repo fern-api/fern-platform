@@ -1,5 +1,4 @@
 import NextBundleAnalyzer from "@next/bundle-analyzer";
-import { PHASE_DEVELOPMENT_SERVER } from "next/constants.js";
 import process from "node:process";
 
 const cdnUri =
@@ -211,30 +210,15 @@ const nextConfig = {
     });
     return config;
   },
+
+  deploymentId: process.env.VERCEL_DEPLOYMENT_ID ?? "dpl_development", // skew protection
+  productionBrowserSourceMaps: true,
+  reactProductionProfiling: true,
 };
 
-function withVercelEnv(config) {
-  return {
-    ...config,
-    deploymentId: process.env.VERCEL_DEPLOYMENT_ID ?? "dpl_development", // skew protection
-    productionBrowserSourceMaps: process.env.VERCEL_ENV === "preview",
-  };
-}
+const withBundleAnalyzer = NextBundleAnalyzer({
+  enabled: process.env.ANALYZE === "1",
+});
 
 /** @type {import("next").NextConfig} */
-export default (phase) => {
-  const isDev = phase === PHASE_DEVELOPMENT_SERVER;
-
-  /**
-   * Do not enable sentry or bundle analysis for local development.
-   */
-  if (isDev) {
-    return withVercelEnv(nextConfig);
-  }
-
-  const withBundleAnalyzer = NextBundleAnalyzer({
-    enabled: process.env.ANALYZE === "1",
-  });
-
-  return withBundleAnalyzer(withVercelEnv(nextConfig));
-};
+export default withBundleAnalyzer(nextConfig);
