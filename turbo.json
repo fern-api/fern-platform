@@ -78,6 +78,7 @@
         "KV_REST_API_URL",
         "KV_URL",
         "NEXT_PUBLIC_FONTAWESOME_CDN_HOST",
+        "NEXT_PUBLIC_TRAILING_SLASH",
         "OPENAI_API_KEY",
         "QSTASH_CURRENT_SIGNING_KEY",
         "QSTASH_NEXT_SIGNING_KEY",
@@ -97,8 +98,7 @@
         "VERCEL_DEPLOYMENT_ID",
         "VERCEL_ENV",
         "VERCEL_URL",
-        "NEXT_DEPLOYMENT_ID",
-        "TRAILING_SLASH"
+        "NEXT_DEPLOYMENT_ID"
       ]
     }
   },

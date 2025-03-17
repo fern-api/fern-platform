@@ -1,0 +1,9 @@
+{
+  "ignores": [
+    "@tailwindcss/postcss",
+    "@types/react",
+    "@types/react-dom",
+    "tailwindcss"
+  ],
+  "ignore-patterns": ["dist"]
+}

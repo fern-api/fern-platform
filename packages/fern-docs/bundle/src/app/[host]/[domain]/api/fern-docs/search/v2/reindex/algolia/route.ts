@@ -6,7 +6,7 @@ import {
   algoliaIndexSettingsTask,
   algoliaIndexerTask,
 } from "@fern-docs/search-server/algolia";
-import { addLeadingSlash, withoutStaging } from "@fern-docs/utils";
+import { slugToHref, withoutStaging } from "@fern-docs/utils";
 
 import { track } from "@/server/analytics/posthog";
 import { createCachedDocsLoader } from "@/server/docs-loader";
@@ -16,6 +16,7 @@ import {
   fdrEnvironment,
   fernToken_admin,
 } from "@/server/env-variables";
+import { postToEngineeringNotifs } from "@/server/slack";
 import { Gate, withBasicTokenAnonymous } from "@/server/withRbac";
 import { getDocsDomainEdge } from "@/server/xfernhost/edge";
 
@@ -67,10 +68,8 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
         }
 
         return (
-          withBasicTokenAnonymous(
-            authEdgeConfig,
-            addLeadingSlash(node.slug)
-          ) === Gate.DENY
+          withBasicTokenAnonymous(authEdgeConfig, slugToHref(node.slug)) ===
+          Gate.DENY
         );
       },
       ...edgeFlags,
@@ -78,7 +77,7 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
 
     const end = Date.now();
 
-    await track("algolia_reindex", {
+    track("algolia_reindex", {
       indexName: SEARCH_INDEX,
       durationMs: end - start,
       domain,
@@ -103,11 +102,15 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
   } catch (error) {
     console.error(error);
 
-    await track("algolia_reindex_error", {
+    track("algolia_reindex_error", {
       indexName: SEARCH_INDEX,
       domain,
       error: String(error),
     });
+
+    postToEngineeringNotifs(
+      `:rotating_light: [ALGOLIA] Failed to reindex ${domain} with the following error: ${String(error)}`
+    );
 
     return NextResponse.json("Internal server error", { status: 500 });
   }

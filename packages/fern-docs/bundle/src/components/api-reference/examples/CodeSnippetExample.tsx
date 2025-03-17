@@ -7,7 +7,7 @@ import { isEqual } from "es-toolkit/predicate";
 import {
   FernSyntaxHighlighter,
   type ScrollToHandle,
-} from "@fern-docs/syntax-highlighter";
+} from "@fern-docs/components/syntax-highlighter";
 import { useResizeObserver } from "@fern-ui/react-commons";
 
 import { ErrorBoundary } from "@/components/error-boundary";

@@ -6,6 +6,7 @@ import { FernScrollArea, cn } from "@fern-docs/components";
 
 import { useDismountMeasureSidebarScrollPosition } from "@/state/sidebar-scroll";
 
+import { FERN_SIDEBAR_SCROLL_AREA_ID } from "../constants";
 import { MobileSidebarHeaderLinks } from "./MobileSidebarHeaderLinks";
 import { SidebarFixedItemsSection } from "./SidebarFixedItemsSection";
 import { ThemeSwitch } from "./theme-switch";
@@ -39,9 +40,9 @@ export const SidebarContainer = React.memo(function SidebarContainer({
         showHeaderInSidebar={showHeaderInSidebar}
       />
       <FernScrollArea
-        id="sidebar-scroll-area"
+        id={FERN_SIDEBAR_SCROLL_AREA_ID}
         rootClassName="flex-1"
-        className="group/sidebar mask-grad-y-3 sticky overscroll-contain px-4 py-6 pb-12 lg:pl-5 [&>div]:space-y-6"
+        className="group/sidebar mask-grad-y-3 sticky overscroll-contain [&>div]:space-y-6"
         scrollbars="vertical"
         ref={ref}
       >

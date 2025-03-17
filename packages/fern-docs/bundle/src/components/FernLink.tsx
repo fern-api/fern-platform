@@ -6,12 +6,15 @@ import React from "react";
 import { ExternalLinkIcon } from "lucide-react";
 import { type UrlObject, format, parse, resolve } from "url";
 
+import { conformTrailingSlash } from "@fern-docs/utils";
+
 import { useCurrentPathname } from "@/hooks/use-current-pathname";
 import { useDomain } from "@/state/domain";
 
 export const FernLink = React.forwardRef<
   HTMLAnchorElement,
-  React.ComponentProps<typeof Link> & {
+  Omit<React.ComponentProps<typeof Link>, "href"> & {
+    href: string;
     showExternalLinkIcon?: boolean;
   }
 >(function FernLink({ showExternalLinkIcon = false, ...props }, ref) {
@@ -36,7 +39,7 @@ export const FernLink = React.forwardRef<
     );
   }
 
-  return <Link ref={ref} {...props} />;
+  return <Link ref={ref} {...props} href={conformTrailingSlash(props.href)} />;
 });
 
 FernLink.displayName = "FernLink";
@@ -47,7 +50,14 @@ const FernRelativeLink = React.forwardRef<
 >((props, ref) => {
   const pathname = useCurrentPathname();
   const href = resolveRelativeUrl(pathname, formatUrlString(props.href));
-  return <Link ref={ref} prefetch={true} {...props} href={href} />;
+  return (
+    <Link
+      ref={ref}
+      prefetch={true}
+      {...props}
+      href={conformTrailingSlash(href)}
+    />
+  );
 });
 
 FernRelativeLink.displayName = "FernRelativeLink";

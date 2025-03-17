@@ -194,7 +194,6 @@ var Component = (() => {
               title: "Python",
               icon: "brands python",
               href: "https://github.com/fern-api/fern/tree/main/generators/python",
-              id: "python",
               children: (0, import_jsx_runtime.jsx)(_components.p, {
                 children: "The icon field references a Font Awesome icon."
               })
@@ -214,7 +213,6 @@ var Component = (() => {
                 alt: "Python logo"
               }),
               href: "https://github.com/fern-api/fern/tree/main/generators/python",
-              id: "python-1",
               children: (0, import_jsx_runtime.jsx)(_components.p, {
                 children: "Pass in an image tag to use a custom icon."
               })
@@ -236,7 +234,6 @@ var Component = (() => {
                   })
                 })
               }),
-              id: "pythonhttpsgithubcomfern-apiferntreemaingeneratorspython",
               children: (0, import_jsx_runtime.jsx)(_components.p, {
                 children: "The title text can be a link."
               })
@@ -253,7 +250,6 @@ var Component = (() => {
               title: "Location",
               icon: "regular globe",
               iconPosition: "left",
-              id: "location",
               children: (0, import_jsx_runtime.jsxs)(_components.p, {
                 children: ["You can set the icon position as ", (0, import_jsx_runtime.jsx)(_components.code, {
                   children: "left"

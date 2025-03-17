@@ -30,6 +30,7 @@ export async function LayoutEvaluatorContent({
   children,
   aside,
   bottomNavigation,
+  slug,
 }: {
   serialize: MdxSerializer;
   frontmatter?: Partial<FernDocs.Frontmatter>;
@@ -40,6 +41,7 @@ export async function LayoutEvaluatorContent({
   children: React.ReactNode;
   aside?: React.ReactNode;
   bottomNavigation?: React.ReactNode;
+  slug: string;
 }) {
   let layout = frontmatter?.layout ?? "guide";
 
@@ -53,6 +55,7 @@ export async function LayoutEvaluatorContent({
       title={title}
       subtitle={subtitle}
       breadcrumb={breadcrumb}
+      slug={slug}
     />
   );
 
@@ -99,7 +102,12 @@ export async function LayoutEvaluatorContent({
       );
     case "reference":
       return (
-        <ReferenceLayout header={pageHeader} aside={aside} footer={footer}>
+        <ReferenceLayout
+          header={pageHeader}
+          aside={aside}
+          footer={footer}
+          kind="guide"
+        >
           {children}
         </ReferenceLayout>
       );

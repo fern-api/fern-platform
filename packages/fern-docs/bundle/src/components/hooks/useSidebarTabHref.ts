@@ -1,12 +1,12 @@
 import { visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
-import { addLeadingSlash } from "@fern-docs/utils";
+import { slugToHref } from "@fern-docs/utils";
 import { SidebarTab } from "@fern-platform/fdr-utils";
 
 export function useSidebarTabHref(tab: SidebarTab): string {
   const href = visitDiscriminatedUnion(tab, "type")._visit({
-    tabGroup: (value) => addLeadingSlash(value.pointsTo ?? value.slug),
+    tabGroup: (value) => slugToHref(value.pointsTo ?? value.slug),
     tabLink: (value) => value.url,
-    tabChangelog: (value) => addLeadingSlash(value.slug),
+    tabChangelog: (value) => slugToHref(value.slug),
     _other: () => "/",
   });
   return href;

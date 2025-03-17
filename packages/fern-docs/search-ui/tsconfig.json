@@ -31,9 +31,6 @@
       "path": "../components"
     },
     {
-      "path": "../syntax-highlighter"
-    },
-    {
       "path": "../../commons/react-commons"
     }
   ],

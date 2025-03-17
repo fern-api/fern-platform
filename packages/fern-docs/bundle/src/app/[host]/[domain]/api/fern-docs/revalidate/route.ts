@@ -21,8 +21,7 @@ import { getAuthEdgeConfig, getEdgeFlags } from "@fern-docs/edge-config";
 import {
   EdgeFlags,
   HEADER_X_FERN_HOST,
-  addLeadingSlash,
-  conformTrailingSlash,
+  slugToHref,
   withoutStaging,
 } from "@fern-docs/utils";
 
@@ -76,7 +75,11 @@ export async function GET(
         ]);
 
         let reindexPromise: Promise<void> | undefined;
-        if (!metadata.isPreview) {
+        if (
+          !metadata.isPreview &&
+          // reindex unless explicitly disabled
+          req.nextUrl.searchParams.get("reindex") !== "false"
+        ) {
           reindexPromise = reindex(docs, host, domain, edgeFlags)
             .then((services) => {
               controller.enqueue(
@@ -206,12 +209,10 @@ export async function GET(
             await Promise.all(
               // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion, @typescript-eslint/no-non-null-assertion
               batches[i]!.map(async (slug) => {
-                const url = withDefaultProtocol(
-                  `${domain}${conformTrailingSlash(addLeadingSlash(slug))}`
-                );
+                const url = withDefaultProtocol(`${domain}${slugToHref(slug)}`);
                 // force revalidate the static page
                 revalidatePath(
-                  `/${host}/${domain}/static/${encodeURIComponent(conformTrailingSlash(addLeadingSlash(slug)))}`,
+                  `/${host}/${domain}/static/${encodeURIComponent(slugToHref(slug))}`,
                   "page"
                 );
                 try {
@@ -220,7 +221,7 @@ export async function GET(
                   while (attempts < 3) {
                     try {
                       res = await fetch(
-                        `${req.nextUrl.origin}${conformTrailingSlash(addLeadingSlash(slug))}`,
+                        `${req.nextUrl.origin}${slugToHref(slug)}`,
                         {
                           method: "HEAD",
                           cache: "no-store",
@@ -233,7 +234,7 @@ export async function GET(
                       }
                     } catch (e) {
                       console.debug(
-                        `Failed to revalidate URL ${req.nextUrl.origin}${conformTrailingSlash(addLeadingSlash(slug))}, trying again...`
+                        `Failed to revalidate URL ${req.nextUrl.origin}${slugToHref(slug)}, trying again...`
                       );
                       attempts++;
                       if (attempts === 3) throw e;

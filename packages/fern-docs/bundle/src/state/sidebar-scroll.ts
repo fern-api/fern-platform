@@ -7,6 +7,7 @@ import {
   useIsomorphicLayoutEffect,
 } from "@fern-ui/react-commons";
 
+import { FERN_SIDEBAR_SCROLL_AREA_ID } from "@/components/constants";
 import { scrollToCenter } from "@/components/util/scrollToCenter";
 
 import { useIsSelectedSidebarNode } from "./navigation";
@@ -15,7 +16,7 @@ let justScrolledTo: string | undefined;
 
 export function useRestoreSidebarScrollPosition() {
   useIsomorphicLayoutEffect(() => {
-    const container = document.getElementById("sidebar-scroll-area");
+    const container = document.getElementById(FERN_SIDEBAR_SCROLL_AREA_ID);
     if (!container) return;
     container.scrollTop = window._FERN_SIDEBAR_SCROLL_RESTORATION ?? 0;
   }, []);
@@ -65,7 +66,7 @@ export function useScrollSidebarNodeIntoView(
   const shouldScrollIntoView = useIsSelectedSidebarNode(nodeId ?? ("" as any));
   useIsomorphicLayoutEffect(() => {
     const scrollTo = () => {
-      const container = document.getElementById("sidebar-scroll-area");
+      const container = document.getElementById(FERN_SIDEBAR_SCROLL_AREA_ID);
       if (!container) return;
       container.scrollTop = window._FERN_SIDEBAR_SCROLL_RESTORATION ?? 0;
 

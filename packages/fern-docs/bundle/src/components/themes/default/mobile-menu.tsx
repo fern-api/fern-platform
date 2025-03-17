@@ -17,6 +17,11 @@ import {
 import { cn } from "@fern-docs/components";
 import { useIsomorphicLayoutEffect } from "@fern-ui/react-commons";
 
+import {
+  FERN_HEADER_ID,
+  FERN_SIDEBAR_ID,
+  FERN_SIDEBAR_OVERLAY_ID,
+} from "@/components/constants";
 import { useCurrentPathname } from "@/hooks/use-current-pathname";
 import { useIsDismissableSidebarOpen } from "@/state/mobile";
 
@@ -35,9 +40,11 @@ const transition = {
 export function MobileMenu({
   children,
   className,
+  ...props
 }: {
   children: React.ReactNode;
   className?: string;
+  "data-theme"?: string;
 }) {
   const [open, setOpen] = useIsDismissableSidebarOpen();
 
@@ -194,13 +201,13 @@ export function MobileMenu({
         typeof window === "undefined"
           ? []
           : compact([
-              document.getElementById("fern-header"),
-              document.getElementById("fern-sidebar"),
-              document.getElementById("fern-sidebar-overlay"),
+              document.getElementById(FERN_HEADER_ID),
+              document.getElementById(FERN_SIDEBAR_ID),
+              document.getElementById(FERN_SIDEBAR_OVERLAY_ID),
             ])
       }
     >
-      <Portal className="pointer-events-none fixed inset-0">
+      <Portal className="pointer-events-none fixed inset-0" {...props}>
         <AnimatePresence
           mode="popLayout"
           onExitComplete={() => {
@@ -214,7 +221,7 @@ export function MobileMenu({
           {open && (
             <motion.div
               layoutRoot
-              className="bg-background/70 pointer-events-auto fixed inset-0 top-[calc(var(--header-height)+1px)] z-30"
+              id={FERN_SIDEBAR_OVERLAY_ID}
               key="overlay"
               style={{ opacity, touchAction: "none" }}
               initial={{ opacity: 0 }}
@@ -233,11 +240,11 @@ export function MobileMenu({
           {open && (
             <motion.div
               layoutRoot
-              id="fern-sidebar"
-              className={cn(
-                "sm:w-sidebar-width fern-background-image border-border-concealed pointer-events-auto fixed inset-y-0 right-0 top-[calc(var(--header-height)+1px)] z-40 flex w-full max-w-[calc(100dvw-3rem)] flex-col border-l backdrop-blur-xl",
-                className
-              )}
+              // Note: if this component must not be rendered at the same time as the side-nav.tsx component,
+              // because they share the same ID.
+              id={FERN_SIDEBAR_ID}
+              data-viewport="mobile"
+              className={cn("fern-background-image", className)}
               key="sidebar"
               onPointerDown={(event) => dragControls.start(event)}
               onDragStart={() => {
@@ -288,7 +295,7 @@ function calculateWidth(value: number | string, sidebarWidth: number) {
 }
 
 function getSidebarWidth() {
-  const sidebar = document.getElementById("fern-sidebar");
+  const sidebar = document.getElementById(FERN_SIDEBAR_ID);
   if (!sidebar) return 0;
   return sidebar.clientWidth;
 }

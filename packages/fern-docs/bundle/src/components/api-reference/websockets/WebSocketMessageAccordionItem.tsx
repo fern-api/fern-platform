@@ -7,9 +7,12 @@ import * as Accordion from "@radix-ui/react-accordion";
 import { ArrowDown, ArrowUp, ChevronDown } from "lucide-react";
 
 import { APIV1Read } from "@fern-api/fdr-sdk/client/types";
-import { cn, useFernCollapseOverflow } from "@fern-docs/components";
-import { CopyToClipboardButton } from "@fern-docs/components";
-import { FernSyntaxHighlighter } from "@fern-docs/syntax-highlighter";
+import {
+  CopyToClipboardButton,
+  FernSyntaxHighlighter,
+  cn,
+  useFernCollapseOverflow,
+} from "@fern-docs/components";
 
 import { WebSocketMessage } from "./WebSocketMessages";
 

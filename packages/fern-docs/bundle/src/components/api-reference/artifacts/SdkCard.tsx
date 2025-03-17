@@ -1,3 +1,5 @@
+"use client";
+
 import { ReactElement, useMemo } from "react";
 
 import type { DocsV1Read } from "@fern-api/fdr-sdk/client/types";

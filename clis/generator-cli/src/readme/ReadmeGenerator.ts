@@ -492,7 +492,7 @@ export class ReadmeGenerator {
     nuget: FernGeneratorCli.NugetPublishInfo;
   }): void {
     writer.writeLine("```sh");
-    writer.writeLine(`nuget install ${nuget.packageName}`);
+    writer.writeLine(`dotnet add package ${nuget.packageName}`);
     writer.writeLine("```");
     writer.writeLine();
   }

@@ -19,6 +19,7 @@ import {
 import {
   ApiDefinitionV1ToLatest,
   AuthScheme,
+  EnvironmentId,
   ObjectProperty,
   PruningNodeType,
   TypeDefinition,
@@ -31,7 +32,6 @@ import {
   PageId,
   Slug,
   TypeId,
-  slugjoin,
 } from "@fern-api/fdr-sdk/navigation";
 import { CONTINUE, SKIP } from "@fern-api/fdr-sdk/traversers";
 import { isNonNullish, isPlainObject } from "@fern-api/ui-core-utils";
@@ -46,8 +46,6 @@ import {
   DEFAULT_PAGE_WIDTH,
   DEFAULT_SIDEBAR_WIDTH,
   EdgeFlags,
-  addLeadingSlash,
-  removeTrailingSlash,
   withoutStaging,
 } from "@fern-docs/utils";
 
@@ -58,7 +56,9 @@ import { generateFernColorPalette } from "./generateFernColors";
 import { FernFonts, generateFonts } from "./generateFonts";
 import { getDocsUrlMetadata } from "./getDocsUrlMetadata";
 import { loadWithUrl as uncachedLoadWithUrl } from "./loadWithUrl";
+import { postToEngineeringNotifs } from "./slack";
 import { FernColorTheme, FernLayoutConfig, FileData } from "./types";
+import { cleanBasePath } from "./utils/clean-base-path";
 import { pruneWithAuthState } from "./withRbac";
 
 const loadWithUrl = uncachedLoadWithUrl;
@@ -196,14 +196,6 @@ const cachedGetEdgeFlags = cache(async (domain: string) => {
   return await getEdgeFlags(domain);
 });
 
-export function cleanBasePath(basePath: string | undefined) {
-  const basepath = removeTrailingSlash(addLeadingSlash(slugjoin(basePath)));
-  if (basepath === "/") {
-    return "";
-  }
-  return basepath;
-}
-
 export const getMetadataFromResponse = async (
   domain: string,
   responsePromise: AsyncOrSync<DocsV2Read.LoadDocsForUrlResponse>
@@ -241,15 +233,29 @@ export const getMetadata = cache(
         error
       );
     }
-    const metadata = await getMetadataFromResponse(domain, loadWithUrl(domain));
-    kvSet(domain, "metadata", metadata);
-    console.log("[getMetadata] cache miss:", metadata);
-    return metadata;
+    try {
+      const metadata = await getMetadataFromResponse(
+        domain,
+        loadWithUrl(domain)
+      );
+      kvSet(domain, "metadata", metadata);
+      console.log("[getMetadata] cache miss:", metadata);
+      return metadata;
+    } catch (error) {
+      postToEngineeringNotifs(
+        `:rotating_light: Failed to get metadata for ${domain} with the following error: ${String(error)}`
+      );
+      throw error;
+    }
   }
 );
 
 const getFiles = cache(
   async (domain: string): Promise<Record<string, FileData>> => {
+    "use cache";
+
+    unstable_cacheTag(domain, "getFiles");
+
     try {
       const cached = await kv.hget<Record<string, FileData>>(domain, "files");
       if (cached) {
@@ -285,6 +291,10 @@ const getFiles = cache(
 
 // the api reference may be too large to cache, so we don't cache it in the KV store
 const getApi = async (domain: string, id: string) => {
+  "use cache";
+
+  unstable_cacheTag(domain, "getApi", id);
+
   const response = await loadWithUrl(domain);
   const latest = response.definition.apisV2[ApiDefinitionId(id)];
   if (latest != null) {
@@ -328,6 +338,20 @@ const createGetPrunedApiCached = (domain: string) =>
 
       const api = await getApi(domain, id);
       const pruned = prune(api, ...nodes);
+
+      for (const endpointK of Object.keys(pruned.endpoints)) {
+        if (
+          pruned.endpoints[EndpointId(endpointK)]?.environments?.length === 0
+        ) {
+          console.debug(
+            `${endpointK} has empty environments, adding default URL.`
+          );
+          pruned.endpoints[EndpointId(endpointK)]?.environments?.push({
+            id: "Default" as EnvironmentId,
+            baseUrl: "https://host.com",
+          });
+        }
+      }
 
       // if there is only one node, and it's an endpoint, try to cache the result
       if (nodes.length === 1 && nodes[0]) {
@@ -381,6 +405,10 @@ const getEndpointById = async (
   authSchemes: AuthScheme[];
   types: Record<TypeId, TypeDefinition>;
 }> => {
+  "use cache";
+
+  unstable_cacheTag(domain, "getEndpointById", apiDefinitionId, endpointId);
+
   const api = await createGetPrunedApiCached(domain)(apiDefinitionId, {
     type: "endpoint",
     endpointId,
@@ -614,6 +642,10 @@ const getPage = cache(async (domain: string, pageId: string) => {
 });
 
 const getMdxBundlerFiles = cache(async (domain: string) => {
+  "use cache";
+
+  unstable_cacheTag(domain, "getMdxBundlerFiles");
+
   try {
     const cached = await kv.hget<Record<string, string>>(
       domain,
@@ -635,6 +667,10 @@ const getMdxBundlerFiles = cache(async (domain: string) => {
 });
 
 const getColors = cache(async (domain: string) => {
+  "use cache";
+
+  unstable_cacheTag(domain, "getColors");
+
   try {
     const cached = await kv.hget<{
       light: FernColorTheme | undefined;
@@ -718,6 +754,10 @@ const getColors = cache(async (domain: string) => {
 });
 
 const getFonts = cache(async (domain: string) => {
+  "use cache";
+
+  unstable_cacheTag(domain, "getFonts");
+
   try {
     const cached = await kv.hget<FernFonts>(domain, "fonts");
     if (cached != null) {
@@ -739,6 +779,10 @@ const getFonts = cache(async (domain: string) => {
 });
 
 const getLayout = cache(async (domain: string) => {
+  "use cache";
+
+  unstable_cacheTag(domain, "getLayout");
+
   const config = await getConfig(domain);
   if (!config) {
     console.debug("Could not find config for domain", domain);
@@ -757,8 +801,12 @@ const getLayout = cache(async (domain: string) => {
         calcDefaultPageWidth(sidebarWidth, contentWidth));
   const headerHeight =
     toPx(config.layout?.headerHeight) ?? DEFAULT_HEADER_HEIGHT;
-  const tabsPlacement = config.layout?.tabsPlacement ?? "SIDEBAR";
-  const searchbarPlacement = config.layout?.searchbarPlacement ?? "HEADER";
+  const tabsPlacement = config.layout?.disableHeader
+    ? "SIDEBAR"
+    : (config.layout?.tabsPlacement ?? defaultTabsPlacement(domain));
+  const searchbarPlacement = config.layout?.disableHeader
+    ? "SIDEBAR"
+    : (config.layout?.searchbarPlacement ?? defaultSearchbarPlacement(domain));
   return {
     logoHeight,
     sidebarWidth,
@@ -770,6 +818,20 @@ const getLayout = cache(async (domain: string) => {
     isHeaderDisabled: config.layout?.disableHeader ?? false,
   };
 });
+
+function defaultTabsPlacement(domain: string) {
+  if (domain.includes("cohere")) {
+    return "HEADER";
+  }
+  return "SIDEBAR";
+}
+
+function defaultSearchbarPlacement(domain: string) {
+  if (domain.includes("cohere")) {
+    return "HEADER_TABS";
+  }
+  return "HEADER";
+}
 
 /**
  * The default page width should be at least 1408px (88rem), and should be able to fit 1 content + 2 sidebars

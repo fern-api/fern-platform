@@ -2,6 +2,7 @@ import { Metadata, Viewport } from "next/types";
 import { experimental_taintUniqueValue } from "react";
 
 import { ConsoleMessage } from "@/components/console-message";
+import { FERN_DOCS_ID } from "@/components/constants";
 import { ScrollToTop } from "@/components/layouts/ScrollToTop";
 
 import "./globals.css";
@@ -30,11 +31,7 @@ const secrets = [
   "VERCEL_AUTOMATION_BYPASS_SECRET",
 ];
 
-export default function DashboardLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function Layout({ children }: { children: React.ReactNode }) {
   for (const secret of secrets) {
     const secretValue = process.env[secret];
     if (secretValue != null) {
@@ -55,7 +52,7 @@ export default function DashboardLayout({
           fetchPriority="low"
         />
       </head>
-      <body className="antialiased" id="fern-docs">
+      <body className="antialiased" id={FERN_DOCS_ID}>
         <ConsoleMessage />
         <ScrollToTop />
         <Providers>{children}</Providers>

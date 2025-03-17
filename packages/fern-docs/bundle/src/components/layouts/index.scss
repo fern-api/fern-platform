@@ -1,0 +1,84 @@
+@layer components {
+  #fern-toc {
+    @apply sticky order-last hidden h-fit flex-col xl:flex;
+    @apply w-(--sticky-aside-width) pr-(--aside-offset);
+  }
+
+  .fern-layout-changelog {
+    &[data-aside-state="hidden"] {
+      @apply max-w-page-width-padded px-page-padding mx-auto min-w-0;
+
+      > aside {
+        @apply w-page-width;
+      }
+
+      .fern-changelog-content {
+        @apply max-w-content-wide-width relative mx-auto grid w-full grid-cols-1 gap-4 lg:grid-cols-[1fr_minmax(0,var(--content-width))_1fr];
+      }
+
+      .eyebrow {
+        @apply flex lg:hidden;
+      }
+
+      .fern-changelog-content > aside {
+        @apply sticky hidden h-fit lg:flex lg:justify-end;
+      }
+    }
+
+    &[data-aside-state="visible"] {
+      @apply px-page-padding mx-auto mb-12 min-w-0 shrink space-y-8;
+
+      > aside {
+        @apply w-content-width;
+      }
+
+      .fern-changelog-content > aside {
+        @apply hidden;
+      }
+    }
+  }
+
+  .fern-layout-page {
+    @apply max-w-page-width-padded px-page-padding mx-auto min-w-0 flex-1;
+  }
+
+  .fern-layout-overview {
+    @apply px-page-padding mx-auto mb-12 min-w-0 shrink space-y-8;
+  }
+
+  .fern-layout-reference {
+    @apply pl-page-padding mx-auto min-w-0 shrink pr-[calc(var(--page-padding)+var(--aside-offset))];
+
+    aside.fern-layout-reference-aside {
+      @apply sticky order-last h-fit;
+    }
+
+    .fern-layout-reference-aside[data-kind="api"] {
+      @apply flex shrink-0;
+    }
+
+    .fern-layout-reference-content {
+      @apply my-6 md:grid md:grid-cols-2 md:gap-8 lg:gap-12;
+    }
+  }
+
+  .fern-layout-guide {
+    @apply px-page-padding mx-auto mb-12 min-w-0 shrink space-y-8;
+  }
+
+  .fern-layout-footer {
+    @apply w-content-width mx-auto my-12 max-w-full space-y-8;
+
+    .fern-layout-footer-toolbar {
+      @apply flex gap-4 gap-y-8 max-sm:flex-col sm:justify-between;
+    }
+  }
+
+  .fern-changelog-content {
+    @apply max-w-content-wide-width relative mx-auto grid w-full grid-cols-1 gap-4;
+
+    .eyebrow {
+      @apply mb-4;
+    }
+  }
+}

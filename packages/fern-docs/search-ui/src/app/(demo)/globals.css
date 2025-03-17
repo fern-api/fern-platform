@@ -3,7 +3,7 @@
 @import "@fern-docs/components/src/fern-accent.scss";
 @import "@fern-docs/components/src/kbd.css";
 @import "@fern-docs/components/src/badges/index.scss";
-@import "@fern-docs/syntax-highlighter/src/index.css";
+@import "@fern-docs/components/src/syntax-highlighter/index.css";
 @import "../../components/shared/reset.css";
 
 @source "../../../../components";

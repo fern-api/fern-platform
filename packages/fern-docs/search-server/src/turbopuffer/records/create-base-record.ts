@@ -1,6 +1,6 @@
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { isNonNullish } from "@fern-api/ui-core-utils";
-import { addLeadingSlash } from "@fern-docs/utils";
+import { slugToHref } from "@fern-docs/utils";
 
 import { createRoleFacet } from "../../shared/roles/create-role-facet";
 import {
@@ -72,13 +72,13 @@ export function createBaseRecord({
   );
 
   return {
-    id: `${node.id}`,
+    id: node.id,
     attributes: {
       type,
       org_id,
       domain,
-      canonicalPathname: addLeadingSlash(node.canonicalSlug ?? node.slug),
-      pathname: addLeadingSlash(node.slug),
+      canonicalPathname: slugToHref(node.canonicalSlug ?? node.slug),
+      pathname: slugToHref(node.slug),
       icon: node.icon,
       title: node.title,
       breadcrumb,

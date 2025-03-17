@@ -181,10 +181,11 @@ const MemoizedTooltip = memo(
           side="right"
           sideOffset={16}
           align="start"
-          className="max-h-(--radix-tooltip-content-available-height) [&_mark]:bg-(color:--accent-a3) [&_mark]:text-(color:--accent-a11) max-w-[min(var(--radix-tooltip-content-available-width),384px)] space-y-2"
+          className="max-h-(--radix-tooltip-content-available-height) [&_mark]:bg-(color:--accent-a3) [&_mark]:text-(color:--accent-a11) w-[384px] space-y-2"
           avoidCollisions
           animate={false}
-          collisionPadding={10}
+          collisionBoundary={document.getElementById("fern-search-dialog")}
+          hideWhenDetached={true}
         >
           {hit._snippetResult?.description && (
             <p className="text-sm">

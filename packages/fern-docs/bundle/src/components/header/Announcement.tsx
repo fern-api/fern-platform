@@ -11,6 +11,7 @@ import { createJSONStorage, persist } from "zustand/middleware";
 
 import { FernButton, cn } from "@fern-docs/components";
 
+import { FERN_ANNOUNCEMENT_ID } from "../constants";
 import { ErrorBoundary } from "../error-boundary";
 
 type AnnouncementStore = {
@@ -144,7 +145,7 @@ export function Announcement({
         <AnimatePresence mode="popLayout">
           {!isDismissed && (
             <MotionAnnouncement
-              id="fern-announcement"
+              id={FERN_ANNOUNCEMENT_ID}
               suppressHydrationWarning
               className={cn("[&_.fern-mdx-link]:text-inherit", className)}
               exit={{ height: 0 }}

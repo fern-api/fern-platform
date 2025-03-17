@@ -49,31 +49,7 @@ export const Callout: FC<PropsWithChildren<Callout.Props>> = ({
 }) => {
   const intent = parseIntent(intentRaw);
   return (
-    <div
-      className={cn(
-        "rounded-3 mb-6 mt-4 border p-4 first:mt-0", // pb-0 to compensate for the ::after margin
-        visitDiscriminatedUnion({ intent }, "intent")._visit({
-          info: () =>
-            "bg-(color:--grayscale-a2) border-(color:--grayscale-a6) text-(color:--grayscale-a11) [&_svg]:text-(color:--grayscale-a10)",
-          warning: () =>
-            "bg-(color:--amber-a2) border-(color:--amber-a6) text-(color:--amber-a11) [&_svg]:text-(color:--amber-a10)",
-          success: () =>
-            "bg-(color:--green-a2) border-(color:--green-a6) text-(color:--green-a11) [&_svg]:text-(color:--green-a10)",
-          error: () =>
-            "bg-(color:--red-a2) border-(color:--red-a6) text-(color:--red-a11) [&_svg]:text-(color:--red-a10)",
-          note: () =>
-            "bg-(color:--blue-a2) border-(color:--blue-a6) text-(color:--blue-a11) [&_svg]:text-(color:--blue-a10)",
-          launch: () =>
-            "bg-(color:--accent-a2) border-(color:--accent-a6) text-(color:--accent-a11) [&_svg]:text-(color:--accent-a10)",
-          tip: () =>
-            "bg-(color:--green-a2) border-(color:--green-a6) text-(color:--green-a11) [&_svg]:text-(color:--green-a10)",
-          check: () =>
-            "bg-(color:--green-a2) border-(color:--green-a6) text-(color:--green-a11) [&_svg]:text-(color:--green-a10)",
-          _other: () =>
-            "bg-(color:--grayscale-a2) border-(color:--grayscale-a6) text-(color:--grayscale-a11) [&_svg]:text-(color:--grayscale-a10)",
-        })
-      )}
-    >
+    <div data-intent={intent} className="fern-callout">
       <div className="flex items-start space-x-4">
         <div className="[&_svg]:size-icon-md mt-0.5 w-4">
           {typeof icon === "string" ? (

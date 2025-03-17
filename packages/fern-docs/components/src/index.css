@@ -12,6 +12,7 @@
 @import "./kbd.css";
 @import "./accordion.scss";
 @import "./utilities.scss";
+@import "./syntax-highlighter/index.css";
 
 @custom-variant dark (&:where(.dark, .dark *));
 @custom-variant light (&:where(.light, .light *));
@@ -197,21 +198,22 @@
 
 @theme inline {
   --radius-none: 0;
-  --radius-1\/2: calc(var(--radius) * 0.5);
-  --radius-3\/2: calc(var(--radius) * 1.5);
-  --radius-1: var(--radius);
-  --radius-2: calc(var(--radius) * 2);
-  --radius-3: calc(var(--radius) * 3);
-  --radius-4: calc(var(--radius) * 4);
-  --radius-5: calc(var(--radius) * 5);
-  --radius-6: calc(var(--radius) * 6);
-  --radius-7: calc(var(--radius) * 7);
-  --radius-8: calc(var(--radius) * 8);
-  --radius-9: calc(var(--radius) * 9);
-  --radius-10: calc(var(--radius) * 10);
-  --radius-11: calc(var(--radius) * 11);
-  --radius-12: calc(var(--radius) * 12);
-  --radius-full: calc(var(--radius) * 9999);
+  --radius-1\/2: calc(var(--radius) * 0.5); /* 2px */
+  --radius-3\/4: calc(var(--radius) * 0.75); /* 3px */
+  --radius-3\/2: calc(var(--radius) * 1.5); /* 6px */
+  --radius-1: var(--radius); /* 4px */
+  --radius-2: calc(var(--radius) * 2); /* 8px */
+  --radius-3: calc(var(--radius) * 3); /* 12px */
+  --radius-4: calc(var(--radius) * 4); /* 16px */
+  --radius-5: calc(var(--radius) * 5); /* 20px */
+  --radius-6: calc(var(--radius) * 6); /* 24px */
+  --radius-7: calc(var(--radius) * 7); /* 28px */
+  --radius-8: calc(var(--radius) * 8); /* 32px */
+  --radius-9: calc(var(--radius) * 9); /* 36px */
+  --radius-10: calc(var(--radius) * 10); /* 40px */
+  --radius-11: calc(var(--radius) * 11); /* 44px */
+  --radius-12: calc(var(--radius) * 12); /* 48px */
+  --radius-full: calc(var(--radius) * 9999); /* 9999px */
 
   /** Colors */
   --color-accent: var(--accent);

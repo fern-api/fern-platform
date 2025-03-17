@@ -45,10 +45,24 @@ describe("migrateMeta", () => {
       `"title="generators.yml" highlight={[7,8,9,10,11,12]}"`
     );
   });
-  
+
   it("should migrate title at the end of theline", () => {
     expect(migrateMeta("{7-12} generators.yml")).toMatchInlineSnapshot(
-      `"highlight={[7,8,9,10,11,12]} title="generators.yml""`
+      `"highlight={[7,8,9,10,11,12]} title="generators.yml" "`
+    );
+  });
+
+  it("should not migrate meaningless content", () => {
+    expect(
+      migrateMeta("{metadata_that_means_nothing=true}")
+    ).toMatchInlineSnapshot(`"{metadata_that_means_nothing=true}"`);
+  });
+
+  it("should leave meaningless content and migrate a title", () => {
+    expect(
+      migrateMeta("python.py {metadata_that_means_nothing=true}")
+    ).toMatchInlineSnapshot(
+      `" title="python.py" {metadata_that_means_nothing=true}"`
     );
   });
 });

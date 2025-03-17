@@ -14,7 +14,10 @@ export const rehypeAccordions: Unified.Plugin<[], Hast.Root> = () => {
         return CONTINUE;
       }
 
-      if (node.name === "Accordions") {
+      // conform aliases
+      if (node.name === "Expandable") {
+        node.name = "Accordion";
+      } else if (node.name === "Accordions") {
         node.name = "AccordionGroup";
       }
 
