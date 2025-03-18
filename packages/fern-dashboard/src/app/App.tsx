@@ -1,37 +1,33 @@
-"use client";
-
 import Image from "next/image";
 
-import { useUser } from "@auth0/nextjs-auth0/client";
+import { getSession } from "@auth0/nextjs-auth0";
 
 import { LoginButton } from "./LoginButton";
 import { LogoutButton } from "./LogoutButton";
 
-export function App() {
-  const { user, error, isLoading } = useUser();
+export async function App() {
+  const session = await getSession();
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-  if (error) {
-    return <div>{error.message}</div>;
-  }
-  if (user == null) {
+  if (session == null) {
     return <LoginButton />;
   }
 
+  const name = session.user.name;
+  const picture = session.user.picture;
+  const email = session.user.email;
+
   return (
     <div className="flex flex-1 flex-col justify-center">
-      {user.picture != null && (
+      {picture != null && (
         <Image
-          src={user.picture}
-          alt={user.name ?? "user photo"}
+          src={picture}
+          alt={name ?? "user photo"}
           width={200}
           height={200}
         />
       )}
-      <h2>{user.name}</h2>
-      <p>{user.email}</p>
+      <h2>{name}</h2>
+      <p>{email}</p>
       <LogoutButton />
     </div>
   );
