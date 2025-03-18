@@ -18,7 +18,8 @@
     transition: transform 100ms ease;
     position: relative;
 
-    --cmdk-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    --cmdk-shadow: 0 25px 50px -12px rgba(0, 0, 0, 25%);
+
     box-shadow: var(--cmdk-shadow);
 
     &::before {
@@ -33,7 +34,6 @@
 
     [data-cmdk-fern-header] {
       border-bottom: 1px solid var(--color-border-default);
-
       padding: 0.5rem;
       gap: 0;
       display: flex;
@@ -70,7 +70,6 @@
 
     [data-cmdk-empty] {
       color: var(--grayscale-a11);
-
       padding: 2rem;
       text-align: center;
       hyphens: auto;
@@ -81,7 +80,6 @@
       font-size: 0.75rem;
       font-weight: 600;
       color: var(--grayscale-a11);
-
       margin-bottom: 0.5rem;
       padding: 0 0.5rem;
     }
@@ -98,8 +96,7 @@
         transition-property: height;
       }
 
-      scroll-padding-block-start: 0.75rem;
-      scroll-padding-block-end: 0.75rem;
+      scroll-padding-block: 0.75rem;
 
       &:focus {
         outline: none;
@@ -108,7 +105,6 @@
 
     [data-cmdk-list-sizer] {
       padding: 0.75rem 0.5rem;
-
       display: flex;
       flex-direction: column;
       gap: 0.5rem;
@@ -117,7 +113,6 @@
     [data-cmdk-item] {
       font-size: 0.875rem;
       line-height: 1.25rem;
-
       border-radius: calc(0.5rem - 2px);
       padding: 0.5rem;
       text-align: left;
@@ -162,7 +157,7 @@
     }
   }
 
-  @media (min-width: 40rem) {
+  @media (width >= 40rem) {
     #fern-search-desktop-command[data-cmdk-root] {
       border: 1px solid var(--color-border-default);
       border-radius: var(--radius-3);

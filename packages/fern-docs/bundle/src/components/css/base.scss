@@ -2,6 +2,7 @@
   html,
   body {
     @apply font-body text-body text-base;
+
     background-color: var(--background, lightdark(#fff, #000));
   }
 
