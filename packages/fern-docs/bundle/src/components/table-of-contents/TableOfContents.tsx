@@ -18,6 +18,7 @@ import type { TableOfContentsItem as TableOfContentsItemType } from "@fern-docs/
 
 import { useCurrentAnchor } from "@/hooks/use-anchor";
 
+import { WithFeatureFlags } from "../feature-flags/WithFeatureFlags";
 import { TableOfContentsItem } from "./TableOfContentsItem";
 import { useTableOfContentsObserver } from "./useTableOfContentsObserver";
 
@@ -100,23 +101,30 @@ export const TableOfContents: React.FC<TableOfContents.Props> = ({
     items: TableOfContentsItemType[],
     depth = 0
   ): ReactNode => {
-    return items.flatMap(({ simpleString: text, anchorString, children }) => {
-      if (text.length === 0) {
-        // don't render empty headings
-        return [];
+    return items.flatMap(
+      ({ simpleString: text, anchorString, children, featureFlags }) => {
+        if (text.length === 0) {
+          // don't render empty headings
+          return [];
+        }
+        return [
+          <WithFeatureFlags
+            featureFlags={featureFlags}
+            key={`${depth}-${anchorString}`}
+          >
+            <TableOfContentsItem
+              key={`${depth}-${anchorString}`}
+              text={text}
+              anchorString={anchorString}
+              active={anchorInView === anchorString}
+              setActiveRef={setActiveRef}
+              depth={depth}
+            />
+          </WithFeatureFlags>,
+          flattenTableOfContents(children, depth + 1),
+        ];
       }
-      return [
-        <TableOfContentsItem
-          key={`${depth}-${anchorString}`}
-          text={text}
-          anchorString={anchorString}
-          active={anchorInView === anchorString}
-          setActiveRef={setActiveRef}
-          depth={depth}
-        />,
-        flattenTableOfContents(children, depth + 1),
-      ];
-    });
+    );
   };
 
   return (
