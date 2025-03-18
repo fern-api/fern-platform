@@ -1,4 +1,4 @@
-import { toPixelValue } from "../to-pixel-value";
+import { toPixelValue } from "./to-pixel-value";
 
 describe("toPixelValue", () => {
   it("should return number if the value is a number", () => {

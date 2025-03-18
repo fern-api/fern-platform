@@ -5,7 +5,7 @@ import {
   PropertyKey,
 } from "@fern-api/fdr-sdk/api-definition";
 
-import { getMatchablePermutationsForEndpoint } from "../processRequestSnippetComponents";
+import { getMatchablePermutationsForEndpoint } from "./processRequestSnippetComponents";
 
 function literal(value: string): PathPart.Literal {
   return {

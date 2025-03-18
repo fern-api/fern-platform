@@ -7,7 +7,7 @@ import {
   pruneWithBasicTokenAnonymous,
   withBasicTokenAnonymous,
   withBasicTokenAnonymousCheck,
-} from "../withRbac";
+} from "./withRbac";
 
 describe("withBasicTokenAnonymous", () => {
   it("should deny the request if no rules are provided", () => {
