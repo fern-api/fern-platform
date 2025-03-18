@@ -57,16 +57,16 @@ export const LoginPage = () => {
               Giving API superpowers to world-class companies
             </div>
             <div className="flex justify-center gap-4">
-              <div className="flex w-32 items-center justify-center rounded border border-gray-300 bg-gray-200 py-2 font-bold">
+              <div className="flex w-32 items-center justify-center rounded border border-gray-300 bg-gray-200 py-2 font-bold dark:border-black dark:bg-gray-800">
                 LOGO
               </div>
-              <div className="flex w-32 items-center justify-center rounded border border-gray-300 bg-gray-200 py-2 font-bold">
+              <div className="flex w-32 items-center justify-center rounded border border-gray-300 bg-gray-200 py-2 font-bold dark:border-black dark:bg-gray-800">
                 LOGO
               </div>
-              <div className="flex w-32 items-center justify-center rounded border border-gray-300 bg-gray-200 py-2 font-bold">
+              <div className="flex w-32 items-center justify-center rounded border border-gray-300 bg-gray-200 py-2 font-bold dark:border-black dark:bg-gray-800">
                 LOGO
               </div>
-              <div className="flex w-32 items-center justify-center rounded border border-gray-300 bg-gray-200 py-2 font-bold">
+              <div className="flex w-32 items-center justify-center rounded border border-gray-300 bg-gray-200 py-2 font-bold dark:border-black dark:bg-gray-800">
                 LOGO
               </div>
             </div>
