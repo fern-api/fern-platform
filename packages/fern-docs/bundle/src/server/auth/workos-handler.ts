@@ -1,5 +1,6 @@
 import urlJoin from "url-join";
 
+import { withDefaultProtocol } from "@fern-api/ui-core-utils";
 import { removeTrailingSlash } from "@fern-docs/utils";
 
 import { AuthState, getWorkosRbacRoles } from "./getAuthState";
@@ -78,7 +79,10 @@ export async function handleWorkosAuth({
   }
 
   const redirectUri = String(
-    new URL("/api/fern-docs/auth/sso/callback", preferPreview(host, domain))
+    new URL(
+      "/api/fern-docs/auth/sso/callback",
+      withDefaultProtocol(decodeURIComponent(preferPreview(host, domain)))
+    )
   );
   const authorizationUrlParams = getWorkosSSOAuthorizationUrl({
     redirectUri,
