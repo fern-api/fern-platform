@@ -1419,12 +1419,6 @@ importers:
       '@types/node':
         specifier: ^18.11.9
         version: 18.19.33
-      '@types/react':
-        specifier: 19.0.10
-        version: 19.0.10
-      '@types/react-dom':
-        specifier: 19.0.4
-        version: 19.0.4(@types/react@19.0.10)
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
