@@ -6,7 +6,9 @@
     "hast",
     "mdast",
     "mdx",
-    "vite"
+    "vite",
+    "estree",
+    "estree-jsx"
   ],
   "ignore-patterns": ["dist"]
 }
