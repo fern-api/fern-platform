@@ -1,4 +1,4 @@
-import { getOryAuthorizationUrl } from "../ory";
+import { getOryAuthorizationUrl } from "./ory";
 
 describe("OAuth2Client", () => {
   it("should create an appropriate redirect url", () => {

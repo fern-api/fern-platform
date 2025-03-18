@@ -4,7 +4,7 @@ import {
   formatUrlString,
   resolveRelativeUrl,
   toUrlObject,
-} from "../FernLink";
+} from "./FernLink";
 
 describe("checkIsExternalUrl", () => {
   it("returns true for external URLs", () => {

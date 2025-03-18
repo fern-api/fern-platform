@@ -11,7 +11,7 @@ import {
   getClosestGrayColor,
   getSourceForGrayscale,
   isWhiteOrBlack,
-} from "../generateFernColors";
+} from "./generateFernColors";
 
 vi.mock("server-only", () => ({}));
 

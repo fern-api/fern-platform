@@ -1,4 +1,4 @@
-import { resolveSerializableFile } from "../resolveSerializableFile";
+import { resolveSerializableFile } from "./resolveSerializableFile";
 
 describe("resolveSerializableFile", () => {
   it("should resolve a file with a data URL starting with https", async () => {

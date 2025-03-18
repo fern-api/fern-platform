@@ -6,7 +6,7 @@ import { render, screen } from "@testing-library/react";
 import { PathPart } from "@fern-api/fdr-sdk/api-definition";
 import { EnvironmentId, PropertyKey } from "@fern-api/fdr-sdk/navigation";
 
-import { EndpointUrl } from "../EndpointUrl";
+import { EndpointUrl } from "./EndpointUrl";
 
 function lit(value: string): PathPart.Literal {
   return { type: "literal", value };

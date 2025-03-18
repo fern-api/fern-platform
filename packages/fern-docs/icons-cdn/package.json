@@ -41,8 +41,6 @@
     "@fern-platform/configs": "workspace:*",
     "@next/bundle-analyzer": "15.3.0-canary.1",
     "@types/node": "^18.11.9",
-    "@types/react": "19.0.10",
-    "@types/react-dom": "19.0.4",
     "depcheck": "^1.4.7",
     "next": "15.3.0-canary.1",
     "stylelint": "^16.1.0",
