@@ -7,7 +7,7 @@ import { useUser } from "@auth0/nextjs-auth0/client";
 import { LoginButton } from "./LoginButton";
 import { LogoutButton } from "./LogoutButton";
 
-export default function App() {
+export function App() {
   const { user, error, isLoading } = useUser();
 
   if (isLoading) {
