@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 
+import { UserProvider } from "@auth0/nextjs-auth0/client";
+
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -13,7 +15,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="flex h-[calc(100dvh)] antialiased">{children}</body>
+      <UserProvider>
+        <body className="flex h-[calc(100dvh)] antialiased">{children}</body>
+      </UserProvider>
     </html>
   );
 }
