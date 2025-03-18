@@ -4,7 +4,8 @@
   "tasks": {
     "build": {
       "outputs": [".next/**", "!.next/cache/**"],
-      "inputs": ["$TURBO_DEFAULT$", ".env*"]
+      "inputs": ["$TURBO_DEFAULT$", ".env*"],
+      "env": ["DEPLOYMENT_URL"]
     }
   }
 }
