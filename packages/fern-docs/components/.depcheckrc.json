@@ -7,6 +7,7 @@
     "@storybook/addon-links",
     "@storybook/addon-onboarding",
     "@storybook/blocks",
+    "@storybook/nextjs",
     "@storybook/test",
     "@tailwindcss/postcss",
     "@tailwindcss/typography",
