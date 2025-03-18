@@ -1443,9 +1443,6 @@ importers:
       '@fern-api/ui-core-utils':
         specifier: workspace:*
         version: link:../../commons/core-utils
-      '@fern-docs/mdx':
-        specifier: workspace:*
-        version: 'link:'
       '@types/estree':
         specifier: ^1.0.6
         version: 1.0.6
