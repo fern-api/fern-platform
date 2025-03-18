@@ -21,6 +21,7 @@ docker/build
 # next
 .next
 next-env.d.ts
+!packages/fern-dashboard/next-env.d.ts
 .vercel
 
 # misc
