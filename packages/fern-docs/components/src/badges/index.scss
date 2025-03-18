@@ -33,7 +33,9 @@
     }
 
     &.large {
+      /* stylelint-disable custom-property-pattern */
       border-radius: var(--radius-3\/2);
+      /* stylelint-enable custom-property-pattern */
       font-size: 0.875rem;
       height: 1.5rem;
       padding: 0.25rem 0.5rem;
