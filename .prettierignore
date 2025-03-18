@@ -28,6 +28,7 @@ pnpm-lock.yaml
 **/__test__/outputs/
 **/tsconfig*tsbuildinfo
 docker/build
+**/__snapshots__/**
 
 # environments
 .env*.local
