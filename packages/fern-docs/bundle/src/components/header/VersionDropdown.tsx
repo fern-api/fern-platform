@@ -1,3 +1,5 @@
+import "server-only";
+
 import { FernNavigation } from "@fern-api/fdr-sdk";
 
 import { DocsLoader } from "@/server/docs-loader";
