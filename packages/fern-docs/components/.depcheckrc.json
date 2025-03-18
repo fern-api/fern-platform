@@ -10,7 +10,8 @@
     "@storybook/test",
     "@tailwindcss/postcss",
     "@tailwindcss/typography",
-    "cssnano"
+    "cssnano",
+    "hast"
   ],
   "ignore-patterns": ["dist"]
 }
