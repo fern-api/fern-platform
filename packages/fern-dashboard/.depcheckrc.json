@@ -3,7 +3,8 @@
     "@tailwindcss/postcss",
     "@types/react",
     "@types/react-dom",
-    "tailwindcss"
+    "tailwindcss",
+    "tailwindcss-animate"
   ],
   "ignore-patterns": ["dist"]
 }
