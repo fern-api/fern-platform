@@ -12,10 +12,10 @@ import {
   Slug,
 } from "@fern-api/fdr-sdk/navigation";
 
-import { PlaygroundEndpointRequestFormState } from "../../types";
-import { CurlSnippetBuilder } from "../builders/curl";
-import { PythonRequestSnippetBuilder } from "../builders/python";
-import { TypescriptFetchSnippetBuilder } from "../builders/typescript";
+import { PlaygroundEndpointRequestFormState } from "../types";
+import { CurlSnippetBuilder } from "./builders/curl";
+import { PythonRequestSnippetBuilder } from "./builders/python";
+import { TypescriptFetchSnippetBuilder } from "./builders/typescript";
 
 describe("PlaygroundCodeSnippetBuilder", () => {
   const node: EndpointNode = {
