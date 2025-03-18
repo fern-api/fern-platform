@@ -103,7 +103,7 @@
     "prettier-plugin-packagejson": "^2.5.8",
     "prettier-plugin-tailwindcss": "^0.6.11",
     "react": "19.0.0",
-    "rollup": "^4.34.8",
+    "rollup": "^4.36.0",
     "styled-jsx": "^5.1.6",
     "stylelint": "^16.14.1",
     "stylelint-config-recommended": "^14.0.1",
