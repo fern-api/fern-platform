@@ -19,6 +19,9 @@ const PREVIEWABLE_HOSTS = [
   "canary-slash.ferndocs.com",
   "prod.ferndocs.com",
   "prod-slash.ferndocs.com",
+  "dev.ferndocs.com",
+  "app.buildwithfern.com",
+  "app-dev.buildwithfern.com"
 ];
 
 export async function GET(req: NextRequest): Promise<NextResponse> {
