@@ -47,7 +47,7 @@
     "@prisma/client": "5.13.0",
     "@sentry/cli": "^2.31.0",
     "@sentry/node": "^7.112.2",
-    "@sentry/profiling-node": "^7.112.2",
+    "@sentry/profiling-node": "^9.6.0",
     "@slack/web-api": "^6.9.0",
     "@ungap/url-search-params": "0.2.2",
     "algoliasearch": "^4.24.0",
