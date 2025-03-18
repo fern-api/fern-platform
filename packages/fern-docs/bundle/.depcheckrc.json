@@ -12,6 +12,7 @@
     "@storybook/test",
     "@tailwindcss/postcss",
     "@tailwindcss/typography",
+    "@testing-library/jest-dom",
     "@upstash/qstash",
     "cssnano",
     "esbuild",
