@@ -2,14 +2,14 @@ import Image from "next/image";
 
 import { getSession } from "@auth0/nextjs-auth0";
 
-import { LoginButton } from "./LoginButton";
-import { LogoutButton } from "./LogoutButton";
+import { LoginPage } from "./auth/LoginPage";
+import { LogoutButton } from "./auth/LogoutButton";
 
 export async function App() {
   const session = await getSession();
 
   if (session == null) {
-    return <LoginButton />;
+    return <LoginPage />;
   }
 
   const name = session.user.name;
