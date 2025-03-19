@@ -35,7 +35,7 @@ jobs:
         run: pnpm i -g fern-api@latest
 
       - name: Fetch domains
-        run: pnpm vercel-scripts domains.txt legacy.buildwithfern.com --token=${{ secrets.VERCEL_TOKEN }}
+        run: pnpm vercel-scripts domains.txt legacy.ferndocs.com --token=${{ secrets.VERCEL_TOKEN }}
 
       - name: Install Playwright Browsers
         run: pnpm exec playwright install chromium
