@@ -10,7 +10,7 @@ import { LoginButton } from "./LoginButton";
 export const LoginPage = () => {
   return (
     <div className="relative flex flex-1">
-      <div className="relative flex flex-1 items-center bg-white md:mx-2 md:mt-2 md:w-[40%] md:min-w-[350px] md:flex-initial md:rounded-t-2xl md:border md:border-gray-200 md:shadow-md dark:bg-[#171717] dark:md:border-[rgb(46,46,46)]">
+      <div className="relative flex flex-1 items-center bg-white md:mx-2 md:mt-2 md:w-[40%] md:min-w-[350px] md:flex-initial md:rounded-t-2xl md:border-x md:border-t md:border-gray-200 md:shadow-md dark:bg-[#171717] dark:md:border-[rgb(46,46,46)]">
         <div className="mx-[15%] flex flex-1 flex-col">
           <div className="mb-2 text-xl font-bold">Welcome to Fern</div>
           <div className="text-muted-foreground mb-8 text-sm">
