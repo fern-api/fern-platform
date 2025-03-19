@@ -45,6 +45,7 @@ export async function POST(req: NextRequest) {
     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
   });
+
   const languageModel = wrapAISDKModel(
     bedrock("us.anthropic.claude-3-5-sonnet-20241022-v2:0")
   );
@@ -58,7 +59,8 @@ export async function POST(req: NextRequest) {
   const { messages, url } = await req.json();
 
   // TODO: SORRY DEEP - NEED TO PUSH FOR WEBFLOW
-  const isWebflow = url.includes("webflow-ai");
+  const isWebflow =
+    typeof url === "string" ? url.includes("webflow-ai") : false;
   let webflowVersion: string | undefined = undefined;
   if (isWebflow) {
     if (url.includes("/v2.0.0/data/")) {
