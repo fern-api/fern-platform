@@ -111,7 +111,6 @@ describe("generateFernColorPalette", () => {
       })
     ).toMatchSnapshot();
   });
-
   it("should generate vapi colors", () => {
     expect(
       generateFernColorPalette({
@@ -120,7 +119,6 @@ describe("generateFernColorPalette", () => {
         background: "#FFFAEA",
       })
     ).toMatchSnapshot();
-
     expect(
       generateFernColorPalette({
         appearance: "dark",
@@ -129,7 +127,6 @@ describe("generateFernColorPalette", () => {
       })
     ).toMatchSnapshot();
   });
-
   it("should generate humanloop colors", () => {
     expect(
       generateFernColorPalette({
@@ -138,7 +135,6 @@ describe("generateFernColorPalette", () => {
         accent: "#2A6A42",
       })
     ).toMatchSnapshot();
-
     expect(
       generateFernColorPalette({
         appearance: "dark",
