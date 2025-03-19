@@ -16,7 +16,10 @@ import { initLogger, wrapAISDKModel } from "braintrust";
 import { z } from "zod";
 
 import { getAuthEdgeConfig, getEdgeFlags } from "@fern-docs/edge-config";
-import { createDefaultSystemPrompt } from "@fern-docs/search-server";
+import {
+  createDefaultSystemPrompt,
+  createWebflowSystemPrompt,
+} from "@fern-docs/search-server";
 import {
   queryTurbopuffer,
   toDocuments,
@@ -46,7 +49,8 @@ export async function POST(req: NextRequest) {
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
   });
   const languageModel = wrapAISDKModel(
-    bedrock("us.anthropic.claude-3-7-sonnet-20250219-v1:0")
+    // bedrock("us.anthropic.claude-3-7-sonnet-20250219-v1:0")
+    bedrock("us.anthropic.claude-3-5-sonnet-20241022-v2:0")
   );
 
   const openai = createOpenAI({ apiKey: openaiApiKey() });
@@ -58,8 +62,9 @@ export async function POST(req: NextRequest) {
   const { messages, url } = await req.json();
 
   // TODO: SORRY DEEP - NEED TO PUSH FOR WEBFLOW
+  const isWebflow = url.includes("webflow-ai");
   let webflowVersion: string | undefined = undefined;
-  if (url.includes("webflow-ai")) {
+  if (isWebflow) {
     if (url.includes("/v2.0.0/data/")) {
       webflowVersion = "Data API v2";
     } else if (url.includes("/designer/")) {
@@ -108,11 +113,17 @@ export async function POST(req: NextRequest) {
     version: webflowVersion,
   });
   const documents = toDocuments(searchResults).join("\n\n");
-  const system = createDefaultSystemPrompt({
-    domain,
-    date: new Date().toDateString(),
-    documents,
-  });
+  const system = isWebflow
+    ? createWebflowSystemPrompt({
+        domain,
+        date: new Date().toDateString(),
+        documents,
+      })
+    : createDefaultSystemPrompt({
+        domain,
+        date: new Date().toDateString(),
+        documents,
+      });
   const result = streamText({
     model: languageModel,
     system,
