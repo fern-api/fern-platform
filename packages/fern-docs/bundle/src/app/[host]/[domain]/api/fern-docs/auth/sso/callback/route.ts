@@ -45,7 +45,7 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
     return new NextResponse(null, { status: 400 });
   }
 
-  // if the current url is app.buildwithfern.com, we should redirect to ***.docs.buildwithfern.com
+  // if the current url is legacy.ferndocs.com, we should redirect to ***.docs.buildwithfern.com
   if (req.nextUrl.host !== url.host && getDocsDomainEdge(req) !== url.host) {
     if (
       req.nextUrl.searchParams.get(FORWARDED_HOST_QUERY) === req.nextUrl.host

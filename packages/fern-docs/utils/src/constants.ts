@@ -49,3 +49,18 @@ export const DEFAULT_CONTENT_WIDTH = 640; // 40rem
 export const FERN_COLOR_ACCENT = "oklch(62.42% 0.1929 143.94)";
 export const FERN_COLOR_AIR = "oklch(99.56% 0.0078 139.44)";
 export const FERN_COLOR_GROUND = "oklch(16.16% 0.021 144.53)";
+
+export const FERN_DOCS_ORIGINS = [
+  "app-dev.buildwithfern.com",
+  "app-staging.buildwithfern.com",
+  "app.buildwithfern.com",
+  "canary-slash.ferndocs.com",
+  "canary.ferndocs.com",
+  "dev.ferndocs.com",
+  "legacy-dev.ferndocs.com",
+  "legacy-staging.ferndocs.com",
+  "legacy.ferndocs.com",
+  "prod-slash.ferndocs.com",
+  "prod.ferndocs.com",
+  "staging.ferndocs.com",
+];

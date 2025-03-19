@@ -34,7 +34,7 @@ export function postToEngineeringNotifs(
       await webClient.chat.postMessage({
         thread_ts: result.ts,
         channel: "#engineering-notifs",
-        text: `View deployment logs: https://vercel.com/buildwithfern/canary.ferndocs.com/${VERCEL_DEPLOYMENT_ID.slice(4)}/logs`,
+        text: `View deployment logs: https://vercel.com/buildwithfern/prod.ferndocs.com/${VERCEL_DEPLOYMENT_ID.slice(4)}/logs`,
         unfurl_links: true,
       });
     }
