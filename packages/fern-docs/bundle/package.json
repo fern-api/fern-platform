@@ -61,7 +61,7 @@
     "@vercel/otel": "^1.10.0",
     "@workos-inc/node": "^7.31.0",
     "ai": "^4.0.18",
-    "algoliasearch": "^5.13.0",
+    "algoliasearch": "^5.21.0",
     "braintrust": "^0.0.182",
     "cssnano": "^6.0.3",
     "es-toolkit": "^1.27.0",
