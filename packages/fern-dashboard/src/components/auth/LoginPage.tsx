@@ -2,7 +2,7 @@ import Image from "next/image";
 
 import { BookOpen } from "lucide-react";
 
-import loginPreview from "../../../public/login-preview.png";
+import loginPreview from "../../../public/login-preview.avif";
 import { ThemedFernLogo } from "../theme/ThemedFernLogo";
 import { Button } from "../ui/button";
 import { LoginButton } from "./LoginButton";
@@ -39,7 +39,7 @@ export const LoginPage = () => {
         </div>
       </div>
       <div className="relative hidden flex-1 flex-col md:flex">
-        <div className="mt-16 flex min-h-0 flex-col overflow-hidden">
+        <div className="mt-16 flex min-h-0 flex-1 flex-col overflow-hidden">
           <div className="mx-16 flex flex-col">
             <ThemedFernLogo className="mb-8 mt-4 w-28" />
             <div className="text-3xl font-bold">
@@ -49,10 +49,17 @@ export const LoginPage = () => {
               </div>
             </div>
           </div>
-          <div className="mx-12 flex">
-            <Image src={loginPreview} alt="preview of fern docs" />
+          <div className="relative flex flex-1">
+            <div className="perspective-normal absolute bottom-24 left-0 right-16 top-6 flex">
+              <Image
+                src={loginPreview}
+                className="object-fit rotate-y-[-10deg] w-auto min-w-0 object-contain"
+                fill
+                alt="preview of fern docs"
+              />
+            </div>
           </div>
-          <div className="bg-background/75 absolute bottom-0 left-0 right-0 flex flex-col gap-4 p-16">
+          <div className="bg-background/75 absolute bottom-0 left-0 right-0 flex flex-col gap-4 p-8">
             <div className="text-muted-foreground text-center text-sm">
               Giving API superpowers to world-class companies
             </div>
