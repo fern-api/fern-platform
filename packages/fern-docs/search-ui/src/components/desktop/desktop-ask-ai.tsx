@@ -320,7 +320,14 @@ const DesktopAskAIChat = ({
         return;
       }
       setChatError(false); // reset any previous chat error
-      void chat.append({ role: "user", content: message });
+      void chat.append(
+        { role: "user", content: message },
+        {
+          body: {
+            url: document.location.href,
+          },
+        }
+      );
       chat.setInput("");
     },
 
