@@ -37,6 +37,7 @@ import { DocsLoader } from "@/server/docs-loader";
 import { FileData } from "@/server/types";
 
 import { getMDXExport } from "../get-mdx-export";
+import { rehypeAccordionNestedHeaders } from "../plugins/rehype-accordion-nested-headers";
 import { rehypeAccordions } from "../plugins/rehype-accordions";
 import { rehypeButtons } from "../plugins/rehype-buttons";
 import { rehypeCards } from "../plugins/rehype-cards";
@@ -152,11 +153,12 @@ async function serializeMdxImpl(
         [rehypeFiles, { files: remoteFiles }],
         rehypeMdxClassStyle,
         rehypeCodeBlock,
-        [rehypeSlug, { additionalJsxElements: ["Step", "Accordion", "Tab"] }],
         rehypeSteps,
         rehypeAccordions,
         rehypeTabs,
         rehypeCards,
+        [rehypeSlug, { additionalJsxElements: ["Step", "Accordion", "Tab"] }],
+        rehypeAccordionNestedHeaders,
         [
           rehypeExpressionToMd,
           {

@@ -8,6 +8,8 @@ export function useCurrentAnchor() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
+  // hack: searchParams creates a new record when anchor is added
+  // this could break if nextjs checks for equality upstream
   useIsomorphicLayoutEffect(() => {
     const hash = window.location.hash.slice(1);
     setAnchor(hash);
