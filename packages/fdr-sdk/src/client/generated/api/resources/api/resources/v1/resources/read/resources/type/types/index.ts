@@ -8,6 +8,7 @@ export * from "./ObjectProperty";
 export * from "./PrimitiveType";
 export * from "./IntegerType";
 export * from "./DoubleType";
+export * from "./FloatType";
 export * from "./StringType";
 export * from "./LongType";
 export * from "./BooleanType";
