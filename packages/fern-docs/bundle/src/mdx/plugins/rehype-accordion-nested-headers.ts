@@ -8,6 +8,7 @@ import {
   visit,
 } from "@fern-docs/mdx";
 
+// collect headers nested in an accordion so we know when to expand
 export const rehypeAccordionNestedHeaders: Unified.Plugin<
   [],
   Hast.Root
