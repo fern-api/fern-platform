@@ -6,7 +6,10 @@
     "hast",
     "mdast",
     "mdx",
-    "vite"
+    "vite",
+    "estree",
+    "estree-jsx",
+    "@fern-docs/mdx"
   ],
   "ignore-patterns": ["dist"]
 }

@@ -1,7 +1,9 @@
-import { ApiDefinition, FernNavigation } from "@fern-api/fdr-sdk";
-import { truncateToBytes, withDefaultProtocol } from "@fern-api/ui-core-utils";
 import { createHash } from "crypto";
 import { compact, flatten } from "es-toolkit/array";
+
+import { ApiDefinition, FernNavigation } from "@fern-api/fdr-sdk";
+import { truncateToBytes, withDefaultProtocol } from "@fern-api/ui-core-utils";
+
 import { maybePrepareMdxContent } from "../../utils/prepare-mdx-content";
 import { toDescription } from "../../utils/to-description";
 import {
@@ -50,7 +52,18 @@ export function createEndpointBaseRecordHttp({
     })
   ).filter((snippet) => snippet != null);
 
-  const keywords: string[] = [...(base.attributes.keywords ?? [])];
+  const keywords: string[] = [];
+  if (
+    typeof base.attributes.keywords !== "undefined" &&
+    typeof base.attributes.keywords === "string"
+  ) {
+    keywords.push(base.attributes.keywords);
+  } else if (
+    typeof base.attributes.keywords !== "undefined" &&
+    Array.isArray(base.attributes.keywords)
+  ) {
+    keywords.push(...base.attributes.keywords);
+  }
 
   keywords.push("endpoint", "api", "http", "rest", "openapi");
 
@@ -93,7 +106,7 @@ export function createEndpointBaseRecordHttp({
     id: createHash("sha256").update(node.endpointId).digest("hex"),
     attributes: {
       ...base.attributes,
-      chunk: prepared.content?.slice(0, 50) ?? "",
+      chunk: prepared.content ?? "",
       api_type: "http",
       api_definition_id: node.apiDefinitionId,
       api_endpoint_id: node.endpointId,

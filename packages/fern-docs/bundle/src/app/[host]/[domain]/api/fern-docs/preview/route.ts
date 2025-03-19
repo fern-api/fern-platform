@@ -4,33 +4,32 @@ import { NextRequest, NextResponse } from "next/server";
 
 import { getEnv } from "@vercel/functions";
 
-import { COOKIE_FERN_DOCS_PREVIEW } from "@fern-docs/utils";
+import {
+  COOKIE_FERN_DOCS_PREVIEW,
+  FERN_DOCS_ORIGINS,
+  HEADER_X_FERN_HOST,
+} from "@fern-docs/utils";
 
 import {
   withDeleteCookie,
   withSecureCookie,
 } from "@/server/auth/with-secure-cookie";
 import { redirectResponse } from "@/server/serverResponse";
+import { getDocsDomainEdge } from "@/server/xfernhost/edge";
 
 export const runtime = "edge";
-
-const PREVIEWABLE_HOSTS = [
-  "canary.ferndocs.com",
-  "canary-slash.ferndocs.com",
-  "prod.ferndocs.com",
-  "prod-slash.ferndocs.com",
-];
 
 export async function GET(req: NextRequest): Promise<NextResponse> {
   const { VERCEL_ENV } = getEnv();
 
-  // Only allow preview in dev and preview deployments, or if the hostname is canary.ferndocs.com
+  // Only allow preview in dev and preview deployments
+  const currentHost = getDocsDomainEdge(req);
   if (
     VERCEL_ENV === "production" &&
-    !PREVIEWABLE_HOSTS.includes(req.nextUrl.hostname) &&
+    !FERN_DOCS_ORIGINS.includes(currentHost) &&
     !req.nextUrl.hostname.endsWith(".vercel.app")
   ) {
-    console.debug("Production docs not hosted by canary.ferndocs.com detected");
+    console.debug(`Cannot preview docs hosted on ${currentHost}`);
     return notFound();
   }
 

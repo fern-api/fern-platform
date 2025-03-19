@@ -115,7 +115,7 @@ const nextConfig: NextConfig = {
    * subpath does not exist in their hosting provider. Potentially, even, their root path is also a next.js app.
    * To avoid conflicting with the customer's app, or introduce complex rewrite rules for the customer, we must edit
    * the `assetPrefix` to point to an external URL that hosts all static assets (which we call the CDN_URI).
-   * On prod, the CDN_URI is currently https://app.buildwithfern.com.
+   * On prod, the CDN_URI is currently https://legacy.ferndocs.com.
    *
    * Note that local development should not set the CDN_URI to ensure that the assets are served from the local server.
    */
