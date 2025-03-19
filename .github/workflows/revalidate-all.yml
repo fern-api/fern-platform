@@ -7,14 +7,14 @@ on:
         type: string
         description: "The deployment URL to revalidate"
         required: true
-        default: "legacy.buildwithfern.com"
+        default: "legacy.ferndocs.com"
   workflow_dispatch:
     inputs:
       deployment_url:
         type: string
         description: "The deployment URL to revalidate"
         required: false
-        default: "legacy.buildwithfern.com"
+        default: "legacy.ferndocs.com"
 
 env:
   VERCEL_ORG_ID: team_6FKOM5nw037hv8g2mTk3gaH7
@@ -30,4 +30,4 @@ jobs:
         uses: ./.github/actions/install
 
       - name: Revalidate all
-        run: pnpm vercel-scripts revalidate-all ${{ inputs.deployment_url || 'legacy.buildwithfern.com' }} --token ${{ secrets.VERCEL_TOKEN }}
+        run: pnpm vercel-scripts revalidate-all ${{ inputs.deployment_url || 'legacy.ferndocs.com' }} --token ${{ secrets.VERCEL_TOKEN }}
