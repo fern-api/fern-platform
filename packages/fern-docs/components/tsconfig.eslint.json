@@ -4,6 +4,5 @@
     "rootDir": ".",
     "noEmit": true,
     "allowJs": true
-  },
-  "include": ["**/*.{ts,tsx,mjs}"]
+  }
 }
