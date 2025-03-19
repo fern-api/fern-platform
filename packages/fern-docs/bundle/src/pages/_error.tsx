@@ -1,7 +1,9 @@
-import { parseServerSidePathname } from "@/hooks/use-current-pathname";
-import { isEmpty } from "es-toolkit/compat";
 import { GetServerSideProps } from "next";
 import Error from "next/error";
+
+import { isEmpty } from "es-toolkit/compat";
+
+import { parseServerSidePathname } from "@/hooks/use-current-pathname";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   if (isEmpty(context.query.error) && context.req.url) {

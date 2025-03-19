@@ -6,7 +6,7 @@ node_modules
 # production
 packages/**/build
 packages/**/lib
-!packages/**/fern-dashboard/src/lib
+!packages/fern-dashboard/src/lib
 packages/**/dist
 packages/**/tsconfig*tsbuildinfo
 packages/**/out
@@ -21,6 +21,7 @@ docker/build
 # next
 .next
 next-env.d.ts
+!packages/fern-dashboard/next-env.d.ts
 .vercel
 
 # misc
