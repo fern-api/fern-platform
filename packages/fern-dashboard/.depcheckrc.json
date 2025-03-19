@@ -4,7 +4,9 @@
     "@types/react",
     "@types/react-dom",
     "tailwindcss",
-    "tailwindcss-animate"
+    "tailwindcss-animate",
+    "clsx",
+    "tailwind-merge"
   ],
   "ignore-patterns": ["dist"]
 }
