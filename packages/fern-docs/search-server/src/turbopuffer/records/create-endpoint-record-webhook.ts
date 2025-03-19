@@ -52,7 +52,18 @@ export function createEndpointBaseRecordWebhook({
     })
   ).filter((snippet) => snippet != null);
 
-  const keywords: string[] = [...(base.attributes.keywords ?? [])];
+  const keywords: string[] = [];
+  if (
+    typeof base.attributes.keywords !== "undefined" &&
+    typeof base.attributes.keywords === "string"
+  ) {
+    keywords.push(base.attributes.keywords);
+  } else if (
+    typeof base.attributes.keywords !== "undefined" &&
+    Array.isArray(base.attributes.keywords)
+  ) {
+    keywords.push(...base.attributes.keywords);
+  }
 
   keywords.push("endpoint", "api", "webhook");
 

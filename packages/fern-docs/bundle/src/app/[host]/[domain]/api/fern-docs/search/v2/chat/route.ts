@@ -16,7 +16,10 @@ import { initLogger, wrapAISDKModel } from "braintrust";
 import { z } from "zod";
 
 import { getAuthEdgeConfig, getEdgeFlags } from "@fern-docs/edge-config";
-import { createDefaultSystemPrompt } from "@fern-docs/search-server";
+import {
+  createDefaultSystemPrompt,
+  createWebflowSystemPrompt,
+} from "@fern-docs/search-server";
 import {
   queryTurbopuffer,
   toDocuments,
@@ -46,7 +49,8 @@ export async function POST(req: NextRequest) {
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
   });
   const languageModel = wrapAISDKModel(
-    bedrock("us.anthropic.claude-3-7-sonnet-20250219-v1:0")
+    // bedrock("us.anthropic.claude-3-7-sonnet-20250219-v1:0")
+    bedrock("us.anthropic.claude-3-5-sonnet-20241022-v2:0")
   );
 
   const openai = createOpenAI({ apiKey: openaiApiKey() });
@@ -55,7 +59,21 @@ export async function POST(req: NextRequest) {
   const host = req.nextUrl.host;
   const domain = getDocsDomainEdge(req);
   const namespace = `${withoutStaging(domain)}_${embeddingModel.modelId}`;
-  const { messages } = await req.json();
+  const { messages, url } = await req.json();
+
+  // TODO: SORRY DEEP - NEED TO PUSH FOR WEBFLOW
+  const isWebflow = url.includes("webflow-ai");
+  let webflowVersion: string | undefined = undefined;
+  if (isWebflow) {
+    if (url.includes("/v2.0.0/data/")) {
+      webflowVersion = "Data API v2";
+    } else if (url.includes("/designer/")) {
+      webflowVersion = "Designer API v2";
+    } else if (url.includes("/browser/")) {
+      webflowVersion = "Browser API";
+    }
+  }
+  // END WEBFLOW SPECIFIC CODE
 
   const loader = await createCachedDocsLoader(host, domain);
   const metadata = await loader.getMetadata();
@@ -92,13 +110,20 @@ export async function POST(req: NextRequest) {
     authed: user != null,
     roles: user?.roles ?? [],
     topK: 5,
+    version: webflowVersion,
   });
   const documents = toDocuments(searchResults).join("\n\n");
-  const system = createDefaultSystemPrompt({
-    domain,
-    date: new Date().toDateString(),
-    documents,
-  });
+  const system = isWebflow
+    ? createWebflowSystemPrompt({
+        domain,
+        date: new Date().toDateString(),
+        documents,
+      })
+    : createDefaultSystemPrompt({
+        domain,
+        date: new Date().toDateString(),
+        documents,
+      });
   const result = streamText({
     model: languageModel,
     system,
@@ -118,6 +143,7 @@ export async function POST(req: NextRequest) {
             namespace,
             authed: user != null,
             roles: user?.roles ?? [],
+            version: webflowVersion,
           });
           return response.map((hit) => {
             const { domain, pathname, hash } = hit.attributes;
@@ -193,22 +219,34 @@ async function runQueryTurbopuffer(
     topK?: number;
     authed?: boolean;
     roles?: string[];
+    version?: string;
   }
 ) {
   return query == null || query.trimStart().length === 0
     ? []
-    : await queryTurbopuffer(query, {
-        namespace: opts.namespace,
-        apiKey: turbopufferApiKey(),
-        topK: opts.topK ?? 20,
-        vectorizer: async (text) => {
-          const embedding = await embed({
-            model: opts.embeddingModel,
-            value: text,
-          });
-          return embedding.embedding;
-        },
-        authed: opts.authed,
-        roles: opts.roles,
+    : (
+        await queryTurbopuffer(
+          query + (opts.version ? ` version: ${opts.version}` : ""),
+          {
+            namespace: opts.namespace,
+            apiKey: turbopufferApiKey(),
+            topK: opts.topK ?? 10,
+            vectorizer: async (text) => {
+              const embedding = await embed({
+                model: opts.embeddingModel,
+                value: text,
+              });
+              return embedding.embedding;
+            },
+            mode: "bm25",
+            authed: opts.authed,
+            roles: opts.roles,
+          }
+        )
+      ).filter((hit) => {
+        if (opts.version) {
+          return hit.attributes.version === opts.version;
+        }
+        return true;
       });
 }
