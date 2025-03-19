@@ -57,7 +57,7 @@ export function DesktopFilterDropdownMenu({
             className="fern-search-facet-filter-menu-button"
             interactive
           >
-            {facetDisplay} kapil-test
+            {facetDisplay}
           </Badge>
         )}
       </DropdownMenuTrigger>
@@ -92,7 +92,7 @@ export function DesktopFilterDropdownMenu({
                       titleCase: true,
                     })}
                     <Badge size="sm" rounded className="ml-auto">
-                      {option.count} kapil-test
+                      {option.count}
                     </Badge>
                   </DropdownMenuRadioItem>
                 ))}
