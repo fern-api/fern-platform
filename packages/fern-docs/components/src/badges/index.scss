@@ -42,7 +42,8 @@
 
     &[data-badge-type="http-method"],
     &[data-badge-type="status-code"] {
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+      font-family:
+        ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
         "Liberation Mono", "Courier New", monospace !important;
       font-variant-numeric: slashed-zero;
       text-transform: uppercase;

@@ -1,7 +1,8 @@
 @layer base {
   :root {
-    --font-mono: ui-monospace, sfmono-regular, menlo, monaco, consolas,
-      "Liberation Mono", "Courier New", monospace;
+    --font-mono:
+      ui-monospace, sfmono-regular, menlo, monaco, consolas, "Liberation Mono",
+      "Courier New", monospace;
   }
 
   html {
