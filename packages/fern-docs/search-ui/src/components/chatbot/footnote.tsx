@@ -48,17 +48,16 @@ export function FootnoteSup({ node }: { node?: HastElement }) {
       <Tooltip>
         <TooltipTrigger>
           <Badge
-            rounded
             interactive
             asChild
             className="not-prose"
             disabled={!fn}
-            size="sm"
+            size="lg"
+            color="grayWithAccent"
+            variant="subtleSolidHover"
           >
             <a href={fn?.url} target="_blank" rel="noreferrer" className="ms-1">
-              <span className="text-(color:--grayscale-a9) text-xs">
-                {String(index + 1)}
-              </span>
+              <span className="text-xs">{String(index + 1)}</span>
             </a>
           </Badge>
         </TooltipTrigger>
@@ -164,7 +163,7 @@ export function FootnotesSection({
       </VisuallyHidden>
       <div className="flex flex-wrap gap-1">
         {footnotes.map(({ ids, url, title, icon, type, api_type }, index) => (
-          <Badge key={ids[0] ?? index} asChild interactive rounded>
+          <Badge key={ids[0] ?? index} asChild interactive>
             <a href={url} target="_blank" rel="noreferrer">
               <PageIcon
                 icon={icon}
