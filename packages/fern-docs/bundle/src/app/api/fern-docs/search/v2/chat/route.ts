@@ -6,7 +6,10 @@ import { getDocsDomainEdge } from "@/server/xfernhost/edge";
 import { createAmazonBedrock } from "@ai-sdk/amazon-bedrock";
 import { createOpenAI } from "@ai-sdk/openai";
 import { getAuthEdgeConfig, getEdgeFlags } from "@fern-docs/edge-config";
-import { createDefaultSystemPrompt } from "@fern-docs/search-server";
+import {
+  createDefaultSystemPrompt,
+  createWebflowSystemPrompt,
+} from "@fern-docs/search-server";
 import {
   queryTurbopuffer,
   toDocuments,
@@ -51,7 +54,22 @@ export async function POST(req: NextRequest) {
 
   const domain = getDocsDomainEdge(req);
   const namespace = `${withoutStaging(domain)}_${embeddingModel.modelId}`;
-  const { messages } = await req.json();
+
+  const { messages, url } = await req.json();
+
+  // TODO: SORRY DEEP - NEED TO PUSH FOR WEBFLOW
+  const isWebflow = url.includes("webflow-ai");
+  let webflowVersion: string | undefined = undefined;
+  if (isWebflow) {
+    if (url.includes("/v2.0.0/data/")) {
+      webflowVersion = "Data API v2";
+    } else if (url.includes("/designer/")) {
+      webflowVersion = "Designer API v2";
+    } else if (url.includes("/browser/")) {
+      webflowVersion = "Browser API";
+    }
+  }
+  // END WEBFLOW SPECIFIC CODE
 
   const orgMetadata = await getOrgMetadataForDomain(withoutStaging(domain));
   if (orgMetadata == null) {
@@ -91,13 +109,20 @@ export async function POST(req: NextRequest) {
     authed: user != null,
     roles: user?.roles ?? [],
     topK: 5,
+    version: webflowVersion,
   });
   const documents = toDocuments(searchResults).join("\n\n");
-  const system = createDefaultSystemPrompt({
-    domain,
-    date: new Date().toDateString(),
-    documents,
-  });
+  const system = isWebflow
+    ? createWebflowSystemPrompt({
+        domain,
+        date: new Date().toDateString(),
+        documents,
+      })
+    : createDefaultSystemPrompt({
+        domain,
+        date: new Date().toDateString(),
+        documents,
+      });
   const result = streamText({
     model: languageModel,
     system,
@@ -117,6 +142,7 @@ export async function POST(req: NextRequest) {
             namespace,
             authed: user != null,
             roles: user?.roles ?? [],
+            version: webflowVersion,
           });
           return response.map((hit) => {
             const { domain, pathname, hash } = hit.attributes;
@@ -192,22 +218,34 @@ async function runQueryTurbopuffer(
     topK?: number;
     authed?: boolean;
     roles?: string[];
+    version?: string;
   }
 ) {
   return query == null || query.trimStart().length === 0
     ? []
-    : await queryTurbopuffer(query, {
-        namespace: opts.namespace,
-        apiKey: turbopufferApiKey(),
-        topK: opts.topK ?? 10,
-        vectorizer: async (text) => {
-          const embedding = await embed({
-            model: opts.embeddingModel,
-            value: text,
-          });
-          return embedding.embedding;
-        },
-        authed: opts.authed,
-        roles: opts.roles,
+    : (
+        await queryTurbopuffer(
+          query + (opts.version ? ` version: ${opts.version}` : ""),
+          {
+            namespace: opts.namespace,
+            apiKey: turbopufferApiKey(),
+            topK: opts.topK ?? 10,
+            vectorizer: async (text) => {
+              const embedding = await embed({
+                model: opts.embeddingModel,
+                value: text,
+              });
+              return embedding.embedding;
+            },
+            mode: "bm25",
+            authed: opts.authed,
+            roles: opts.roles,
+          }
+        )
+      ).filter((hit) => {
+        if (opts.version) {
+          return hit.attributes.version === opts.version;
+        }
+        return true;
       });
 }
