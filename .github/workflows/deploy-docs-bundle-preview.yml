@@ -33,7 +33,7 @@ jobs:
         uses: ./.github/actions/turbo-ignore
         with:
           token: ${{ secrets.VERCEL_TOKEN }}
-          project: "app.buildwithfern.com"
+          project: "legacy.buildwithfern.com"
           package: "@fern-docs/bundle"
           environment: "preview"
           branch: ${{ github.event.pull_request.head.ref || github.ref_name || github.ref }}
@@ -43,7 +43,7 @@ jobs:
     if: needs.ignore.outputs.continue == 1 || needs.ignore.outputs.check_changes == 1
     runs-on: ubuntu-latest
     environment:
-      name: Preview - app.buildwithfern.com
+      name: Preview - legacy.buildwithfern.com
       url: ${{ steps.deploy.outputs.deployment_url }}
     outputs:
       deployment_url: ${{ steps.deploy.outputs.deployment_url }}
@@ -60,7 +60,7 @@ jobs:
       - name: Build & Deploy to Vercel
         id: deploy
         run: |
-          pnpm vercel-scripts deploy app.buildwithfern.com --token=${{ secrets.VERCEL_TOKEN }}
+          pnpm vercel-scripts deploy legacy.buildwithfern.com --token=${{ secrets.VERCEL_TOKEN }}
           if [ -f deployment-url.txt ]; then
             pnpm vercel-scripts preview.txt $(cat deployment-url.txt) --token=${{ secrets.VERCEL_TOKEN }}
             echo "deployment_url=$(cat deployment-url.txt)" >> $GITHUB_OUTPUT
@@ -89,7 +89,7 @@ jobs:
 
       - name: Build
         id: deploy
-        run: pnpm vercel-scripts deploy app.buildwithfern.com --token=${{ secrets.VERCEL_TOKEN }} --skip-deploy=true
+        run: pnpm vercel-scripts deploy legacy.buildwithfern.com --token=${{ secrets.VERCEL_TOKEN }} --skip-deploy=true
         env:
           ANALYZE: 1
 
