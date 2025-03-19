@@ -7,7 +7,7 @@ on:
       - ui@*
 
 concurrency:
-  group: app.buildwithfern.com
+  group: legacy.buildwithfern.com
   cancel-in-progress: true
 
 jobs:
@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     if: github.ref_type == 'tag' && github.event_name == 'push'
     environment:
-      name: Production - app.buildwithfern.com
+      name: Production - legacy.buildwithfern.com
       url: ${{ steps.deploy.outputs.deployment_url }}
     outputs:
       deployment_url: ${{ steps.deploy.outputs.deployment_url }}
@@ -26,7 +26,7 @@ jobs:
       - name: Build & Deploy to Vercel
         id: deploy
         run: |
-          pnpm vercel-scripts deploy app.buildwithfern.com --token=${{ secrets.VERCEL_TOKEN }} --environment=production
+          pnpm vercel-scripts deploy legacy.buildwithfern.com --token=${{ secrets.VERCEL_TOKEN }} --environment=production
           echo "deployment_url=$(cat deployment-url.txt)" >> $GITHUB_OUTPUT
 
   deploy_app_ferndocs_com:
@@ -72,7 +72,7 @@ jobs:
   # TODO: Fix the tests and run them before promoting the deployment
   ete:
     needs:
-      - deploy_app_buildwithfern_com # only the app.buildwithfern.com deployment is an E2E candidate but ideally all deployments should be tested
+      - deploy_app_buildwithfern_com # only the legacy.buildwithfern.com deployment is an E2E candidate but ideally all deployments should be tested
       - promote
     if: needs.deploy_app_buildwithfern_com.outputs.deployment_url
     uses: ./.github/workflows/playwright.yml
@@ -91,8 +91,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/install
-      - name: Revalidate all app.buildwithfern.com deployments
-        run: pnpm vercel-scripts revalidate-all app.buildwithfern.com --token ${{ secrets.VERCEL_TOKEN }}
+      - name: Revalidate all legacy.buildwithfern.com deployments
+        run: pnpm vercel-scripts revalidate-all legacy.buildwithfern.com --token ${{ secrets.VERCEL_TOKEN }}
 
   rollback:
     needs: ete
@@ -106,13 +106,13 @@ jobs:
       - name: Rollback on failure # remove this step once we switch back to pre-promotion testing
         run: |
           echo "E2E tests failed. Rolling back deployment"
-          pnpm vercel-scripts rollback app.buildwithfern.com --token ${{ secrets.VERCEL_TOKEN }}
+          pnpm vercel-scripts rollback legacy.buildwithfern.com --token ${{ secrets.VERCEL_TOKEN }}
           pnpm vercel-scripts rollback app.ferndocs.com --token ${{ secrets.VERCEL_TOKEN }}
           pnpm vercel-scripts rollback app-slash.ferndocs.com --token ${{ secrets.VERCEL_TOKEN }}
 
-          # currently only the custom domains for app.buildwithfern.com deployment should be revalidated
+          # currently only the custom domains for legacy.buildwithfern.com deployment should be revalidated
           # because the other deployments don't have custom domains (yet)
-          pnpm vercel-scripts revalidate-all app.buildwithfern.com --token ${{ secrets.VERCEL_TOKEN }}
+          pnpm vercel-scripts revalidate-all legacy.buildwithfern.com --token ${{ secrets.VERCEL_TOKEN }}
           echo "All docs deployments have been rolled back successfully!"
           exit 1
 

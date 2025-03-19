@@ -46,16 +46,6 @@ export async function POST(req: NextRequest) {
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
   });
 
-  const languageModel = wrapAISDKModel(
-    bedrock("us.anthropic.claude-3-5-sonnet-20241022-v2:0")
-  );
-
-  const openai = createOpenAI({ apiKey: openaiApiKey() });
-  const embeddingModel = openai.embedding("text-embedding-3-large");
-
-  const domain = getDocsDomainEdge(req);
-  const namespace = `${withoutStaging(domain)}_${embeddingModel.modelId}`;
-
   const { messages, url } = await req.json();
 
   // TODO: SORRY DEEP - NEED TO PUSH FOR WEBFLOW
@@ -71,7 +61,17 @@ export async function POST(req: NextRequest) {
       webflowVersion = "Browser API";
     }
   }
+
+  const languageModel = isWebflow
+    ? wrapAISDKModel(bedrock("us.anthropic.claude-3-7-sonnet-20240620-v1:0"))
+    : wrapAISDKModel(bedrock("us.anthropic.claude-3-5-sonnet-20241022-v2:0"));
   // END WEBFLOW SPECIFIC CODE
+
+  const openai = createOpenAI({ apiKey: openaiApiKey() });
+  const embeddingModel = openai.embedding("text-embedding-3-large");
+
+  const domain = getDocsDomainEdge(req);
+  const namespace = `${withoutStaging(domain)}_${embeddingModel.modelId}`;
 
   const orgMetadata = await getOrgMetadataForDomain(withoutStaging(domain));
   if (orgMetadata == null) {
