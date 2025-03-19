@@ -14,6 +14,7 @@ interface SemanticSearchOptions {
   namespace: string;
   apiKey: string;
   topK: number;
+  filters?: FilterCondition[];
 
   /**
    * The search mode to use.
@@ -32,6 +33,7 @@ export async function queryTurbopuffer(
     namespace,
     apiKey,
     topK,
+    filters,
     mode = "semantic",
     authed = false,
     roles = [],
@@ -74,7 +76,7 @@ export async function queryTurbopuffer(
       ? await ns.query({
           top_k: topK,
           include_attributes: true,
-          filters: authFilter,
+          filters: filters ? ["And", [...filters, authFilter]] : authFilter,
           rank_by: [
             "Sum",
             [

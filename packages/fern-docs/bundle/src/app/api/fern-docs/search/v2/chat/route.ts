@@ -226,29 +226,27 @@ async function runQueryTurbopuffer(
 ) {
   return query == null || query.trimStart().length === 0
     ? []
-    : (
-        await queryTurbopuffer(
-          query + (opts.version ? ` version: ${opts.version}` : ""),
-          {
-            namespace: opts.namespace,
-            apiKey: turbopufferApiKey(),
-            topK: opts.topK ?? 10,
-            vectorizer: async (text) => {
-              const embedding = await embed({
-                model: opts.embeddingModel,
-                value: text,
-              });
-              return embedding.embedding;
-            },
-            mode: "bm25",
-            authed: opts.authed,
-            roles: opts.roles,
-          }
-        )
-      ).filter((hit) => {
-        if (opts.version) {
-          return hit.attributes.version === opts.version;
+    : await queryTurbopuffer(
+        query + (opts.version ? ` version: ${opts.version}` : ""),
+        {
+          namespace: opts.namespace,
+          apiKey: turbopufferApiKey(),
+          topK: opts.topK ?? 10,
+          vectorizer: async (text) => {
+            const embedding = await embed({
+              model: opts.embeddingModel,
+              value: text,
+            });
+            return embedding.embedding;
+          },
+          filters: opts.version
+            ? [["version", "Eq", opts.version]]
+            : opts.authed
+              ? [["authed", "Eq", true]]
+              : undefined,
+          mode: "bm25",
+          authed: opts.authed,
+          roles: opts.roles,
         }
-        return true;
-      });
+      );
 }

@@ -1,13 +1,10 @@
 :root {
-  --typography-body-font-family:
-    -apple-system, blinkmacsystemfont, segoe ui, roboto, oxygen, ubuntu,
-    cantarell, open sans, helvetica neue, sans-serif;
-  --typography-heading-font-family:
-    -apple-system, blinkmacsystemfont, segoe ui, roboto, oxygen, ubuntu,
-    cantarell, open sans, helvetica neue, sans-serif;
-  --typography-code-font-family:
-    ui-monospace, sfmono-regular, menlo, monaco, consolas, liberation mono,
-    courier new, monospace;
+  --typography-body-font-family: -apple-system, blinkmacsystemfont, segoe ui,
+    roboto, oxygen, ubuntu, cantarell, open sans, helvetica neue, sans-serif;
+  --typography-heading-font-family: -apple-system, blinkmacsystemfont, segoe ui,
+    roboto, oxygen, ubuntu, cantarell, open sans, helvetica neue, sans-serif;
+  --typography-code-font-family: ui-monospace, sfmono-regular, menlo, monaco,
+    consolas, liberation mono, courier new, monospace;
   --spacing-page-width: 1504px;
   --spacing-content-width: 44rem;
   --spacing-content-wide-width: 66.5rem;
