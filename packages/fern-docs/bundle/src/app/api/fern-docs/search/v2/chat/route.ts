@@ -63,7 +63,7 @@ export async function POST(req: NextRequest) {
   }
 
   const languageModel = isWebflow
-    ? wrapAISDKModel(bedrock("us.anthropic.claude-3-7-sonnet-20240620-v1:0"))
+    ? wrapAISDKModel(bedrock("us.anthropic.claude-3-7-sonnet-20250219-v1:0"))
     : wrapAISDKModel(bedrock("us.anthropic.claude-3-5-sonnet-20241022-v2:0"));
   // END WEBFLOW SPECIFIC CODE
 
