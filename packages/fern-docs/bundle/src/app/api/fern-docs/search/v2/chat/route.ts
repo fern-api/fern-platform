@@ -40,17 +40,18 @@ export async function POST(req: NextRequest) {
     apiKey: process.env.BRAINTRUST_API_KEY,
   });
 
+  const { messages, url } = await req.json();
+
+  // TODO: Make this a docs.yml config
+  const isWebflow =
+    typeof url === "string" ? url.includes("webflow-ai") : false;
+
   const bedrock = createAmazonBedrock({
-    region: "us-west-2",
+    region: isWebflow ? "us-east-1" : "us-west-2",
     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
   });
 
-  const { messages, url } = await req.json();
-
-  // TODO: SORRY DEEP - NEED TO PUSH FOR WEBFLOW
-  const isWebflow =
-    typeof url === "string" ? url.includes("webflow-ai") : false;
   let webflowVersion: string | undefined = undefined;
   if (isWebflow) {
     if (url.includes("/v2.0.0/data/")) {
