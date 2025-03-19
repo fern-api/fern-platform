@@ -1,7 +1,9 @@
-import { ApiDefinition } from "@fern-api/fdr-sdk";
-import { truncateToBytes } from "@fern-api/ui-core-utils";
 import { createHash } from "crypto";
 import { flatten } from "es-toolkit/array";
+
+import { ApiDefinition } from "@fern-api/fdr-sdk";
+import { truncateToBytes } from "@fern-api/ui-core-utils";
+
 import { maybePrepareMdxContent } from "../../utils/prepare-mdx-content";
 import { toDescription } from "../../utils/to-description";
 import { FernTurbopufferRecord } from "../types";

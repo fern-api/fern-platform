@@ -196,9 +196,6 @@ export const middleware: NextMiddleware = async (request) => {
         )
       );
     }
-    if (!authState.ok && authState.authorizationUrl) {
-      return NextResponse.redirect(authState.authorizationUrl);
-    }
 
     return rewrite(
       withDomain(

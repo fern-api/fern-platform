@@ -1,8 +1,10 @@
-import { isNonNullish } from "@fern-api/ui-core-utils";
-import { getFrontmatter, markdownToString } from "@fern-docs/mdx";
 import { createHash } from "crypto";
 import { compact, flatten } from "es-toolkit/array";
 import { decode } from "html-entities";
+
+import { isNonNullish } from "@fern-api/ui-core-utils";
+import { getFrontmatter, markdownToString } from "@fern-docs/mdx";
+
 import { maybePrepareMdxContent } from "../../utils/prepare-mdx-content";
 import { FernTurbopufferRecordWithoutVector } from "../types";
 import { BaseRecord } from "./create-base-record";

@@ -105,11 +105,32 @@ test("sitemap.xml", async ({ page }) => {
   );
 });
 
-test("revalidate-all/v3 all should work", async ({ page }) => {
+test("revalidate all should work", async ({ page }) => {
   test.setTimeout(10_000);
   const response = await page.goto(
     new URL(
-      "/subpath/api/fern-docs/revalidate-all/v3",
+      "/subpath/api/fern-docs/revalidate",
+      getProxyUrl(server)
+    ).toString(),
+    {
+      timeout: 20_000,
+    }
+  );
+  expect(response).toBeDefined();
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  const definedResponse = response!;
+  expect(definedResponse.status()).toBe(200);
+  expect(definedResponse.headers()["content-type"]).toBe("text/event-stream");
+
+  const text = await definedResponse.text();
+  expect(text).toContain("revalidate-finished:");
+});
+
+test("revalidate-all should work with trailing slash", async ({ page }) => {
+  test.setTimeout(10_000);
+  const response = await page.goto(
+    new URL(
+      "/subpath/api/fern-docs/revalidate/",
       getProxyUrl(server)
     ).toString(),
     {
@@ -121,80 +142,6 @@ test("revalidate-all/v3 all should work", async ({ page }) => {
   const definedResponse = response!;
   expect(definedResponse.status()).toBe(200);
 
-  const results = await definedResponse.json();
-
-  expect(results.successfulRevalidations).toHaveLength(2);
-  expect(results.failedRevalidations).toHaveLength(0);
-});
-
-test("revalidate-all/v3 should work with trailing slash", async ({ page }) => {
-  test.setTimeout(10_000);
-  const response = await page.goto(
-    new URL(
-      "/subpath/api/fern-docs/revalidate-all/v3/",
-      getProxyUrl(server)
-    ).toString(),
-    {
-      timeout: 20_000,
-    }
-  );
-  expect(response).toBeDefined();
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const definedResponse = response!;
-  expect(definedResponse.status()).toBe(200);
-
-  const results = await definedResponse.json();
-
-  expect(results.successfulRevalidations).toHaveLength(2);
-  expect(results.failedRevalidations).toHaveLength(0);
-});
-
-test("revalidate-all/v4 should work", async ({ page }) => {
-  test.setTimeout(10_000);
-  const response = await page.goto(
-    new URL(
-      "/subpath/api/fern-docs/revalidate-all/v4",
-      getProxyUrl(server)
-    ).toString(),
-    {
-      timeout: 10_000,
-    }
-  );
-  expect(response).toBeDefined();
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const definedResponse = response!;
-  expect(definedResponse.status()).toBe(200);
-
-  const results = await definedResponse.json();
-
-  expect(results.total).toBe(2);
-  expect(results.results).toHaveLength(2);
-  expect(
-    (results.results as object[]).map((r) => "success" in r && r.success)
-  ).toEqual([true, true]);
-});
-
-test("revalidate-all/v4 should work with trailing slash", async ({ page }) => {
-  test.setTimeout(10_000);
-  const response = await page.goto(
-    new URL(
-      "/subpath/api/fern-docs/revalidate-all/v4/",
-      getProxyUrl(server)
-    ).toString(),
-    {
-      timeout: 10_000,
-    }
-  );
-  expect(response).toBeDefined();
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const definedResponse = response!;
-  expect(definedResponse.status()).toBe(200);
-
-  const results = await definedResponse.json();
-
-  expect(results.total).toBe(2);
-  expect(results.results).toHaveLength(2);
-  expect(
-    (results.results as object[]).map((r) => "success" in r && r.success)
-  ).toEqual([true, true]);
+  const text = await definedResponse.text();
+  expect(text).toContain("revalidate-finished:");
 });

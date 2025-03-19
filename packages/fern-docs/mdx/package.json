@@ -70,6 +70,7 @@
     "ts-essentials": "^10.0.1",
     "unified": "^11.0.4",
     "unist-util-visit": "^5.0.0",
+    "unist-util-visit-parents": "^6.0.1",
     "vfile-message": "^4.0.2"
   },
   "devDependencies": {

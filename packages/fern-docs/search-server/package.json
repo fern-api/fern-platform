@@ -62,6 +62,7 @@
     "@turbopuffer/turbopuffer": "^0.5.11",
     "algoliasearch": "^5.20.3",
     "es-toolkit": "^1.32.0",
+    "gpt-tokenizer": "2.9.0",
     "html-entities": "^2.5.2",
     "html-to-text": "^9.0.5",
     "marked": "^5.1.0",
