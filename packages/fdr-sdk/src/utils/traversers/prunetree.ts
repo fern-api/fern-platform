@@ -6,7 +6,7 @@ interface PruneTreeOptions<NODE, PARENT extends NODE = NODE, POINTER = NODE> {
    * @param node the node to check
    * @returns **false** if the node SHOULD be deleted
    */
-  predicate: (node: NODE, parents: readonly PARENT[]) => boolean;
+  predicate: (node: NODE, parents: readonly PARENT[]) => boolean | "force";
   getChildren: (node: PARENT) => readonly NODE[];
 
   /**
@@ -14,7 +14,11 @@ interface PruneTreeOptions<NODE, PARENT extends NODE = NODE, POINTER = NODE> {
    * @param child the child that should be deleted
    * @returns the pointer to the child node, or **null** if the child cannot be deleted
    */
-  deleter: (parent: PARENT | undefined, child: NODE) => DeleterAction;
+  deleter: (
+    parent: PARENT | undefined,
+    child: NODE,
+    force?: boolean
+  ) => DeleterAction;
 
   /**
    * If there are circular references, we can use this function to get a unique identifier for the node.
@@ -64,13 +68,15 @@ export function prunetree<
     }
 
     // continue traversal if the node is not to be deleted
-    if (predicate(node, parents)) {
+    const deleteAction = predicate(node, parents);
+    if (deleteAction === true) {
       return;
     }
+
     const ancestors = [...parents];
     const parent = ancestors.pop();
 
-    let action = deleter(parent, node);
+    let action = deleter(parent, node, deleteAction === "force");
     let toDelete = node;
 
     while (action === "should-delete-parent" && parent != null) {
