@@ -152,11 +152,11 @@ async function serializeMdxImpl(
         [rehypeFiles, { files: remoteFiles }],
         rehypeMdxClassStyle,
         rehypeCodeBlock,
+        [rehypeSlug, { additionalJsxElements: ["Step", "Accordion", "Tab"] }],
         rehypeSteps,
         rehypeAccordions,
         rehypeTabs,
         rehypeCards,
-        [rehypeSlug, { additionalJsxElements: ["Step", "Accordion", "Tab"] }],
         [
           rehypeExpressionToMd,
           {

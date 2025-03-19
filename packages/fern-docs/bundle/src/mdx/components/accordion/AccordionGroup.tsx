@@ -17,15 +17,34 @@ export function AccordionGroup({ children }: AccordionGroupProps) {
 
   const items = unwrapChildren(children, Accordion);
 
+  const findParentAccordion = React.useCallback(
+    (anchor: string) => {
+      if (items.some((tab) => tab.props.id === anchor)) {
+        return anchor;
+      }
+
+      const parentAccordion = items.find((tab) =>
+        tab.props.nestedHeaders?.includes(anchor)
+      );
+
+      if (parentAccordion) {
+        return parentAccordion.props.id;
+      }
+
+      return undefined;
+    },
+    [items]
+  );
+
   React.useEffect(() => {
     if (anchor != null) {
-      if (items.some((tab) => tab.props.id === anchor)) {
+      const parentAccordion = findParentAccordion(anchor);
+      if (parentAccordion) {
         setActiveTabs((prev) =>
-          prev.includes(anchor) ? prev : [...prev, anchor]
+          prev.includes(parentAccordion) ? prev : [...prev, parentAccordion]
         );
       }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    } // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [anchor]);
 
   const handleValueChange = React.useCallback((nextActiveTabs: string[]) => {
@@ -60,6 +79,7 @@ export function Accordion({
   title = "Untitled",
   id = "",
   children,
+  nestedHeaders,
 }: {
   /**
    * the title of the accordion
@@ -79,12 +99,20 @@ export function Accordion({
    * the children of the accordion
    */
   children?: React.ReactNode;
+  /**
+   * the headers nested within the accordion
+   */
+  nestedHeaders?: string[];
 }) {
   if (!children) {
     return null;
   }
   return (
-    <AccordionComponent.AccordionItem id={id} value={id}>
+    <AccordionComponent.AccordionItem
+      id={id}
+      value={id}
+      nestedHeaders={nestedHeaders}
+    >
       <AccordionComponent.AccordionTrigger>
         {title}
       </AccordionComponent.AccordionTrigger>
