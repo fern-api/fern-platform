@@ -46,7 +46,6 @@ export async function POST(req: NextRequest) {
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
   });
   const languageModel = wrapAISDKModel(
-    // bedrock("us.anthropic.claude-3-5-sonnet-20241022-v2:0")
     bedrock("us.anthropic.claude-3-7-sonnet-20250219-v1:0")
   );
 
@@ -58,22 +57,18 @@ export async function POST(req: NextRequest) {
   const namespace = `${withoutStaging(domain)}_${embeddingModel.modelId}`;
   const { messages, url } = await req.json();
 
-  // TODO: WEBFLOW SPECIFIC CODE
+  // TODO: SORRY DEEP - NEED TO PUSH FOR WEBFLOW
   let webflowVersion: string | undefined = undefined;
-  if (url.includes("/v2.0.0/data/")) {
-    webflowVersion = "Data API v2";
-  } else if (url.includes("/designer/")) {
-    webflowVersion = "Designer API v2";
-  } else if (url.includes("/browser/")) {
-    webflowVersion = "Browser API";
+  if (url.includes("webflow-ai")) {
+    if (url.includes("/v2.0.0/data/")) {
+      webflowVersion = "Data API v2";
+    } else if (url.includes("/designer/")) {
+      webflowVersion = "Designer API v2";
+    } else if (url.includes("/browser/")) {
+      webflowVersion = "Browser API";
+    }
   }
-  console.log("webflowVersion", webflowVersion);
   // END WEBFLOW SPECIFIC CODE
-
-  // messages.push({
-  //   role: "assistant",
-  //   content: "<question_analysis>",
-  // });
 
   const loader = await createCachedDocsLoader(host, domain);
   const metadata = await loader.getMetadata();

@@ -47,14 +47,6 @@ Instructions:
 5. Code Examples:
    - Provide code examples when relevant and available in the documentation.
 
-Before answering, break down the question inside <question_breakdown> tags by:
-a) Quoting relevant parts of the question
-b) Identifying key terms or concepts in the question
-c) Listing relevant sections of the documentation to search
-d) Noting any version-specific information needed
-e) Planning the structure of your response
-f) Listing potential citations needed for each piece of information you'll include
-
 Output Format:
 <version>
 [Version-specific information (if applicable) with as many citations as possible]
