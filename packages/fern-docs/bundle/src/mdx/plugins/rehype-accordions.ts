@@ -84,7 +84,9 @@ export const rehypeAccordions: Unified.Plugin<[], Hast.Root> = () => {
           if (isMdxJsxElementHast(parent) && parent.name === "AccordionGroup") {
             const { props } = hastMdxJsxElementHastToProps(node);
             const items = [{ ...props }];
-            parent.attributes.push(unknownToMdxJsxAttribute("items", items));
+            parent.attributes.push(
+              unknownToMdxJsxAttribute("items", JSON.stringify(items))
+            );
             return CONTINUE;
           }
 
@@ -94,7 +96,9 @@ export const rehypeAccordions: Unified.Plugin<[], Hast.Root> = () => {
             type: "mdxJsxFlowElement" as const,
             name: "AccordionGroup",
             children: [node],
-            attributes: [unknownToMdxJsxAttribute("items", items)],
+            attributes: [
+              unknownToMdxJsxAttribute("items", JSON.stringify(items)),
+            ],
           };
 
           parent.children[index] = accordionGroup;

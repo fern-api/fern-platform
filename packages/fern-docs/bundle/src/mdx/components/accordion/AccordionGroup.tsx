@@ -43,6 +43,14 @@ export function AccordionGroup({ children }: AccordionGroupProps) {
         setActiveTabs((prev) =>
           prev.includes(parentAccordion) ? prev : [...prev, parentAccordion]
         );
+
+        // wait for the accordion to open before scrolling
+        setTimeout(() => {
+          const element = document.getElementById(anchor);
+          if (element) {
+            element.scrollIntoView({ behavior: "smooth" });
+          }
+        }, 100);
       }
     } // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [anchor]);
