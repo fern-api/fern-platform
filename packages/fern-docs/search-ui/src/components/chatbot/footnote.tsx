@@ -54,10 +54,10 @@ export function FootnoteSup({ node }: { node?: HastElement }) {
             disabled={!fn}
             size="lg"
             color="grayWithAccent"
-            variant="subtleSolidHover"
+            variant="outlined"
           >
             <a href={fn?.url} target="_blank" rel="noreferrer" className="ms-1">
-              <span className="text-xs">{String(index + 1)}</span>
+              <span className="text-xs">{String(index + 1)}test</span>
             </a>
           </Badge>
         </TooltipTrigger>

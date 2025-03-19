@@ -167,6 +167,7 @@
       &.interactive:not(:disabled):hover,
       &[data-state="open"]:not(:disabled) {
         background-color: var(--accent-a9);
+        color: var(--accent-contrast);
       }
     }
 
@@ -813,6 +814,7 @@
       &.interactive:not(:disabled):hover,
       &[data-state="open"]:not(:disabled) {
         background-color: var(--accent-a9);
+        color: var(--accent-contrast);
       }
     }
 
