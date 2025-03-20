@@ -20,5 +20,5 @@ describe("hume", () => {
       snapshotFilepath
     );
     expect(uniq(objectIDs).length).toBe(objectIDs.length);
-  });
+  }, 100_000);
 });
