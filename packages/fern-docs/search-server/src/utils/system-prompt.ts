@@ -74,9 +74,7 @@ export const createWebflowSystemPrompt = (data: {
      - Provide code examples when relevant and available in the documentation.
   
   Output Format:
-  <version>
-  [Version-specific information (if applicable) with as many citations as possible]
-  </version>
+  ## [Version-specific information (if applicable) with as many citations as possible]
   
   [Concise answer to the user's question]
   
