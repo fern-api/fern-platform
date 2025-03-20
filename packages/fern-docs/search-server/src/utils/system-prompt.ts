@@ -61,9 +61,9 @@ export const createWebflowSystemPrompt = (data: {
        [^1]: https://<citation_domain>/<path>
   
   3. Tone and Content:
-     - Write in a factual tone.
      - Maintain a professional and helpful tone.
      - Avoid offensive or harmful language.
+     - Do not provide inaccurate information or mislead users.
      - Express uncertainty clearly when necessary.
   
   4. Limitations:
