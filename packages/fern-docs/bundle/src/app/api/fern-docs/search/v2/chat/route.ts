@@ -45,9 +45,7 @@ export async function POST(req: NextRequest) {
 
   // TODO: Make this a docs.yml config
   const isWebflow =
-    typeof url === "string"
-      ? url.includes("webflow-ai") || url.includes("localhost")
-      : false;
+    typeof url === "string" ? url.includes("webflow-ai") : false;
 
   const bedrock = createAmazonBedrock({
     region: isWebflow ? "us-east-1" : "us-west-2",
