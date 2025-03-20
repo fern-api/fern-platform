@@ -15,6 +15,9 @@ jobs:
       - name: Install
         uses: ./.github/actions/install
 
+      - name: Generate prisma types
+        run: pnpm --filter=@fern-platform/fdr codegen
+
       - name: Check types
         run: pnpm --filter=@fern-dashboard/ui check-types
 
