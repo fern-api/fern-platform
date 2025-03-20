@@ -1,5 +1,6 @@
 import { unstable_cacheTag } from "next/cache";
 import { cookies } from "next/headers";
+import { notFound } from "next/navigation";
 import { NextRequest, NextResponse } from "next/server";
 
 import { Feed, Item } from "feed";
@@ -22,21 +23,78 @@ export async function GET(
   req: NextRequest,
   props: { params: Promise<{ host: string; domain: string }> }
 ): Promise<NextResponse> {
-  "use cache";
-
   const { host, domain } = await props.params;
-
-  unstable_cacheTag(domain, "changelog");
 
   const path = slugToHref(req.nextUrl.searchParams.get("slug") ?? "");
   const format = getFormat(req);
 
   const fernToken = (await cookies()).get(COOKIE_FERN_TOKEN)?.value;
+
+  if (format === "json") {
+    return new NextResponse(await getJsonFeed(host, domain, path, fernToken), {
+      headers: { "Content-Type": "application/json" },
+    });
+  } else if (format === "atom") {
+    return new NextResponse(await getAtomFeed(host, domain, path, fernToken), {
+      headers: { "Content-Type": "application/atom+xml" },
+    });
+  } else {
+    return new NextResponse(await getRssFeed(host, domain, path, fernToken), {
+      headers: { "Content-Type": "application/rss+xml" },
+    });
+  }
+}
+
+async function getJsonFeed(
+  host: string,
+  domain: string,
+  path: string,
+  fernToken: string | undefined
+): Promise<string> {
+  "use cache";
+
+  unstable_cacheTag(domain, "changelog.json");
+
+  return createFeed(host, domain, path, fernToken).then((feed) => feed.json1());
+}
+
+async function getAtomFeed(
+  host: string,
+  domain: string,
+  path: string,
+  fernToken: string | undefined
+): Promise<string> {
+  "use cache";
+
+  unstable_cacheTag(domain, "changelog.atom");
+
+  return createFeed(host, domain, path, fernToken).then((feed) => feed.atom1());
+}
+
+async function getRssFeed(
+  host: string,
+  domain: string,
+  path: string,
+  fernToken: string | undefined
+): Promise<string> {
+  "use cache";
+
+  unstable_cacheTag(domain, "changelog.rss");
+
+  return createFeed(host, domain, path, fernToken).then((feed) => feed.rss2());
+}
+
+async function createFeed(
+  host: string,
+  domain: string,
+  path: string,
+  fernToken: string | undefined
+): Promise<Feed> {
   const loader = await createCachedDocsLoader(host, domain, fernToken);
   const root = await loader.getRoot();
 
   if (!root) {
-    return NextResponse.json(null, { status: 404 });
+    notFound();
   }
 
   const collector = NodeCollector.collect(root);
@@ -44,7 +102,7 @@ export async function GET(
   const node = collector.slugMap.get(FernNavigation.slugjoin(path));
 
   if (node?.type !== "changelog") {
-    return NextResponse.json(null, { status: 404 });
+    notFound();
   }
 
   const link = urlJoin(withDefaultProtocol(domain), node.slug);
@@ -76,19 +134,7 @@ export async function GET(
     })
   );
 
-  if (format === "json") {
-    return new NextResponse(feed.json1(), {
-      headers: { "Content-Type": "application/json" },
-    });
-  } else if (format === "atom") {
-    return new NextResponse(feed.atom1(), {
-      headers: { "Content-Type": "application/atom+xml" },
-    });
-  } else {
-    return new NextResponse(feed.rss2(), {
-      headers: { "Content-Type": "application/rss+xml" },
-    });
-  }
+  return feed;
 }
 
 function isFormat(format: string): format is Format {
