@@ -44,12 +44,6 @@ export async function POST(req: NextRequest) {
     apiKey: process.env.BRAINTRUST_API_KEY,
   });
 
-  const bedrock = createAmazonBedrock({
-    region: "us-east-1",
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-  });
-
   const openai = createOpenAI({ apiKey: openaiApiKey() });
   const embeddingModel = openai.embedding("text-embedding-3-large");
 
@@ -60,6 +54,12 @@ export async function POST(req: NextRequest) {
 
   // TODO: move system prompt to docs.yml
   const isWebflow = url.includes("webflow-ai");
+
+  const bedrock = createAmazonBedrock({
+    region: isWebflow ? "us-east-1" : "us-west-2",
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+  });
 
   const languageModel = isWebflow
     ? wrapAISDKModel(bedrock("us.anthropic.claude-3-7-sonnet-20250219-v1:0"))
