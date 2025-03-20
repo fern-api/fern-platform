@@ -737,7 +737,7 @@
       &.interactive:not(:disabled):hover,
       &[data-state="open"]:not(:disabled) {
         background-color: var(--amber-a9);
-        color: var(--amber-a1);
+        color: var(--amber-a12);
       }
     }
 
@@ -747,7 +747,7 @@
       &.interactive:not(:disabled):hover,
       &[data-state="open"]:not(:disabled) {
         background-color: var(--yellow-a9);
-        color: var(--yellow-a1);
+        color: var(--yellow-a12);
       }
     }
 
@@ -757,7 +757,7 @@
       &.interactive:not(:disabled):hover,
       &[data-state="open"]:not(:disabled) {
         background-color: var(--lime-a9);
-        color: var(--lime-a1);
+        color: var(--lime-a12);
       }
     }
 
@@ -767,7 +767,7 @@
       &.interactive:not(:disabled):hover,
       &[data-state="open"]:not(:disabled) {
         background-color: var(--mint-a9);
-        color: var(--mint-a1);
+        color: var(--mint-a12);
       }
     }
 
@@ -777,7 +777,7 @@
       &.interactive:not(:disabled):hover,
       &[data-state="open"]:not(:disabled) {
         background-color: var(--sky-a9);
-        color: var(--sky-a1);
+        color: var(--sky-a12);
       }
     }
   }
