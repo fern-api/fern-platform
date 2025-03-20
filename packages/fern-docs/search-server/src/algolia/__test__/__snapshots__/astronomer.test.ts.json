@@ -285,10 +285,6 @@
       {
         "lang": "bash",
         "code": "curl --location 'https://api.astronomer.io/platform/v1beta1/organizations/<your-organization-id>/workspaces?limit=20&sorts=updatedAt:asc' \\\n--header 'Authorization: Bearer <your-organization-api-token>'"
-      },
-      {
-        "lang": "bash",
-        "code": "curl --location 'https://api.astronomer.io/platform/v1beta1/organizations/<your-organization-id>/workspaces?limit=20&sorts=updatedAt:asc' \\\n--header 'Authorization: Bearer <your-organization-api-token>'"
       }
     ],
     "hierarchy": {
