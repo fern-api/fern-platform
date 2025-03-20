@@ -106,8 +106,8 @@ var Component = (() => {
       }), "\n", (0, import_jsx_runtime.jsx)(ErrorBoundary, {
         children: (0, import_jsx_runtime.jsx)(CodeBlock, {
           code: '    case MyEnum.Values.Value1:\n        Console.WriteLine("Value1");\n        break;\n    case MyEnum.Values.Value2:\n        Console.WriteLine("Value2");\n        break;\n    default:\n        Console.WriteLine(resource.EnumProperty.Value);\n        break;\n} if(resource.EnumProperty == MyEnum.Value1) {\n    Console.WriteLine("Value1");\n} else if (resource.EnumProperty == MyEnum.Value2) {\n    Console.WriteLine("Value2");\n} else {\n    Console.WriteLine(resource.EnumProperty.Value);\n} ```\nThe output correctly shows `Value3`.\n',
-          language: "csharp",
           className: "language-csharp",
+          language: "csharp",
           title: 'var resource = client.CreateResource(new Resource { Id = "2", EnumProperty = MyEnum.Value2 } ); resource = client.CreateResource(new Resource { Id = "3", EnumProperty = MyEnum.Custom("value3") } ); resource = client.GetResource("3"); switch(resource.EnumProperty.Value) {'
         })
       })]

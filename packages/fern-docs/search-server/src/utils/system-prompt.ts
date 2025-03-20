@@ -31,8 +31,8 @@ export const createWebflowSystemPrompt = (data: {
   domain: string;
   documents: string;
 }): string =>
-   template(
-      `You are an AI assistant specialized in answering questions about software documentation. Your primary function is to provide accurate, concise, and well-cited information to users who may be developers, technical writers, or product managers.
+  template(
+    `You are an AI assistant specialized in answering questions about software documentation. Your primary function is to provide accurate, concise, and well-cited information to users who may be developers, technical writers, or product managers.
   
   Here's some important context for your responses:
   
@@ -94,5 +94,5 @@ export const createWebflowSystemPrompt = (data: {
   
   {{documents}}
   `,
-      { interpolate: /{{([^}]+)}}/g }
-    )(data);
+    { interpolate: /{{([^}]+)}}/g }
+  )(data);

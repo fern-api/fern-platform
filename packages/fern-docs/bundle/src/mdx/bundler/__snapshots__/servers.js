@@ -76,8 +76,8 @@ var Component = (() => {
       }), "\n", (0, import_jsx_runtime.jsx)(ErrorBoundary, {
         children: (0, import_jsx_runtime.jsx)(CodeBlock, {
           code: "servers:\n  - url: https://api.yourcompany.com/\n  - url: https://api.eu.yourcompany.com/\n",
-          language: "yml",
           className: "language-yml",
+          language: "yml",
           title: "openapi.yml"
         })
       }), "\n", (0, import_jsx_runtime.jsx)(_components.p, {
@@ -98,8 +98,8 @@ var Component = (() => {
       }), "\n", (0, import_jsx_runtime.jsx)(ErrorBoundary, {
         children: (0, import_jsx_runtime.jsx)(CodeBlock, {
           code: "servers:\n  - x-fern-server-name: Production\n    url: https://api.yourcompany.com/\n  - x-fern-server-name: Production_EU\n    url: https://api.eu.yourcompany.com/\n",
-          language: "yml",
           className: "language-yml",
+          language: "yml",
           title: "openapi.yml",
           highlight: [3, 5]
         })
@@ -121,8 +121,8 @@ var Component = (() => {
       }), "\n", (0, import_jsx_runtime.jsx)(ErrorBoundary, {
         children: (0, import_jsx_runtime.jsx)(CodeBlock, {
           code: "api:\n  default-environment: Production\n  default-url: api\n  environments:\n    Production:\n      api: api.yourcompany.com\n      ai: ai.yourcompany.com\n  specs:\n    - openapi: ./path/to/your/openapi\n      overrides: ./path/to/your/overrides # optional\n",
-          language: "yml",
           className: "language-yml",
+          language: "yml",
           title: "generators.yml",
           highlight: [3, 4, 5, 6, 7, 8]
         })
@@ -135,8 +135,8 @@ var Component = (() => {
       }), "\n", (0, import_jsx_runtime.jsx)(ErrorBoundary, {
         children: (0, import_jsx_runtime.jsx)(CodeBlock, {
           code: "paths:\n  /chat:\n    post:\n      x-fern-server-name: ai\n",
-          language: "yml",
           className: "language-yml",
+          language: "yml",
           title: "openapi.yml",
           highlight: 4
         })
@@ -147,8 +147,8 @@ var Component = (() => {
       }), "\n", (0, import_jsx_runtime.jsx)(ErrorBoundary, {
         children: (0, import_jsx_runtime.jsx)(CodeBlock, {
           code: "api:\n  default-environment: Production\n  default-url: api\n  environments:\n    Production:\n      api: api.yourcompany.com\n      ai: ai.yourcompany.com\n    Staging:\n      api: api.staging.yourcompany.com\n      ai: ai.staging.yourcompany.com\n    Dev:\n      api: api.dev.yourcompany.com\n      ai: ai.dev.yourcompany.com\n",
-          language: "yml",
           className: "language-yml",
+          language: "yml",
           title: "generators.yml",
           highlight: [7, 8, 9, 10, 11, 12]
         })

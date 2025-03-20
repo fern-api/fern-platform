@@ -46,6 +46,7 @@ import {
   DEFAULT_PAGE_WIDTH,
   DEFAULT_SIDEBAR_WIDTH,
   EdgeFlags,
+  FERN_DOCS_ORIGINS,
   withoutStaging,
 } from "@fern-docs/utils";
 
@@ -182,6 +183,12 @@ export interface DocsLoader {
   getBaseUrl: () => Promise<string>;
 }
 
+function assertDocsDomain(domain: string) {
+  if (FERN_DOCS_ORIGINS.includes(domain) || domain.endsWith(".vercel.app")) {
+    notFound();
+  }
+}
+
 function kvSet(domain: string, key: string, value: unknown) {
   after(async () => {
     try {
@@ -200,6 +207,8 @@ export const getMetadataFromResponse = async (
   domain: string,
   responsePromise: AsyncOrSync<DocsV2Read.LoadDocsForUrlResponse>
 ): Promise<DocsMetadata> => {
+  assertDocsDomain(domain);
+
   const [response, docsUrlMetadata] = await Promise.all([
     responsePromise,
     getDocsUrlMetadata(domain),
@@ -218,6 +227,8 @@ export const getMetadata = cache(
     "use cache";
 
     unstable_cacheTag(domain, "getMetadata");
+
+    assertDocsDomain(domain);
 
     try {
       const cached = DocsMetadataSchema.safeParse(
@@ -866,6 +877,8 @@ export const createCachedDocsLoader = async (
   domain: string,
   fern_token?: string
 ): Promise<DocsLoader> => {
+  assertDocsDomain(domain);
+
   const authConfig = getAuthConfig(domain);
   const metadata = getMetadata(withoutStaging(domain));
 
