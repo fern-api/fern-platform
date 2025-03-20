@@ -17,6 +17,8 @@ export const removeTrailingSlash = (pathname: string): string => {
 };
 
 export function conformTrailingSlash(pathname: string): string {
+  // root pathname should always be `/` regardless of trailing slash setting
+  // because empty string is not a valid URL pathname
   if (pathname === "/" || pathname === "") {
     return "/";
   }
@@ -39,27 +41,17 @@ export function conformTrailingSlash(pathname: string): string {
     pathname.includes("#") ? pathname.indexOf("#") : Infinity
   );
 
-  if (isTrailingSlashEnabled()) {
-    if (queryOrHashIndex !== Infinity) {
-      // Split the pathname into base and query/hash parts
-      const base = pathname.substring(0, queryOrHashIndex);
-      const rest = pathname.substring(queryOrHashIndex);
+  // conform trailing slash of pathname before query or hash
+  if (queryOrHashIndex !== Infinity) {
+    // Split the pathname into base and query/hash parts
+    const base = pathname.substring(0, queryOrHashIndex);
+    const rest = pathname.substring(queryOrHashIndex);
 
-      // Add trailing slash to the base part
-      return addTrailingSlash(base) + rest;
-    } else {
-      return addTrailingSlash(pathname);
-    }
-  } else {
-    if (queryOrHashIndex !== Infinity) {
-      // Split the pathname into base and query/hash parts
-      const base = pathname.substring(0, queryOrHashIndex);
-      const rest = pathname.substring(queryOrHashIndex);
-
-      // Remove trailing slash from the base part
-      return removeTrailingSlash(base) + rest;
-    } else {
-      return removeTrailingSlash(pathname);
-    }
+    // Add trailing slash to the base part
+    return conformTrailingSlash(base) + rest;
   }
+
+  return isTrailingSlashEnabled()
+    ? addTrailingSlash(pathname)
+    : removeTrailingSlash(pathname);
 }
