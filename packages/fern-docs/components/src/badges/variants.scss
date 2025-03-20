@@ -1,7 +1,8 @@
 @layer components {
   .fern-docs-badge.subtle,
   .fern-docs-badge.outlined,
-  .fern-docs-badge.outlined-subtle {
+  .fern-docs-badge.outlined-subtle,
+  .fern-docs-badge.subtle-solid-hover {
     color: var(--grayscale-a11);
 
     &.accent {
@@ -157,6 +158,16 @@
       &.interactive:not(:disabled):hover,
       &[data-state="open"]:not(:disabled) {
         background-color: var(--gray-a4);
+      }
+    }
+
+    &.gray-hover-accent {
+      background-color: var(--gray-a3);
+
+      &.interactive:not(:disabled):hover,
+      &[data-state="open"]:not(:disabled) {
+        background-color: var(--accent-a9);
+        color: var(--accent-contrast);
       }
     }
 
@@ -431,6 +442,346 @@
     }
   }
 
+  .fern-docs-badge.subtle-solid-hover {
+    background-color: var(--grayscale-a3);
+
+    &.interactive:not(:disabled):hover,
+    &[data-state="open"]:not(:disabled) {
+      background-color: var(--grayscale-a10);
+      color: var(--accent-contrast);
+    }
+
+    &.accent {
+      background-color: var(--accent-a3, var(--grayscale-a3));
+
+      &.interactive:not(:disabled):hover,
+      &[data-state="open"]:not(:disabled) {
+        background-color: var(--accent-a9, var(--grayscale-a10));
+        color: var(--accent-contrast);
+      }
+    }
+
+    &.gray {
+      background-color: var(--gray-a3);
+
+      &.interactive:not(:disabled):hover,
+      &[data-state="open"]:not(:disabled) {
+        background-color: var(--gray-a9);
+        color: var(--gray-a1);
+      }
+    }
+
+    &.gray-hover-accent {
+      background-color: var(--gray-a3);
+
+      &.interactive:not(:disabled):hover,
+      &[data-state="open"]:not(:disabled) {
+        background-color: var(--accent-a10);
+        color: var(--accent-contrast);
+      }
+    }
+
+    &.mauve {
+      background-color: var(--mauve-a3);
+
+      &.interactive:not(:disabled):hover,
+      &[data-state="open"]:not(:disabled) {
+        background-color: var(--mauve-10);
+        color: var(--mauve-1);
+      }
+    }
+
+    &.slate {
+      background-color: var(--slate-a3);
+
+      &.interactive:not(:disabled):hover,
+      &[data-state="open"]:not(:disabled) {
+        background-color: var(--slate-10);
+        color: var(--slate-1);
+      }
+    }
+
+    &.sage {
+      background-color: var(--sage-a3);
+
+      &.interactive:not(:disabled):hover,
+      &[data-state="open"]:not(:disabled) {
+        background-color: var(--sage-10);
+        color: var(--sage-1);
+      }
+    }
+
+    &.olive {
+      background-color: var(--olive-a3);
+
+      &.interactive:not(:disabled):hover,
+      &[data-state="open"]:not(:disabled) {
+        background-color: var(--olive-10);
+        color: var(--olive-1);
+      }
+    }
+
+    &.sand {
+      background-color: var(--sand-a3);
+
+      &.interactive:not(:disabled):hover,
+      &[data-state="open"]:not(:disabled) {
+        background-color: var(--sand-10);
+        color: var(--sand-1);
+      }
+    }
+
+    &.tomato {
+      background-color: var(--tomato-a3);
+
+      &.interactive:not(:disabled):hover,
+      &[data-state="open"]:not(:disabled) {
+        background-color: var(--tomato-10);
+        color: var(--tomato-1);
+      }
+    }
+
+    &.red {
+      background-color: var(--red-a3);
+
+      &.interactive:not(:disabled):hover,
+      &[data-state="open"]:not(:disabled) {
+        background-color: var(--red-10);
+        color: var(--red-1);
+      }
+    }
+
+    &.ruby {
+      background-color: var(--ruby-a3);
+
+      &.interactive:not(:disabled):hover,
+      &[data-state="open"]:not(:disabled) {
+        background-color: var(--ruby-10);
+        color: var(--ruby-1);
+      }
+    }
+
+    &.crimson {
+      background-color: var(--crimson-a3);
+
+      &.interactive:not(:disabled):hover,
+      &[data-state="open"]:not(:disabled) {
+        background-color: var(--crimson-10);
+        color: var(--crimson-1);
+      }
+    }
+
+    &.pink {
+      background-color: var(--pink-a3);
+
+      &.interactive:not(:disabled):hover,
+      &[data-state="open"]:not(:disabled) {
+        background-color: var(--pink-10);
+        color: var(--pink-1);
+      }
+    }
+
+    &.plum {
+      background-color: var(--plum-a3);
+
+      &.interactive:not(:disabled):hover,
+      &[data-state="open"]:not(:disabled) {
+        background-color: var(--plum-10);
+        color: var(--plum-1);
+      }
+    }
+
+    &.purple {
+      background-color: var(--purple-a3);
+
+      &.interactive:not(:disabled):hover,
+      &[data-state="open"]:not(:disabled) {
+        background-color: var(--purple-10);
+        color: var(--purple-1);
+      }
+    }
+
+    &.violet {
+      background-color: var(--violet-a3);
+
+      &.interactive:not(:disabled):hover,
+      &[data-state="open"]:not(:disabled) {
+        background-color: var(--violet-10);
+        color: var(--violet-1);
+      }
+    }
+
+    &.iris {
+      background-color: var(--iris-a3);
+
+      &.interactive:not(:disabled):hover,
+      &[data-state="open"]:not(:disabled) {
+        background-color: var(--iris-10);
+        color: var(--iris-1);
+      }
+    }
+
+    &.indigo {
+      background-color: var(--indigo-a3);
+
+      &.interactive:not(:disabled):hover,
+      &[data-state="open"]:not(:disabled) {
+        background-color: var(--indigo-10);
+        color: var(--indigo-1);
+      }
+    }
+
+    &.blue {
+      background-color: var(--blue-a3);
+
+      &.interactive:not(:disabled):hover,
+      &[data-state="open"]:not(:disabled) {
+        background-color: var(--blue-10);
+        color: var(--blue-1);
+      }
+    }
+
+    &.cyan {
+      background-color: var(--cyan-a3);
+
+      &.interactive:not(:disabled):hover,
+      &[data-state="open"]:not(:disabled) {
+        background-color: var(--cyan-10);
+        color: var(--cyan-1);
+      }
+    }
+
+    &.teal {
+      background-color: var(--teal-a3);
+
+      &.interactive:not(:disabled):hover,
+      &[data-state="open"]:not(:disabled) {
+        background-color: var(--teal-10);
+        color: var(--teal-1);
+      }
+    }
+
+    &.jade {
+      background-color: var(--jade-a3);
+
+      &.interactive:not(:disabled):hover,
+      &[data-state="open"]:not(:disabled) {
+        background-color: var(--jade-10);
+        color: var(--jade-1);
+      }
+    }
+
+    &.green {
+      background-color: var(--green-a3);
+
+      &.interactive:not(:disabled):hover,
+      &[data-state="open"]:not(:disabled) {
+        background-color: var(--green-10);
+        color: var(--green-1);
+      }
+    }
+
+    &.grass {
+      background-color: var(--grass-a3);
+
+      &.interactive:not(:disabled):hover,
+      &[data-state="open"]:not(:disabled) {
+        background-color: var(--grass-10);
+        color: var(--grass-1);
+      }
+    }
+
+    &.bronze {
+      background-color: var(--bronze-a3);
+
+      &.interactive:not(:disabled):hover,
+      &[data-state="open"]:not(:disabled) {
+        background-color: var(--bronze-10);
+        color: var(--bronze-1);
+      }
+    }
+
+    &.gold {
+      background-color: var(--gold-a3);
+
+      &.interactive:not(:disabled):hover,
+      &[data-state="open"]:not(:disabled) {
+        background-color: var(--gold-9);
+        color: var(--gold-1);
+      }
+    }
+
+    &.brown {
+      background-color: var(--brown-a3);
+
+      &.interactive:not(:disabled):hover,
+      &[data-state="open"]:not(:disabled) {
+        background-color: var(--brown-9);
+        color: var(--brown-1);
+      }
+    }
+
+    &.orange {
+      background-color: var(--orange-a3);
+
+      &.interactive:not(:disabled):hover,
+      &[data-state="open"]:not(:disabled) {
+        background-color: var(--orange-10);
+        color: var(--orange-12);
+      }
+    }
+
+    &.amber {
+      background-color: var(--amber-a3);
+
+      &.interactive:not(:disabled):hover,
+      &[data-state="open"]:not(:disabled) {
+        background-color: var(--amber-10);
+        color: var(--amber-12);
+      }
+    }
+
+    &.yellow {
+      background-color: var(--yellow-a3);
+
+      &.interactive:not(:disabled):hover,
+      &[data-state="open"]:not(:disabled) {
+        background-color: var(--yellow-10);
+        color: var(--yellow-12);
+      }
+    }
+
+    &.lime {
+      background-color: var(--lime-a3);
+
+      &.interactive:not(:disabled):hover,
+      &[data-state="open"]:not(:disabled) {
+        background-color: var(--lime-10);
+        color: var(--lime-12);
+      }
+    }
+
+    &.mint {
+      background-color: var(--mint-a3);
+
+      &.interactive:not(:disabled):hover,
+      &[data-state="open"]:not(:disabled) {
+        background-color: var(--mint-10);
+        color: var(--mint-12);
+      }
+    }
+
+    &.sky {
+      background-color: var(--sky-a3);
+
+      &.interactive:not(:disabled):hover,
+      &[data-state="open"]:not(:disabled) {
+        background-color: var(--sky-10);
+        color: var(--sky-12);
+      }
+    }
+  }
+
   .fern-docs-badge.outlined-subtle {
     background-color: var(--grayscale-a1);
 
@@ -454,6 +805,16 @@
       &.interactive:not(:disabled):hover,
       &[data-state="open"]:not(:disabled) {
         background-color: var(--gray-a2);
+      }
+    }
+
+    &.gray-hover-accent {
+      background-color: var(--gray-a1);
+
+      &.interactive:not(:disabled):hover,
+      &[data-state="open"]:not(:disabled) {
+        background-color: var(--accent-a9);
+        color: var(--accent-contrast);
       }
     }
 
@@ -875,7 +1236,7 @@
     }
 
     &.accent {
-      color: var(--accent-1, var(--gray-1));
+      color: var(--accent-contrast, var(--gray-1));
       background-color: var(--accent-9, var(--gray-9));
 
       &.interactive:not(:disabled):hover,
@@ -891,6 +1252,16 @@
       &.interactive:not(:disabled):hover,
       &[data-state="open"]:not(:disabled) {
         background-color: var(--gray-10);
+      }
+    }
+
+    &.gray-hover-accent {
+      background-color: var(--gray-9);
+      color: var(--gray-1);
+
+      &.interactive:not(:disabled):hover,
+      &[data-state="open"]:not(:disabled) {
+        background-color: var(--accent-10);
       }
     }
 
