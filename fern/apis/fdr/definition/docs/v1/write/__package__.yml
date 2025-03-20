@@ -119,7 +119,7 @@ types:
       js: optional<commons.JsConfig>
 
       # ai chat
-      aiChatConfig: optional<AIChatConfig>
+      aiChatConfig: optional<commons.AIChatConfig>
 
       # deprecated
       backgroundImage: optional<rootCommons.FileId>
@@ -136,20 +136,6 @@ types:
       typography:
         type: optional<commons.DocsTypographyConfig>
         availability: deprecated
-  
-  AIChatConfig: 
-    properties: 
-      model:
-        type: optional<AIModel> 
-      systemPrompt: 
-        type: optional<string>
-  
-  AIModel: 
-    enum: 
-      - value: claude-3.5
-        name: claude_3_5
-      - value: claude-3.7
-        name: claude_3_7
 
   ColorsConfigV3:
     union:
