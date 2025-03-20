@@ -10,13 +10,13 @@ import {
   FernCard,
 } from "@fern-docs/components";
 
-import {
-  PLAYGROUND_AUTH_STATE_ATOM,
-  PLAYGROUND_AUTH_STATE_OAUTH_ATOM,
-} from "@/components/atoms";
 import { isFileForgeHackEnabledAtom } from "@/state/api-explorer-flags";
 import { jotaiStore } from "@/state/jotai-provider";
 import { useProgrammingLanguage } from "@/state/language";
+import {
+  PLAYGROUND_AUTH_STATE_ATOM,
+  PLAYGROUND_AUTH_STATE_OAUTH_ATOM,
+} from "@/state/playground";
 
 import { PlaygroundRequestPreview } from "../PlaygroundRequestPreview";
 import { PlaygroundCodeSnippetResolverBuilder } from "../code-snippets/resolver";
@@ -52,7 +52,7 @@ export function PlaygroundEndpointRequestCard({
   const setOAuthValue = useSetAtom(PLAYGROUND_AUTH_STATE_OAUTH_ATOM);
   const [baseUrl] = usePlaygroundBaseUrl(context.endpoint);
   return (
-    <FernCard className="rounded-3 flex min-w-0 flex-1 shrink flex-col overflow-hidden shadow-sm">
+    <FernCard className="rounded-3 flex min-w-0 flex-1 shrink flex-col overflow-hidden">
       <div className="border-border-default flex h-10 w-full shrink-0 items-center justify-between border-b px-3 py-2">
         <span className="text-(color:--grayscale-a11) text-xs uppercase">
           Request

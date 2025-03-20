@@ -1,3 +1,5 @@
+"use client";
+
 import { ReactElement, useMemo } from "react";
 
 import { cn } from "@fern-docs/components";

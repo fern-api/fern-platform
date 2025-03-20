@@ -3,16 +3,14 @@ import "server-only";
 import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 
-import { PageHeader } from "@/components/components/PageHeader";
+import { PageHeader } from "@/components/PageHeader";
 import { FooterLayout } from "@/components/layouts/FooterLayout";
 import { ReferenceLayout } from "@/components/layouts/ReferenceLayout";
-import { ScrollToTop } from "@/components/layouts/ScrollToTop";
-import { Prose } from "@/components/mdx/prose";
 import { renderTypeShorthand } from "@/components/type-shorthand";
+import { Prose } from "@/mdx/components/prose";
+import { MdxServerComponentProseSuspense } from "@/mdx/components/server-component";
 import { MdxSerializer } from "@/server/mdx-serializer";
-import { SetLayout } from "@/state/layout";
 
-import { Markdown } from "../../mdx/Markdown";
 import { EndpointSection } from "../endpoints/EndpointSection";
 import { ObjectProperty } from "../type-definitions/ObjectProperty";
 import {
@@ -30,11 +28,13 @@ export async function WebhookContent({
   context,
   breadcrumb,
   bottomNavigation,
+  action,
 }: {
   serialize: MdxSerializer;
   context: ApiDefinition.WebhookContext;
   breadcrumb: readonly FernNavigation.BreadcrumbItem[];
   bottomNavigation: React.ReactNode;
+  action?: React.ReactNode;
 }) {
   const { node, webhook, types } = context;
 
@@ -51,6 +51,8 @@ export async function WebhookContent({
           serialize={serialize}
           breadcrumb={breadcrumb}
           title={node.title}
+          action={action}
+          slug={node.slug}
         />
       }
       aside={webhookExample}
@@ -112,9 +114,10 @@ export async function WebhookContent({
       }
       footer={<FooterLayout bottomNavigation={bottomNavigation} />}
     >
-      <SetLayout value="reference" />
-      <ScrollToTop />
-      <Markdown className="leading-6" mdx={webhook.description} />
+      <MdxServerComponentProseSuspense
+        serialize={serialize}
+        mdx={webhook.description}
+      />
     </ReferenceLayout>
   );
 }

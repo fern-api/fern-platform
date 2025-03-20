@@ -1,8 +1,12 @@
+import "server-only";
+
 import { ReactNode } from "react";
 
 import { UnreachableCaseError } from "ts-essentials";
 
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
+
+import { FaIconServer } from "@/components/fa-icon-server";
 
 import { SidebarApiLeafNode } from "./SidebarApiLeafNode";
 import { SidebarApiPackageNode } from "./SidebarApiPackageNode";
@@ -24,9 +28,22 @@ export function SidebarApiPackageChild({
 }: SidebarApiPackageChild): ReactNode {
   switch (node.type) {
     case "page":
-      return <SidebarPageNode node={node} depth={depth} shallow={shallow} />;
+      return (
+        <SidebarPageNode
+          icon={node.icon ? <FaIconServer icon={node.icon} /> : undefined}
+          node={node}
+          depth={depth}
+          shallow={shallow}
+        />
+      );
     case "link":
-      return <SidebarLinkNode node={node} depth={depth} />;
+      return (
+        <SidebarLinkNode
+          icon={node.icon ? <FaIconServer icon={node.icon} /> : undefined}
+          node={node}
+          depth={depth}
+        />
+      );
     case "endpoint":
       return <SidebarApiLeafNode node={node} depth={depth} shallow={shallow} />;
     case "endpointPair":
@@ -38,9 +55,30 @@ export function SidebarApiPackageChild({
     case "webhook":
       return <SidebarApiLeafNode node={node} depth={depth} shallow={shallow} />;
     case "apiPackage":
-      return <SidebarApiPackageNode node={node} depth={depth} />;
+      return (
+        <SidebarApiPackageNode
+          node={node}
+          depth={depth}
+          icon={node.icon ? <FaIconServer icon={node.icon} /> : undefined}
+        >
+          {node.children.map((node: FernNavigation.ApiPackageChild) => (
+            <SidebarApiPackageChild
+              key={node.id}
+              node={node}
+              depth={depth + 1}
+              shallow={shallow}
+            />
+          ))}
+        </SidebarApiPackageNode>
+      );
     case "changelog":
-      return <SidebarChangelogNode node={node} depth={depth} />;
+      return (
+        <SidebarChangelogNode
+          node={node}
+          depth={depth}
+          icon={node.icon ? <FaIconServer icon={node.icon} /> : undefined}
+        />
+      );
     default:
       throw new UnreachableCaseError(node);
   }

@@ -4,8 +4,8 @@ import { ComponentProps } from "react";
 
 import { LogInIcon, LogOutIcon } from "lucide-react";
 
-import { ButtonLink } from "./components/FernLinkButton";
-import { WithReturnTo } from "./header/WithReturnTo";
+import { ButtonLink } from "@/components/FernLinkButton";
+import { WithReturnTo } from "@/components/header/WithReturnTo";
 
 export function LoginButtonClient({
   authed,

@@ -1,0 +1,12 @@
+{
+  "ignores": [
+    "@tailwindcss/postcss",
+    "@types/react",
+    "@types/react-dom",
+    "tailwindcss",
+    "tailwindcss-animate",
+    "clsx",
+    "tailwind-merge"
+  ],
+  "ignore-patterns": ["dist"]
+}

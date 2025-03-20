@@ -7,12 +7,13 @@
     },
     "strictNullChecks": true
   },
-  "exclude": ["node_modules"],
+  "exclude": ["node_modules", "**/__snapshots__"],
   "include": [
     "src/**/*",
     ".next/types/**/*.ts",
     ".storybook/**/*.{ts,tsx}",
-    "next.config.ts"
+    "next.config.ts",
+    "vitest.config.ts"
   ],
   "references": [
     {
@@ -38,9 +39,6 @@
     },
     {
       "path": "../search-server"
-    },
-    {
-      "path": "../syntax-highlighter"
     },
     {
       "path": "../utils"

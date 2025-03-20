@@ -11,11 +11,14 @@ import {
 import { cn } from "@fern-docs/components";
 import { CopyToClipboardButton, SemanticColor } from "@fern-docs/components";
 
+import { useIsDarkCode } from "@/state/dark-code";
+
 export declare namespace TitledExample {
   export interface Props {
     title: ReactNode;
     intent?: SemanticColor;
-    actions?: ReactElement<any>;
+    tryIt?: ReactElement<any>;
+    languageDropdown?: ReactElement<any>;
     className?: string;
     copyToClipboardText?: () => string; // use provider to lazily compute clipboard text
     onClick?: MouseEventHandler<HTMLDivElement>;
@@ -31,7 +34,8 @@ export const TitledExample = forwardRef<
     title,
     intent = "none",
     className,
-    actions,
+    tryIt,
+    languageDropdown,
     children,
     copyToClipboardText,
     onClick,
@@ -39,11 +43,13 @@ export const TitledExample = forwardRef<
   },
   ref
 ) {
+  const isDarkCode = useIsDarkCode();
   return (
     <div
       className={cn(
-        "bg-card-solid border-card-border rounded-3 relative flex flex-col overflow-hidden border shadow-sm",
+        "bg-card-background border-card-border rounded-3 shadow-card-grayscale relative flex flex-col overflow-hidden border",
         "max-md:max-h-content-height-padded",
+        { "bg-card-solid dark": isDarkCode },
         className
       )}
       onClick={onClick}
@@ -75,7 +81,7 @@ export const TitledExample = forwardRef<
             <div className="min-w-0 flex-1 shrink">{title}</div>
           )}
           <div className="flex items-center gap-2">
-            {actions}
+            {languageDropdown}
             {!disableClipboard && (
               <CopyToClipboardButton
                 content={copyToClipboardText}
@@ -86,6 +92,7 @@ export const TitledExample = forwardRef<
         </div>
       </div>
       {children}
+      {tryIt}
     </div>
   );
 });

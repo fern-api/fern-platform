@@ -4,7 +4,7 @@ import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import { EndpointContext } from "@fern-api/fdr-sdk/api-definition";
 import { visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
 
-import { MdxServerComponentProseSuspense } from "@/components/mdx/server-component";
+import { MdxServerComponentProseSuspense } from "@/mdx/components/server-component";
 import { MdxSerializer } from "@/server/mdx-serializer";
 
 import { ObjectProperty } from "../type-definitions/ObjectProperty";
@@ -144,13 +144,13 @@ export async function EndpointContentLeft({
             <EndpointSection title="Headers">
               <WithSeparator>
                 {headers.map((parameter) => {
-                  let isAuth = false;
+                  // let isAuth = false;
                   if (
                     (auth?.type === "header" &&
                       parameter.key === auth?.headerWireValue) ||
                     parameter.key === "Authorization"
                   ) {
-                    isAuth = true;
+                    // isAuth = true;
                   }
 
                   // {isAuth && (

@@ -6,7 +6,7 @@ import { composeRefs } from "@radix-ui/react-compose-refs";
 import { Slot } from "@radix-ui/react-slot";
 
 import type { Slug } from "@fern-api/fdr-sdk/navigation";
-import { addLeadingSlash } from "@fern-docs/utils";
+import { slugToHref } from "@fern-docs/utils";
 
 import { useApiPageCenterElement } from "./useApiPageCenterElement";
 
@@ -23,11 +23,7 @@ export const ApiPageCenter = React.forwardRef<
   useApiPageCenterElement(ref, slug);
 
   return (
-    <Comp
-      ref={composeRefs(forwardedRef, ref)}
-      id={addLeadingSlash(slug)}
-      {...props}
-    >
+    <Comp ref={composeRefs(forwardedRef, ref)} id={slugToHref(slug)} {...props}>
       {children}
     </Comp>
   );

@@ -1,8 +1,11 @@
+"use client";
+
 import { FC, FormEvent, useCallback, useMemo, useRef, useState } from "react";
 
 import { useAtom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
-import { motion } from "motion/react";
+import { LazyMotion, domAnimation } from "motion/react";
+import * as m from "motion/react-m";
 
 import { cn } from "@fern-docs/components";
 import {
@@ -15,7 +18,7 @@ import {
 } from "@fern-docs/components";
 import { useKeyboardPress } from "@fern-ui/react-commons";
 
-const MotionFernRadioGroup = motion.create(FernRadioGroup);
+const MotionFernRadioGroup = m.create(FernRadioGroup);
 
 interface FeedbackFormProps {
   isHelpful: "yes" | "no";
@@ -33,6 +36,8 @@ const SHOW_EMAIL_INPUT_ATOM = atomWithStorage<boolean | "indeterminate">(
   false
 );
 const EMAIL_ATOM = atomWithStorage<string>("feedback-email", "");
+
+const FEEDBACK_FORM_REASON_ID = "feedback-reason";
 
 export const FeedbackForm: FC<FeedbackFormProps> = ({
   isHelpful,
@@ -126,7 +131,7 @@ export const FeedbackForm: FC<FeedbackFormProps> = ({
   return (
     <form onSubmit={handleSubmitFeedback} className="p-0">
       <label
-        htmlFor="feedbackReason"
+        htmlFor={FEEDBACK_FORM_REASON_ID}
         className={cn({
           "text-lg font-semibold": layoutDensity === "verbose",
           "text-(color:--grayscale-a11) text-sm font-medium":
@@ -137,16 +142,18 @@ export const FeedbackForm: FC<FeedbackFormProps> = ({
       </label>
 
       {feedbackOptions.length > 0 ? (
-        <MotionFernRadioGroup
-          layoutId={legend}
-          id="feedbackReason"
-          className="mt-4"
-          value={feedbackId}
-          onValueChange={setFeedbackId}
-          options={feedbackOptions}
-          autoFocus={true}
-          compact={layoutDensity === "condensed"}
-        />
+        <LazyMotion features={domAnimation} strict>
+          <MotionFernRadioGroup
+            layoutId={legend}
+            id={FEEDBACK_FORM_REASON_ID}
+            className="mt-4"
+            value={feedbackId}
+            onValueChange={setFeedbackId}
+            options={feedbackOptions}
+            autoFocus={true}
+            compact={layoutDensity === "condensed"}
+          />
+        </LazyMotion>
       ) : (
         <FernTextarea
           ref={textareaRef}

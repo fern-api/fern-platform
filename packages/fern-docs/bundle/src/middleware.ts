@@ -9,7 +9,9 @@ import {
   COOKIE_FERN_TOKEN,
   HEADER_X_FERN_BASEPATH,
   HEADER_X_FERN_HOST,
+  HEADER_X_FORWARDED_HOST,
   conformTrailingSlash,
+  isTrailingSlashEnabled,
   removeLeadingSlash,
   removeTrailingSlash,
 } from "@fern-docs/utils";
@@ -40,10 +42,18 @@ function splitPathname(
 export const middleware: NextMiddleware = async (request) => {
   const host = request.nextUrl.host;
   const domain = getDocsDomainEdge(request);
-  const pathname = removeTrailingSlash(request.nextUrl.pathname);
+
+  // note: decoding the uri component here will avoid double-encoding the pathname futher
+  // down the middleware chain
+  const pathname = decodeURIComponent(
+    removeTrailingSlash(request.nextUrl.pathname)
+  );
 
   const headers = new Headers(request.headers);
   headers.set(HEADER_X_FERN_HOST, domain);
+  if (domain !== host) {
+    headers.set(HEADER_X_FORWARDED_HOST, domain);
+  }
 
   const rewrite = (
     newPathname: string,
@@ -70,7 +80,9 @@ export const middleware: NextMiddleware = async (request) => {
     });
   };
 
-  const withDomain = (pathname: string) => `/${host}/${domain}${pathname}`;
+  // this mutation is reversed in `useCurrentPathname` hook. if this changes, please update that hook.
+  const withDomain = (pathname: string) =>
+    `/${host}/${domain}${conformTrailingSlash(pathname)}`;
 
   const withoutBasepath = (splitter: string | RegExp) => {
     const [basepath, newPathname] = splitPathname(pathname, splitter);
@@ -87,10 +99,7 @@ export const middleware: NextMiddleware = async (request) => {
    * Rewrite /api/fern-docs/revalidate-all/v3 to /api/fern-docs/revalidate?regenerate=true
    */
   if (pathname.endsWith("/api/fern-docs/revalidate-all/v3")) {
-    return rewrite(
-      withDomain(withoutBasepath("/api/fern-docs/revalidate")),
-      "?regenerate=true"
-    );
+    return rewrite(withDomain("/api/fern-docs/revalidate"));
   }
 
   /**
@@ -155,11 +164,26 @@ export const middleware: NextMiddleware = async (request) => {
   }
 
   /**
+   * At this point, conform the trailing slash setting or else redirect
+   */
+  if (isTrailingSlashEnabled() !== request.nextUrl.pathname.endsWith("/")) {
+    const destination = request.nextUrl.clone();
+    destination.pathname = conformTrailingSlash(destination.pathname);
+    if (String(destination) !== String(request.nextUrl)) {
+      return NextResponse.redirect(destination);
+    }
+  }
+
+  /**
    * Rewrite .../~explorer to /[domain]/explorer/...
    */
   if (pathname.endsWith("/~explorer")) {
     const pathname = withoutEnding("/~explorer");
-    return rewrite(withDomain(`/explorer/${encodeURIComponent(pathname)}`));
+    return rewrite(
+      withDomain(
+        `/explorer/${encodeURIComponent(conformTrailingSlash(pathname))}`
+      )
+    );
   }
 
   let newToken: string | undefined;
@@ -170,14 +194,19 @@ export const middleware: NextMiddleware = async (request) => {
   const authState = await getAuthState(pathname);
 
   const getResponse = () => {
-    if (authState.authed) {
-      return rewrite(withDomain(`/dynamic/${encodeURIComponent(pathname)}`));
-    }
-    if (!authState.ok && authState.authorizationUrl) {
-      return NextResponse.redirect(authState.authorizationUrl);
+    if (authState.authed || request.nextUrl.searchParams.has("error")) {
+      return rewrite(
+        withDomain(
+          `/dynamic/${encodeURIComponent(conformTrailingSlash(pathname))}`
+        )
+      );
     }
 
-    return rewrite(withDomain(`/static/${encodeURIComponent(pathname)}`));
+    return rewrite(
+      withDomain(
+        `/static/${encodeURIComponent(conformTrailingSlash(pathname))}`
+      )
+    );
   };
 
   const response = getResponse();

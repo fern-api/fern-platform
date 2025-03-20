@@ -8,18 +8,16 @@ import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import type { TableOfContentsItem } from "@fern-docs/mdx";
 
+import { PageHeader } from "@/components/PageHeader";
 import { MdxSerializer } from "@/server/mdx-serializer";
-import { SetLayout } from "@/state/layout";
 
 import { BuiltWithFern } from "../built-with-fern";
-import { PageHeader } from "../components/PageHeader";
 import { CustomLayout } from "./CustomLayout";
 import { FooterLayout } from "./FooterLayout";
 import { GuideLayout } from "./GuideLayout";
 import { OverviewLayout } from "./OverviewLayout";
 import { PageLayout } from "./PageLayout";
 import { ReferenceLayout } from "./ReferenceLayout";
-import { ScrollToTop } from "./ScrollToTop";
 import { TableOfContentsLayout } from "./TableOfContentsLayout";
 
 export async function LayoutEvaluatorContent({
@@ -32,6 +30,7 @@ export async function LayoutEvaluatorContent({
   children,
   aside,
   bottomNavigation,
+  slug,
 }: {
   serialize: MdxSerializer;
   frontmatter?: Partial<FernDocs.Frontmatter>;
@@ -42,6 +41,7 @@ export async function LayoutEvaluatorContent({
   children: React.ReactNode;
   aside?: React.ReactNode;
   bottomNavigation?: React.ReactNode;
+  slug: string;
 }) {
   let layout = frontmatter?.layout ?? "guide";
 
@@ -55,6 +55,7 @@ export async function LayoutEvaluatorContent({
       title={title}
       subtitle={subtitle}
       breadcrumb={breadcrumb}
+      slug={slug}
     />
   );
 
@@ -78,40 +79,35 @@ export async function LayoutEvaluatorContent({
     case "custom":
       return (
         <CustomLayout footer={<BuiltWithFern className="mx-auto my-8 w-fit" />}>
-          <SetLayout value="custom" />
-          <ScrollToTop />
           {children}
         </CustomLayout>
       );
     case "guide":
       return (
         <GuideLayout header={pageHeader} toc={toc} footer={footer}>
-          <SetLayout value="guide" />
-          <ScrollToTop />
           {children}
         </GuideLayout>
       );
     case "overview":
       return (
         <OverviewLayout header={pageHeader} toc={toc} footer={footer}>
-          <SetLayout value="overview" />
-          <ScrollToTop />
           {children}
         </OverviewLayout>
       );
     case "page":
       return (
         <PageLayout header={pageHeader} footer={footer}>
-          <SetLayout value="page" />
-          <ScrollToTop />
           {children}
         </PageLayout>
       );
     case "reference":
       return (
-        <ReferenceLayout header={pageHeader} aside={aside} footer={footer}>
-          <SetLayout value="reference" />
-          <ScrollToTop />
+        <ReferenceLayout
+          header={pageHeader}
+          aside={aside}
+          footer={footer}
+          kind="guide"
+        >
           {children}
         </ReferenceLayout>
       );

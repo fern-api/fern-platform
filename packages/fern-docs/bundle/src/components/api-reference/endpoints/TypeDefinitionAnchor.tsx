@@ -3,8 +3,9 @@
 import React from "react";
 
 import { cn } from "@fern-docs/components";
+import { isomorphicRequestIdleCallback } from "@fern-ui/react-commons";
 
-import { FernAnchor } from "@/components/components/FernAnchor";
+import { FernAnchor } from "@/components/FernAnchor";
 
 import {
   useHref,
@@ -37,19 +38,14 @@ export const SectionContainer = React.forwardRef<
       id={href}
       ref={ref}
       {...props}
-      className={cn("relative scroll-mt-4", props.className)}
+      className={cn("relative", props.className)}
     >
       {children}
     </div>
   );
 });
 
-const rIC = (fn: () => void, timeout = 0) => {
-  if (typeof requestIdleCallback !== "undefined") {
-    return requestIdleCallback(fn, { timeout });
-  }
-  return setTimeout(fn, timeout);
-};
+SectionContainer.displayName = "SectionContainer";
 
 export function PropertyContainer({
   children,
@@ -62,7 +58,7 @@ export function PropertyContainer({
   const ref = React.useRef<HTMLDivElement>(null);
   React.useEffect(() => {
     if (isActive) {
-      rIC(() => {
+      isomorphicRequestIdleCallback(() => {
         ref.current?.scrollIntoView({ behavior: "smooth", block: "center" });
       }, 150);
     }

@@ -3,10 +3,11 @@ import React from "react";
 import { cn } from "@fern-docs/components";
 import { DEFAULT_LOGO_HEIGHT } from "@fern-docs/utils";
 
-import type { LogoConfiguration } from "@/components/atoms";
+import { LogoText } from "@/state/logo-text";
+import type { LogoConfiguration } from "@/state/types";
 
-import { FernImage } from "./components/FernImage";
-import { MaybeFernLink } from "./components/FernLink";
+import { FernImage } from "./FernImage";
+import { MaybeFernLink } from "./FernLink";
 
 export function Logo({
   logo,
@@ -25,10 +26,10 @@ export function Logo({
   };
 
   return (
-    <MaybeFernLink href={href} className={className}>
+    <MaybeFernLink href={href} className={cn(className, "flex items-center")}>
       {light && (
         <FernImage
-          className={cn("max-h-full object-contain", {
+          className={cn("max-h-full object-contain max-md:!max-h-8", {
             "block dark:hidden": !!dark,
           })}
           alt={alt ?? light.alt ?? "Logo"}
@@ -44,7 +45,7 @@ export function Logo({
       )}
       {dark && (
         <FernImage
-          className={cn("max-h-full object-contain", {
+          className={cn("max-h-full object-contain max-md:!max-h-8", {
             "hidden dark:block": !!light,
           })}
           alt={alt ?? dark.alt ?? "Logo"}
@@ -58,6 +59,8 @@ export function Logo({
           style={style}
         />
       )}
+
+      <LogoText className="ml-1" />
     </MaybeFernLink>
   );
 }

@@ -1,152 +1,76 @@
-.fern-theme-cohere.fern-container {
-  @apply fixed inset-0 p-3;
-  @apply flex flex-col gap-3;
+@layer components {
+  [data-theme="cohere"] {
+    &#fern-header {
+      .fern-header-navbar-links,
+      .fern-header-mobile-menu-button {
+        @apply -mr-2;
+      }
 
-  > header {
-    @apply shrink-0;
-  }
+      .fern-header-tabs {
+        @apply lg:items-center;
+      }
 
-  .fern-body {
-    @apply flex min-h-0 flex-1 gap-3;
-  }
+      [role="tablist"] {
+        @apply flex items-center gap-3;
+      }
 
-  .fern-main,
-  .fern-header,
-  .fern-header-tabs,
-  .fern-sidebar-container {
-    @apply border-border-default rounded-2 border;
-  }
+      [data-radix-collection-item] {
+        @apply rounded-2 flex h-[40px] select-none items-center border px-3 text-sm;
 
-  .fern-sidebar-container {
-    @apply bg-sidebar-background w-sidebar-width shrink-0;
-    @apply flex flex-col;
-  }
+        &[data-state="active"] {
+          border-color: var(--border-color-header-tab-active);
+          background-color: var(--bg-color-header-tab-active);
+        }
 
-  .fern-sidebar-container.dismissable {
-    @apply fixed bottom-3 left-3;
-    @apply max-sm:right-3 max-sm:w-auto;
-    @apply shadow-xl;
+        &[data-state="inactive"] {
+          @apply text-body border-border-default;
 
-    top: calc(var(--spacing-header-height-real) + 1.5rem);
-
-    .fern-sidebar-content {
-      @apply px-4;
-    }
-  }
-
-  .fern-sidebar-container:not(.dismissable) {
-    @apply max-lg:hidden;
-  }
-
-  .fern-main {
-    @apply bg-sidebar-background min-w-0 flex-1;
-  }
-
-  .fern-header-container {
-    @apply flex flex-col gap-3;
-  }
-
-  .fern-header,
-  .fern-header-tabs {
-    @apply bg-header-background;
-  }
-
-  .fern-header-content {
-    @apply flex h-full shrink-0 items-center justify-between gap-4 px-4;
-    @apply max-lg:pr-2;
-  }
-
-  .fern-header {
-    @apply h-header-height-real;
-  }
-
-  #fern-footer:empty {
-    display: none;
-  }
-
-  .fern-header-tabs {
-    @apply flex justify-between gap-3 p-3 max-lg:hidden;
-
-    .fern-header-tabs-list {
-      @apply flex gap-3;
-    }
-
-    .fern-header-tab-button {
-      @apply rounded-2 flex h-[40px] select-none items-center border px-3 text-sm;
-    }
-
-    .fern-header-tab-button[data-state="inactive"] {
-      @apply text-body border-border-default;
-
-      &:hover {
-        background-color: var(--bg-color-header-tab-inactive-hover);
+          @variant hover {
+            background-color: var(--bg-color-header-tab-inactive-hover);
+          }
+        }
       }
     }
 
-    .fern-header-tab-button[data-state="active"] {
-      border-color: var(--border-color-header-tab-active);
-      background-color: var(--bg-color-header-tab-active);
+    #fern-cohere-content {
+      @apply relative flex w-full gap-3;
     }
-  }
 
-  .fern-sidebar-content {
-    @apply mask-grad-y-6 px-3 pb-12;
-  }
+    #fern-sidebar[data-viewport="desktop"] {
+      @apply bg-sidebar-background border-border-default rounded-2 w-sidebar-width shrink-0 overflow-clip border;
 
-  .fern-endpoint-content {
-    @apply px-4 lg:px-10;
-
-    .fern-endpoint-content-right {
-      @apply max-w-content-width;
-      @apply md:sticky md:top-0 md:flex-1 md:self-start;
-
-      /* the 4rem is the same as the h-10 as the Header */
-      @apply max-h-content-height;
-      @apply flex;
-
-      /* header offset */
-      @apply py-8;
-
-      @media (screen(md)) {
-        max-height: var(--content-height);
+      #fern-sidebar-scroll-area {
+        @apply px-2 py-6 pb-12;
       }
     }
-  }
 
-  .fern-layout-toc {
-    @apply h-content-height top-header-height w-sidebar-width sticky shrink-0 max-xl:hidden;
-  }
+    #fern-sidebar[data-viewport="mobile"] {
+      @apply bg-sidebar-background rounded-2 border-border-default overflow-clip border;
+      @apply sm:w-sidebar-width border-border-concealed pointer-events-auto fixed bottom-3 right-3 top-[calc(var(--header-height)+1.5rem)] z-40 flex w-full max-w-[calc(100dvw-3rem)] flex-col border-l backdrop-blur-xl;
 
-  .fern-guide-layout,
-  .fern-overview-layout,
-  .fern-page-layout {
-    @apply relative;
-  }
+      #fern-sidebar-scroll-area {
+        @apply px-4 py-6 pb-12;
+      }
+    }
 
-  .fern-guide-layout,
-  .fern-overview-layout {
-    @apply mx-auto flex max-w-fit flex-row-reverse gap-3 lg:max-xl:ml-0;
-  }
+    #fern-toc {
+      @apply top-0 max-h-[calc(100dvh-var(--spacing-header-height)-2.25rem-2px)];
+    }
 
-  .fern-page-layout {
-    @apply pb-20;
-    @apply w-full min-w-0 shrink px-4 sm:px-6 lg:px-10;
-  }
+    .fern-layout-reference-aside[data-kind="api"] {
+      @apply max-h-[calc(100svh-var(--header-height)-8.25rem-2px)] md:top-6 md:max-h-[calc(100vh-var(--header-height)-5.25rem-2px)];
+    }
 
-  .fern-layout-content {
-    @apply min-w-0 pb-20;
-  }
+    .fern-layout-reference-aside[data-kind="guide"] {
+      @apply top-6 pb-12;
+    }
 
-  .fern-guide-layout {
-    @apply px-4 sm:px-6 lg:px-10;
-  }
+    .fern-changelog-content > aside {
+      @apply top-4;
+    }
 
-  .fern-sidebar-hidden:has(.fern-layout-toc) {
-    @apply xl:pl-sidebar-width;
-
-    .fern-guide-layout,
-    .fern-overview-layout {
-      @apply lg:max-xl:mx-auto xl:pl-3 xl:pr-0;
+    #fern-sidebar-overlay {
+      @apply bg-background/70 pointer-events-auto fixed inset-0 top-[calc(var(--header-height)+1.5rem)] z-30;
     }
   }
 }

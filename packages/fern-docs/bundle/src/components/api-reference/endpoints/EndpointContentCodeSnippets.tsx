@@ -16,7 +16,7 @@ import {
 
 import { WebSocketMessages } from "@/components/api-reference/websockets/WebSocketMessages";
 
-import { PlaygroundButton } from "../../playground/PlaygroundButton";
+import { PlaygroundButtonTray } from "../../playground/PlaygroundButtonTray";
 import { usePlaygroundBaseUrl } from "../../playground/utils/select-environment";
 import { AudioExample } from "../examples/AudioExample";
 import {
@@ -133,6 +133,7 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<
   return (
     <div
       className={cn(
+        "not-prose",
         // note: .fern-endpoint-code-snippets class is used to detect clicks outside of the code snippets
         // this is used to clear the selected error when the user clicks outside of the error
         "fern-endpoint-code-snippets w-full",
@@ -168,15 +169,19 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<
         onClick={(e) => {
           e.stopPropagation();
         }}
-        actions={
+        tryIt={
           <>
             {node != null && (
-              <PlaygroundButton
+              <PlaygroundButtonTray
                 state={node}
 
                 // example={selectedExample?.exampleCall}
               />
             )}
+          </>
+        }
+        languageDropdown={
+          <>
             {languages.length > 1 && (
               <CodeExampleClientDropdown
                 languages={languages}

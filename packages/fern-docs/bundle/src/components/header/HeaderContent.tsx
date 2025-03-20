@@ -1,11 +1,14 @@
+"use client";
+
 import { CSSProperties } from "react";
 import React from "react";
 
 import { FernButtonGroup, cn } from "@fern-docs/components";
+import { useIsDesktop } from "@fern-ui/react-commons";
 
 import { SearchV2Trigger } from "@/state/search";
 
-import { ThemeButton } from "../themes";
+import { ThemeSwitch } from "../sidebar/theme-switch";
 import { MobileMenuButton } from "./MobileButtons";
 
 export function HeaderContent({
@@ -13,7 +16,6 @@ export function HeaderContent({
   versionSelect,
   className,
   style,
-  showThemeButton,
   showSearchBar,
   navbarLinks,
   loginButton,
@@ -22,11 +24,11 @@ export function HeaderContent({
   versionSelect: React.ReactNode;
   className?: string;
   style?: CSSProperties;
-  showThemeButton?: boolean;
   showSearchBar?: boolean;
   navbarLinks: React.ReactNode;
   loginButton?: React.ReactNode;
 }) {
+  const isSmallScreen = !useIsDesktop();
   return (
     <div
       className={cn(
@@ -35,31 +37,31 @@ export function HeaderContent({
       )}
       style={style}
     >
-      <div className="relative flex h-full min-w-fit flex-1 shrink-0 items-center gap-2 py-1">
+      <div className="fern-header-logo-container">
         <div className="flex items-center gap-2">
           {logo}
           {versionSelect}
         </div>
       </div>
 
-      {showSearchBar && (
+      {(showSearchBar || isSmallScreen) && (
         <SearchV2Trigger
           aria-label="Search"
-          className="max-w-content-width hidden w-full min-w-0 shrink lg:inline-flex"
+          className="fern-header-search-bar"
         />
       )}
 
       <FernButtonGroup asChild>
-        <nav
-          aria-label="Navbar links"
-          className="hidden flex-1 lg:flex lg:items-center lg:justify-end"
-        >
+        <nav className="fern-header-navbar-links" aria-label="Navbar links">
           {navbarLinks}
           {loginButton}
+          <ThemeSwitch iconOnly variant="ghost" className="ml-2" />
         </nav>
       </FernButtonGroup>
 
-      <MobileMenuButton className="-ml-2" />
+      <div className="fern-header-mobile-menu-button">
+        <MobileMenuButton />
+      </div>
     </div>
   );
 }

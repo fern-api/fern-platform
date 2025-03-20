@@ -38,11 +38,9 @@
   "devDependencies": {
     "@fern-platform/configs": "workspace:*",
     "@types/js-yaml": "^4.0.5",
-    "@types/node": "^18.7.18",
+    "@types/node": "^18.11.9",
     "@types/yargs": "^17.0.32",
     "depcheck": "^1.4.7",
-    "eslint": "^9",
-    "prettier": "^3.4.2",
     "typescript": "^5",
     "vitest": "^3.0.5"
   }

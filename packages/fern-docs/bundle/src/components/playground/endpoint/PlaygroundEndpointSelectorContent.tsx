@@ -1,6 +1,5 @@
 "use client";
 
-import { usePathname } from "next/navigation";
 import { Fragment, forwardRef, useEffect, useRef, useState } from "react";
 
 import { Search, Slash, X } from "lucide-react";
@@ -17,6 +16,7 @@ import {
 import { removeTrailingSlash } from "@fern-docs/utils";
 
 import { BuiltWithFern } from "@/components/built-with-fern";
+import { useCurrentPathname } from "@/hooks/use-current-pathname";
 
 import { conformExplorerRoute } from "../utils/explorer-route";
 import { ApiGroup } from "../utils/flatten-apis";
@@ -26,6 +26,7 @@ export interface PlaygroundEndpointSelectorContentProps {
   apiGroups: ApiGroup[];
   className?: string;
   shallow?: boolean;
+  replace?: boolean;
 }
 
 function matchesEndpoint(
@@ -47,8 +48,8 @@ function matchesEndpoint(
 export const PlaygroundEndpointSelectorContent = forwardRef<
   HTMLDivElement,
   PlaygroundEndpointSelectorContentProps
->(({ apiGroups, className, shallow }, forwardedRef) => {
-  const pathname = usePathname();
+>(({ apiGroups, className, shallow, replace }, forwardedRef) => {
+  const pathname = useCurrentPathname();
 
   const [filterValue, setFilterValue] = useState<string>("");
 
@@ -98,6 +99,7 @@ export const PlaygroundEndpointSelectorContent = forwardRef<
                 ref={active ? selectedItemRef : undefined}
                 filterValue={filterValue}
                 shallow={shallow}
+                replace={replace}
               />
             );
           })}
@@ -136,7 +138,7 @@ export const PlaygroundEndpointSelectorContent = forwardRef<
         </div>
         <FernScrollArea
           rootClassName="min-h-0 flex-1 shrink w-full"
-          className="mask-grad-y-6 !flex w-full"
+          className="mask-grad-y-6 !flex w-full overscroll-contain"
           scrollbars="vertical"
           asChild
         >

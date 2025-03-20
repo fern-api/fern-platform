@@ -1,14 +1,18 @@
 "use client";
 
 import { FC } from "react";
+import React from "react";
 
 import * as Accordion from "@radix-ui/react-accordion";
 import { ArrowDown, ArrowUp, ChevronDown } from "lucide-react";
 
 import { APIV1Read } from "@fern-api/fdr-sdk/client/types";
-import { cn } from "@fern-docs/components";
-import { CopyToClipboardButton } from "@fern-docs/components";
-import { FernSyntaxHighlighter } from "@fern-docs/syntax-highlighter";
+import {
+  CopyToClipboardButton,
+  FernSyntaxHighlighter,
+  cn,
+  useFernCollapseOverflow,
+} from "@fern-docs/components";
 
 import { WebSocketMessage } from "./WebSocketMessages";
 
@@ -67,7 +71,10 @@ export const WebsocketMessageAccordionItem: FC<
           aria-hidden
         />
       </Accordion.Trigger>
-      <Accordion.Content className="fern-web-socket-content fern-collapsible">
+      <Accordion.Content
+        className="fern-web-socket-content fern-collapsible"
+        {...useFernCollapseOverflow()}
+      >
         <div className="group/cb-container relative">
           <FernSyntaxHighlighter
             className="w-0 min-w-full overflow-y-auto"

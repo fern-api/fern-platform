@@ -40,13 +40,16 @@ export function InternalTypeDefinition({
     case "enum": {
       return (
         <EnumTypeDefinition
-          elements={shape.values.map((value) => (
-            <EnumValue
-              key={value.value}
-              serialize={serialize}
-              enumValue={value}
-            />
-          ))}
+          elements={shape.values.map((value) => ({
+            element: (
+              <EnumValue
+                key={value.value}
+                serialize={serialize}
+                enumValue={value}
+              />
+            ),
+            searchableString: `${value.value} ${value.description ?? ""}`,
+          }))}
         />
       );
     }

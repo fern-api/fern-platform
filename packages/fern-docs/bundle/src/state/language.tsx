@@ -1,9 +1,10 @@
 "use client";
 
-import { atom, useAtomValue } from "jotai";
+import { atom, getDefaultStore, useAtomValue } from "jotai";
 import { useHydrateAtoms } from "jotai/utils";
+import { z } from "zod";
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
+import { createJSONStorage, persist } from "zustand/middleware";
 
 import { ApiDefinition } from "@fern-api/fdr-sdk";
 
@@ -13,8 +14,11 @@ export function useDefaultProgrammingLanguage() {
   return useAtomValue(defaultLanguageAtom);
 }
 
-type LanguageStore = {
-  language: string | null;
+const languageStoreSchema = z.object({
+  language: z.string().nullable(),
+});
+
+type LanguageStore = z.infer<typeof languageStoreSchema> & {
   setLanguage: React.Dispatch<React.SetStateAction<string | null>>;
 };
 
@@ -27,10 +31,7 @@ export const useProgrammingLanguageStore = create<LanguageStore>()(
           const language =
             typeof action === "function" ? action(prev.language) : action;
           return {
-            language:
-              typeof language === "string"
-                ? ApiDefinition.cleanLanguage(language)
-                : null,
+            language: language ? ApiDefinition.cleanLanguage(language) : null,
           };
         }),
     }),
@@ -38,19 +39,16 @@ export const useProgrammingLanguageStore = create<LanguageStore>()(
       // not to be confused with internationalization,
       // this is the programming language that the user prefers to use
       name: "fern-programming-language",
+      storage: createJSONStorage(() => localStorage),
       version: 1,
       merge: (persistedState, currentState) => {
-        if (persistedState == null) {
-          return currentState;
-        }
-        if (
-          typeof persistedState === "object" &&
-          "language" in persistedState &&
-          typeof persistedState.language === "string"
-        ) {
+        const result = languageStoreSchema.safeParse(persistedState);
+        if (result.success) {
           return {
             ...currentState,
-            language: ApiDefinition.cleanLanguage(persistedState.language),
+            language: result.data.language
+              ? ApiDefinition.cleanLanguage(result.data.language)
+              : currentState.language,
           };
         }
         return currentState;
@@ -74,6 +72,16 @@ export function useProgrammingLanguage() {
   const value = useProgrammingLanguageValue();
   const setValue = useSetProgrammingLanguage();
   return [value, setValue] as const;
+}
+
+/**
+ * This function will "peek" at the programming language from the store
+ */
+export function getProgrammingLanguage() {
+  return (
+    useProgrammingLanguageStore.getState().language ??
+    getDefaultStore().get(defaultLanguageAtom)
+  );
 }
 
 export function DefaultLanguage({ language }: { language: string }) {

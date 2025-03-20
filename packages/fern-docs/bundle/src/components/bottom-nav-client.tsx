@@ -1,11 +1,12 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import React from "react";
 
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
-import { MaybeFernLink } from "@/components/components/FernLink";
-import { Separator } from "@/components/components/Separator";
+import { MaybeFernLink } from "@/components/FernLink";
+import { Separator } from "@/components/Separator";
 
 export function BottomNavigationClient({
   prev,
@@ -24,6 +25,33 @@ export function BottomNavigationClient({
     onClick?: () => void;
   };
 }) {
+  const router = useRouter();
+  React.useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (
+        (event.key === "ArrowLeft" && event.altKey) ||
+        (event.key === "ArrowLeft" && event.metaKey)
+      ) {
+        prev?.onClick?.();
+        if (prev?.href) {
+          router.push(prev.href, { scroll: true });
+        }
+      } else if (
+        (event.key === "ArrowRight" && event.altKey) ||
+        (event.key === "ArrowRight" && event.metaKey)
+      ) {
+        next?.onClick?.();
+        if (next?.href) {
+          router.push(next.href, { scroll: true });
+        }
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [next, prev, router]);
+
   if (prev == null && next == null) {
     return <Separator />;
   }
@@ -31,7 +59,7 @@ export function BottomNavigationClient({
   return (
     <nav
       aria-label="Up next"
-      className="bg-(color:--grayscale-a3) max-w-content-width [&>a]:rounded-1 rounded-2 mx-auto flex p-1"
+      className="bg-(color:--grayscale-a3) [&>a]:rounded-3 rounded-4 -mx-1 flex p-1"
     >
       {prev && (
         <MaybeFernLink
@@ -49,25 +77,25 @@ export function BottomNavigationClient({
       {next && (
         <MaybeFernLink
           href={next.href}
-          className="bg-background hover:border-(color:--accent-a9) border-(color:--grayscale-a6) flex h-16 min-w-0 flex-1 shrink items-center justify-end gap-4 border px-3"
+          className="bg-card-solid hover:border-(color:--accent-a9) border-(color:--grayscale-a6) fern-background-image relative flex h-16 min-w-0 flex-1 shrink items-center justify-end gap-4 overflow-clip border px-3 transition-all hover:transition-none"
           shallow={next.shallow}
           onClick={next.onClick}
         >
-          <div className="min-w-0 shrink pl-4 text-right">
-            <h4 className="text-(color:--grayscale-a12) truncate text-base font-bold">
+          <div className="relative min-w-0 shrink pl-4 text-right">
+            <h4 className="text-(color:--grayscale-a12) truncate text-base font-bold [&_*]:truncate">
               {next.title}
             </h4>
             {next.excerpt && (
-              <div className="text-(color:--grayscale-a11) truncate text-sm [&_p]:truncate">
+              <div className="text-(color:--grayscale-a11) truncate text-sm [&_*]:truncate">
                 {next.excerpt}
               </div>
             )}
           </div>
           <Separator
             orientation="vertical"
-            className="bg-(color:--grayscale-a5) hidden h-8 w-px sm:block"
+            className="bg-(color:--grayscale-a5) relative hidden h-8 w-px sm:block"
           />
-          <span className="inline-flex items-center gap-1">
+          <span className="relative inline-flex items-center gap-1">
             <span className="text-(color:--grayscale-a11) hidden text-sm font-medium sm:block">
               Next
             </span>

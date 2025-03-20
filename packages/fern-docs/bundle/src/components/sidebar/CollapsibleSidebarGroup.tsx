@@ -1,31 +1,33 @@
-import type { ReactElement } from "react";
+import React from "react";
 
 import * as Collapsible from "@radix-ui/react-collapsible";
 
-import type { FernNavigation } from "@fern-api/fdr-sdk";
+import { cn, useFernCollapseOverflow } from "@fern-docs/components";
 
-interface FernSidebarGroupProps<T> {
-  nodes: T[];
-  open: boolean;
-  renderNode: (node: T) => ReactElement<any>;
-  children: ReactElement<any>;
-}
-
-export function CollapsibleSidebarGroup<
-  T extends FernNavigation.NavigationNode,
->({
-  nodes,
+export function CollapsibleSidebarGroup({
   open,
-  renderNode,
+  trigger,
   children,
-}: FernSidebarGroupProps<T>): ReactElement<any> | null {
+}: {
+  open: boolean;
+  trigger: React.ReactNode;
+  children: React.ReactNode;
+}) {
   return (
     <Collapsible.Root open={open}>
-      <Collapsible.Trigger asChild>{children}</Collapsible.Trigger>
-      <Collapsible.Content asChild>
-        <ul className="fern-sidebar-group fern-collapsible">
-          {nodes.map((node) => (
-            <li key={node.id}>{renderNode(node)}</li>
+      <Collapsible.Trigger asChild>{trigger}</Collapsible.Trigger>
+      <Collapsible.Content asChild {...useFernCollapseOverflow()}>
+        <ul
+          className={cn(
+            "fern-sidebar-group fern-collapsible border-border-concealed ml-4 border-l lg:ml-2 lg:py-1 lg:pl-1"
+          )}
+        >
+          {React.Children.map(children, (child, index) => (
+            <li
+              key={React.isValidElement(child) ? (child.key ?? index) : index}
+            >
+              {child}
+            </li>
           ))}
         </ul>
       </Collapsible.Content>

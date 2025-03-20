@@ -6,7 +6,7 @@ import { FernScrollArea, cn } from "@fern-docs/components";
 
 import { useDismountMeasureSidebarScrollPosition } from "@/state/sidebar-scroll";
 
-import { useIsScrolled } from "../hooks/useIsScrolled";
+import { FERN_SIDEBAR_SCROLL_AREA_ID } from "../constants";
 import { MobileSidebarHeaderLinks } from "./MobileSidebarHeaderLinks";
 import { SidebarFixedItemsSection } from "./SidebarFixedItemsSection";
 import { ThemeSwitch } from "./theme-switch";
@@ -29,7 +29,6 @@ export const SidebarContainer = React.memo(function SidebarContainer({
   children: React.ReactNode;
 }) {
   const ref = React.useRef<HTMLDivElement>(null);
-  const isScrolled = useIsScrolled(ref);
   useDismountMeasureSidebarScrollPosition(ref);
 
   return (
@@ -37,21 +36,27 @@ export const SidebarContainer = React.memo(function SidebarContainer({
       <SidebarFixedItemsSection
         logo={logo}
         versionSelect={versionSelect}
-        showBorder={isScrolled}
         showSearchBar={showSearchBar}
         showHeaderInSidebar={showHeaderInSidebar}
       />
       <FernScrollArea
-        id="sidebar-scroll-area"
+        id={FERN_SIDEBAR_SCROLL_AREA_ID}
         rootClassName="flex-1"
-        className="group/sidebar mask-grad-y-3 overscroll-contain px-4 py-3 pb-12 lg:pl-5"
+        className="group/sidebar mask-grad-y-3 sticky overscroll-contain [&>div]:space-y-6"
         scrollbars="vertical"
         ref={ref}
       >
         {loginButton}
         {children}
-        <MobileSidebarHeaderLinks>{navbarLinks}</MobileSidebarHeaderLinks>
-        <ThemeSwitch className="mx-auto mt-8 flex" />
+        <MobileSidebarHeaderLinks hideInDesktop={!showHeaderInSidebar}>
+          {navbarLinks}
+        </MobileSidebarHeaderLinks>
+        <ThemeSwitch
+          className={cn(
+            "mx-auto mt-8 flex",
+            !showHeaderInSidebar && "lg:hidden"
+          )}
+        />
       </FernScrollArea>
     </>
   );

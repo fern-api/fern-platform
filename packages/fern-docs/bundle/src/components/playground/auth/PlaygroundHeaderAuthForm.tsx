@@ -1,3 +1,5 @@
+"use client";
+
 import type { ReactElement, SetStateAction } from "react";
 
 import { atom } from "jotai";
@@ -9,8 +11,8 @@ import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
 import { unknownToString } from "@fern-api/ui-core-utils";
 
 import { fernUserAtom } from "@/state/fern-user";
+import { PLAYGROUND_AUTH_STATE_HEADER_ATOM } from "@/state/playground";
 
-import { PLAYGROUND_AUTH_STATE_HEADER_ATOM } from "../../atoms";
 import { PasswordInputGroup } from "../PasswordInputGroup";
 import { pascalCaseHeaderKey } from "../utils/header-key-case";
 

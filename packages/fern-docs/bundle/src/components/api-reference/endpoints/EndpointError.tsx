@@ -6,7 +6,8 @@ import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
 import { visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
 
-import { MdxServerComponentProseSuspense } from "@/components/mdx/server-component";
+import { Separator } from "@/components/Separator";
+import { MdxServerComponentProseSuspense } from "@/mdx/components/server-component";
 import { MdxSerializer } from "@/server/mdx-serializer";
 
 import { renderTypeShorthand } from "../../type-shorthand";
@@ -35,11 +36,14 @@ export function EndpointError({
         className="text-(color:--grayscale-a11)"
       />
       {shouldHideShape(error.shape, types) ? null : (
-        <TypeReferenceDefinitions
-          serialize={serialize}
-          shape={error.shape}
-          types={types}
-        />
+        <>
+          <Separator />
+          <TypeReferenceDefinitions
+            serialize={serialize}
+            shape={error.shape}
+            types={types}
+          />
+        </>
       )}
     </div>
   );

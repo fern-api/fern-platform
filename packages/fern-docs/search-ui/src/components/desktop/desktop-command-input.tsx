@@ -52,7 +52,8 @@ export const DesktopCommandInput = forwardRef<
 >(({ children, ...props }, forwardedRef) => {
   const scrollSelectedIntoView = Command.useScrollSelectedIntoView();
   const inputRef = useRef<HTMLInputElement>(null);
-  const selectionState = useRef<number | null>(null);
+  const selectionStateStart = useRef<number | null>(null);
+  const selectionStateEnd = useRef<number | null>(null);
   const { setInputRef } = useCommandUx();
 
   // there's a bug in the cmdk library where the input gets re-mounted when the user types, and the cursor position is lost
@@ -60,12 +61,10 @@ export const DesktopCommandInput = forwardRef<
   // this is a workaround to save the cursor position when the user types, and then restore it when the input is mounted again
   useIsomorphicLayoutEffect(() => {
     setInputRef(inputRef.current);
-    if (inputRef.current != null && selectionState.current != null) {
-      inputRef.current.setSelectionRange(
-        selectionState.current,
-        selectionState.current
-      );
-    }
+    inputRef.current?.setSelectionRange(
+      selectionStateStart.current,
+      selectionStateEnd.current
+    );
   });
 
   // receive a custom event that clears the input when the user presses escape
@@ -88,14 +87,17 @@ export const DesktopCommandInput = forwardRef<
       {...props}
       ref={composeRefs(inputRef, forwardedRef)}
       onChangeCapture={composeEventHandlers(props.onChangeCapture, (e) => {
-        selectionState.current = e.currentTarget.selectionStart;
+        selectionStateStart.current = e.currentTarget.selectionStart;
+        selectionStateEnd.current = e.currentTarget.selectionEnd;
         scrollSelectedIntoView();
       })}
       onBlur={composeEventHandlers(props.onBlur, () => {
-        selectionState.current = null;
+        selectionStateStart.current = null;
+        selectionStateEnd.current = null;
       })}
       onFocus={composeEventHandlers(props.onFocus, () => {
-        selectionState.current = null;
+        selectionStateStart.current = null;
+        selectionStateEnd.current = null;
       })}
     >
       {children}

@@ -8,9 +8,7 @@ const cdnUri =
   process.env.NEXT_PUBLIC_CDN_URI != null
     ? new URL("/", process.env.NEXT_PUBLIC_CDN_URI)
     : undefined;
-const isTrailingSlashEnabled =
-  process.env.TRAILING_SLASH === "1" ||
-  process.env.NEXT_PUBLIC_TRAILING_SLASH === "1";
+const isTrailingSlashEnabled = process.env.NEXT_PUBLIC_TRAILING_SLASH === "1";
 
 // TODO: move this to a shared location (this is copied in FernImage.tsx)
 const NEXT_IMAGE_HOSTS = [
@@ -35,23 +33,24 @@ const nextConfig: NextConfig = {
      *
      * pnpm list --filter=@fern-docs/bundle --only-projects --prod --recursive --depth=Infinity --json | jq -r '[.. | objects | select(.version | .!=null) | select(.version | startswith("link:")) | .from] | unique'
      */
-    // "@fern-api/fdr-sdk",
-    // "@fern-api/template-resolver",
-    // "@fern-api/ui-core-utils",
-    // "@fern-docs/auth",
-    // "@fern-docs/components",
-    // "@fern-docs/edge-config",
-    // "@fern-docs/mdx",
-    // "@fern-docs/search-server",
-    // "@fern-docs/search-ui",
-    // "@fern-docs/syntax-highlighter",
-    // "@fern-docs/utils",
-    // "@fern-platform/fdr-utils",
-    // "@fern-ui/loadable",
-    // "@fern-ui/react-commons",
+    "@fern-api/fdr-sdk",
+    "@fern-api/template-resolver",
+    "@fern-api/ui-core-utils",
+    "@fern-docs/auth",
+    "@fern-docs/components",
+    "@fern-docs/edge-config",
+    "@fern-docs/mdx",
+    "@fern-docs/search-server",
+    "@fern-docs/search-ui",
+    "@fern-docs/utils",
+    "@fern-platform/fdr-utils",
+    "@fern-ui/loadable",
+    "@fern-ui/react-commons",
   ],
   experimental: {
+    appNavFailHandling: true,
     scrollRestoration: true,
+    optimisticClientCache: true,
     optimizePackageImports: [
       "@fern-api/fdr-sdk",
       "@fern-docs/mdx",
@@ -60,6 +59,24 @@ const nextConfig: NextConfig = {
       "es-toolkit",
       "ts-essentials",
       "lucide-react",
+
+      /**
+       * optimize imports for all rehype and unist related packages.
+       */
+      "@mdx-js/esbuild",
+      "@mdx-js/mdx",
+      "@mdx-js/react",
+      "estree-util-is-identifier-name",
+      "estree-util-value-to-estree",
+      "estree-walker",
+      "rehype-katex",
+      "remark-frontmatter",
+      "remark-gemoji",
+      "remark-gfm",
+      "remark-math",
+      "remark-mdx-frontmatter",
+      "remark-smartypants",
+      "remark-squeeze-paragraphs",
     ],
     optimizeServerReact: Boolean(process.env.VERCEL),
     authInterrupts: true,
@@ -75,7 +92,15 @@ const nextConfig: NextConfig = {
       static: 180,
     },
     serverComponentsHmrCache: true,
+    serverActions: {
+      allowedOrigins: ["*"],
+    },
   },
+  expireTime: 3600, // 1 hour
+
+  // speed up build
+  typescript: { ignoreBuildErrors: true },
+  eslint: { ignoreDuringBuilds: true },
 
   skipMiddlewareUrlNormalize: true,
 
@@ -90,23 +115,25 @@ const nextConfig: NextConfig = {
    * subpath does not exist in their hosting provider. Potentially, even, their root path is also a next.js app.
    * To avoid conflicting with the customer's app, or introduce complex rewrite rules for the customer, we must edit
    * the `assetPrefix` to point to an external URL that hosts all static assets (which we call the CDN_URI).
-   * On prod, the CDN_URI is currently https://app.buildwithfern.com.
+   * On prod, the CDN_URI is currently https://legacy.ferndocs.com.
    *
    * Note that local development should not set the CDN_URI to ensure that the assets are served from the local server.
    */
   assetPrefix: cdnUri != null ? cdnUri.href : undefined,
-  typescript: { ignoreBuildErrors: true },
   compiler: {
-    removeConsole:
-      process.env.VERCEL_ENV === "production" ? { exclude: ["error"] } : false,
+    // Note: i think this removes console logs in server-side code?
+    // removeConsole:
+    //   process.env.VERCEL_ENV === "production"
+    //     ? { exclude: ["error", "log"] }
+    //     : false,
     styledJsx: true,
   },
   logging: {
-    // fetches: {
-    //   fullUrl: true,
-    //   hmrRefreshes: true,
-    // },
-    // incomingRequests: true,
+    fetches: {
+      fullUrl: true,
+      //   hmrRefreshes: true,
+    },
+    incomingRequests: true,
   },
   headers: async () => {
     const AccessControlHeaders = [
@@ -178,6 +205,10 @@ const nextConfig: NextConfig = {
     path: cdnUri != null ? `${cdnUri.href}_next/image` : undefined,
   },
   webpack: (config, { isServer }) => {
+    // config.optimization = {
+    //   ...config.optimization,
+    //   minimize: false,
+    // };
     if (isServer) {
       config.externals = config.externals || [];
       config.externals.push("esbuild");
@@ -207,10 +238,12 @@ function withVercelEnv(config: NextConfig): NextConfig {
   return {
     ...config,
     deploymentId: process.env.VERCEL_DEPLOYMENT_ID, // skew protection
-    // productionBrowserSourceMaps: process.env.VERCEL_ENV !== "production",
-    // reactProductionProfiling: process.env.VERCEL_ENV !== "production",
     productionBrowserSourceMaps: false,
     reactProductionProfiling: false,
+    experimental: {
+      ...config.experimental,
+      serverSourceMaps: false,
+    },
   };
 }
 

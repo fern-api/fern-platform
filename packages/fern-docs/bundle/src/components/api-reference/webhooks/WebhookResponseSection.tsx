@@ -1,4 +1,4 @@
-import { Markdown } from "../../mdx/Markdown";
+import { Markdown } from "@/mdx/components/Markdown";
 
 const STATUS_200_TEXT =
   "Return a 200 status to indicate that the data was received successfully.";

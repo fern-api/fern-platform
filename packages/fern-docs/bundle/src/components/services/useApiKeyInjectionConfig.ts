@@ -15,3 +15,10 @@ export function useApiKeyInjectionConfig(): APIKeyInjectionConfig {
   );
   return data ?? DEFAULT;
 }
+
+export function useInjectedApiKey(): string | null {
+  const apiKeyInjection = useApiKeyInjectionConfig();
+  return apiKeyInjection.enabled && apiKeyInjection.authenticated
+    ? apiKeyInjection.access_token
+    : null;
+}

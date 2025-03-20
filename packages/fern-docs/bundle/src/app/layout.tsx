@@ -1,15 +1,12 @@
 import { Metadata, Viewport } from "next/types";
 import { experimental_taintUniqueValue } from "react";
 
-import { TooltipProvider } from "@radix-ui/react-tooltip";
-
-import { Toaster } from "@fern-docs/components";
-
 import { ConsoleMessage } from "@/components/console-message";
-import { JotaiProvider } from "@/state/jotai-provider";
+import { FERN_DOCS_ID } from "@/components/constants";
+import { ScrollToTop } from "@/components/layouts/ScrollToTop";
 
 import "./globals.css";
-import StyledJsxRegistry from "./registry";
+import { Providers } from "./providers";
 
 const secrets = [
   "BRAINTRUST_API_KEY",
@@ -34,11 +31,7 @@ const secrets = [
   "VERCEL_AUTOMATION_BYPASS_SECRET",
 ];
 
-export default function DashboardLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function Layout({ children }: { children: React.ReactNode }) {
   for (const secret of secrets) {
     const secretValue = process.env[secret];
     if (secretValue != null) {
@@ -59,16 +52,10 @@ export default function DashboardLayout({
           fetchPriority="low"
         />
       </head>
-      <body className="antialiased">
+      <body className="antialiased" id={FERN_DOCS_ID}>
         <ConsoleMessage />
-        <StyledJsxRegistry>
-          <JotaiProvider>
-            <TooltipProvider>
-              <Toaster />
-              {children}
-            </TooltipProvider>
-          </JotaiProvider>
-        </StyledJsxRegistry>
+        <ScrollToTop />
+        <Providers>{children}</Providers>
       </body>
     </html>
   );

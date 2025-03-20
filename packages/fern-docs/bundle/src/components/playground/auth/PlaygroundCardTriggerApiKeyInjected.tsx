@@ -9,12 +9,13 @@ import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
 import { APIKeyInjectionConfigEnabled } from "@fern-docs/auth";
 import { FernButton, FernCard } from "@fern-docs/components";
 
+import { Callout } from "@/mdx/components/callout";
 import {
   PLAYGROUND_AUTH_STATE_ATOM,
   PLAYGROUND_AUTH_STATE_BEARER_TOKEN_ATOM,
-} from "../../atoms";
+} from "@/state/playground";
+
 import { useApiRoute } from "../../hooks/useApiRoute";
-import { Callout } from "../../mdx/components/callout";
 import { PlaygroundAuthorizationForm } from "./PlaygroundAuthorizationForm";
 
 interface PlaygroundCardTriggerApiKeyInjectedProps {
@@ -72,7 +73,7 @@ export function PlaygroundCardTriggerApiKeyInjected({
   if (apiKey != null && apiKey.trim().length > 0) {
     return (
       <FernCard
-        className="rounded-3 mb-3 p-4 shadow-sm"
+        className="rounded-3 mb-3 p-4"
         title="Login to send a real request"
       >
         <FernButton
@@ -136,7 +137,7 @@ export function PlaygroundCardTriggerApiKeyInjected({
   }
 
   return (
-    <FernCard className="rounded-3 mb-2 p-4 shadow-sm">
+    <FernCard className="rounded-3 mb-2 p-4">
       {error && <Callout intent="error">{errorDescription ?? error}</Callout>}
 
       <h5 className="text-(color:--grayscale-a11) m-0">

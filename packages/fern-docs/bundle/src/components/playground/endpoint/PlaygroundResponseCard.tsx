@@ -36,7 +36,7 @@ export function PlaygroundResponseCard({
     isBinaryOctetStreamAudioPlayerAtom
   );
   return (
-    <FernCard className="rounded-3 flex min-w-0 flex-1 shrink flex-col overflow-hidden shadow-sm">
+    <FernCard className="rounded-3 flex min-w-0 flex-1 shrink flex-col overflow-hidden">
       <div className="border-border-default flex h-10 w-full shrink-0 items-center justify-between border-b px-3 py-2">
         <span className="text-(color:--grayscale-a11) text-xs uppercase">
           Response
@@ -114,7 +114,7 @@ export function PlaygroundResponseCard({
               />
             ),
           failed: () => (
-            <span className="bg-(color:--red-a3) text-(color:--red-a11) flex items-center rounded-[4px] p-1 font-mono text-xs uppercase leading-none">
+            <span className="bg-(color:--red-a3) text-(color:--red-a11) rounded-1 flex items-center p-1 font-mono text-xs uppercase leading-none">
               Failed
             </span>
           ),

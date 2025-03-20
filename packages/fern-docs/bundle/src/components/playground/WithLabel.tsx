@@ -13,7 +13,8 @@ import { cn } from "@fern-docs/components";
 import { FernButton, FernTooltip } from "@fern-docs/components";
 import { AvailabilityBadge } from "@fern-docs/components/badges";
 
-import { Markdown } from "../mdx/Markdown";
+import { Markdown } from "@/mdx/components/Markdown";
+
 import { renderTypeShorthandRoot } from "../type-shorthand";
 import { shouldRenderInline } from "./utils";
 
@@ -110,6 +111,7 @@ export const WithLabelInternal: FC<
 
           {description != null && (
             <FernTooltip
+              // todo: server-side render this
               content={<Markdown mdx={description} size="xs" />}
               delayDuration={0}
             >

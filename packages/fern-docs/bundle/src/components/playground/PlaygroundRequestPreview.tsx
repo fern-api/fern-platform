@@ -1,16 +1,18 @@
+"use client";
+
 import { FC, useMemo } from "react";
 
 import { useAtom, useAtomValue } from "jotai";
 
 import type { EndpointContext } from "@fern-api/fdr-sdk/api-definition";
-import { FernSyntaxHighlighter } from "@fern-docs/syntax-highlighter";
+import { FernSyntaxHighlighter } from "@fern-docs/components/syntax-highlighter";
 
 import { isFileForgeHackEnabledAtom } from "@/state/api-explorer-flags";
-
 import {
   PLAYGROUND_AUTH_STATE_ATOM,
   PLAYGROUND_AUTH_STATE_OAUTH_ATOM,
-} from "../atoms";
+} from "@/state/playground";
+
 import { PlaygroundCodeSnippetResolverBuilder } from "./code-snippets/resolver";
 import { useSnippet } from "./code-snippets/useSnippet";
 import { PlaygroundEndpointRequestFormState } from "./types";

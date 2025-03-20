@@ -1,8 +1,9 @@
 import React from "react";
 
-import { cn } from "@fern-docs/components";
+import { Prose } from "@/mdx/components/prose";
+import { SetLayout } from "@/state/layout";
 
-import { Prose } from "../mdx/prose";
+import { AsideAwareDiv } from "./AsideAwareDiv";
 
 interface OverviewLayoutProps {
   header?: React.ReactNode;
@@ -19,8 +20,9 @@ export function OverviewLayout({
 }: OverviewLayoutProps) {
   return (
     <>
+      <SetLayout value="overview" />
       {toc}
-      <div className="px-page-padding mx-auto mb-12 min-w-0 shrink space-y-8 lg:ml-0 xl:ml-auto">
+      <AsideAwareDiv className="fern-layout-overview">
         <article className="w-content-wide-width max-w-full">
           {header}
           <Prose className="prose-h1:mt-[1.5em] first:prose-h1:mt-0 max-w-full">
@@ -28,7 +30,7 @@ export function OverviewLayout({
           </Prose>
           {footer}
         </article>
-      </div>
+      </AsideAwareDiv>
     </>
   );
 }

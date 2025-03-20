@@ -1,59 +1,50 @@
-import { Url } from "next/dist/shared/lib/router/router";
+"use client";
+
 import {
   HTMLAttributeAnchorTarget,
-  HTMLElementType,
   PropsWithChildren,
-  ReactElement,
   ReactNode,
-  createElement,
   forwardRef,
-  memo,
   useRef,
 } from "react";
+import React from "react";
 
 import { composeEventHandlers } from "@radix-ui/primitive";
 import { composeRefs } from "@radix-ui/react-compose-refs";
-import { range } from "es-toolkit/math";
 import { ChevronDown, Lock } from "lucide-react";
 
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
-import { cn } from "@fern-docs/components";
-import { FaIcon, FernTooltip } from "@fern-docs/components";
-import { addLeadingSlash } from "@fern-docs/utils";
+import { FernTooltip, cn } from "@fern-docs/components";
+import { slugToHref } from "@fern-docs/utils";
 
-import { useCloseDismissableSidebar } from "@/state/mobile";
+import { FernLink } from "@/components/FernLink";
+import { useIsSelectedSidebarNode } from "@/state/navigation";
 import { useScrollSidebarNodeIntoView } from "@/state/sidebar-scroll";
-
-import { FernLink } from "../components/FernLink";
-import { scrollToRoute } from "../util/anchor";
 
 interface SidebarSlugLinkProps {
   nodeId: FernNavigation.NodeId;
-  icon?: ReactElement<any> | string;
+  icon?: React.ReactNode;
   slug?: FernNavigation.Slug;
-  onClick?: React.MouseEventHandler<HTMLAnchorElement | HTMLButtonElement>;
-  onClickIndicator?: React.MouseEventHandler<HTMLSpanElement>;
+  onClick?: React.MouseEventHandler<HTMLElement>;
+  onToggleExpand?: (e: React.MouseEvent<HTMLElement | SVGSVGElement>) => void;
   className?: string;
-  linkClassName?: string;
   title?: ReactNode;
   shallow?: boolean;
   scroll?: boolean;
   selected?: boolean;
   showIndicator?: boolean;
   depth?: number;
-  expandable?: boolean;
   expanded?: boolean;
   rightElement?: ReactNode;
   tooltipContent?: ReactNode;
   hidden?: boolean;
   authed?: boolean;
-  as?: HTMLElementType;
 }
 
 type SidebarLinkProps = PropsWithChildren<
   Omit<SidebarSlugLinkProps, "registerScrolledToPathListener" | "slug"> & {
     // Link props
-    href?: Url;
+    href?: string;
     rel?: string | undefined;
     target?: HTMLAttributeAnchorTarget | undefined;
 
@@ -61,173 +52,146 @@ type SidebarLinkProps = PropsWithChildren<
   }
 >;
 
-const SidebarLinkInternal = forwardRef<HTMLDivElement, SidebarLinkProps>(
-  (props, forwardRef) => {
-    const {
-      icon,
-      className,
-      linkClassName: linkClassNameProp,
-      title,
-      onClick,
-      onClickIndicator,
-      shallow,
-      scroll,
-      href,
-      selected,
-      showIndicator,
-      depth = 0,
-      expandable = false,
-      expanded = false,
-      rightElement,
-      tooltipContent,
-      target,
-      rel,
-      hidden,
-      authed,
-      as = "span",
-    } = props;
+const SidebarLinkInternal = React.forwardRef<
+  HTMLAnchorElement,
+  SidebarLinkProps
+>((props, forwardRef) => {
+  const {
+    icon,
+    className,
+    title,
+    onToggleExpand,
+    onClick,
+    shallow,
+    // scroll,
+    href,
+    selected,
+    showIndicator,
+    depth = 0,
+    expanded = false,
+    rightElement,
+    tooltipContent,
+    target,
+    rel,
+    hidden,
+    authed,
+  } = props;
 
-    const ref = useRef<HTMLDivElement>(null);
-    const closeDismissableSidebar = useCloseDismissableSidebar();
+  const expandButton = (!!onToggleExpand || expanded) && (
+    <ChevronDown
+      className={cn("expand-indicator", expanded ? "rotate-0" : "-rotate-90")}
+      data-state={showIndicator ? "active" : "inactive"}
+      onClickCapture={(e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        onToggleExpand?.(e);
+      }}
+    />
+  );
 
-    if (hidden && !expanded && !selected) {
-      return null;
+  const withTooltip = (children: ReactNode) => {
+    let content = tooltipContent;
+    if (authed) {
+      content = "You must be logged in to view this page";
     }
 
-    const renderLink = (child: ReactElement<any>) => {
-      const linkClassName = cn(linkClassNameProp, "fern-sidebar-link", {
-        "opacity-50": hidden,
-      });
-
-      return href != null ? (
-        <FernLink
-          href={href}
-          className={linkClassName}
-          onClick={composeEventHandlers(onClick, () => {
-            closeDismissableSidebar();
-          })}
-          shallow={shallow}
-          target={target}
-          rel={rel}
-          scroll={scroll}
-        >
-          {child}
-        </FernLink>
-      ) : (
-        <button
-          className={linkClassName}
-          onClick={composeEventHandlers(onClick, () => {
-            closeDismissableSidebar();
-          })}
-        >
-          {child}
-        </button>
-      );
-    };
-
-    const withTooltip = (content: ReactNode) => {
-      if (authed) {
-        return (
-          <FernTooltip
-            content="You must be logged in to view this page"
-            side="right"
-          >
-            {content}
-          </FernTooltip>
-        );
-      }
-
-      if (tooltipContent == null) {
-        return content;
-      }
-
-      return (
-        <FernTooltip content={tooltipContent} side="right">
-          {content}
-        </FernTooltip>
-      );
-    };
-
-    const expandButton = (expandable || expanded) && (
-      <span
-        className={cn("fern-sidebar-link-expand", {
-          "opacity-50 transition-opacity group-hover:opacity-80":
-            !showIndicator,
-        })}
-        data-state={showIndicator ? "active" : "inactive"}
-        onClick={onClickIndicator}
-      >
-        <ChevronDown
-          className={cn("size-icon-md lg:size-icon", {
-            "-rotate-90": !expanded,
-            "rotate-0": expanded,
-          })}
-        />
-      </span>
-    );
+    if (content == null) {
+      return children;
+    }
 
     return (
-      <div
-        ref={composeRefs(forwardRef, ref)}
-        className={cn("fern-sidebar-link-container", className)}
+      <FernTooltip content={content} side="right">
+        {children}
+      </FernTooltip>
+    );
+  };
+
+  const sharedClassName = cn(
+    "fern-sidebar-link",
+    { "opacity-50": hidden },
+    depth > 0 && "nested",
+    className
+  );
+
+  return withTooltip(
+    href ? (
+      <FernLink
+        ref={forwardRef}
+        href={href}
+        scroll={true}
+        shallow={shallow}
+        target={target}
+        rel={rel}
+        className={sharedClassName}
+        onClick={(e) => {
+          onClick?.(e);
+
+          if (e.isDefaultPrevented()) {
+            return;
+          }
+
+          // if the link is not selected AND is expanded, we do NOT want to close it.
+          if (selected || !expanded) {
+            onToggleExpand?.(e);
+          }
+        }}
         data-state={selected ? "active" : "inactive"}
       >
-        {withTooltip(
-          renderLink(
-            <>
-              {range(0, depth).map((i) => (
-                <div key={i} className="fern-sidebar-link-indent" />
-              ))}
-              <span className="fern-sidebar-link-content">
-                {icon != null && (
-                  <span className="fern-sidebar-icon">
-                    {typeof icon === "string" ? <FaIcon icon={icon} /> : icon}
-                  </span>
-                )}
-                {createElement(
-                  as,
-                  { className: "fern-sidebar-link-text" },
-                  title
-                )}
-                {authed ? (
-                  <Lock className="text-(color:--grayscale-a9) size-4 self-center" />
-                ) : (
-                  rightElement
-                )}
-              </span>
-              {expandButton}
-            </>
-          )
-        )}
-      </div>
-    );
-  }
-);
+        {icon}
+        <span className="mr-auto hyphens-auto break-words">{title}</span>
+        {authed ? <Lock /> : rightElement}
+        {expandButton}
+      </FernLink>
+    ) : (
+      <button
+        ref={forwardRef as React.ForwardedRef<HTMLButtonElement>}
+        className={sharedClassName}
+        onClick={(e) => {
+          onClick?.(e);
+
+          if (e.isDefaultPrevented()) {
+            return;
+          }
+
+          onToggleExpand?.(e);
+        }}
+        data-state={selected ? "active" : "inactive"}
+      >
+        {icon}
+        <span className="mr-auto">{title}</span>
+        {authed ? <Lock /> : rightElement}
+        {expandButton}
+      </button>
+    )
+  );
+});
 
 SidebarLinkInternal.displayName = "SidebarLink";
 
-export const SidebarLink = memo(SidebarLinkInternal);
+export const SidebarLink = React.memo(SidebarLinkInternal);
 
 export const SidebarSlugLink = forwardRef<
-  HTMLDivElement,
-  PropsWithChildren<SidebarSlugLinkProps>
+  HTMLAnchorElement,
+  PropsWithChildren<Omit<SidebarSlugLinkProps, "selected">>
 >((props, forwardRef) => {
   const { slug, ...innerProps } = props;
-  const ref = useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLAnchorElement>(null);
   useScrollSidebarNodeIntoView(ref, props.nodeId);
-  const href = slug ? addLeadingSlash(slug) : undefined;
+  const selected = useIsSelectedSidebarNode(props.nodeId);
+  const href = slug ? slugToHref(slug) : undefined;
   return (
     <SidebarLink
       {...innerProps}
       ref={composeRefs(forwardRef, ref)}
       href={href}
       onClick={composeEventHandlers(innerProps.onClick, () => {
-        if (href) {
-          scrollToRoute(href);
-        }
+        // if (href) {
+        //   scrollToRoute(href);
+        // }
       })}
-      shallow={innerProps.shallow || innerProps.selected}
+      shallow={innerProps.shallow || selected}
       scroll={!innerProps.shallow}
+      selected={selected}
     />
   );
 });

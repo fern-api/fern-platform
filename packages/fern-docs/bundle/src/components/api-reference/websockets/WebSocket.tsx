@@ -9,16 +9,15 @@ import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { FernScrollArea } from "@fern-docs/components";
 import { AvailabilityBadge } from "@fern-docs/components/badges";
 
-import { PageHeader } from "@/components/components/PageHeader";
+import { PageHeader } from "@/components/PageHeader";
 import { FooterLayout } from "@/components/layouts/FooterLayout";
 import { ReferenceLayout } from "@/components/layouts/ReferenceLayout";
-import { ScrollToTop } from "@/components/layouts/ScrollToTop";
+import { PlaygroundButton } from "@/components/playground/PlaygroundButton";
+import { PlaygroundKeyboardTrigger } from "@/components/playground/PlaygroundKeyboardTrigger";
+import { MdxServerComponentProseSuspense } from "@/mdx/components/server-component";
 import { MdxSerializer } from "@/server/mdx-serializer";
-import { SetLayout } from "@/state/layout";
 
-import { Markdown } from "../../mdx/Markdown";
-import { PlaygroundButton } from "../../playground/PlaygroundButton";
-import { ApiPageCenter } from "../api-page-center";
+import { PlaygroundButtonTray } from "../../playground/PlaygroundButtonTray";
 import { EndpointSection } from "../endpoints/EndpointSection";
 import { EndpointUrlWithPlaygroundBaseUrl } from "../endpoints/EndpointUrlWithPlaygroundBaseUrl";
 import { TitledExample } from "../examples/TitledExample";
@@ -40,11 +39,13 @@ export async function WebSocketContent({
   context,
   breadcrumb,
   bottomNavigation,
+  action,
 }: {
   serialize: MdxSerializer;
   context: WebSocketContext;
   breadcrumb: readonly FernNavigation.BreadcrumbItem[];
   bottomNavigation: React.ReactNode;
+  action?: React.ReactNode;
 }) {
   const { channel, node, types, globalHeaders } = context;
 
@@ -95,16 +96,21 @@ export async function WebSocketContent({
               <AvailabilityBadge availability={channel.availability} rounded />
             )
           }
+          action={action}
+          slug={node.slug}
         >
-          <EndpointUrlWithPlaygroundBaseUrl endpoint={channel} />
+          <EndpointUrlWithPlaygroundBaseUrl
+            endpoint={channel}
+            className="hidden lg:flex"
+          />
         </PageHeader>
       }
       aside={
-        <div className="grid grid-rows-[repeat(auto-fit,minmax(0,min-content))] gap-6">
+        <div className="not-prose grid grid-rows-[repeat(auto-fit,minmax(0,min-content))] gap-6">
           <TitledExample
             title="Handshake"
-            actions={
-              node != null ? <PlaygroundButton state={node} /> : undefined
+            tryIt={
+              node != null ? <PlaygroundButtonTray state={node} /> : undefined
             }
             disableClipboard={true}
           >
@@ -133,14 +139,21 @@ export async function WebSocketContent({
             <CardedSection
               number={1}
               title={
-                <span className="inline-flex items-center gap-2">
-                  {"Handshake"}
-                  <span className="bg-(color:--grayscale-a3) inline-block rounded-full p-1">
-                    <Wifi
-                      className="text-(color:--grayscale-a11) size-icon"
-                      strokeWidth={1.5}
-                    />
+                <span className="flex w-full items-center justify-between">
+                  <span className="inline-flex items-center gap-2">
+                    {"Handshake"}
+                    <span className="bg-(color:--grayscale-a3) inline-block rounded-full p-1">
+                      <Wifi
+                        className="text-(color:--grayscale-a11) size-icon"
+                        strokeWidth={1.5}
+                      />
+                    </span>
                   </span>
+                  {node != null && (
+                    <>
+                      <PlaygroundButton state={node} className="md:hidden" />
+                    </>
+                  )}
                 </span>
               }
               slug={node.slug}
@@ -252,9 +265,11 @@ export async function WebSocketContent({
       }
       footer={<FooterLayout bottomNavigation={bottomNavigation} />}
     >
-      <SetLayout value="reference" />
-      <ScrollToTop />
-      <Markdown className="mt-4 leading-6" mdx={channel.description} />
+      <PlaygroundKeyboardTrigger />
+      <MdxServerComponentProseSuspense
+        serialize={serialize}
+        mdx={channel.description}
+      />
     </ReferenceLayout>
   );
 }

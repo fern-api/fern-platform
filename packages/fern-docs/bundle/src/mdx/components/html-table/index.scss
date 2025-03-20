@@ -1,0 +1,52 @@
+@layer components {
+  .fern-table-root {
+    @apply border-(color:--grayscale-a5) rounded-3/2 bg-card-background border;
+    @apply overflow-hidden text-sm backdrop-blur-2xl;
+
+    /* hack to make the table scrollable */
+    display: flex;
+    flex-direction: column;
+  }
+
+  .fern-table {
+    @apply w-full;
+
+    thead tr th {
+      @apply bg-(color:--grayscale-a2);
+    }
+
+    td,
+    th {
+      @apply h-9 p-2 text-left;
+      @apply border-(color:--grayscale-a5) border-b;
+    }
+
+    tbody > tr:last-child > td {
+      @apply border-b-0;
+    }
+
+    tbody > tr:has(td[rowspan]):not(:has(~ tr > td[rowspan])) > td[rowspan] {
+      @apply border-b-0;
+    }
+  }
+
+  .fern-table-root.fullscreen .fern-table thead th {
+    @apply sticky top-0;
+
+    box-shadow: inset 0 -1px var(--grayscale-a5);
+    border-bottom: 0;
+
+    &::after {
+      @apply bg-(color:--grayscale-a2) pointer-events-none absolute inset-0 content-[''];
+    }
+  }
+
+  .fern-table-root.fullscreen {
+    @apply bg-background-translucent rounded-2 text-base shadow-2xl;
+
+    .fern-table th,
+    .fern-table td {
+      @apply bg-background h-10 p-3;
+    }
+  }
+}

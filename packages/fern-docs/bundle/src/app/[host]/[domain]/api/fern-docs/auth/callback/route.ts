@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from "next/server";
 
 import { withDefaultProtocol } from "@fern-api/ui-core-utils";
 import { getAuthEdgeConfig } from "@fern-docs/edge-config";
-import { HEADER_X_FERN_HOST } from "@fern-docs/utils";
 
 import { FernNextResponse } from "@/server/FernNextResponse";
 import { getAllowedRedirectUrls } from "@/server/auth/allowed-redirects";

@@ -1,7 +1,8 @@
+"use client";
+
 import {
   ComponentPropsWithoutRef,
   KeyboardEvent,
-  MutableRefObject,
   ReactElement,
   ReactNode,
   Ref,
@@ -26,7 +27,10 @@ import { useIsomorphicLayoutEffect } from "swr/_internal";
 import { noop } from "ts-essentials";
 import { z } from "zod";
 
-import { useDebouncedCallback } from "@fern-ui/react-commons";
+import {
+  isomorphicRequestAnimationFrame,
+  useDebouncedCallback,
+} from "@fern-ui/react-commons";
 
 import { commandScore } from "./command-score";
 
@@ -206,7 +210,7 @@ const GROUP_SELECTOR = "[data-cmdk-group]";
 const GROUP_ITEMS_SELECTOR = "[data-cmdk-group-items]";
 const GROUP_HEADING_SELECTOR = "[data-cmdk-group-heading]";
 const ITEM_SELECTOR = "[data-cmdk-item]";
-const VALID_ITEM_SELECTOR = `${ITEM_SELECTOR}:not([aria-disabled="true"])`;
+const VALID_ITEM_SELECTOR = `${GROUP_SELECTOR}:not([hidden]) ${ITEM_SELECTOR}:not([data-disabled="true"])`;
 const SELECT_EVENT = "cmdk-item-select";
 const VALUE_ATTR = "data-value";
 const defaultFilter: CommandProps["filter"] = (value, search, keywords) =>
@@ -1061,9 +1065,9 @@ const List = forwardRef<HTMLDivElement, ListProps>((props, forwardedRef) => {
     if (height.current && ref.current) {
       const el = height.current;
       const wrapper = ref.current;
-      let animationFrame: number;
+      let cancelAnimationFrame: () => void = noop;
       const observer = new ResizeObserver(() => {
-        animationFrame = requestAnimationFrame(() => {
+        cancelAnimationFrame = isomorphicRequestAnimationFrame(() => {
           const height = el.offsetHeight;
           wrapper.style.setProperty(
             "--cmdk-list-height",
@@ -1073,7 +1077,7 @@ const List = forwardRef<HTMLDivElement, ListProps>((props, forwardedRef) => {
       });
       observer.observe(el);
       return () => {
-        cancelAnimationFrame(animationFrame);
+        cancelAnimationFrame();
         observer.unobserve(el);
       };
     }
@@ -1248,27 +1252,25 @@ function useAsRef<T>(data: T) {
 }
 
 function useLazyRef<T>(fn: () => T) {
-  const ref = useRef<T>();
+  const ref = useRef<T>(null);
 
-  if (ref.current === undefined) {
+  if (ref.current == null) {
     ref.current = fn();
   }
 
-  return ref as unknown as MutableRefObject<T>;
+  return ref as unknown as RefObject<T>;
 }
 
 // ESM is still a nightmare with Next.js so I'm just gonna copy the package code in
 // https://github.com/gregberge/react-merge-refs
 // Copyright (c) 2020 Greg Bergé
-function mergeRefs<T = any>(
-  refs: (MutableRefObject<T> | Ref<T>)[]
-): RefCallback<T> {
+function mergeRefs<T = any>(refs: (RefObject<T> | Ref<T>)[]): RefCallback<T> {
   return (value) => {
     refs.forEach((ref) => {
       if (typeof ref === "function") {
         ref(value);
       } else if (ref != null) {
-        (ref as MutableRefObject<T | null>).current = value;
+        (ref as RefObject<T | null>).current = value;
       }
     });
   };
@@ -1287,7 +1289,7 @@ function useValue(
   deps: (string | ReactNode | RefObject<HTMLElement | null>)[],
   aliases: string[] = []
 ) {
-  const valueRef = useRef<string>();
+  const valueRef = useRef<string | null>(null);
   const context = useCommand();
 
   useIsomorphicLayoutEffect(() => {
@@ -1299,12 +1301,12 @@ function useValue(
 
         if (typeof part === "object" && part != null && "current" in part) {
           if (part.current) {
-            return part.current.textContent?.trim();
+            return part.current.textContent?.trim() ?? null;
           }
           return valueRef.current;
         }
       }
-      return;
+      return null;
     })();
 
     const keywords = aliases.map((alias) => alias.trim());
@@ -1353,7 +1355,7 @@ function SlottableWithNestedChildren(
   { asChild, children }: { asChild?: boolean; children?: ReactNode },
   render: (child: ReactNode) => ReactElement<any>
 ) {
-  if (asChild && isValidElement(children)) {
+  if (asChild && isValidElement<{ children: ReactNode }>(children)) {
     return cloneElement(
       renderChildren(children),
       { ref: (children as any).ref },

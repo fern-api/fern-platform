@@ -7,6 +7,7 @@ import { CONTINUE, SKIP } from "@fern-api/fdr-sdk/traversers";
 export interface ExpandedNodesState {
   expandedNodes: ReadonlySet<FernNavigation.NodeId>;
   implicitExpandedNodes: ReadonlySet<FernNavigation.NodeId>;
+  collapsedNodes: ReadonlySet<FernNavigation.NodeId>;
   childToParentsMap: ReadonlyMap<
     FernNavigation.NodeId,
     FernNavigation.NodeId[]
@@ -25,6 +26,7 @@ export function createInitialExpandedNodes(
 ): ExpandedNodesState {
   const expandedNodes = new Set<FernNavigation.NodeId>();
   const implicitExpandedNodes = new Set<FernNavigation.NodeId>();
+  const collapsedNodes = new Set<FernNavigation.NodeId>();
 
   if (currentNodeId != null) {
     expandedNodes.add(currentNodeId);
@@ -33,7 +35,12 @@ export function createInitialExpandedNodes(
     });
   }
 
-  return { expandedNodes, implicitExpandedNodes, childToParentsMap };
+  return {
+    expandedNodes,
+    implicitExpandedNodes,
+    collapsedNodes,
+    childToParentsMap,
+  };
 }
 
 export function getSidebarRootNodeIdToChildToParentsMap(

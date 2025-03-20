@@ -11,13 +11,10 @@ import React from "react";
 
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { Slug } from "@fern-api/fdr-sdk/navigation";
+import { withDefaultProtocol } from "@fern-api/ui-core-utils";
 import { getSeoDisabled } from "@fern-docs/edge-config";
 import { getFrontmatter, markdownToString } from "@fern-docs/mdx";
-import {
-  addLeadingSlash,
-  conformTrailingSlash,
-  getRedirectForPath,
-} from "@fern-docs/utils";
+import { getRedirectForPath, slugToHref } from "@fern-docs/utils";
 
 import { toImageDescriptor } from "@/app/seo";
 import FeedbackPopover from "@/components/feedback/FeedbackPopover";
@@ -28,6 +25,7 @@ import {
   MdxSerializer,
   createCachedMdxSerializer,
 } from "@/server/mdx-serializer";
+import { SetIsLandingPage } from "@/state/layout";
 import { SetCurrentNavigationNode } from "@/state/navigation";
 
 import { DocsMainContent } from "../app/[host]/[domain]/main";
@@ -43,24 +41,16 @@ export default async function SharedPage({
 
   // start loading the root node early
   const rootPromise = loader.getRoot();
-  const baseUrlPromise = loader.getBaseUrl();
+  const baseUrlPromise = loader.getMetadata();
   const configPromise = loader.getConfig();
-  const authStatePromise = loader.getAuthState(
-    conformTrailingSlash(addLeadingSlash(slug))
-  );
+  const authStatePromise = loader.getAuthState(slugToHref(slug));
   const edgeFlagsPromise = loader.getEdgeFlags();
-  const [baseUrl, config] = await Promise.all([
-    baseUrlPromise,
-    configPromise,
-    authStatePromise,
-    edgeFlagsPromise,
-  ]);
 
   // check for redirects
   const configuredRedirect = getRedirectForPath(
-    conformTrailingSlash(addLeadingSlash(slug)),
-    baseUrl,
-    config.redirects
+    slugToHref(slug),
+    await baseUrlPromise,
+    (await configPromise).redirects
   );
 
   if (configuredRedirect != null) {
@@ -167,9 +157,11 @@ export default async function SharedPage({
         nodeId={found.node.id}
         sidebarRootNodeId={found.sidebar?.id}
         tabId={found.currentTab?.id}
-        versionId={found.currentVersion?.id}
+        versionId={found.currentVersion?.versionId}
         versionSlug={found.currentVersion?.slug}
+        versionIsDefault={found.isCurrentVersionDefault}
       />
+      <SetIsLandingPage value={found.node.type === "landingPage"} />
       <DocsMainContent
         loader={loader}
         serialize={serialize}
@@ -203,10 +195,12 @@ export async function generateMetadata({
   const noindex =
     node == null ||
     (FernNavigation.hasMarkdown(node) && node.noindex) ||
+    node.hidden ||
     isSeoDisabled ||
     frontmatter?.noindex ||
     false;
-  const nofollow = isSeoDisabled || frontmatter?.nofollow || false;
+  const nofollow =
+    node?.hidden || isSeoDisabled || frontmatter?.nofollow || false;
 
   return {
     title:
@@ -225,9 +219,9 @@ export async function generateMetadata({
       canonical:
         frontmatter?.["canonical-url"] ??
         (node != null
-          ? conformTrailingSlash(
-              addLeadingSlash(node.canonicalSlug ?? node.slug)
-            )
+          ? `${withDefaultProtocol(loader.domain)}${slugToHref(
+              node.canonicalSlug ?? node.slug
+            )}`
           : undefined),
     },
     openGraph: {
@@ -268,7 +262,7 @@ function prepareRedirect(destination: string): string {
     const url = new URL(destination);
     destination = String(url);
   } else {
-    destination = encodeURI(addLeadingSlash(destination));
+    destination = encodeURI(slugToHref(destination));
   }
   return destination;
 }
@@ -291,23 +285,27 @@ async function getNeighbor(
   const pageId = FernNavigation.getPageId(node);
   if (pageId == null) {
     return {
-      href: addLeadingSlash(node.slug),
+      href: slugToHref(node.slug),
       title: node.title,
     };
   }
   try {
     const page = await loader.getPage(pageId);
-    const mdx = await serialize(page.markdown);
+    const mdx = await serialize(page.markdown, {
+      filename: page.filename,
+      slug: node.slug,
+      toc: true, // this is probably already cached with toc: true
+    });
     const excerpt = mdx?.frontmatter?.subtitle ?? mdx?.frontmatter?.excerpt;
     return {
-      href: addLeadingSlash(node.slug),
+      href: slugToHref(node.slug),
       title: mdx?.frontmatter?.title ?? node.title,
       excerpt,
     };
   } catch (error) {
     console.error(error);
     return {
-      href: addLeadingSlash(node.slug),
+      href: slugToHref(node.slug),
       title: node.title,
     };
   }

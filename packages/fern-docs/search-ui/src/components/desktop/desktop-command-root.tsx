@@ -10,9 +10,9 @@ import {
 import { composeEventHandlers } from "@radix-ui/primitive";
 import { composeRefs } from "@radix-ui/react-compose-refs";
 
+import { FERN_SEARCH_DESKTOP_COMMAND_ID } from "../../constants";
 import * as Command from "../cmdk";
 import { CommandUxProvider } from "../shared/command-ux";
-import "./desktop.scss";
 
 export const DesktopCommandRoot = forwardRef<
   HTMLDivElement,
@@ -56,7 +56,7 @@ export const DesktopCommandRoot = forwardRef<
           label="Search"
           ref={composeRefs(forwardedRef, ref)}
           {...props}
-          id="fern-search-desktop-command"
+          id={FERN_SEARCH_DESKTOP_COMMAND_ID}
           onKeyDown={composeEventHandlers(
             props.onKeyDown,
             (e) => {
@@ -89,6 +89,13 @@ export const DesktopCommandRoot = forwardRef<
           onKeyDownCapture={composeEventHandlers(
             props.onKeyDownCapture,
             (e) => {
+              if (
+                document.activeElement instanceof HTMLInputElement ||
+                document.activeElement instanceof HTMLTextAreaElement
+              ) {
+                return;
+              }
+
               // if input is alphanumeric, space, backspace, delete, arrow left, arrow right, then focus input
               // note: this func is onKeyDownCapture so it will fire before the input
               // which is important so that the first character typed isn't swallowed

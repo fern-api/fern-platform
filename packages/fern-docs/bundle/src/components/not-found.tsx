@@ -3,11 +3,11 @@ import "server-only";
 import { Undo2 } from "lucide-react";
 
 import { Badge } from "@fern-docs/components";
-import { addLeadingSlash, conformTrailingSlash } from "@fern-docs/utils";
 
-import { FernLinkButton } from "@/components/components/FernLinkButton";
+import { FernLinkButton } from "@/components/FernLinkButton";
 import { Logo } from "@/components/logo";
 import { createCachedDocsLoader } from "@/server/docs-loader";
+import { cleanBasePath } from "@/server/utils/clean-base-path";
 import { getDocsDomainApp, getDocsHostApp } from "@/server/xfernhost/app";
 
 export default async function NotFound() {
@@ -15,7 +15,7 @@ export default async function NotFound() {
   const domain = await getDocsDomainApp();
   const loader = await createCachedDocsLoader(host, domain);
   const [baseUrl, colors, config] = await Promise.all([
-    loader.getBaseUrl(),
+    loader.getMetadata(),
     loader.getColors(),
     loader.getConfig(),
   ]);
@@ -38,12 +38,11 @@ export default async function NotFound() {
             We can&apos;t find the page you are looking for.
           </p>
           <FernLinkButton
-            href={addLeadingSlash(
-              conformTrailingSlash(baseUrl.basePath || "/")
-            )}
+            href={cleanBasePath(baseUrl.basePath) || "/"}
             variant="filled"
             intent="primary"
             rightIcon={<Undo2 />}
+            scroll={true}
           >
             Return home
           </FernLinkButton>

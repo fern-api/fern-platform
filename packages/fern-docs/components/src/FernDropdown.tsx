@@ -98,6 +98,7 @@ export const FernDropdown = forwardRef<
     const renderDropdownContent = () => (
       <DropdownMenu.Content
         sideOffset={4}
+        collisionPadding={4}
         side={side}
         align={align}
         {...contentProps}
@@ -143,7 +144,7 @@ export const FernDropdown = forwardRef<
       <DropdownMenu.Root
         onOpenChange={handleOpenChange}
         open={isOpen}
-        modal={false}
+        // modal={false}
         defaultOpen={defaultOpen}
       >
         <DropdownMenu.Trigger asChild={true} ref={ref} className={className}>
@@ -192,34 +193,28 @@ function FernDropdownItemValue({
   function renderButtonContent() {
     return (
       <div className="w-full">
-        <div className="flex items-center">
-          <span className="fern-dropdown-item-indicator">
-            {value != null && (
-              <DropdownMenu.ItemIndicator asChild={true}>
-                <Check />
-              </DropdownMenu.ItemIndicator>
-            )}
-          </span>
-
-          {option.icon && (
-            <span className="mr-2 inline-flex items-center">{option.icon}</span>
-          )}
+        <div className="flex items-center gap-2">
+          {option.icon}
 
           <div className={option.labelClassName}>
             {option.label ?? option.value}
           </div>
-          <span className="ml-auto space-x-1 pl-2">
+          <span className="ml-auto space-x-1">
             {option.rightElement && <span>{option.rightElement}</span>}
             {(isEllipsisActive ||
               (option.tooltip != null && option.tooltip !== "")) && (
               <Info className="size-icon" />
             )}
           </span>
+
+          <DropdownMenu.ItemIndicator asChild>
+            <Check />
+          </DropdownMenu.ItemIndicator>
         </div>
 
         {option.helperText != null && (
           <div
-            className="ml-5 mt-0.5 text-start text-xs leading-snug opacity-60"
+            className="mt-0.5 text-start text-xs leading-snug opacity-60"
             ref={helperTextRef}
           >
             {option.helperText}
@@ -246,7 +241,11 @@ function FernDropdownItemValue({
       sideOffset={8}
       container={container}
     >
-      <DropdownMenu.RadioItem asChild={true} value={option.value}>
+      <DropdownMenu.RadioItem
+        asChild={true}
+        value={option.value}
+        className="[&_svg]:size-icon data-[state=unchecked]:text-(color:--grayscale-a11 data-[highlighted]:data-[state=unchecked]:text-(color:--accent-contrast))"
+      >
         {dropdownMenuElement != null ? (
           cloneElement(
             dropdownMenuElement,

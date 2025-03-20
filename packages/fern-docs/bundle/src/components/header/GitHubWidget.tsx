@@ -8,7 +8,7 @@ import useSWRImmutable from "swr/immutable";
 
 import { cn } from "@fern-docs/components";
 
-import { FernLinkButton } from "@/components/components/FernLinkButton";
+import { FernLinkButton } from "@/components/FernLinkButton";
 
 /* eslint-disable @typescript-eslint/no-deprecated */
 
@@ -73,6 +73,7 @@ export function GitHubWidget({
       variant="minimal"
       id={id}
       className={cn("h-10", className)}
+      scroll={true}
     >
       <div className="font-medium">{repo}</div>
       <div className="flex gap-2 text-xs">
@@ -82,10 +83,3 @@ export function GitHubWidget({
     </FernLinkButton>
   );
 }
-
-export const getGitHubRepo = (url: string): string | null => {
-  return (
-    url.match(/^https:\/\/(www\.)?github\.com\/([\w-]+\/[\w-]+)\/?$/)?.[2] ??
-    null
-  );
-};

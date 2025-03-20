@@ -1,3 +1,5 @@
+"use client";
+
 import dynamic from "next/dynamic";
 import { FC, memo, useCallback, useEffect, useMemo, useState } from "react";
 
@@ -14,13 +16,15 @@ import { cn } from "@fern-docs/components";
 import { FernButton, FernDropdown } from "@fern-docs/components";
 import { useBooleanState } from "@fern-ui/react-commons";
 
+import { withErrorBoundary } from "@/components/error-boundary";
+
 import { renderTypeShorthandRoot } from "../../type-shorthand";
 import { castToRecord, getEmptyValueForType, isExpandable } from "../utils";
 import { PlaygroundAdditionalProperties } from "./PlaygroundAdditionalProperties";
 import { PlaygroundTypeReferenceForm } from "./PlaygroundTypeReferenceForm";
 
 const Markdown = dynamic(() =>
-  import("../../mdx/Markdown").then(({ Markdown }) => Markdown)
+  import("@/mdx/components/Markdown").then(({ Markdown }) => Markdown)
 );
 
 const ADD_ALL_KEY = "__FERN_ADD_ALL__";
@@ -36,7 +40,7 @@ interface PlaygroundObjectPropertyFormProps {
   defaultValue?: unknown;
 }
 
-export const PlaygroundObjectPropertyForm: FC<
+const PlaygroundObjectPropertyFormInternal: FC<
   PlaygroundObjectPropertyFormProps
 > = ({
   id,
@@ -87,6 +91,10 @@ export const PlaygroundObjectPropertyForm: FC<
   );
 };
 
+export const PlaygroundObjectPropertyForm = withErrorBoundary(
+  PlaygroundObjectPropertyFormInternal
+);
+
 interface PlaygroundObjectPropertiesFormProps {
   id: string;
   properties: readonly ObjectProperty[];
@@ -99,7 +107,7 @@ interface PlaygroundObjectPropertiesFormProps {
   disabled?: boolean;
 }
 
-export const PlaygroundObjectPropertiesForm =
+export const PlaygroundObjectPropertiesFormInternal =
   memo<PlaygroundObjectPropertiesFormProps>((props) => {
     const {
       id,
@@ -173,6 +181,7 @@ export const PlaygroundObjectPropertiesForm =
           labelClassName: "font-mono",
           tooltip:
             property.description != null ? (
+              // todo: server-side render this
               <Markdown size="xs" mdx={property.description} />
             ) : undefined,
         })
@@ -290,7 +299,13 @@ export const PlaygroundObjectPropertiesForm =
     );
   });
 
-PlaygroundObjectPropertiesForm.displayName = "PlaygroundObjectPropertiesForm";
+PlaygroundObjectPropertiesFormInternal.displayName =
+  "PlaygroundObjectPropertiesFormInternal";
+
+export const PlaygroundObjectPropertiesForm = withErrorBoundary(
+  PlaygroundObjectPropertiesFormInternal,
+  <div>Error rendering object properties form</div>
+);
 
 function shouldShowProperty(
   shape: ObjectProperty["valueShape"],

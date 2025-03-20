@@ -1,6 +1,10 @@
 import "server-only";
 
+import { Metadata } from "next";
+
 import { getFernToken } from "@/app/fern-token";
+import { PlaygroundCloseButton } from "@/components/playground/PlaygroundCloseButton";
+import { PlaygroundKeyboardTrigger } from "@/components/playground/PlaygroundKeyboardTrigger";
 import { HorizontalSplitPane } from "@/components/playground/VerticalSplitPane";
 import { PlaygroundEndpointSelectorContent } from "@/components/playground/endpoint/PlaygroundEndpointSelectorContent";
 import { flattenApiSection } from "@/components/playground/utils/flatten-apis";
@@ -29,7 +33,9 @@ export default async function Layout({
   const apiGroups = flattenApiSection(root);
 
   return (
-    <main className="h-screen">
+    <main className="fixed inset-0">
+      <PlaygroundKeyboardTrigger />
+      <PlaygroundCloseButton />
       <ApiExplorerFlags
         isFileForgeHackEnabled={edgeFlags.isFileForgeHackEnabled}
         isProxyDisabled={edgeFlags.isProxyDisabled}
@@ -54,4 +60,22 @@ export default async function Layout({
       </HorizontalSplitPane>
     </main>
   );
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ host: string; domain: string }>;
+}): Promise<Metadata> {
+  const { host, domain } = await params;
+  const loader = await createCachedDocsLoader(host, domain);
+  const config = await loader.getConfig();
+  return {
+    title: {
+      default: "API Explorer",
+      template: config.title ? "%s | " + config.title : "%s",
+    },
+    description:
+      "Browse, explore, and try out API endpoints without leaving the documentation.",
+  };
 }

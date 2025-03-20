@@ -3,7 +3,8 @@
 import { forwardRef, useCallback, useMemo, useState } from "react";
 
 import { Check, ThumbsDown, ThumbsUp } from "lucide-react";
-import { motion } from "motion/react";
+import { LazyMotion, domAnimation } from "motion/react";
+import * as m from "motion/react-m";
 import * as Selection from "selection-popover";
 
 import { cn } from "@fern-docs/components";
@@ -13,9 +14,9 @@ import { track } from "../analytics";
 import { useSelection } from "../hooks/useSelection";
 import { FeedbackForm } from "./FeedbackForm";
 
-const MotionFernButton = motion.create(FernButton);
-const MotionFernButtonGroup = motion.create(FernButtonGroup);
-const MotionSelectionContent = motion.create(Selection.Content);
+const MotionFernButton = m.create(FernButton);
+const MotionFernButtonGroup = m.create(FernButtonGroup);
+const MotionSelectionContent = m.create(Selection.Content);
 
 type SelectionTextToolbarElement = React.ComponentRef<typeof Selection.Trigger>;
 type SelectionTextToolbarProps = {
@@ -178,78 +179,80 @@ const FeedbackPopover = forwardRef<
   );
 
   return (
-    <Selection.Root whileSelect onOpenChange={handleOpenChange}>
-      <Selection.Trigger ref={forwardedRef}>{children}</Selection.Trigger>
-      <Selection.Portal>
-        <MotionSelectionContent
-          layout
-          transition={{ type: "spring", duration: 0.4, bounce: 0 }}
-          sideOffset={8}
-          className={cn(
-            "border-border-default dark:bg-background/50 rounded-2 z-50 border bg-white/50 p-1 shadow-xl backdrop-blur-xl",
-            {
-              "min-w-80 space-y-2 p-2": isHelpful !== undefined,
-            }
-          )}
-        >
-          <MotionFernButtonGroup layout className="flex items-center gap-1">
-            {!isFeedbackSubmitted && voteButtons}
-            {/* TODO: make the createCopyHighlightLink hook more robust https://github.com/GoogleChromeLabs/text-fragments-polyfill/blob/main/src/text-fragments.js */}
-            {/* {isHelpful === undefined && (
+    <LazyMotion features={domAnimation} strict>
+      <Selection.Root whileSelect onOpenChange={handleOpenChange}>
+        <Selection.Trigger ref={forwardedRef}>{children}</Selection.Trigger>
+        <Selection.Portal>
+          <MotionSelectionContent
+            layout
+            transition={{ type: "spring", duration: 0.4, bounce: 0 }}
+            sideOffset={8}
+            className={cn(
+              "border-border-default dark:bg-background/50 rounded-2 z-50 border bg-white/50 p-1 shadow-xl backdrop-blur-xl",
+              {
+                "min-w-80 space-y-2 p-2": isHelpful !== undefined,
+              }
+            )}
+          >
+            <MotionFernButtonGroup layout className="flex items-center gap-1">
+              {!isFeedbackSubmitted && voteButtons}
+              {/* TODO: make the createCopyHighlightLink hook more robust https://github.com/GoogleChromeLabs/text-fragments-polyfill/blob/main/src/text-fragments.js */}
+              {/* {isHelpful === undefined && (
                                 <>
                                     <motion.div layoutId="divider" className="w-px h-8 mx-1 bg-border-default" />
                                     <CopyLinkButton />
                                 </>
                             )} */}
-          </MotionFernButtonGroup>
+            </MotionFernButtonGroup>
 
-          {isHelpful !== undefined &&
-            (isFeedbackSubmitted ? (
-              <motion.div
-                transition={{ type: "spring", duration: 0.3, bounce: 0 }}
-                initial={{ opacity: 0, scale: 0.5 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.5 }}
-                key={isFeedbackSubmitted === undefined ? "y" : "n"}
-                className="space-y-2 py-2"
-              >
-                <motion.div
-                  layoutId="icon-container"
-                  className="bg-(color:--accent-a3) text-(color:--accent-a11) rounded-3/2 mx-auto flex size-8 items-center justify-center"
+            {isHelpful !== undefined &&
+              (isFeedbackSubmitted ? (
+                <m.div
+                  transition={{ type: "spring", duration: 0.3, bounce: 0 }}
+                  initial={{ opacity: 0, scale: 0.5 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.5 }}
+                  key={isFeedbackSubmitted === undefined ? "y" : "n"}
+                  className="space-y-2 py-2"
                 >
-                  <Check />
-                </motion.div>
-                <motion.p
-                  layoutId="success-title"
-                  className="text-md text-center font-semibold"
+                  <m.div
+                    layoutId="icon-container"
+                    className="bg-(color:--accent-a3) text-(color:--accent-a11) rounded-3/2 mx-auto flex size-8 items-center justify-center"
+                  >
+                    <Check />
+                  </m.div>
+                  <m.p
+                    layoutId="success-title"
+                    className="text-md text-center font-semibold"
+                  >
+                    Feedback received!
+                  </m.p>
+                  <m.p
+                    layoutId="success-description"
+                    className="text-(color:--grayscale-a11) text-center text-sm"
+                  >
+                    Thank you for improving the docs.
+                  </m.p>
+                </m.div>
+              ) : (
+                <m.div
+                  transition={{ type: "spring", duration: 0.3, bounce: 0 }}
+                  initial={{ opacity: 0, y: 25 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -25 }}
+                  key={isHelpful === undefined ? "y" : "n"}
                 >
-                  Feedback received!
-                </motion.p>
-                <motion.p
-                  layoutId="success-description"
-                  className="text-(color:--grayscale-a11) text-center text-sm"
-                >
-                  Thank you for improving the docs.
-                </motion.p>
-              </motion.div>
-            ) : (
-              <motion.div
-                transition={{ type: "spring", duration: 0.3, bounce: 0 }}
-                initial={{ opacity: 0, y: 25 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -25 }}
-                key={isHelpful === undefined ? "y" : "n"}
-              >
-                <FeedbackForm
-                  layoutDensity="condensed"
-                  onSubmit={handleSubmitFeedback}
-                  isHelpful={isHelpful}
-                />
-              </motion.div>
-            ))}
-        </MotionSelectionContent>
-      </Selection.Portal>
-    </Selection.Root>
+                  <FeedbackForm
+                    layoutDensity="condensed"
+                    onSubmit={handleSubmitFeedback}
+                    isHelpful={isHelpful}
+                  />
+                </m.div>
+              ))}
+          </MotionSelectionContent>
+        </Selection.Portal>
+      </Selection.Root>
+    </LazyMotion>
   );
 });
 

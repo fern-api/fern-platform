@@ -1,6 +1,12 @@
 @layer components {
   .fern-collapsible-card {
-    @apply border-border-default rounded-2 max-md:rounded-3 overflow-clip border;
+    /* flex here will ensure that margins are included in the collapsible measurement */
+    @apply border-border-default rounded-2 max-md:rounded-3 flex flex-col overflow-hidden border;
+
+    & > .fern-collapsible > .fern-collapsible-child {
+      /* this will ensure that the collapsible child will not exceed the width of the parent */
+      width: 100% !important;
+    }
 
     .fern-collapse-trigger {
       @apply w-full rounded-none;

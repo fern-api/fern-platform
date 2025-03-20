@@ -1,7 +1,10 @@
 import * as React from "react";
 
+import { composeEventHandlers } from "@radix-ui/primitive";
+import { composeRefs } from "@radix-ui/react-compose-refs";
 import { ChevronRight } from "lucide-react";
 
+import { useFernCollapseOverflow } from "./FernCollapse";
 import * as AccordionPrimitive from "./accordion-primitive";
 import { cn } from "./cn";
 
@@ -23,8 +26,10 @@ Accordion.displayName = "Accordion";
 
 const AccordionItem = React.forwardRef<
   React.ComponentRef<typeof AccordionPrimitive.Item>,
-  React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Item>
->(({ className, children, ...props }, forwardedRef) => (
+  React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Item> & {
+    nestedHeaders?: string[];
+  }
+>(({ className, children, nestedHeaders, ...props }, forwardedRef) => (
   <AccordionPrimitive.Item
     ref={forwardedRef}
     className={cn("fern-accordion-item", className)}
@@ -55,15 +60,26 @@ AccordionTrigger.displayName = AccordionPrimitive.Trigger.displayName;
 const AccordionContent = React.forwardRef<
   React.ComponentRef<typeof AccordionPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Content>
->(({ className, children, asChild, ...props }, ref) => (
-  <AccordionPrimitive.Content
-    ref={ref}
-    className={cn("fern-collapsible", className)}
-    {...props}
-  >
-    {children}
-  </AccordionPrimitive.Content>
-));
+>(({ className, children, asChild, ...props }, ref) => {
+  const collapseProps = useFernCollapseOverflow();
+  return (
+    <AccordionPrimitive.Content
+      ref={composeRefs(ref, collapseProps.ref)}
+      className={cn("fern-collapsible flex flex-col", className)}
+      {...props}
+      onAnimationStart={composeEventHandlers(
+        props.onAnimationStart,
+        collapseProps.onAnimationStart
+      )}
+      onAnimationEnd={composeEventHandlers(
+        props.onAnimationEnd,
+        collapseProps.onAnimationEnd
+      )}
+    >
+      {children}
+    </AccordionPrimitive.Content>
+  );
+});
 AccordionContent.displayName = AccordionPrimitive.Content.displayName;
 
 export { Accordion, AccordionContent, AccordionItem, AccordionTrigger };

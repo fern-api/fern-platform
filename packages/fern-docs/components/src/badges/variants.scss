@@ -5,12 +5,7 @@
     color: var(--grayscale-a11);
 
     &.accent {
-      color: var(
-        color: --accent-a11,
-        var(
-          --grayscale-a11,
-        )
-      );
+      color: var(--accent-a11, var(--grayscale-a11));
     }
 
     &.gray {
@@ -148,21 +143,11 @@
     }
 
     &.accent {
-      background-color: var(
-        color: --accent-a3,
-        var(
-          --grayscale-a3,
-        )
-      );
+      background-color: var(--accent-a3, var(--grayscale-a3));
 
       &.interactive:not(:disabled):hover,
       &[data-state="open"]:not(:disabled) {
-        background-color: var(
-          color: --accent-a4,
-          var(
-            --grayscale-a4,
-          )
-        );
+        background-color: var(--accent-a4, var(--grayscale-a4));
       }
     }
 
@@ -455,21 +440,11 @@
     }
 
     &.accent {
-      background-color: var(
-        color: --accent-a1,
-        var(
-          --grayscale-a1,
-        )
-      );
+      background-color: var(--accent-a1, var(--grayscale-a1));
 
       &.interactive:not(:disabled):hover,
       &[data-state="open"]:not(:disabled) {
-        background-color: var(
-          color: --accent-a2,
-          var(
-            --grayscale-a2,
-          )
-        );
+        background-color: var(--accent-a2, var(--grayscale-a2));
       }
     }
 
@@ -758,12 +733,7 @@
     border: 1px solid var(--grayscale-a6);
 
     &.accent {
-      border-color: var(
-        color: --accent-a6,
-        var(
-          --grayscale-a6,
-        )
-      );
+      border-color: var(--accent-a6, var(--grayscale-a6));
     }
 
     &.gray {
@@ -895,7 +865,7 @@
     color: var(--grayscale-1);
     background-color: var(--grayscale-9);
 
-    &:is(.dark *) {
+    @variant dark {
       color: white;
     }
 
@@ -905,27 +875,12 @@
     }
 
     &.accent {
-      color: var(
-        color: --accent-1,
-        var(
-          --gray-1,
-        )
-      );
-      background-color: var(
-        color: --accent-9,
-        var(
-          --gray-9,
-        )
-      );
+      color: var(--accent-1, var(--gray-1));
+      background-color: var(--accent-9, var(--gray-9));
 
       &.interactive:not(:disabled):hover,
       &[data-state="open"]:not(:disabled) {
-        background-color: var(
-          color: --accent-10,
-          var(
-            --gray-10,
-          )
-        );
+        background-color: var(--accent-10, var(--gray-10));
       }
     }
 
@@ -1239,44 +1194,42 @@
       }
     }
 
-    &.accent,
-    &.gray,
-    &.mauve,
-    &.slate,
-    &.sage,
-    &.olive,
-    &.sand,
-    &.tomato,
-    &.red,
-    &.ruby,
-    &.crimson,
-    &.pink,
-    &.plum,
-    &.purple,
-    &.violet,
-    &.iris,
-    &.indigo,
-    &.blue,
-    &.cyan,
-    &.teal,
-    &.jade,
-    &.green,
-    &.grass,
-    &.bronze,
-    &.gold,
-    &.brown,
-    &.orange {
-      &:is(.dark *) {
+    @variant dark {
+      &.accent,
+      &.gray,
+      &.mauve,
+      &.slate,
+      &.sage,
+      &.olive,
+      &.sand,
+      &.tomato,
+      &.red,
+      &.ruby,
+      &.crimson,
+      &.pink,
+      &.plum,
+      &.purple,
+      &.violet,
+      &.iris,
+      &.indigo,
+      &.blue,
+      &.cyan,
+      &.teal,
+      &.jade,
+      &.green,
+      &.grass,
+      &.bronze,
+      &.gold,
+      &.brown,
+      &.orange {
         color: white;
       }
-    }
 
-    &.amber,
-    &.sky,
-    &.mint,
-    &.lime,
-    &.yellow {
-      &:is(.dark *) {
+      &.amber,
+      &.sky,
+      &.mint,
+      &.lime,
+      &.yellow {
         color: black;
       }
     }

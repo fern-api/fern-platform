@@ -1,59 +1,44 @@
-"use client";
+import "server-only";
 
-import { ReactNode, useCallback } from "react";
+import React, { ReactNode } from "react";
 
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 
-import {
-  useIsChildSelected,
-  useIsExpanded,
-  useIsSelectedSidebarNode,
-  useToggleSidebarNode,
-} from "@/state/navigation";
-
-import { WithFeatureFlags } from "../../feature-flags/WithFeatureFlags";
-import { CollapsibleSidebarGroup } from "../CollapsibleSidebarGroup";
-import { SidebarSlugLink } from "../SidebarLink";
-import { SidebarApiPackageChild } from "./SidebarApiPackageChild";
+import { SidebarCollapseGroup } from "./SidebarCollapseGroup";
 import { SidebarGroupApiReferenceNode } from "./SidebarGroupApiReferenceNode";
 import { SidebarPageNode } from "./SidebarPageNode";
 
 export interface SidebarApiPackageNodeProps {
   node: FernNavigation.ApiReferenceNode | FernNavigation.ApiPackageNode;
+  icon: React.ReactNode;
   depth: number;
   className?: string;
+  children: ReactNode;
 }
 
 export function SidebarApiPackageNode({
   node,
+  icon,
   depth,
   className,
+  children,
 }: SidebarApiPackageNodeProps): ReactNode {
-  const selected = useIsSelectedSidebarNode(node.id);
-  const handleToggleExpand = useToggleSidebarNode(node.id);
-  const childSelected = useIsChildSelected(node.id);
-  const expanded = useIsExpanded(node.id);
-  const shallow = false;
-
-  const renderNode = useCallback(
-    (node: FernNavigation.ApiPackageChild) => (
-      <SidebarApiPackageChild node={node} depth={depth + 1} shallow={shallow} />
-    ),
-    [depth, shallow]
-  );
-
-  if (node.children.length === 0 && FernNavigation.hasMarkdown(node)) {
+  if (
+    React.Children.count(children) === 0 &&
+    FernNavigation.hasMarkdown(node)
+  ) {
     return (
       <SidebarPageNode
         node={node}
         depth={depth}
         className={className}
-        shallow={shallow}
+        shallow={false}
+        icon={icon}
       />
     );
   }
 
-  if (node.children.length === 0 || (node.hidden && !childSelected)) {
+  if (React.Children.count(children) === 0) {
     return null;
   }
 
@@ -61,44 +46,14 @@ export function SidebarApiPackageNode({
     return <SidebarGroupApiReferenceNode node={node} depth={depth} />;
   }
 
-  const showIndicator = childSelected && !expanded;
-
   return (
-    <WithFeatureFlags featureFlags={node.featureFlags}>
-      <CollapsibleSidebarGroup<FernNavigation.ApiPackageChild>
-        open={expanded}
-        nodes={node.children}
-        renderNode={renderNode}
-      >
-        <SidebarSlugLink
-          nodeId={node.id}
-          icon={node.icon}
-          className={className}
-          depth={Math.max(depth - 1, 0)}
-          title={node.title}
-          expanded={expanded}
-          onClick={(e) => {
-            if (e.isDefaultPrevented()) {
-              return;
-            }
-            if (selected && expanded) {
-              e.preventDefault();
-            }
-            handleToggleExpand();
-          }}
-          onClickIndicator={(e) => {
-            handleToggleExpand();
-            e.preventDefault();
-          }}
-          expandable={node.children.length > 0}
-          showIndicator={showIndicator}
-          hidden={node.hidden}
-          authed={node.authed}
-          slug={node.overviewPageId != null ? node.slug : undefined}
-          selected={selected}
-          shallow={shallow}
-        />
-      </CollapsibleSidebarGroup>
-    </WithFeatureFlags>
+    <SidebarCollapseGroup
+      node={node}
+      icon={icon}
+      depth={depth}
+      className={className}
+    >
+      {children}
+    </SidebarCollapseGroup>
   );
 }

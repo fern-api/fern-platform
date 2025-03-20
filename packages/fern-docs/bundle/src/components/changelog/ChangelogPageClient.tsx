@@ -7,19 +7,21 @@ import { useAtomValue } from "jotai";
 
 import type { FernNavigation } from "@fern-api/fdr-sdk";
 import { EMPTY_ARRAY } from "@fern-api/ui-core-utils";
-import { Badge, cn } from "@fern-docs/components";
-import { addLeadingSlash } from "@fern-docs/utils";
+import { Badge } from "@fern-docs/components";
+import { slugToHref } from "@fern-docs/utils";
+import { useIsomorphicLayoutEffect } from "@fern-ui/react-commons";
 
+import { FernLink } from "@/components/FernLink";
+import { Separator } from "@/components/Separator";
 import { HideBuiltWithFern } from "@/components/built-with-fern";
 import { useCurrentAnchor } from "@/hooks/use-anchor";
 import { SetLayout } from "@/state/layout";
+import { SCROLL_BODY_ATOM } from "@/state/viewport";
 
-import { SCROLL_BODY_ATOM } from "../atoms";
 import { BottomNavigationClient } from "../bottom-nav-client";
-import { FernLink } from "../components/FernLink";
-import { Separator } from "../components/Separator";
+import { AsideAwareDiv } from "../layouts/AsideAwareDiv";
 import { FooterLayout } from "../layouts/FooterLayout";
-import { PageLayout } from "../layouts/PageLayout";
+import { TableOfContentsLayout } from "../layouts/TableOfContentsLayout";
 import { ChangelogContentLayout } from "./ChangelogContentLayout";
 
 function flattenChangelogEntries(
@@ -31,9 +33,6 @@ function flattenChangelogEntries(
 }
 
 const CHANGELOG_PAGE_SIZE = 10;
-
-const useIsomorphicLayoutEffect =
-  typeof window !== "undefined" ? React.useLayoutEffect : React.useEffect;
 
 export default function ChangelogPageClient({
   node,
@@ -141,39 +140,49 @@ export default function ChangelogPageClient({
   }, [chunkedEntries.length, page]);
 
   return (
-    <article className="max-w-page-width-padded px-page-padding mx-auto min-w-0 flex-1">
-      <SetLayout value="page" />
-      <HideBuiltWithFern>
-        <ChangelogContentLayout as="section" className="pb-8">
-          {overview}
-        </ChangelogContentLayout>
-
-        {visibleEntries.map((entry) => {
-          return (
-            <Fragment key={entry.id}>
-              <Separator className="max-w-content-width mx-auto my-12" />
-              <ChangelogContentLayout
-                as="article"
-                id={entry.date}
-                stickyContent={
-                  <Badge asChild>
-                    <FernLink href={addLeadingSlash(entry.slug)}>
-                      {entry.title}
-                    </FernLink>
-                  </Badge>
-                }
-              >
-                {entries[entry.pageId]}
-              </ChangelogContentLayout>
-            </Fragment>
-          );
-        })}
-      </HideBuiltWithFern>
-      <FooterLayout
-        className="max-w-content-width mx-auto"
-        hideFeedback
-        bottomNavigation={<BottomNavigationClient prev={prev} next={next} />}
+    <>
+      <TableOfContentsLayout
+        tableOfContents={undefined}
+        hideTableOfContents={true}
       />
-    </article>
+      {/* TODO(cd): treat as a guide for now, update for large-screen changelog */}
+      <AsideAwareDiv className="fern-layout-changelog">
+        <article className="max-w-full">
+          <SetLayout value="guide" />
+          <HideBuiltWithFern>
+            <ChangelogContentLayout as="section" className="mb-8">
+              {overview}
+            </ChangelogContentLayout>
+
+            {visibleEntries.map((entry) => {
+              return (
+                <Fragment key={entry.id}>
+                  <Separator className="max-w-content-width mx-auto my-12" />
+                  <ChangelogContentLayout
+                    as="article"
+                    id={entry.date}
+                    stickyContent={
+                      <Badge asChild>
+                        <FernLink href={slugToHref(entry.slug)} scroll={true}>
+                          {entry.title}
+                        </FernLink>
+                      </Badge>
+                    }
+                  >
+                    {entries[entry.pageId]}
+                  </ChangelogContentLayout>
+                </Fragment>
+              );
+            })}
+          </HideBuiltWithFern>
+          <FooterLayout
+            hideFeedback
+            bottomNavigation={
+              <BottomNavigationClient prev={prev} next={next} />
+            }
+          />
+        </article>
+      </AsideAwareDiv>
+    </>
   );
 }

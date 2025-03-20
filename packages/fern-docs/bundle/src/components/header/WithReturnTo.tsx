@@ -1,8 +1,9 @@
 "use client";
 
-import { usePathname } from "next/navigation";
 import React from "react";
 import { useState } from "react";
+
+import { useCurrentPathname } from "@/hooks/use-current-pathname";
 
 export function WithReturnTo({
   queryParam,
@@ -11,7 +12,7 @@ export function WithReturnTo({
   queryParam: string;
   children: React.ReactElement<{ href: string }>;
 }) {
-  const pathname = usePathname();
+  const pathname = useCurrentPathname();
   const [href, setHref] = useState(() => pathname);
 
   React.useEffect(() => {

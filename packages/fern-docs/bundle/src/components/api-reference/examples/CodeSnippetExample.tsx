@@ -4,15 +4,13 @@ import React, { FC, createRef, useCallback, useEffect, useMemo } from "react";
 
 import { isEqual } from "es-toolkit/predicate";
 
-import { cn } from "@fern-docs/components";
 import {
   FernSyntaxHighlighter,
   type ScrollToHandle,
-} from "@fern-docs/syntax-highlighter";
+} from "@fern-docs/components/syntax-highlighter";
 import { useResizeObserver } from "@fern-ui/react-commons";
 
 import { ErrorBoundary } from "@/components/error-boundary";
-import { useIsDarkCode } from "@/state/dark-code";
 
 import { JsonPropertyPath } from "./JsonPropertyPath";
 import { TitledExample } from "./TitledExample";
@@ -71,10 +69,13 @@ const CodeSnippetExampleInternal: FC<CodeSnippetExample.Props> = ({
         setHoveredPropertyPath(detail);
       }
     };
-    const hoverOffHandler = () => {
-      setHoveredPropertyPath((prev) =>
-        isEqual(prev, hoveredPropertyPath) ? undefined : prev
-      );
+    const hoverOffHandler = (event: Event) => {
+      if (event instanceof CustomEvent) {
+        const detail = event.detail as JsonPropertyPath;
+        setHoveredPropertyPath((prev) =>
+          isEqual(prev, detail) ? undefined : prev
+        );
+      }
     };
     window.addEventListener(propertyHoverOnEventName, hoverOnHandler);
     window.addEventListener(propertyHoverOffEventName, hoverOffHandler);
@@ -110,15 +111,10 @@ const CodeSnippetExampleInternal: FC<CodeSnippetExample.Props> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [code]);
 
-  const isDarkCode = useIsDarkCode();
-
   return (
     <TitledExample
       copyToClipboardText={useCallback(() => code, [code])}
       {...props}
-      className={cn(className, {
-        "bg-card-solid dark": isDarkCode,
-      })}
     >
       <FernSyntaxHighlighter
         id={id}

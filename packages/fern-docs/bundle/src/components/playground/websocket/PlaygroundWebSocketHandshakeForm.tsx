@@ -1,10 +1,12 @@
+"use client";
+
 import { Dispatch, FC, SetStateAction, useCallback } from "react";
 
 import type { WebSocketContext } from "@fern-api/fdr-sdk/api-definition";
 import { FernCard } from "@fern-docs/components";
 
-import { Callout } from "../../mdx/components/callout";
-import { PlaygroundAuthorizationFormCard } from "../auth";
+import { Callout } from "@/mdx/components/callout";
+
 import { PlaygroundObjectPropertiesForm } from "../form/PlaygroundObjectPropertyForm";
 import { PlaygroundWebSocketRequestFormState } from "../types";
 
@@ -14,11 +16,12 @@ interface PlaygroundWebSocketHandshakeFormProps {
   setFormState: Dispatch<SetStateAction<PlaygroundWebSocketRequestFormState>>;
   error: string | null;
   disabled: boolean;
+  authForm: React.ReactNode;
 }
 
 export const PlaygroundWebSocketHandshakeForm: FC<
   PlaygroundWebSocketHandshakeFormProps
-> = ({ context, formState, setFormState, error, disabled }) => {
+> = ({ context, formState, setFormState, error, disabled, authForm }) => {
   const setHeaders = useCallback(
     (value: ((old: unknown) => unknown) | unknown) => {
       setFormState((state) => ({
@@ -64,7 +67,7 @@ export const PlaygroundWebSocketHandshakeForm: FC<
     return null;
   }
 
-  const { auth, channel, types, globalHeaders } = context;
+  const { channel, types, globalHeaders } = context;
 
   const headers = [...globalHeaders, ...(channel.requestHeaders ?? [])];
 
@@ -76,9 +79,7 @@ export const PlaygroundWebSocketHandshakeForm: FC<
         </Callout>
       )}
 
-      {auth != null && (
-        <PlaygroundAuthorizationFormCard auth={auth} disabled={disabled} />
-      )}
+      {authForm}
 
       <div className="col-span-2 space-y-8">
         {headers.length > 0 && (
@@ -86,7 +87,7 @@ export const PlaygroundWebSocketHandshakeForm: FC<
             <div className="mb-4 px-4">
               <h5 className="text-(color:--grayscale-a11) m-0">Headers</h5>
             </div>
-            <FernCard className="rounded-3 p-4 shadow-sm">
+            <FernCard className="rounded-3 p-4">
               <PlaygroundObjectPropertiesForm
                 id="header"
                 properties={headers}
@@ -107,7 +108,7 @@ export const PlaygroundWebSocketHandshakeForm: FC<
                 Path Parameters
               </h5>
             </div>
-            <FernCard className="rounded-3 p-4 shadow-sm">
+            <FernCard className="rounded-3 p-4">
               <PlaygroundObjectPropertiesForm
                 id="path"
                 properties={channel.pathParameters}
@@ -128,7 +129,7 @@ export const PlaygroundWebSocketHandshakeForm: FC<
                 Query Parameters
               </h5>
             </div>
-            <FernCard className="rounded-3 p-4 shadow-sm">
+            <FernCard className="rounded-3 p-4">
               <PlaygroundObjectPropertiesForm
                 id="query"
                 properties={channel.queryParameters}

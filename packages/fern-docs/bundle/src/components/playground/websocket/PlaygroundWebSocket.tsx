@@ -1,13 +1,6 @@
 "use client";
 
-import {
-  FC,
-  ReactElement,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { FC, useCallback, useEffect, useRef, useState } from "react";
 
 import { Wifi, WifiOff } from "lucide-react";
 import urlJoin from "url-join";
@@ -20,11 +13,11 @@ import {
 import { FernTooltipProvider } from "@fern-docs/components";
 import { usePrevious } from "@fern-ui/react-commons";
 
+import { jotaiStore } from "@/state/jotai-provider";
 import {
   PLAYGROUND_AUTH_STATE_ATOM,
   usePlaygroundWebsocketFormState,
-} from "@/components/atoms";
-import { jotaiStore } from "@/state/jotai-provider";
+} from "@/state/playground";
 
 import { usePlaygroundSettings } from "../../hooks/usePlaygroundSettings";
 import { PlaygroundEndpointPath } from "../endpoint/PlaygroundEndpointPath";
@@ -38,11 +31,13 @@ const WEBSOCKET_PROXY_URI = "wss://proxy.ferndocs.com/";
 
 interface PlaygroundWebSocketProps {
   context: WebSocketContext;
+  authForm: React.ReactNode;
 }
 
 export const PlaygroundWebSocket: FC<PlaygroundWebSocketProps> = ({
   context,
-}): ReactElement<any> => {
+  authForm,
+}) => {
   const [formState, setFormState] = usePlaygroundWebsocketFormState(context);
   const websocketMessageLimit = usePlaygroundSettings(context.node.id)?.[
     "limit-websocket-messages-per-connection"
@@ -256,6 +251,7 @@ export const PlaygroundWebSocket: FC<PlaygroundWebSocketProps> = ({
             clearMessages={clearMessages}
             connected={connectedState === "opened"}
             error={error}
+            authForm={authForm}
           />
         </div>
       </div>

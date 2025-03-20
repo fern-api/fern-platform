@@ -5,12 +5,12 @@ import React from "react";
 import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 
+import { MdxAside } from "@/mdx/bundler/component";
+import { MdxContent } from "@/mdx/components/MdxContent";
 import { DocsLoader } from "@/server/docs-loader";
 import { MdxSerializer } from "@/server/mdx-serializer";
 
-import { MdxContent } from "../mdx/MdxContent";
-import { MdxAsideComponent } from "../mdx/bundler/component";
-import { asToc, getMDXExport } from "../mdx/get-mdx-export";
+import { asToc, getMDXExport } from "../../mdx/get-mdx-export";
 import { LayoutEvaluatorContent } from "./LayoutEvaluatorContent";
 
 export async function LayoutEvaluator({
@@ -20,6 +20,7 @@ export async function LayoutEvaluator({
   pageId,
   breadcrumb,
   bottomNavigation,
+  slug,
 }: {
   loader: DocsLoader;
   serialize: MdxSerializer;
@@ -27,11 +28,13 @@ export async function LayoutEvaluator({
   pageId: FernNavigation.PageId;
   breadcrumb: readonly FernNavigation.BreadcrumbItem[];
   bottomNavigation?: React.ReactNode;
+  slug: string;
 }) {
   const { filename, markdown, editThisPageUrl } = await loader.getPage(pageId);
   const mdx = await serialize(markdown, {
     filename,
     toc: true,
+    slug,
   });
 
   const exports = getMDXExport(mdx);
@@ -43,8 +46,6 @@ export async function LayoutEvaluator({
 
   frontmatter["edit-this-page-url"] ??= editThisPageUrl;
 
-  const hasAside = exports?.aside != null;
-
   return (
     <LayoutEvaluatorContent
       serialize={serialize}
@@ -53,8 +54,13 @@ export async function LayoutEvaluator({
       frontmatter={frontmatter}
       breadcrumb={breadcrumb}
       tableOfContents={toc}
-      aside={mdx && hasAside && <MdxAsideComponent {...mdx} />}
+      aside={
+        mdx && exports?.Aside ? (
+          <MdxAside code={mdx.code} jsxElements={mdx.jsxElements} />
+        ) : undefined
+      }
       bottomNavigation={bottomNavigation}
+      slug={slug}
     >
       <MdxContent mdx={mdx} fallback={markdown} />
     </LayoutEvaluatorContent>

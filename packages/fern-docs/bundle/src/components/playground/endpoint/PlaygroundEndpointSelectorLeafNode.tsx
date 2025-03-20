@@ -1,13 +1,15 @@
+"use client";
+
 import { ReactElement, forwardRef } from "react";
 
-import escapeStringRegexp from "escape-string-regexp";
+import { escapeRegExp } from "es-toolkit/string";
 
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { cn } from "@fern-docs/components";
 import { FernTooltip } from "@fern-docs/components";
 import { HttpMethodBadge } from "@fern-docs/components/badges";
 
-import { FernLinkButton } from "@/components/components/FernLinkButton";
+import { FernLinkButton } from "@/components/FernLinkButton";
 
 import { conformExplorerRoute } from "../utils/explorer-route";
 
@@ -16,12 +18,13 @@ interface PlaygroundEndpointSelectorLeafNodeProps {
   filterValue: string;
   active: boolean;
   shallow?: boolean;
+  replace?: boolean;
 }
 
 export const PlaygroundEndpointSelectorLeafNode = forwardRef<
   HTMLLIElement,
   PlaygroundEndpointSelectorLeafNodeProps
->(({ node, filterValue, active, shallow }, ref) => {
+>(({ node, filterValue, active, shallow, replace }, ref) => {
   const text = renderTextWithHighlight(node.title, filterValue);
 
   // const description = useAtomValue(
@@ -53,6 +56,7 @@ export const PlaygroundEndpointSelectorLeafNode = forwardRef<
           <FernLinkButton
             href={conformExplorerRoute(node.slug)}
             shallow={shallow}
+            replace={replace}
             text={text}
             className="w-full text-left"
             variant="minimal"
@@ -81,6 +85,7 @@ export const PlaygroundEndpointSelectorLeafNode = forwardRef<
           <FernLinkButton
             href={conformExplorerRoute(node.slug)}
             shallow={shallow}
+            replace={replace}
             text={text}
             className="w-full text-left"
             variant="minimal"
@@ -117,9 +122,7 @@ function renderTextWithHighlight(
     return [<span key={0}>{text}</span>];
   }
   // Split text on higlight term, include term itself into parts, ignore case
-  const parts = text.split(
-    new RegExp(`(${escapeStringRegexp(highlight)})`, "gi")
-  );
+  const parts = text.split(new RegExp(`(${escapeRegExp(highlight)})`, "gi"));
   return parts.map((part, idx) =>
     part.toLowerCase() === highlight.toLowerCase() ? (
       <mark className="text-body bg-(color:--accent-a3)" key={idx}>

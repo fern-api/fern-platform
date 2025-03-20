@@ -5,7 +5,7 @@ import React from "react";
 import { FaIcon } from "@fern-docs/components/fa-icon";
 import { getIconUrl, parseSvg } from "@fern-docs/components/util/fa";
 
-export async function FaIconServer({
+async function FaIconServerInternal({
   icon,
   ...props
 }: {
@@ -47,4 +47,16 @@ export async function FaIconServer({
     console.error(error);
     return clientIcon;
   }
+}
+
+export function FaIconServer(
+  props: {
+    icon: string;
+  } & React.SVGProps<SVGSVGElement>
+) {
+  return (
+    <React.Suspense fallback={<FaIcon {...props} />}>
+      <FaIconServerInternal {...props} />
+    </React.Suspense>
+  );
 }

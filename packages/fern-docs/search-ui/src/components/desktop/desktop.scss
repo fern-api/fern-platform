@@ -1,11 +1,20 @@
 @import "../shared/common.scss";
 
 @layer components {
+  #fern-search-dialog {
+    @apply fixed inset-0 bottom-auto z-50 h-fit w-svw origin-center outline-none sm:left-1/2 sm:top-[15%] sm:w-[640px] sm:-translate-x-1/2;
+  }
+
+  #fern-search-dialog-overlay {
+    @apply bg-background-a3 fixed inset-0 z-40 backdrop-blur-md;
+  }
+
   #fern-search-desktop-command[data-cmdk-root] {
+    display: flex;
+    flex-direction: column;
+    max-height: 100dvh;
     overflow: hidden;
-    border: 1px solid var(--color-border-default);
     background-color: var(--grayscale-surface);
-    border-radius: 0.75rem;
     transition: transform 100ms ease;
     position: relative;
 
@@ -18,12 +27,8 @@
       position: absolute;
       inset: 0;
       z-index: -50;
-      background: var(--white-a9);
+      background: var(--color-background-a9);
       backdrop-filter: blur(40px);
-
-      :is(.dark) & {
-        background: var(--black-a9);
-      }
     }
 
     [data-cmdk-fern-header] {
@@ -82,8 +87,9 @@
     }
 
     [data-cmdk-list] {
-      height: min(400px, var(--cmdk-list-height));
-      max-height: 400px;
+      max-height: -webkit-fill-available;
+      height: var(--cmdk-list-height);
+      flex: 1;
       overflow: auto;
       overscroll-behavior: contain;
 
@@ -98,10 +104,6 @@
       &:focus {
         outline: none;
       }
-    }
-
-    &[data-mode="ask-ai"] [data-cmdk-list] {
-      height: 400px;
     }
 
     [data-cmdk-list-sizer] {
@@ -156,6 +158,23 @@
             opacity: 0.8;
           }
         }
+      }
+    }
+  }
+
+  @media (min-width: 40rem) {
+    #fern-search-desktop-command[data-cmdk-root] {
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-3);
+
+      &[data-mode="ask-ai"] [data-cmdk-list] {
+        height: 400px;
+      }
+
+      [data-cmdk-list] {
+        min-height: 0;
+        height: min(400px, var(--cmdk-list-height));
+        max-height: 400px;
       }
     }
   }

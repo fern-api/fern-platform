@@ -7,7 +7,7 @@ import { useHydrateAtoms } from "jotai/utils";
 import { StoreApi, UseBoundStore, create } from "zustand";
 
 import { FernNavigation } from "@fern-api/fdr-sdk";
-import { useLazyRef } from "@fern-ui/react-commons";
+import { useIsomorphicLayoutEffect, useLazyRef } from "@fern-ui/react-commons";
 
 import {
   ExpandedNodesState,
@@ -63,7 +63,9 @@ export function useBasePath() {
 }
 
 export function SetBasePath({ value }: { value: string }) {
-  useHydrateAtoms([[basepathAtom, value]]);
+  useHydrateAtoms([[basepathAtom, value]], {
+    dangerouslyForceHydrate: true,
+  });
   return null;
 }
 
@@ -76,8 +78,13 @@ const currentSidebarRootNodeIdAtom = atom<FernNavigation.NodeId | undefined>(
 );
 const currentNodeIdAtom = atom<FernNavigation.NodeId | undefined>(undefined);
 const currentTabIdAtom = atom<FernNavigation.NodeId | undefined>(undefined);
-const currentVersionIdAtom = atom<FernNavigation.NodeId | undefined>(undefined);
+const currentVersionIdAtom = atom<FernNavigation.VersionId | undefined>(
+  undefined
+);
 const currentVersionSlugAtom = atom<FernNavigation.Slug | undefined>(undefined);
+
+// if true, the current version is the default version
+const currentVersionIsDefaultAtom = atom<boolean>(false);
 
 export function useCurrentSidebarRootNodeId() {
   return useAtomValue(currentSidebarRootNodeIdAtom);
@@ -99,8 +106,9 @@ export function useCurrentVersionSlug() {
   return useAtomValue(currentVersionSlugAtom);
 }
 
-const useIsomorphicLayoutEffect =
-  typeof window !== "undefined" ? React.useLayoutEffect : React.useEffect;
+export function useCurrentVersionIsDefault() {
+  return useAtomValue(currentVersionIsDefaultAtom);
+}
 
 export function SetCurrentNavigationNode({
   sidebarRootNodeId,
@@ -108,12 +116,14 @@ export function SetCurrentNavigationNode({
   tabId,
   versionId,
   versionSlug,
+  versionIsDefault,
 }: {
   sidebarRootNodeId?: FernNavigation.NodeId;
   nodeId?: FernNavigation.NodeId;
   tabId?: FernNavigation.NodeId;
-  versionId?: FernNavigation.NodeId;
+  versionId?: FernNavigation.VersionId;
   versionSlug?: FernNavigation.Slug;
+  versionIsDefault?: boolean;
 }) {
   const useStore = React.useContext(RootNodeStoreContext);
   const dispatch = useStore((s) => s.dispatch);
@@ -122,20 +132,28 @@ export function SetCurrentNavigationNode({
   const setCurrentTabId = useSetAtom(currentTabIdAtom);
   const setCurrentVersionId = useSetAtom(currentVersionIdAtom);
   const setCurrentVersionSlug = useSetAtom(currentVersionSlugAtom);
-
+  const setCurrentVersionIsDefault = useSetAtom(currentVersionIsDefaultAtom);
   useIsomorphicLayoutEffect(() => {
     setCurrentSidebarRootNodeId(sidebarRootNodeId);
     setCurrentNodeId(nodeId);
     setCurrentTabId(tabId);
     setCurrentVersionId(versionId);
     setCurrentVersionSlug(versionSlug);
-  }, [nodeId, tabId, sidebarRootNodeId, versionId, versionSlug]);
+    setCurrentVersionIsDefault(versionIsDefault ?? false);
+  }, [
+    nodeId,
+    tabId,
+    sidebarRootNodeId,
+    versionId,
+    versionSlug,
+    versionIsDefault,
+  ]);
 
   useIsomorphicLayoutEffect(() => {
     if (nodeId && sidebarRootNodeId) {
-      dispatch({ type: "expand", nodeId }, sidebarRootNodeId);
+      dispatch({ type: "expand-soft", nodeId }, sidebarRootNodeId);
     }
-  }, [nodeId && sidebarRootNodeId]);
+  }, [nodeId, sidebarRootNodeId]);
 
   return null;
 }
@@ -220,33 +238,15 @@ export function RootNodeProvider({
   );
   return (
     <RootNodeStoreContext.Provider value={store.current}>
-      <PathnameDispatcher />
       {children}
     </RootNodeStoreContext.Provider>
   );
 }
 
-export function PathnameDispatcher() {
-  const currentNodeId = useCurrentNodeId();
-  const currentSidebarRootNodeId = useCurrentSidebarRootNodeId();
-  const useStore = React.useContext(RootNodeStoreContext);
-  const dispatch = useStore((s) => s.dispatch);
-  useIsomorphicLayoutEffect(() => {
-    if (currentNodeId == null || currentSidebarRootNodeId == null) {
-      return;
-    }
-    dispatch(
-      { type: "expand", nodeId: currentNodeId },
-      currentSidebarRootNodeId
-    );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentNodeId, currentSidebarRootNodeId]);
-  return null;
-}
-
 const EMPTY_EXPANDED_NODES_STATE: ExpandedNodesState = {
   expandedNodes: new Set(),
   implicitExpandedNodes: new Set(),
+  collapsedNodes: new Set(),
   childToParentsMap: new Map(),
 };
 
@@ -278,6 +278,7 @@ function reduceExpandedNodes(
         invertParentChildMap(prev.childToParentsMap).keys()
       ),
       implicitExpandedNodes: new Set(),
+      collapsedNodes: new Set(),
       childToParentsMap: prev.childToParentsMap,
     };
   }
@@ -292,6 +293,7 @@ function reduceExpandedNodes(
     return {
       expandedNodes: prev.expandedNodes,
       implicitExpandedNodes,
+      collapsedNodes: new Set(),
       childToParentsMap: prev.childToParentsMap,
     };
   }
@@ -307,37 +309,56 @@ function reduceExpandedNodes(
         : "expand"
       : action.type;
 
-  if (
-    (actionType === "expand" || actionType === "expand-soft") &&
-    !isExpanded
-  ) {
+  if (actionType === "expand" || actionType === "expand-soft") {
     const expandedNodes = new Set(prev.expandedNodes);
-    const implicitExpandedNodes = new Set(prev.implicitExpandedNodes);
-    // add this node and all children to the expanded set
-    expandedNodes.add(action.nodeId);
+    const implicitExpandedNodes = new Set<FernNavigation.NodeId>();
+    const collapsedNodes = new Set(prev.collapsedNodes);
+
+    collapsedNodes.delete(action.nodeId);
+
+    if (actionType === "expand-soft") {
+      implicitExpandedNodes.add(action.nodeId);
+    } else {
+      expandedNodes.add(action.nodeId);
+    }
+
     prev.childToParentsMap.get(action.nodeId)?.forEach((parent) => {
-      if (actionType === "expand-soft") {
+      implicitExpandedNodes.add(parent);
+    });
+
+    prev.expandedNodes.forEach((nodeId) => {
+      const parents = prev.childToParentsMap.get(nodeId);
+      if (parents == null) {
+        return;
+      }
+      for (const parent of parents) {
+        if (collapsedNodes.has(parent)) {
+          break;
+        }
         implicitExpandedNodes.add(parent);
-      } else {
-        expandedNodes.add(parent);
       }
     });
+
     return {
       expandedNodes,
       implicitExpandedNodes,
+      collapsedNodes,
       childToParentsMap: prev.childToParentsMap,
     };
   }
 
-  if (actionType === "collapse" && isExpanded) {
+  if (actionType === "collapse") {
     const expandedNodes = new Set(prev.expandedNodes);
     const implicitExpandedNodes = new Set(prev.implicitExpandedNodes);
+    const collapsedNodes = new Set(prev.collapsedNodes);
     // remove this node and all children from the expanded set
     expandedNodes.delete(action.nodeId);
     implicitExpandedNodes.delete(action.nodeId);
+    collapsedNodes.add(action.nodeId);
     return {
       expandedNodes,
       implicitExpandedNodes,
+      collapsedNodes,
       childToParentsMap: prev.childToParentsMap,
     };
   }

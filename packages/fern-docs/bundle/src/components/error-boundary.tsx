@@ -78,3 +78,16 @@ export function ErrorBoundary({
     </ReactErrorBoundary>
   );
 }
+
+export function withErrorBoundary<T extends React.ComponentType<any>>(
+  Component: T,
+  fallback?: React.ReactNode
+) {
+  return function WithErrorBoundary(props: React.ComponentProps<T>) {
+    return (
+      <ErrorBoundary fallback={fallback}>
+        <Component {...props} />
+      </ErrorBoundary>
+    );
+  };
+}

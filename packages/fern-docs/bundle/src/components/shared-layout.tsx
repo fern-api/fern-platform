@@ -6,14 +6,15 @@ import { Announcement } from "@/components/header/Announcement";
 import { HeaderContent } from "@/components/header/HeaderContent";
 import { NavbarLinks } from "@/components/header/NavbarLinks";
 import { Logo } from "@/components/logo";
-import { MdxServerComponent } from "@/components/mdx/server-component";
 import { SidebarContainer } from "@/components/sidebar/SidebarContainer";
 import { ThemedDocs } from "@/components/themes/ThemedDocs";
+import { MdxServerComponent } from "@/mdx/components/server-component";
 import { DocsLoader } from "@/server/docs-loader";
 import { createFileResolver } from "@/server/file-resolver";
 import { createCachedMdxSerializer } from "@/server/mdx-serializer";
 import { withLogo } from "@/server/withLogo";
 
+import { VersionDropdown } from "./header/VersionDropdown";
 import { LoginButton } from "./login-button";
 
 export default async function SharedLayout({
@@ -30,7 +31,7 @@ export default async function SharedLayout({
   const serialize = createCachedMdxSerializer(loader);
   const [{ basePath }, config, edgeFlags, files, colors, layout] =
     await Promise.all([
-      loader.getBaseUrl(),
+      loader.getMetadata(),
       loader.getConfig(),
       loader.getEdgeFlags(),
       loader.getFiles(),
@@ -47,8 +48,19 @@ export default async function SharedLayout({
       isSidebarFixed={
         !!colors.dark?.sidebarBackground ||
         !!colors.light?.sidebarBackground ||
-        !layout.pageWidth ||
         layout.isHeaderDisabled
+      }
+      lightSidebarClassName={
+        colors.light?.sidebarBackgroundTheme === "dark" ? "dark" : undefined
+      }
+      darkSidebarClassName={
+        colors.dark?.sidebarBackgroundTheme === "light" ? "light" : undefined
+      }
+      lightHeaderClassName={
+        colors.light?.headerBackgroundTheme === "dark" ? "dark" : undefined
+      }
+      darkHeaderClassName={
+        colors.dark?.headerBackgroundTheme === "light" ? "light" : undefined
       }
       isHeaderDisabled={layout.isHeaderDisabled}
       announcement={
@@ -72,18 +84,22 @@ export default async function SharedLayout({
               className="w-fit shrink-0"
             />
           }
-          versionSelect={false}
+          versionSelect={
+            <React.Suspense fallback={null}>
+              <VersionDropdown loader={loader} />
+            </React.Suspense>
+          }
           showSearchBar={layout.searchbarPlacement === "HEADER"}
-          showThemeButton={Boolean(colors.dark && colors.light)}
           navbarLinks={<NavbarLinks loader={loader} />}
           loginButton={
             <React.Suspense fallback={null}>
-              <LoginButton loader={loader} size="sm" className="mx-2" />
+              <LoginButton loader={loader} size="sm" className="ml-2" />
             </React.Suspense>
           }
         />
       }
       tabs={headertabs}
+      showSearchBarInTabs={layout.searchbarPlacement === "HEADER_TABS"}
       sidebar={
         <SidebarContainer
           logo={
@@ -94,7 +110,11 @@ export default async function SharedLayout({
           }
           showSearchBar={layout.searchbarPlacement === "SIDEBAR"}
           showHeaderInSidebar={layout.isHeaderDisabled}
-          versionSelect={false}
+          versionSelect={
+            <React.Suspense fallback={null}>
+              <VersionDropdown loader={loader} />
+            </React.Suspense>
+          }
           navbarLinks={
             <React.Suspense fallback={null}>
               <NavbarLinks loader={loader} />

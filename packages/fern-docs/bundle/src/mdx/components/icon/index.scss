@@ -1,0 +1,13 @@
+@layer components {
+  .fern-mdx-icon {
+    color: var(--grayscale-a11);
+    display: inline-block;
+    vertical-align: baseline;
+  }
+
+  @variant dark {
+    .fern-mdx-icon {
+      color: var(--fa-icon-dark, var(--grayscale-a11));
+    }
+  }
+}

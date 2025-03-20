@@ -8,10 +8,14 @@ import {
 import * as Dialog from "@radix-ui/react-dialog";
 import { TooltipPortal } from "@radix-ui/react-tooltip";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
+import { X } from "lucide-react";
 
-import { cn } from "@fern-docs/components";
 import { Button } from "@fern-docs/components/button";
 
+import {
+  FERN_SEARCH_DIALOG_ID,
+  FERN_SEARCH_DIALOG_OVERLAY_ID,
+} from "../../constants";
 import {
   Tooltip,
   TooltipContent,
@@ -20,6 +24,46 @@ import {
 } from "../ui/tooltip";
 import { DesktopCommandAfterInput } from "./desktop-command";
 
+function DialogCloseEsc({ className }: { className?: string }) {
+  return (
+    <TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <Dialog.DialogClose asChild>
+            <Button
+              size="xs"
+              variant="outline"
+              className={className}
+              aria-label="Close search"
+            >
+              <kbd>Esc</kbd>
+            </Button>
+          </Dialog.DialogClose>
+        </TooltipTrigger>
+        <TooltipPortal>
+          <TooltipContent>
+            <p>Close search</p>
+          </TooltipContent>
+        </TooltipPortal>
+      </Tooltip>
+    </TooltipProvider>
+  );
+}
+
+function DialogCloseX({ className }: { className?: string }) {
+  return (
+    <Dialog.DialogClose asChild>
+      <Button
+        size="icon"
+        variant="outline"
+        className={className}
+        aria-label="Close search"
+      >
+        <X />
+      </Button>
+    </Dialog.DialogClose>
+  );
+}
 export const DesktopSearchDialog = memo(
   ({
     children,
@@ -40,27 +84,15 @@ export const DesktopSearchDialog = memo(
 
         <DesktopCommandAfterInput>
           {afterInput || (
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Dialog.DialogClose asChild>
-                    <Button size="xs" variant="outline">
-                      <kbd>Esc</kbd>
-                    </Button>
-                  </Dialog.DialogClose>
-                </TooltipTrigger>
-                <TooltipPortal>
-                  <TooltipContent>
-                    <p>Close search</p>
-                  </TooltipContent>
-                </TooltipPortal>
-              </Tooltip>
-            </TooltipProvider>
+            <>
+              <DialogCloseEsc className="pointer-coarse:hidden shrink-0" />
+              <DialogCloseX className="pointer-coarse:flex hidden shrink-0" />
+            </>
           )}
         </DesktopCommandAfterInput>
 
         <Dialog.Portal>
-          <Dialog.Overlay className="bg-(color:--white-a3) dark:bg-(color:--black-a3) fixed inset-0 z-40 backdrop-blur-md" />
+          <Dialog.Overlay id={FERN_SEARCH_DIALOG_OVERLAY_ID} />
 
           <VisuallyHidden>
             <Dialog.Title>Search</Dialog.Title>
@@ -68,9 +100,7 @@ export const DesktopSearchDialog = memo(
           </VisuallyHidden>
 
           <Dialog.Content
-            className={cn(
-              "fixed left-1/2 top-[15%] z-50 w-svw max-w-[640px] origin-center -translate-x-1/2 outline-none"
-            )}
+            id={FERN_SEARCH_DIALOG_ID}
             asChild={asChild}
             onEscapeKeyDown={(e) => {
               e.preventDefault();

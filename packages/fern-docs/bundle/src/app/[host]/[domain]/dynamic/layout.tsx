@@ -9,11 +9,13 @@ export default async function Layout({
   params,
   headertabs,
   sidebar,
+  explorer,
 }: {
   children: React.ReactNode;
   params: Promise<{ host: string; domain: string }>;
   headertabs: React.ReactNode;
   sidebar: React.ReactNode;
+  explorer: React.ReactNode;
 }) {
   const { host, domain } = await params;
   const fernToken = await getFernToken();
@@ -21,6 +23,7 @@ export default async function Layout({
   return (
     <SharedLayout loader={loader} headertabs={headertabs} sidebar={sidebar}>
       {children}
+      {explorer}
     </SharedLayout>
   );
 }

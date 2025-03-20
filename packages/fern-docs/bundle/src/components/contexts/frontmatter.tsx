@@ -1,3 +1,5 @@
+"use client";
+
 import { createContext, useContext } from "react";
 
 import * as FernDocs from "@fern-api/fdr-sdk/docs";

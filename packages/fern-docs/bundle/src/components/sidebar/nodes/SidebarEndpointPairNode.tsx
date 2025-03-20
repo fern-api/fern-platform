@@ -1,10 +1,12 @@
+"use client";
+
 import { ReactNode } from "react";
 
 import { useAtomValue } from "jotai";
 
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 
-import { FERN_STREAM_ATOM } from "@/components/atoms";
+import { FERN_STREAM_ATOM } from "@/state/stream";
 
 import { SidebarApiLeafNode } from "./SidebarApiLeafNode";
 

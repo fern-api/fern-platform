@@ -12,6 +12,7 @@
 @import "./kbd.css";
 @import "./accordion.scss";
 @import "./utilities.scss";
+@import "./syntax-highlighter/index.css";
 
 @custom-variant dark (&:where(.dark, .dark *));
 @custom-variant light (&:where(.light, .light *));
@@ -21,6 +22,7 @@
   --radius: 0.25rem;
   --color-body: var(--color-black);
   --header-height-real: 4rem;
+  --card-surface-fallback: color-mix(in srgb, var(--background), white 80%);
 }
 
 @theme {
@@ -189,38 +191,40 @@
   }
 }
 
-@variant dark {
-  :root {
-    --color-body: var(--color-white);
-  }
+.dark {
+  --color-body: var(--color-white);
+  --card-surface-fallback: color-mix(in srgb, var(--background), black 5%);
 }
 
 @theme inline {
   --radius-none: 0;
-  --radius-1\/2: calc(var(--radius) * 0.5);
-  --radius-3\/2: calc(var(--radius) * 1.5);
-  --radius-1: var(--radius);
-  --radius-2: calc(var(--radius) * 2);
-  --radius-3: calc(var(--radius) * 3);
-  --radius-4: calc(var(--radius) * 4);
-  --radius-5: calc(var(--radius) * 5);
-  --radius-6: calc(var(--radius) * 6);
-  --radius-7: calc(var(--radius) * 7);
-  --radius-8: calc(var(--radius) * 8);
-  --radius-9: calc(var(--radius) * 9);
-  --radius-10: calc(var(--radius) * 10);
-  --radius-11: calc(var(--radius) * 11);
-  --radius-12: calc(var(--radius) * 12);
-  --radius-full: calc(var(--radius) * 9999);
+  --radius-1\/2: calc(var(--radius) * 0.5); /* 2px */
+  --radius-3\/4: calc(var(--radius) * 0.75); /* 3px */
+  --radius-3\/2: calc(var(--radius) * 1.5); /* 6px */
+  --radius-1: var(--radius); /* 4px */
+  --radius-2: calc(var(--radius) * 2); /* 8px */
+  --radius-3: calc(var(--radius) * 3); /* 12px */
+  --radius-4: calc(var(--radius) * 4); /* 16px */
+  --radius-5: calc(var(--radius) * 5); /* 20px */
+  --radius-6: calc(var(--radius) * 6); /* 24px */
+  --radius-7: calc(var(--radius) * 7); /* 28px */
+  --radius-8: calc(var(--radius) * 8); /* 32px */
+  --radius-9: calc(var(--radius) * 9); /* 36px */
+  --radius-10: calc(var(--radius) * 10); /* 40px */
+  --radius-11: calc(var(--radius) * 11); /* 44px */
+  --radius-12: calc(var(--radius) * 12); /* 48px */
+  --radius-full: calc(var(--radius) * 9999); /* 9999px */
 
   /** Colors */
   --color-accent: var(--accent);
   --color-background: var(--background);
   --color-background-translucent: --alpha(var(--color-background) / 70%);
+  --color-background-a9: --alpha(var(--color-background) / 47.1%);
+  --color-background-a3: --alpha(var(--color-background) / 6.27%);
   --color-sidebar-background: var(--sidebar-background);
   --color-header-background: var(--header-background);
   --color-card-background: var(--card-background, var(--grayscale-surface));
-  --color-card-solid: var(--card-background, var(--grayscale-1));
+  --color-card-solid: var(--card-background, var(--card-surface-fallback));
 
   --color-border-default: var(--border, var(--grayscale-a5));
   --color-border-default-soft: var(--border, var(--grayscale-a4));
@@ -231,44 +235,38 @@
   --spacing-content-width: var(--content-width, 40rem);
   --spacing-sidebar-width: var(--sidebar-width, 18rem);
   --spacing-content-wide-width: calc(
-    (var(--spacing-content-width) * 3) / 2 + 0.5rem
+    (var(--spacing-content-width) * 3) / 2 + (var(--spacing) * 2)
   );
-  --spacing-endpoint-width: calc(var(--spacing-content-width) * 2 + 3rem);
+  --spacing-endpoint-width: calc(
+    var(--spacing-content-width) * 2 + (var(--spacing) * 12)
+  );
 
   --spacing-header-height-real: var(--header-height-real);
   --spacing-header-height: var(
     --header-height,
     var(--spacing-header-height-real)
   );
-  --spacing-header-height-padded: calc(var(--spacing-header-height) + 1rem);
+  --spacing-header-height-padded: calc(
+    var(--spacing-header-height) + (var(--spacing) * 4)
+  );
   --spacing-content-height: calc(100vh - var(--spacing-header-height));
-  --spacing-content-height-padded: calc(var(--spacing-content-height) - 1rem);
+  --spacing-content-height-padded: calc(
+    var(--spacing-content-height) - (var(--spacing) * 4)
+  );
 
   --shadow-header: 0px 4px 24px 0px var(--accent-a3);
 
-  --shadow-card-light: 0 1px 2px var(--grayscale-a6);
-  --shadow-card-light-elevated: 0 1px 2px var(--grayscale-a6),
-    0 3px 6px var(--grayscale-a6);
-  --shadow-card-dark: 0 2px 4px var(--grayscale-a6);
-  --shadow-card-dark-elevated: 0 2px 4px var(--grayscale-a6),
-    0 2px 24px var(--grayscale-a6);
+  --shadow-card-grayscale: 0 1px 2px var(--grayscale-a3);
+  --shadow-card-grayscale-elevated:
+    0 1px 2px var(--grayscale-a3), 0 3px 6px var(--grayscale-a3);
+  --shadow-card-accent: 0 1px 2px var(--accent-a3);
+  --shadow-card-accent-elevated:
+    0 1px 2px var(--accent-a3), 0 3px 6px var(--accent-a3);
 }
 
 @support (height: 100dvh) {
   @theme inline {
     --spacing-content-height: calc(100dvh - var(--spacing-header-height));
-  }
-}
-
-@layer utilities {
-  .bg-card-surface {
-    @apply bg-card-background;
-  }
-
-  @variant dark {
-    .bg-card-surface {
-      @apply bg-white/5;
-    }
   }
 }
 

@@ -1,9 +1,7 @@
-import { usePathname } from "next/navigation";
 import { FC, Fragment, ReactNode } from "react";
 
 import { omitBy } from "es-toolkit/object";
 import { isUndefined } from "es-toolkit/predicate";
-import { X } from "lucide-react";
 
 import type {
   Environment,
@@ -25,10 +23,10 @@ import { CopyToClipboardButton } from "@fern-docs/components";
 import { HttpMethodBadge } from "@fern-docs/components/badges";
 import { useBooleanState } from "@fern-ui/react-commons";
 
-import { FernLinkButton } from "@/components/components/FernLinkButton";
+import { MaybeEnvironmentDropdown } from "@/components/MaybeEnvironmentDropdown";
+import { useAllEnvironmentIds } from "@/state/environment";
 
-import { useAllEnvironmentIds } from "../../atoms/environment";
-import { MaybeEnvironmentDropdown } from "../../components/MaybeEnvironmentDropdown";
+import { closeButton } from "../PlaygroundCloseButton";
 import { PlaygroundSendRequestButton } from "../PlaygroundSendRequestButton";
 import { PlaygroundRequestFormState } from "../types";
 
@@ -64,7 +62,7 @@ export const PlaygroundEndpointPath: FC<PlaygroundEndpointPathProps> = ({
 
   return (
     <div className="playground-endpoint">
-      <div className="bg-(color:--grayscale-a3) rounded-2 flex h-10 min-w-0 flex-1 shrink items-center gap-2 px-4 py-2 max-sm:h-8 max-sm:px-2 max-sm:py-1 sm:rounded-[20px]">
+      <div className="bg-(color:--grayscale-a3) rounded-2 sm:rounded-5 flex h-10 min-w-0 flex-1 shrink items-center gap-2 px-4 py-2 max-sm:h-8 max-sm:px-2 max-sm:py-1">
         {method != null && (
           <HttpMethodBadge
             method={method}
@@ -173,20 +171,7 @@ export const PlaygroundEndpointPath: FC<PlaygroundEndpointPathProps> = ({
         />
       </div>
 
-      <CloseButton />
+      {<closeButton.Out />}
     </div>
   );
 };
-
-function CloseButton() {
-  const pathname = usePathname();
-  return (
-    <FernLinkButton
-      icon={<X />}
-      size="large"
-      rounded
-      variant="outlined"
-      href={pathname.replace("/~explorer", "")}
-    />
-  );
-}

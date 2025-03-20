@@ -9,7 +9,7 @@ import {
 } from "@fern-api/fdr-sdk/api-definition";
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 
-import { DocsLoader } from "@/server/docs-loader";
+import { DocsLoader, createPruneKey } from "@/server/docs-loader";
 import { MdxSerializer } from "@/server/mdx-serializer";
 
 import { EndpointContent } from "./endpoints/EndpointContent";
@@ -26,10 +26,14 @@ export default async function ApiEndpointPage({
   loader: DocsLoader;
   serialize: MdxSerializer;
   node: FernNavigation.NavigationNodeApiLeaf;
+  action?: React.ReactNode;
   breadcrumb: readonly FernNavigation.BreadcrumbItem[];
   bottomNavigation?: React.ReactNode;
 }) {
-  const apiDefinition = await loader.getApi(node.apiDefinitionId);
+  const apiDefinition = await loader.getPrunedApi(
+    node.apiDefinitionId,
+    createPruneKey(node)
+  );
 
   return (
     <ApiEndpointContent
@@ -45,12 +49,14 @@ export default async function ApiEndpointPage({
 async function ApiEndpointContent({
   serialize,
   node,
+  action,
   apiDefinition,
   breadcrumb,
   bottomNavigation,
 }: {
   serialize: MdxSerializer;
   node: FernNavigation.NavigationNodeApiLeaf;
+  action?: React.ReactNode;
   apiDefinition: ApiDefinition;
   breadcrumb: readonly FernNavigation.BreadcrumbItem[];
   bottomNavigation?: React.ReactNode;
@@ -66,6 +72,7 @@ async function ApiEndpointContent({
           serialize={serialize}
           breadcrumb={breadcrumb}
           context={context}
+          action={action}
           showErrors
           bottomNavigation={bottomNavigation}
           showAuth
@@ -82,6 +89,7 @@ async function ApiEndpointContent({
           serialize={serialize}
           breadcrumb={breadcrumb}
           context={context}
+          action={action}
           bottomNavigation={bottomNavigation}
         />
       );
@@ -96,6 +104,7 @@ async function ApiEndpointContent({
           serialize={serialize}
           breadcrumb={breadcrumb}
           context={context}
+          action={action}
           bottomNavigation={bottomNavigation}
         />
       );

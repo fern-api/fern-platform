@@ -10,7 +10,8 @@ import {
 import visitDiscriminatedUnion from "@fern-api/ui-core-utils/visitDiscriminatedUnion";
 import { FernButton, FernDropdown } from "@fern-docs/components";
 
-import { Markdown } from "../../mdx/Markdown";
+import { Markdown } from "@/mdx/components/Markdown";
+
 import { renderTypeShorthandRoot } from "../../type-shorthand";
 import { PlaygroundFileUploadForm } from "../form/PlaygroundFileUploadForm";
 import { PlaygroundObjectPropertyForm } from "../form/PlaygroundObjectPropertyForm";
@@ -245,6 +246,7 @@ export function PlaygroundEndpointMultipartForm({
                   labelClassName: "font-mono",
                   tooltip:
                     field.description != null ? (
+                      // todo: server-side render this
                       <Markdown size="xs" mdx={field.description} />
                     ) : undefined,
                 })

@@ -2,8 +2,8 @@ import "server-only";
 
 import React from "react";
 
-import { Separator } from "@/components/components/Separator";
-import { MdxServerComponent } from "@/components/mdx/server-component";
+import { Separator } from "@/components/Separator";
+import { MdxServerComponent } from "@/mdx/components/server-component";
 import { MdxSerializer } from "@/server/mdx-serializer";
 
 import { BottomNavigationClient } from "./bottom-nav-client";

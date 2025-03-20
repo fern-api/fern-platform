@@ -1,6 +1,6 @@
 "use client";
 
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import React from "react";
 
 import { isEqual } from "es-toolkit/predicate";
@@ -21,21 +21,17 @@ import {
   SearchClientRoot,
 } from "@fern-docs/search-ui";
 import { VersionSwitcherInfo } from "@fern-platform/fdr-utils";
-import {
-  useEventCallback,
-  useIsMobile,
-  useLazyRef,
-} from "@fern-ui/react-commons";
+import { useEventCallback, useLazyRef } from "@fern-ui/react-commons";
 
 import { Feedback } from "@/components/feedback/Feedback";
 import { useApiRoute } from "@/components/hooks/useApiRoute";
 import { useApiRouteSWRImmutable } from "@/components/hooks/useApiRouteSWR";
+import { useCurrentPathname } from "@/hooks/use-current-pathname";
 import { useSetTheme, useThemeSwitchEnabled } from "@/hooks/use-theme";
 import { useIsDarkCode } from "@/state/dark-code";
 import { useFernUser } from "@/state/fern-user";
-
-import { searchDialogOpenAtom, searchInitializedAtom } from "../state/search";
-import { atomWithStorageString } from "./atoms/utils/atomWithStorageString";
+import { searchDialogOpenAtom, searchInitializedAtom } from "@/state/search";
+import { atomWithStorageString } from "@/state/utils/atomWithStorageString";
 
 const ALGOLIA_USER_TOKEN_KEY = "algolia-user-token";
 
@@ -96,7 +92,7 @@ export const SearchV2 = React.memo(function SearchV2({
   const router = useRouter();
 
   const handleNavigate = useEventCallback((path: string) => {
-    router.push(path);
+    router.push(path, { scroll: true });
     setOpen(false);
   });
 
@@ -125,7 +121,7 @@ export const SearchV2 = React.memo(function SearchV2({
   }, [data]);
 
   // close the search dialog when the pathname changes
-  const pathname = usePathname();
+  const pathname = useCurrentPathname();
   React.useEffect(() => {
     setOpen(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -196,11 +192,15 @@ export const SearchV2 = React.memo(function SearchV2({
               );
             }}
             darkCodeEnabled={isDarkCodeEnabled}
+            className="shadow-xl"
           >
             {children}
           </DesktopCommandWithAskAI>
         ) : (
-          <DesktopCommand onEscapeKeyDown={() => setOpen(false)}>
+          <DesktopCommand
+            onEscapeKeyDown={() => setOpen(false)}
+            className="shadow-xl"
+          >
             {children}
           </DesktopCommand>
         )}
@@ -230,11 +230,10 @@ function useCommandTrigger(): [
   React.Dispatch<React.SetStateAction<boolean>>,
 ] {
   const [open, setOpen] = useAtom(searchDialogOpenAtom);
-  const isMobile = useIsMobile();
 
   React.useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (isMobile) {
+      if (open) {
         return;
       }
 
@@ -270,7 +269,7 @@ function useCommandTrigger(): [
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [isMobile, setOpen]);
+  }, [open, setOpen]);
 
   return [open, setOpen];
 }

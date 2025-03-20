@@ -6,13 +6,12 @@ import { EndpointContext } from "@fern-api/fdr-sdk/api-definition";
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { AvailabilityBadge } from "@fern-docs/components/badges";
 
-import { PageHeader } from "@/components/components/PageHeader";
+import { PageHeader } from "@/components/PageHeader";
 import { FooterLayout } from "@/components/layouts/FooterLayout";
 import { ReferenceLayout } from "@/components/layouts/ReferenceLayout";
-import { ScrollToTop } from "@/components/layouts/ScrollToTop";
-import { MdxServerComponentProseSuspense } from "@/components/mdx/server-component";
+import { PlaygroundKeyboardTrigger } from "@/components/playground/PlaygroundKeyboardTrigger";
+import { MdxServerComponentProseSuspense } from "@/mdx/components/server-component";
 import { MdxSerializer } from "@/server/mdx-serializer";
-import { SetLayout } from "@/state/layout";
 
 import { TypeDefinitionRoot } from "../type-definitions/TypeDefinitionContext";
 import { TypeDefinitionSlotsServer } from "../type-definitions/TypeDefinitionSlotsServer";
@@ -27,6 +26,7 @@ export async function EndpointContent({
   showAuth,
   context,
   breadcrumb,
+  action,
   bottomNavigation,
 }: {
   serialize: MdxSerializer;
@@ -34,7 +34,7 @@ export async function EndpointContent({
   showAuth: boolean;
   context: EndpointContext;
   breadcrumb: readonly FernNavigation.BreadcrumbItem[];
-  streamToggle?: React.ReactNode;
+  action?: React.ReactNode;
   bottomNavigation?: React.ReactNode;
 }) {
   const { node, endpoint, types } = context;
@@ -47,6 +47,7 @@ export async function EndpointContent({
             serialize={serialize}
             breadcrumb={breadcrumb}
             title={node.title}
+            action={action}
             tags={
               endpoint.availability != null && (
                 <AvailabilityBadge
@@ -55,6 +56,7 @@ export async function EndpointContent({
                 />
               )
             }
+            slug={node.slug}
           >
             <EndpointUrlWithPlaygroundBaseUrl
               endpoint={endpoint}
@@ -83,8 +85,7 @@ export async function EndpointContent({
         }
         footer={<FooterLayout bottomNavigation={bottomNavigation} />}
       >
-        <SetLayout value="reference" />
-        <ScrollToTop />
+        <PlaygroundKeyboardTrigger />
         <MdxServerComponentProseSuspense
           serialize={serialize}
           mdx={endpoint.description}

@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Dispatch,
   FC,
@@ -22,6 +24,7 @@ interface PlaygroundWebSocketContentProps {
   sendMessage: (message: ApiDefinition.WebSocketMessage, data: unknown) => void;
   connected: boolean;
   error: string | null;
+  authForm: React.ReactNode;
 }
 
 export const PlaygroundWebSocketContent: FC<
@@ -35,6 +38,7 @@ export const PlaygroundWebSocketContent: FC<
   clearMessages,
   connected,
   error,
+  authForm,
 }) => {
   const [scrollAreaHeight, setScrollAreaHeight] = useState(0);
   const scrollAreaRef = useRef<HTMLDivElement>(null);
@@ -70,6 +74,7 @@ export const PlaygroundWebSocketContent: FC<
           clearMessages={clearMessages}
           connected={connected}
           error={error}
+          authForm={authForm}
         />
       </div>
     </div>

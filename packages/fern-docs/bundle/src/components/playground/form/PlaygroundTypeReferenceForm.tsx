@@ -1,3 +1,5 @@
+"use client";
+
 import { ReactElement, memo, useCallback } from "react";
 
 import { useAtomValue } from "jotai";
@@ -17,6 +19,7 @@ import {
   FernTextarea,
 } from "@fern-docs/components";
 
+import { withErrorBoundary } from "@/components/error-boundary";
 import { hasVoiceIdPlaygroundFormAtom } from "@/state/api-explorer-flags";
 
 import { WithLabel } from "../WithLabel";
@@ -46,7 +49,7 @@ interface PlaygroundTypeReferenceFormProps {
   indent?: boolean;
 }
 
-export const PlaygroundTypeReferenceForm =
+const PlaygroundTypeReferenceFormInternal =
   memo<PlaygroundTypeReferenceFormProps>((props) => {
     const hasVoiceIdPlaygroundForm = useAtomValue(hasVoiceIdPlaygroundFormAtom);
     const {
@@ -161,6 +164,7 @@ export const PlaygroundTypeReferenceForm =
               ) : property?.key === "user_audio_chunk" || // TODO(naman): remove hardcoding for ElevenLabs once the backend mimeType is plumbed through
                 (primitive.value.type === "base64" &&
                   primitive.value.mimeType?.includes("audio/webm") &&
+                  typeof window !== "undefined" &&
                   MediaRecorder.isTypeSupported("audio/webm")) ? (
                 <PlaygroundMicrophoneForm
                   id={id}
@@ -515,4 +519,9 @@ export const PlaygroundTypeReferenceForm =
     });
   });
 
-PlaygroundTypeReferenceForm.displayName = "PlaygroundTypeReferenceForm";
+PlaygroundTypeReferenceFormInternal.displayName =
+  "PlaygroundTypeReferenceFormInternal";
+
+export const PlaygroundTypeReferenceForm = withErrorBoundary(
+  PlaygroundTypeReferenceFormInternal
+);

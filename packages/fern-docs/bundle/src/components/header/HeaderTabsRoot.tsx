@@ -2,16 +2,30 @@
 
 import * as Tabs from "@radix-ui/react-tabs";
 
-import { useCurrentTabId } from "@/state/navigation";
+import { cn } from "@fern-docs/components";
 
-export function HeaderTabsRoot({ children }: { children: React.ReactNode }) {
+import { useCurrentTabId } from "@/state/navigation";
+import { SearchV2Trigger } from "@/state/search";
+
+export function HeaderTabsRoot({
+  children,
+  showSearchBar,
+  className,
+}: {
+  children: React.ReactNode;
+  showSearchBar: boolean;
+  className?: string;
+}) {
   const currentTabId = useCurrentTabId();
   return (
     <Tabs.Root
       value={currentTabId}
-      className="w-page-width-padded px-page-padding mx-auto hidden max-w-full select-none lg:block"
+      className={cn("fern-header-tabs", className)}
     >
       {children}
+      {showSearchBar && (
+        <SearchV2Trigger aria-label="Search" className="max-w-sidebar-width" />
+      )}
     </Tabs.Root>
   );
 }

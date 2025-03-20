@@ -7,15 +7,15 @@ import { compact } from "es-toolkit/compat";
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { isNonNullish } from "@fern-api/ui-core-utils";
 import { type TableOfContentsItem, makeToc, toTree } from "@fern-docs/mdx";
-import { addLeadingSlash } from "@fern-docs/utils";
+import { slugToHref } from "@fern-docs/utils";
 
+import { FernLink } from "@/components/FernLink";
+import { PageHeader } from "@/components/PageHeader";
+import { Markdown } from "@/mdx/components/Markdown";
+import { MdxContent } from "@/mdx/components/MdxContent";
 import { DocsLoader } from "@/server/docs-loader";
 import { MdxSerializer } from "@/server/mdx-serializer";
 
-import { FernLink } from "../components/FernLink";
-import { PageHeader } from "../components/PageHeader";
-import { Markdown } from "../mdx/Markdown";
-import { MdxContent } from "../mdx/MdxContent";
 import ChangelogPageClient from "./ChangelogPageClient";
 
 export default async function ChangelogPage({
@@ -31,6 +31,9 @@ export default async function ChangelogPage({
 }) {
   const node = await loader.getNavigationNode(nodeId);
   if (node.type !== "changelog") {
+    console.debug(
+      `[${loader.domain}] Found non-changelog node for nodeId: ${nodeId}`
+    );
     notFound();
   }
 
@@ -111,6 +114,7 @@ export async function ChangelogPageOverview({
       : undefined;
   const mdx = await serialize(page?.markdown, {
     filename: page?.filename,
+    slug: node.slug,
   });
 
   return (
@@ -118,9 +122,10 @@ export async function ChangelogPageOverview({
       <PageHeader
         serialize={serialize}
         title={mdx?.frontmatter?.title ?? node.title}
-        titleHref={addLeadingSlash(node.slug)}
+        titleHref={slugToHref(node.slug)}
         subtitle={mdx?.frontmatter?.subtitle ?? mdx?.frontmatter?.excerpt}
         breadcrumb={breadcrumb}
+        slug={node.slug}
       />
       <Markdown mdx={mdx} fallback={page?.markdown} />
     </>
@@ -138,10 +143,14 @@ export async function ChangelogPageEntry({
 }) {
   const page = await loader.getPage(node.pageId);
   const mdx = await serialize(page.markdown, {
-    filename: node.pageId,
+    filename: page.filename,
+    slug: node.slug,
   });
 
-  const title = await serialize(mdx?.frontmatter?.title);
+  const title = await serialize(mdx?.frontmatter?.title, {
+    filename: page.filename,
+    slug: node.slug,
+  });
 
   return (
     <Markdown
@@ -149,7 +158,11 @@ export async function ChangelogPageEntry({
       title={
         title != null ? (
           <h2>
-            <FernLink href={node.slug} className="not-prose">
+            <FernLink
+              href={slugToHref(node.slug)}
+              className="not-prose"
+              scroll={true}
+            >
               <MdxContent mdx={title} />
             </FernLink>
           </h2>

@@ -1,3 +1,5 @@
+"use client";
+
 import {
   ComponentPropsWithoutRef,
   KeyboardEventHandler,
@@ -38,6 +40,7 @@ import {
   tunnel,
   useDebouncedCallback,
   useEventCallback,
+  useIsMobile,
 } from "@fern-ui/react-commons";
 
 import { FootnoteSup, FootnotesSection } from "../chatbot/footnote";
@@ -113,6 +116,7 @@ export const DesktopCommandWithAskAI = forwardRef<
     },
     forwardedRef
   ) => {
+    const isMobile = useIsMobile();
     const ref = useRef<HTMLDivElement>(null);
 
     const [askAI, setAskAI] = useControllableState<boolean>({
@@ -124,12 +128,13 @@ export const DesktopCommandWithAskAI = forwardRef<
 
     function glow() {
       if (ref.current) {
+        const prefix = isMobile ? "inset " : "";
         ref.current.animate(
           {
             boxShadow: [
-              "0 0 0px var(color:--accent-a5), var(--cmdk-shadow)",
-              "0 0 75px var(color:--accent-a5), var(--cmdk-shadow)",
-              "0 0 150px transparent, var(--cmdk-shadow)",
+              `${prefix}0 0 0px var(--accent-a5), var(--cmdk-shadow)`,
+              `${prefix}0 0 75px var(--accent-a5), var(--cmdk-shadow)`,
+              `${prefix}0 0 150px transparent, var(--cmdk-shadow)`,
             ],
           },
           { duration: 800, easing: "ease-out" }
@@ -154,7 +159,7 @@ export const DesktopCommandWithAskAI = forwardRef<
 
     // bounce on action
     function bounce() {
-      if (ref.current) {
+      if (ref.current && !isMobile) {
         ref.current.animate(
           { transform: ["scale(1)", "scale(0.96)", "scale(1)"] },
           { duration: 200, easing: "cubic-bezier(0.25, 0.46, 0.45, 0.94)" }
@@ -326,7 +331,14 @@ const DesktopAskAIChat = ({
         );
         return;
       }
-      void chat.append({ role: "user", content: message });
+      void chat.append(
+        { role: "user", content: message },
+        {
+          body: {
+            url: document.location.href,
+          },
+        }
+      );
       chat.setInput("");
     },
 
@@ -336,7 +348,10 @@ const DesktopAskAIChat = ({
   );
 
   useEffect(() => {
-    if (initialInput) {
+    if (
+      initialInput &&
+      !chat.messages.map((m) => m.content).includes(initialInput)
+    ) {
       askAI(initialInput);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -1,6 +1,6 @@
 "use client";
 
-import { ReactElement, useCallback, useState } from "react";
+import { useCallback, useState } from "react";
 
 import { mapValues } from "es-toolkit/object";
 import { useAtomValue, useSetAtom } from "jotai";
@@ -25,13 +25,13 @@ import {
 } from "@/state/api-explorer-flags";
 import { fernUserAtom } from "@/state/fern-user";
 import { jotaiStore } from "@/state/jotai-provider";
-
-import { track } from "../../analytics";
 import {
   PLAYGROUND_AUTH_STATE_ATOM,
   PLAYGROUND_AUTH_STATE_OAUTH_ATOM,
   usePlaygroundEndpointFormState,
-} from "../../atoms";
+} from "@/state/playground";
+
+import { track } from "../../analytics";
 import { usePlaygroundSettings } from "../../hooks/usePlaygroundSettings";
 import { executeProxyRest } from "../fetch-utils/executeProxyRest";
 import { executeProxyStream } from "../fetch-utils/executeProxyStream";
@@ -48,9 +48,11 @@ import { PlaygroundEndpointPath } from "./PlaygroundEndpointPath";
 
 export const PlaygroundEndpoint = ({
   context,
+  authForm,
 }: {
   context: EndpointContext;
-}): ReactElement<any> => {
+  authForm: React.ReactNode;
+}) => {
   const user = useAtomValue(fernUserAtom);
   const { node, endpoint, auth } = context;
 
@@ -236,6 +238,7 @@ export const PlaygroundEndpoint = ({
         </div>
         <div className="flex min-h-0 flex-1 shrink">
           <PlaygroundEndpointContent
+            authForm={authForm}
             context={context}
             formState={formState}
             setFormState={setFormState}

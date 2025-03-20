@@ -1,3 +1,5 @@
+"use client";
+
 import { ReactNode, createContext, useContext, useRef } from "react";
 
 import { PrimitiveAtom, atom } from "jotai";

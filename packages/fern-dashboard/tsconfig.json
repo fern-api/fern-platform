@@ -1,0 +1,17 @@
+{
+  "extends": "@fern-platform/configs/tsconfig/nextjs.json",
+  "compilerOptions": {
+    "rootDir": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  },
+  "exclude": ["node_modules"],
+  "include": [
+    "**/*",
+    ".next/types/**/*.ts",
+    "next.config.ts",
+    "vitest.config.ts"
+  ],
+  "references": []
+}

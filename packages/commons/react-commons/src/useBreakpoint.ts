@@ -1,10 +1,10 @@
 import React from "react";
 
+import { isomorphicRequestAnimationFrame } from "./request-callback";
+import { useIsomorphicLayoutEffect } from "./useIsomorphicLayoutEffect";
+
 const MOBILE_BREAKPOINT = 768;
 const DESKTOP_BREAKPOINT = 1024;
-
-const useIsomorphicLayoutEffect =
-  typeof window !== "undefined" ? React.useLayoutEffect : React.useEffect;
 
 export function useMinWidth(breakpoint: number): boolean {
   const [largerThanBreakpoint, setLargerThanBreakpoint] =
@@ -13,7 +13,7 @@ export function useMinWidth(breakpoint: number): boolean {
     );
 
   useIsomorphicLayoutEffect(() => {
-    requestAnimationFrame(() => {
+    const cancelAnimationFrame = isomorphicRequestAnimationFrame(() => {
       window.innerWidth >= breakpoint;
     });
 
@@ -23,7 +23,10 @@ export function useMinWidth(breakpoint: number): boolean {
     };
 
     mql.addEventListener("change", onChange);
-    return () => mql.removeEventListener("change", onChange);
+    return () => {
+      cancelAnimationFrame();
+      mql.removeEventListener("change", onChange);
+    };
   }, [breakpoint]);
 
   return !!largerThanBreakpoint;

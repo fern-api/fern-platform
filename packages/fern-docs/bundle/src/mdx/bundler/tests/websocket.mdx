@@ -1,0 +1,18 @@
+This endpoint creates a bidirectional WebSocket connection. The connection supports multiplexing, so you can send multiple requests and receive the corresponding responses in parallel.
+
+The WebSocket API is built around _contexts_:
+
+- When you send a generation request, you pass a `context_id`. Further inputs on the same `context_id` will [continue the generation](/build-with-sonic/capability-guides/stream-inputs-using-continuations), maintaining prosody.
+- Responses for a context contain the `context_id` you passed in so that you can match requests and responses.
+
+Read the guide on [working with contexts](/api-reference/tts/working-with-web-sockets/contexts) to learn more.
+
+For the best performance, we recommend the following usage pattern:
+
+1. **Do many generations over a single WebSocket.** Just use a separate context for each generation. The WebSocket scales up to dozens of concurrent generations.
+2. **Set up the WebSocket before the first generation.** This ensures you don't incur latency when you start generating speech.
+3. **Buffer the first input on a context** to at least 3 or 4 words for optimizing both latency and prosody.
+4. **Split inputs into sentences:** Sending inputs in sentences allows Sonic to generate speech more accurately and with better prosody. Include necessary spaces and punctuation.
+   For conversational agent use cases, we recommend the following usage pattern:
+5. **Each turn in a conversation should correspond to a context:** For example, if you are using Sonic to power a voice agent, each turn in the conversation should be a new context.
+6. **Start a new context for interruptions:** If the user interrupts the agent, start a new context for the agent's response.

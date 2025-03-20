@@ -6,14 +6,17 @@ import { Play } from "lucide-react";
 
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { FernTooltip, FernTooltipProvider } from "@fern-docs/components";
+import { cn } from "@fern-docs/components";
 
-import { ButtonLink } from "../components/FernLinkButton";
+import { ButtonLink } from "@/components/FernLinkButton";
+
 import { usePlaygroundSettings } from "../hooks/usePlaygroundSettings";
 import { conformExplorerRoute } from "./utils/explorer-route";
 
 export const PlaygroundButton: FC<{
   state: FernNavigation.NavigationNodeApiLeaf;
-}> = ({ state }) => {
+  className?: string;
+}> = ({ state, className }) => {
   const settings = usePlaygroundSettings(state.id);
 
   return (
@@ -29,6 +32,7 @@ export const PlaygroundButton: FC<{
         }
       >
         <ButtonLink
+          id={`playground-button:${state.slug}`}
           aria-description={
             settings?.button?.href
               ? "Opens an API Explorer in a new tab"
@@ -38,10 +42,11 @@ export const PlaygroundButton: FC<{
           target={settings?.button?.href ? "_blank" : undefined}
           variant="default"
           size="xs"
-          className="font-mono"
+          className={cn("font-mono [&_svg]:size-3", className)}
+          scroll={false}
         >
           <Play className="fill-current" />
-          Play
+          Try it
         </ButtonLink>
       </FernTooltip>
     </FernTooltipProvider>

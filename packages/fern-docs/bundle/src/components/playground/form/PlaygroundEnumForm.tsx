@@ -1,3 +1,5 @@
+"use client";
+
 import dynamic from "next/dynamic";
 import { memo, useMemo } from "react";
 
@@ -8,7 +10,7 @@ import { EnumValue } from "@fern-api/fdr-sdk/api-definition";
 import { FernButton, FernDropdown } from "@fern-docs/components";
 
 const Markdown = dynamic(() =>
-  import("../../mdx/Markdown").then(({ Markdown }) => Markdown)
+  import("@/mdx/components/Markdown").then(({ Markdown }) => Markdown)
 );
 
 interface PlaygroundEnumFormProps {

@@ -1,7 +1,7 @@
 import { cn } from "@fern-docs/components";
 
+import { EditThisPageButton } from "../EditThisPage";
 import { BuiltWithFern } from "../built-with-fern";
-import { EditThisPageButton } from "../components/EditThisPage";
 import { Feedback } from "../feedback/Feedback";
 
 export function FooterLayout({
@@ -20,15 +20,15 @@ export function FooterLayout({
   className?: string;
 }) {
   return (
-    <footer className={cn("my-12 space-y-8", className)}>
-      <div className="flex gap-4 max-sm:flex-col sm:justify-between">
+    <footer className={cn("fern-layout-footer not-prose", className)}>
+      <div className="fern-layout-footer-toolbar">
         <div>{!hideFeedback && <Feedback pathname={pathname} />}</div>
         <EditThisPageButton editThisPageUrl={editThisPageUrl} />
       </div>
 
       {!hideNavLinks && bottomNavigation}
 
-      <BuiltWithFern className="mx-auto w-fit" />
+      <BuiltWithFern className="mx-auto mt-12 w-fit" />
     </footer>
   );
 }

@@ -1,6 +1,6 @@
 import "server-only";
 
-import { Metadata, Viewport } from "next/types";
+import { Metadata } from "next/types";
 import React from "react";
 import { preload } from "react-dom";
 
@@ -16,34 +16,38 @@ import {
   getSeoDisabled,
 } from "@fern-docs/edge-config";
 
+import { JavascriptProvider } from "@/components/JavascriptProvider";
 import { CustomerAnalytics } from "@/components/analytics/CustomerAnalytics";
-import { BgImageGradient } from "@/components/components/BgImageGradient";
-import { JavascriptProvider } from "@/components/components/JavascriptProvider";
-import { withJsConfig } from "@/components/components/with-js-config";
 import { FeatureFlagProvider } from "@/components/feature-flags/FeatureFlagProvider";
+import { FernUser } from "@/components/fern-user";
 import SearchV2 from "@/components/search";
+import { withJsConfig } from "@/components/with-js-config";
 import { DocsLoader, createCachedDocsLoader } from "@/server/docs-loader";
+import { SetColors } from "@/state/colors";
 import { DarkCode } from "@/state/dark-code";
 import { Domain } from "@/state/domain";
 import { LaunchDarklyInfo } from "@/state/feature-flags";
 import { DefaultLanguage } from "@/state/language";
+import { SetLogoText } from "@/state/logo-text";
 import { RootNodeProvider, SetBasePath } from "@/state/navigation";
 import {
   getAllSidebarRootNodes,
   getSidebarRootNodeIdToChildToParentsMap,
 } from "@/state/navigation-server";
+import { Whitelabeled } from "@/state/whitelabeled";
 
 import { GlobalStyles } from "../../global-styles";
 import { toImageDescriptor } from "../../seo";
 import { ThemeProvider } from "../../theme";
 
-export default async function Layout(props: {
+export default async function Layout({
+  children,
+  params,
+}: {
   children: React.ReactNode;
   params: Promise<{ host: string; domain: string }>;
 }) {
-  const { host, domain } = await props.params;
-
-  const { children } = props;
+  const { host, domain } = await params;
 
   const loader = await createCachedDocsLoader(host, domain);
   const [
@@ -58,7 +62,7 @@ export default async function Layout(props: {
     deprecated_customerAnalytics,
     launchDarkly,
   ] = await Promise.all([
-    loader.getBaseUrl(),
+    loader.getMetadata(),
     loader.getConfig(),
     loader.unsafe_getFullRoot(),
     getEdgeFlags(domain),
@@ -85,6 +89,8 @@ export default async function Layout(props: {
     <ThemeProvider
       hasLight={Boolean(colors.light)}
       hasDark={Boolean(colors.dark)}
+      lightThemeColor={colors.light?.themeColor}
+      darkThemeColor={colors.dark?.themeColor}
     >
       <RootNodeProvider
         sidebarRootNodesToChildToParentsMap={
@@ -92,13 +98,16 @@ export default async function Layout(props: {
         }
       >
         <Domain value={domain} />
-        <SetBasePath value={basePath ?? ""} />
+        <SetBasePath value={basePath} />
+        {/** HACKHACK: this is a hack to set the logo text to "Docs" for Cohere, this needs to be moved into docs.yml */}
+        <SetLogoText text={domain.includes("cohere") ? "Docs" : undefined} />
         {config.defaultLanguage != null && (
           <DefaultLanguage language={config.defaultLanguage} />
         )}
         <DarkCode value={edgeFlags.isDarkCodeEnabled} />
-        {/* <FernUser domain={domain} fern_token={fern_token} /> */}
-        <BgImageGradient colors={colors} />
+        <Whitelabeled value={edgeFlags.isWhitelabeled} />
+        <SetColors colors={colors} />
+        <FernUser domain={domain} host={host} />
         <GlobalStyles
           domain={domain}
           layout={layout}
@@ -170,25 +179,6 @@ async function getLaunchDarklyInfo(
   };
 }
 
-export async function generateViewport(props: {
-  params: Promise<{ host: string; domain: string }>;
-}): Promise<Viewport> {
-  const { host, domain } = await props.params;
-
-  const loader = await createCachedDocsLoader(host, domain);
-  const colors = await loader.getColors();
-  const dark = colors.dark?.background ?? colors.dark?.accent;
-  const light = colors.light?.background ?? colors.light?.accent;
-  return {
-    themeColor: compact([
-      dark ? { color: dark, media: "(prefers-color-scheme: dark)" } : undefined,
-      light
-        ? { color: light, media: "(prefers-color-scheme: light)" }
-        : undefined,
-    ]),
-  };
-}
-
 export async function generateMetadata(props: {
   params: Promise<{ host: string; domain: string }>;
 }): Promise<Metadata> {
@@ -212,7 +202,7 @@ export async function generateMetadata(props: {
     applicationName: config.title,
     title: {
       template: config.title ? "%s | " + config.title : "%s",
-      default: config.title ?? "Documentation",
+      default: "Documentation",
     },
     robots: { index, follow },
     openGraph: {

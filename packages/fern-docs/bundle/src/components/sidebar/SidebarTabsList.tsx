@@ -5,11 +5,10 @@ import { Lock } from "lucide-react";
 
 import { TabChild, hasRedirect } from "@fern-api/fdr-sdk/navigation";
 import { cn } from "@fern-docs/components";
-import { addLeadingSlash } from "@fern-docs/utils";
+import { slugToHref } from "@fern-docs/utils";
 
+import { FernLink } from "@/components/FernLink";
 import { FaIconServer } from "@/components/fa-icon-server";
-
-import { FernLink } from "../components/FernLink";
 
 export function SidebarTabsList({
   tabs,
@@ -19,7 +18,7 @@ export function SidebarTabsList({
   children?: React.ReactNode;
 }) {
   return (
-    <Tabs.TabsList>
+    <Tabs.TabsList className="-my-2">
       {tabs.map((tab) => (
         <Tabs.TabsTrigger key={tab.id} value={tab.id} asChild>
           <FernLink
@@ -32,12 +31,13 @@ export function SidebarTabsList({
             href={
               tab.type === "link"
                 ? tab.url
-                : addLeadingSlash(hasRedirect(tab) ? tab.pointsTo : tab.slug)
+                : slugToHref(hasRedirect(tab) ? tab.pointsTo : tab.slug)
             }
+            scroll={true}
           >
             <span
               className={cn(
-                "bg-card-surface border-border-default rounded-3/2 mr-4 flex size-6 items-center justify-center border shadow-sm",
+                "bg-card-background border-border-default rounded-3/2 shadow-card-grayscale mr-4 flex size-6 items-center justify-center border",
                 "group-hover:group-data-[state=inactive]:bg-(color:--accent-a3) group-hover:group-data-[state=inactive]:border-(color:--accent-a8) group-hover:group-data-[state=inactive]:text-(color:--accent-a11)",
                 "group-data-[state=active]:bg-(color:--accent-10) group-data-[state=active]:text-background group-data-[state=active]:border-transparent group-data-[state=active]:shadow-none"
               )}
@@ -45,7 +45,7 @@ export function SidebarTabsList({
               {tab.type !== "link" && tab.authed ? (
                 <Lock />
               ) : (
-                tab.icon && <FaIconServer icon={tab.icon} />
+                <FaIconServer icon={tab.icon ?? "book"} />
               )}
             </span>
             <span className="truncate font-medium group-data-[state=active]:font-semibold">

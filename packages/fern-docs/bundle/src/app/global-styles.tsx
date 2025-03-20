@@ -29,7 +29,7 @@ export function GlobalStyles({
   const root = light ?? dark;
   const hasTheme = !!light && !!dark;
   return (
-    <style jsx global>
+    <style jsx global key="__fern-global-styles">
       {`
         ${fonts.fontFaces.join("\n")}
 
@@ -42,12 +42,18 @@ export function GlobalStyles({
           --font-code: ${createFontFamilyCss(fonts.codeFont, FONT_MONO)};
           ${domain.includes("nominal") ? "--radius: 0px;" : ""}
           --header-height-real: ${layout.headerHeight}px;
+          --mobile-header-height-real: ${Math.min(layout.headerHeight, 64)}px;
           --content-width: ${layout.contentWidth}px;
           --sidebar-width: ${layout.sidebarWidth}px;
           --page-width: ${layout.pageWidth != null
             ? `${layout.pageWidth}px`
             : "100vw"};
           --logo-height: ${layout.logoHeight}px;
+
+          /* for backwards compatibility */
+          --typography-body-font-family: var(--font-body);
+          --typography-heading-font-family: var(--font-heading);
+          --typography-code-font-family: var(--font-code);
         }
 
         ${root
@@ -108,13 +114,15 @@ export function GlobalStyles({
 
         ${hasTheme ? ":root, .light" : ":root"} {
           --accent: ${root?.accent ?? FERN_COLOR_ACCENT};
-          --background: ${root?.background ?? (!!light ? "#fff" : "#000")};
+          --background: ${root?.background ?? (light ? "#fff" : "#000")};
           --border: ${domain.includes("nominal")
             ? "#000"
             : (root?.border ?? "initial")};
           --sidebar-background: ${root?.sidebarBackground ?? "initial"};
-          --header-background: ${root?.headerBackground ?? "initial"};
+          --header-background: ${root?.headerBackground ??
+          "color-mix(in srgb, var(--background), transparent 30%)"};
           --card-background: ${root?.cardBackground ?? "initial"};
+          --theme-color: ${root?.themeColor};
         }
 
         ${hasTheme && dark
@@ -125,14 +133,23 @@ export function GlobalStyles({
             domain.includes("nominal") ? "#fff" : (dark.border ?? "initial")
           };
           --sidebar-background: ${dark.sidebarBackground ?? "initial"};
-          --header-background: ${dark.headerBackground ?? "initial"};
+          --header-background: ${dark.headerBackground ?? "color-mix(in srgb, var(--background), transparent 30%)"};
           --card-background: ${dark.cardBackground ?? "initial"};
+          --theme-color: ${dark.themeColor};
         }`
           : ""}
 
-        html {
-          background-color: var(--background, lightdark(#fff, #000));
-        }
+        ${root?.backgroundGradient || root?.backgroundImage
+          ? `.fern-background-image {
+          background-image: ${root?.backgroundImage?.src ? `url(${root?.backgroundImage?.src})` : light ? "linear-gradient(to bottom, color-mix(in srgb, var(--accent), var(--background) 90%) 0, var(--background) 100%)" : "linear-gradient(to bottom, var(--background) 0, color-mix(in srgb, var(--accent), var(--background) 90%) 100%)"};
+        }`
+          : ""}
+
+      ${hasTheme && (light?.backgroundGradient || light?.backgroundImage)
+          ? `.dark .fern-background-image {
+          background-image: ${light?.backgroundImage?.src ? `url(${light?.backgroundImage?.src})` : "linear-gradient(to bottom, var(--background) 0, color-mix(in srgb, var(--accent), var(--background) 90%) 100%)"};
+        }`
+          : ""}
 
         ${fonts.additionalCss}
 

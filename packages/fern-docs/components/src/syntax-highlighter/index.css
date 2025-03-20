@@ -1,0 +1,78 @@
+@theme {
+  --shiki-dark: white;
+}
+
+@layer components {
+  .code-block-root {
+    @apply flex w-full flex-col overflow-hidden;
+
+    counter-reset: code-block-line;
+    background-color: unset !important;
+  }
+
+  .code-block-root > .fern-scroll-area {
+    @apply min-h-0 shrink;
+  }
+
+  .code-block,
+  .code-block.text-sm,
+  .code-block.text-xs,
+  .code-block.text-base {
+    @apply font-mono leading-relaxed;
+  }
+
+  .code-block-inner {
+    @apply py-3;
+  }
+
+  .code-block.text-xs > .code-block-inner {
+    @apply py-2;
+  }
+
+  .code-block-line-group {
+    @apply min-w-full border-spacing-0;
+  }
+
+  .code-block-line-gutter {
+    @apply w-0 select-none p-0 align-top;
+  }
+
+  .code-block-line-gutter > span {
+    @apply pl-3;
+    color: var(--grayscale-a9, var(--gray-a9));
+  }
+
+  .code-block-line-content {
+    @apply px-3 py-0;
+  }
+
+  .code-block-line-group.word-wrap .code-block-line-content {
+    @apply whitespace-pre-wrap break-all;
+  }
+
+  .code-block-line-group.highlight-focus .code-block-line:not(.highlight) {
+    @apply opacity-40 blur-[1.5px] transition-[filter,opacity] dark:opacity-50;
+  }
+
+  .code-block:hover
+    .code-block-line-group.highlight-focus
+    .code-block-line:not(.highlight) {
+    @apply opacity-100 blur-none dark:opacity-100;
+  }
+
+  .code-block-line-group:not(.highlight-focus) .code-block-line.highlight {
+    @apply transition-[background];
+    background-color: var(--accent-a4);
+  }
+
+  .dark .code-block-line-content span {
+    color: var(--shiki-dark) !important;
+
+    /* background-color: var(--shiki-dark-bg) !important; */
+
+    /* Optional, if you also want font styles */
+    font-style: var(--font-code) !important;
+    font-weight: var(--shiki-dark-font-weight) !important;
+    text-decoration: var(--shiki-dark-text-decoration) !important;
+  }
+}

@@ -1,3 +1,7 @@
+import "server-only";
+
+import { after } from "next/server";
+
 import { PostHog } from "posthog-node";
 
 function getPosthogKey(): string | undefined {
@@ -18,27 +22,26 @@ function getPosthog(): PostHog | undefined {
   });
 }
 
-export async function track(
-  event: string,
-  properties?: Record<string, unknown>
-): Promise<void> {
-  try {
-    const client = getPosthog();
+export function track(event: string, properties?: Record<string, unknown>) {
+  after(async () => {
+    try {
+      const client = getPosthog();
 
-    client?.capture({
-      event,
-      distinctId: "server-side-event",
-      properties: {
-        // anonymize this event because it's server-side https://posthog.com/docs/product-analytics/capture-events?tab=Backend
-        $process_person_profile: false,
-        ...properties,
-      },
-    });
+      client?.capture({
+        event,
+        distinctId: "server-side-event",
+        properties: {
+          // anonymize this event because it's server-side https://posthog.com/docs/product-analytics/capture-events?tab=Backend
+          $process_person_profile: false,
+          ...properties,
+        },
+      });
 
-    await client?.shutdown();
-  } catch (error) {
-    if (process.env.NODE_ENV !== "development") {
-      console.error(error);
+      await client?.shutdown();
+    } catch (error) {
+      if (process.env.NODE_ENV !== "development") {
+        console.error(error);
+      }
     }
-  }
+  });
 }

@@ -1,3 +1,5 @@
+"use client";
+
 import dynamic from "next/dynamic";
 import { memo, useCallback, useMemo } from "react";
 
@@ -19,7 +21,7 @@ import { castToRecord, getEmptyValueForObjectProperties } from "../utils";
 import { PlaygroundObjectPropertiesForm } from "./PlaygroundObjectPropertyForm";
 
 const Markdown = dynamic(() =>
-  import("../../mdx/Markdown").then(({ Markdown }) => Markdown)
+  import("@/mdx/components/Markdown").then(({ Markdown }) => Markdown)
 );
 
 interface PlaygroundDiscriminatedUnionFormProps {
@@ -89,6 +91,7 @@ export const PlaygroundDiscriminatedUnionForm =
             // todo: handle availability
             tooltip:
               variant.description != null ? (
+                // todo: server-side render this
                 <Markdown size="xs" mdx={variant.description} />
               ) : undefined,
           })

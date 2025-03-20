@@ -3,6 +3,8 @@
 import { useServerInsertedHTML } from "next/navigation";
 import React from "react";
 
+import { FERN_HEADER_ID } from "@/components/constants";
+
 export function FernHeader(props: React.ComponentPropsWithoutRef<"header">) {
   const ref = React.useRef<HTMLDivElement>(null);
 
@@ -19,7 +21,7 @@ export function FernHeader(props: React.ComponentPropsWithoutRef<"header">) {
         suppressHydrationWarning
         dangerouslySetInnerHTML={{
           __html: `(${String(function () {
-            window.requestAnimationFrame(() => {
+            (window.requestAnimationFrame ?? window.setTimeout)(() => {
               const headerHeight =
                 document.getElementById("fern-header")?.clientHeight ?? 0;
               document.documentElement.style.setProperty(
@@ -52,11 +54,14 @@ export function FernHeader(props: React.ComponentPropsWithoutRef<"header">) {
   }, []);
 
   return (
-    <header ref={ref} id="fern-header" role="banner" {...props}>
-      <style jsx>
+    <header ref={ref} id={FERN_HEADER_ID} role="banner" {...props}>
+      <style jsx global key="__fern-header-scroll-padding">
         {`
-          :global(html, body) {
-            scroll-padding-top: var(--header-height);
+          html,
+          body {
+            scroll-padding-top: calc(
+              var(--header-height) + (var(--spacing) * 4)
+            );
           }
         `}
       </style>

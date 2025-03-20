@@ -1,4 +1,4 @@
-import { atom, useAtom, useAtomValue, useSetAtom } from "jotai";
+import { atom, useAtom, useSetAtom } from "jotai";
 
 export const isDismissableSidebarOpenAtom = atom(false);
 

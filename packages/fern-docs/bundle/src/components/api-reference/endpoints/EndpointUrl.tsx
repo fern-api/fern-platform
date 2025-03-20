@@ -19,7 +19,7 @@ import { CopyToClipboardButton } from "@fern-docs/components";
 import { HttpMethodBadge } from "@fern-docs/components/badges";
 import { useBooleanState } from "@fern-ui/react-commons";
 
-import { MaybeEnvironmentDropdown } from "../../components/MaybeEnvironmentDropdown";
+import { MaybeEnvironmentDropdown } from "@/components/MaybeEnvironmentDropdown";
 
 export declare namespace EndpointUrl {
   export type Props = React.PropsWithChildren<{

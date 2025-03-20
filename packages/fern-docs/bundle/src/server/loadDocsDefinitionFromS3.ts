@@ -8,18 +8,15 @@ import { getSignedUrl as getUncachedSignedUrl } from "@aws-sdk/s3-request-presig
 import { FdrAPI } from "@fern-api/fdr-sdk";
 import { getS3KeyForV1DocsDefinition } from "@fern-api/fdr-sdk/docs";
 
-const getSignedUrl = async (
-  domain: string,
-  {
-    Bucket,
-    Key,
-    expiresIn,
-  }: {
-    Bucket: string;
-    Key: string;
-    expiresIn: number;
-  }
-) => {
+const getSignedUrl = async ({
+  Bucket,
+  Key,
+  expiresIn,
+}: {
+  Bucket: string;
+  Key: string;
+  expiresIn: number;
+}) => {
   const accessKeyId = process.env.AWS_ACCESS_KEY_ID;
   const secretAccessKey = process.env.AWS_SECRET_ACCESS_KEY;
 
@@ -45,18 +42,15 @@ const getSignedUrl = async (
 
 // this function cannot be cached because the response can be > 2MB
 export const loadDocsDefinitionFromS3 = cache(
-  async ({
-    domain,
-    docsBucketName,
-  }: {
-    domain: string;
-    docsBucketName: string;
-  }): Promise<FdrAPI.docs.v2.read.LoadDocsForUrlResponse | undefined> => {
+  async (
+    domain: string,
+    docsBucketName: string
+  ): Promise<FdrAPI.docs.v2.read.LoadDocsForUrlResponse | undefined> => {
     try {
       const cleanDomain = domain.replace(/^https?:\/\//, "");
       const s3Key = getS3KeyForV1DocsDefinition(cleanDomain);
 
-      const signedUrl = await getSignedUrl(domain, {
+      const signedUrl = await getSignedUrl({
         Bucket: docsBucketName,
         Key: s3Key,
         expiresIn: 60 * 60, // 1 hour

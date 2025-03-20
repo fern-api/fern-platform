@@ -1,28 +1,17 @@
 "use client";
 
-import { usePathname } from "next/navigation";
+import { useTheme } from "next-themes";
 import React from "react";
 
-import {
-  Dialog,
-  DialogContent,
-  DialogOverlay,
-  DialogPortal,
-  DialogTitle,
-} from "@radix-ui/react-dialog";
-import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
-
 import { cn } from "@fern-docs/components";
-import { useIsDesktop } from "@fern-ui/react-commons/src/useBreakpoint";
 
+import { FERN_FOOTER_ID } from "@/components/constants";
 import { HeaderTabsRoot } from "@/components/header/HeaderTabsRoot";
-import { useShouldHideAsides } from "@/state/layout";
-import {
-  useCloseDismissableSidebar,
-  useIsDismissableSidebarOpen,
-} from "@/state/mobile";
+import { SetIsSidebarFixed } from "@/state/layout";
 
 import { FernHeader } from "./fern-header";
+import { MainCtx } from "./mobile-menu";
+import { SidebarNav } from "./side-nav";
 
 export default function DefaultDocs({
   header,
@@ -32,6 +21,11 @@ export default function DefaultDocs({
   tabs,
   isSidebarFixed = false,
   isHeaderDisabled = false,
+  showSearchBarInTabs = false,
+  lightHeaderClassName,
+  darkHeaderClassName,
+  lightSidebarClassName,
+  darkSidebarClassName,
 }: {
   header: React.ReactNode;
   sidebar: React.ReactNode;
@@ -40,128 +34,54 @@ export default function DefaultDocs({
   tabs?: React.ReactNode;
   isSidebarFixed?: boolean;
   isHeaderDisabled?: boolean;
+  showSearchBarInTabs?: boolean;
+  lightHeaderClassName?: string;
+  darkHeaderClassName?: string;
+  lightSidebarClassName?: string;
+  darkSidebarClassName?: string;
 }) {
-  const hideAsides = useShouldHideAsides();
+  const { resolvedTheme } = useTheme();
+  const headerClassName =
+    resolvedTheme === "dark" ? darkHeaderClassName : lightHeaderClassName;
+  const sidebarClassName =
+    resolvedTheme === "dark" ? darkSidebarClassName : lightSidebarClassName;
+  const mainRef = React.useRef<HTMLDivElement>(null);
   return (
     <>
+      <SetIsSidebarFixed value={isSidebarFixed} />
+      <div className="fern-background-image pointer-events-none fixed inset-0" />
       <FernHeader
         className={cn(
-          "bg-header-background border-border-concealed fixed inset-x-0 top-0 z-30 border-b backdrop-blur-lg",
-          { "lg:hidden": isHeaderDisabled }
+          "fern-background-image",
+          { "lg:hidden": isHeaderDisabled },
+          headerClassName
         )}
+        data-theme="default"
       >
         {announcement}
-        <div className="h-header-height-real px-page-padding flex items-center">
-          {header}
+        <div className="width-before-scroll-bar">
+          <div className="fern-header-content">{header}</div>
+          <HeaderTabsRoot showSearchBar={showSearchBarInTabs}>
+            {tabs}
+          </HeaderTabsRoot>
         </div>
-        <HeaderTabsRoot>{tabs}</HeaderTabsRoot>
       </FernHeader>
 
-      <main className="mt-(--header-height) relative z-0">
-        <div
-          className={cn("max-w-page-width-padded mx-auto flex flex-row", {
-            "[&>aside]:lg:hidden": hideAsides,
-          })}
+      <MainCtx.Provider value={mainRef}>
+        <main
+          ref={mainRef}
+          className="mt-(--header-height) relative z-0 flex"
+          data-theme="default"
         >
-          <SideNav fixed={isSidebarFixed}>{sidebar}</SideNav>
+          <SidebarNav className={sidebarClassName} data-theme="default">
+            {sidebar}
+          </SidebarNav>
           {children}
-        </div>
-      </main>
+        </main>
+      </MainCtx.Provider>
 
       {/* Enables footer DOM injection */}
-      <footer id="fern-footer" />
+      <footer id={FERN_FOOTER_ID} className="width-before-scroll-bar" />
     </>
-  );
-}
-
-function SideNav({
-  children,
-  fixed = false,
-}: {
-  children: React.ReactNode;
-  fixed?: boolean;
-}) {
-  const isDesktop = useIsDesktop();
-  const isDismissableSidebarOpen = useIsDismissableSidebarOpen();
-  const closeDismissableSidebar = useCloseDismissableSidebar();
-  const currentPath = usePathname();
-  React.useEffect(() => {
-    closeDismissableSidebar();
-  }, [currentPath]);
-
-  return (
-    <>
-      {isDesktop && (
-        <aside
-          className={cn(
-            "pointer-events-auto",
-            "z-30",
-            "lg:flex lg:shrink-0 lg:translate-x-0 lg:flex-col",
-            !fixed &&
-              "sticky h-fit max-h-[calc(100dvh-var(--header-height))] border-r-0",
-            fixed &&
-              "border-border-concealed bg-background/70 fixed bottom-0 left-0 border-r backdrop-blur-xl",
-            "w-(--spacing-sidebar-width)",
-            "top-(--header-height) hidden"
-          )}
-          data-mobile-state={isDismissableSidebarOpen ? "open" : "closed"}
-        >
-          {children}
-        </aside>
-      )}
-      {isDesktop && fixed && (
-        <aside className="lg:w-(--spacing-sidebar-width) pointer-events-none hidden lg:block lg:shrink-0" />
-      )}
-      {!isDesktop && <MobileMenu>{children}</MobileMenu>}
-    </>
-  );
-}
-
-function MobileMenu({ children }: { children: React.ReactNode }) {
-  const [open, setOpen] = useIsDismissableSidebarOpen();
-  const [dragStartX, setDragStartX] = React.useState(-1);
-  const [dragX, setDragX] = React.useState(0);
-
-  return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogPortal>
-        <DialogOverlay className="bg-background/70 fixed inset-0 z-40" />
-        <DialogContent
-          className={cn(
-            "sm:w-sidebar-width bg-background/70 border-border-default fixed inset-y-0 right-0 z-50 w-full max-w-[calc(100dvw-3rem)] transform border-l backdrop-blur-xl"
-            // "transition-transform duration-300 data-[state=closed]:translate-x-full data-[state=open]:translate-x-0"
-          )}
-          style={{
-            transform:
-              dragStartX === -1 || dragX < 0
-                ? undefined
-                : `translateX(${dragX}px)`,
-          }}
-          draggable={false}
-          onPointerDown={(event) => {
-            setDragStartX(event.clientX);
-          }}
-          onPointerMove={(event) => {
-            if (dragStartX === -1) {
-              return;
-            }
-            setDragX(event.clientX - dragStartX);
-          }}
-          onPointerUp={(e) => {
-            if (dragX > e.currentTarget.clientWidth / 2) {
-              setOpen(false);
-            }
-
-            setDragStartX(-1);
-            setDragX(0);
-          }}
-        >
-          <VisuallyHidden>
-            <DialogTitle>Menu</DialogTitle>
-          </VisuallyHidden>
-          {children}
-        </DialogContent>
-      </DialogPortal>
-    </Dialog>
   );
 }

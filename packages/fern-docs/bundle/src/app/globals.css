@@ -1,28 +1,24 @@
 @import "tailwindcss";
-@import "../components/css/rmiz.scss";
-@import "../components/css/base.scss";
 @import "../../../components/src/index.css";
-@import "../../../syntax-highlighter/src/index.css";
 @import "../../../search-ui/src/index.css";
-@import "../components/css/components.scss";
-@import "../components/api-reference/index.scss";
-@import "../components/playground/index.scss";
-@import "../components/components/index.scss";
-@import "../components/mdx/components/index.scss";
-@import "../components/changelog/index.scss";
-@import "../components/themes/index.scss";
-@import "../components/sidebar/index.scss";
+@import "../components/index.scss";
+@import "../mdx/components/index.scss";
 
 @plugin "@tailwindcss/typography";
 @config "./tailwind.config.ts";
 
 @source "../components";
+@source "../mdx/components";
 @source "../../../components/src";
 @source "../../../search-ui/src/components";
-@source "../../../syntax-highlighter/src";
 
 :root {
   --page-padding: 1rem;
+  --page-margin: calc((100vw - var(--page-width)) / 2);
+  --aside-offset: max(0px, calc(var(--page-margin) - var(--page-padding)));
+  --sticky-aside-width: calc(
+    var(--spacing-sidebar-width) + var(--aside-offset)
+  );
 }
 
 @media (min-width: 768px) {

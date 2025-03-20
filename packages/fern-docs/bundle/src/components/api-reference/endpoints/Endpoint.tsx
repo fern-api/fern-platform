@@ -1,54 +1,54 @@
-import { memo, useMemo } from "react";
+// import { memo, useMemo } from "react";
 
-import {
-  type ApiDefinition,
-  createEndpointContext,
-} from "@fern-api/fdr-sdk/api-definition";
-import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
+// import {
+//   type ApiDefinition,
+//   createEndpointContext,
+// } from "@fern-api/fdr-sdk/api-definition";
+// import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 
-import { WithAside } from "../../contexts/api-page";
-import { EndpointContent } from "./EndpointContent";
+// import { WithAside } from "../../contexts/api-page";
+// import { EndpointContent } from "./EndpointContent";
 
-export declare namespace Endpoint {
-  export interface Props {
-    showErrors: boolean;
-    node: FernNavigation.EndpointNode;
-    apiDefinition: ApiDefinition;
-    breadcrumb: readonly FernNavigation.BreadcrumbItem[];
-    streamToggle?: React.ReactElement<any>;
-    last?: boolean;
-  }
-}
+// export declare namespace Endpoint {
+//   export interface Props {
+//     showErrors: boolean;
+//     node: FernNavigation.EndpointNode;
+//     apiDefinition: ApiDefinition;
+//     breadcrumb: readonly FernNavigation.BreadcrumbItem[];
+//     streamToggle?: React.ReactElement<any>;
+//     last?: boolean;
+//   }
+// }
 
-const UnmemoizedEndpoint: React.FC<Endpoint.Props> = ({
-  showErrors,
-  node,
-  apiDefinition,
-  breadcrumb,
-  streamToggle,
-  last,
-}) => {
-  const context = useMemo(
-    () => createEndpointContext(node, apiDefinition),
-    [node, apiDefinition]
-  );
+// const UnmemoizedEndpoint: React.FC<Endpoint.Props> = ({
+//   showErrors,
+//   node,
+//   apiDefinition,
+//   breadcrumb,
+//   streamToggle,
+//   last,
+// }) => {
+//   const context = useMemo(
+//     () => createEndpointContext(node, apiDefinition),
+//     [node, apiDefinition]
+//   );
 
-  if (!context) {
-    console.error("Could not create context for endpoint", node);
-    return null;
-  }
+//   if (!context) {
+//     console.error("Could not create context for endpoint", node);
+//     return null;
+//   }
 
-  return (
-    <WithAside.Provider value={true}>
-      <EndpointContent
-        breadcrumb={breadcrumb}
-        showErrors={showErrors}
-        context={context}
-        streamToggle={streamToggle}
-        last={last}
-      />
-    </WithAside.Provider>
-  );
-};
+//   return (
+//     <WithAside.Provider value={true}>
+//       <EndpointContent
+//         breadcrumb={breadcrumb}
+//         showErrors={showErrors}
+//         context={context}
+//         streamToggle={streamToggle}
+//         // last={last}
+//       />
+//     </WithAside.Provider>
+//   );
+// };
 
-export const Endpoint = memo(UnmemoizedEndpoint);
+// export const Endpoint = memo(UnmemoizedEndpoint);

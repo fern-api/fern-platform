@@ -3,7 +3,7 @@ import { Snippet } from "react-instantsearch";
 
 import { TooltipPortal } from "@radix-ui/react-tooltip";
 
-import { useSearchHits } from "../../hooks/use-search-hits";
+import { useSearchHits, useSendEvent } from "../../hooks/use-search-hits";
 import { AlgoliaRecordHit } from "../../types";
 import * as Command from "../cmdk";
 import { PageIcon } from "../icons/page";
@@ -105,6 +105,7 @@ function CommandHit({
   onSelect: (path: string) => void;
   prefetch?: (path: string) => void | Promise<void>;
 }) {
+  const sendEvent = useSendEvent();
   if (!hit.record) {
     return false;
   }
@@ -119,7 +120,13 @@ function CommandHit({
         href={hit.path}
         keywords={[hit.record.title]}
         prefetch={prefetch}
-        onSelect={onSelect}
+        onSelect={(value) => {
+          // record click-through event for record
+          if (hit.record) {
+            sendEvent("click", hit.record);
+          }
+          onSelect(value);
+        }}
         domain={domain}
       >
         <PageIcon
@@ -174,10 +181,11 @@ const MemoizedTooltip = memo(
           side="right"
           sideOffset={16}
           align="start"
-          className="max-h-(--radix-tooltip-content-available-height) [&_mark]:bg-(color:--accent-a3) [&_mark]:text-(color:--accent-a11) max-w-[min(var(--radix-tooltip-content-available-width),384px)] space-y-2"
+          className="max-h-(--radix-tooltip-content-available-height) [&_mark]:bg-(color:--accent-a3) [&_mark]:text-(color:--accent-a11) w-[384px] space-y-2"
           avoidCollisions
           animate={false}
-          collisionPadding={10}
+          collisionBoundary={document.getElementById("fern-search-dialog")}
+          hideWhenDetached={true}
         >
           {hit._snippetResult?.description && (
             <p className="text-sm">

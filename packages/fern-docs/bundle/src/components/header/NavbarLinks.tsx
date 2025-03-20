@@ -6,15 +6,12 @@ import { ArrowRight } from "lucide-react";
 
 import { cn } from "@fern-docs/components";
 
-import type {
-  NavbarLink,
-  NavbarLink as NavbarLinkType,
-} from "@/components/atoms";
+import { FernLinkButton } from "@/components/FernLinkButton";
 import { FaIconServer } from "@/components/fa-icon-server";
 import { DocsLoader } from "@/server/docs-loader";
+import type { NavbarLink, NavbarLink as NavbarLinkType } from "@/state/types";
 
-import { FernLinkButton } from "../components/FernLinkButton";
-import { GitHubWidget, getGitHubRepo } from "./GitHubWidget";
+import { GitHubWidget } from "./GitHubWidget";
 import { WithReturnTo } from "./WithReturnTo";
 
 export async function NavbarLinks({ loader }: { loader: DocsLoader }) {
@@ -53,6 +50,13 @@ export async function NavbarLinks({ loader }: { loader: DocsLoader }) {
     </>
   );
 }
+
+const getGitHubRepo = (url: string): string | null => {
+  return (
+    url.match(/^https:\/\/(www\.)?github\.com\/([\w-]+\/[\w-]+)\/?$/)?.[2] ??
+    null
+  );
+};
 
 function HeaderNavbarLink({ navbarLink }: { navbarLink: NavbarLinkType }) {
   if (navbarLink.type === "github") {
@@ -94,6 +98,7 @@ function HeaderNavbarLink({ navbarLink }: { navbarLink: NavbarLinkType }) {
             : navbarLink.type
       }
       rounded={navbarLink.rounded}
+      scroll={true}
     >
       {navbarLink.text}
     </FernLinkButton>

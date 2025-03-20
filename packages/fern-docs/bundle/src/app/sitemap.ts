@@ -9,10 +9,16 @@ import { conformTrailingSlash } from "@fern-docs/utils";
 import { createCachedDocsLoader } from "@/server/docs-loader";
 import { getDocsDomainApp, getDocsHostApp } from "@/server/xfernhost/app";
 
+import { getFernToken } from "./fern-token";
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const host = await getDocsHostApp();
   const domain = await getDocsDomainApp();
-  const loader = await createCachedDocsLoader(host, domain);
+  const loader = await createCachedDocsLoader(
+    host,
+    domain,
+    await getFernToken()
+  );
   const root = await loader.getRoot();
 
   // collect all indexable page slugs

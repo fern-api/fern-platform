@@ -1,46 +1,34 @@
-"use client";
-
 import { ReactNode } from "react";
 
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
-
-import { useIsSelectedSidebarNode } from "@/state/navigation";
 
 import { WithFeatureFlags } from "../../feature-flags/WithFeatureFlags";
 import { SidebarSlugLink } from "../SidebarLink";
 
 interface SidebarPageNodeProps {
   node: FernNavigation.NavigationNodeWithMarkdown;
+  icon: React.ReactNode;
   depth: number;
   className?: string;
-  linkClassName?: string;
   shallow?: boolean;
 }
 
 export function SidebarPageNode({
   node,
+  icon,
   depth,
   className,
-  linkClassName,
   shallow,
 }: SidebarPageNodeProps): ReactNode {
-  const selected = useIsSelectedSidebarNode(node.id);
-
-  if (node.hidden && !selected) {
-    return null;
-  }
-
   return (
     <WithFeatureFlags featureFlags={node.featureFlags}>
       <SidebarSlugLink
+        icon={icon}
         nodeId={node.id}
         className={className}
-        linkClassName={linkClassName}
         slug={node.slug}
         depth={Math.max(depth - 1, 0)}
         title={node.title}
-        selected={selected}
-        icon={node.icon}
         hidden={node.hidden}
         authed={node.authed}
         shallow={shallow}

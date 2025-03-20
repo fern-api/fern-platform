@@ -24,10 +24,16 @@
   );
 }
 
-@utility clipped-background {
-  @apply pointer-events-none absolute top-0 -z-10 h-full w-full overflow-hidden;
+@layer components {
+  .clipped-background {
+    @apply pointer-events-none absolute inset-0 z-0 overflow-hidden;
 
-  clip-path: inset(0);
+    clip-path: inset(0);
+
+    & ~ * {
+      @apply relative;
+    }
+  }
 }
 
 @utility description-mask {
@@ -37,10 +43,7 @@
 }
 
 @utility bg-search-dialog {
-  background-color: var(
-    --bg-color-search-dialog,
-    var(--color-background-translucent)
-  );
+  background-color: var(--bg-color-search-dialog, var(--color-background-a9));
 }
 
 @utility m-mdx {
@@ -100,8 +103,6 @@
 }
 
 @utility fern-collapsible {
-  overflow: hidden;
-
   &[data-state="open"] {
     animation: collapsible-open 0.18s var(--ease-collapse) none;
 

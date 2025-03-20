@@ -4,13 +4,18 @@ import { NextRequest, NextResponse } from "next/server";
 
 import { getEnv } from "@vercel/functions";
 
-import { COOKIE_FERN_DOCS_PREVIEW } from "@fern-docs/utils";
+import {
+  COOKIE_FERN_DOCS_PREVIEW,
+  FERN_DOCS_ORIGINS,
+  HEADER_X_FERN_HOST,
+} from "@fern-docs/utils";
 
 import {
   withDeleteCookie,
   withSecureCookie,
 } from "@/server/auth/with-secure-cookie";
 import { redirectResponse } from "@/server/serverResponse";
+import { getDocsDomainEdge } from "@/server/xfernhost/edge";
 
 export const runtime = "edge";
 
@@ -18,7 +23,13 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
   const { VERCEL_ENV } = getEnv();
 
   // Only allow preview in dev and preview deployments
-  if (VERCEL_ENV === "production") {
+  const currentHost = getDocsDomainEdge(req);
+  if (
+    VERCEL_ENV === "production" &&
+    !FERN_DOCS_ORIGINS.includes(currentHost) &&
+    !req.nextUrl.hostname.endsWith(".vercel.app")
+  ) {
+    console.debug(`Cannot preview docs hosted on ${currentHost}`);
     return notFound();
   }
 
@@ -47,5 +58,6 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
     return redirectResponse(req.nextUrl.origin);
   }
 
+  console.debug("No redirect returned");
   notFound();
 }

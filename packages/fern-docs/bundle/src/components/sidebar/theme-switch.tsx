@@ -1,17 +1,12 @@
 "use client";
 
 import { useTheme } from "next-themes";
-import type { FC } from "react";
+import React from "react";
 
 import { Monitor, Moon, Sun } from "lucide-react";
 
 import { Button, FernDropdown } from "@fern-docs/components";
 import { useMounted } from "@fern-ui/react-commons";
-
-type ThemeSwitchProps = {
-  lite?: boolean;
-  className?: string;
-};
 
 const themeSwitchOptions = [
   { type: "value", value: "light", label: "Light", icon: <Sun /> },
@@ -19,12 +14,25 @@ const themeSwitchOptions = [
   { type: "value", value: "system", label: "System", icon: <Monitor /> },
 ] as const;
 
-export const ThemeSwitch: FC<ThemeSwitchProps> = ({ className }) => {
-  const { setTheme, theme = "system" } = useTheme();
+export function ThemeSwitch({
+  className,
+  variant = "outline",
+  size = "default",
+  iconOnly = false,
+}: {
+  className?: string;
+  variant?: "outline" | "ghost";
+  size?: "sm" | "default";
+  iconOnly?: boolean;
+}) {
+  const { setTheme, theme = "system", forcedTheme } = useTheme();
   const mounted = useMounted();
   const selectedOption = themeSwitchOptions.find(
     (option) => option.value === (mounted ? theme : "light")
   );
+  if (forcedTheme) {
+    return null;
+  }
   return (
     <FernDropdown
       className={className}
@@ -32,10 +40,13 @@ export const ThemeSwitch: FC<ThemeSwitchProps> = ({ className }) => {
       onValueChange={setTheme}
       value={selectedOption?.value}
     >
-      <Button variant="outline" size="sm">
+      <Button
+        variant={variant}
+        size={iconOnly ? (size === "default" ? "icon" : "iconSm") : size}
+      >
         {selectedOption?.icon}
-        {selectedOption?.label}
+        {!iconOnly && selectedOption?.label}
       </Button>
     </FernDropdown>
   );
-};
+}

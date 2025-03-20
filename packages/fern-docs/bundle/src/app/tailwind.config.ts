@@ -21,7 +21,7 @@ const config: Config = {
             "--tw-prose-body": "inherit",
             "--tw-prose-bullets": "var(--grayscale-a9)",
             "--tw-prose-captions": "var(--grayscale-a11)",
-            "--tw-prose-code": "inherit",
+            "--tw-prose-code": "var(--accent-a11)",
             "--tw-prose-counters": "var(--grayscale-a10)",
             "--tw-prose-headings": "inherit",
             "--tw-prose-th-borders": "var(--color-border-default)",
@@ -32,8 +32,8 @@ const config: Config = {
             "--tw-prose-links": "var(--accent-a11)",
             "--tw-prose-pre-bg": "initial",
             "--tw-prose-pre-code": "inherit",
-            "--tw-prose-quote-borders": "var(--grayscale-a2)",
-            "--tw-prose-quotes": "var(--color-border-default)",
+            "--tw-prose-quote-borders": "var(--accent-a6)",
+            "--tw-prose-quotes": "var(--grayscale-a11)",
             "--tw-prose-td-borders": "var(--color-border-default)",
 
             "tbody td[rowspan]:first-child, tfoot td[rowspan]:first-child": {

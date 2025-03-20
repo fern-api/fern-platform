@@ -28,3 +28,8 @@ export { useWhyDidYouUpdate } from "./useWhyDidYouUpdate";
 export { useLazyRef } from "./useLazyRef";
 export { tunnel } from "./tunnel-rat";
 export { useMinWidth, useIsMobile, useIsDesktop } from "./useBreakpoint";
+export { useIsomorphicLayoutEffect } from "./useIsomorphicLayoutEffect";
+export {
+  isomorphicRequestIdleCallback,
+  isomorphicRequestAnimationFrame,
+} from "./request-callback";

@@ -1,0 +1,353 @@
+---
+title: EVI Next.js Quickstart
+excerpt: A quickstart guide for implementing the Empathic Voice Interface (EVI) with Next.js.
+---
+
+This guide provides instructions for integrating EVI into your Next.js projects with Hume's [React SDK](https://www.npmjs.com/package/@humeai/voice-react)
+and includes detailed steps for using EVI with Next.js App Router and Pages Router.
+
+<Callout intent="info">
+  Kickstart your project with our pre-configured [Vercel template for the
+  Empathic Voice
+  Interface](https://vercel.com/templates/next.js/empathic-voice-interface-starter).
+  Install with one click to instantly set up a ready-to-use project and start
+  building with TypeScript right away!
+</Callout>
+
+<Tabs>
+<Tab title='Next.js (App Router)'>
+    This tutorial utilizes Hume’s React SDK to interact with EVI. It includes detailed steps for both the
+    **App Router** in Next.js and is broken down into four key components:
+
+    1. **Authentication**: Generate and use an access token to authenticate with EVI.
+    2. **Setting up context provider**: Set up the `<VoiceProvider/>`.
+    3. **Starting a chat and display messages**: Implement the functionality to start a chat with EVI and display messages.
+    4. **That's it!**: Audio playback and interruptions are handled for you.
+
+    <Callout intent='info'>
+      The Hume React SDK abstracts much of the logic for managing the WebSocket connection, as
+      well as capturing and preparing audio for processing. For a closer look at how the React
+      package manages these aspects of the integration, we invite you to explore the source code
+      here: [@humeai/voice-react](https://github.com/HumeAI/empathic-voice-api-js/tree/main/packages/react)
+    </Callout>
+
+    To see this code fully implemented within a frontend web application using the App Router from Next.js, visit this GitHub repository:
+    [evi-nextjs-app-router](https://github.com/HumeAI/hume-api-examples/tree/main/evi-next-js-app-router).
+
+    <Steps>
+      ### Prerequisites
+
+        Before you begin, you will need to have [an existing Next.js project set up using the App Router](https://nextjs.org/docs/getting-started/installation).
+
+      ### Authenticate
+
+      In order to make an authenticated connection we will first need to generate an access token. Doing so will
+      require your API key and Secret key. These keys can be obtained by logging into the portal and visiting the
+      [API keys page](https://platform.hume.ai/settings/keys).
+
+      <Callout intent='info'>
+        In the sample code below, the API key and Secret key have been saved to
+        environment variables. Avoid hardcoding these values in your project to
+        prevent them from being leaked.
+      </Callout>
+
+      <CodeBlock title="React">
+        ```tsx
+        // ./app/page.tsx
+        import ClientComponent from "@/components/ClientComponent";
+        import { fetchAccessToken } from "hume";
+
+        export default async function Page() {
+          const accessToken = await fetchAccessToken({
+            apiKey: String(process.env.HUME_API_KEY),
+            secretKey: String(process.env.HUME_SECRET_KEY),
+          });
+
+          if (!accessToken) {
+            throw new Error();
+          }
+
+          return <ClientComponent accessToken={accessToken} />;
+        }
+        ```
+      </CodeBlock>
+
+      ### Setup Context Provider
+
+      After fetching our access token we can pass it to our `ClientComponent`. First we set up the `<VoiceProvider/>` so that our `Messages` and `Controls` components can access the context. We also pass the access token to the `auth` prop of the `<VoiceProvider/>` for setting up the WebSocket connection.
+
+      <CodeBlock title="TypeScript">
+        ```tsx
+        // ./components/ClientComponent.tsx
+        "use client";
+        import { VoiceProvider } from "@humeai/voice-react";
+        import Messages from "./Messages";
+        import Controls from "./Controls";
+
+        export default function ClientComponent({
+          accessToken,
+        }: {
+          accessToken: string;
+        }) {
+          return (
+            <VoiceProvider auth={{ type: "accessToken", value: accessToken }}>
+              <Messages />
+              <Controls />
+            </VoiceProvider>
+          );
+        }
+        ```
+      </CodeBlock>
+
+      ### Audio input
+
+     `<VoiceProvider/>` will handle the microphone and playback logic.
+
+      ### Starting session
+
+      In order to start a session, you can use the `connect` function. It is important that this event is attached to a user interaction event (like a click) so that the browser is capable of playing Audio.
+
+      <CodeBlock title="TypeScript">
+        ```tsx
+        // ./components/Controls.tsx
+        "use client";
+        import { useVoice, VoiceReadyState } from "@humeai/voice-react";
+        export default function Controls() {
+          const { connect, disconnect, readyState } = useVoice();
+
+          if (readyState === VoiceReadyState.OPEN) {
+            return (
+              <button
+                onClick={() => {
+                  disconnect();
+                }}
+              >
+                End Session
+              </button>
+            );
+          }
+
+          return (
+            <button
+              onClick={() => {
+                connect()
+                  .then(() => {
+                    /* handle success */
+                  })
+                  .catch(() => {
+                    /* handle error */
+                  });
+              }}
+            >
+              Start Session
+            </button>
+          );
+        }
+        ```
+      </CodeBlock>
+
+      ### Displaying message history
+
+      To display the message history, we can use the `useVoice` hook to access the `messages` array. We can then map over the `messages` array to display the role (`Assistant` or `User`) and content of each message.
+
+      <CodeBlock title="TypeScript">
+        ```tsx
+        // ./components/Messages.tsx
+        "use client";
+        import { useVoice } from "@humeai/voice-react";
+
+        export default function Messages() {
+          const { messages } = useVoice();
+
+          return (
+            <div>
+              {messages.map((msg, index) => {
+                if (msg.type === "user_message" || msg.type === "assistant_message") {
+                  return (
+                    <div key={msg.type + index}>
+                      <div>{msg.message.role}</div>
+                      <div>{msg.message.content}</div>
+                    </div>
+                  );
+                }
+
+                return null;
+              })}
+            </div>
+          );
+        }
+        ```
+      </CodeBlock>
+
+      ### Interrupt
+
+      This [Next.js example](https://github.com/HumeAI/hume-api-examples/tree/main/evi-next-js-app-router) will handle interruption events automatically!
+    </Steps>
+
+  </Tab>
+  <Tab title='Next.js (Pages Router)'>
+    This tutorial utilizes Hume’s React SDK to interact with EVI. It includes detailed steps for both the
+    **Pages Router** in Next.js and is broken down into four key components:
+
+    1. **Authentication**: Generate and use an access token to authenticate with EVI.
+    2. **Setting up context provider**: Set up the `<VoiceProvider/>`.
+    3. **Starting a chat and display messages**: Implement the functionality to start a chat with EVI and display messages.
+    4. **That's it!**: Audio playback and interruptions are handled for you.
+
+    <Callout intent='info'>
+      The Hume React SDK abstracts much of the logic for managing the WebSocket connection, as
+      well as capturing and preparing audio for processing. For a closer look at how the React
+      package manages these aspects of the integration, we invite you to explore the source code
+      here: [@humeai/voice-react](https://github.com/HumeAI/empathic-voice-api-js/tree/main/packages/react)
+    </Callout>
+
+    To see this code fully implemented within a frontend web application using the Pages Router from Next.js, visit this GitHub repository: [evi-nextjs-pages-router](https://github.com/HumeAI/hume-api-examples/tree/main/evi-next-js-pages-router).
+
+    <Steps>
+      ### Prerequisites
+
+      Before you begin, you will need to have [an existing Next.js project set up using the Pages Router](https://nextjs.org/docs/getting-started/installation).
+
+      ### Authenticate and Setup Context Provider
+
+      In order to make an authenticated connection we will first need to generate an access token. Doing so will
+      require your API key and Secret key. These keys can be obtained by logging into the portal and visiting the
+      [API keys page](https://platform.hume.ai/settings/keys).
+
+      <Callout intent='info'>
+        In the sample code below, the API key and Secret key have been saved to
+        environment variables. Avoid hardcoding these values in your project to
+        prevent them from being leaked.
+      </Callout>
+
+        <CodeBlock title="React">
+          ```tsx
+          // ./pages/index.tsx
+          import Controls from "@/components/Controls";
+          import Messages from "@/components/Messages";
+          import { fetchAccessToken } from "hume";
+          import { VoiceProvider } from "@humeai/voice-react";
+          import { InferGetServerSidePropsType } from "next";
+
+          export const getServerSideProps = async () => {
+            const accessToken = await fetchAccessToken({
+              apiKey: String(process.env.HUME_API_KEY),
+              secretKey: String(process.env.HUME_SECRET_KEY),
+            });
+
+            if (!accessToken) {
+              return {
+                redirect: {
+                  destination: "/error",
+                  permanent: false,
+                },
+              };
+            }
+
+            return {
+              props: {
+                accessToken,
+              },
+            };
+          };
+
+          type PageProps = InferGetServerSidePropsType<typeof getServerSideProps>;
+
+          export default function Page({ accessToken }: PageProps) {
+            return (
+              <VoiceProvider auth={{ type: "accessToken", value: accessToken }}>
+                <Messages />
+                <Controls />
+              </VoiceProvider>
+            );
+          }
+          ```
+        </CodeBlock>
+
+      ### Audio input
+
+     `<VoiceProvider/>` is designed to manage microphone inputs and audio playback. It abstracts the complexities of audio processing to allow developers to focus on developing interactive voice-driven functionalities.
+
+     For a closer look at how `<VoiceProvider/>` processes audio inputs and controls playback, you can view the source code [here](https://github.com/HumeAI/empathic-voice-api-js/blob/main/packages/react/src/lib/VoiceProvider.tsx).
+
+     ### Starting session
+
+     In order to start a session, you can use the `connect` function. It is important that this event is attached to a user interaction event (like a click) so that the browser is capable of playing Audio.
+
+      <CodeBlock title="TypeScript">
+        ```tsx
+        // ./components/Controls.tsx
+        import { useVoice, VoiceReadyState } from "@humeai/voice-react";
+        export default function Controls() {
+          const { connect, disconnect, readyState } = useVoice();
+
+          if (readyState === VoiceReadyState.OPEN) {
+            return (
+              <button
+                onClick={() => {
+                  disconnect();
+                }}
+              >
+                End Session
+              </button>
+            );
+          }
+
+          return (
+            <button
+              onClick={() => {
+                connect()
+                  .then(() => {
+                    /* handle success */
+                  })
+                  .catch(() => {
+                    /* handle error */
+                  });
+              }}
+            >
+              Start Session
+            </button>
+          );
+        }
+        ```
+      </CodeBlock>
+
+      ### Displaying message history
+
+      To display the message history, we can use the `useVoice` hook to access the `messages` array. We can then map over the `messages` array to display the role (`Assistant` or `User`) and content of each message.
+
+      <CodeBlock title="TypeScript">
+        ```tsx
+        // ./components/Messages.tsx
+        import { useVoice } from "@humeai/voice-react";
+
+        export default function Messages() {
+          const { messages } = useVoice();
+
+          return (
+            <div>
+              {messages.map((msg, index) => {
+                if (msg.type === "user_message" || msg.type === "assistant_message") {
+                  return (
+                    <div key={msg.type + index}>
+                      <div>{msg.message.role}</div>
+                      <div>{msg.message.content}</div>
+                    </div>
+                  );
+                }
+
+                return null;
+              })}
+            </div>
+          );
+        }
+        ```
+      </CodeBlock>
+
+      ### Interrupt
+
+      This [Next.js example](https://github.com/HumeAI/hume-api-examples/tree/main/evi-next-js-app-router) will handle interruption events automatically!
+    </Steps>
+
+  </Tab>
+</Tabs>
