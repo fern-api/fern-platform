@@ -457,7 +457,7 @@
       &.interactive:not(:disabled):hover,
       &[data-state="open"]:not(:disabled) {
         background-color: var(--accent-a9, var(--grayscale-a9));
-        color: var(--grayscale-1);
+        color: var(--accent-contrast);
       }
     }
 
