@@ -24,6 +24,7 @@ import {
   queryTurbopuffer,
   toDocuments,
 } from "@fern-docs/search-server/turbopuffer";
+import { FacetFilter } from "@fern-docs/search-ui";
 import { withoutStaging } from "@fern-docs/utils";
 
 import { getFernToken } from "@/app/fern-token";
@@ -48,10 +49,6 @@ export async function POST(req: NextRequest) {
     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
   });
-  const languageModel = wrapAISDKModel(
-    // bedrock("us.anthropic.claude-3-7-sonnet-20250219-v1:0")
-    bedrock("us.anthropic.claude-3-5-sonnet-20241022-v2:0")
-  );
 
   const openai = createOpenAI({ apiKey: openaiApiKey() });
   const embeddingModel = openai.embedding("text-embedding-3-large");
@@ -59,21 +56,14 @@ export async function POST(req: NextRequest) {
   const host = req.nextUrl.host;
   const domain = getDocsDomainEdge(req);
   const namespace = `${withoutStaging(domain)}_${embeddingModel.modelId}`;
-  const { messages, url } = await req.json();
+  const { messages, url, filters } = await req.json();
 
-  // TODO: SORRY DEEP - NEED TO PUSH FOR WEBFLOW
-  const isWebflow = url.includes("webflow-ai");
-  let webflowVersion: string | undefined = undefined;
-  if (isWebflow) {
-    if (url.includes("/v2.0.0/data/")) {
-      webflowVersion = "Data API v2";
-    } else if (url.includes("/designer/")) {
-      webflowVersion = "Designer API v2";
-    } else if (url.includes("/browser/")) {
-      webflowVersion = "Browser API";
-    }
-  }
-  // END WEBFLOW SPECIFIC CODE
+  // TODO: move system prompt to docs.yml
+  const isWebflow = url.includes("webflow-ai") || url.includes("localhost");
+
+  const languageModel = isWebflow
+    ? wrapAISDKModel(bedrock("us.anthropic.claude-3-7-sonnet-20250219-v1:0"))
+    : wrapAISDKModel(bedrock("us.anthropic.claude-3-5-sonnet-20241022-v2:0"));
 
   const loader = await createCachedDocsLoader(host, domain);
   const metadata = await loader.getMetadata();
@@ -110,7 +100,7 @@ export async function POST(req: NextRequest) {
     authed: user != null,
     roles: user?.roles ?? [],
     topK: 5,
-    version: webflowVersion,
+    filters,
   });
   const documents = toDocuments(searchResults).join("\n\n");
   const system = isWebflow
@@ -143,7 +133,7 @@ export async function POST(req: NextRequest) {
             namespace,
             authed: user != null,
             roles: user?.roles ?? [],
-            version: webflowVersion,
+            filters,
           });
           return response.map((hit) => {
             const { domain, pathname, hash } = hit.attributes;
@@ -219,34 +209,25 @@ async function runQueryTurbopuffer(
     topK?: number;
     authed?: boolean;
     roles?: string[];
-    version?: string;
+    filters?: FacetFilter[];
   }
 ) {
   return query == null || query.trimStart().length === 0
     ? []
-    : (
-        await queryTurbopuffer(
-          query + (opts.version ? ` version: ${opts.version}` : ""),
-          {
-            namespace: opts.namespace,
-            apiKey: turbopufferApiKey(),
-            topK: opts.topK ?? 10,
-            vectorizer: async (text) => {
-              const embedding = await embed({
-                model: opts.embeddingModel,
-                value: text,
-              });
-              return embedding.embedding;
-            },
-            mode: "bm25",
-            authed: opts.authed,
-            roles: opts.roles,
-          }
-        )
-      ).filter((hit) => {
-        if (opts.version) {
-          return hit.attributes.version === opts.version;
-        }
-        return true;
+    : await queryTurbopuffer(query, {
+        namespace: opts.namespace,
+        apiKey: turbopufferApiKey(),
+        topK: opts.topK ?? 10,
+        vectorizer: async (text) => {
+          const embedding = await embed({
+            model: opts.embeddingModel,
+            value: text,
+          });
+          return embedding.embedding;
+        },
+        mode: "hybrid",
+        authed: opts.authed,
+        roles: opts.roles,
+        filters: opts.filters,
       });
 }
