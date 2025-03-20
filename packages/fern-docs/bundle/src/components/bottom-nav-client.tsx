@@ -77,7 +77,7 @@ export function BottomNavigationClient({
       {next && (
         <MaybeFernLink
           href={next.href}
-          className="bg-card-solid hover:border-(color:--accent-a9) border-(color:--grayscale-a6) fern-background-image relative flex h-16 min-w-0 flex-1 shrink items-center justify-end gap-4 overflow-clip border px-3 transition-all hover:transition-none"
+          className="bg-card-solid hover:border-(color:--accent-a9) border-card-border fern-background-image relative flex h-16 min-w-0 flex-1 shrink items-center justify-end gap-4 overflow-clip border px-3 transition-all hover:transition-none"
           shallow={next.shallow}
           onClick={next.onClick}
         >
