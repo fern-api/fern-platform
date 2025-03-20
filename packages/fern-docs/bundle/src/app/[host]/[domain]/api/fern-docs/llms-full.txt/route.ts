@@ -1,3 +1,4 @@
+import { unstable_cacheTag } from "next/cache";
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -16,7 +17,11 @@ export async function GET(
   req: NextRequest,
   props: { params: Promise<{ host: string; domain: string }> }
 ): Promise<NextResponse> {
+  "use cache";
+
   const { host, domain } = await props.params;
+
+  unstable_cacheTag(domain, "llms-full-txt");
 
   const path = slugToHref(req.nextUrl.searchParams.get("slug") ?? "");
   const fern_token = (await cookies()).get(COOKIE_FERN_TOKEN)?.value;

@@ -1,3 +1,4 @@
+import { unstable_cacheTag } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
 
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
@@ -35,7 +36,11 @@ export async function GET(
   req: NextRequest,
   props: { params: Promise<{ host: string; domain: string }> }
 ): Promise<NextResponse> {
+  "use cache";
+
   const { host, domain } = await props.params;
+
+  unstable_cacheTag(domain, "llms-txt");
 
   const path = slugToHref(req.nextUrl.searchParams.get("slug") ?? "");
   const loader = await createCachedDocsLoader(host, domain);
