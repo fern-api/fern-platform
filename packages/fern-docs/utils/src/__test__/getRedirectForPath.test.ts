@@ -50,7 +50,7 @@ describe("getRedirectForPath", () => {
       getRedirectForPath("/docs/bar", MOCK_BASE_URL_1, [
         { source: "/bar", destination: "/baz", permanent: undefined },
       ])
-    ).toEqual({destination: "/baz", permanent: false });
+    ).toEqual({ destination: "/baz", permanent: false });
     expect(
       getRedirectForPath("/docs/bar", MOCK_BASE_URL_1, [
         { source: "/bar/", destination: "/baz/", permanent: undefined },
