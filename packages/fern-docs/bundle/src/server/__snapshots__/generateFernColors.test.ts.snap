@@ -63,7 +63,7 @@ exports[`generateFernColorPalette > Should generate fern colors 1`] = `
   "accentSurface": "#f1f9f0cc",
   "accentSurfaceWideGamut": "color(display-p3 0.9529 0.9765 0.9451 / 0.8)",
   "appearance": "light",
-  "background": "#fbfffa",
+  "background": "oklch(99.56% 0.0078 139.44)",
   "border": undefined,
   "cardBackground": undefined,
   "grayScale": [
@@ -125,7 +125,10 @@ exports[`generateFernColorPalette > Should generate fern colors 1`] = `
   "graySurface": "#ffffffcc",
   "graySurfaceWideGamut": "color(display-p3 1 1 1 / 80%)",
   "headerBackground": undefined,
+  "headerBackgroundTheme": undefined,
   "sidebarBackground": undefined,
+  "sidebarBackgroundTheme": undefined,
+  "themeColor": "oklch(99.56% 0.0078 139.44)",
 }
 `;
 
@@ -192,7 +195,7 @@ exports[`generateFernColorPalette > Should generate fern colors 2`] = `
   "accentSurface": "#1c241c80",
   "accentSurfaceWideGamut": "color(display-p3 0.1176 0.1412 0.1098 / 0.5)",
   "appearance": "dark",
-  "background": "#081008",
+  "background": "oklch(16.16% 0.021 144.53)",
   "border": undefined,
   "cardBackground": undefined,
   "grayScale": [
@@ -254,7 +257,10 @@ exports[`generateFernColorPalette > Should generate fern colors 2`] = `
   "graySurface": "rgba(0, 0, 0, 0.05)",
   "graySurfaceWideGamut": "color(display-p3 0 0 0 / 5%)",
   "headerBackground": undefined,
+  "headerBackgroundTheme": undefined,
   "sidebarBackground": undefined,
+  "sidebarBackgroundTheme": undefined,
+  "themeColor": "oklch(16.16% 0.021 144.53)",
 }
 `;
 
@@ -321,7 +327,7 @@ exports[`generateFernColorPalette > should generate humanloop colors 1`] = `
   "accentSurface": "#f3faf4cc",
   "accentSurfaceWideGamut": "color(display-p3 0.9569 0.9804 0.9608 / 0.8)",
   "appearance": "light",
-  "background": "#fff",
+  "background": "#FFF",
   "border": undefined,
   "cardBackground": undefined,
   "grayScale": [
@@ -383,7 +389,10 @@ exports[`generateFernColorPalette > should generate humanloop colors 1`] = `
   "graySurface": "#ffffffcc",
   "graySurfaceWideGamut": "color(display-p3 1 1 1 / 80%)",
   "headerBackground": undefined,
+  "headerBackgroundTheme": undefined,
   "sidebarBackground": undefined,
+  "sidebarBackgroundTheme": undefined,
+  "themeColor": "#fff",
 }
 `;
 
@@ -450,7 +459,7 @@ exports[`generateFernColorPalette > should generate humanloop colors 2`] = `
   "accentSurface": "#1d231c80",
   "accentSurfaceWideGamut": "color(display-p3 0.1176 0.1333 0.1176 / 0.5)",
   "appearance": "dark",
-  "background": "#07110c",
+  "background": "#07110C",
   "border": undefined,
   "cardBackground": undefined,
   "grayScale": [
@@ -512,7 +521,10 @@ exports[`generateFernColorPalette > should generate humanloop colors 2`] = `
   "graySurface": "rgba(0, 0, 0, 0.05)",
   "graySurfaceWideGamut": "color(display-p3 0 0 0 / 5%)",
   "headerBackground": undefined,
+  "headerBackgroundTheme": undefined,
   "sidebarBackground": undefined,
+  "sidebarBackgroundTheme": undefined,
+  "themeColor": "#07110c",
 }
 `;
 
@@ -579,7 +591,7 @@ exports[`generateFernColorPalette > should generate vapi colors 1`] = `
   "accentSurface": "#e5f7f1cc",
   "accentSurfaceWideGamut": "color(display-p3 0.9137 0.9608 0.9451 / 0.8)",
   "appearance": "light",
-  "background": "#fffaea",
+  "background": "#FFFAEA",
   "border": undefined,
   "cardBackground": undefined,
   "grayScale": [
@@ -641,7 +653,10 @@ exports[`generateFernColorPalette > should generate vapi colors 1`] = `
   "graySurface": "#ffffffcc",
   "graySurfaceWideGamut": "color(display-p3 1 1 1 / 80%)",
   "headerBackground": undefined,
+  "headerBackgroundTheme": undefined,
   "sidebarBackground": undefined,
+  "sidebarBackgroundTheme": undefined,
+  "themeColor": "#fffaea",
 }
 `;
 
@@ -708,7 +723,7 @@ exports[`generateFernColorPalette > should generate vapi colors 2`] = `
   "accentSurface": "#0b281680",
   "accentSurfaceWideGamut": "color(display-p3 0.0706 0.1569 0.0863 / 0.5)",
   "appearance": "dark",
-  "background": "#0e0e12",
+  "background": "#0E0E12",
   "border": undefined,
   "cardBackground": undefined,
   "grayScale": [
@@ -770,6 +785,9 @@ exports[`generateFernColorPalette > should generate vapi colors 2`] = `
   "graySurface": "rgba(0, 0, 0, 0.05)",
   "graySurfaceWideGamut": "color(display-p3 0 0 0 / 5%)",
   "headerBackground": undefined,
+  "headerBackgroundTheme": undefined,
   "sidebarBackground": undefined,
+  "sidebarBackgroundTheme": undefined,
+  "themeColor": "#0e0e12",
 }
 `;

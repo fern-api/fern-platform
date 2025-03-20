@@ -30,6 +30,7 @@
     "lint:style:fix": "pnpm lint:style --fix",
     "storybook": "storybook dev -p 6006",
     "test": "vitest --run --passWithNoTests --globals",
+    "test:update": "vitest --run --passWithNoTests --globals",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
