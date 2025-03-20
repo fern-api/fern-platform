@@ -22,21 +22,13 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
   const { VERCEL_ENV } = getEnv();
 
   // Only allow preview in dev and preview deployments
+  const origin = req.headers.get(HEADER_X_FORWARDED_HOST) ?? req.nextUrl.host;
   if (
     VERCEL_ENV === "production" &&
-    !FERN_DOCS_ORIGINS.includes(req.nextUrl.host) &&
-    !req.nextUrl.hostname.endsWith(".vercel.app")
+    !FERN_DOCS_ORIGINS.includes(origin) &&
+    !origin.endsWith(".vercel.app")
   ) {
-    console.debug(`Cannot preview docs hosted on ${req.nextUrl.host}`);
-    return notFound();
-  }
-
-  if (req.headers.has(HEADER_X_FORWARDED_HOST)) {
-    console.debug(
-      `Cannot preview docs hosted on a forwarded host: ${req.headers.get(
-        HEADER_X_FORWARDED_HOST
-      )}`
-    );
+    console.debug(`Cannot preview docs hosted on ${origin}`);
     return notFound();
   }
 
