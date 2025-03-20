@@ -9,7 +9,7 @@
   },
   "sideEffects": false,
   "scripts": {
-    "check-types": "tsc --noEmit",
+    "check-types": "tsc --build",
     "dashboard:build": "next build",
     "dashboard:dev": "next dev",
     "dashboard:dev:inspect": "NODE_OPTIONS='--inspect' next dev",
