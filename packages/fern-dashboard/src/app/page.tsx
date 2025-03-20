@@ -1,9 +1,15 @@
-import { App } from "../components/App";
+import { redirect } from "next/navigation";
 
-export default function Home() {
-  return (
-    <div className="flex flex-1">
-      <App />
-    </div>
-  );
+import { getSession } from "@auth0/nextjs-auth0";
+
+import { LoginPage } from "@/components/LoginPage";
+
+export default async function Home() {
+  const session = await getSession();
+
+  if (session == null) {
+    return <LoginPage />;
+  } else {
+    redirect("/docs");
+  }
 }

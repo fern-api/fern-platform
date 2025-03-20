@@ -28,10 +28,15 @@
   },
   "dependencies": {
     "@auth0/nextjs-auth0": "3",
+    "@heroicons/react": "^2.2.0",
     "@radix-ui/react-dropdown-menu": "^2.1.6",
+    "@radix-ui/react-popover": "^1.1.6",
+    "@radix-ui/react-select": "^2.1.6",
     "@radix-ui/react-slot": "^1.1.2",
+    "auth0": "^4.20.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "jsonwebtoken": "^9.0.2",
     "lucide-react": "^0.460.0",
     "next": "15.3.0-canary.1",
     "next-themes": "^0.4.4",
@@ -43,6 +48,7 @@
   "devDependencies": {
     "@fern-platform/configs": "workspace:*",
     "@tailwindcss/postcss": "^4.0.9",
+    "@types/jsonwebtoken": "^9.0.9",
     "@types/node": "^18.11.9",
     "@types/react": "19.0.10",
     "@types/react-dom": "19.0.4",
