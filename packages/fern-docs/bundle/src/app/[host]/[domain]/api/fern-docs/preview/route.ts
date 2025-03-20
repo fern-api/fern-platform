@@ -7,7 +7,7 @@ import { getEnv } from "@vercel/functions";
 import {
   COOKIE_FERN_DOCS_PREVIEW,
   FERN_DOCS_ORIGINS,
-  HEADER_X_FERN_HOST,
+  HEADER_X_FORWARDED_HOST,
 } from "@fern-docs/utils";
 
 import {
@@ -15,7 +15,6 @@ import {
   withSecureCookie,
 } from "@/server/auth/with-secure-cookie";
 import { redirectResponse } from "@/server/serverResponse";
-import { getDocsDomainEdge } from "@/server/xfernhost/edge";
 
 export const runtime = "edge";
 
@@ -23,13 +22,21 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
   const { VERCEL_ENV } = getEnv();
 
   // Only allow preview in dev and preview deployments
-  const currentHost = getDocsDomainEdge(req);
   if (
     VERCEL_ENV === "production" &&
-    !FERN_DOCS_ORIGINS.includes(currentHost) &&
+    !FERN_DOCS_ORIGINS.includes(req.nextUrl.host) &&
     !req.nextUrl.hostname.endsWith(".vercel.app")
   ) {
-    console.debug(`Cannot preview docs hosted on ${currentHost}`);
+    console.debug(`Cannot preview docs hosted on ${req.nextUrl.host}`);
+    return notFound();
+  }
+
+  if (req.headers.has(HEADER_X_FORWARDED_HOST)) {
+    console.debug(
+      `Cannot preview docs hosted on a forwarded host: ${req.headers.get(
+        HEADER_X_FORWARDED_HOST
+      )}`
+    );
     return notFound();
   }
 
