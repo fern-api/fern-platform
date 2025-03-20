@@ -217,31 +217,5 @@
   .thinking-state {
     display: flex;
     align-items: center;
-
-    &.solid {
-      color: var(--grayscale-1);
-      background-color: var(--grayscale-9);
-
-      @variant dark {
-        color: white;
-      }
-
-      &.accent,
-      &.gray,
-      &.mauve,
-      &.slate,
-      &.blue,
-      &.green {
-        color: white;
-      }
-
-      &.amber,
-      &.sky,
-      &.mint,
-      &.lime,
-      &.yellow {
-        color: black;
-      }
-    }
   }
 }
