@@ -447,7 +447,7 @@
 
     &.interactive:not(:disabled):hover,
     &[data-state="open"]:not(:disabled) {
-      background-color: var(--grayscale-a9);
+      background-color: var(--grayscale-a10);
       color: var(--accent-contrast);
     }
 
@@ -456,7 +456,7 @@
 
       &.interactive:not(:disabled):hover,
       &[data-state="open"]:not(:disabled) {
-        background-color: var(--accent-a9, var(--grayscale-a9));
+        background-color: var(--accent-a9, var(--grayscale-a10));
         color: var(--accent-contrast);
       }
     }
@@ -467,7 +467,7 @@
       &.interactive:not(:disabled):hover,
       &[data-state="open"]:not(:disabled) {
         background-color: var(--gray-a9);
-        color: var(--accent-contrast);
+        color: var(--gray-a1);
       }
     }
 
@@ -476,7 +476,7 @@
 
       &.interactive:not(:disabled):hover,
       &[data-state="open"]:not(:disabled) {
-        background-color: var(--accent-a9);
+        background-color: var(--accent-a10);
         color: var(--accent-contrast);
       }
     }
@@ -486,8 +486,8 @@
 
       &.interactive:not(:disabled):hover,
       &[data-state="open"]:not(:disabled) {
-        background-color: var(--mauve-a9);
-        color: var(--accent-contrast);
+        background-color: var(--mauve-10);
+        color: var(--mauve-1);
       }
     }
 
@@ -496,8 +496,8 @@
 
       &.interactive:not(:disabled):hover,
       &[data-state="open"]:not(:disabled) {
-        background-color: var(--slate-a9);
-        color: var(--accent-contrast);
+        background-color: var(--slate-10);
+        color: var(--slate-1);
       }
     }
 
@@ -506,8 +506,8 @@
 
       &.interactive:not(:disabled):hover,
       &[data-state="open"]:not(:disabled) {
-        background-color: var(--sage-a9);
-        color: var(--accent-contrast);
+        background-color: var(--sage-10);
+        color: var(--sage-1);
       }
     }
 
@@ -516,8 +516,8 @@
 
       &.interactive:not(:disabled):hover,
       &[data-state="open"]:not(:disabled) {
-        background-color: var(--olive-a9);
-        color: var(--accent-contrast);
+        background-color: var(--olive-10);
+        color: var(--olive-1);
       }
     }
 
@@ -526,8 +526,8 @@
 
       &.interactive:not(:disabled):hover,
       &[data-state="open"]:not(:disabled) {
-        background-color: var(--sand-a9);
-        color: var(--accent-contrast);
+        background-color: var(--sand-10);
+        color: var(--sand-1);
       }
     }
 
@@ -536,8 +536,8 @@
 
       &.interactive:not(:disabled):hover,
       &[data-state="open"]:not(:disabled) {
-        background-color: var(--tomato-a9);
-        color: var(--accent-contrast);
+        background-color: var(--tomato-10);
+        color: var(--tomato-1);
       }
     }
 
@@ -546,8 +546,8 @@
 
       &.interactive:not(:disabled):hover,
       &[data-state="open"]:not(:disabled) {
-        background-color: var(--red-a9);
-        color: var(--accent-contrast);
+        background-color: var(--red-10);
+        color: var(--red-1);
       }
     }
 
@@ -556,8 +556,8 @@
 
       &.interactive:not(:disabled):hover,
       &[data-state="open"]:not(:disabled) {
-        background-color: var(--ruby-a9);
-        color: var(--accent-contrast);
+        background-color: var(--ruby-10);
+        color: var(--ruby-1);
       }
     }
 
@@ -566,8 +566,8 @@
 
       &.interactive:not(:disabled):hover,
       &[data-state="open"]:not(:disabled) {
-        background-color: var(--crimson-a9);
-        color: var(--accent-contrast);
+        background-color: var(--crimson-10);
+        color: var(--crimson-1);
       }
     }
 
@@ -576,8 +576,8 @@
 
       &.interactive:not(:disabled):hover,
       &[data-state="open"]:not(:disabled) {
-        background-color: var(--pink-a9);
-        color: var(--accent-contrast);
+        background-color: var(--pink-10);
+        color: var(--pink-1);
       }
     }
 
@@ -586,8 +586,8 @@
 
       &.interactive:not(:disabled):hover,
       &[data-state="open"]:not(:disabled) {
-        background-color: var(--plum-a9);
-        color: var(--accent-contrast);
+        background-color: var(--plum-10);
+        color: var(--plum-1);
       }
     }
 
@@ -596,8 +596,8 @@
 
       &.interactive:not(:disabled):hover,
       &[data-state="open"]:not(:disabled) {
-        background-color: var(--purple-a9);
-        color: var(--accent-contrast);
+        background-color: var(--purple-10);
+        color: var(--purple-1);
       }
     }
 
@@ -606,8 +606,8 @@
 
       &.interactive:not(:disabled):hover,
       &[data-state="open"]:not(:disabled) {
-        background-color: var(--violet-a9);
-        color: var(--accent-contrast);
+        background-color: var(--violet-10);
+        color: var(--violet-1);
       }
     }
 
@@ -616,8 +616,8 @@
 
       &.interactive:not(:disabled):hover,
       &[data-state="open"]:not(:disabled) {
-        background-color: var(--iris-a9);
-        color: var(--accent-contrast);
+        background-color: var(--iris-10);
+        color: var(--iris-1);
       }
     }
 
@@ -626,8 +626,8 @@
 
       &.interactive:not(:disabled):hover,
       &[data-state="open"]:not(:disabled) {
-        background-color: var(--indigo-a9);
-        color: var(--accent-contrast);
+        background-color: var(--indigo-10);
+        color: var(--indigo-1);
       }
     }
 
@@ -636,8 +636,8 @@
 
       &.interactive:not(:disabled):hover,
       &[data-state="open"]:not(:disabled) {
-        background-color: var(--blue-a9);
-        color: var(--accent-contrast);
+        background-color: var(--blue-10);
+        color: var(--blue-1);
       }
     }
 
@@ -646,8 +646,8 @@
 
       &.interactive:not(:disabled):hover,
       &[data-state="open"]:not(:disabled) {
-        background-color: var(--cyan-a9);
-        color: var(--accent-contrast);
+        background-color: var(--cyan-10);
+        color: var(--cyan-1);
       }
     }
 
@@ -656,8 +656,8 @@
 
       &.interactive:not(:disabled):hover,
       &[data-state="open"]:not(:disabled) {
-        background-color: var(--teal-a9);
-        color: var(--accent-contrast);
+        background-color: var(--teal-10);
+        color: var(--teal-1);
       }
     }
 
@@ -666,8 +666,8 @@
 
       &.interactive:not(:disabled):hover,
       &[data-state="open"]:not(:disabled) {
-        background-color: var(--jade-a9);
-        color: var(--accent-contrast);
+        background-color: var(--jade-10);
+        color: var(--jade-1);
       }
     }
 
@@ -676,8 +676,8 @@
 
       &.interactive:not(:disabled):hover,
       &[data-state="open"]:not(:disabled) {
-        background-color: var(--green-a9);
-        color: var(--accent-contrast);
+        background-color: var(--green-10);
+        color: var(--green-1);
       }
     }
 
@@ -686,8 +686,8 @@
 
       &.interactive:not(:disabled):hover,
       &[data-state="open"]:not(:disabled) {
-        background-color: var(--grass-a9);
-        color: var(--accent-contrast);
+        background-color: var(--grass-10);
+        color: var(--grass-1);
       }
     }
 
@@ -696,8 +696,8 @@
 
       &.interactive:not(:disabled):hover,
       &[data-state="open"]:not(:disabled) {
-        background-color: var(--bronze-a9);
-        color: var(--accent-contrast);
+        background-color: var(--bronze-10);
+        color: var(--bronze-1);
       }
     }
 
@@ -706,8 +706,8 @@
 
       &.interactive:not(:disabled):hover,
       &[data-state="open"]:not(:disabled) {
-        background-color: var(--gold-a9);
-        color: var(--accent-contrast);
+        background-color: var(--gold-9);
+        color: var(--gold-1);
       }
     }
 
@@ -716,8 +716,8 @@
 
       &.interactive:not(:disabled):hover,
       &[data-state="open"]:not(:disabled) {
-        background-color: var(--brown-a9);
-        color: var(--accent-contrast);
+        background-color: var(--brown-9);
+        color: var(--brown-1);
       }
     }
 
@@ -726,8 +726,8 @@
 
       &.interactive:not(:disabled):hover,
       &[data-state="open"]:not(:disabled) {
-        background-color: var(--orange-a11);
-        color: var(--accent-contrast);
+        background-color: var(--orange-10);
+        color: var(--orange-12);
       }
     }
 
@@ -736,8 +736,8 @@
 
       &.interactive:not(:disabled):hover,
       &[data-state="open"]:not(:disabled) {
-        background-color: var(--amber-a11);
-        color: var(--accent-contrast);
+        background-color: var(--amber-10);
+        color: var(--amber-12);
       }
     }
 
@@ -746,8 +746,8 @@
 
       &.interactive:not(:disabled):hover,
       &[data-state="open"]:not(:disabled) {
-        background-color: var(--yellow-a11);
-        color: var(--accent-contrast);
+        background-color: var(--yellow-10);
+        color: var(--yellow-12);
       }
     }
 
@@ -756,8 +756,8 @@
 
       &.interactive:not(:disabled):hover,
       &[data-state="open"]:not(:disabled) {
-        background-color: var(--lime-a11);
-        color: var(--accent-contrast);
+        background-color: var(--lime-10);
+        color: var(--lime-12);
       }
     }
 
@@ -766,8 +766,8 @@
 
       &.interactive:not(:disabled):hover,
       &[data-state="open"]:not(:disabled) {
-        background-color: var(--mint-a11);
-        color: var(--accent-contrast);
+        background-color: var(--mint-10);
+        color: var(--mint-12);
       }
     }
 
@@ -776,8 +776,8 @@
 
       &.interactive:not(:disabled):hover,
       &[data-state="open"]:not(:disabled) {
-        background-color: var(--sky-a11);
-        color: var(--accent-contrast);
+        background-color: var(--sky-10);
+        color: var(--sky-12);
       }
     }
   }
