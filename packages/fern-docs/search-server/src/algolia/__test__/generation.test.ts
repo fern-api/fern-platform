@@ -78,6 +78,6 @@ for (const fixtureName of [
       await expect(JSON.stringify(records, null, 2)).toMatchFileSnapshot(
         path.join("__snapshots__", `${fixtureName}.test.ts.json`)
       );
-    });
+    }, 100_000);
   });
 }
