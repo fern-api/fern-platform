@@ -325,9 +325,6 @@
     "code_snippets": [
       {
         "code": "You are a {{ personality_type }} AI assistant.\n{% if personality_type == \"rude\" %}\nYou end every message with a frowning emoji.\n{% else %}\nYou end every message with a smiling emoji.\n{% endif %}"
-      },
-      {
-        "code": "You are a {{ personality_type }} AI assistant.\n{% if personality_type == \"rude\" %}\nYou end every message with a frowning emoji.\n{% else %}\nYou end every message with a smiling emoji.\n{% endif %}"
       }
     ],
     "hierarchy": {
@@ -371,9 +368,6 @@
     "hash": "#comments",
     "content": "You can use jinja to leave comments in your prompt that don’t use up any\ntokens when compiled and sent to the LLM. For example,",
     "code_snippets": [
-      {
-        "code": "{# This is a comment #}\nHello, world!"
-      },
       {
         "code": "{# This is a comment #}\nHello, world!"
       }
@@ -1827,10 +1821,6 @@
       {
         "lang": "jinja",
         "code": "{# this example will have invisible whitespace #} \n{% if some_condition %}\n    {{ result A }}\n{% else %}\n    {{ result B }}\n{% endif %}\n\n{# this will give the result you expect #} \n{%- if some_condition -%}\n    {{- result A -}}\n{%- else -%}\n    {{- result B -}}\n{%- endif -%}"
-      },
-      {
-        "lang": "jinja",
-        "code": "{# this example will have invisible whitespace #} \n{% if some_condition %}\n    {{ result A }}\n{% else %}\n    {{ result B }}\n{% endif %}\n\n{# this will give the result you expect #} \n{%- if some_condition -%}\n    {{- result A -}}\n{%- else -%}\n    {{- result B -}}\n{%- endif -%}"
       }
     ],
     "hierarchy": {
@@ -2603,13 +2593,6 @@
         "code": "{{ user_input[:10] }}"
       },
       {
-        "lang": "jinja2",
-        "code": "{{ user_input[:10] }}"
-      },
-      {
-        "code": "Inputs:\n-------\nuser_input = \"Hello, world!\"\n\nOutput:\n-------\n\"Hello, wor\""
-      },
-      {
         "code": "Inputs:\n-------\nuser_input = \"Hello, world!\"\n\nOutput:\n-------\n\"Hello, wor\""
       }
     ],
@@ -2659,17 +2642,7 @@
         "code": "{% if maybe_json|is_valid_json_string %}\n    {{ maybe_json }}\n    \n    ## to extract specific properties from the JSON\n    {{ json.loads(maybe_json).property }}\n{% else %}\n    {{ {} }}\n{% endif %}"
       },
       {
-        "lang": "jinja2",
-        "code": "{% if maybe_json|is_valid_json_string %}\n    {{ maybe_json }}\n    \n    ## to extract specific properties from the JSON\n    {{ json.loads(maybe_json).property }}\n{% else %}\n    {{ {} }}\n{% endif %}"
-      },
-      {
         "code": "Inputs:\n-------\nmaybe_json = '{\"key\": \"value\"}'\n\nOutput:\n-------\n{\"key\": \"value\"}"
-      },
-      {
-        "code": "Inputs:\n-------\nmaybe_json = '{\"key\": \"value\"}'\n\nOutput:\n-------\n{\"key\": \"value\"}"
-      },
-      {
-        "code": "Inputs:\n-------\nmaybe_json = 'not valid json'\n\nOutput:\n-------\n{}"
       },
       {
         "code": "Inputs:\n-------\nmaybe_json = 'not valid json'\n\nOutput:\n-------\n{}"
@@ -2721,13 +2694,6 @@
         "code": "{{ chat_history[-2:] }}"
       },
       {
-        "lang": "jinja2",
-        "code": "{{ chat_history[-2:] }}"
-      },
-      {
-        "code": "Inputs:\n-------\nchat_history = [\n    {\"role\": \"USER\", \"text\": \"What color is the sky?\"},\n    {\"role\": \"ASSISTANT\", \"text\": \"Blue\"},\n    {\"role\": \"USER\", \"text\": \"But why\"}\n]\n\nOutput:\n-------\n[\n    {\"role\": \"ASSISTANT\", \"text\": \"Blue\"},\n    {\"role\": \"USER\", \"text\": \"But why\"}\n]"
-      },
-      {
         "code": "Inputs:\n-------\nchat_history = [\n    {\"role\": \"USER\", \"text\": \"What color is the sky?\"},\n    {\"role\": \"ASSISTANT\", \"text\": \"Blue\"},\n    {\"role\": \"USER\", \"text\": \"But why\"}\n]\n\nOutput:\n-------\n[\n    {\"role\": \"ASSISTANT\", \"text\": \"Blue\"},\n    {\"role\": \"USER\", \"text\": \"But why\"}\n]"
       }
     ],
@@ -2775,13 +2741,6 @@
       {
         "lang": "jinja2",
         "code": "{% for result in search_results -%}\nSource:\n{{ result.document.label }}\n\nContent:\n{{ result.text }}\n{% if not loop.last %}\n\n#####\n\n{% endif %}\n{% endfor %}"
-      },
-      {
-        "lang": "jinja2",
-        "code": "{% for result in search_results -%}\nSource:\n{{ result.document.label }}\n\nContent:\n{{ result.text }}\n{% if not loop.last %}\n\n#####\n\n{% endif %}\n{% endfor %}"
-      },
-      {
-        "code": "Inputs:\n-------\nsearch_results = [\n    {\n        \"text\": \"Hello, world!\",\n        \"score\": 0.015,\n        \"keywords\": [\"hello\", \"world”],\n        \"document\": {\n            \"id\": \"22df06cf-c876-45ef-a162-4836c410e37b\",\n            \"label\": \"introduction.txt\",\n            \"external_id\": \"introduction.txt\"\n        }\n    },\n    {\n        \"text\": \"The sky is blue.\",\n        \"score\": 0.005,\n        \"keywords\": [\"sky\", \"blue”],\n        \"document\": {\n            \"id\": \"d9655f5f-885e-400e-b000-00b605a03a99\",\n            \"label\": \"description.txt\",\n            \"external_id\": \"description.txt\"\n        }\n    }\n]\n\nOutput:\n-------\nSource:\nintroduction.txt\n\nContent:\nHello, world!\n\n\n#####\n\n\nSource:\ndescription.txt\n\nContent:\nThe sky is blue."
       },
       {
         "code": "Inputs:\n-------\nsearch_results = [\n    {\n        \"text\": \"Hello, world!\",\n        \"score\": 0.015,\n        \"keywords\": [\"hello\", \"world”],\n        \"document\": {\n            \"id\": \"22df06cf-c876-45ef-a162-4836c410e37b\",\n            \"label\": \"introduction.txt\",\n            \"external_id\": \"introduction.txt\"\n        }\n    },\n    {\n        \"text\": \"The sky is blue.\",\n        \"score\": 0.005,\n        \"keywords\": [\"sky\", \"blue”],\n        \"document\": {\n            \"id\": \"d9655f5f-885e-400e-b000-00b605a03a99\",\n            \"label\": \"description.txt\",\n            \"external_id\": \"description.txt\"\n        }\n    }\n]\n\nOutput:\n-------\nSource:\nintroduction.txt\n\nContent:\nHello, world!\n\n\n#####\n\n\nSource:\ndescription.txt\n\nContent:\nThe sky is blue."
@@ -3956,10 +3915,6 @@
     "hash": "#slack-support-bot-cites-sources-using-multiple-indexes",
     "content": "Concepts: Document Indexes, Metadata, Zapier, Slack, Citing Sources, Combining Sources\n\n\n\n\n\n\n\n\nPassing JSON Arrays in Zapier can be tricky. Instead, you can use Code Blocks to make it easier.\nYou can use the follow code snippet as inspiration for your own API calls with Zapier Code Blocks and Python.",
     "code_snippets": [
-      {
-        "lang": "python",
-        "code": "  import requests\n\n  # Replace with your actual Vellum API key\n  VELLUM_API_KEY = \"...\"\n\n  url = \"https://predict.vellum.ai/v1/execute-workflow\"\n\n  headers = {\n      \"Content-Type\": \"application/json\",\n      \"X_API_KEY\": VELLUM_API_KEY\n  }\n\n  data = {\n      \"workflow_deployment_name\": \"vellum-customer-support-q-a-demos\",\n      \"release_tag\": \"LATEST\",\n      \"inputs\": [\n          {\n              \"type\": \"STRING\",\n              \"name\": \"question\",\n              \"value\": input_data[\"user_question\"] # whatever Zapier values you want to use here\n          }\n      ]\n  }\n\n  response = requests.post(url, headers=headers, json=data)\n\n  # Print the response from the server\n  print(response.status_code)\n  print(response.json())\n\n  return response.json()"
-      },
       {
         "lang": "python",
         "code": "  import requests\n\n  # Replace with your actual Vellum API key\n  VELLUM_API_KEY = \"...\"\n\n  url = \"https://predict.vellum.ai/v1/execute-workflow\"\n\n  headers = {\n      \"Content-Type\": \"application/json\",\n      \"X_API_KEY\": VELLUM_API_KEY\n  }\n\n  data = {\n      \"workflow_deployment_name\": \"vellum-customer-support-q-a-demos\",\n      \"release_tag\": \"LATEST\",\n      \"inputs\": [\n          {\n              \"type\": \"STRING\",\n              \"name\": \"question\",\n              \"value\": input_data[\"user_question\"] # whatever Zapier values you want to use here\n          }\n      ]\n  }\n\n  response = requests.post(url, headers=headers, json=data)\n\n  # Print the response from the server\n  print(response.status_code)\n  print(response.json())\n\n  return response.json()"
@@ -5602,10 +5557,6 @@
       {
         "lang": "python",
         "code": "def main(input_1, input_2, target, completion):\n    return {\n        \"score\": 10\n    }"
-      },
-      {
-        "lang": "python",
-        "code": "def main(input_1, input_2, target, completion):\n    return {\n        \"score\": 10\n    }"
       }
     ],
     "hierarchy": {
@@ -6649,9 +6600,6 @@
         "code": "curl -X POST \\\n--url \"https://predict.vellum.ai/v1/execute-prompt\" \\\n--header \"Content-Type: application/json\" \\\n--header \"X_API_KEY: $VELLUM_API_KEY\" \\\n--header \"Accept: application/json\" \\\n--data '\n{\n  \"inputs\": [\n    {\n      \"type\": \"STRING\",\n      \"name\": \"string\",\n      \"value\": \"string\"\n    }\n  ],\n  “release_tag”: “staging”\n}\n  '\n"
       },
       {
-        "code": "curl -X POST \\\n--url \"https://predict.vellum.ai/v1/execute-prompt\" \\\n--header \"Content-Type: application/json\" \\\n--header \"X_API_KEY: $VELLUM_API_KEY\" \\\n--header \"Accept: application/json\" \\\n--data '\n{\n  \"inputs\": [\n    {\n      \"type\": \"STRING\",\n      \"name\": \"string\",\n      \"value\": \"string\"\n    }\n  ],\n  “release_tag”: “staging”\n}\n  '\n"
-      },
-      {
         "code": ""
       }
     ],
@@ -7340,10 +7288,6 @@
       {
         "lang": "python",
         "code": "import secrets\nprint(secrets.token_hex(16))"
-      },
-      {
-        "lang": "python",
-        "code": "import secrets\nprint(secrets.token_hex(16))"
       }
     ],
     "hierarchy": {
@@ -7386,14 +7330,6 @@
       {
         "lang": "python",
         "code": "message = f\"{timestamp}\\n{method}\\n{url}\\n{body}\""
-      },
-      {
-        "lang": "python",
-        "code": "message = f\"{timestamp}\\n{method}\\n{url}\\n{body}\""
-      },
-      {
-        "lang": "python",
-        "code": "import hmac\nimport hashlib\n\ndef verify(message: str, secret: str, signature: str) -> bool:\n    hash_object = hmac.new(secret.encode(), msg=message.encode(), digestmod=hashlib.sha256)\n    expected_signature = hash_object.hexdigest()\n    return hmac.compare_digest(expected_signature, signature)"
       },
       {
         "lang": "python",

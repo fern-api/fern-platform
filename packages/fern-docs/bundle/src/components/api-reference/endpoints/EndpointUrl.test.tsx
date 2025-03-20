@@ -1,6 +1,8 @@
 /**
  * @vitest-environment jsdom
  */
+import React from "react";
+
 import { render, screen } from "@testing-library/react";
 
 import { PathPart } from "@fern-api/fdr-sdk/api-definition";
