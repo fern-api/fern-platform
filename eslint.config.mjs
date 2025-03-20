@@ -19,6 +19,7 @@ export default [
   ...tseslint.config(
     {
       ignores: [
+        "**/configuration/generated/**", // for generator-cli generated folder
         "**/generated",
         "**/dist",
         "**/build",
