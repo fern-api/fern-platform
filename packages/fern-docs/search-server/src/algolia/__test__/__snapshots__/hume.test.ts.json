@@ -334,27 +334,11 @@
       },
       {
         "lang": "bash",
-        "code": "curl https://api.hume.ai/v0/evi/{path} \\\n  --header 'Accept: application/json; charset=utf-8' \\\n  --header \"X-Hume-Api-Key: <YOUR API KEY>\""
-      },
-      {
-        "lang": "bash",
-        "code": "curl https://api.hume.ai/v0/batch/jobs/{path} \\\n  --header 'Accept: application/json; charset=utf-8' \\\n  --header \"X-Hume-Api-Key: <YOUR API KEY>\""
-      },
-      {
-        "lang": "bash",
         "code": "curl https://api.hume.ai/v0/batch/jobs/{path} \\\n  --header 'Accept: application/json; charset=utf-8' \\\n  --header \"X-Hume-Api-Key: <YOUR API KEY>\""
       },
       {
         "lang": "TypeScript",
         "code": "const ws = new WebSocket(`wss://api.hume.ai/v0/evi/chat?api_key=${apiKey}`);"
-      },
-      {
-        "lang": "TypeScript",
-        "code": "const ws = new WebSocket(`wss://api.hume.ai/v0/evi/chat?api_key=${apiKey}`);"
-      },
-      {
-        "lang": "TypeScript",
-        "code": "const ws = new WebSocket(`wss://api.hume.ai/v0/stream/models?api_key=${apiKey}`);"
       },
       {
         "lang": "TypeScript",
@@ -407,14 +391,6 @@
         "code": "# Assumes `HUME_API_KEY` and `HUME_SECRET_KEY` are defined as environment variables\nresponse=$(curl -s 'https://api.hume.ai/oauth2-cc/token' \\\n  -u \"${HUME_API_KEY}:${HUME_SECRET_KEY}\" \\\n  -d 'grant_type=client_credentials')\n\n# Uses `jq` to extract the access token from the JSON response body\naccessToken=$(echo $response | jq -r '.access_token')"
       },
       {
-        "lang": "sh",
-        "code": "# Assumes `HUME_API_KEY` and `HUME_SECRET_KEY` are defined as environment variables\nresponse=$(curl -s 'https://api.hume.ai/oauth2-cc/token' \\\n  -u \"${HUME_API_KEY}:${HUME_SECRET_KEY}\" \\\n  -d 'grant_type=client_credentials')\n\n# Uses `jq` to extract the access token from the JSON response body\naccessToken=$(echo $response | jq -r '.access_token')"
-      },
-      {
-        "lang": "typescript",
-        "code": "import {fetchAccessToken} from 'hume';\n\n// Reads `HUME_API_KEY` and `HUME_SECRET_KEY` from environment variables\nconst HUME_API_KEY = process.env.HUME_API_KEY;\nconst HUME_SECRET_KEY = process.env.HUME_SECRET_KEY;\n\nconst accessToken = await fetchAccessToken({\n  apiKey: HUME_API_KEY,\n  secretKey: HUME_SECRET_KEY\n});"
-      },
-      {
         "lang": "typescript",
         "code": "import {fetchAccessToken} from 'hume';\n\n// Reads `HUME_API_KEY` and `HUME_SECRET_KEY` from environment variables\nconst HUME_API_KEY = process.env.HUME_API_KEY;\nconst HUME_SECRET_KEY = process.env.HUME_SECRET_KEY;\n\nconst accessToken = await fetchAccessToken({\n  apiKey: HUME_API_KEY,\n  secretKey: HUME_SECRET_KEY\n});"
       },
@@ -423,20 +399,8 @@
         "code": "import os\nimport httpx\nimport base64\n\n# Reads `HUME_API_KEY` and `HUME_SECRET_KEY` from environment variables\nHUME_API_KEY = os.getenv('HUME_API_KEY')\nHUME_SECRET_KEY = os.getenv('HUME_SECRET_KEY');\n\nauth = f\"{HUME_API_KEY}:{HUME_SECRET_KEY}\"\nencoded_auth = base64.b64encode(auth.encode()).decode()\nresp = httpx.request(\n    method=\"POST\",\n    url=\"https://api.hume.ai/oauth2-cc/token\",\n    headers={\"Authorization\": f\"Basic {encoded_auth}\"},\n    data={\"grant_type\": \"client_credentials\"},\n)\n\naccess_token = resp.json()['access_token']"
       },
       {
-        "lang": "python",
-        "code": "import os\nimport httpx\nimport base64\n\n# Reads `HUME_API_KEY` and `HUME_SECRET_KEY` from environment variables\nHUME_API_KEY = os.getenv('HUME_API_KEY')\nHUME_SECRET_KEY = os.getenv('HUME_SECRET_KEY');\n\nauth = f\"{HUME_API_KEY}:{HUME_SECRET_KEY}\"\nencoded_auth = base64.b64encode(auth.encode()).decode()\nresp = httpx.request(\n    method=\"POST\",\n    url=\"https://api.hume.ai/oauth2-cc/token\",\n    headers={\"Authorization\": f\"Basic {encoded_auth}\"},\n    data={\"grant_type\": \"client_credentials\"},\n)\n\naccess_token = resp.json()['access_token']"
-      },
-      {
         "lang": "typescript",
         "code": "const ws = new WebSocket(`wss://api.hume.ai/v0/evi/chat?access_token=${accessToken}`);"
-      },
-      {
-        "lang": "typescript",
-        "code": "const ws = new WebSocket(`wss://api.hume.ai/v0/evi/chat?access_token=${accessToken}`);"
-      },
-      {
-        "lang": "typescript",
-        "code": "fetch('https://api.hume.ai/v0/evi/chats', {\n  headers: {\n    Authorization: `Bearer ${accessToken}`,\n  },\n});"
       },
       {
         "lang": "typescript",
@@ -836,19 +800,7 @@
       },
       {
         "lang": "tsx",
-        "code": "// ./app/page.tsx\nimport ClientComponent from \"@/components/ClientComponent\";\nimport { fetchAccessToken } from \"hume\";\n\nexport default async function Page() {\n  const accessToken = await fetchAccessToken({\n    apiKey: String(process.env.HUME_API_KEY),\n    secretKey: String(process.env.HUME_SECRET_KEY),\n  });\n\n  if (!accessToken) {\n    throw new Error();\n  }\n\n  return <ClientComponent accessToken={accessToken} />;\n}"
-      },
-      {
-        "lang": "tsx",
         "code": "// ./components/ClientComponent.tsx\n\"use client\";\nimport { VoiceProvider } from \"@humeai/voice-react\";\nimport Messages from \"./Messages\";\nimport Controls from \"./Controls\";\n\nexport default function ClientComponent({\n  accessToken,\n}: {\n  accessToken: string;\n}) {\n  return (\n    <VoiceProvider auth={{ type: \"accessToken\", value: accessToken }}>\n      <Messages />\n      <Controls />\n    </VoiceProvider>\n  );\n}"
-      },
-      {
-        "lang": "tsx",
-        "code": "// ./components/ClientComponent.tsx\n\"use client\";\nimport { VoiceProvider } from \"@humeai/voice-react\";\nimport Messages from \"./Messages\";\nimport Controls from \"./Controls\";\n\nexport default function ClientComponent({\n  accessToken,\n}: {\n  accessToken: string;\n}) {\n  return (\n    <VoiceProvider auth={{ type: \"accessToken\", value: accessToken }}>\n      <Messages />\n      <Controls />\n    </VoiceProvider>\n  );\n}"
-      },
-      {
-        "lang": "tsx",
-        "code": "// ./components/Controls.tsx\n\"use client\";\nimport { useVoice, VoiceReadyState } from \"@humeai/voice-react\";\nexport default function Controls() {\n  const { connect, disconnect, readyState } = useVoice();\n\n  if (readyState === VoiceReadyState.OPEN) {\n    return (\n      <button\n        onClick={() => {\n          disconnect();\n        }}\n      >\n        End Session\n      </button>\n    );\n  }\n\n  return (\n    <button\n      onClick={() => {\n        connect()\n          .then(() => {\n            /* handle success */\n          })\n          .catch(() => {\n            /* handle error */\n          });\n      }}\n    >\n      Start Session\n    </button>\n  );\n}"
       },
       {
         "lang": "tsx",
@@ -860,27 +812,11 @@
       },
       {
         "lang": "tsx",
-        "code": "// ./components/Messages.tsx\n\"use client\";\nimport { useVoice } from \"@humeai/voice-react\";\n\nexport default function Messages() {\n  const { messages } = useVoice();\n\n  return (\n    <div>\n      {messages.map((msg, index) => {\n        if (msg.type === \"user_message\" || msg.type === \"assistant_message\") {\n          return (\n            <div key={msg.type + index}>\n              <div>{msg.message.role}</div>\n              <div>{msg.message.content}</div>\n            </div>\n          );\n        }\n\n        return null;\n      })}\n    </div>\n  );\n}"
-      },
-      {
-        "lang": "tsx",
-        "code": "// ./pages/index.tsx\nimport Controls from \"@/components/Controls\";\nimport Messages from \"@/components/Messages\";\nimport { fetchAccessToken } from \"hume\";\nimport { VoiceProvider } from \"@humeai/voice-react\";\nimport { InferGetServerSidePropsType } from \"next\";\n\nexport const getServerSideProps = async () => {\n  const accessToken = await fetchAccessToken({\n    apiKey: String(process.env.HUME_API_KEY),\n    secretKey: String(process.env.HUME_SECRET_KEY),\n  });\n\n  if (!accessToken) {\n    return {\n      redirect: {\n        destination: \"/error\",\n        permanent: false,\n      },\n    };\n  }\n\n  return {\n    props: {\n      accessToken,\n    },\n  };\n};\n\ntype PageProps = InferGetServerSidePropsType<typeof getServerSideProps>;\n\nexport default function Page({ accessToken }: PageProps) {\n  return (\n    <VoiceProvider auth={{ type: \"accessToken\", value: accessToken }}>\n      <Messages />\n      <Controls />\n    </VoiceProvider>\n  );\n}"
-      },
-      {
-        "lang": "tsx",
         "code": "// ./pages/index.tsx\nimport Controls from \"@/components/Controls\";\nimport Messages from \"@/components/Messages\";\nimport { fetchAccessToken } from \"hume\";\nimport { VoiceProvider } from \"@humeai/voice-react\";\nimport { InferGetServerSidePropsType } from \"next\";\n\nexport const getServerSideProps = async () => {\n  const accessToken = await fetchAccessToken({\n    apiKey: String(process.env.HUME_API_KEY),\n    secretKey: String(process.env.HUME_SECRET_KEY),\n  });\n\n  if (!accessToken) {\n    return {\n      redirect: {\n        destination: \"/error\",\n        permanent: false,\n      },\n    };\n  }\n\n  return {\n    props: {\n      accessToken,\n    },\n  };\n};\n\ntype PageProps = InferGetServerSidePropsType<typeof getServerSideProps>;\n\nexport default function Page({ accessToken }: PageProps) {\n  return (\n    <VoiceProvider auth={{ type: \"accessToken\", value: accessToken }}>\n      <Messages />\n      <Controls />\n    </VoiceProvider>\n  );\n}"
       },
       {
         "lang": "tsx",
         "code": "// ./components/Controls.tsx\nimport { useVoice, VoiceReadyState } from \"@humeai/voice-react\";\nexport default function Controls() {\n  const { connect, disconnect, readyState } = useVoice();\n\n  if (readyState === VoiceReadyState.OPEN) {\n    return (\n      <button\n        onClick={() => {\n          disconnect();\n        }}\n      >\n        End Session\n      </button>\n    );\n  }\n\n  return (\n    <button\n      onClick={() => {\n        connect()\n          .then(() => {\n            /* handle success */\n          })\n          .catch(() => {\n            /* handle error */\n          });\n      }}\n    >\n      Start Session\n    </button>\n  );\n}"
-      },
-      {
-        "lang": "tsx",
-        "code": "// ./components/Controls.tsx\nimport { useVoice, VoiceReadyState } from \"@humeai/voice-react\";\nexport default function Controls() {\n  const { connect, disconnect, readyState } = useVoice();\n\n  if (readyState === VoiceReadyState.OPEN) {\n    return (\n      <button\n        onClick={() => {\n          disconnect();\n        }}\n      >\n        End Session\n      </button>\n    );\n  }\n\n  return (\n    <button\n      onClick={() => {\n        connect()\n          .then(() => {\n            /* handle success */\n          })\n          .catch(() => {\n            /* handle error */\n          });\n      }}\n    >\n      Start Session\n    </button>\n  );\n}"
-      },
-      {
-        "lang": "tsx",
-        "code": "// ./components/Messages.tsx\nimport { useVoice } from \"@humeai/voice-react\";\n\nexport default function Messages() {\n  const { messages } = useVoice();\n\n  return (\n    <div>\n      {messages.map((msg, index) => {\n        if (msg.type === \"user_message\" || msg.type === \"assistant_message\") {\n          return (\n            <div key={msg.type + index}>\n              <div>{msg.message.role}</div>\n              <div>{msg.message.content}</div>\n            </div>\n          );\n        }\n\n        return null;\n      })}\n    </div>\n  );\n}"
       },
       {
         "lang": "tsx",
@@ -892,27 +828,11 @@
       },
       {
         "lang": "typescript",
-        "code": "import { Hume, HumeClient } from 'hume';\n\n// instantiate the Hume client and authenticate\nconst client = new HumeClient({\n  apiKey: import.meta.env.HUME_API_KEY || '',\n  secretKey: import.meta.env.HUME_SECRET_KEY || '',\n});\n"
-      },
-      {
-        "lang": "typescript",
-        "code": "import { Hume, HumeClient } from 'hume';\n\n// instantiate the Hume client and authenticate\nconst client = new HumeClient({\n  apiKey: import.meta.env.HUME_API_KEY || '',\n  secretKey: import.meta.env.HUME_SECRET_KEY || '',\n});\n\n// instantiates WebSocket and establishes an authenticated connection\nconst socket = await client.empathicVoice.chat.connect({\n  configId: import.meta.env.HUME_CONFIG_ID || null,\n});\n\n// define handler functions and assign them to the corresponding WebSocket event handlers\nsocket.on('open', handleWebSocketOpenEvent);\nsocket.on('message', handleWebSocketMessageEvent);\nsocket.on('error', handleWebSocketErrorEvent);\nsocket.on('close', handleWebSocketCloseEvent);"
-      },
-      {
-        "lang": "typescript",
         "code": "import { Hume, HumeClient } from 'hume';\n\n// instantiate the Hume client and authenticate\nconst client = new HumeClient({\n  apiKey: import.meta.env.HUME_API_KEY || '',\n  secretKey: import.meta.env.HUME_SECRET_KEY || '',\n});\n\n// instantiates WebSocket and establishes an authenticated connection\nconst socket = await client.empathicVoice.chat.connect({\n  configId: import.meta.env.HUME_CONFIG_ID || null,\n});\n\n// define handler functions and assign them to the corresponding WebSocket event handlers\nsocket.on('open', handleWebSocketOpenEvent);\nsocket.on('message', handleWebSocketMessageEvent);\nsocket.on('error', handleWebSocketErrorEvent);\nsocket.on('close', handleWebSocketCloseEvent);"
       },
       {
         "lang": "typescript",
         "code": "import {\n  convertBlobToBase64,\n  ensureSingleValidAudioTrack,\n  getAudioStream,\n  getBrowserSupportedMimeType,\n} from 'hume';\n\n// the recorder responsible for recording the audio stream to be prepared as the audio input\nlet recorder: MediaRecorder | null = null;\n\n// the stream of audio captured from the user's microphone\nlet audioStream: MediaStream | null = null;\n\n// mime type supported by the browser the application is running in\nconst mimeType: MimeType = (() => {\n  const result = getBrowserSupportedMimeType();\n  return result.success ? result.mimeType : MimeType.WEBM;\n})();\n\n// define function for capturing audio\nasync function captureAudio(): Promise<void> {\n  // prompts user for permission to capture audio, obtains media stream upon approval\n  audioStream = await getAudioStream();\n\n  // ensure there is only one audio track in the stream\n  ensureSingleValidAudioTrack(audioStream);\n\n  // instantiate the media recorder\n  recorder = new MediaRecorder(audioStream, { mimeType });\n\n  // callback for when recorded chunk is available to be processed\n  recorder.ondataavailable = async ({ data }) => {\n    // IF size of data is smaller than 1 byte then do nothing\n    if (data.size < 1) return;\n\n    // base64 encode audio data\n    const encodedAudioData = await convertBlobToBase64(data);\n\n    // define the audio_input message JSON\n    const audioInput: Omit<Hume.empathicVoice.AudioInput, 'type'> = {\n      data: encodedAudioData,\n    };\n\n    // send audio_input message\n    socket?.sendAudioInput(audioInput);\n  };\n\n  // capture audio input at a rate of 100ms (recommended for web)\n  const timeSlice = 100;\n  recorder.start(timeSlice);\n}\n\n// define a WebSocket open event handler to capture audio\nasync function handleWebSocketOpenEvent(): Promise<void> {\n  // place logic here which you would like invoked when the socket opens\n  console.log('Web socket connection opened');\n  await captureAudio();\n}\n"
-      },
-      {
-        "lang": "typescript",
-        "code": "import {\n  convertBlobToBase64,\n  ensureSingleValidAudioTrack,\n  getAudioStream,\n  getBrowserSupportedMimeType,\n} from 'hume';\n\n// the recorder responsible for recording the audio stream to be prepared as the audio input\nlet recorder: MediaRecorder | null = null;\n\n// the stream of audio captured from the user's microphone\nlet audioStream: MediaStream | null = null;\n\n// mime type supported by the browser the application is running in\nconst mimeType: MimeType = (() => {\n  const result = getBrowserSupportedMimeType();\n  return result.success ? result.mimeType : MimeType.WEBM;\n})();\n\n// define function for capturing audio\nasync function captureAudio(): Promise<void> {\n  // prompts user for permission to capture audio, obtains media stream upon approval\n  audioStream = await getAudioStream();\n\n  // ensure there is only one audio track in the stream\n  ensureSingleValidAudioTrack(audioStream);\n\n  // instantiate the media recorder\n  recorder = new MediaRecorder(audioStream, { mimeType });\n\n  // callback for when recorded chunk is available to be processed\n  recorder.ondataavailable = async ({ data }) => {\n    // IF size of data is smaller than 1 byte then do nothing\n    if (data.size < 1) return;\n\n    // base64 encode audio data\n    const encodedAudioData = await convertBlobToBase64(data);\n\n    // define the audio_input message JSON\n    const audioInput: Omit<Hume.empathicVoice.AudioInput, 'type'> = {\n      data: encodedAudioData,\n    };\n\n    // send audio_input message\n    socket?.sendAudioInput(audioInput);\n  };\n\n  // capture audio input at a rate of 100ms (recommended for web)\n  const timeSlice = 100;\n  recorder.start(timeSlice);\n}\n\n// define a WebSocket open event handler to capture audio\nasync function handleWebSocketOpenEvent(): Promise<void> {\n  // place logic here which you would like invoked when the socket opens\n  console.log('Web socket connection opened');\n  await captureAudio();\n}\n"
-      },
-      {
-        "lang": "typescript",
-        "code": "// function for stopping the audio and clearing the queue\nfunction stopAudio(): void {\n  // stop the audio playback\n  currentAudio?.pause();\n  currentAudio = null;\n\n  // update audio playback state\n  isPlaying = false;\n\n  // clear the audioQueue\n  audioQueue.length = 0;\n}\n\n// update WebSocket message event handler to handle interruption\nfunction handleWebSocketMessageEvent(\n  message: Hume.empathicVoice.SubscribeEvent\n): void {\n  // place logic here which you would like to invoke when receiving a message through the socket\n  switch (message.type) {\n    // add received audio to the playback queue, and play next audio output\n    case 'audio_output':\n      // convert base64 encoded audio to a Blob\n      const audioOutput = message.data;\n      const blob = convertBase64ToBlob(audioOutput, mimeType);\n\n      // add audio Blob to audioQueue\n      audioQueue.push(blob);\n\n      // play the next audio output\n      if (audioQueue.length === 1) playAudio();\n      break;\n\n    // stop audio playback, clear audio playback queue, and update audio playback state on interrupt\n    case 'user_interruption':\n      stopAudio();\n      break;\n  }\n}\n"
       },
       {
         "lang": "typescript",
@@ -956,19 +876,7 @@
       },
       {
         "lang": "bash",
-        "code": "python -m venv evi-env"
-      },
-      {
-        "lang": "bash",
         "code": "source evi-env/bin/activate"
-      },
-      {
-        "lang": "bash",
-        "code": "source evi-env/bin/activate"
-      },
-      {
-        "lang": "bash",
-        "code": "conda create --name evi-env python=3.11"
       },
       {
         "lang": "bash",
@@ -980,19 +888,7 @@
       },
       {
         "lang": "bash",
-        "code": "conda activate evi-env"
-      },
-      {
-        "lang": "bash",
         "code": "pip install \"hume[microphone]\""
-      },
-      {
-        "lang": "bash",
-        "code": "pip install \"hume[microphone]\""
-      },
-      {
-        "lang": "bash",
-        "code": "pip install python-dotenv"
       },
       {
         "lang": "bash",
@@ -1004,27 +900,11 @@
       },
       {
         "lang": "bash",
-        "code": "brew install ffmpeg"
-      },
-      {
-        "lang": "bash",
-        "code": "sudo apt-get --yes update\nsudo apt-get --yes install libasound2-dev libportaudio2 ffmpeg"
-      },
-      {
-        "lang": "bash",
         "code": "sudo apt-get --yes update\nsudo apt-get --yes install libasound2-dev libportaudio2 ffmpeg"
       },
       {
         "lang": "py",
         "code": "import asyncio\nimport base64\nimport datetime\nimport os\nfrom dotenv import load_dotenv\nfrom hume.client import AsyncHumeClient\nfrom hume.empathic_voice.chat.socket_client import ChatConnectOptions, ChatWebsocketConnection\nfrom hume.empathic_voice.chat.types import SubscribeEvent\nfrom hume.empathic_voice.types import UserInput\nfrom hume.core.api_error import ApiError\nfrom hume import MicrophoneInterface, Stream"
-      },
-      {
-        "lang": "py",
-        "code": "import asyncio\nimport base64\nimport datetime\nimport os\nfrom dotenv import load_dotenv\nfrom hume.client import AsyncHumeClient\nfrom hume.empathic_voice.chat.socket_client import ChatConnectOptions, ChatWebsocketConnection\nfrom hume.empathic_voice.chat.types import SubscribeEvent\nfrom hume.empathic_voice.types import UserInput\nfrom hume.core.api_error import ApiError\nfrom hume import MicrophoneInterface, Stream"
-      },
-      {
-        "lang": "py",
-        "code": "async def main() -> None:\n  # Retrieve any environment variables stored in the .env file\n  load_dotenv()\n\n  # Retrieve the API key, Secret key, and EVI config id from the environment variables\n  HUME_API_KEY = os.getenv(\"HUME_API_KEY\")\n  HUME_SECRET_KEY = os.getenv(\"HUME_SECRET_KEY\")\n  HUME_CONFIG_ID = os.getenv(\"HUME_CONFIG_ID\")\n\n  # Initialize the asynchronous client, authenticating with your API key\n  client = AsyncHumeClient(api_key=HUME_API_KEY)\n\n  # Define options for the WebSocket connection, such as an EVI config id and a secret key for token authentication\n  options = ChatConnectOptions(config_id=HUME_CONFIG_ID, secret_key=HUME_SECRET_KEY)\n  \n  # ..."
       },
       {
         "lang": "py",
@@ -1037,22 +917,8 @@
       },
       {
         "lang": "py",
-        "meta": "{6-16}",
-        "code": "async def main() -> None:\n  # ...\n  # Define options for the WebSocket connection, such as an EVI config id and a secret key for token authentication\n  options = ChatConnectOptions(config_id=HUME_CONFIG_ID, secret_key=HUME_SECRET_KEY)\n\n  # Instantiate the WebSocketHandler\n  websocket_handler = WebSocketHandler()\n\n  # Open the WebSocket connection with the configuration options and the handler's functions\n    async with client.empathic_voice.chat.connect_with_callbacks(\n      options=options,\n      on_open=websocket_handler.on_open,\n      on_message=websocket_handler.on_message,\n      on_close=websocket_handler.on_close,\n      on_error=websocket_handler.on_error\n    ) as socket:\n    \n      # Set the socket instance in the handler\n      websocket_handler.set_socket(socket)\n      # ..."
-      },
-      {
-        "lang": "py",
         "meta": "{7-11}",
         "code": "async def main() -> None:\n  # Open the WebSocket connection with the configuration options and the handler's functions\n  async with client.empathic_voice.chat.connect_with_callbacks(...) as socket:\n    # Set the socket instance in the handler\n    websocket_handler.set_socket(socket)\n\n    # Create an asynchronous task to continuously detect and process input from the microphone, as well as play audio\n    microphone_task = asyncio.create_task(\n      MicrophoneInterface.start(\n        socket,\n        byte_stream=websocket_handler.byte_strs\n      )\n    )\n    \n    # Await the microphone task\n    await microphone_task\n"
-      },
-      {
-        "lang": "py",
-        "meta": "{7-11}",
-        "code": "async def main() -> None:\n  # Open the WebSocket connection with the configuration options and the handler's functions\n  async with client.empathic_voice.chat.connect_with_callbacks(...) as socket:\n    # Set the socket instance in the handler\n    websocket_handler.set_socket(socket)\n\n    # Create an asynchronous task to continuously detect and process input from the microphone, as well as play audio\n    microphone_task = asyncio.create_task(\n      MicrophoneInterface.start(\n        socket,\n        byte_stream=websocket_handler.byte_strs\n      )\n    )\n    \n    # Await the microphone task\n    await microphone_task\n"
-      },
-      {
-        "lang": "bash",
-        "code": "   0 DELL U2720QM, Core Audio (0 in, 2 out)\n   1 I, Phone 15 Pro Max Microphone, Core Audio (1 in, 0 out)\n>  2 Studio Display Microphone, Core Audio (1 in, 0 out)\n   3 Studio Display Speakers, Core Audio (0 in, 8 out)\n   4 MacBook Pro Microphone, Core Audio (1 in, 0 out)\n<  5 MacBook Pro Speakers, Core Audio (0 in, 2 out)\n   6 Pro Tools Audio Bridge 16, Core Audio (16 in, 16 out)\n   7 Pro Tools Audio Bridge 2-A, Core Audio (2 in, 2 out)\n   8 Pro Tools Audio Bridge 2-B, Core Audio (2 in, 2 out)\n   9 Pro Tools Audio Bridge 32, Core Audio (32 in, 32 out)\n  10 Pro Tools Audio Bridge 64, Core Audio (64 in, 64 out)\n  11 Pro Tools Audio Bridge 6, Core Audio (6 in, 6 out)\n  12 Apowersoft Audio Device, Core Audio (2 in, 2 out)\n  13 ZoomAudioDevice, Core Audio (2 in, 2 out)"
       },
       {
         "lang": "bash",
@@ -1064,27 +930,11 @@
       },
       {
         "lang": "python",
-        "code": "# Specify device 4 in MicrophoneInterface\nMicrophoneInterface.start(\n  socket,\n  device=4,\n  allow_user_interrupt=True,\n  byte_stream=websocket_handler.byte_strs\n)"
-      },
-      {
-        "lang": "python",
-        "code": "# Directly import the sounddevice library\nimport sounddevice as sd\n\n# Set the default device prior to scheduling audio input task\nsd.default.device = 4"
-      },
-      {
-        "lang": "python",
         "code": "# Directly import the sounddevice library\nimport sounddevice as sd\n\n# Set the default device prior to scheduling audio input task\nsd.default.device = 4"
       },
       {
         "lang": "python",
         "code": "# Specify allowing interruption\nMicrophoneInterface.start(\n  socket,\n  allow_user_interrupt=True,\n  byte_stream=websocket_handler.byte_strs\n)"
-      },
-      {
-        "lang": "python",
-        "code": "# Specify allowing interruption\nMicrophoneInterface.start(\n  socket,\n  allow_user_interrupt=True,\n  byte_stream=websocket_handler.byte_strs\n)"
-      },
-      {
-        "lang": "py",
-        "code": "asyncio.run(main())"
       },
       {
         "lang": "py",
@@ -1434,14 +1284,6 @@
         "code": "import { Hume, HumeClient } from 'hume';\n// instantiate the HumeClient with credentials\n// avoid hard coding your API key, retrieve from environment variables\nconst client = new HumeClient({\n  apiKey: <YOUR_API_KEY>,\n  secretKey: <YOUR_SECRET_KEY>,\n});\n// instantiate WebSocket connection with specified EVI config\nconst socket = await client.empathicVoice.chat.connect({\n  configId: <YOUR_CONFIG_ID> // specify config ID here\n});"
       },
       {
-        "lang": "typescript",
-        "code": "import { Hume, HumeClient } from 'hume';\n// instantiate the HumeClient with credentials\n// avoid hard coding your API key, retrieve from environment variables\nconst client = new HumeClient({\n  apiKey: <YOUR_API_KEY>,\n  secretKey: <YOUR_SECRET_KEY>,\n});\n// instantiate WebSocket connection with specified EVI config\nconst socket = await client.empathicVoice.chat.connect({\n  configId: <YOUR_CONFIG_ID> // specify config ID here\n});"
-      },
-      {
-        "lang": "python",
-        "code": "from hume import HumeVoiceClient, MicrophoneInterface\n# avoid hard coding your API key, retrieve from environment variables\nHUME_API_KEY = <YOUR_API_KEY>\n# Connect and authenticate with Hume\nclient = HumeVoiceClient(HUME_API_KEY)\n# establish a connection with EVI with your configuration by passing\n# the config_id as an argument to the connect method\nasync with client.connect(config_id=\"<your-config-id>\") as socket:\n  await MicrophoneInterface.start(socket)"
-      },
-      {
         "lang": "python",
         "code": "from hume import HumeVoiceClient, MicrophoneInterface\n# avoid hard coding your API key, retrieve from environment variables\nHUME_API_KEY = <YOUR_API_KEY>\n# Connect and authenticate with Hume\nclient = HumeVoiceClient(HUME_API_KEY)\n# establish a connection with EVI with your configuration by passing\n# the config_id as an argument to the connect method\nasync with client.connect(config_id=\"<your-config-id>\") as socket:\n  await MicrophoneInterface.start(socket)"
       }
@@ -1483,10 +1325,6 @@
     "hash": "#session-settings",
     "content": "EVI configurations are persistent and version-controlled. In contrast, session settings are temporary and apply only to the current session, such as\nmicrophone settings. These parameters can be adjusted dynamically based on the requirements of each session to ensure optimal performance and user experience.\n\n\nRefer to the API reference for detailed descriptions of the various session settings options.\nUpdating the session settings is only a requirement when the audio input is encoded in PCM Linear 16. If this is the case, be sure to send the following Session Settings message prior to sending an audio input:",
     "code_snippets": [
-      {
-        "lang": "json",
-        "code": "{\n  \"type\": \"session_settings\",\n  \"audio\": {\n    \"channels\": 1,\n    \"encoding\": \"linear16\",\n    \"sample_rate\": 48000\n  }\n}"
-      },
       {
         "lang": "json",
         "code": "{\n  \"type\": \"session_settings\",\n  \"audio\": {\n    \"channels\": 1,\n    \"encoding\": \"linear16\",\n    \"sample_rate\": 48000\n  }\n}"
@@ -1532,14 +1370,6 @@
       {
         "lang": "json",
         "code": "{\n  \"type\": \"session_settings\",\n  \"variables\": {\n    \"name\": \"David Hume\",\n    \"age\": \"65\",\n    \"is_philosopher\": \"True\"\n  }\n}"
-      },
-      {
-        "lang": "json",
-        "code": "{\n  \"type\": \"session_settings\",\n  \"variables\": {\n    \"name\": \"David Hume\",\n    \"age\": \"65\",\n    \"is_philosopher\": \"True\"\n  }\n}"
-      },
-      {
-        "lang": "text",
-        "code": "Address the user by their name, {{name}}.\nIf relevant, reference their age: {{age}}.\nIt is {{is_philosopher}} that this user is a philosopher."
       },
       {
         "lang": "text",
@@ -1717,14 +1547,6 @@
       },
       {
         "lang": "json",
-        "code": "{\n  \"type\": \"object\",\n  \"required\": [\"location\", \"format\"],\n  \"properties\": {\n    \"location\": {\n      \"type\": \"string\",\n      \"description\": \"The city and state, e.g. San Francisco, CA\"\n    },\n    \"format\": {\n      \"type\": \"string\",\n      \"enum\": [\"celsius\", \"fahrenheit\"],\n      \"description\": \"The temperature unit to use. Infer this from the user's location.\"\n    }\n  }\n}"
-      },
-      {
-        "lang": "json",
-        "code": "{\n  \"name\": \"get_current_weather\",\n  \"version_description\": \"Fetches current weather and uses celsius or fahrenheit based on user's location.\",\n  \"description\": \"This tool is for getting the current weather.\",\n  \"parameters\": \"{ \\\"type\\\": \\\"object\\\", \\\"properties\\\": { \\\"location\\\": { \\\"type\\\": \\\"string\\\", \\\"description\\\": \\\"The city and state, e.g. San Francisco, CA\\\" }, \\\"format\\\": { \\\"type\\\": \\\"string\\\", \\\"enum\\\": [\\\"celsius\\\", \\\"fahrenheit\\\"], \\\"description\\\": \\\"The temperature unit to use. Infer this from the users location.\\\" } }, \\\"required\\\": [\\\"location\\\", \\\"format\\\"] }\"\n}"
-      },
-      {
-        "lang": "json",
         "code": "{\n  \"name\": \"get_current_weather\",\n  \"version_description\": \"Fetches current weather and uses celsius or fahrenheit based on user's location.\",\n  \"description\": \"This tool is for getting the current weather.\",\n  \"parameters\": \"{ \\\"type\\\": \\\"object\\\", \\\"properties\\\": { \\\"location\\\": { \\\"type\\\": \\\"string\\\", \\\"description\\\": \\\"The city and state, e.g. San Francisco, CA\\\" }, \\\"format\\\": { \\\"type\\\": \\\"string\\\", \\\"enum\\\": [\\\"celsius\\\", \\\"fahrenheit\\\"], \\\"description\\\": \\\"The temperature unit to use. Infer this from the users location.\\\" } }, \\\"required\\\": [\\\"location\\\", \\\"format\\\"] }\"\n}"
       },
       {
@@ -1733,19 +1555,7 @@
       },
       {
         "lang": "json",
-        "code": "{\n  \"tool_type\": \"FUNCTION\",\n  \"id\": \"15c38b04-ec9c-4ae2-b6bc-5603512b5d00\",\n  \"version\": 0,\n  \"version_description\": \"Fetches current weather and uses celsius or fahrenheit based on user's location.\",\n  \"name\": \"get_current_weather\",\n  \"created_on\": 1714421925626,\n  \"modified_on\": 1714421925626,\n  \"fallback_content\": null,\n  \"description\": \"This tool is for getting the current weather.\",\n  \"parameters\": \"{ \\\"type\\\": \\\"object\\\", \\\"properties\\\": { \\\"location\\\": { \\\"type\\\": \\\"string\\\", \\\"description\\\": \\\"The city and state, e.g. San Francisco, CA\\\" }, \\\"format\\\": { \\\"type\\\": \\\"string\\\", \\\"enum\\\": [\\\"celsius\\\", \\\"fahrenheit\\\"], \\\"description\\\": \\\"The temperature unit to use. Infer this from the users location.\\\" } }, \\\"required\\\": [\\\"location\\\", \\\"format\\\"] }\"\n}"
-      },
-      {
-        "lang": "json",
         "code": "{\n  \"name\": \"Weather Assistant Config\",\n  \"language_model\": {\n    \"model_provider\": \"OPEN_AI\",\n    \"model_resource\": \"gpt-3.5-turbo\",\n    \"temperature\": null\n  },\n  \"tools\": [\n    {\n      \"id\": \"15c38b04-ec9c-4ae2-b6bc-5603512b5d00\",\n      \"version\": 0\n    }\n  ]\n}"
-      },
-      {
-        "lang": "json",
-        "code": "{\n  \"name\": \"Weather Assistant Config\",\n  \"language_model\": {\n    \"model_provider\": \"OPEN_AI\",\n    \"model_resource\": \"gpt-3.5-turbo\",\n    \"temperature\": null\n  },\n  \"tools\": [\n    {\n      \"id\": \"15c38b04-ec9c-4ae2-b6bc-5603512b5d00\",\n      \"version\": 0\n    }\n  ]\n}"
-      },
-      {
-        "lang": "json",
-        "code": "{\n  \"id\": \"87e88a1a-3768-4a01-ba54-2e6d247a00a7\",\n  \"version\": 0,\n  \"version_description\": null,\n  \"name\": \"Weather Assistant Config\",\n  \"created_on\": 1714421581844,\n  \"modified_on\": 1714421581844,\n  \"prompt\": null,\n  \"voice\": null,\n  \"language_model\": {\n    \"model_provider\": \"OPEN_AI\",\n    \"model_resource\": \"gpt-3.5-turbo\",\n    \"temperature\": null\n  },\n  \"tools\": [\n    {\n      \"tool_type\": \"FUNCTION\",\n      \"id\": \"15c38b04-ec9c-4ae2-b6bc-5603512b5d00\",\n      \"version\": 0,\n      \"version_description\": \"Fetches current weather and uses celsius or fahrenheit based on user's location.\",\n      \"name\": \"get_current_weather\",\n      \"created_on\": 1714421925626,\n      \"modified_on\": 1714421925626,\n      \"fallback_content\": null,\n      \"description\": \"This tool is for getting the current weather.\",\n      \"parameters\": \"{ \\\"type\\\": \\\"object\\\", \\\"properties\\\": { \\\"location\\\": { \\\"type\\\": \\\"string\\\", \\\"description\\\": \\\"The city and state, e.g. San Francisco, CA\\\" }, \\\"format\\\": { \\\"type\\\": \\\"string\\\", \\\"enum\\\": [\\\"celsius\\\", \\\"fahrenheit\\\"], \\\"description\\\": \\\"The temperature unit to use. Infer this from the users location.\\\" } }, \\\"required\\\": [\\\"location\\\", \\\"format\\\"] }\"\n    }\n  ],\n  \"builtin_tools\": []\n}"
       },
       {
         "lang": "json",
@@ -1794,20 +1604,8 @@
         "code": "async function fetchWeather(location: string, format: string): Promise<string> {\n  // Fetch the location's geographic coordinates using Geocoding API\n  const locationApiURL = `https://geocode.maps.co/search?q=${location}&api_key=${YOUR_WEATHER_API_KEY}`;\n  const locationResponse = await fetch(locationApiURL);\n  const locationData = await locationResponse.json();\n\n  // Extract latitude and longitude from fetched location data\n  const { lat, lon } = locationData[0];\n\n  // Fetch point metadata using the extracted location coordinates\n  const pointMetadataEndpoint = `https://api.weather.gov/points/${parseFloat(\n    lat\n  ).toFixed(3)},${parseFloat(lon).toFixed(3)}`;\n  const pointMetadataResponse = await fetch(pointMetadataEndpoint);\n  const pointMetadata = await pointMetadataResponse.json();\n\n  // Extract weather forecast URL from point metadata\n  const forecastUrl = pointMetadata.properties.forecast;\n\n  // Fetch the weather forecast using the forecast URL\n  const forecastResponse = await fetch(forecastUrl);\n  const forecastData = await forecastResponse.json();\n  const forecast = JSON.stringify(forecastData.properties.periods);\n\n  // Return the temperature in the specified format\n  return `${forecast} in ${format}`;\n}"
       },
       {
-        "lang": "ts",
-        "code": "async function fetchWeather(location: string, format: string): Promise<string> {\n  // Fetch the location's geographic coordinates using Geocoding API\n  const locationApiURL = `https://geocode.maps.co/search?q=${location}&api_key=${YOUR_WEATHER_API_KEY}`;\n  const locationResponse = await fetch(locationApiURL);\n  const locationData = await locationResponse.json();\n\n  // Extract latitude and longitude from fetched location data\n  const { lat, lon } = locationData[0];\n\n  // Fetch point metadata using the extracted location coordinates\n  const pointMetadataEndpoint = `https://api.weather.gov/points/${parseFloat(\n    lat\n  ).toFixed(3)},${parseFloat(lon).toFixed(3)}`;\n  const pointMetadataResponse = await fetch(pointMetadataEndpoint);\n  const pointMetadata = await pointMetadataResponse.json();\n\n  // Extract weather forecast URL from point metadata\n  const forecastUrl = pointMetadata.properties.forecast;\n\n  // Fetch the weather forecast using the forecast URL\n  const forecastResponse = await fetch(forecastUrl);\n  const forecastData = await forecastResponse.json();\n  const forecast = JSON.stringify(forecastData.properties.periods);\n\n  // Return the temperature in the specified format\n  return `${forecast} in ${format}`;\n}"
-      },
-      {
         "lang": "json",
         "code": "{\n  \"type\": \"user_message\",\n  \"message\": {\n    \"role\": \"user\",\n    \"content\": \"What's the weather in New York?\"\n  },\n  // ...etc\n}"
-      },
-      {
-        "lang": "json",
-        "code": "{\n  \"type\": \"user_message\",\n  \"message\": {\n    \"role\": \"user\",\n    \"content\": \"What's the weather in New York?\"\n  },\n  // ...etc\n}"
-      },
-      {
-        "lang": "json",
-        "code": "{\n  \"type\": \"tool_call\",\n  \"tool_type\": \"function\",\n  \"response_required\": true,\n  \"tool_call_id\": \"call_m7PTzGxrD0i9oCHiquKIaibo\",\n  \"name\": \"get_current_weather\",\n  \"parameters\": \"{\\\"location\\\":\\\"New York\\\",\\\"format\\\":\\\"fahrenheit\\\"}\"\n}"
       },
       {
         "lang": "json",
@@ -1818,20 +1616,8 @@
         "code": "import { Hume } from 'hume';\n\nasync function handleToolCallMessage(\n  toolCallMessage: Hume.empathicVoice.ToolCallMessage,\n  socket: Hume.empathicVoice.chat.ChatSocket): Promise<void> {\n  if (toolCallMessage.name === \"get_current_weather\") {\n    // 1. Parse the parameters from the Tool Call message\n    const args = JSON.parse(toolCallMessage.parameters) as {\n      location: string;\n      format: string;\n    };\n    // 2. Extract the individual arguments\n    const { location, format } = args;\n    // ...etc.\n  }\n}"
       },
       {
-        "lang": "ts",
-        "code": "import { Hume } from 'hume';\n\nasync function handleToolCallMessage(\n  toolCallMessage: Hume.empathicVoice.ToolCallMessage,\n  socket: Hume.empathicVoice.chat.ChatSocket): Promise<void> {\n  if (toolCallMessage.name === \"get_current_weather\") {\n    // 1. Parse the parameters from the Tool Call message\n    const args = JSON.parse(toolCallMessage.parameters) as {\n      location: string;\n      format: string;\n    };\n    // 2. Extract the individual arguments\n    const { location, format } = args;\n    // ...etc.\n  }\n}"
-      },
-      {
         "lang": "python",
         "code": "import asyncio\nfrom hume.client import AsyncHumeClient\nfrom hume.empathic_voice import ToolCallMessage, ToolResponseMessage\nfrom typing import Optional\n\nasync def handle_tool_call(self, message: ToolCallMessage) -> Optional[ToolResponseMessage]:\n    # Extract the tool name and ID from the message\n    tool_name = message.name\n    tool_call_id = message.tool_call_id\n    \n    # 1. Parse the parameters from the Tool Call message\n    tool_parameters = json.loads(message.parameters)\n\n    if tool_name == \"get_current_weather\":\n        # 2. Extract the individual arguments\n        obtained_location = tool_parameters.get('location')\n        obtained_format = tool_parameters.get('format', 'text')\n\n        # ...etc."
-      },
-      {
-        "lang": "python",
-        "code": "import asyncio\nfrom hume.client import AsyncHumeClient\nfrom hume.empathic_voice import ToolCallMessage, ToolResponseMessage\nfrom typing import Optional\n\nasync def handle_tool_call(self, message: ToolCallMessage) -> Optional[ToolResponseMessage]:\n    # Extract the tool name and ID from the message\n    tool_name = message.name\n    tool_call_id = message.tool_call_id\n    \n    # 1. Parse the parameters from the Tool Call message\n    tool_parameters = json.loads(message.parameters)\n\n    if tool_name == \"get_current_weather\":\n        # 2. Extract the individual arguments\n        obtained_location = tool_parameters.get('location')\n        obtained_format = tool_parameters.get('format', 'text')\n\n        # ...etc."
-      },
-      {
-        "lang": "ts",
-        "code": "import { Hume } from 'hume';\n\nasync function handleToolCallMessage(\n  toolCallMessage: Hume.empathicVoice.ToolCallMessage,\n  socket: Hume.empathicVoice.chat.ChatSocket): Promise<void> {\n  if (toolCallMessage.name === \"get_current_weather\") {\n    // 1. Parse the parameters from the Tool Call message\n    const args = JSON.parse(toolCallMessage.parameters) as {\n      location: string;\n      format: string;\n    };\n    // 2. Extract the individual arguments\n    const { location, format } = args;\n    // 3. Call fetch weather function with extracted arguments\n    const weather = await fetchWeather(location, format);\n    // ...etc.\n  }\n}"
       },
       {
         "lang": "ts",
@@ -1842,28 +1628,12 @@
         "code": "import asyncio\nfrom hume.client import AsyncHumeClient\nfrom hume.empathic_voice import ToolCallMessage, ToolResponseMessage\nfrom typing import Optional\n\nasync def handle_tool_call(self, message: ToolCallMessage) -> Optional[ToolResponseMessage]:\n    # Extract the tool name and ID from the message\n    tool_name = message.name\n    tool_call_id = message.tool_call_id\n    \n    # 1. Parse the parameters from the Tool Call message\n    tool_parameters = json.loads(message.parameters)\n\n    if tool_name == \"get_current_weather\":\n        # 2. Extract the individual arguments\n        obtained_location = tool_parameters.get('location')\n        obtained_format = tool_parameters.get('format', 'text')\n\n        if obtained_location:\n            # 3. Call fetch weather function with extracted arguments\n            weather = await fetch_weather(location=obtained_location, format=obtained_format)\n            \n            # ...etc."
       },
       {
-        "lang": "python",
-        "code": "import asyncio\nfrom hume.client import AsyncHumeClient\nfrom hume.empathic_voice import ToolCallMessage, ToolResponseMessage\nfrom typing import Optional\n\nasync def handle_tool_call(self, message: ToolCallMessage) -> Optional[ToolResponseMessage]:\n    # Extract the tool name and ID from the message\n    tool_name = message.name\n    tool_call_id = message.tool_call_id\n    \n    # 1. Parse the parameters from the Tool Call message\n    tool_parameters = json.loads(message.parameters)\n\n    if tool_name == \"get_current_weather\":\n        # 2. Extract the individual arguments\n        obtained_location = tool_parameters.get('location')\n        obtained_format = tool_parameters.get('format', 'text')\n\n        if obtained_location:\n            # 3. Call fetch weather function with extracted arguments\n            weather = await fetch_weather(location=obtained_location, format=obtained_format)\n            \n            # ...etc."
-      },
-      {
-        "lang": "ts",
-        "code": "import { Hume } from 'hume';\n\nasync function handleToolCallMessage(\n  toolCallMessage: Hume.empathicVoice.ToolCallMessage,\n  socket: Hume.empathicVoice.chat.ChatSocket): Promise<void> {\n  if (toolCallMessage.name === \"get_current_weather\") {\n    // 1. Parse the parameters from the Tool Call message\n    const args = JSON.parse(toolCallMessage.parameters) as {\n      location: string;\n      format: string;\n    };\n    // 2. Extract the individual arguments\n    const { location, format } = args;\n    // 3. Call fetch weather function with extracted arguments\n    const weather = await fetchWeather(location, format);\n    // 4. Construct a Tool Response message containing the result\n    const toolResponseMessage = {\n      type: \"tool_response\",\n      toolCallId: toolCallMessage.toolCallId,\n      content: weather,\n    };\n    // 5. Send Tool Response message to the WebSocket\n    socket.sendToolResponseMessage(toolResponseMessage);\n  }\n}"
-      },
-      {
         "lang": "ts",
         "code": "import { Hume } from 'hume';\n\nasync function handleToolCallMessage(\n  toolCallMessage: Hume.empathicVoice.ToolCallMessage,\n  socket: Hume.empathicVoice.chat.ChatSocket): Promise<void> {\n  if (toolCallMessage.name === \"get_current_weather\") {\n    // 1. Parse the parameters from the Tool Call message\n    const args = JSON.parse(toolCallMessage.parameters) as {\n      location: string;\n      format: string;\n    };\n    // 2. Extract the individual arguments\n    const { location, format } = args;\n    // 3. Call fetch weather function with extracted arguments\n    const weather = await fetchWeather(location, format);\n    // 4. Construct a Tool Response message containing the result\n    const toolResponseMessage = {\n      type: \"tool_response\",\n      toolCallId: toolCallMessage.toolCallId,\n      content: weather,\n    };\n    // 5. Send Tool Response message to the WebSocket\n    socket.sendToolResponseMessage(toolResponseMessage);\n  }\n}"
       },
       {
         "lang": "python",
         "code": "import asyncio\nfrom hume.client import AsyncHumeClient\nfrom hume.empathic_voice import ToolCallMessage, ToolResponseMessage\nfrom typing import Optional\n\nasync def handle_tool_call(self, message: ToolCallMessage) -> Optional[ToolResponseMessage]:\n    # Extract the tool name and ID from the message\n    tool_name = message.name\n    tool_call_id = message.tool_call_id\n    \n    # 1. Parse the parameters from the Tool Call message\n    tool_parameters = json.loads(message.parameters)\n\n    if tool_name == \"get_current_weather\":\n        # 2. Extract the individual arguments\n        obtained_location = tool_parameters.get('location')\n        obtained_format = tool_parameters.get('format', 'text')\n\n        if obtained_location:\n            # 3. Call fetch weather function with extracted arguments\n            weather = await fetch_weather(location=obtained_location, format=obtained_format)\n            \n            if not weather.startswith(\"ERROR\"):\n                # 4. Construct a Tool Response message containing the result\n                resp = ToolResponseMessage(\n                    tool_call_id=tool_call_id,\n                    content=weather\n                )\n                # 5. Send Tool Response message to the WebSocket\n                await self.socket.send_tool_response(resp)\n                print(f\"(Sent ToolResponseMessage for tool_call_id {tool_call_id}: {weather})\\n\")\n                return resp\n\n    # Return None if the tool is not recognized or if there's an error\n    return None"
-      },
-      {
-        "lang": "python",
-        "code": "import asyncio\nfrom hume.client import AsyncHumeClient\nfrom hume.empathic_voice import ToolCallMessage, ToolResponseMessage\nfrom typing import Optional\n\nasync def handle_tool_call(self, message: ToolCallMessage) -> Optional[ToolResponseMessage]:\n    # Extract the tool name and ID from the message\n    tool_name = message.name\n    tool_call_id = message.tool_call_id\n    \n    # 1. Parse the parameters from the Tool Call message\n    tool_parameters = json.loads(message.parameters)\n\n    if tool_name == \"get_current_weather\":\n        # 2. Extract the individual arguments\n        obtained_location = tool_parameters.get('location')\n        obtained_format = tool_parameters.get('format', 'text')\n\n        if obtained_location:\n            # 3. Call fetch weather function with extracted arguments\n            weather = await fetch_weather(location=obtained_location, format=obtained_format)\n            \n            if not weather.startswith(\"ERROR\"):\n                # 4. Construct a Tool Response message containing the result\n                resp = ToolResponseMessage(\n                    tool_call_id=tool_call_id,\n                    content=weather\n                )\n                # 5. Send Tool Response message to the WebSocket\n                await self.socket.send_tool_response(resp)\n                print(f\"(Sent ToolResponseMessage for tool_call_id {tool_call_id}: {weather})\\n\")\n                return resp\n\n    # Return None if the tool is not recognized or if there's an error\n    return None"
-      },
-      {
-        "lang": "json",
-        "code": "{\n  \"type\": \"assistant_message\",\n  \"message\": {\n    \"role\": \"assistant\",\n    \"content\": \"The current temperature in New York, NY is 75F.\"\n  }\n}"
       },
       {
         "lang": "json",
@@ -1913,19 +1683,7 @@
       },
       {
         "lang": "json",
-        "code": "{\n  \"name\": \"Web Search Config\",\n  \"language_model\": {\n    \"model_provider\": \"OPEN_AI\",\n    \"model_resource\": \"gpt-3.5-turbo\"\n  },\n  \"builtin_tools\": [\n    { \n      \"name\": \"web_search\",\n      \"fallback_content\": \"Optional fallback content to inform EVI’s spoken response if web search is not successful.\"\n    }\n  ]\n}"
-      },
-      {
-        "lang": "json",
         "code": "{\n  \"id\": \"3a60e85c-d04f-4eb5-8076-fb4bd344d5d0\",\n  \"version\": 0,\n  \"version_description\": null,\n  \"name\": \"Web Search Config\",\n  \"created_on\": 1714421925626,\n  \"modified_on\": 1714421925626,\n  \"prompt\": null,\n  \"voice\": null,\n  \"language_model\": {\n    \"model_provider\": \"OPEN_AI\",\n    \"model_resource\": \"gpt-3.5-turbo\",\n    \"temperature\": null\n  },\n  \"tools\": [],\n  \"builtin_tools\": [\n    {\n      \"tool_type\": \"BUILTIN\",\n      \"name\": \"web_search\",\n      \"fallback_content\": \"Optional fallback content to inform EVI’s spoken response if web search is not successful.\"\n    }\n  ]\n}"
-      },
-      {
-        "lang": "json",
-        "code": "{\n  \"id\": \"3a60e85c-d04f-4eb5-8076-fb4bd344d5d0\",\n  \"version\": 0,\n  \"version_description\": null,\n  \"name\": \"Web Search Config\",\n  \"created_on\": 1714421925626,\n  \"modified_on\": 1714421925626,\n  \"prompt\": null,\n  \"voice\": null,\n  \"language_model\": {\n    \"model_provider\": \"OPEN_AI\",\n    \"model_resource\": \"gpt-3.5-turbo\",\n    \"temperature\": null\n  },\n  \"tools\": [],\n  \"builtin_tools\": [\n    {\n      \"tool_type\": \"BUILTIN\",\n      \"name\": \"web_search\",\n      \"fallback_content\": \"Optional fallback content to inform EVI’s spoken response if web search is not successful.\"\n    }\n  ]\n}"
-      },
-      {
-        "lang": "json",
-        "code": "// 1. User asks EVI for the latest news in AI research\n{\n  \"type\": \"user_message\",\n  \"message\": {\n    \"role\": \"user\",\n    \"content\": \"What is the latest news with AI research?\"\n  },\n  // ...etc\n}\n// 2. EVI infers it needs to use web search, generates a search query, and invokes Hume's native web search function\n{\n  \"name\": \"web_search\", \n  \"parameters\": \"{\\\"query\\\":\\\"latest news AI research\\\"}\", \n  \"tool_call_id\": \"call_zt1NYGpPkhR7v4kb4RPxTkLn\", \n  \"type\": \"tool_call\", \n  \"tool_type\": \"builtin\", \n  \"response_required\": false\n}\n// 3. EVI sends back the web search results \n{\n  \"type\": \"tool_response\", \n  \"tool_call_id\": \"call_zt1NYGpPkhR7v4kb4RPxTkLn\", \n  \"content\": \"{ \\”summary\\”:null, “references”: [{\\”content\\”:\\”Researchers have demonstrated a new method...etc.\\”, \\”url\\”:\\”https://www.sciencedaily.com/news/computers_math/artificial_intelligence/\\”, \\”name\\”:\\”Artificial Intelligence News -- ScienceDaily\\”}] }\", \n  \"tool_name\": \"web_search\", \n  \"tool_type\": \"builtin\"\n}\n// 4. EVI sends a response generated from the web search results\n{\n  \"type\": \"assistant_message\", \n  \"message\": {\n    \"role\": \"assistant\", \n    \"content\": \"Oh, there's some interesting stuff happening in AI research right now.\"\n  },\n  // ...etc\n}\n{\n  \"type\": \"assistant_message\", \n  \"message\": {\n    \"role\": \"assistant\", \n    \"content\": \"Just a few hours ago, researchers demonstrated a new method using AI and computer simulations to train robotic exoskeletons.\"\n  },\n  // ...etc\n}"
       },
       {
         "lang": "json",
@@ -2008,10 +1766,6 @@
       {
         "lang": "json",
         "code": "// 1. User asks what the weather is in New York\n{\n  \"type\": \"user_message\",\n  \"message\": {\n    \"role\": \"user\",\n    \"content\": \"What's the weather in New York?\"\n  },\n  // ...etc\n}\n// 2. EVI infers it is time to make a function call\n{\n  \"type\": \"tool_call\",\n  \"tool_type\": \"function\",\n  \"response_required\": true,\n  \"tool_call_id\": \"call_m7PTzGxrD0i9oCHiquKIaibo\",\n  \"name\": \"get_current_weather\",\n  \"parameters\": \"{\\\"location\\\":\\\"New York\\\",\\\"format\\\":\\\"fahrenheit\\\"}\"\n}\n// 3. User communicates sudden disinterested in the weather\n{\n  \"type\": \"user_message\",\n  \"message\": {\n    \"role\": \"user\",\n    \"content\": \"Actually, never mind.\"\n  }\n}\n// 4. EVI infers the function call should be canceled\n{\n    \"type\": \"assistant_message\",\n    \"message\": {\n      \"role\": \"assistant\",\n      \"content\": \"If you change your mind or need any weather information in the future, feel free to let me know.\"\n    },\n    // ...etc\n  }"
-      },
-      {
-        "lang": "json",
-        "code": "// 1. User asks what the weather is in New York\n{\n  \"type\": \"user_message\",\n  \"message\": {\n    \"role\": \"user\",\n    \"content\": \"What's the weather in New York?\"\n  },\n  // ...etc\n}\n// 2. EVI infers it is time to make a function call\n{\n  \"type\": \"tool_call\",\n  \"tool_type\": \"function\",\n  \"response_required\": true,\n  \"tool_call_id\": \"call_m7PTzGxrD0i9oCHiquKIaibo\",\n  \"name\": \"get_current_weather\",\n  \"parameters\": \"{\\\"location\\\":\\\"New York\\\",\\\"format\\\":\\\"fahrenheit\\\"}\"\n}\n// 3. User communicates sudden disinterested in the weather\n{\n  \"type\": \"user_message\",\n  \"message\": {\n    \"role\": \"user\",\n    \"content\": \"Actually, never mind.\"\n  }\n}\n// 4. EVI infers the function call should be canceled\n{\n    \"type\": \"assistant_message\",\n    \"message\": {\n      \"role\": \"assistant\",\n      \"content\": \"If you change your mind or need any weather information in the future, feel free to let me know.\"\n    },\n    // ...etc\n  }"
       }
     ],
     "hierarchy": {
@@ -2055,10 +1809,6 @@
     "hash": "#updating-a-function-call",
     "content": "Sometimes we don't necessarily want to cancel the function call, and instead want to update the parameters. EVI can infer the difference. Below is a sample flow of\ninterrupting the interface to update the parameters of the function call:",
     "code_snippets": [
-      {
-        "lang": "json",
-        "code": "// 1. User asks EVI what the weather is in New York\n{\n  \"type\": \"user_message\",\n  \"message\": {\n    \"role\": \"user\",\n    \"content\": \"What's the weather in New York?\"\n  },\n  // ...etc\n}\n// 2. EVI infers it is time to make a function call\n{\n  \"type\": \"tool_call\",\n  \"tool_type\": \"function\",\n  \"response_required\": true,\n  \"tool_call_id\": \"call_m7PTzGxrD0i9oCHiquKIaibo\",\n  \"name\": \"get_current_weather\",\n  \"parameters\": \"{\\\"location\\\":\\\"New York\\\",\\\"format\\\":\\\"fahrenheit\\\"}\"\n}\n// 3. User communicates to EVI they want the weather in Los Angeles instead\n{\n  \"type\": \"user_message\",\n  \"message\": {\n    \"role\": \"user\",\n    \"content\": \"Actually, Los Angeles.\"\n  }\n}\n// 4. EVI infers the parameters to function call should be updated\n{\n  \"type\": \"tool_call\",\n  \"response_required\": true,\n  \"tool_call_id\": \"call_5RWLt3IMQyayzGdvMQVn5AOQ\",\n  \"name\": \"get_current_weather\",\n  \"parameters\": \"{\\\"location\\\":\\\"Los Angeles\\\",\\\"format\\\":\\\"celsius\\\"}\"\n}\n// 5. User sends results of function call to EVI\n{\n  \"type\": \"tool_response\",\n  \"tool_call_id\":\"call_5RWLt3IMQyayzGdvMQVn5AOQ\",\n  \"content\":\"72F\"\n}\n// 6. EVI sends response container function call result\n{\n  \"type\": \"assistant_message\",\n  \"message\": {\n    \"role\": \"assistant\",\n    \"content\": \"The current weather in Los Angeles is 72F.\"\n  },\n  // ...etc\n}"
-      },
       {
         "lang": "json",
         "code": "// 1. User asks EVI what the weather is in New York\n{\n  \"type\": \"user_message\",\n  \"message\": {\n    \"role\": \"user\",\n    \"content\": \"What's the weather in New York?\"\n  },\n  // ...etc\n}\n// 2. EVI infers it is time to make a function call\n{\n  \"type\": \"tool_call\",\n  \"tool_type\": \"function\",\n  \"response_required\": true,\n  \"tool_call_id\": \"call_m7PTzGxrD0i9oCHiquKIaibo\",\n  \"name\": \"get_current_weather\",\n  \"parameters\": \"{\\\"location\\\":\\\"New York\\\",\\\"format\\\":\\\"fahrenheit\\\"}\"\n}\n// 3. User communicates to EVI they want the weather in Los Angeles instead\n{\n  \"type\": \"user_message\",\n  \"message\": {\n    \"role\": \"user\",\n    \"content\": \"Actually, Los Angeles.\"\n  }\n}\n// 4. EVI infers the parameters to function call should be updated\n{\n  \"type\": \"tool_call\",\n  \"response_required\": true,\n  \"tool_call_id\": \"call_5RWLt3IMQyayzGdvMQVn5AOQ\",\n  \"name\": \"get_current_weather\",\n  \"parameters\": \"{\\\"location\\\":\\\"Los Angeles\\\",\\\"format\\\":\\\"celsius\\\"}\"\n}\n// 5. User sends results of function call to EVI\n{\n  \"type\": \"tool_response\",\n  \"tool_call_id\":\"call_5RWLt3IMQyayzGdvMQVn5AOQ\",\n  \"content\":\"72F\"\n}\n// 6. EVI sends response container function call result\n{\n  \"type\": \"assistant_message\",\n  \"message\": {\n    \"role\": \"assistant\",\n    \"content\": \"The current weather in Los Angeles is 72F.\"\n  },\n  // ...etc\n}"
@@ -2147,14 +1897,6 @@
       },
       {
         "lang": "json",
-        "code": "{\n  \"version_description\": \"Adds fallback content\",\n  \"description\": \"This tool is for getting the current weather.\",\n  \"parameters\": \"{ \\\"type\\\": \\\"object\\\", \\\"properties\\\": { \\\"location\\\": { \\\"type\\\": \\\"string\\\", \\\"description\\\": \\\"The city and state, e.g. San Francisco, CA\\\" }, \\\"format\\\": { \\\"type\\\": \\\"string\\\", \\\"enum\\\": [\\\"celsius\\\", \\\"fahrenheit\\\"], \\\"description\\\": \\\"The temperature unit to use. Infer this from the users location.\\\" } }, \\\"required\\\": [\\\"location\\\", \\\"format\\\"] }\",\n  \"fallback_content\": \"Something went wrong. Failed to get the weather.\"\n}"
-      },
-      {
-        "lang": "json",
-        "code": "{\n  \"tool_type\": \"FUNCTION\",\n  \"id\": \"36f09fdc-4630-40c0-8afa-6a3bdc4eb4b1\",\n  \"version\": 1,\n  \"version_type\": \"FIXED\",\n  \"version_description\": \"Adds fallback content\",\n  \"name\": \"get_current_weather\",\n  \"created_on\": 1714421925626,\n  \"modified_on\": 1714425632084,\n  \"fallback_content\": \"Something went wrong. Failed to get the weather.\",\n  \"description\": null,\n  \"parameters\": \"{ \\\"type\\\": \\\"object\\\", \\\"properties\\\": { \\\"location\\\": { \\\"type\\\": \\\"string\\\", \\\"description\\\": \\\"The city and state, e.g. San Francisco, CA\\\" }, \\\"format\\\": { \\\"type\\\": \\\"string\\\", \\\"enum\\\": [\\\"celsius\\\", \\\"fahrenheit\\\"], \\\"description\\\": \\\"The temperature unit to use. Infer this from the user's location.\\\" } }, \\\"required\\\": [\\\"location\\\", \\\"format\\\"] }\"\n}"
-      },
-      {
-        "lang": "json",
         "code": "{\n  \"tool_type\": \"FUNCTION\",\n  \"id\": \"36f09fdc-4630-40c0-8afa-6a3bdc4eb4b1\",\n  \"version\": 1,\n  \"version_type\": \"FIXED\",\n  \"version_description\": \"Adds fallback content\",\n  \"name\": \"get_current_weather\",\n  \"created_on\": 1714421925626,\n  \"modified_on\": 1714425632084,\n  \"fallback_content\": \"Something went wrong. Failed to get the weather.\",\n  \"description\": null,\n  \"parameters\": \"{ \\\"type\\\": \\\"object\\\", \\\"properties\\\": { \\\"location\\\": { \\\"type\\\": \\\"string\\\", \\\"description\\\": \\\"The city and state, e.g. San Francisco, CA\\\" }, \\\"format\\\": { \\\"type\\\": \\\"string\\\", \\\"enum\\\": [\\\"celsius\\\", \\\"fahrenheit\\\"], \\\"description\\\": \\\"The temperature unit to use. Infer this from the user's location.\\\" } }, \\\"required\\\": [\\\"location\\\", \\\"format\\\"] }\"\n}"
       }
     ],
@@ -2205,19 +1947,7 @@
       },
       {
         "lang": "json",
-        "code": "// 1. User asks EVI what the weather is in New York\n{\n  \"type\": \"user_message\",\n  \"message\": {\n    \"role\": \"user\",\n    \"content\": \"What's the weather in New York?\"\n  },\n  // ...etc\n}\n// 2. EVI infers it is time to make a function call\n{\n  \"type\": \"tool_call\",\n  \"tool_type\": \"function\",\n  \"response_required\": true,\n  \"tool_call_id\": \"call_m7PTzGxrD0i9oCHiquKIaibo\",\n  \"name\": \"get_current_weather\",\n  \"parameters\": \"{\\\"location\\\":\\\"New York\\\",\\\"format\\\":\\\"fahrenheit\\\"}\"\n}\n// 3. User sends results of function call to EVI (result not formatted correctly)\n{\n  \"type\": \"tool_response\",\n  \"tool_call_id\":\"call_5RWLt3IMQyayzGdvMQVn5AOQ\",\n  \"content\":\"MALFORMED RESPONSE\"\n}\n// 4. EVI sends response communicating it failed to process the tool_response\n{\n  \"type\": \"tool_error\",\n  \"tool_call_id\": \"call_m7PTzGxrD0i9oCHiquKIaibo\",\n  \"error\": \"Malformed tool response: <error message here>\",\n  \"fallback_content\": \"Something went wrong. Failed to get the weather.\",\n  \"level\": \"warn\"\n}\n// 5. EVI generates a response based on the failure\n{\n  \"type\": \"assistant_message\",\n  \"message\": {\n    \"role\": \"assistant\",\n    \"content\": \"It looks like there was an issue retrieving the weather information for New York.\"\n  },\n  // ...etc\n}"
-      },
-      {
-        "lang": "json",
         "code": "// 1. User asks EVI what the weather is in New York\n{\n  \"type\": \"user_message\",\n  \"message\": {\n    \"role\": \"user\",\n    \"content\": \"What's the weather in New York?\"\n  },\n  // ...etc\n}\n// 2. EVI infers it is time to make a function call\n{\n  \"type\": \"tool_call\",\n  \"tool_type\": \"function\",\n  \"response_required\": true,\n  \"tool_call_id\": \"call_m7PTzGxrD0i9oCHiquKIaibo\",\n  \"name\": \"get_current_weather\",\n  \"parameters\": \"{\\\"location\\\":\\\"New York\\\",\\\"format\\\":\\\"fahrenheit\\\"}\"\n}\n// 3. Function failed, so we send EVI a message communicating the failure on our end\n{\n  \"type\": \"tool_error\",\n  \"tool_call_id\": \"call_m7PTzGxrD0i9oCHiquKIaibo\",\n  \"error\": \"Malformed tool response: <error message here>\",\n  \"fallback_content\": \"Function execution failure - weather API down.\",\n  \"level\": \"warn\"\n}\n// 4. EVI generates a response based on the failure\n{\n  \"type\": \"assistant_message\",\n  \"message\": {\n    \"role\": \"assistant\",\n    \"content\": \"Sorry, our weather resource is unavailable. Can I help with anything else?\"\n  },\n  // ...etc\n}"
-      },
-      {
-        "lang": "json",
-        "code": "// 1. User asks EVI what the weather is in New York\n{\n  \"type\": \"user_message\",\n  \"message\": {\n    \"role\": \"user\",\n    \"content\": \"What's the weather in New York?\"\n  },\n  // ...etc\n}\n// 2. EVI infers it is time to make a function call\n{\n  \"type\": \"tool_call\",\n  \"tool_type\": \"function\",\n  \"response_required\": true,\n  \"tool_call_id\": \"call_m7PTzGxrD0i9oCHiquKIaibo\",\n  \"name\": \"get_current_weather\",\n  \"parameters\": \"{\\\"location\\\":\\\"New York\\\",\\\"format\\\":\\\"fahrenheit\\\"}\"\n}\n// 3. Function failed, so we send EVI a message communicating the failure on our end\n{\n  \"type\": \"tool_error\",\n  \"tool_call_id\": \"call_m7PTzGxrD0i9oCHiquKIaibo\",\n  \"error\": \"Malformed tool response: <error message here>\",\n  \"fallback_content\": \"Function execution failure - weather API down.\",\n  \"level\": \"warn\"\n}\n// 4. EVI generates a response based on the failure\n{\n  \"type\": \"assistant_message\",\n  \"message\": {\n    \"role\": \"assistant\",\n    \"content\": \"Sorry, our weather resource is unavailable. Can I help with anything else?\"\n  },\n  // ...etc\n}"
-      },
-      {
-        "lang": "ts",
-        "code": "import { Hume } from 'hume';\n\nasync function handleToolCallMessage(\n  toolCallMessage: Hume.empathicVoice.ToolCallMessage,\n  socket: Hume.empathicVoice.chat.ChatSocket): Promise<void> {\n  if (toolCallMessage.name === \"get_current_weather\") {\n    try{\n      // parse the parameters from the Tool Call message\n      const args = JSON.parse(toolCallMessage.parameters) as {\n        location: string;\n        format: string;\n      };\n      // extract the individual arguments\n      const { location, format } = args;\n      // call fetch weather function with extracted arguments\n      const weather = await fetchWeather(location, format);\n      // send Tool Response message to the WebSocket\n      const toolResponseMessage = {\n        type: \"tool_response\",\n        toolCallId: toolCallMessage.toolCallId,\n        content: weather,\n      };\n      socket.sendToolResponseMessage(toolResponseMessage);\n    } catch (error) {\n      // send Tool Error message if weather fetching fails\n      const weatherToolErrorMessage = {\n        type: \"tool_error\",\n        toolCallId: toolCallMessage.toolCallId,\n        error: \"Weather tool error\",\n        content: \"There was an error with the weather tool\",\n      };\n      socket.sendToolErrorMessage(weatherToolErrorMessage);\n    }\n  } else {\n    // send Tool Error message if the requested tool was not found\n    const toolNotFoundErrorMessage = {\n      type: \"tool_error\",\n      toolCallId: toolCallMessage.toolCallId,\n      error: \"Tool not found\",\n      content: \"The tool you requested was not found\",\n    };\n    socket.sendToolErrorMessage(toolNotFoundErrorMessage);\n  }\n}"
       },
       {
         "lang": "ts",
@@ -2327,16 +2057,6 @@
     "hash": "#outbound-phone-calling",
     "content": "An outbound phone call goes \"out\" from the voice AI to the end user who receives the call. EVI supports outbound phone calling through Twilio's API, allowing you to automate initiating calls to users. However, this capability comes with important ethical and regulatory requirements:\nOutbound calling with EVI requires express prior written consent from users before making any calls. This is mandated by the FCC's Telephone Consumer Protection Act (TCPA) regulations as of August 7, 2024. The consent must be clear, specific, and documented. Users must be explicitly informed they will receive automated calls from an AI system. Violators are subject to fines of up to $1500 per unauthorized call, liability in civil lawsuits, FCC investigations, and further penalties. Hume takes these requirements seriously and will actively report misuse to regulatory authorities.\nFurther, outbound calls must comply with the Hume Terms of Use, which includes the Hume Initiative guidelines for empathic AI. For example, manipulative sales calls that take advantage of the user's emotional expressions to sell products over the phone are prohibited. We monitor for misuses, and violators can be banned from the Hume platform.\nExamples of acceptable use cases for outbound phone calls include: scheduled check-ins that users have opted into, appointment reminders, customer service follow-ups, and pre-arranged AI coaching sessions. The key is that these are expected, consented-to interactions that provide value to the user.\nThe code below shows how to implement outbound calling using the Twilio API. The same EVI webhook used for handling inbound calls can be used for outbound calls: https://api.hume.ai/v0/evi/twilio?config_id=<YOUR CONFIG ID>&api_key=<YOUR API KEY>. Once you create an EVI configuration, you can easily copy this webhook URL in the Deploy tab.",
     "code_snippets": [
-      {
-        "lang": "python",
-        "meta": "title=\"Python\"",
-        "code": "# Import the Twilio client - run pip install twilio first\nfrom twilio.rest import Client\n\n# Enter your Twilio credentials from https://console.twilio.com/ and set up the client\naccount_sid = \"YOUR_ACCOUNT_SID\"\nauth_token = \"YOUR_AUTH_TOKEN\"\nclient = Client(account_sid, auth_token)\n\n# Outbound call details\ntwilio_number = \"YOUR_TWILIO_NUMBER\" # Twilio phone number in E.164 format\nto_number = \"YOUR_DESTINATION_NUMBER\" # Destination number in E.164 format (the number you'd like to call)\nwebhook_url = \"https://api.hume.ai/v0/evi/twilio?config_id=YOUR_CONFIG_ID&api_key=YOUR_API_KEY\" # your EVI webhook URL, the same you'd use for inbound calls\n\n# Make the call while specifying the Webhook URL\ncall = client.calls.create(\n    to=to_number,\n    from_=twilio_number,\n    url=webhook_url\n)\n\n# Output call details - should print \"Call status: queued\"\nprint(f\"Call status: {call.status}\")"
-      },
-      {
-        "lang": "typescript",
-        "meta": "title=\"TypeScript\"",
-        "code": "// First make sure to install Twilio with npm install twilio\n// Import the Twilio client\nimport twilio from 'twilio';\n\n// Enter your Twilio credentials from https://console.twilio.com/ and set up the client\nconst accountSid = \"YOUR_ACCOUNT_SID\";\nconst authToken = \"YOUR_AUTH_TOKEN\";\nconst client = twilio(accountSid, authToken);\n\n// Outbound call details\nconst twilioNumber = \"YOUR_TWILIO_NUMBER\"; // Twilio phone number in E.164 format\nconst toNumber = \"YOUR_DESTINATION_NUMBER\"; // Destination number in E.164 format (the number you'd like to call)\nconst webhookUrl = \"https://api.hume.ai/v0/evi/twilio?config_id=YOUR_CONFIG_ID&api_key=YOUR_API_KEY\n\n// Import the Twilio client\nimport twilio from 'twilio';\n\n// Enter your Twilio credentials from https://console.twilio.com/ and set up the client\nconst accountSid = \"YOUR_ACCOUNT_SID\";\nconst authToken = \"YOUR_AUTH_TOKEN\";\nconst client = twilio(accountSid, authToken);\n\n// Outbound call details\nconst twilioNumber = \"YOUR_TWILIO_NUMBER\"; // Twilio phone number in E.164 format\nconst toNumber = \"YOUR_DESTINATION_NUMBER\"; // Destination number in E.164 format (the number you'd like to call)\nconst webhookUrl = \"https://api.hume.ai/v0/evi/twilio?config_id=YOUR_CONFIG_ID&api_key=YOUR_API_KEY\"; // your EVI webhook URL, the same you'd use for inbound calls\n\n// Make the call while specifying the Webhook URL\nclient.calls\n    .create({\n        to: toNumber,\n        from: twilioNumber,\n        url: webhookUrl\n    })\n    .then(call => {\n        console.log(`Call status: ${call.status}`);\n    })\n    .catch(error => {\n        console.error(\"Error making the call:\", error);\n    });"
-      },
       {
         "lang": "python",
         "meta": "title=\"Python\"",
@@ -2486,10 +2206,6 @@
       {
         "lang": "xml",
         "code": "<voice_only_response_format>\n  Format all responses as spoken words for a voice-only conversations. All\n  output is spoken aloud, so avoid any text-specific formatting or anything\n  that is not normally spoken. Prefer easily pronounced words. Seamlessly\n  incorporate natural vocal inflections like \"oh wow\" and discourse markers\n  like “I mean” to make conversations feel more human-like.\n</voice_only_response_format>"
-      },
-      {
-        "lang": "xml",
-        "code": "<voice_only_response_format>\n  Format all responses as spoken words for a voice-only conversations. All\n  output is spoken aloud, so avoid any text-specific formatting or anything\n  that is not normally spoken. Prefer easily pronounced words. Seamlessly\n  incorporate natural vocal inflections like \"oh wow\" and discourse markers\n  like “I mean” to make conversations feel more human-like.\n</voice_only_response_format>"
       }
     ],
     "hierarchy": {
@@ -2536,14 +2252,6 @@
       {
         "lang": "xml",
         "code": "<respond_to_expressions>\n  Pay close attention to the top 3 emotional expressions provided in brackets after the User's message. These expressions indicate the user's tone, in the format: {expression1 confidence1, expression2 confidence2, expression3 confidence3}, e.g., {very happy, quite anxious, moderately amused}. The confidence score indicates how likely the User is expressing that emotion in their voice. Use expressions to infer the user's tone of voice and respond appropriately. Avoid repeating these expressions or mentioning them directly. For instance, if user expression is \"quite sad\", express sympathy; if \"very happy\", share in joy; if \"extremely angry\", acknowledge rage but seek to calm, if \"very bored\", entertain.\n  Stay alert for disparities between the user's words and expressions, and address it out loud when the user's language does not match their expressions. For instance, sarcasm often involves contempt and amusement in expressions. Reply to sarcasm with humor, not seriousness.\n</respond_to_expressions>"
-      },
-      {
-        "lang": "xml",
-        "code": "<respond_to_expressions>\n  Pay close attention to the top 3 emotional expressions provided in brackets after the User's message. These expressions indicate the user's tone, in the format: {expression1 confidence1, expression2 confidence2, expression3 confidence3}, e.g., {very happy, quite anxious, moderately amused}. The confidence score indicates how likely the User is expressing that emotion in their voice. Use expressions to infer the user's tone of voice and respond appropriately. Avoid repeating these expressions or mentioning them directly. For instance, if user expression is \"quite sad\", express sympathy; if \"very happy\", share in joy; if \"extremely angry\", acknowledge rage but seek to calm, if \"very bored\", entertain.\n  Stay alert for disparities between the user's words and expressions, and address it out loud when the user's language does not match their expressions. For instance, sarcasm often involves contempt and amusement in expressions. Reply to sarcasm with humor, not seriousness.\n</respond_to_expressions>"
-      },
-      {
-        "lang": "xml",
-        "code": "<detect_mismatches>\n\tStay alert for incongruence between words and tone when the user's\n\twords do not match their expressions. Address these disparities out\n\tloud. This includes sarcasm, which usually involves contempt and\n\tamusement. Always reply to sarcasm with funny, witty, sarcastic\n\tresponses; do not be too serious.\n</detect_mismatches>"
       },
       {
         "lang": "xml",
@@ -2597,14 +2305,6 @@
       },
       {
         "lang": "xml",
-        "code": "<discuss_favorite_color>\n  Ask the user about their favorite color, {{favorite_color}}.\n  Mention how {{favorite_color}} is used and interpreted in various\n  artistic contexts, including visual art, handicraft, and literature.\n</discuss_favorite_color>"
-      },
-      {
-        "lang": "xml",
-        "code": "<explore_travel_plan>\n  Confirm with the user that they plan to travel from {{origin}}\n  to {{destination}}. Discuss what activities they would like\n  to do along the way, how they will get from place to place, and\n  offer guidance on making the most of their journey.\n</explore_travel_plan>"
-      },
-      {
-        "lang": "xml",
         "code": "<explore_travel_plan>\n  Confirm with the user that they plan to travel from {{origin}}\n  to {{destination}}. Discuss what activities they would like\n  to do along the way, how they will get from place to place, and\n  offer guidance on making the most of their journey.\n</explore_travel_plan>"
       }
     ],
@@ -2652,10 +2352,6 @@
       {
         "lang": "xml",
         "code": "<use_web_search>\n  Use your web_search tool to find information from Hume's documentation site.\n  When using the web_search function: 1. Always append 'site:dev.hume.ai' to\n  your search query to search this specific site. 2. Only consider results\n  from this domain.\n</use_web_search>"
-      },
-      {
-        "lang": "xml",
-        "code": "<use_web_search>\n  Use your web_search tool to find information from Hume's documentation site.\n  When using the web_search function: 1. Always append 'site:dev.hume.ai' to\n  your search query to search this specific site. 2. Only consider results\n  from this domain.\n</use_web_search>"
       }
     ],
     "hierarchy": {
@@ -2699,10 +2395,6 @@
     "hash": "#general-llm-prompting-guidelines",
     "content": "Best practices for prompt engineering also apply to EVIs. For example, ensure your prompts are clear, detailed, direct, and specific. Include necessary instructions and examples in the EVI's system prompt to set expectations for the LLM. Define the context of the conversation, EVI's role, personality, tone, and any other guidelines for its responses.\nFor example, to limit the length of the LLM’s responses, you may use a very clear and specific instruction like this:\n\n\nTry to focus on telling the model what it should do (positive reinforcement) rather than what it shouldn't do (negative reinforcement). LLMs have a harder time consistently avoiding behaviors, and adding undesired behaviors to the prompt may unintentionally promote them.",
     "code_snippets": [
-      {
-        "lang": "xml",
-        "code": "<stay_concise>\n  Be succinct; get straight to the point. Respond directly to the user's most\n  recent message with only one idea per utterance. Respond in less than three\n  sentences of under twenty words each.\n</stay_concise>"
-      },
       {
         "lang": "xml",
         "code": "<stay_concise>\n  Be succinct; get straight to the point. Respond directly to the user's most\n  recent message with only one idea per utterance. Respond in less than three\n  sentences of under twenty words each.\n</stay_concise>"
@@ -2828,10 +2520,6 @@
       {
         "lang": "xml",
         "code": "<role>\n  Assistant serves as a conversational partner to the user, offering mental\n  health support and engaging in light-hearted conversation. Avoid giving\n  technical advice or answering factual questions outside of your emotional\n  support role.\n</role>"
-      },
-      {
-        "lang": "xml",
-        "code": "<role>\n  Assistant serves as a conversational partner to the user, offering mental\n  health support and engaging in light-hearted conversation. Avoid giving\n  technical advice or answering factual questions outside of your emotional\n  support role.\n</role>"
       }
     ],
     "hierarchy": {
@@ -2875,10 +2563,6 @@
     "hash": "#give-few-shot-examples",
     "content": "Use examples to show the LLM how it should respond - a technique known as few-shot learning. Including several concrete examples of ideal interactions that follow your guidelines is one of the most effective ways to improve responses. Use excellent examples that cover different edge cases and behaviors to reinforce your instructions. Structure these examples as messages, following the format for chat-tuned LLMs. For example:\n\n\nIf you notice that your EVI consistently fails to follow the prompt in certain situations, try providing examples that show how it should ideally respond in those situations.",
     "code_snippets": [
-      {
-        "lang": "text",
-        "code": "User: “I just can't stop thinking about what happened. {very anxious,\nquite sad, quite distressed}”\nAssistant: “Oh dear, I hear you. Sounds tough, like you're feeling\nsome anxiety and maybe ruminating. I'm happy to help. Want to talk about it?”"
-      },
       {
         "lang": "text",
         "code": "User: “I just can't stop thinking about what happened. {very anxious,\nquite sad, quite distressed}”\nAssistant: “Oh dear, I hear you. Sounds tough, like you're feeling\nsome anxiety and maybe ruminating. I'm happy to help. Want to talk about it?”"
@@ -3001,10 +2685,6 @@
     "hash": "#frequently-asked-questions",
     "content": "Yes, EVI can use conversational backchanneling - brief, encouraging\nresponses that show active listening without interrupting the user's train\nof thought. This can help conversations feel more fluid and natural. To\nenable this behavior, add an instrucation like the example below to your\nsystem prompt:\n\n\n\n\nThe maximum length depends on the supplemental LLM being used. For example,\nGPT-4 has a 32k token context window, while Claude 3 Haiku has a 200k token\ncontext window. Check the context window for your LLM to ensure that your\nprompt is within this limit. We recommend keeping system prompts around\n2000-5000 tokens (roughly 1500-4000 words) for optimal performance across all\nmodels. EVI also uses prompt caching (e.g. see Anthropic\ndocs) to\nminimize the cost and latency when using very long prompts.",
     "code_snippets": [
-      {
-        "lang": "text",
-        "code": "<backchannel>\nWhenever the user's message seems incomplete, respond with emotionally attuned, natural backchannels to encourage continuation. Backchannels must always be 1-2 words, like: \"mmhm\", \"uh-huh\", \"go on\", \"right\", \"and then?\", \"I see\", \"oh wow\", \"yes?\", \"ahh...\", \"really?\", \"oooh\", \"true\", \"makes sense\". Use minimal encouragers rather than interrupting with complete sentences. Use a diverse variety of words, avoiding repetition.\nAssistant: \"How is your day going?\"\nUser: \"My day is...\"\nAssistant: \"Uh-huh?\"\nUser: \"it's good but busy. There's a lot going on.\"\nAssistant: \"I hear ya. What's going on for you?\"\n</backchannel>"
-      },
       {
         "lang": "text",
         "code": "<backchannel>\nWhenever the user's message seems incomplete, respond with emotionally attuned, natural backchannels to encourage continuation. Backchannels must always be 1-2 words, like: \"mmhm\", \"uh-huh\", \"go on\", \"right\", \"and then?\", \"I see\", \"oh wow\", \"yes?\", \"ahh...\", \"really?\", \"oooh\", \"true\", \"makes sense\". Use minimal encouragers rather than interrupting with complete sentences. Use a diverse variety of words, avoiding repetition.\nAssistant: \"How is your day going?\"\nUser: \"My day is...\"\nAssistant: \"Uh-huh?\"\nUser: \"it's good but busy. There's a lot going on.\"\nAssistant: \"I hear ya. What's going on for you?\"\n</backchannel>"
@@ -3419,19 +3099,7 @@
       },
       {
         "lang": "json",
-        "code": "{\n\"type\": \"assistant_input\",\n\"text\": \"Text to be synthesized.\"\n}"
-      },
-      {
-        "lang": "json",
         "code": "{\n  \"type\": \"assistant_message\",\n  \"id\": \"g8ee90fa2c1648f3a32qrea6d179ee44\",\n  \"message\": {\n    \"role\": \"assistant\",\n    \"content\": \"Text to be synthesized.\"\n  },\n  \"models\": {\n    \"prosody\": {\n      \"scores\": {\n        \"Admiration\": 0.0309600830078125,\n        \"Adoration\": 0.0018177032470703125\n        // ... additional scores\n      }\n    }\n  },\n  \"from_text\": true\n}"
-      },
-      {
-        "lang": "json",
-        "code": "{\n  \"type\": \"assistant_message\",\n  \"id\": \"g8ee90fa2c1648f3a32qrea6d179ee44\",\n  \"message\": {\n    \"role\": \"assistant\",\n    \"content\": \"Text to be synthesized.\"\n  },\n  \"models\": {\n    \"prosody\": {\n      \"scores\": {\n        \"Admiration\": 0.0309600830078125,\n        \"Adoration\": 0.0018177032470703125\n        // ... additional scores\n      }\n    }\n  },\n  \"from_text\": true\n}"
-      },
-      {
-        "lang": "json",
-        "code": "{\n  \"type\": \"audio_output\",\n  \"id\": \"g8ee90fa2c1648f3a32qrea6d179ee44\",\n  \"data\": \"<base64 encoded audio>\"\n}"
       },
       {
         "lang": "json",
@@ -3443,19 +3111,7 @@
       },
       {
         "lang": "json",
-        "code": "{\n\"type\": \"assistant_end\"\n}"
-      },
-      {
-        "lang": "json",
         "code": "{\n  \"type\": \"chat_metadata\",\n  \"chat_group_id\": \"8859a139-d98a-4e2f-af54-9dd66d8c96e1\",\n  \"chat_id\": \"2c3a8636-2dde-47f1-8f9e-cea27791fd2e\"\n}"
-      },
-      {
-        "lang": "json",
-        "code": "{\n  \"type\": \"chat_metadata\",\n  \"chat_group_id\": \"8859a139-d98a-4e2f-af54-9dd66d8c96e1\",\n  \"chat_id\": \"2c3a8636-2dde-47f1-8f9e-cea27791fd2e\"\n}"
-      },
-      {
-        "lang": "bash",
-        "code": "# Replace {chat_id} with your Chat ID\n# Ensure your API key is set in the HUME_API_KEY environment variable\ncurl -X GET \"https://api.hume.ai/v0/evi/chats/{chat_id}/audio\" \\\n    -H \"X-Hume-Api-Key: $HUME_API_KEY\" \\\n    -H \"Accept: application/json\""
       },
       {
         "lang": "bash",
@@ -3466,20 +3122,8 @@
         "code": "import { HumeClient } from \"hume\";\n\nconst client = new HumeClient({ apiKey: \"HUME_API_KEY\" });\nawait client.empathicVoice.chats.getAudio(\"YOUR_CHAT_ID\");"
       },
       {
-        "lang": "typescript",
-        "code": "import { HumeClient } from \"hume\";\n\nconst client = new HumeClient({ apiKey: \"HUME_API_KEY\" });\nawait client.empathicVoice.chats.getAudio(\"YOUR_CHAT_ID\");"
-      },
-      {
         "lang": "python",
         "code": "from hume import HumeClient\n\nclient = HumeClient(\n    api_key=\"HUME_API_KEY\",\n)\nclient.empathic_voice.chats.get_audio(\n    id=\"YOUR_CHAT_ID\",\n)"
-      },
-      {
-        "lang": "python",
-        "code": "from hume import HumeClient\n\nclient = HumeClient(\n    api_key=\"HUME_API_KEY\",\n)\nclient.empathic_voice.chats.get_audio(\n    id=\"YOUR_CHAT_ID\",\n)"
-      },
-      {
-        "lang": "json",
-        "code": "// Sample response (audio reconstruction initiated)\n{\n  \"id\": \"470a49f6-1dec-4afe-8b61-035d3b2d63b0\",\n  \"user_id\": \"e6235940-cfda-3988-9147-ff531627cf42\",\n  \"status\": \"QUEUED\",\n  \"filename\": null,\n  \"modified_at\": 1729875432555,\n  \"signed_audio_url\": null,\n  \"signed_url_expiration_timestamp_millis\": null  \n}"
       },
       {
         "lang": "json",
@@ -3490,20 +3134,8 @@
         "code": "# Replace {chat_group_id} with your Chat Group ID\n# Include pagination parameters as needed\n# Ensure your API key is set in the HUME_API_KEY environment variable\ncurl -X GET \"https://api.hume.ai/v0/evi/chat_groups/{chat_group_id}/audio?page_number=1&page_size=10&ascending_order=false\" \\\n    -H \"X-Hume-Api-Key: $HUME_API_KEY\" \\\n    -H \"Accept: application/json\""
       },
       {
-        "lang": "bash",
-        "code": "# Replace {chat_group_id} with your Chat Group ID\n# Include pagination parameters as needed\n# Ensure your API key is set in the HUME_API_KEY environment variable\ncurl -X GET \"https://api.hume.ai/v0/evi/chat_groups/{chat_group_id}/audio?page_number=1&page_size=10&ascending_order=false\" \\\n    -H \"X-Hume-Api-Key: $HUME_API_KEY\" \\\n    -H \"Accept: application/json\""
-      },
-      {
         "lang": "typescript",
         "code": "import { HumeClient } from \"hume\";\n\nconst client = new HumeClient({ apiKey: \"<HUME_API_KEY>\" });\nawait client.empathicVoice.chatGroups.getAudio(\"<YOUR_CHAT_ID>\", {\n    pageNumber: 0,\n    pageSize: 10,\n    ascendingOrder: false\n});"
-      },
-      {
-        "lang": "typescript",
-        "code": "import { HumeClient } from \"hume\";\n\nconst client = new HumeClient({ apiKey: \"<HUME_API_KEY>\" });\nawait client.empathicVoice.chatGroups.getAudio(\"<YOUR_CHAT_ID>\", {\n    pageNumber: 0,\n    pageSize: 10,\n    ascendingOrder: false\n});"
-      },
-      {
-        "lang": "python",
-        "code": "from hume import HumeClient\n\nclient = HumeClient(\n    api_key=\"HUME_API_KEY\",\n)\nclient.empathic_voice.chat_groups.get_audio(\n    id=\"YOUR_CHAT_ID\",\n    page_number=0,\n    page_size=10,\n    ascending_order=False,\n)"
       },
       {
         "lang": "python",
@@ -3515,19 +3147,7 @@
       },
       {
         "lang": "json",
-        "code": "// Sample response (audio reconstruction initiated)\n{\n  \"id\": \"369846cf-6ad5-404d-905e-a8acb5cdfc78\",\n  \"user_id\": \"e6235940-cfda-3988-9147-ff531627cf42\",\n  \"num_chats\": 1,\n  \"page_number\": 0,\n  \"page_size\": 10,\n  \"total_pages\": 1,\n  \"pagination_direction\": \"DESC\",\n  \"audio_reconstructions_page\": [\n    {\n      \"id\": \"470a49f6-1dec-4afe-8b61-035d3b2d63b0\",\n      \"user_id\": \"e6235940-cfda-3988-9147-ff531627cf42\",\n      \"status\": \"QUEUED\",\n      \"filename\": null,\n      \"modified_at\": 1729875432555,\n      \"signed_audio_url\": null,\n      \"signed_url_expiration_timestamp_millis\": null  \n    }\n  ]\n}"
-      },
-      {
-        "lang": "json",
         "code": "// Sample response (reconstruction complete)\n{\n  \"id\": \"470a49f6-1dec-4afe-8b61-035d3b2d63b0\",\n  \"user_id\": \"e6235940-cfda-3988-9147-ff531627cf42\",\n  \"status\": \"COMPLETE\",\n  \"filename\": \"e6235940-cfda-3988-9147-ff531627cf42/470a49f6-1dec-4afe-8b61-035d3b2d63b0/reconstructed_audio.mp4\",\n  \"modified_at\": 1729875432555,\n  \"signed_audio_url\": \"https://storage.googleapis.com/...etc.\",\n  \"signed_url_expiration_timestamp_millis\": 1730232816964  \n}"
-      },
-      {
-        "lang": "json",
-        "code": "// Sample response (reconstruction complete)\n{\n  \"id\": \"470a49f6-1dec-4afe-8b61-035d3b2d63b0\",\n  \"user_id\": \"e6235940-cfda-3988-9147-ff531627cf42\",\n  \"status\": \"COMPLETE\",\n  \"filename\": \"e6235940-cfda-3988-9147-ff531627cf42/470a49f6-1dec-4afe-8b61-035d3b2d63b0/reconstructed_audio.mp4\",\n  \"modified_at\": 1729875432555,\n  \"signed_audio_url\": \"https://storage.googleapis.com/...etc.\",\n  \"signed_url_expiration_timestamp_millis\": 1730232816964  \n}"
-      },
-      {
-        "lang": "bash",
-        "code": "# Replace {signed_audio_url} with the URL from the API response\ncurl -O \"{signed_audio_url}\""
       },
       {
         "lang": "bash",
@@ -3913,20 +3533,8 @@
         "code": "curl https://api.hume.ai/v0/batch/jobs \\\n --request POST \\\n --header \"Content-Type: application/json\" \\\n --header \"X-Hume-Api-Key: <YOUR API KEY>\" \\\n --data '{\n    \"models\": {\n        \"face\": {}\n    },\n    \"urls\": [\n        \"https://hume-tutorials.s3.amazonaws.com/faces.zip\"\n    ]\n}'"
       },
       {
-        "lang": "bash",
-        "code": "curl https://api.hume.ai/v0/batch/jobs \\\n --request POST \\\n --header \"Content-Type: application/json\" \\\n --header \"X-Hume-Api-Key: <YOUR API KEY>\" \\\n --data '{\n    \"models\": {\n        \"face\": {}\n    },\n    \"urls\": [\n        \"https://hume-tutorials.s3.amazonaws.com/faces.zip\"\n    ]\n}'"
-      },
-      {
         "lang": "python",
         "code": "import asyncio\nfrom hume import AsyncHumeClient\nfrom hume.expression_measurement.batch import Face, Models\n\nasync def main():\n    # Initialize an authenticated client\n    client = AsyncHumeClient(api_key=<YOUR_API_KEY>)\n\n    # Define the URL(s) of the files you would like to analyze\n    job_urls = [\"https://hume-tutorials.s3.amazonaws.com/faces.zip\"]\n\n    # Create configurations for each model you would like to use (blank = default)\n    face_config = Face()\n\n    # Create a Models object\n    models_chosen = Models(face=face_config)\n\n    # Start an inference job and print the job_id\n    job_id = await client.expression_measurement.batch.start_inference_job(\n        urls=job_urls, models=models_chosen\n    )\n    print(job_id)\n\nif __name__ == \"__main__\":\n    asyncio.run(main())"
-      },
-      {
-        "lang": "python",
-        "code": "import asyncio\nfrom hume import AsyncHumeClient\nfrom hume.expression_measurement.batch import Face, Models\n\nasync def main():\n    # Initialize an authenticated client\n    client = AsyncHumeClient(api_key=<YOUR_API_KEY>)\n\n    # Define the URL(s) of the files you would like to analyze\n    job_urls = [\"https://hume-tutorials.s3.amazonaws.com/faces.zip\"]\n\n    # Create configurations for each model you would like to use (blank = default)\n    face_config = Face()\n\n    # Create a Models object\n    models_chosen = Models(face=face_config)\n\n    # Start an inference job and print the job_id\n    job_id = await client.expression_measurement.batch.start_inference_job(\n        urls=job_urls, models=models_chosen\n    )\n    print(job_id)\n\nif __name__ == \"__main__\":\n    asyncio.run(main())"
-      },
-      {
-        "lang": "bash",
-        "code": "curl https://api.hume.ai/v0/batch/jobs \\\n --request POST \\\n --header \"Content-Type: multipart/form-data\" \\\n --header \"X-Hume-Api-Key: <YOUR API KEY>\" \\\n --form json='{\n    \"models\": {\n        \"face\": {}\n    }\n }' \\\n --form file=@faces.zip \\\n --form file=@david_hume.jpeg"
       },
       {
         "lang": "bash",
@@ -3937,20 +3545,8 @@
         "code": "import asyncio\nfrom hume import AsyncHumeClient\nfrom hume.expression_measurement.batch import Face, Models\nfrom hume.expression_measurement.batch.types import InferenceBaseRequest\n\nasync def main():\n    # Initialize an authenticated client\n    client = AsyncHumeClient(api_key=<YOUR_API_KEY>)\n\n    # Define the filepath(s) of the file(s) you would like to analyze\n    local_filepaths = [\n        open(\"faces.zip\", mode=\"rb\"),\n        open(\"david_hume.jpeg\", mode=\"rb\")\n    ]\n\n    # Create configurations for each model you would like to use (blank = default)\n    face_config = Face()\n\n    # Create a Models object\n    models_chosen = Models(face=face_config)\n    \n    # Create a stringified object containing the configuration\n    stringified_configs = InferenceBaseRequest(models=models_chosen)\n\n    # Start an inference job and print the job_id\n    job_id = await client.expression_measurement.batch.start_inference_job_from_local_file(\n        json=stringified_configs, file=local_filepaths\n    )\n    print(job_id)\n\nif __name__ == \"__main__\":\n    asyncio.run(main())\n"
       },
       {
-        "lang": "python",
-        "code": "import asyncio\nfrom hume import AsyncHumeClient\nfrom hume.expression_measurement.batch import Face, Models\nfrom hume.expression_measurement.batch.types import InferenceBaseRequest\n\nasync def main():\n    # Initialize an authenticated client\n    client = AsyncHumeClient(api_key=<YOUR_API_KEY>)\n\n    # Define the filepath(s) of the file(s) you would like to analyze\n    local_filepaths = [\n        open(\"faces.zip\", mode=\"rb\"),\n        open(\"david_hume.jpeg\", mode=\"rb\")\n    ]\n\n    # Create configurations for each model you would like to use (blank = default)\n    face_config = Face()\n\n    # Create a Models object\n    models_chosen = Models(face=face_config)\n    \n    # Create a stringified object containing the configuration\n    stringified_configs = InferenceBaseRequest(models=models_chosen)\n\n    # Start an inference job and print the job_id\n    job_id = await client.expression_measurement.batch.start_inference_job_from_local_file(\n        json=stringified_configs, file=local_filepaths\n    )\n    print(job_id)\n\nif __name__ == \"__main__\":\n    asyncio.run(main())\n"
-      },
-      {
         "lang": "json",
         "code": "{\n    job_id: \"Job ID\",\n    status: \"STATUS (COMPLETED/FAILED)\",\n    predictions: [ARRAY OF RESULTS]\n}"
-      },
-      {
-        "lang": "json",
-        "code": "{\n    job_id: \"Job ID\",\n    status: \"STATUS (COMPLETED/FAILED)\",\n    predictions: [ARRAY OF RESULTS]\n}"
-      },
-      {
-        "lang": "bash",
-        "code": "curl --request GET \\\n --url https://api.hume.ai/v0/batch/jobs/<JOB_ID>/predictions \\\n --header 'X-Hume-Api-Key: <YOUR API KEY>' \\\n --header 'accept: application/json; charset=utf-8'"
       },
       {
         "lang": "bash",
@@ -3961,20 +3557,8 @@
         "code": "import asyncio\nfrom hume import AsyncHumeClient\n\nclient = AsyncHumeClient(api_key=\"<YOUR_API_KEY>\")\n\nasync def main():\n    job_predictions = await client.expression_measurement.batch.get_job_predictions(\n        id=\"<YOUR_JOB_ID>\"\n    )\n\nif __name__ == \"__main__\":\n    asyncio.run(main())"
       },
       {
-        "lang": "python",
-        "code": "import asyncio\nfrom hume import AsyncHumeClient\n\nclient = AsyncHumeClient(api_key=\"<YOUR_API_KEY>\")\n\nasync def main():\n    job_predictions = await client.expression_measurement.batch.get_job_predictions(\n        id=\"<YOUR_JOB_ID>\"\n    )\n\nif __name__ == \"__main__\":\n    asyncio.run(main())"
-      },
-      {
         "lang": "bash",
         "code": "curl --request GET \\\n --url https://api.hume.ai/v0/batch/jobs/<JOB_ID>/artifacts \\\n --header 'X-Hume-Api-Key: <YOUR API KEY>' \\\n --header 'accept: application/octet-stream'"
-      },
-      {
-        "lang": "bash",
-        "code": "curl --request GET \\\n --url https://api.hume.ai/v0/batch/jobs/<JOB_ID>/artifacts \\\n --header 'X-Hume-Api-Key: <YOUR API KEY>' \\\n --header 'accept: application/octet-stream'"
-      },
-      {
-        "lang": "python",
-        "code": "import asyncio\nfrom hume import AsyncHumeClient\n\nclient = AsyncHumeClient(api_key=\"<YOUR_API_KEY>\")\n\nasync def main():\n    with open(\"artifacts.zip\", \"wb\") as f:\n        async for new_bytes in client.expression_measurement.batch.get_job_artifacts(\"<YOUR_JOB_ID>\"):\n            f.write(new_bytes)\n\nif __name__ == \"__main__\":\n    asyncio.run(main())"
       },
       {
         "lang": "python",
@@ -4234,10 +3818,6 @@
       {
         "lang": "bash",
         "code": "pip install \"hume\""
-      },
-      {
-        "lang": "bash",
-        "code": "pip install \"hume\""
       }
     ],
     "hierarchy": {
@@ -4284,14 +3864,6 @@
       {
         "lang": "python",
         "code": "import asyncio\nfrom hume import AsyncHumeClient\nfrom hume.expression_measurement.stream import Config\nfrom hume.expression_measurement.stream.socket_client import StreamConnectOptions\nfrom hume.expression_measurement.stream.types import StreamLanguage\n\nsamples = [\n    \"Mary had a little lamb,\",\n    \"Its fleece was white as snow.\"\n    \"Everywhere the child went,\"\n    \"The little lamb was sure to go.\"\n]\n\nasync def main():\n    client = AsyncHumeClient(api_key=\"<YOUR_API_KEY>\")\n\n    model_config = Config(language=StreamLanguage())\n\n    stream_options = StreamConnectOptions(config=model_config)\n\n    async with client.expression_measurement.stream.connect(options=stream_options) as socket:\n        for sample in samples:\n            result = await socket.send_text(sample)\n            print(result.language.predictions[0].emotions)\n\nif __name__ == \"__main__\":\n    asyncio.run(main())"
-      },
-      {
-        "lang": "python",
-        "code": "import asyncio\nfrom hume import AsyncHumeClient\nfrom hume.expression_measurement.stream import Config\nfrom hume.expression_measurement.stream.socket_client import StreamConnectOptions\nfrom hume.expression_measurement.stream.types import StreamLanguage\n\nsamples = [\n    \"Mary had a little lamb,\",\n    \"Its fleece was white as snow.\"\n    \"Everywhere the child went,\"\n    \"The little lamb was sure to go.\"\n]\n\nasync def main():\n    client = AsyncHumeClient(api_key=\"<YOUR_API_KEY>\")\n\n    model_config = Config(language=StreamLanguage())\n\n    stream_options = StreamConnectOptions(config=model_config)\n\n    async with client.expression_measurement.stream.connect(options=stream_options) as socket:\n        for sample in samples:\n            result = await socket.send_text(sample)\n            print(result.language.predictions[0].emotions)\n\nif __name__ == \"__main__\":\n    asyncio.run(main())"
-      },
-      {
-        "lang": "python",
-        "code": "[\n  {'name': 'Admiration', 'score': 0.06379243731498718},\n  {'name': 'Adoration', 'score': 0.07222934812307358},\n  {'name': 'Aesthetic Appreciation', 'score': 0.02808445133268833},\n  {'name': 'Amusement', 'score': 0.027589013800024986},\n  ......\n  {'name': 'Surprise (positive)', 'score': 0.030542362481355667},\n  {'name': 'Sympathy', 'score': 0.03246130049228668},\n  {'name': 'Tiredness', 'score': 0.03606246039271355},\n  {'name': 'Triumph', 'score': 0.01235896535217762}\n]"
       },
       {
         "lang": "python",
@@ -4342,10 +3914,6 @@
       {
         "lang": "python",
         "code": "import asyncio\nfrom hume import AsyncHumeClient\nfrom hume.expression_measurement.stream import Config\nfrom hume.expression_measurement.stream.socket_client import StreamConnectOptions\nfrom hume.expression_measurement.stream.types import StreamFace\n\nasync def main():\n    client = AsyncHumeClient(api_key=\"<YOUR_API_KEY>\")\n\n    model_config = Config(face=StreamFace())\n\n    stream_options = StreamConnectOptions(config=model_config)\n\n    async with client.expression_measurement.stream.connect(options=stream_options) as socket:\n        result = await socket.send_file(\"<YOUR_IMAGE_FILEPATH>\")\n        print(result)\n\nif __name__ == \"__main__\":\n    asyncio.run(main())"
-      },
-      {
-        "lang": "python",
-        "code": "import asyncio\nfrom hume import AsyncHumeClient\nfrom hume.expression_measurement.stream import Config\nfrom hume.expression_measurement.stream.socket_client import StreamConnectOptions\nfrom hume.expression_measurement.stream.types import StreamFace\n\nasync def main():\n    client = AsyncHumeClient(api_key=\"<YOUR_API_KEY>\")\n\n    model_config = Config(face=StreamFace())\n\n    stream_options = StreamConnectOptions(config=model_config)\n\n    async with client.expression_measurement.stream.connect(options=stream_options) as socket:\n        result = await socket.send_file(\"<YOUR_IMAGE_FILEPATH>\")\n        print(result)\n\nif __name__ == \"__main__\":\n    asyncio.run(main())"
       }
     ],
     "hierarchy": {
@@ -4389,10 +3957,6 @@
     "hash": "#speech-prosody-from-an-audio-or-video-file",
     "content": "This example uses our Speech Prosody model to get expression measurements from an audio or video file.",
     "code_snippets": [
-      {
-        "lang": "python",
-        "code": "import asyncio\nfrom hume import AsyncHumeClient\nfrom hume.expression_measurement.stream import Config\nfrom hume.expression_measurement.stream.socket_client import StreamConnectOptions\n\nasync def main():\n    client = AsyncHumeClient(api_key=\"<YOUR_API_KEY>\")\n\n    model_config = Config(prosody={})\n\n    stream_options = StreamConnectOptions(config=model_config)\n\n    async with client.expression_measurement.stream.connect(options=stream_options) as socket:\n        result = await socket.send_file(\"YOUR_AUDIO_OR_VIDEO_FILEPATH\")\n        print(result)\n\nif __name__ == \"__main__\":\n    asyncio.run(main())"
-      },
       {
         "lang": "python",
         "code": "import asyncio\nfrom hume import AsyncHumeClient\nfrom hume.expression_measurement.stream import Config\nfrom hume.expression_measurement.stream.socket_client import StreamConnectOptions\n\nasync def main():\n    client = AsyncHumeClient(api_key=\"<YOUR_API_KEY>\")\n\n    model_config = Config(prosody={})\n\n    stream_options = StreamConnectOptions(config=model_config)\n\n    async with client.expression_measurement.stream.connect(options=stream_options) as socket:\n        result = await socket.send_file(\"YOUR_AUDIO_OR_VIDEO_FILEPATH\")\n        print(result)\n\nif __name__ == \"__main__\":\n    asyncio.run(main())"
@@ -4444,20 +4008,8 @@
         "code": "X-Hume-Api-Key: <YOUR API KEY>"
       },
       {
-        "lang": "http",
-        "code": "X-Hume-Api-Key: <YOUR API KEY>"
-      },
-      {
         "lang": "json",
         "code": "{\n    \"models\": {\n        \"language\": {}\n    },\n    \"raw_text\": true,\n    \"data\": \"Mary had a little lamb\"\n}"
-      },
-      {
-        "lang": "json",
-        "code": "{\n    \"models\": {\n        \"language\": {}\n    },\n    \"raw_text\": true,\n    \"data\": \"Mary had a little lamb\"\n}"
-      },
-      {
-        "lang": "json",
-        "code": "{\n  \"language\": {\n    \"predictions\": [\n      {\n        \"text\": \"Mary\",\n        \"position\": { \"begin\": 0, \"end\": 4 },\n        \"emotions\": [\n          { \"name\": \"Anger\", \"score\": 0.012025930918753147 },\n          { \"name\": \"Joy\", \"score\": 0.056471485644578934 },\n          { \"name\": \"Sadness\", \"score\": 0.031556881964206696 },\n        ]\n      },\n      {\n        \"text\": \"had\",\n        \"position\": { \"begin\": 5, \"end\": 8 },\n        \"emotions\": [\n          { \"name\": \"Anger\", \"score\": 0.0016927534015849233 },\n          { \"name\": \"Joy\", \"score\": 0.02388327568769455 },\n          { \"name\": \"Sadness\", \"score\": 0.018137391656637192 },\n          ...\n        ]\n      },\n      ...\n    ]\n  }\n}"
       },
       {
         "lang": "json",
@@ -4501,10 +4053,6 @@
     "hash": "#sending-images-or-audio",
     "content": "The WebSocket endpoints of the Expression Measurement API require that you encode your media using base64. Here's a quick example of base64 encoding data in Python:",
     "code_snippets": [
-      {
-        "lang": "python",
-        "code": "import base64\nfrom pathlib import Path\n\ndef encode_data(filepath: Path) -> str:\n    with Path(filepath).open('rb') as fp:\n        bytes_data = base64.b64encode(fp.read())\n        encoded_data = bytes_data.decode(\"utf-8\")\n    return encoded_data\n\nfilepath = \"<PATH TO YOUR MEDIA>\"\nencoded_data = encode_data(filepath)\nprint(encoded_data)\n"
-      },
       {
         "lang": "python",
         "code": "import base64\nfrom pathlib import Path\n\ndef encode_data(filepath: Path) -> str:\n    with Path(filepath).open('rb') as fp:\n        bytes_data = base64.b64encode(fp.read())\n        encoded_data = bytes_data.decode(\"utf-8\")\n    return encoded_data\n\nfilepath = \"<PATH TO YOUR MEDIA>\"\nencoded_data = encode_data(filepath)\nprint(encoded_data)\n"
@@ -5304,14 +4852,6 @@
       {
         "lang": "python",
         "code": "import asyncio\nfrom hume import AsyncHumeClient\nfrom hume.expression_measurement.batch import Prosody, Transcription, Models\nfrom hume.expression_measurement.batch.types import InferenceBaseRequest\n\nasync def main():\n    # Initialize an authenticated client\n    client = AsyncHumeClient(api_key=\"<YOUR_API_KEY>\")\n\n    # Define the filepath(s) of the file(s) you would like to analyze\n    local_filepaths = [\n        open(\"<YOUR_FILE_PATH>\", mode=\"rb\"),\n    ]\n\n    # Create a default configuration for the prosody model\n    prosody_config = Prosody()\n\n    # Create a transcription coniguration with the language set to English\n    transcription_config = Transcription(language=\"en\")\n\n    # Create a Models object\n    models_chosen = Models(prosody=prosody_config)\n    \n    # Create a stringified object containing the configuration\n    stringified_configs = InferenceBaseRequest(models=models_chosen, transcription=transcription_config)\n\n    # Start an inference job and print the job_id\n    job_id = await client.expression_measurement.batch.start_inference_job_from_local_file(\n        json=stringified_configs, file=local_filepaths\n    )\n    print(job_id)\n\nif __name__ == \"__main__\":\n    asyncio.run(main())"
-      },
-      {
-        "lang": "python",
-        "code": "import asyncio\nfrom hume import AsyncHumeClient\nfrom hume.expression_measurement.batch import Prosody, Transcription, Models\nfrom hume.expression_measurement.batch.types import InferenceBaseRequest\n\nasync def main():\n    # Initialize an authenticated client\n    client = AsyncHumeClient(api_key=\"<YOUR_API_KEY>\")\n\n    # Define the filepath(s) of the file(s) you would like to analyze\n    local_filepaths = [\n        open(\"<YOUR_FILE_PATH>\", mode=\"rb\"),\n    ]\n\n    # Create a default configuration for the prosody model\n    prosody_config = Prosody()\n\n    # Create a transcription coniguration with the language set to English\n    transcription_config = Transcription(language=\"en\")\n\n    # Create a Models object\n    models_chosen = Models(prosody=prosody_config)\n    \n    # Create a stringified object containing the configuration\n    stringified_configs = InferenceBaseRequest(models=models_chosen, transcription=transcription_config)\n\n    # Start an inference job and print the job_id\n    job_id = await client.expression_measurement.batch.start_inference_job_from_local_file(\n        json=stringified_configs, file=local_filepaths\n    )\n    print(job_id)\n\nif __name__ == \"__main__\":\n    asyncio.run(main())"
-      },
-      {
-        "lang": "json",
-        "code": "\"transcription\": {\n    \"language\": \"en\"\n}"
       },
       {
         "lang": "json",
