@@ -70,7 +70,6 @@ export async function queryTurbopuffer(
           return filter;
         })]]
     : authFilter;
-  console.log("queryFilters", queryFilters);
 
   const semanticResults =
     mode !== "bm25"
