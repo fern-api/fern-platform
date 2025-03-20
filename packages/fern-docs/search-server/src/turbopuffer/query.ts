@@ -63,13 +63,22 @@ export async function queryTurbopuffer(
       ] as const)
     : ["authed", "NotEq", true];
 
-  const versionFilters = filters ? filters.filter((f) => f.facet === "version.title") : [];
-  const queryFilters: Filters = versionFilters.length > 0
-    ? ["And", [authFilter, ...versionFilters.map((f) => {
-          const filter: FilterCondition = ["version", "Eq", f.value];
-          return filter;
-        })]]
-    : authFilter;
+  const versionFilters = filters
+    ? filters.filter((f) => f.facet === "version.title")
+    : [];
+  const queryFilters: Filters =
+    versionFilters.length > 0
+      ? [
+          "And",
+          [
+            authFilter,
+            ...versionFilters.map((f) => {
+              const filter: FilterCondition = ["version", "Eq", f.value];
+              return filter;
+            }),
+          ],
+        ]
+      : authFilter;
   console.log("queryFilters", queryFilters);
 
   const semanticResults =
