@@ -41,6 +41,7 @@ export async function GET(
   req: NextRequest,
   props: { params: Promise<{ host: string; domain: string }> }
 ): Promise<NextResponse> {
+  const cdnUri = process.env.NEXT_PUBLIC_CDN_URI;
   const start = performance.now();
 
   const { host, domain } = await props.params;
@@ -61,7 +62,9 @@ export async function GET(
         }
 
         // note: adds to "domain" for deployment-promoted webhook
-        waitUntil(kv.sadd("domains", domain));
+        if (cdnUri) {
+          waitUntil(kv.sadd(`${cdnUri}:domains`, domain));
+        }
 
         controller.enqueue(`revalidating:${domain}\n`);
 

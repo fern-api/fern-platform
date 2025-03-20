@@ -32,6 +32,7 @@ export const FERN_DOCS_STAGING_BUILDWITHFERN_COM =
   "docs.staging.buildwithfern.com";
 export const FERN_DOCS_DEV_BUILDWITHFERN_COM = "docs.dev.buildwithfern.com";
 export const FERN_DOCS_BUILDWITHFERN_COM = "docs.buildwithfern.com";
+export const FERN_DOCS_FERNDOCS_APP = "ferndocs.app";
 
 /**
  * Layout constants
