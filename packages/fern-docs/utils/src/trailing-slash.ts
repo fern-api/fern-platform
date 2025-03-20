@@ -17,7 +17,49 @@ export const removeTrailingSlash = (pathname: string): string => {
 };
 
 export function conformTrailingSlash(pathname: string): string {
-  return isTrailingSlashEnabled()
-    ? addTrailingSlash(pathname)
-    : removeTrailingSlash(pathname);
+  if (pathname === "/" || pathname === "") {
+    return "/";
+  }
+
+  // Check if the pathname is a URL
+  if (pathname.startsWith("http://") || pathname.startsWith("https://")) {
+    try {
+      // conform pathname of fully qualified URLs
+      const url = new URL(pathname);
+      url.pathname = conformTrailingSlash(url.pathname);
+      return String(url);
+    } catch {
+      // continue
+    }
+  }
+
+  // Find the position of the first ? or # character
+  const queryOrHashIndex = Math.min(
+    pathname.includes("?") ? pathname.indexOf("?") : Infinity,
+    pathname.includes("#") ? pathname.indexOf("#") : Infinity
+  );
+
+  if (isTrailingSlashEnabled()) {
+    if (queryOrHashIndex !== Infinity) {
+      // Split the pathname into base and query/hash parts
+      const base = pathname.substring(0, queryOrHashIndex);
+      const rest = pathname.substring(queryOrHashIndex);
+
+      // Add trailing slash to the base part
+      return addTrailingSlash(base) + rest;
+    } else {
+      return addTrailingSlash(pathname);
+    }
+  } else {
+    if (queryOrHashIndex !== Infinity) {
+      // Split the pathname into base and query/hash parts
+      const base = pathname.substring(0, queryOrHashIndex);
+      const rest = pathname.substring(queryOrHashIndex);
+
+      // Remove trailing slash from the base part
+      return removeTrailingSlash(base) + rest;
+    } else {
+      return removeTrailingSlash(pathname);
+    }
+  }
 }
