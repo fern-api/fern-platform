@@ -45,6 +45,7 @@ import {
 import { Feedback } from "../feedback/Feedback";
 import { useApiRoute } from "../hooks/useApiRoute";
 import { useApiRouteSWRImmutable } from "../hooks/useApiRouteSWR";
+import { withSkewProtection } from "../util/withSkewProtection";
 
 const ALGOLIA_USER_TOKEN_KEY = "algolia-user-token";
 
@@ -146,6 +147,10 @@ export function SearchV2(): ReactElement | false {
     </>
   );
 
+  const headers = withSkewProtection({
+    "X-Fern-Host": domain,
+  });
+
   return (
     <SearchClientRoot
       appId={appId}
@@ -168,9 +173,7 @@ export function SearchV2(): ReactElement | false {
             askAI={askAi}
             setAskAI={setAskAi}
             api={chatEndpoint}
-            headers={{
-              "X-Fern-Host": domain,
-            }}
+            headers={headers}
             suggestionsApi={suggestEndpoint}
             initialInput={initialInput}
             setInitialInput={setInitialInput}
