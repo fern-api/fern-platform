@@ -57,7 +57,7 @@ export function FootnoteSup({ node }: { node?: HastElement }) {
             variant="subtleSolidHover"
           >
             <a href={fn?.url} target="_blank" rel="noreferrer" className="ms-1">
-              <span className="text-xs">{String(index + 1)}test</span>
+              <span className="text-xs">{String(index + 1)}</span>
             </a>
           </Badge>
         </TooltipTrigger>
