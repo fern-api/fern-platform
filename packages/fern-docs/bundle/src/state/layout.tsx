@@ -92,7 +92,9 @@ export function HideAsides({ force }: { force?: boolean }) {
       #fern-sidebar[data-state="sticky"],
       #fern-sidebar[data-state="fixed"],
       #fern-sidebar-spacer {
-        display: none;
+        visibility: hidden;
+        width: 0;
+        overflow: hidden;
       }
     `}</style>
   ) : null;
