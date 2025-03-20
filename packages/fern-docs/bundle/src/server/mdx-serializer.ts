@@ -3,13 +3,14 @@ import "server-only";
 import { unstable_cache } from "next/cache";
 import { cache } from "react";
 
+import { Semaphore } from "es-toolkit/compat";
+
 import { Frontmatter } from "@fern-api/fdr-sdk/docs";
 
 import { serializeMdx as internalSerializeMdx } from "@/mdx/bundler/serialize";
 import { createCachedDocsLoader } from "@/server/docs-loader";
 
 import { cacheSeed } from "./cache-seed";
-import { Semaphore } from "./semaphore";
 import { postToEngineeringNotifs } from "./slack";
 
 export type MdxSerializerOptions = {

@@ -6,6 +6,7 @@ import { after } from "next/server";
 import { cache } from "react";
 
 import { kv } from "@vercel/kv";
+import { Semaphore } from "es-toolkit/compat";
 import { mapValues } from "es-toolkit/object";
 import { AsyncOrSync, UnreachableCaseError } from "ts-essentials";
 import { z } from "zod";
@@ -189,14 +190,31 @@ function assertDocsDomain(domain: string) {
   }
 }
 
+const setMonitor = new Semaphore(10);
 function kvSet(domain: string, key: string, value: unknown) {
   after(async () => {
+    await setMonitor.acquire();
     try {
       await kv.hset(domain, { [key]: value });
     } catch (error) {
       console.warn(`Failed to set kv key ${key}: ${value}`, error);
+    } finally {
+      setMonitor.release();
     }
   });
+}
+
+const getMonitor = new Semaphore(10);
+async function kvGet<T>(domain: string, key: string): Promise<T | null> {
+  await getMonitor.acquire();
+  try {
+    return await kv.hget<T>(domain, key);
+  } catch (error) {
+    console.warn(`Failed to get kv key ${key}`, error);
+    return null;
+  } finally {
+    getMonitor.release();
+  }
 }
 
 const cachedGetEdgeFlags = cache(async (domain: string) => {
@@ -232,7 +250,7 @@ export const getMetadata = cache(
 
     try {
       const cached = DocsMetadataSchema.safeParse(
-        await kv.hget<DocsMetadata>(domain, "metadata")
+        await kvGet<DocsMetadata>(domain, "metadata")
       );
       if (cached.success) {
         console.log("[getMetadata] cache hit:", cached.data);
@@ -268,7 +286,7 @@ const getFiles = cache(
     unstable_cacheTag(domain, "getFiles");
 
     try {
-      const cached = await kv.hget<Record<string, FileData>>(domain, "files");
+      const cached = await kvGet<Record<string, FileData>>(domain, "files");
       if (cached) {
         return cached;
       }
@@ -332,10 +350,7 @@ const createGetPrunedApiCached = (domain: string) =>
       try {
         if (nodes.length === 1 && nodes[0]) {
           const key = `api:${id}:${createEndpointCacheKey(nodes[0])}`;
-          const cached = await kv.hget<ApiDefinition.ApiDefinition>(
-            domain,
-            key
-          );
+          const cached = await kvGet<ApiDefinition.ApiDefinition>(domain, key);
           if (cached != null) {
             return await backfillSnippets(cached, await flagsPromise);
           }
@@ -523,7 +538,7 @@ export function convertResponseToRootNode(
 
 const unsafe_getFullRoot = async (domain: string) => {
   try {
-    const cached = await kv.hget<FernNavigation.RootNode>(domain, "root");
+    const cached = await kvGet<FernNavigation.RootNode>(domain, "root");
     if (cached != null) {
       return cached;
     }
@@ -601,7 +616,7 @@ const getNavigationNode = cache(
 
 const getConfig = cache(async (domain: string) => {
   try {
-    const cached = await kv.hget<
+    const cached = await kvGet<
       Omit<DocsV1Read.DocsDefinition["config"], "navigation" | "root">
     >(domain, "config");
     if (cached != null) {
@@ -621,10 +636,7 @@ const getConfig = cache(async (domain: string) => {
 
 const getPage = cache(async (domain: string, pageId: string) => {
   try {
-    const page = await kv.hget<DocsV1Read.PageContent>(
-      domain,
-      `page:${pageId}`
-    );
+    const page = await kvGet<DocsV1Read.PageContent>(domain, `page:${pageId}`);
     if (page != null && isPlainObject(page) && "markdown" in page) {
       return {
         filename: pageId,
@@ -658,7 +670,7 @@ const getMdxBundlerFiles = cache(async (domain: string) => {
   unstable_cacheTag(domain, "getMdxBundlerFiles");
 
   try {
-    const cached = await kv.hget<Record<string, string>>(
+    const cached = await kvGet<Record<string, string>>(
       domain,
       "mdx-bundler-files"
     );
@@ -683,7 +695,7 @@ const getColors = cache(async (domain: string) => {
   unstable_cacheTag(domain, "getColors");
 
   try {
-    const cached = await kv.hget<{
+    const cached = await kvGet<{
       light: FernColorTheme | undefined;
       dark: FernColorTheme | undefined;
     }>(domain, "colors");
@@ -770,7 +782,7 @@ const getFonts = cache(async (domain: string) => {
   unstable_cacheTag(domain, "getFonts");
 
   try {
-    const cached = await kv.hget<FernFonts>(domain, "fonts");
+    const cached = await kvGet<FernFonts>(domain, "fonts");
     if (cached != null) {
       return cached;
     }
