@@ -53,7 +53,7 @@ export function FootnoteSup({ node }: { node?: HastElement }) {
             className="not-prose"
             disabled={!fn}
             size="lg"
-            color="grayWithAccent"
+            color="grayHoverAccent"
             variant="subtleSolidHover"
           >
             <a href={fn?.url} target="_blank" rel="noreferrer" className="ms-1">
