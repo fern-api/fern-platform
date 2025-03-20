@@ -32,6 +32,7 @@ import {
 import { Components } from "react-markdown";
 import { useIsomorphicLayoutEffect } from "swr/_internal";
 
+import { FacetFilter } from "@fern-docs/search-ui";
 import { FootnoteSup, FootnotesSection } from "../chatbot/footnote";
 import {
   ChatbotTurnContextProvider,
@@ -175,6 +176,7 @@ export const DesktopCommandWithAskAI = forwardRef<
             api={api}
             suggestionsApi={suggestionsApi}
             body={body}
+            filters={filters}
             headers={headers}
             onReturnToSearch={() => {
               setAskAI(false);
@@ -216,6 +218,7 @@ const DesktopAskAIContent = (props: {
   api?: string;
   suggestionsApi?: string;
   body?: object;
+  filters?: readonly FacetFilter[];
   headers?: Record<string, string>;
   onSelectHit?: (path: string) => void;
   prefetch?: (path: string) => Promise<void>;
@@ -258,6 +261,7 @@ const DesktopAskAIChat = ({
   api,
   suggestionsApi,
   body,
+  filters,
   headers,
   onSelectHit,
   prefetch,
@@ -271,6 +275,7 @@ const DesktopAskAIChat = ({
   api?: string;
   suggestionsApi?: string;
   body?: object;
+  filters?: readonly FacetFilter[];
   headers?: Record<string, string>;
   onSelectHit?: (path: string) => void;
   prefetch?: (path: string) => Promise<void>;
@@ -325,6 +330,7 @@ const DesktopAskAIChat = ({
         {
           body: {
             url: document.location.href,
+            filters,
           },
         }
       );

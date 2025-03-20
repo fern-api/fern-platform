@@ -1,6 +1,7 @@
 import { isNonNullish } from "@fern-api/ui-core-utils";
 import {
   FilterCondition,
+  Filters,
   QueryResults,
   Turbopuffer,
 } from "@turbopuffer/turbopuffer";
@@ -14,7 +15,7 @@ interface SemanticSearchOptions {
   namespace: string;
   apiKey: string;
   topK: number;
-  filters?: FilterCondition[];
+  filters?: { facet: string; value: string }[];
 
   /**
    * The search mode to use.
@@ -60,6 +61,23 @@ export async function queryTurbopuffer(
       ] as const)
     : ["authed", "NotEq", true];
 
+  const versionFilters = filters
+    ? filters.filter((f) => f.facet === "version.title")
+    : [];
+  const queryFilters: Filters =
+    versionFilters.length > 0
+      ? [
+          "And",
+          [
+            authFilter,
+            ...versionFilters.map((f) => {
+              const filter: FilterCondition = ["version", "Eq", f.value];
+              return filter;
+            }),
+          ],
+        ]
+      : authFilter;
+
   const semanticResults =
     mode !== "bm25"
       ? await ns.query({
@@ -67,7 +85,7 @@ export async function queryTurbopuffer(
           distance_metric: "cosine_distance",
           top_k: topK,
           include_attributes: true,
-          filters: authFilter,
+          filters: queryFilters,
         })
       : [];
 
@@ -76,7 +94,7 @@ export async function queryTurbopuffer(
       ? await ns.query({
           top_k: topK,
           include_attributes: true,
-          filters: filters ? ["And", [...filters, authFilter]] : authFilter,
+          filters: queryFilters,
           rank_by: [
             "Sum",
             [
