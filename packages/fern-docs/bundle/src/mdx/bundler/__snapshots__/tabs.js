@@ -72,8 +72,8 @@ var Component = (() => {
   </Tab>
 </Tabs>
 `,
-          language: "jsx",
-          className: "language-jsx"
+          className: "language-jsx",
+          language: "jsx"
         })
       })
     });

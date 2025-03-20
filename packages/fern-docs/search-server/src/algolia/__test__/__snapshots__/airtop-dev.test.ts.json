@@ -95,16 +95,6 @@
         "lang": "python",
         "meta": "Python",
         "code": "session = client.sessions.create()"
-      },
-      {
-        "lang": "ts",
-        "meta": "NodeJS",
-        "code": "const session = await client.sessions.create();"
-      },
-      {
-        "lang": "python",
-        "meta": "Python",
-        "code": "session = client.sessions.create()"
       }
     ],
     "hierarchy": {
@@ -157,16 +147,6 @@
         "lang": "python",
         "meta": "Python",
         "code": "prompt = \"\"\"\nGet me up to 1000 results in this search page and extract the title, price, and link for each result. \nFormat the results as a JSON array.\n\"\"\"\nprompt_result = client.windows.prompt_content(session.data.id, window_response.data.window_id, prompt=prompt)"
-      },
-      {
-        "lang": "ts",
-        "meta": "NodeJS",
-        "code": "const prompt = `Get me up to 1000 results in this search page \n                and extract the title, price, and link for each result. \n                Format the results as a JSON array.`;\nconst results = await client.windows.promptContent(session.data.id, window.id, {\n  prompt,\n  followPaginationLinks: true,\n});"
-      },
-      {
-        "lang": "python",
-        "meta": "Python",
-        "code": "prompt = \"\"\"\nGet me up to 1000 results in this search page and extract the title, price, and link for each result. \nFormat the results as a JSON array.\n\"\"\"\nprompt_result = client.windows.prompt_content(session.data.id, window_response.data.window_id, prompt=prompt)"
       }
     ],
     "hierarchy": {
@@ -210,16 +190,6 @@
     "hash": "#playwrightpuppeteerselenium-scripts",
     "content": "There are times when you do want lower level control of your automation. We fully support Playwright, Puppeteer, and Selenium scripts, and can easily integrate with them.\nHere is a brief example of how to use Puppeteer/Playwright with Airtop:",
     "code_snippets": [
-      {
-        "lang": "ts",
-        "meta": "NodeJS (Puppeteer)",
-        "code": "const session = await client.sessions.create();\nconst browser = await puppeteer.connect({\n  browserWSEndpoint: session.data?.cdpWsUrl,\n  headers: {\n    authorization: `Bearer API_KEY`,\n  },\n});\nconst page = await browser.newPage();\n\n// Navigate to a page\nawait page.goto('https://www.airtop.ai');\n\n// Extract all the href links from the page\nconst links = await page.evaluate(() => {\n  return Array.from(document.querySelectorAll('a')).map((link) => link.href);\n});"
-      },
-      {
-        "lang": "python",
-        "meta": "Python (Playwright)",
-        "code": "browser = p.chromium.connect_over_cdp(session.data.cdp_ws_url, headers={\n    'authorization': 'Bearer API_KEY'\n})\n\ndefault_context = browser.contexts[0]\npage = default_context.new_page()\n\n# Navigate to a page\npage.goto(\"https://www.airtop.ai\")\n\n# Extract all the href links from the page\nlinks = page.eval_on_selector_all('a', 'elements => elements.map(el => el.href)')"
-      },
       {
         "lang": "ts",
         "meta": "NodeJS (Puppeteer)",
@@ -408,26 +378,6 @@
         "code": "pip install airtop"
       },
       {
-        "lang": "bash",
-        "meta": "NodeJS (npm)",
-        "code": "npm i -s @airtop/sdk"
-      },
-      {
-        "lang": "bash",
-        "meta": "NodeJS (yarn)",
-        "code": "yarn add @airtop/sdk"
-      },
-      {
-        "lang": "bash",
-        "meta": "NodeJS (pnpm)",
-        "code": "pnpm add @airtop/sdk"
-      },
-      {
-        "lang": "bash",
-        "meta": "Python",
-        "code": "pip install airtop"
-      },
-      {
         "lang": "ts",
         "meta": "NodeJS",
         "code": "import { AirtopClient } from '@airtop/sdk';\n\nconst apiKey = 'YOUR_AIRTOP_API_KEY';\nconst client = new AirtopClient({ apiKey });"
@@ -436,26 +386,6 @@
         "lang": "python",
         "meta": "Python",
         "code": "from airtop import Airtop\n\nclient = Airtop(api_key=\"YOUR_AIRTOP_API_KEY\")"
-      },
-      {
-        "lang": "ts",
-        "meta": "NodeJS",
-        "code": "import { AirtopClient } from '@airtop/sdk';\n\nconst apiKey = 'YOUR_AIRTOP_API_KEY';\nconst client = new AirtopClient({ apiKey });"
-      },
-      {
-        "lang": "python",
-        "meta": "Python",
-        "code": "from airtop import Airtop\n\nclient = Airtop(api_key=\"YOUR_AIRTOP_API_KEY\")"
-      },
-      {
-        "lang": "ts",
-        "meta": "NodeJS",
-        "code": "const session = await client.sessions.create();"
-      },
-      {
-        "lang": "python",
-        "meta": "Python",
-        "code": "session = client.sessions.create()"
       },
       {
         "lang": "ts",
@@ -480,42 +410,12 @@
       {
         "lang": "ts",
         "meta": "NodeJS",
-        "code": "const window = await client.windows.create(session.data.id, { url: \"https://www.airtop.ai\" });"
-      },
-      {
-        "lang": "python",
-        "meta": "Python",
-        "code": "window = client.windows.create(session.data.id, url=\"https://www.airtop.ai\")"
-      },
-      {
-        "lang": "ts",
-        "meta": "NodeJS",
         "code": "const contentSummary = await client.windows.promptContent(session.data.id, window.data.windowId, {\n  prompt: 'Summarize the contents of the page in 1 short paragraph up to 170 characters.',\n});\nconsole.log(contentSummary.data.modelResponse);\n\n// Terminate the session when you're done\nawait client.sessions.terminate(session.data.id);"
       },
       {
         "lang": "python",
         "meta": "Python",
         "code": "prompt = 'Summarize the contents of the page in 1 short paragraph up to 170 characters.'\ncontent_summary = client.windows.prompt_content(session.data.id, window.data.window_id, prompt=prompt)\nprint(content_summary.data.model_response)\n\n# Terminate the session when you're done\nclient.sessions.terminate(session.data.id)"
-      },
-      {
-        "lang": "ts",
-        "meta": "NodeJS",
-        "code": "const contentSummary = await client.windows.promptContent(session.data.id, window.data.windowId, {\n  prompt: 'Summarize the contents of the page in 1 short paragraph up to 170 characters.',\n});\nconsole.log(contentSummary.data.modelResponse);\n\n// Terminate the session when you're done\nawait client.sessions.terminate(session.data.id);"
-      },
-      {
-        "lang": "python",
-        "meta": "Python",
-        "code": "prompt = 'Summarize the contents of the page in 1 short paragraph up to 170 characters.'\ncontent_summary = client.windows.prompt_content(session.data.id, window.data.window_id, prompt=prompt)\nprint(content_summary.data.model_response)\n\n# Terminate the session when you're done\nclient.sessions.terminate(session.data.id)"
-      },
-      {
-        "lang": "bash",
-        "meta": "NodeJS",
-        "code": "node quickstart.js"
-      },
-      {
-        "lang": "bash",
-        "meta": "Python",
-        "code": "python quickstart.py"
       },
       {
         "lang": "bash",
@@ -630,26 +530,6 @@
       {
         "lang": "typescript",
         "meta": "NodeJS",
-        "code": "const client = new AirtopClient({apiKey: \"YOUR_API_KEY\"});\nconst session = await client.sessions.create();"
-      },
-      {
-        "lang": "python",
-        "meta": "Python",
-        "code": "client = Airtop(api_key=\"YOUR_API_KEY\")\nsession = client.sessions.create()"
-      },
-      {
-        "lang": "typescript",
-        "meta": "NodeJS",
-        "code": "const client = new AirtopClient({apiKey: \"YOUR_API_KEY\"});\nconst session = await client.sessions.create({\n  configuration: {\n    skipWaitSessionReady: true,\n  }\n});"
-      },
-      {
-        "lang": "python",
-        "meta": "Python",
-        "code": "# Also import SessionConfig to pass the configuration parameter\nfrom airtop import Airtop, SessionConfig\n\nclient = Airtop(api_key=\"YOUR_API_KEY\")\nsession = client.sessions.create(configuration=SessionConfig(skip_wait_session_ready=True))"
-      },
-      {
-        "lang": "typescript",
-        "meta": "NodeJS",
         "code": "const client = new AirtopClient({apiKey: \"YOUR_API_KEY\"});\nconst session = await client.sessions.create({\n  configuration: {\n    skipWaitSessionReady: true,\n  }\n});"
       },
       {
@@ -670,42 +550,12 @@
       {
         "lang": "typescript",
         "meta": "NodeJS",
-        "code": "const client = new AirtopClient({apiKey: \"YOUR_API_KEY\"});\nconst session = await client.sessions.create({\n  configuration: {\n    skipWaitSessionReady: true,\n  }\n});\n\n// Session will be returned immediately but may not be ready for use\nawait client.sessions.waitForSessionReady(session.data.id);\n\n// Session is now ready for use"
-      },
-      {
-        "lang": "python",
-        "meta": "Python",
-        "code": "client = Airtop(api_key=\"YOUR_API_KEY\")\nsession = await client.sessions.create(configuration=SessionConfig(skip_wait_session_ready=True))\n\n# Session will be returned immediately but may not be ready for use\nclient.sessions.wait_for_session_ready(session.data.id)\n\n# Session is now ready for use"
-      },
-      {
-        "lang": "typescript",
-        "meta": "NodeJS",
         "code": "const client = new AirtopClient({apiKey: \"YOUR_API_KEY\"});\nconst session = await client.sessions.create({configuration: {\n  timeoutMinutes: 15,\n}});"
       },
       {
         "lang": "python",
         "meta": "Python",
         "code": "# Also import SessionConfigV1 to pass the configuration parameter\nfrom airtop import Airtop, SessionConfig\n\nclient = Airtop(api_key=\"YOUR_API_KEY\")\nsession = client.sessions.create(configuration=SessionConfig(timeout_minutes=15))"
-      },
-      {
-        "lang": "typescript",
-        "meta": "NodeJS",
-        "code": "const client = new AirtopClient({apiKey: \"YOUR_API_KEY\"});\nconst session = await client.sessions.create({configuration: {\n  timeoutMinutes: 15,\n}});"
-      },
-      {
-        "lang": "python",
-        "meta": "Python",
-        "code": "# Also import SessionConfigV1 to pass the configuration parameter\nfrom airtop import Airtop, SessionConfig\n\nclient = Airtop(api_key=\"YOUR_API_KEY\")\nsession = client.sessions.create(configuration=SessionConfig(timeout_minutes=15))"
-      },
-      {
-        "lang": "typescript",
-        "meta": "NodeJS",
-        "code": "const client = new AirtopClient({apiKey: \"YOUR_API_KEY\"});\nconst session = await client.sessions.create();\nawait client.sessions.terminate(session.data.id);"
-      },
-      {
-        "lang": "python",
-        "meta": "Python",
-        "code": "client = Airtop(api_key=\"YOUR_API_KEY\")\nsession = client.sessions.create()\nclient.sessions.terminate(session.data.id)"
       },
       {
         "lang": "typescript",
@@ -755,16 +605,6 @@
     "hash": "#session-states",
     "content": "Sessions can be in one of the following states:\ninitializing: The session is pending initialization.\n\nawaiting_capacity: The session is waiting for capacity.\n\nrunning: The session is running and ready for use.\n\nended: The session has been ended by the user or due to inactivity.\n\n\nIn general, if you are creating a session via the SDK without the skipWaitSessionReady: true parameter, you do not need to worry about initializing and awaiting_capacity states. These states are only relevant if you are creating a session with the skipWaitSessionReady: true parameter or directly through the REST API. A session might be ended if it terminated due to TTL timeout, if you explicitly terminate it, or if it was terminated due to an error.\nYou can check the state of a session by calling the getInfo function.",
     "code_snippets": [
-      {
-        "lang": "typescript",
-        "meta": "NodeJS",
-        "code": "const client = new AirtopClient({apiKey: \"YOUR_API_KEY\"});\nconst session = await client.sessions.getInfo(session.data.id);\nconsole.log(session.data.status);"
-      },
-      {
-        "lang": "python",
-        "meta": "Python",
-        "code": "client = Airtop(api_key=\"YOUR_API_KEY\")\nsession = client.sessions.getinfo(session.data.id)\nprint(session.data.status)"
-      },
       {
         "lang": "typescript",
         "meta": "NodeJS",
@@ -858,16 +698,6 @@
         "lang": "python",
         "meta": "Python",
         "code": "window = client.windows.create(session.data.id, url=\"https://www.airtop.ai\")"
-      },
-      {
-        "lang": "typescript",
-        "meta": "NodeJS",
-        "code": "const window = await client.windows.create(session.data.id, { url: \"https://www.airtop.ai\" });"
-      },
-      {
-        "lang": "python",
-        "meta": "Python",
-        "code": "window = client.windows.create(session.data.id, url=\"https://www.airtop.ai\")"
       }
     ],
     "hierarchy": {
@@ -907,16 +737,6 @@
     "hash": "#wait-until-options",
     "content": "Before you can interact or prompt the page, the page must be fully loaded. You can provide a waitUntil parameter to the create function to customize exactly what you are waiting for. There are 2 options for the waitUntil parameter: load and domcontentloaded.\nload: Wait until the page and all resources are fully loaded (default).\n\ndomcontentloaded: Wait until the DOM is fully loaded.",
     "code_snippets": [
-      {
-        "lang": "typescript",
-        "meta": "NodeJS",
-        "code": "const window = await client.windows.create(session.data.id, { url: \"https://www.airtop.ai\" waitUntil: \"domcontentloaded\"});"
-      },
-      {
-        "lang": "python",
-        "meta": "Python",
-        "code": "window = client.windows.create(session.data.id, url=\"https://www.airtop.ai\", wait_until=\"domcontentloaded\")"
-      },
       {
         "lang": "typescript",
         "meta": "NodeJS",
@@ -978,16 +798,6 @@
         "lang": "python",
         "meta": "Python",
         "code": "window = client.windows.create(session.data.id, url=\"https://www.airtop.ai\", screen_resolution=\"1920x1080\")"
-      },
-      {
-        "lang": "typescript",
-        "meta": "NodeJS",
-        "code": "const window = await client.windows.create(session.data.id, { url: \"https://www.airtop.ai\", screenResolution: \"1920x1080\" });"
-      },
-      {
-        "lang": "python",
-        "meta": "Python",
-        "code": "window = client.windows.create(session.data.id, url=\"https://www.airtop.ai\", screen_resolution=\"1920x1080\")"
       }
     ],
     "hierarchy": {
@@ -1040,16 +850,6 @@
         "lang": "python",
         "meta": "Python",
         "code": "# Create a window and load URL 1\nwindow = client.windows.create(session.data.id, url=\"https://www.airtop.ai\")\n\n# Load URL 2\nclient.windows.load_url(session.data.id, window.data.window_id, url=\"https://www.google.com\")"
-      },
-      {
-        "lang": "typescript",
-        "meta": "NodeJS",
-        "code": "// Create a window and load URL 1\nconst windowResponse = await client.windows.create(session.data.id, { url: \"https://www.airtop.ai\" });\n\n// Load URL 2\nawait client.windows.loadUrl(session.data.id, windowResponse.data.windowId, { url: \"https://www.google.com\" });"
-      },
-      {
-        "lang": "python",
-        "meta": "Python",
-        "code": "# Create a window and load URL 1\nwindow = client.windows.create(session.data.id, url=\"https://www.airtop.ai\")\n\n# Load URL 2\nclient.windows.load_url(session.data.id, window.data.window_id, url=\"https://www.google.com\")"
       }
     ],
     "hierarchy": {
@@ -1093,16 +893,6 @@
     "hash": "#closing-windows",
     "content": "If you terminate a browser session (see Timeouts and Termination above), all windows associated with that session will be closed automatically.\nIf you have a window ID, you can close that specific window by calling the close function.\n\n\nThis can be useful if you have a long running session with multiple windows and want to close windows you aren't using anymore to free up resources.",
     "code_snippets": [
-      {
-        "lang": "typescript",
-        "meta": "NodeJS",
-        "code": "await client.windows.close(sessionId, windowId);"
-      },
-      {
-        "lang": "python",
-        "meta": "Python",
-        "code": "client.windows.close(session_id, window_id)"
-      },
       {
         "lang": "typescript",
         "meta": "NodeJS",
@@ -1225,16 +1015,6 @@
         "lang": "python",
         "meta": "Python",
         "code": "session = client.sessions.create(configuration=SessionConfig(persist_profile=True))\nprofile_id = session.data.profileId"
-      },
-      {
-        "lang": "typescript",
-        "meta": "NodeJS",
-        "code": "const session = await client.sessions.create({configuration: {persistProfile: true}});\nconst profileId = session.data.profileId;"
-      },
-      {
-        "lang": "python",
-        "meta": "Python",
-        "code": "session = client.sessions.create(configuration=SessionConfig(persist_profile=True))\nprofile_id = session.data.profileId"
       }
     ],
     "hierarchy": {
@@ -1283,26 +1063,6 @@
         "lang": "python",
         "meta": "Python",
         "code": "session = client.sessions.create(configuration=SessionConfig(base_profile_id=\"YOUR_PROFILE_ID\"))"
-      },
-      {
-        "lang": "typescript",
-        "meta": "NodeJS",
-        "code": "const session = await client.sessions.create({configuration: {baseProfileId: \"YOUR_PROFILE_ID\"}});"
-      },
-      {
-        "lang": "python",
-        "meta": "Python",
-        "code": "session = client.sessions.create(configuration=SessionConfig(base_profile_id=\"YOUR_PROFILE_ID\"))"
-      },
-      {
-        "lang": "typescript",
-        "meta": "NodeJS",
-        "code": "const session = await client.sessions.create({configuration: {persistProfile: true, baseProfileId: \"ORIGINAL_PROFILE_ID\"}});\nconst profileId = session.data.profileId;"
-      },
-      {
-        "lang": "python",
-        "meta": "Python",
-        "code": "session = client.sessions.create(configuration=SessionConfig(persist_profile=True, base_profile_id=\"ORIGINAL_PROFILE_ID\"))\nprofile_id = session.data.profile_Id"
       },
       {
         "lang": "typescript",
@@ -1365,42 +1125,12 @@
       {
         "lang": "typescript",
         "meta": "NodeJS",
-        "code": "const profiles = await client.profiles.get();"
-      },
-      {
-        "lang": "python",
-        "meta": "Python",
-        "code": "profiles = client.profiles.get()"
-      },
-      {
-        "lang": "typescript",
-        "meta": "NodeJS",
         "code": "const profile = await client.profiles.get({profileIds: \"PROFILE_ID\"});\nconst profiles = await client.profiles.get({profileIds: [\"PROFILE_ID\", \"ANOTHER_PROFILE_ID\"]});"
       },
       {
         "lang": "python",
         "meta": "Python",
         "code": "profile = client.profiles.get(profile_ids=[\"PROFILE_ID\"])\nprofiles = client.profiles.get(profile_ids=[\"PROFILE_ID\", \"ANOTHER_PROFILE_ID\"])"
-      },
-      {
-        "lang": "typescript",
-        "meta": "NodeJS",
-        "code": "const profile = await client.profiles.get({profileIds: \"PROFILE_ID\"});\nconst profiles = await client.profiles.get({profileIds: [\"PROFILE_ID\", \"ANOTHER_PROFILE_ID\"]});"
-      },
-      {
-        "lang": "python",
-        "meta": "Python",
-        "code": "profile = client.profiles.get(profile_ids=[\"PROFILE_ID\"])\nprofiles = client.profiles.get(profile_ids=[\"PROFILE_ID\", \"ANOTHER_PROFILE_ID\"])"
-      },
-      {
-        "lang": "typescript",
-        "meta": "NodeJS",
-        "code": "await client.profiles.delete({profileIds: \"PROFILE_ID\"});\nawait client.profiles.delete({profileIds: [\"PROFILE_ID\", \"ANOTHER_PROFILE_ID\"]});"
-      },
-      {
-        "lang": "python",
-        "meta": "Python",
-        "code": "client.profiles.delete(profile_ids=\"PROFILE_ID\")\nclient.profiles.delete(profile_ids=[\"PROFILE_ID\", \"ANOTHER_PROFILE_ID\"])"
       },
       {
         "lang": "typescript",
@@ -1560,26 +1290,6 @@
       {
         "lang": "typescript",
         "meta": "NodeJS",
-        "code": "const windowInfo = await client.windows.getWindowInfo(session.data.id, windowId);\nconst liveViewUrl = windowInfo.data.liveViewUrl;"
-      },
-      {
-        "lang": "python",
-        "meta": "Python",
-        "code": "window_info = client.windows.get_window_info(session.data.id, window_id)\nlive_view_url = window_info.data.live_view_url"
-      },
-      {
-        "lang": "typescript",
-        "meta": "NodeJS",
-        "code": "const windowInfo = await client.windows.getWindowInfoForPuppeteerPage(session, page); // page is a puppeteer.Page object\nconst windowInfo = await client.windows.getWindowInfoForPlaywrightPage(session, page); // page is a playwright.Page object\nconst windowInfo = await client.windows.getWindowInfoForSeleniumDriver(session, driver); // driver is a seleniumWebdriver.WebDriver object"
-      },
-      {
-        "lang": "python",
-        "meta": "Python",
-        "code": "window_info = client.windows.get_window_info_for_playwright_page(session.data, page) # page is a playwright.Page object\nwindow_info = client.windows.get_window_info_for_selenium_driver(session.data, browser) # browser is a webdriver.Remote object"
-      },
-      {
-        "lang": "typescript",
-        "meta": "NodeJS",
         "code": "const windowInfo = await client.windows.getWindowInfoForPuppeteerPage(session, page); // page is a puppeteer.Page object\nconst windowInfo = await client.windows.getWindowInfoForPlaywrightPage(session, page); // page is a playwright.Page object\nconst windowInfo = await client.windows.getWindowInfoForSeleniumDriver(session, driver); // driver is a seleniumWebdriver.WebDriver object"
       },
       {
@@ -1600,20 +1310,6 @@
         "lang": "python",
         "meta": "Python",
         "code": "window_info = client.windows.get_window_info(session.data.id, window_id, include_navigation_bar=True)\nlive_view_url = window_info.data.live_view_url"
-      },
-      {
-        "lang": "typescript",
-        "meta": "NodeJS",
-        "code": "const windowInfo = await client.windows.getWindowInfo(session.data.id, windowId, {\n  includeNavigationBar: true,\n});\nconst liveViewUrl = windowInfo.data.liveViewUrl;"
-      },
-      {
-        "lang": "python",
-        "meta": "Python",
-        "code": "window_info = client.windows.get_window_info(session.data.id, window_id, include_navigation_bar=True)\nlive_view_url = window_info.data.live_view_url"
-      },
-      {
-        "lang": "html",
-        "code": "<iframe\n  allow=\"clipboard-read;clipboard-write\"\n  title=\"<YOUR_BROWSER_ID>\" // iframe elements require a unique title property\n  id=\"<YOUR_BROWSER_ID>\" // used to identify the iframe in live view message events\n  src=\"<YOUR_LIVE_VIEW_URL>\"\n/>"
       }
     ],
     "hierarchy": {
@@ -1653,16 +1349,6 @@
     "hash": "#controlling-the-live-views-dimensions",
     "content": "By default, the live view will resize to fit the wrapping iframe or window. You can control the Live View's size by simply adjusting the iframe's dimensions and the browser contents will resize to fit. However, you may also choose to set the screen resolution and disable resizing as shown below.",
     "code_snippets": [
-      {
-        "lang": "typescript",
-        "meta": "NodeJS",
-        "code": "const windowInfo = await client.windows.getWindowInfo(session.data.id, windowId, {\n  includeNavigationBar: true,\n  screenResolution: \"1920x1080\", // Width x Height\n  disableResize: true,\n});"
-      },
-      {
-        "lang": "python",
-        "meta": "Python",
-        "code": "window_info = client.windows.get_window_info(session.data.id, window_id, include_navigation_bar=True, screen_resolution=\"1920x1080\", disable_resize=True)"
-      },
       {
         "lang": "typescript",
         "meta": "NodeJS",
@@ -1951,16 +1637,6 @@
         "lang": "python",
         "meta": "Python",
         "code": "from airtop import SessionConfig, Proxy\n\nclient.sessions.create(configuration=SessionConfig(proxy='https://username:password@my-proxy-provider.com'))\n\nclient.sessions.create(configuration=SessionConfig(\n    proxy=Proxy(\n        url='https://my-proxy-provider.com', \n        username='my-proxy-username', \n        password='my-proxy-password'\n    )\n))\n"
-      },
-      {
-        "lang": "typescript",
-        "meta": "NodeJS",
-        "code": "await client.sessions.create({ \n  configuration: {\n    proxy: 'https://username:password@my-proxy-provider.com',\n  },\n});\n\nawait client.sessions.create({\n  configuration: {\n    proxy: {\n      url: 'https://my-proxy-provider.com',\n      username: 'my-proxy-username',\n      password: 'my-proxy-password',\n    },\n  },\n});"
-      },
-      {
-        "lang": "python",
-        "meta": "Python",
-        "code": "from airtop import SessionConfig, Proxy\n\nclient.sessions.create(configuration=SessionConfig(proxy='https://username:password@my-proxy-provider.com'))\n\nclient.sessions.create(configuration=SessionConfig(\n    proxy=Proxy(\n        url='https://my-proxy-provider.com', \n        username='my-proxy-username', \n        password='my-proxy-password'\n    )\n))\n"
       }
     ],
     "hierarchy": {
@@ -2009,26 +1685,6 @@
         "lang": "python",
         "meta": "Python",
         "code": "client.sessions.create(configuration=SessionConfig(\n    proxy=[\n        SessionConfigV1ProxyItem(domain_pattern='*\\.wikipedia\\.org', relay='https://username:password@my-proxy-provider.com'),\n        SessionConfigV1ProxyItem(domain_pattern='*', relay='https://username:password@my-other-proxy-provider.com')\n    ]\n))"
-      },
-      {
-        "lang": "typescript",
-        "meta": "NodeJS",
-        "code": "await client.sessions.create({\n  configuration: {\n    proxy: [\n      { domainPattern: '*\\.wikipedia\\.org', relay: 'https://username:password@my-proxy-provider.com' },\n      { domainPattern: '*', relay: 'https://username:password@my-other-proxy-provider.com' },\n    ],\n  },\n});"
-      },
-      {
-        "lang": "python",
-        "meta": "Python",
-        "code": "client.sessions.create(configuration=SessionConfig(\n    proxy=[\n        SessionConfigV1ProxyItem(domain_pattern='*\\.wikipedia\\.org', relay='https://username:password@my-proxy-provider.com'),\n        SessionConfigV1ProxyItem(domain_pattern='*', relay='https://username:password@my-other-proxy-provider.com')\n    ]\n))"
-      },
-      {
-        "lang": "typescript",
-        "meta": "NodeJS",
-        "code": "await client.sessions.create({\n  configuration: {\n    proxy: [\n      { domainPattern: '*\\.wikipedia\\.org', relay: 'https://username:password@my-proxy-provider.com' },\n    ],\n  },\n});"
-      },
-      {
-        "lang": "python",
-        "meta": "Python",
-        "code": "client.sessions.create(configuration=SessionConfig(\n    proxy=[\n        SessionConfigV1ProxyItem(domain_pattern='*\\.wikipedia\\.org', relay='https://username:password@my-proxy-provider.com'),\n    ]\n))"
       },
       {
         "lang": "typescript",
@@ -2214,21 +1870,6 @@
     "hash": "#installation",
     "content": "You will need to install the puppeteer-core package to use Puppeteer with Airtop.",
     "code_snippets": [
-      {
-        "lang": "bash",
-        "meta": "npm",
-        "code": "npm i puppeteer-core"
-      },
-      {
-        "lang": "bash",
-        "meta": "yarn",
-        "code": "yarn add puppeteer-core"
-      },
-      {
-        "lang": "bash",
-        "meta": "pnpm",
-        "code": "pnpm add puppeteer-core"
-      },
       {
         "lang": "bash",
         "meta": "npm",
@@ -2467,26 +2108,6 @@
         "lang": "bash",
         "meta": "Python",
         "code": "pip install playwright"
-      },
-      {
-        "lang": "bash",
-        "meta": "NodeJS (npm)",
-        "code": "npm i playwright-core"
-      },
-      {
-        "lang": "bash",
-        "meta": "NodeJS (yarn)",
-        "code": "yarn add playwright-core"
-      },
-      {
-        "lang": "bash",
-        "meta": "NodeJS (pnpm)",
-        "code": "pnpm add playwright-core"
-      },
-      {
-        "lang": "bash",
-        "meta": "Python",
-        "code": "pip install playwright"
       }
     ],
     "hierarchy": {
@@ -2539,16 +2160,6 @@
         "lang": "python",
         "meta": "Python",
         "code": "from playwright.sync_api import sync_playwright\n\nwith sync_playwright() as p:\n    # Connect to the cloud browser.\n    browser = p.chromium.connect_over_cdp(session.data.cdp_ws_url, headers={\n        'authorization': f'Bearer YOUR_API_KEY'\n    })\n\n    # Airtop does not currently support multiple contexts.\n    # Please be sure to use the default context.\n    default_context = browser.contexts[0]\n    page = default_context.new_page()\n    page.goto(\"https://www.airtop.ai\")\n\n    # Get the page content\n    content = page.content()\n    print(content)"
-      },
-      {
-        "lang": "typescript",
-        "meta": "NodeJS",
-        "code": "import { chromium } from 'playwright-core';\n\nconst session = await client.sessions.create();\nconst playwrightBrowser = await chromium.connectOverCDP(session.data.cdpWsUrl, {\n  headers: {\n    authorization: `Bearer YOUR_API_KEY`,\n  },\n});\n\n// Airtop does not currently support multiple contexts.\n// Please be sure to use the default context.\nconst defaultContext = playwrightBrowser.contexts()[0];\n\n// Navigate to a new page\nconst page = await defaultContext.newPage();\nawait page.goto('https://www.airtop.ai');\n\n// Get the page content\nconst content = await page.content();\nconsole.log(content);"
-      },
-      {
-        "lang": "python",
-        "meta": "Python",
-        "code": "from playwright.sync_api import sync_playwright\n\nwith sync_playwright() as p:\n    # Connect to the cloud browser.\n    browser = p.chromium.connect_over_cdp(session.data.cdp_ws_url, headers={\n        'authorization': f'Bearer YOUR_API_KEY'\n    })\n\n    # Airtop does not currently support multiple contexts.\n    # Please be sure to use the default context.\n    default_context = browser.contexts[0]\n    page = default_context.new_page()\n    page.goto(\"https://www.airtop.ai\")\n\n    # Get the page content\n    content = page.content()\n    print(content)"
       }
     ],
     "hierarchy": {
@@ -2592,16 +2203,6 @@
     "hash": "#combining-playwright-and-airtop-window-management",
     "content": "You can use Airtop's window management functions in combination with Playwright to automate your browser. For example, you might want to create a new window, load a URL in it, use our AI APIs, but use Playwright to push a few buttons on the page.\nOnce you create a window, you'll be given a window ID, which you'll use to interact with the window using Airtop's SDK. But you'll also be given a targetId, which you'll use to connect Playwright to the window.",
     "code_snippets": [
-      {
-        "lang": "typescript",
-        "meta": "NodeJS",
-        "code": "const windowResponse = await client.windows.create(session.data.id, { url: \"https://www.airtop.ai\", waitUntil: \"load\" });\n\n// Get the target ID from the window response\nconst { targetId } = windowResponse.data;\n\n// Connect to the session using Playwright\nconst playwrightBrowser = await chromium.connectOverCDP(session.data.cdpWsUrl, {\n  headers: {\n    authorization: `Bearer YOUR_API_KEY`,\n  }\n});\n\n// Iterate through the pages to find the one that matches the target ID\nconst pages = playwrightBrowser.contexts()[0].pages();\nlet matchingPage;\nfor (const page of pages) {\n  const cdpSession = await page.context().newCDPSession(page);\n  const { targetInfo } = await cdpSession.send('Target.getTargetInfo');\n  const pageTargetId = targetInfo.targetId;\n  if (pageTargetId === targetId) {\n    matchingPage = page;\n    break;\n  }\n}\n\n// Once the page is found you can use Playwright to interact with it\nif (matchingPage) {\n  await matchingPage.getByRole('button').click();\n}"
-      },
-      {
-        "lang": "python",
-        "meta": "Python",
-        "code": "window_response = client.windows.create(session.data.id, url=\"https://www.airtop.ai\", wait_until=\"load\")\n\n# Get the target ID from the window response\nwindow_target_id = window_response.data.target_id\n\nwith sync_playwright() as p:\n    # Connect to the session using Playwright.\n    browser = p.chromium.connect_over_cdp(session.data.cdp_ws_url, headers={\n        'authorization': 'Bearer YOUR_API_KEY'\n    })\n\n    pages = browser.contexts[0].pages\n    for page in pages:\n        cdp_session = page.context.new_cdp_session(page)\n        result = cdp_session.send('Target.getTargetInfo')\n        if result['targetInfo']['targetId'] == window_target_id:\n            matching_page = page\n            break\n\n    # Once the page is found you can use Playwright to interact with it\n    if matching_page:\n        matching_page.get_by_role('button').click()"
-      },
       {
         "lang": "typescript",
         "meta": "NodeJS",
@@ -2743,26 +2344,6 @@
         "lang": "python",
         "meta": "Python",
         "code": "pip install selenium"
-      },
-      {
-        "lang": "bash",
-        "meta": "NodeJS (npm)",
-        "code": "npm i selenium-webdriver"
-      },
-      {
-        "lang": "bash",
-        "meta": "NodeJS (yarn)",
-        "code": "yarn add selenium-webdriver"
-      },
-      {
-        "lang": "bash",
-        "meta": "NodeJS (pnpm)",
-        "code": "pnpm add selenium-webdriver"
-      },
-      {
-        "lang": "python",
-        "meta": "Python",
-        "code": "pip install selenium"
       }
     ],
     "hierarchy": {
@@ -2806,16 +2387,6 @@
     "hash": "#usage",
     "content": "Once you have created a session with Airtop, you can use the Selenium library to control the browser by connecting Selenium to the ChromeDriver endpoint provided by Airtop.\n\n\nIf you're not already familiar with Selenium, you might want to check out their documentation to learn more about the library and its capabilities.",
     "code_snippets": [
-      {
-        "lang": "typescript",
-        "meta": "NodeJS",
-        "code": "import { Builder, until } from 'selenium-webdriver';\nimport * as https from 'https';\nimport chrome from 'selenium-webdriver/chrome';\nimport { AirtopClient } from \"@airtop/sdk\";\n\nconst client = new AirtopClient({ apiKey: \"YOUR_API_KEY\" });\nconst session = await client.sessions.create();\n\n// Generate a custom HTTP agent to handle the authorization header\nconst customHttpAgent = new https.Agent({});\n(customHttpAgent as any).addRequest = (req: any, options: any) => {\n  req.setHeader('Authorization', 'Bearer YOUR_API_KEY');\n  (https.Agent.prototype as any).addRequest.call(customHttpAgent, req, options);\n};\n\n// Create a new Chrome driver instance\nconst driver = await new Builder()\n  .forBrowser('chrome')\n  .usingHttpAgent(customHttpAgent)\n  .usingServer(session.data.chromedriverUrl)\n  .build();\n\n// Open a new tab and navigate to the target URL\nawait driver.switchTo().newWindow('tab');\nawait driver.get(\"https://www.airtop.ai\");\nawait driver.wait(until.titleContains('Airtop'), 10000);\n\n// Get the page content\nconst content = await driver.getPageSource();\nconsole.log(content);"
-      },
-      {
-        "lang": "python",
-        "meta": "Python",
-        "code": "from airtop import Airtop\nfrom selenium import webdriver\nfrom selenium.webdriver.chrome.remote_connection import ChromeRemoteConnection\n\ndef create_airtop_selenium_connection(airtop_api_key, airtop_session_data, *args, **kwargs):\n    class AirtopRemoteConnection(ChromeRemoteConnection):\n        @classmethod\n        def get_remote_connection_headers(cls, *args, **kwargs):\n            headers = super().get_remote_connection_headers(*args, **kwargs)\n            headers['Authorization'] = f'Bearer {airtop_api_key}'\n            return headers\n\n    return AirtopRemoteConnection(remote_server_addr=airtop_session_data.chromedriver_url, *args, **kwargs)\n\n# Initialize Airtop client\nclient = Airtop(api_key=api_key)\nsession = client.sessions.create()\n\n# Connect to the Airtop cloud browser with Selenium and navigate to a page.\ntry:\n  browser = webdriver.Remote(\n    command_executor=create_airtop_selenium_connection(api_key, session.data),\n    options=webdriver.ChromeOptions(),\n  )\n  browser.get(\"https://en.wikipedia.org/wiki/Rocket\")\n\n  # Get the window info and scrape the page content\n  window_info = client.windows.get_window_info_for_selenium_driver(\n    session.data,\n    browser,\n  )\n  print(f\"Live view url: {window_info.data.live_view_url}\")\n  scrape = client.windows.scrape_content(session_id=session.data.id, window_id=window_info.data.window_id, time_threshold_seconds=60)\n  print(scrape.data.model_response.scraped_content)\n\n  browser.quit()\nfinally:\n  # Terminate the Airtop session.\n  client.sessions.terminate(session.data.id)"
-      },
       {
         "lang": "typescript",
         "meta": "NodeJS",
@@ -2911,42 +2482,12 @@
       {
         "lang": "typescript",
         "meta": "NodeJS",
-        "code": "const session = await client.sessions.create();"
-      },
-      {
-        "lang": "python",
-        "meta": "Python",
-        "code": "session = client.sessions.create()"
-      },
-      {
-        "lang": "typescript",
-        "meta": "NodeJS",
         "code": "const window = await client.windows.create(session.data.id, { url: \"https://en.wikipedia.org/wiki/Margrit_Waltz\" });"
       },
       {
         "lang": "python",
         "meta": "Python",
         "code": "window = client.windows.create(session.data.id, url=\"https://en.wikipedia.org/wiki/Margrit_Waltz\")"
-      },
-      {
-        "lang": "typescript",
-        "meta": "NodeJS",
-        "code": "const window = await client.windows.create(session.data.id, { url: \"https://en.wikipedia.org/wiki/Margrit_Waltz\" });"
-      },
-      {
-        "lang": "python",
-        "meta": "Python",
-        "code": "window = client.windows.create(session.data.id, url=\"https://en.wikipedia.org/wiki/Margrit_Waltz\")"
-      },
-      {
-        "lang": "typescript",
-        "meta": "NodeJS",
-        "code": "const content = await client.windows.scrapeContent(session.data.id, window.data.windowId);"
-      },
-      {
-        "lang": "python",
-        "meta": "Python",
-        "code": "content = client.windows.scrape_content(session_id=session.data.id, window_id=window.data.window_id, time_threshold_seconds=60)"
       },
       {
         "lang": "typescript",
@@ -3003,14 +2544,6 @@
       {
         "lang": "text",
         "code": "Jump to content\n\nMain menu\n\n    Main menu\n    move to sidebar\n    hide\n\n\n\n\n\n            Navigation\n\n\n\n\n\n                    Main pageContentsCurrent eventsRandom articleAbout WikipediaContact us\n\n\n\n\n\n\n\n\n\n            Contribute\n\n\n\n\n\n                    HelpLearn to editCommunity portalRecent changesUpload file\n\nSearch\n\n                            Search\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n                    Donate\n\nAppearance\n\n    Appearance\n    move to sidebar\n    hide\n\nTextSmallStandardLargeThis page always uses small font sizeWidthStandardWideThe content is as wide as possible for your browser window.Color (beta)AutomaticLightDarkThis page is always in light mode.\n"
-      },
-      {
-        "lang": "text",
-        "code": "Jump to content\n\nMain menu\n\n    Main menu\n    move to sidebar\n    hide\n\n\n\n\n\n            Navigation\n\n\n\n\n\n                    Main pageContentsCurrent eventsRandom articleAbout WikipediaContact us\n\n\n\n\n\n\n\n\n\n            Contribute\n\n\n\n\n\n                    HelpLearn to editCommunity portalRecent changesUpload file\n\nSearch\n\n                            Search\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n                    Donate\n\nAppearance\n\n    Appearance\n    move to sidebar\n    hide\n\nTextSmallStandardLargeThis page always uses small font sizeWidthStandardWideThe content is as wide as possible for your browser window.Color (beta)AutomaticLightDarkThis page is always in light mode.\n"
-      },
-      {
-        "lang": "md",
-        "code": "Challenge: Explore the Random Growth Mindset Cats\n\nI started making growth mindset cats a couple of years ago, and now there are hundreds of them. For this assignment, you will browse the cats at random and pick out two or three favorites, writing up a blog post about them.\n\nRandom Cats:\n\n- You can see cats at random at the Growth Mindset blog; each time you reload the page, there will be a random cat.\n- When you see a cat that you like, click on the \"more info\" link to go to the blog post with more information.\n- To grab a copy of the image to use in your blog post, right-mouse click on the image and save it to your computer (or drag-and-drop), and make sure you link to that blog post in the Image Information.\n- Hint: As you find a cat you want to use, you might leave that open in its own tab, and then open another tab to look for the next cat; that way, you will have the cats you need each in their own tab for when you write up your blog post.\n\nYour blog post. Find two or three cats that you like, and include those images in a blog post. For each image, explain why you picked this cat in particular. Don't forget to link to the specific blog post for that cat as part of the Image Information.\n\nwill.jpg\n\n(Source: Curiosity: The will to explore.)"
       },
       {
         "lang": "md",
@@ -3101,42 +2634,12 @@
       {
         "lang": "typescript",
         "meta": "NodeJS",
-        "code": "const session = await client.sessions.create();"
-      },
-      {
-        "lang": "python",
-        "meta": "Python",
-        "code": "session = client.sessions.create()"
-      },
-      {
-        "lang": "typescript",
-        "meta": "NodeJS",
         "code": "const window = await client.windows.create(session.data.id, { url: \"https://news.ycombinator.com/news\" });"
       },
       {
         "lang": "python",
         "meta": "Python",
         "code": "window = client.windows.create(session.data.id, url=\"https://news.ycombinator.com/news\")"
-      },
-      {
-        "lang": "typescript",
-        "meta": "NodeJS",
-        "code": "const window = await client.windows.create(session.data.id, { url: \"https://news.ycombinator.com/news\" });"
-      },
-      {
-        "lang": "python",
-        "meta": "Python",
-        "code": "window = client.windows.create(session.data.id, url=\"https://news.ycombinator.com/news\")"
-      },
-      {
-        "lang": "typescript",
-        "meta": "NodeJS",
-        "code": "const result = await client.windows.promptContent(session.data.id, window.data.windowId, {\n  prompt:\n    'Give me a list of all the titles of the articles on this page along with the number of comments each article has.',\n});\nconst content = result.data.modelResponse;"
-      },
-      {
-        "lang": "python",
-        "meta": "Python",
-        "code": "result = client.windows.prompt_content(session.data.id, window.data.window_id, prompt='Give me a list of all the titles of the articles on this page along with the number of comments each article has.')\ncontent = result.data.model_response"
       },
       {
         "lang": "typescript",
@@ -3194,16 +2697,6 @@
     "hash": "#paginated-results",
     "content": "If you're scraping a paginated page, Airtop will automatically handle pagination for you. You just need to pass the followPaginationLinks: true option and specify the number of pages or results you want to scrape.\n\n\nExample output:",
     "code_snippets": [
-      {
-        "lang": "typescript",
-        "meta": "NodeJS",
-        "code": "const result = await client.windows.promptContent(session.data.id, windowInfo.data.windowId, {\n  prompt:\n    'You are on the Hacker News website. Please scan articles 1-100, referencing the article numbers on the left side of the page, and provide a list of the articles that have over 100 comments. You may need to page through the articles using the pagination controls at the bottom of the page to get to article number 100. You should ignore articles beyond number 100, but be sure to scan the final partial list of articles up to number 100 when you reach it. Return the article number, title, number of comments, and the user who posted the article.',\n  followPaginationLinks: true,\n});"
-      },
-      {
-        "lang": "python",
-        "meta": "Python",
-        "code": "prompt = \"\"\"\nYou are on the Hacker News website. Please scan articles 1-100, referencing the article numbers on the left side of the page, and provide a list of the articles that have over 100 comments. You may need to page through the articles using the pagination controls at the bottom of the page to get to article number 100. You should ignore articles beyond number 100, but be sure to scan the final partial list of articles up to number 100 when you reach it. Return the article number, title, number of comments, and the user who posted the article.\n\"\"\"\nresult = client.windows.prompt_content(session.data.id, window_info.data.window_id, prompt=prompt, follow_pagination_links=True)"
-      },
       {
         "lang": "typescript",
         "meta": "NodeJS",

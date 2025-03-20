@@ -165,8 +165,8 @@ var Component = (() => {
                         children: (0, import_jsx_runtime.jsx)(CodeBlock, {
                           title: "React",
                           code: '// ./app/page.tsx\nimport ClientComponent from "@/components/ClientComponent";\nimport { fetchAccessToken } from "hume";\n\nexport default async function Page() {\n  const accessToken = await fetchAccessToken({\n    apiKey: String(process.env.HUME_API_KEY),\n    secretKey: String(process.env.HUME_SECRET_KEY),\n  });\n\n  if (!accessToken) {\n    throw new Error();\n  }\n\n  return <ClientComponent accessToken={accessToken} />;\n}\n',
-                          language: "tsx",
-                          className: "language-tsx"
+                          className: "language-tsx",
+                          language: "tsx"
                         })
                       })]
                     })
@@ -192,8 +192,8 @@ var Component = (() => {
                         children: (0, import_jsx_runtime.jsx)(CodeBlock, {
                           title: "TypeScript",
                           code: '// ./components/ClientComponent.tsx\n"use client";\nimport { VoiceProvider } from "@humeai/voice-react";\nimport Messages from "./Messages";\nimport Controls from "./Controls";\n\nexport default function ClientComponent({\n  accessToken,\n}: {\n  accessToken: string;\n}) {\n  return (\n    <VoiceProvider auth={{ type: "accessToken", value: accessToken }}>\n      <Messages />\n      <Controls />\n    </VoiceProvider>\n  );\n}\n',
-                          language: "tsx",
-                          className: "language-tsx"
+                          className: "language-tsx",
+                          language: "tsx"
                         })
                       })]
                     })
@@ -219,8 +219,8 @@ var Component = (() => {
                         children: (0, import_jsx_runtime.jsx)(CodeBlock, {
                           title: "TypeScript",
                           code: '// ./components/Controls.tsx\n"use client";\nimport { useVoice, VoiceReadyState } from "@humeai/voice-react";\nexport default function Controls() {\n  const { connect, disconnect, readyState } = useVoice();\n\n  if (readyState === VoiceReadyState.OPEN) {\n    return (\n      <button\n        onClick={() => {\n          disconnect();\n        }}\n      >\n        End Session\n      </button>\n    );\n  }\n\n  return (\n    <button\n      onClick={() => {\n        connect()\n          .then(() => {\n            /* handle success */\n          })\n          .catch(() => {\n            /* handle error */\n          });\n      }}\n    >\n      Start Session\n    </button>\n  );\n}\n',
-                          language: "tsx",
-                          className: "language-tsx"
+                          className: "language-tsx",
+                          language: "tsx"
                         })
                       })]
                     })
@@ -244,8 +244,8 @@ var Component = (() => {
                         children: (0, import_jsx_runtime.jsx)(CodeBlock, {
                           title: "TypeScript",
                           code: '// ./components/Messages.tsx\n"use client";\nimport { useVoice } from "@humeai/voice-react";\n\nexport default function Messages() {\n  const { messages } = useVoice();\n\n  return (\n    <div>\n      {messages.map((msg, index) => {\n        if (msg.type === "user_message" || msg.type === "assistant_message") {\n          return (\n            <div key={msg.type + index}>\n              <div>{msg.message.role}</div>\n              <div>{msg.message.content}</div>\n            </div>\n          );\n        }\n\n        return null;\n      })}\n    </div>\n  );\n}\n',
-                          language: "tsx",
-                          className: "language-tsx"
+                          className: "language-tsx",
+                          language: "tsx"
                         })
                       })]
                     })
@@ -340,8 +340,8 @@ var Component = (() => {
                         children: (0, import_jsx_runtime.jsx)(CodeBlock, {
                           title: "React",
                           code: '// ./pages/index.tsx\nimport Controls from "@/components/Controls";\nimport Messages from "@/components/Messages";\nimport { fetchAccessToken } from "hume";\nimport { VoiceProvider } from "@humeai/voice-react";\nimport { InferGetServerSidePropsType } from "next";\n\nexport const getServerSideProps = async () => {\n  const accessToken = await fetchAccessToken({\n    apiKey: String(process.env.HUME_API_KEY),\n    secretKey: String(process.env.HUME_SECRET_KEY),\n  });\n\n  if (!accessToken) {\n    return {\n      redirect: {\n        destination: "/error",\n        permanent: false,\n      },\n    };\n  }\n\n  return {\n    props: {\n      accessToken,\n    },\n  };\n};\n\ntype PageProps = InferGetServerSidePropsType<typeof getServerSideProps>;\n\nexport default function Page({ accessToken }: PageProps) {\n  return (\n    <VoiceProvider auth={{ type: "accessToken", value: accessToken }}>\n      <Messages />\n      <Controls />\n    </VoiceProvider>\n  );\n}\n',
-                          language: "tsx",
-                          className: "language-tsx"
+                          className: "language-tsx",
+                          language: "tsx"
                         })
                       })]
                     })
@@ -374,8 +374,8 @@ var Component = (() => {
                         children: (0, import_jsx_runtime.jsx)(CodeBlock, {
                           title: "TypeScript",
                           code: '// ./components/Controls.tsx\nimport { useVoice, VoiceReadyState } from "@humeai/voice-react";\nexport default function Controls() {\n  const { connect, disconnect, readyState } = useVoice();\n\n  if (readyState === VoiceReadyState.OPEN) {\n    return (\n      <button\n        onClick={() => {\n          disconnect();\n        }}\n      >\n        End Session\n      </button>\n    );\n  }\n\n  return (\n    <button\n      onClick={() => {\n        connect()\n          .then(() => {\n            /* handle success */\n          })\n          .catch(() => {\n            /* handle error */\n          });\n      }}\n    >\n      Start Session\n    </button>\n  );\n}\n',
-                          language: "tsx",
-                          className: "language-tsx"
+                          className: "language-tsx",
+                          language: "tsx"
                         })
                       })]
                     })
@@ -399,8 +399,8 @@ var Component = (() => {
                         children: (0, import_jsx_runtime.jsx)(CodeBlock, {
                           title: "TypeScript",
                           code: '// ./components/Messages.tsx\nimport { useVoice } from "@humeai/voice-react";\n\nexport default function Messages() {\n  const { messages } = useVoice();\n\n  return (\n    <div>\n      {messages.map((msg, index) => {\n        if (msg.type === "user_message" || msg.type === "assistant_message") {\n          return (\n            <div key={msg.type + index}>\n              <div>{msg.message.role}</div>\n              <div>{msg.message.content}</div>\n            </div>\n          );\n        }\n\n        return null;\n      })}\n    </div>\n  );\n}\n',
-                          language: "tsx",
-                          className: "language-tsx"
+                          className: "language-tsx",
+                          language: "tsx"
                         })
                       })]
                     })
