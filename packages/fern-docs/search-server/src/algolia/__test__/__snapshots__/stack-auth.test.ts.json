@@ -248,46 +248,6 @@
         "code": "NEXT_PUBLIC_STACK_PROJECT_ID=<your-project-id>\nNEXT_PUBLIC_STACK_PUBLISHABLE_CLIENT_KEY=<your-publishable-client-key>\nSTACK_SECRET_SERVER_KEY=<your-secret-server-key>"
       },
       {
-        "lang": "sh",
-        "meta": "title=\"Terminal\"",
-        "code": "npx @stackframe/init-stack@latest"
-      },
-      {
-        "lang": "sh",
-        "meta": "title=\".env.local\"",
-        "code": "NEXT_PUBLIC_STACK_PROJECT_ID=<your-project-id>\nNEXT_PUBLIC_STACK_PUBLISHABLE_CLIENT_KEY=<your-publishable-client-key>\nSTACK_SECRET_SERVER_KEY=<your-secret-server-key>"
-      },
-      {
-        "lang": "bash",
-        "meta": "title=\"Terminal\"",
-        "code": "npm install @stackframe/stack"
-      },
-      {
-        "lang": "sh",
-        "meta": "title=\".env.local\"",
-        "code": "NEXT_PUBLIC_STACK_PROJECT_ID=<your-project-id>\nNEXT_PUBLIC_STACK_PUBLISHABLE_CLIENT_KEY=<your-publishable-client-key>\nSTACK_SECRET_SERVER_KEY=<your-secret-server-key>"
-      },
-      {
-        "lang": "tsx",
-        "meta": "title=\"stack.ts\"",
-        "code": "import \"server-only\";\nimport { StackServerApp } from \"@stackframe/stack\";\n\nexport const stackServerApp = new StackServerApp({\n  tokenStore: \"nextjs-cookie\", // storing auth tokens in cookies\n});"
-      },
-      {
-        "lang": "tsx",
-        "meta": "title=\"app/handler/[...stack]/page.tsx\"",
-        "code": "import { StackHandler } from \"@stackframe/stack\";\nimport { stackServerApp } from \"@/stack\";\n\nexport default function Handler(props: any) {\n  return <StackHandler fullPage app={stackServerApp} {...props} />;\n}"
-      },
-      {
-        "lang": "tsx",
-        "meta": "title=\"app/layout.tsx\"",
-        "code": "import React from \"react\";\nimport { StackProvider, StackTheme } from \"@stackframe/stack\";\nimport { stackServerApp } from \"@/stack\";\n\nexport default function RootLayout({ children }: { children: React.ReactNode }) {\n  return (\n    <html lang=\"en\">\n      <body>\n        <StackProvider app={stackServerApp}>\n          <StackTheme>\n            {children}\n          </StackTheme>\n        </StackProvider>\n      </body>\n    </html>\n  );\n}"
-      },
-      {
-        "lang": "tsx",
-        "meta": "title=\"app/loading.tsx\"",
-        "code": "export default function Loading() {\n  // You can use any loading indicator here\n  return <>\n    Loading...\n  </>;\n}"
-      },
-      {
         "lang": "bash",
         "meta": "title=\"Terminal\"",
         "code": "npm install @stackframe/stack"
@@ -745,23 +705,8 @@
       },
       {
         "lang": "tsx",
-        "meta": "title=\"middleware.tsx\"",
-        "code": "export async function middleware(request: NextRequest) {\n  const user = await stackServerApp.getUser();\n  if (!user) {\n    return NextResponse.redirect(new URL('/handler/sign-in', request.url));\n  }\n  return NextResponse.next();\n}\n\nexport const config = {\n  // You can add your own route protection logic here\n  // Make sure not to protect the root URL, as it would prevent users from accessing static Next.js files or Stack's /handler path\n  matcher: '/protected/:path*',\n};"
-      },
-      {
-        "lang": "tsx",
         "meta": "title=\"my-protected-client-component.tsx\"",
         "code": "\"use client\";\nimport { useUser } from \"@stackframe/stack\";\n\nexport default function MyProtectedClientComponent() {\n  useUser({ or: 'redirect' });\n  return <h1>You can only see this if you are logged in</h1>\n}"
-      },
-      {
-        "lang": "tsx",
-        "meta": "title=\"my-protected-client-component.tsx\"",
-        "code": "\"use client\";\nimport { useUser } from \"@stackframe/stack\";\n\nexport default function MyProtectedClientComponent() {\n  useUser({ or: 'redirect' });\n  return <h1>You can only see this if you are logged in</h1>\n}"
-      },
-      {
-        "lang": "tsx",
-        "meta": "title=\"my-protected-server-component.tsx\"",
-        "code": "import { stackServerApp } from \"@/stack\";\n\nexport default async function MyProtectedServerComponent() {\n  await stackServerApp.getUser({ or: 'redirect' });\n  return <h1>You can only see this if you are logged in</h1>\n}"
       },
       {
         "lang": "tsx",
@@ -858,16 +803,6 @@
       },
       {
         "lang": "tsx",
-        "meta": "title=\"sign-out-button.tsx\"",
-        "code": "\"use client\";\nimport { useUser } from \"@stackframe/stack\";\n\nexport default function SignOutButton() {\n  const user = useUser();\n  return user ? <button onClick={() => user.signOut()}>Sign Out</button> : \"Not signed in\";\n}"
-      },
-      {
-        "lang": "tsx",
-        "meta": "title=\"sign-out-link.tsx\"",
-        "code": "import { stackServerApp } from \"@/stack\";\n\nexport default async function SignOutLink() {\n  // stackServerApp.urls.signOut is equal to /handler/sign-out\n  return <a href={stackServerApp.urls.signOut}>Sign Out</a>;\n}"
-      },
-      {
-        "lang": "tsx",
         "meta": "title=\"sign-out-link.tsx\"",
         "code": "import { stackServerApp } from \"@/stack\";\n\nexport default async function SignOutLink() {\n  // stackServerApp.urls.signOut is equal to /handler/sign-out\n  return <a href={stackServerApp.urls.signOut}>Sign Out</a>;\n}"
       }
@@ -914,16 +849,6 @@
         "lang": "tsx",
         "meta": "title=\"app/profile/page.tsx\"",
         "code": "'use client';\nimport { useUser, useStackApp, UserButton } from \"@stackframe/stack\";\n\nexport default function PageClient() {\n  const user = useUser();\n  const app = useStackApp();\n  return (\n    <div>\n      {user ? (\n        <div>\n          <UserButton />\n          <p>Welcome, {user.displayName ?? \"anonymous user\"}</p>\n          <p>Your e-mail: {user.primaryEmail}</p>\n          <button onClick={() => user.signOut()}>Sign Out</button>\n        </div>\n      ) : (\n        <div>\n          <p>You are not logged in</p>\n          <button onClick={() => app.redirectToSignIn()}>Sign in</button>\n          <button onClick={() => app.redirectToSignUp()}>Sign up</button>\n        </div>\n      )}\n    </div>\n  );\n}"
-      },
-      {
-        "lang": "tsx",
-        "meta": "title=\"app/profile/page.tsx\"",
-        "code": "'use client';\nimport { useUser, useStackApp, UserButton } from \"@stackframe/stack\";\n\nexport default function PageClient() {\n  const user = useUser();\n  const app = useStackApp();\n  return (\n    <div>\n      {user ? (\n        <div>\n          <UserButton />\n          <p>Welcome, {user.displayName ?? \"anonymous user\"}</p>\n          <p>Your e-mail: {user.primaryEmail}</p>\n          <button onClick={() => user.signOut()}>Sign Out</button>\n        </div>\n      ) : (\n        <div>\n          <p>You are not logged in</p>\n          <button onClick={() => app.redirectToSignIn()}>Sign in</button>\n          <button onClick={() => app.redirectToSignUp()}>Sign up</button>\n        </div>\n      )}\n    </div>\n  );\n}"
-      },
-      {
-        "lang": "tsx",
-        "meta": "title=\"app/profile/page.tsx\"",
-        "code": "import { stackServerApp } from \"@/stack\";\nimport { UserButton } from \"@stackframe/stack\";\n\nexport default async function Page() {\n  const user = await stackServerApp.getUser();\n  return (\n    <div>\n      {user ? (\n        <div>\n          <UserButton />\n          <p>Welcome, {user.displayName ?? \"anonymous user\"}</p>\n          <p>Your e-mail: {user.primaryEmail}</p>\n          <p><a href={stackServerApp.urls.signOut}>Sign Out</a></p>\n        </div>\n      ) : (\n        <div>\n          <p>You are not logged in</p>\n          <p><a href={stackServerApp.urls.signIn}>Sign in</a></p>\n          <p><a href={stackServerApp.urls.signUp}>Sign up</a></p>\n        </div>\n      )}\n    </div>\n  );\n}"
       },
       {
         "lang": "tsx",
@@ -1483,16 +1408,6 @@
       },
       {
         "lang": "jsx",
-        "meta": "title=\"app/onboarding-hooks.ts\"",
-        "code": "'use client';\nimport { useEffect } from 'react';\nimport { useUser } from '@stackframe/stack';\nimport { useRouter } from 'next/navigation';\n\nexport function useOnboarded() {\n  const user = useUser();\n  const router = useRouter();\n\n  useEffect(() => {\n    if (!user.clientMetadata.onboarded) {\n      router.push('/onboarding');\n    }\n  }, [user]);\n}"
-      },
-      {
-        "lang": "jsx",
-        "meta": "title=\"app/onboarding-functions.ts\"",
-        "code": "import { stackServerApp } from '@/stack';\nimport { redirect } from 'next/navigation';\n\nexport async function ensureOnboarded() {\n  const user = await stackServerApp.getUser();\n  if (!user.serverMetadata.onboarded) {\n    redirect('/onboarding');\n  }\n}"
-      },
-      {
-        "lang": "jsx",
         "meta": "title=\"app/onboarding-functions.ts\"",
         "code": "import { stackServerApp } from '@/stack';\nimport { redirect } from 'next/navigation';\n\nexport async function ensureOnboarded() {\n  const user = await stackServerApp.getUser();\n  if (!user.serverMetadata.onboarded) {\n    redirect('/onboarding');\n  }\n}"
       },
@@ -1500,16 +1415,6 @@
         "lang": "jsx",
         "meta": "title=\"app/page.tsx\"",
         "code": "import { useOnboarding } from '@/app/onboarding-hooks';\nimport { useUser } from '@stackframe/stack';\n\nexport default function HomePage() {\n  useOnboarding();\n  const user = useUser();\n\n  return (\n    <div>Welcome to the app, {user.displayName}</div>\n  );\n}"
-      },
-      {
-        "lang": "jsx",
-        "meta": "title=\"app/page.tsx\"",
-        "code": "import { useOnboarding } from '@/app/onboarding-hooks';\nimport { useUser } from '@stackframe/stack';\n\nexport default function HomePage() {\n  useOnboarding();\n  const user = useUser();\n\n  return (\n    <div>Welcome to the app, {user.displayName}</div>\n  );\n}"
-      },
-      {
-        "lang": "jsx",
-        "meta": "title=\"app/page.tsx\"",
-        "code": "import { ensureOnboarding } from '@/app/onboarding-functions';\nimport { stackServerApp } from '@/stack';\n\nexport default async function HomePage() {\n  await ensureOnboarding();\n  const user = await stackServerApp.getUser();\n\n  return (\n    <div>Welcome to the app, {user.displayName}</div>\n  );\n}"
       },
       {
         "lang": "jsx",
@@ -1876,14 +1781,6 @@
       },
       {
         "lang": "tsx",
-        "code": "const user = useUser({ or: 'redirect' });\nconst allTeams = user.useTeams();\nconst someTeam = user.useTeam('some-team-id'); // May be null if the user is not a member of this team\n\nreturn (\n  <div>\n    {allTeams.map(team => (\n      <div key={team.id}>{team.displayName}</div>\n    ))}\n  </div>\n  <div>\n    {someTeam ? someTeam.displayName : 'Not a member of this team'}\n  </div>\n);"
-      },
-      {
-        "lang": "tsx",
-        "code": "const user = await stackServerApp.getUser({ or: 'redirect' });\nconst allTeams = await user.listTeams();\nconst someTeam = await user.getTeam('some-team-id'); // May be null if the user is not a member of this team\n\nreturn (\n  <div>\n    {allTeams.map(team => (\n      <div key={team.id}>{team.displayName}</div>\n    ))}\n  </div>\n  <div>\n    {someTeam ? someTeam.displayName : 'Not a member of this team'}\n  </div>"
-      },
-      {
-        "lang": "tsx",
         "code": "const user = await stackServerApp.getUser({ or: 'redirect' });\nconst allTeams = await user.listTeams();\nconst someTeam = await user.getTeam('some-team-id'); // May be null if the user is not a member of this team\n\nreturn (\n  <div>\n    {allTeams.map(team => (\n      <div key={team.id}>{team.displayName}</div>\n    ))}\n  </div>\n  <div>\n    {someTeam ? someTeam.displayName : 'Not a member of this team'}\n  </div>"
       }
     ],
@@ -2064,14 +1961,6 @@
       },
       {
         "lang": "tsx",
-        "code": "// ... retrieve the team and ensure user has the necessary permissions\n\nconst users = team.useUsers();\n\nreturn (\n  <div>\n    {users.map(user => (\n      <div key={user.id}>{user.teamProfile.displayName}</div>\n    ))}\n  </div>\n);"
-      },
-      {
-        "lang": "tsx",
-        "code": "// ... retrieve the team\n\nconst users = await team.listUsers();\n\nreturn (\n  <div>\n    {users.map(user => (\n      <div key={user.id}>{user.teamProfile.displayName}</div>\n    ))}\n  </div>\n);"
-      },
-      {
-        "lang": "tsx",
         "code": "// ... retrieve the team\n\nconst users = await team.listUsers();\n\nreturn (\n  <div>\n    {users.map(user => (\n      <div key={user.id}>{user.teamProfile.displayName}</div>\n    ))}\n  </div>\n);"
       }
     ],
@@ -2116,14 +2005,6 @@
       {
         "lang": "tsx",
         "code": "const teamProfile = user.useTeamProfile(team);"
-      },
-      {
-        "lang": "tsx",
-        "code": "const teamProfile = user.useTeamProfile(team);"
-      },
-      {
-        "lang": "tsx",
-        "code": "const teamProfile = await user.getTeamProfile(team);"
       },
       {
         "lang": "tsx",
@@ -2736,16 +2617,6 @@
       },
       {
         "lang": "tsx",
-        "meta": "title=\"Check user permission on the client\"",
-        "code": "\"use client\";\nimport { useUser } from \"@stackframe/stack\";\n\nexport function CheckUserPermission() {\n  const user = useUser({ or: 'redirect' });\n  const permission = user.usePermission('read');\n\n  // Don't rely on client-side permission checks for business logic.\n  return (\n    <div>\n      {permission ? 'You have the read permission' : 'You shall not pass'}\n    </div>\n  );\n}"
-      },
-      {
-        "lang": "tsx",
-        "meta": "title=\"Check user permission on the server\"",
-        "code": "import { stackServerApp } from \"@/stack\";\n\nexport default async function CheckUserPermission() {\n  const user = await stackServerApp.getUser({ or: 'redirect' });\n  const permission = await user.getPermission('read');\n\n  // This is a server-side check, so it's secure.\n  return (\n    <div>\n      {permission ? 'You have the read permission' : 'You shall not pass'}\n    </div>\n  );\n}"
-      },
-      {
-        "lang": "tsx",
         "meta": "title=\"Check user permission on the server\"",
         "code": "import { stackServerApp } from \"@/stack\";\n\nexport default async function CheckUserPermission() {\n  const user = await stackServerApp.getUser({ or: 'redirect' });\n  const permission = await user.getPermission('read');\n\n  // This is a server-side check, so it's secure.\n  return (\n    <div>\n      {permission ? 'You have the read permission' : 'You shall not pass'}\n    </div>\n  );\n}"
       }
@@ -2796,16 +2667,6 @@
         "lang": "tsx",
         "meta": "title=\"List user permissions on the client\"",
         "code": "\"use client\";\nimport { useUser } from \"@stackframe/stack\";\n\nexport function DisplayUserPermissions() {\n  const user = useUser({ or: 'redirect' });\n  const permissions = user.usePermissions();\n\n  return (\n    <div>\n      {permissions.map(permission => (\n        <div key={permission.id}>{permission.id}</div>\n      ))}\n    </div>\n  );\n}"
-      },
-      {
-        "lang": "tsx",
-        "meta": "title=\"List user permissions on the client\"",
-        "code": "\"use client\";\nimport { useUser } from \"@stackframe/stack\";\n\nexport function DisplayUserPermissions() {\n  const user = useUser({ or: 'redirect' });\n  const permissions = user.usePermissions();\n\n  return (\n    <div>\n      {permissions.map(permission => (\n        <div key={permission.id}>{permission.id}</div>\n      ))}\n    </div>\n  );\n}"
-      },
-      {
-        "lang": "tsx",
-        "meta": "title=\"List user permissions on the server\"",
-        "code": "import { stackServerApp } from \"@/stack\";\n\nexport default async function DisplayUserPermissions() {\n  const user = await stackServerApp.getUser({ or: 'redirect' });\n  const permissions = await user.listPermissions();\n\n  return (\n    <div>\n      {permissions.map(permission => (\n        <div key={permission.id}>{permission.id}</div>\n      ))}\n    </div>\n  );\n}"
       },
       {
         "lang": "tsx",
@@ -3246,14 +3107,6 @@
       {
         "lang": "javascript",
         "code": "const url = 'https://api.stack-auth.com/api/v1/users/me';\nconst headers = {\n  'x-stack-access-type': 'server',\n  'x-stack-project-id': 'generated on the Stack Auth dashboard',\n  'x-stack-secret-server-key': 'generated on the Stack Auth dashboard',\n  'x-stack-access-token': 'access token from the headers',\n};\n\nfetch(url, { headers })\n  .then(response => response.json())\n  .then(data => {\n    if (data.id) {\n      console.log('User is authenticated');\n    } else {\n      console.log('User is not authenticated');\n    }\n  });"
-      },
-      {
-        "lang": "javascript",
-        "code": "const url = 'https://api.stack-auth.com/api/v1/users/me';\nconst headers = {\n  'x-stack-access-type': 'server',\n  'x-stack-project-id': 'generated on the Stack Auth dashboard',\n  'x-stack-secret-server-key': 'generated on the Stack Auth dashboard',\n  'x-stack-access-token': 'access token from the headers',\n};\n\nfetch(url, { headers })\n  .then(response => response.json())\n  .then(data => {\n    if (data.id) {\n      console.log('User is authenticated');\n    } else {\n      console.log('User is not authenticated');\n    }\n  });"
-      },
-      {
-        "lang": "python",
-        "code": " import requests\n\n url = 'https://api.stack-auth.com/api/v1/users/me'\n headers = {\n   'x-stack-access-type': 'server',\n   'x-stack-project-id': 'generated on the Stack Auth dashboard',\n   'x-stack-secret-server-key': 'generated on the Stack Auth dashboard',\n   'x-stack-access-token': 'access token from the headers',\n }\n\n response = requests.get(url, headers=headers)\n if (response.json()['id'] is not None):\n   print('User is authenticated')\n else:\n   print('User is not authenticated')"
       },
       {
         "lang": "python",
@@ -3936,31 +3789,6 @@
     "hash": "#setup",
     "content": "Let's create a sample table and some RLS policies to demonstrate how to integrate Stack Auth with Supabase RLS. You can apply the same logic to your own tables and policies.\n\n\nSetup Supabase\nFirst, let's create a Supabase project, then go to the SQL Editor and create a new table with some sample data and RLS policies.\nSetup a new Next.js project\nNow let's create a new Next.js project and install Stack Auth and Supabase client. (more details on Next.js setup, Stack Auth setup, and Supabase setup)\nNow copy the environment variables from the Supabase dashboard to the .env.local file:\nNEXT_PUBLIC_SUPABASE_URL\n\nNEXT_PUBLIC_SUPABASE_ANON_KEY\n\nSUPABASE_JWT_SECRET\n\n\nCopy environment variables from the Stack dashboard to the .env.local file.\nNEXT_PUBLIC_STACK_PROJECT_ID\n\nNEXT_PUBLIC_STACK_PUBLISHABLE_CLIENT_KEY\n\nSTACK_SECRET_SERVER_KEY\n\n\nSet up Supbase client\nNow let's create a server action that mints a supabase JWT with the Stack Auth user ID if the user is authenticated.\nAnd now create a helper function to create a Supabase client with the JWT signed by the server action\nFetch data from Supabase\nLet's create an example page that fetches data from Supabase and displays it.\nNow you should be able to compare the data you can view with an anonymous user, an authenticated user. You can also add your user Id to the row 3 of the Supabase table, and you should be able to see the row if and only if you are signed in with that user.\nYou can find the full example here on GitHub.",
     "code_snippets": [
-      {
-        "lang": "sql",
-        "meta": "title=\"Supabase SQL Editor\"",
-        "code": "-- Create the 'data' table\nCREATE TABLE data (\n  id bigint PRIMARY KEY,\n  text text NOT NULL,\n  user_id UUID\n);\n\n-- Insert sample data\nINSERT INTO data (id, text, user_id) VALUES\n  (1, 'Everyone can see this', NULL),\n  (2, 'Only authenticated users can see this', NULL),\n  (3, 'Only user with specific id can see this', NULL);\n\n-- Enable Row Level Security\nALTER TABLE data ENABLE ROW LEVEL SECURITY;\n\n-- Allow everyone to read the first row\nCREATE POLICY \"Public read\" ON \"public\".\"data\" TO public\nUSING (id = 1);\n\n-- Allow authenticated users to read the second row\nCREATE POLICY \"Authenticated access\" ON \"public\".\"data\" TO authenticated\nUSING (id = 2);\n\n-- Allow only the owner of the row to read it\nCREATE POLICY \"User access\" ON \"public\".\"data\" TO authenticated\nUSING (id = 3 AND auth.uid() = user_id);"
-      },
-      {
-        "lang": "bash",
-        "meta": "title=\"Terminal\"",
-        "code": "npx create-next-app@latest -e with-supabase stack-supabase\ncd stack-supabase\nnpx @stackframe/init-stack@latest"
-      },
-      {
-        "lang": "tsx",
-        "meta": "title=\"/utils/actions.ts\"",
-        "code": "'use server';\n\nimport { stackServerApp } from \"@/stack\";\nimport * as jose from \"jose\";\n\nexport const getSupabaseJwt = async () => {\n  const user = await stackServerApp.getUser();\n\n  if (!user) {\n    return null;\n  }\n\n  const token = await new jose.SignJWT({\n    sub: user.id,\n    role: \"authenticated\",\n  })\n    .setProtectedHeader({ alg: \"HS256\" })\n    .setIssuedAt()\n    .setExpirationTime('1h')\n    .sign(new TextEncoder().encode(process.env.SUPABASE_JWT_SECRET));\n\n  return token;\n};"
-      },
-      {
-        "lang": "tsx",
-        "meta": "title=\"/utils/supabase-client.ts\"",
-        "code": "import { createBrowserClient } from \"@supabase/ssr\";\nimport { getSupabaseJwt } from \"./actions\";\n\nexport const createSupabaseClient = () => {\n  return createBrowserClient(\n    process.env.NEXT_PUBLIC_SUPABASE_URL!,\n    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,\n    { accessToken: async () => await getSupabaseJwt() || \"\" }\n  );\n}"
-      },
-      {
-        "lang": "tsx",
-        "meta": "title=\"/app/page.tsx\"",
-        "code": "'use client';\n\nimport { createSupabaseClient } from \"@/utils/supabase-client\";\nimport { useStackApp, useUser } from \"@stackframe/stack\";\nimport Link from \"next/link\";\nimport { useEffect, useState } from \"react\";\n\nexport default function Page() {\n  const app = useStackApp();\n  const user = useUser();\n  const supabase = createSupabaseClient();\n  const [data, setData] = useState<null | any[]>(null);\n\n  useEffect(() => {\n    supabase.from(\"data\").select().then(({ data }) => setData(data ?? []));\n  }, []);\n\n  const listContent = data === null ? \n    <p>Loading...</p> :\n    data.length === 0 ?\n      <p>No notes found</p> :\n      data.map((note) => <li key={note.id}>{note.text}</li>);\n\n  return (\n    <div>\n      {\n        user ? \n        <>\n          <p>You are signed in</p>\n          <p>User ID: {user.id}</p>\n          <Link href={app.urls.signOut}>Sign Out</Link>\n        </> : \n        <Link href={app.urls.signIn}>Sign In</Link>\n      }\n      <h3>Supabase data</h3>\n      <ul>{listContent}</ul>\n    </div>\n  )\n}"
-      },
       {
         "lang": "sql",
         "meta": "title=\"Supabase SQL Editor\"",
