@@ -43,6 +43,8 @@ import {
   useIsMobile,
 } from "@fern-ui/react-commons";
 
+import { FacetFilter } from "@/types";
+
 import { FootnoteSup, FootnotesSection } from "../chatbot/footnote";
 import {
   ChatbotTurnContextProvider,
@@ -191,6 +193,7 @@ export const DesktopCommandWithAskAI = forwardRef<
             suggestionsApi={suggestionsApi}
             body={body}
             headers={headers}
+            filters={filters}
             onReturnToSearch={() => {
               setAskAI(false);
               bounce();
@@ -232,6 +235,7 @@ const DesktopAskAIContent = (props: {
   api?: string;
   suggestionsApi?: string;
   body?: object;
+  filters?: readonly FacetFilter[];
   headers?: Record<string, string>;
   onSelectHit?: (path: string) => void;
   prefetch?: (path: string) => Promise<void>;
@@ -274,6 +278,7 @@ const DesktopAskAIChat = ({
   api,
   suggestionsApi,
   body,
+  filters,
   headers,
   onSelectHit,
   prefetch,
@@ -288,6 +293,7 @@ const DesktopAskAIChat = ({
   api?: string;
   suggestionsApi?: string;
   body?: object;
+  filters?: readonly FacetFilter[];
   headers?: Record<string, string>;
   onSelectHit?: (path: string) => void;
   prefetch?: (path: string) => Promise<void>;
@@ -336,6 +342,7 @@ const DesktopAskAIChat = ({
         {
           body: {
             url: document.location.href,
+            filters,
           },
         }
       );
