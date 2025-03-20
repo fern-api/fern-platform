@@ -12,6 +12,7 @@ const badgeVariants = cva("fern-docs-badge", {
     color: {
       accent: "accent",
       gray: "grayscale",
+      grayHoverAccent: "gray-hover-accent",
       tomato: "tomato",
       red: "red",
       ruby: "ruby",
@@ -40,6 +41,7 @@ const badgeVariants = cva("fern-docs-badge", {
     },
     variant: {
       subtle: "subtle",
+      subtleSolidHover: "subtle-solid-hover",
       solid: "solid",
       outlined: "outlined",
       "outlined-subtle": "outlined-subtle",

@@ -3,7 +3,7 @@ import React from "react";
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 
 import { DocsLoader } from "@/server/docs-loader";
-import { withPrunedNavigation } from "@/server/withPrunedNavigation";
+import { withPrunedNavigationLoader } from "@/server/withPrunedNavigation";
 import { SetEmptySidebar } from "@/state/layout";
 
 import { SidebarRootChild } from "./SidebarRootChild";
@@ -17,16 +17,11 @@ export async function SidebarRootNode({
   currentNodeId: FernNavigation.NodeId | undefined;
   loader: DocsLoader;
 }) {
-  const node = withPrunedNavigation(root, {
-    visibleNodeIds: currentNodeId != null ? [currentNodeId] : undefined,
-    authed: (await loader.getAuthState()).authed,
-    // when true, all unauthed pages are visible, but rendered with a LOCK button
-    // so they're not actually "pruned" from the sidebar
-    // TODO: move this out of a feature flag and into the navigation node metadata
-    discoverable: (await loader.getEdgeFlags()).isAuthenticatedPagesDiscoverable
-      ? (true as const)
-      : undefined,
-  });
+  const node = await withPrunedNavigationLoader(
+    root,
+    loader,
+    currentNodeId != null ? [currentNodeId] : undefined
+  );
 
   const children =
     node?.children.flatMap(

@@ -12,7 +12,7 @@
   }
 
   .fern-anchor-icon:not(.copied) {
-    @apply text-(color:--grayscale-a11) bg-card-background border-(color:--grayscale-a5) border backdrop-blur;
+    @apply text-(color:--grayscale-a11) bg-card-background border-card-border border backdrop-blur;
   }
 
   .fern-anchor-icon.copied {

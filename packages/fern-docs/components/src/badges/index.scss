@@ -13,7 +13,9 @@
 
     &.interactive:not(:disabled):hover,
     &[data-state="open"]:not(:disabled) {
-      transition: background-color 150ms ease-in-out;
+      transition:
+        background-color 150ms ease-in-out,
+        color 150ms ease-in-out;
     }
 
     &:disabled {
