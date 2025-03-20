@@ -59,7 +59,7 @@ export async function POST(req: NextRequest) {
   const { messages, url, filters } = await req.json();
 
   // TODO: move system prompt to docs.yml
-  const isWebflow = url.includes("webflow-ai") || url.includes("localhost");
+  const isWebflow = url.includes("webflow-ai");
 
   const languageModel = isWebflow
     ? wrapAISDKModel(bedrock("us.anthropic.claude-3-7-sonnet-20250219-v1:0"))
