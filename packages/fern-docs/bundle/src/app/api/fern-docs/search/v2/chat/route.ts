@@ -14,6 +14,7 @@ import {
   queryTurbopuffer,
   toDocuments,
 } from "@fern-docs/search-server/turbopuffer";
+import { FacetFilter } from "@fern-docs/search-ui";
 import { COOKIE_FERN_TOKEN, withoutStaging } from "@fern-docs/utils";
 import { WebClient } from "@slack/web-api";
 import {
@@ -29,7 +30,6 @@ import { initLogger, wrapAISDKModel } from "braintrust";
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
-import { FacetFilter } from "@fern-docs/search-ui";
 
 export const maxDuration = 60;
 export const revalidate = 0;

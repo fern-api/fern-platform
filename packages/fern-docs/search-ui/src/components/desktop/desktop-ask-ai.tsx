@@ -32,6 +32,7 @@ import {
 import { Components } from "react-markdown";
 import { useIsomorphicLayoutEffect } from "swr/_internal";
 
+import { FacetFilter } from "@fern-docs/search-ui";
 import { FootnoteSup, FootnotesSection } from "../chatbot/footnote";
 import {
   ChatbotTurnContextProvider,
@@ -56,7 +57,6 @@ import { DesktopCommandContent, afterInput } from "./desktop-command";
 import { DesktopCommandInput } from "./desktop-command-input";
 import { DesktopCommandRoot } from "./desktop-command-root";
 import { Suggestions } from "./suggestions";
-import { FacetFilter } from "@fern-docs/search-ui";
 
 const headerActions = tunnel();
 
