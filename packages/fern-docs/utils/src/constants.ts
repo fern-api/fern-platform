@@ -11,6 +11,7 @@ export const HEADER_X_FERN_BASEPATH = "x-fern-basepath";
 export const HEADER_X_FORWARDED_HOST = "x-forwarded-host";
 export const HEADER_X_MATCHED_PATH = "x-matched-path";
 export const HEADER_X_VERCEL_PROTECTION_BYPASS = "x-vercel-protection-bypass";
+export const HEADER_X_VERCEL_SIGNATURE = "x-vercel-signature";
 
 /**
  * Revalidate all cached docs within 6 days because S3 signatures expire after 7 days.
