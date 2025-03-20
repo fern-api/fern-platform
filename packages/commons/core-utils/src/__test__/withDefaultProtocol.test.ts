@@ -29,9 +29,9 @@ describe("withDefaultProtocol", () => {
     );
   });
 
-  // it("handles an empty string", () => {
-  //   expect(withDefaultProtocol("")).toBe("https://");
-  // });
+  it("handles an empty string", () => {
+    expect(() => withDefaultProtocol("")).toThrow();
+  });
 
   it("handles IP addresses", () => {
     expect(withDefaultProtocol("192.168.1.1")).toBe("https://192.168.1.1");

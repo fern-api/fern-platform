@@ -24,10 +24,23 @@
     "color-function-notation": null,
     "selector-class-pattern": null,
     "no-descending-specificity": null,
+    "scss/operator-no-unspaced": null,
     "scss/at-rule-no-unknown": [
       true,
       {
-        "ignoreAtRules": ["tailwind"]
+        "ignoreAtRules": [
+          "tailwind",
+          "variant",
+          "variants",
+          "source",
+          "utility"
+        ]
+      }
+    ],
+    "function-no-unknown": [
+      true,
+      {
+        "ignoreFunctions": ["lightdark"]
       }
     ]
   }
