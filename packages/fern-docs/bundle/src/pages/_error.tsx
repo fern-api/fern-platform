@@ -4,13 +4,14 @@ import Error from "next/error";
 import { isEmpty } from "es-toolkit/compat";
 
 import { parseServerSidePathname } from "@/hooks/use-current-pathname";
+import { getHostNode } from "@/server/xfernhost/node";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   if (isEmpty(context.query.error) && context.req.url) {
     console.debug("resolvedUrl", context.resolvedUrl);
     const url = new URL(
       context.resolvedUrl,
-      `https://${context.req.headers.host}`
+      `https://${getHostNode(context.req)}`
     );
     url.pathname = parseServerSidePathname(url.pathname);
     const searchParams = new URLSearchParams(url.search);

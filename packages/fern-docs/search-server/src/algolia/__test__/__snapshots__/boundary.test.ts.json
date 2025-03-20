@@ -295,31 +295,6 @@
         "lang": "python",
         "meta": "Other Languages",
         "code": "# read the installation guide for other languages!"
-      },
-      {
-        "lang": "python",
-        "meta": "Python",
-        "code": "import asyncio\nfrom baml_client import b\nfrom baml_client.types import WeatherAPI\n\ndef main():\n    weather_info = b.UseTool(\"What's the weather like in San Francisco?\")\n    print(weather_info)\n    assert isinstance(weather_info, WeatherAPI)\n    print(f\"City: {weather_info.city}\")\n    print(f\"Time of Day: {weather_info.timeOfDay}\")\n\nif __name__ == '__main__':\n    main()"
-      },
-      {
-        "lang": "typescript",
-        "meta": "TypeScript",
-        "code": "import { b } from './baml_client'\nimport { WeatherAPI } from './baml_client/types'\nimport assert from 'assert'\n\nconst main = async () => {\n  const weatherInfo = await b.UseTool(\"What's the weather like in San Francisco?\")\n  console.log(weatherInfo)\n  assert(weatherInfo instanceof WeatherAPI)\n  console.log(`City: ${weatherInfo.city}`)\n  console.log(`Time of Day: ${weatherInfo.timeOfDay}`)\n}"
-      },
-      {
-        "lang": "ruby",
-        "meta": "Ruby",
-        "code": "require_relative \"baml_client/client\"\n\n$b = Baml.Client\n\ndef main\n  weather_info = $b.UseTool(user_message: \"What's the weather like in San Francisco?\")\n  puts weather_info\n  raise unless weather_info.is_a?(Baml::Types::WeatherAPI)\n  puts \"City: #{weather_info.city}\"\n  puts \"Time of Day: #{weather_info.timeOfDay}\"\nend"
-      },
-      {
-        "lang": "python",
-        "meta": "Other Languages",
-        "code": "# read the installation guide for other languages!"
-      },
-      {
-        "lang": "baml",
-        "meta": "main.baml",
-        "code": "class WeatherAPI {\n  city string @description(\"the user's city\")\n  timeOfDay string @description(\"As an ISO8601 timestamp\")\n}\n\nfunction UseTool(user_message: string) -> WeatherAPI {\n  client \"openai/gpt-4o\"\n  prompt #\"\n    Extract.... {# we will explain the rest in the guides #}\n  \"#\n}"
       }
     ],
     "hierarchy": {
@@ -419,26 +394,6 @@
     "hash": "#generating-baml_client",
     "content": "Refer to the Installation guides for how to set this up for your language, and how to generate it.\nBut at a high-level, you just include a generator block in any of your BAML files.\n\n\nThe baml_client transforms a BAML function into the same equivalent function in your language,",
     "code_snippets": [
-      {
-        "lang": "baml",
-        "meta": "Python",
-        "code": "generator target {\n    // Valid values: \"python/pydantic\", \"typescript\", \"ruby/sorbet\"\n    output_type \"python/pydantic\"\n    \n    // Where the generated code will be saved (relative to baml_src/)\n    output_dir \"../\"\n    \n    // What interface you prefer to use for the generated code (sync/async)\n    // Both are generated regardless of the choice, just modifies what is exported\n    // at the top level\n    default_client_mode \"sync\"\n    \n    // Version of runtime to generate code for (should match installed baml-py version)\n    version \"0.54.0\"\n}"
-      },
-      {
-        "lang": "baml",
-        "meta": "TypeScript",
-        "code": "generator target {\n    // Valid values: \"python/pydantic\", \"typescript\", \"ruby/sorbet\"\n    output_type \"typescript\"\n    \n    // Where the generated code will be saved (relative to baml_src/)\n    output_dir \"../\"\n    \n    // What interface you prefer to use for the generated code (sync/async)\n    // Both are generated regardless of the choice, just modifies what is exported\n    // at the top level\n    default_client_mode \"async\"\n    \n    // Version of runtime to generate code for (should match the package @boundaryml/baml version)\n    version \"0.54.0\"\n}"
-      },
-      {
-        "lang": "baml",
-        "meta": "Ruby (beta)",
-        "code": "generator target {\n    // Valid values: \"python/pydantic\", \"typescript\", \"ruby/sorbet\"\n    output_type \"ruby/sorbet\"\n\n    // Where the generated code will be saved (relative to baml_src/)\n    output_dir \"../\"\n    \n    // Version of runtime to generate code for (should match installed `baml` package version)\n    version \"0.54.0\"\n}"
-      },
-      {
-        "lang": "baml",
-        "meta": "OpenAPI",
-        "code": "generator target {\n    // Valid values: \"python/pydantic\", \"typescript\", \"ruby/sorbet\", \"rest/openapi\"\n    output_type \"rest/openapi\"\n\n    // Where the generated code will be saved (relative to baml_src/)\n    output_dir \"../\"\n    \n    // Version of runtime to generate code for (should match installed `baml` package version)\n    version \"0.54.0\"\n\n    // 'baml-cli generate' will run this after generating openapi.yaml, to generate your OpenAPI client\n    // This command will be run from within $output_dir\n    on_generate \"npx @openapitools/openapi-generator-cli generate -i openapi.yaml -g OPENAPI_CLIENT_TYPE -o .\"\n}"
-      },
       {
         "lang": "baml",
         "meta": "Python",
@@ -764,25 +719,6 @@
         "code": "{\n  \"python.analysis.typeCheckingMode\": \"basic\"\n}"
       },
       {
-        "lang": "json",
-        "code": "{\n  \"python.analysis.typeCheckingMode\": \"basic\"\n}"
-      },
-      {
-        "lang": "bash",
-        "meta": "pip",
-        "code": "pip install baml-py"
-      },
-      {
-        "lang": "bash",
-        "meta": "poetry",
-        "code": "poetry add baml-py"
-      },
-      {
-        "lang": "bash",
-        "meta": "uv",
-        "code": "uv add baml-py"
-      },
-      {
         "lang": "bash",
         "meta": "pip",
         "code": "pip install baml-py"
@@ -815,21 +751,6 @@
       {
         "lang": "bash",
         "meta": "pip",
-        "code": "baml-cli init"
-      },
-      {
-        "lang": "bash",
-        "meta": "poetry",
-        "code": "poetry run baml-cli init"
-      },
-      {
-        "lang": "bash",
-        "meta": "uv",
-        "code": "uv run baml-cli init"
-      },
-      {
-        "lang": "bash",
-        "meta": "pip",
         "code": "baml-cli generate"
       },
       {
@@ -841,31 +762,6 @@
         "lang": "bash",
         "meta": "uv",
         "code": "uv run baml-cli generate"
-      },
-      {
-        "lang": "bash",
-        "meta": "pip",
-        "code": "baml-cli generate"
-      },
-      {
-        "lang": "bash",
-        "meta": "poetry",
-        "code": "poetry run baml-cli generate"
-      },
-      {
-        "lang": "bash",
-        "meta": "uv",
-        "code": "uv run baml-cli generate"
-      },
-      {
-        "lang": "python",
-        "meta": "main.py ",
-        "code": "from baml_client.sync_client import b\nfrom baml_client.types import Resume\n\ndef example(raw_resume: str) -> Resume: \n  # BAML's internal parser guarantees ExtractResume\n  # to be always return a Resume type\n  response = b.ExtractResume(raw_resume)\n  return response\n\ndef example_stream(raw_resume: str) -> Resume:\n  stream = b.stream.ExtractResume(raw_resume)\n  for msg in stream:\n    print(msg) # This will be a PartialResume type\n  \n  # This will be a Resume type\n  final = stream.get_final_response()\n\n  return final"
-      },
-      {
-        "lang": "python",
-        "meta": "async_main.py",
-        "code": "from baml_client.async_client import b\nfrom baml_client.types import Resume\n\nasync def example(raw_resume: str) -> Resume: \n  # BAML's internal parser guarantees ExtractResume\n  # to be always return a Resume type\n  response = await b.ExtractResume(raw_resume)\n  return response\n\nasync def example_stream(raw_resume: str) -> Resume:\n  stream = b.stream.ExtractResume(raw_resume)\n  async for msg in stream:\n    print(msg) # This will be a PartialResume type\n  \n  # This will be a Resume type\n  final = stream.get_final_response()\n\n  return final"
       },
       {
         "lang": "python",
@@ -907,21 +803,6 @@
     "hash": "#baml-with-jupyter-notebooks",
     "content": "You can use the baml_client in a Jupyter notebook.\nOne of the common problems is making sure your code changes are picked up by the notebook without having to restart the whole kernel (and re-run all the cells)\nTo make sure your changes in .baml files are reflected in your notebook you must do these steps:\n\n\nSetup the autoreload extension\nThis will make sure to reload imports, such as baml_client's \"b\" object before every cell runs.\nImport baml_client module in your notebook\nNote it's different from how we import in python.\nUsually we import things as\nfrom baml_client import b, and we can call our functions using b, but the %autoreload notebook extension does not work well with from...import statements.\nCall BAML functions using the module name as a prefix\nNow your changes in .baml files are reflected in your notebook automatically, without needing to restart the Jupyter kernel.\n\n\nIf you want to keep using the from baml_client import b style, you'll just need to re-import it everytime you regenerate the baml_client.\n\n\nPylance will complain about any schema changes you make in .baml files. You can ignore these errors. If you want it to pick up your new types, you'll need to restart the kernel.\nThis auto-reload approach works best if you're only making changes to the prompts.\nYou're all set! Continue on to the Deployment Guides for your language to learn how to deploy your BAML code or check out the Interactive Examples to see more examples.",
     "code_snippets": [
-      {
-        "lang": "python",
-        "meta": "cell0",
-        "code": "%load_ext autoreload\n%autoreload 2"
-      },
-      {
-        "lang": "python",
-        "meta": "cell1",
-        "code": "# Assuming your baml_client is inside a dir called app/\nimport app.baml_client as client # you can name this \"llm\" or \"baml\" or whatever you want"
-      },
-      {
-        "lang": "python",
-        "meta": "cell2",
-        "code": "raw_resume = \"Here's some resume text\"\nclient.b.ExtractResume(raw_resume)"
-      },
       {
         "lang": "python",
         "meta": "cell0",
@@ -997,46 +878,6 @@
       {
         "lang": "bash",
         "meta": "npm",
-        "code": "npm install @boundaryml/baml"
-      },
-      {
-        "lang": "bash",
-        "meta": "pnpm",
-        "code": "pnpm add @boundaryml/baml"
-      },
-      {
-        "lang": "bash",
-        "meta": "yarn",
-        "code": "yarn add @boundaryml/baml"
-      },
-      {
-        "lang": "bash",
-        "meta": "deno",
-        "code": "deno install npm:@boundaryml/baml"
-      },
-      {
-        "lang": "bash",
-        "meta": "npm",
-        "code": "npx baml-cli init"
-      },
-      {
-        "lang": "bash",
-        "meta": "pnpm",
-        "code": "pnpx baml-cli init"
-      },
-      {
-        "lang": "bash",
-        "meta": "yarn",
-        "code": "yarn baml-cli init"
-      },
-      {
-        "lang": "bash",
-        "meta": "deno",
-        "code": "dpx baml-cli init"
-      },
-      {
-        "lang": "bash",
-        "meta": "npm",
         "code": "npx baml-cli init"
       },
       {
@@ -1072,25 +913,6 @@
         "lang": "typescript",
         "meta": "sync_example.ts",
         "code": "import {b} from \"baml_client/sync_client\"\nimport type {Resume} from \"baml_client/types\"\n\nfunction Example(raw_resume: string): Resume {\n  // BAML's internal parser guarantees ExtractResume\n  // to be always return a Resume type\n  const response = b.ExtractResume(raw_resume);\n  return response;\n}\n\n// Streaming is not available in the sync_client.\n"
-      },
-      {
-        "lang": "typescript",
-        "meta": "index.ts",
-        "code": "import {b} from \"baml_client\"\nimport type {Resume} from \"baml_client/types\"\n\nasync function Example(raw_resume: string): Resume {\n  // BAML's internal parser guarantees ExtractResume\n  // to be always return a Resume type\n  const response = await b.ExtractResume(raw_resume);\n  return response;\n}\n\nasync function ExampleStream(raw_resume: string): Resume {\n  const stream = b.stream.ExtractResume(raw_resume);\n  for await (const msg of stream) {\n    console.log(msg) // This will be a Partial<Resume> type\n  }\n\n  // This is guaranteed to be a Resume type.\n  return await stream.get_final_response();\n}"
-      },
-      {
-        "lang": "typescript",
-        "meta": "sync_example.ts",
-        "code": "import {b} from \"baml_client/sync_client\"\nimport type {Resume} from \"baml_client/types\"\n\nfunction Example(raw_resume: string): Resume {\n  // BAML's internal parser guarantees ExtractResume\n  // to be always return a Resume type\n  const response = b.ExtractResume(raw_resume);\n  return response;\n}\n\n// Streaming is not available in the sync_client.\n"
-      },
-      {
-        "lang": "bash",
-        "code": "npx baml-cli generate"
-      },
-      {
-        "lang": "json",
-        "meta": "package.json",
-        "code": "{\n  \"scripts\": {\n    // Add a new command\n    \"baml-generate\": \"baml-cli generate\",\n    // Always call baml-generate on every build.\n    \"build\": \"npm run baml-generate && tsc --build\",\n  }\n}"
       }
     ],
     "content": "You can check out this repo: https://github.com/BoundaryML/baml-examples/tree/main/nextjs-starterTo set up BAML with Typescript do the following:\n\n\nInstall BAML VSCode/Cursor Extension\nhttps://marketplace.visualstudio.com/items?itemName=boundary.baml-extension\nsyntax highlighting\n\ntesting playground\n\nprompt previews\n\n\nInstall BAML\n\n\nAdd BAML to your existing project\nThis will give you some starter BAML code in a baml_src directory.\n\n\nGenerate the baml_client typescript package from .baml files\nOne of the files in your baml_src directory will have a generator block. This tells BAML how to generate the baml_client directory, which will have auto-generated typescript code to call your BAML functions.\nYou can modify your package.json so you have a helper prefix in front of your build command.\nSee What is baml_src to learn more about how this works.\n\n\n\n\nIf you set up the VSCode extension, it will automatically run baml-cli generate on saving a BAML file.\nUse a BAML function in Typescript!\n\n\nIf baml_client doesn't exist, make sure to run the previous step!"
@@ -1137,24 +959,6 @@
         "lang": "ruby",
         "meta": "main.rb",
         "code": "require_relative \"baml_client/client\"\n\ndef example(raw_resume)\n    # r is an instance of Baml::Types::Resume, defined in baml_client/types\n    r = Baml.Client.ExtractResume(resume: raw_resume)\n\n    puts \"ExtractResume response:\"\n    puts r.inspect\nend\n\ndef example_stream(raw_resume)\n    stream = Baml.Client.stream.ExtractResume(resume: raw_resume)\n\n    stream.each do |msg|\n        # msg is an instance of Baml::PartialTypes::Resume\n        # defined in baml_client/partial_types\n        puts msg.inspect\n    end\n\n    stream.get_final_response\nend\n\nexample 'Grace Hopper created COBOL'\nexample_stream 'Grace Hopper created COBOL'"
-      },
-      {
-        "lang": "ruby",
-        "meta": "main.rb",
-        "code": "require_relative \"baml_client/client\"\n\ndef example(raw_resume)\n    # r is an instance of Baml::Types::Resume, defined in baml_client/types\n    r = Baml.Client.ExtractResume(resume: raw_resume)\n\n    puts \"ExtractResume response:\"\n    puts r.inspect\nend\n\ndef example_stream(raw_resume)\n    stream = Baml.Client.stream.ExtractResume(resume: raw_resume)\n\n    stream.each do |msg|\n        # msg is an instance of Baml::PartialTypes::Resume\n        # defined in baml_client/partial_types\n        puts msg.inspect\n    end\n\n    stream.get_final_response\nend\n\nexample 'Grace Hopper created COBOL'\nexample_stream 'Grace Hopper created COBOL'"
-      },
-      {
-        "lang": "bash",
-        "meta": "bundle",
-        "code": "bundle add baml sorbet-runtime"
-      },
-      {
-        "lang": "bash",
-        "code": "bundle exec baml-cli init"
-      },
-      {
-        "lang": "bash",
-        "code": "bundle exec baml-cli generate"
       }
     ],
     "content": "You can check out this repo: https://github.com/BoundaryML/baml-examples/tree/main/ruby-exampleTo set up BAML with Ruby do the following:\n\n\nInstall BAML VSCode Extension\nhttps://marketplace.visualstudio.com/items?itemName=boundary.baml-extension\nsyntax highlighting\n\ntesting playground\n\nprompt previews\n\n\nInstall BAML\nAdd BAML to your existing project\nThis will give you some starter BAML code in a baml_src directory.\nGenerate Ruby code from .baml files\n`\nSee What is baml_src to learn more about how this works.\n\n\nAs fun as writing BAML is, we want you be able to leverage BAML with existing ruby modules. This command gives you a ruby module that is a type-safe interface to every BAML function.\n\n\nOur VSCode extension automatically runs this command when you save a BAML file.\nUse a BAML function in Ruby!\n\n\nIf baml_client doesn't exist, make sure to run the previous step!"
@@ -1190,27 +994,7 @@
       },
       {
         "lang": "bash",
-        "code": "brew install npm openapi-generator\n# 'npm' will install npx\n# 'openapi-generator' will install both Java and openapi-generator-cli"
-      },
-      {
-        "lang": "bash",
         "code": "apt install npm default-jdk -y\n# 'npm' will install npx; 'default-jdk' will install java"
-      },
-      {
-        "lang": "bash",
-        "code": "apt install npm default-jdk -y\n# 'npm' will install npx; 'default-jdk' will install java"
-      },
-      {
-        "lang": "bash",
-        "code": "dnf install npm java-21-openjdk -y\n# dnf is the successor to yum"
-      },
-      {
-        "lang": "bash",
-        "code": "dnf install npm java-21-amazon-corretto -y\n# 'npm' will install npx\n# 'java-21-amazon-corretto' will install java"
-      },
-      {
-        "lang": "bash",
-        "code": "curl -sL https://rpm.nodesource.com/setup_16.x | bash -\nyum install nodejs -y\n# 'nodejs' will install npx\namazon-linux-extras install java-openjdk11 -y\n# 'java-openjdk11' will install java"
       },
       {
         "lang": "bash",
@@ -1229,20 +1013,8 @@
         "code": "npx -version\njava -version"
       },
       {
-        "lang": "powershell",
-        "code": "npx -version\njava -version"
-      },
-      {
         "lang": "bash",
         "code": "npx @boundaryml/baml init \\\n  --client-type rest/openapi --openapi-client-type csharp"
-      },
-      {
-        "lang": "bash",
-        "code": "npx @boundaryml/baml init \\\n  --client-type rest/openapi --openapi-client-type csharp"
-      },
-      {
-        "lang": "bash",
-        "code": "npx @boundaryml/baml init \\\n  --client-type rest/openapi --openapi-client-type cpp-restsdk"
       },
       {
         "lang": "bash",
@@ -1254,19 +1026,7 @@
       },
       {
         "lang": "bash",
-        "code": "npx @boundaryml/baml init \\\n  --client-type rest/openapi --openapi-client-type go"
-      },
-      {
-        "lang": "bash",
         "code": "npx @boundaryml/baml init \\\n  --client-type rest/openapi --openapi-client-type java"
-      },
-      {
-        "lang": "bash",
-        "code": "npx @boundaryml/baml init \\\n  --client-type rest/openapi --openapi-client-type java"
-      },
-      {
-        "lang": "bash",
-        "code": "npx @boundaryml/baml init \\\n  --client-type rest/openapi --openapi-client-type php"
       },
       {
         "lang": "bash",
@@ -1278,19 +1038,7 @@
       },
       {
         "lang": "bash",
-        "code": "npx @boundaryml/baml init \\\n  --client-type rest/openapi --openapi-client-type ruby"
-      },
-      {
-        "lang": "bash",
         "code": "npx @boundaryml/baml init \\\n  --client-type rest/openapi --openapi-client-type rust"
-      },
-      {
-        "lang": "bash",
-        "code": "npx @boundaryml/baml init \\\n  --client-type rest/openapi --openapi-client-type rust"
-      },
-      {
-        "lang": "bash",
-        "code": "npx @boundaryml/baml init \\\n  --client-type rest/openapi --openapi-client-type $OPENAPI_CLIENT_TYPE"
       },
       {
         "lang": "bash",
@@ -1304,21 +1052,6 @@
         "lang": "go",
         "meta": "main.go",
         "code": "package main\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\t\"log\"\n  baml \"my-golang-app/baml_client\"\n)\n\nfunc main() {\n\tcfg := baml.NewConfiguration()\n\tb := baml.NewAPIClient(cfg).DefaultAPI\n\textractResumeRequest := baml.ExtractResumeRequest{\n\t\tResume: \"Ada Lovelace (@gmail.com) was an English mathematician and writer\",\n\t}\n\tresp, r, err := b.ExtractResume(context.Background()).ExtractResumeRequest(extractResumeRequest).Execute()\n\tif err != nil {\n\t\tfmt.Printf(\"Error when calling b.ExtractResume: %v\\n\", err)\n\t\tfmt.Printf(\"Full HTTP response: %v\\n\", r)\n\t\treturn\n\t}\n\tlog.Printf(\"Response from server: %v\\n\", resp)\n}"
-      },
-      {
-        "lang": "go",
-        "meta": "main.go",
-        "code": "package main\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\t\"log\"\n  baml \"my-golang-app/baml_client\"\n)\n\nfunc main() {\n\tcfg := baml.NewConfiguration()\n\tb := baml.NewAPIClient(cfg).DefaultAPI\n\textractResumeRequest := baml.ExtractResumeRequest{\n\t\tResume: \"Ada Lovelace (@gmail.com) was an English mathematician and writer\",\n\t}\n\tresp, r, err := b.ExtractResume(context.Background()).ExtractResumeRequest(extractResumeRequest).Execute()\n\tif err != nil {\n\t\tfmt.Printf(\"Error when calling b.ExtractResume: %v\\n\", err)\n\t\tfmt.Printf(\"Full HTTP response: %v\\n\", r)\n\t\treturn\n\t}\n\tlog.Printf(\"Response from server: %v\\n\", resp)\n}"
-      },
-      {
-        "lang": "xml",
-        "meta": "pom.xml",
-        "code": "<dependency>\n  <groupId>org.openapitools</groupId>\n  <artifactId>openapi-java-client</artifactId>\n  <version>0.1.0</version>\n  <scope>compile</scope>\n</dependency>"
-      },
-      {
-        "lang": "kotlin",
-        "meta": "settings.gradle.kts",
-        "code": "repositories {\n    mavenCentral()\n    mavenLocal()\n}\n\ndependencies {\n    implementation(\"org.openapitools:openapi-java-client:0.1.0\")\n}"
       },
       {
         "lang": "xml",
@@ -1341,31 +1074,8 @@
         "code": "plugins {\n    id(\"org.openapi.generator\") version \"7.8.0\"\n}\n\nopenApiGenerate {\n    generatorName.set(\"java\") // Change to 'kotlin', 'spring', etc. if needed\n    inputSpec.set(\"${projectDir}/baml_client/openapi.yaml\")\n    outputDir.set(\"$buildDir/generated-sources/openapi\")\n    apiPackage.set(\"com.boundaryml.baml_client.api\")\n    modelPackage.set(\"com.boundaryml.baml_client.model\")\n    invokerPackage.set(\"com.boundaryml.baml_client\")\n    additionalProperties.set(mapOf(\"java8\" to \"true\"))\n}\n\nsourceSets[\"main\"].java {\n    srcDir(\"$buildDir/generated-sources/openapi/src/main/java\")\n}\n\ntasks.named(\"compileJava\") {\n    dependsOn(\"openApiGenerate\")\n}"
       },
       {
-        "lang": "xml",
-        "meta": "pom.xml",
-        "code": "<build>\n    <plugins>\n        <plugin>\n            <groupId>org.openapitools</groupId>\n            <artifactId>openapi-generator-maven-plugin</artifactId>\n            <version>7.8.0</version> <!-- Use the latest stable version -->\n            <executions>\n                <execution>\n                    <goals>\n                        <goal>generate</goal>\n                    </goals>\n                    <configuration>\n                        <inputSpec>${project.basedir}/baml_client/openapi.yaml</inputSpec>\n                        <generatorName>baml</generatorName> <!-- or another generator name, e.g. 'kotlin' or 'spring' -->\n                        <output>${project.build.directory}/generated-sources/openapi</output>\n                        <apiPackage>com.boundaryml.baml_client.api</apiPackage>\n                        <modelPackage>com.boundaryml.baml_client.model</modelPackage>\n                        <invokerPackage>com.boundaryml.baml_client</invokerPackage>\n                        <java8>true</java8>\n                    </configuration>\n                </execution>\n            </executions>\n        </plugin>\n    </plugins>\n</build>"
-      },
-      {
-        "lang": "kotlin",
-        "meta": "settings.gradle.kts",
-        "code": "plugins {\n    id(\"org.openapi.generator\") version \"7.8.0\"\n}\n\nopenApiGenerate {\n    generatorName.set(\"java\") // Change to 'kotlin', 'spring', etc. if needed\n    inputSpec.set(\"${projectDir}/baml_client/openapi.yaml\")\n    outputDir.set(\"$buildDir/generated-sources/openapi\")\n    apiPackage.set(\"com.boundaryml.baml_client.api\")\n    modelPackage.set(\"com.boundaryml.baml_client.model\")\n    invokerPackage.set(\"com.boundaryml.baml_client\")\n    additionalProperties.set(mapOf(\"java8\" to \"true\"))\n}\n\nsourceSets[\"main\"].java {\n    srcDir(\"$buildDir/generated-sources/openapi/src/main/java\")\n}\n\ntasks.named(\"compileJava\") {\n    dependsOn(\"openApiGenerate\")\n}"
-      },
-      {
         "lang": "Java",
         "code": "import com.boundaryml.baml_client.ApiClient;\nimport com.boundaryml.baml_client.ApiException;\nimport com.boundaryml.baml_client.Configuration;\n// NOTE: baml_client/README.md will suggest importing from models.* - that is wrong.\n// See https://github.com/OpenAPITools/openapi-generator/issues/19431 for more details.\nimport com.boundaryml.baml_client.model.*;\nimport com.boundaryml.baml_client.api.DefaultApi;\n\npublic class Example {\n  public static void main(String[] args) {\n    ApiClient defaultClient = Configuration.getDefaultApiClient();\n    DefaultApi apiInstance = new DefaultApi(defaultClient);\n    ExtractResumeRequest extractResumeRequest = new ExtractResumeRequest(); // ExtractResumeRequest | \n    try {\n      Resume result = apiInstance.extractResume(extractResumeRequest);\n      System.out.println(result);\n    } catch (ApiException e) {\n      System.err.println(\"Exception when calling DefaultApi#extractResume\");\n      System.err.println(\"Status code: \" + e.getCode());\n      System.err.println(\"Reason: \" + e.getResponseBody());\n      System.err.println(\"Response headers: \" + e.getResponseHeaders());\n      e.printStackTrace();\n    }\n  }\n}\n"
-      },
-      {
-        "lang": "Java",
-        "code": "import com.boundaryml.baml_client.ApiClient;\nimport com.boundaryml.baml_client.ApiException;\nimport com.boundaryml.baml_client.Configuration;\n// NOTE: baml_client/README.md will suggest importing from models.* - that is wrong.\n// See https://github.com/OpenAPITools/openapi-generator/issues/19431 for more details.\nimport com.boundaryml.baml_client.model.*;\nimport com.boundaryml.baml_client.api.DefaultApi;\n\npublic class Example {\n  public static void main(String[] args) {\n    ApiClient defaultClient = Configuration.getDefaultApiClient();\n    DefaultApi apiInstance = new DefaultApi(defaultClient);\n    ExtractResumeRequest extractResumeRequest = new ExtractResumeRequest(); // ExtractResumeRequest | \n    try {\n      Resume result = apiInstance.extractResume(extractResumeRequest);\n      System.out.println(result);\n    } catch (ApiException e) {\n      System.err.println(\"Exception when calling DefaultApi#extractResume\");\n      System.err.println(\"Status code: \" + e.getCode());\n      System.err.println(\"Reason: \" + e.getResponseBody());\n      System.err.println(\"Response headers: \" + e.getResponseHeaders());\n      e.printStackTrace();\n    }\n  }\n}\n"
-      },
-      {
-        "lang": "json",
-        "meta": "composer.json",
-        "code": "    \"repositories\": [\n        {\n            \"type\": \"path\",\n            \"url\": \"baml_client\"\n        }\n    ],\n    \"require\": {\n        \"boundaryml/baml-client\": \"*@dev\"\n    }"
-      },
-      {
-        "lang": "PHP",
-        "code": "<?php\nrequire_once(__DIR__ . '/vendor/autoload.php');\n\n$apiInstance = new BamlClient\\Api\\DefaultApi(\n    new GuzzleHttp\\Client()\n);\n$extract_resume_request = new BamlClient\\Model\\ExtractResumeRequest();\n$extract_resume_request->setResume(\"Marie Curie was a Polish and naturalised-French physicist and chemist who conducted pioneering research on radioactivity\");\n\ntry {\n    $result = $apiInstance->extractResume($extract_resume_request);\n    print_r($result);\n} catch (Exception $e) {\n    echo 'Exception when calling DefaultApi->extractResume: ', $e->getMessage(), PHP_EOL;\n}"
       },
       {
         "lang": "json",
@@ -1382,15 +1092,6 @@
         "code": "require 'baml_client'\nrequire 'pp'\n\napi_client = BamlClient::ApiClient.new\nb = BamlClient::DefaultApi.new(api_client)\n\nextract_resume_request = BamlClient::ExtractResumeRequest.new(\n  resume: <<~RESUME\n    John Doe\n\n    Education\n    - University of California, Berkeley\n    - B.S. in Computer Science\n    - graduated 2020\n\n    Skills\n    - Python\n    - Java\n    - C++\n  RESUME\n)\n\nbegin\n  result = b.extract_resume(extract_resume_request)\n  pp result\n\n  edu0 = result.education[0]\n  puts \"Education: #{edu0.school}, #{edu0.degree}, #{edu0.year}\"\nrescue BamlClient::ApiError => e\n  puts \"Error when calling DefaultApi#extract_resume\"\n  pp e\nend"
       },
       {
-        "lang": "ruby",
-        "meta": "app.rb",
-        "code": "require 'baml_client'\nrequire 'pp'\n\napi_client = BamlClient::ApiClient.new\nb = BamlClient::DefaultApi.new(api_client)\n\nextract_resume_request = BamlClient::ExtractResumeRequest.new(\n  resume: <<~RESUME\n    John Doe\n\n    Education\n    - University of California, Berkeley\n    - B.S. in Computer Science\n    - graduated 2020\n\n    Skills\n    - Python\n    - Java\n    - C++\n  RESUME\n)\n\nbegin\n  result = b.extract_resume(extract_resume_request)\n  pp result\n\n  edu0 = result.education[0]\n  puts \"Education: #{edu0.school}, #{edu0.degree}, #{edu0.year}\"\nrescue BamlClient::ApiError => e\n  puts \"Error when calling DefaultApi#extract_resume\"\n  pp e\nend"
-      },
-      {
-        "lang": "bash",
-        "code": "cargo watch --delay 1 -- cargo build"
-      },
-      {
         "lang": "bash",
         "code": "cargo watch --delay 1 -- cargo build"
       },
@@ -1402,19 +1103,6 @@
       {
         "lang": "rust",
         "code": "use baml_client::models::ExtractResumeRequest;\nuse baml_client::apis::default_api as b;\n\n#[tokio::main]\nasync fn main() {\n    let config = baml_client::apis::configuration::Configuration::default();\n\n    let resp = b::extract_resume(&config, ExtractResumeRequest {\n        resume: \"Tony Hoare is a British computer scientist who has made foundational contributions to programming languages, algorithms, operating systems, formal verification, and concurrent computing.\".to_string(),\n    }).await.unwrap();\n\n    println!(\"{:#?}\", resp);\n}"
-      },
-      {
-        "lang": "toml",
-        "meta": "Cargo.toml",
-        "code": "[dependencies]\nbaml-client = { path = \"./baml_client\" }"
-      },
-      {
-        "lang": "rust",
-        "code": "use baml_client::models::ExtractResumeRequest;\nuse baml_client::apis::default_api as b;\n\n#[tokio::main]\nasync fn main() {\n    let config = baml_client::apis::configuration::Configuration::default();\n\n    let resp = b::extract_resume(&config, ExtractResumeRequest {\n        resume: \"Tony Hoare is a British computer scientist who has made foundational contributions to programming languages, algorithms, operating systems, formal verification, and concurrent computing.\".to_string(),\n    }).await.unwrap();\n\n    println!(\"{:#?}\", resp);\n}"
-      },
-      {
-        "lang": "bash",
-        "code": "npx @boundaryml/baml dev --preview"
       }
     ],
     "content": "Requires BAML version >=0.55\n\n\nThis feature is a preview feature and may change. Please provide feedback either\nin Discord or on GitHub so that\nwe can stabilize the feature and keep you updated!\nBAML allows you to expose your BAML functions as RESTful APIs:\n\n\nWe integrate with OpenAPI (universal API definitions), so you can get typesafe client libraries for free!\n\n\nInstall BAML VSCode Extension\nhttps://marketplace.visualstudio.com/items?itemName=boundary.baml-extension\nsyntax highlighting\n\ntesting playground\n\nprompt previews\n\n\nInstall NPX + OpenAPI\n\n\n\n\n\n\nOpenAPI requires default-jdk\n\n\nOpenAPI requires Java\nAmazon Linux 2023:\nAmazon Linux 2:\n\n\nTo install npx and java (for OpenAPI):\nUse the Node.js installer to install npx (default installer settings are fine).\n\nRun npm install -g npm@latest to update npx (there is currently an issue with the default install of npx on Windows where it doesn't work out of the box).\n\nRun the Adoptium OpenJDK .msi installer (install the JDK; default installer settings are fine).\n\n\nYou can verify that npx and java are installed by running:\n\n\nTo install npx, use the Node.js installer.\nTo install java (for OpenAPI), use the Adoptium OpenJDK packages.\nAdd BAML to your existing project\nThis will give you some starter BAML code in a baml_src directory.\n\n\n\n\n\n\n\n\nOpenAPI supports 5 different C++ client types;\nany of them will work with BAML.\n\n\n\nNotice that on_generate has been initialized for you to:\nrun the OpenAPI generator to generate a Java client library, and also\n\nrun mvn clean install to install the generated client library to your\nlocal Maven repository\n\n\n\n\nIf you only use Maven through an IDE (e.g. IntelliJ IDEA), you should\nremove && mvn clean install from the generated on_generate command.\n\n\n\n\n\n\n\n\nAs long as there's an OpenAPI client generator that works with your stack,\nyou can use it with BAML. Check out the full list in the OpenAPI docs.\nStart the BAML development server\nThis will do four things:\nserve your BAML functions over a RESTful interface on localhost:2024\n\ngenerate an OpenAPI schema in baml_client/openapi.yaml\n\nrun openapi-generator -g $OPENAPI_CLIENT_TYPE in baml_client directory to\ngenerate an OpenAPI client for you to use\n\nre-run the above steps whenever you modify any .baml files\n\n\n\n\nBAML-over-REST is currently a preview feature. Please provide feedback\neither in Discord or on GitHub\nso that we can stabilize the feature and keep you updated!\nUse a BAML function in any language!\nopenapi-generator will generate a README with instructions for installing\nand using your client; we've included snippets for some of the most popular\nlanguages below. Check out\nbaml-examples for example\nprojects with instructions for running them.\n\n\nWe've tested the below listed OpenAPI clients, but not all of them. If you run\ninto issues with any of the OpenAPI clients, please let us know, either in\nDiscord or by commenting on\nGitHub so that we can either help you out\nor fix it!\n\n\n\n\nRun this with go run main.go:\n\n\nFirst, add the OpenAPI-generated client to your project.\n\n\n\n\nYou can use the default on_generate command, which will tell baml dev to\ninstall the OpenAPI-generated client into your local Maven repository by running\nmvn clean install every time you save a change to a BAML file.\nTo depend on the client in your local Maven repo, you can use these configs:\n\n\n\n\nYou'll probably want to comment out on_generate and instead use either the OpenAPI Maven plugin or OpenAPI Gradle plugin to build your OpenAPI client.\n\n\nThen, copy this code into wherever your main function is:\n\n\n\n\nThe PHP OpenAPI generator doesn't support OpenAPI's oneOf type, which is\nwhat we map BAML union types to. Please let us know if this is an issue for\nyou, and you need help working around it.\nFirst, add the OpenAPI-generated client to your project:\nYou can now use this code to call a BAML function:\n\n\nUse ruby -Ilib/baml_client app.rb to run this:\n\n\n\n\nIf you're using cargo watch -- cargo build and seeing build failures because it can't find\nthe generated baml_client, try increasing the delay on cargo watch to 1 second like so:\nFirst, add the OpenAPI-generated client to your project:\nYou can now use cargo run:"
@@ -1444,18 +1132,6 @@
     "page_position": 0,
     "type": "markdown",
     "code_snippets": [
-      {
-        "lang": "JS",
-        "code": "/** @type {import('next').NextConfig} */\nconst nextConfig = {\n  experimental: {\n    serverComponentsExternalPackages: [\"@boundaryml/baml\"],\n  },\n  webpack: (config, { dev, isServer, webpack, nextRuntime }) => {\n    config.module.rules.push({\n      test: /\\.node$/,\n      use: [\n        {\n          loader: \"nextjs-node-loader\",\n          options: {\n            outputPath: config.output.path,\n          },\n        },\n      ],\n    });\n\n    return config;\n  },\n};\n\nexport default nextConfig;"
-      },
-      {
-        "lang": "typescript",
-        "code": "import { makeStreamable } from \"../_baml_utils/streamableObjects\";\n\n\nexport const extractResume = makeStreamable(b.stream.ExtractResume);"
-      },
-      {
-        "lang": "tsx",
-        "code": "\"use client\";\nimport {\n  extractResume,\n  extractUnstructuredResume,\n} from \"../../actions/streamable_objects\";\n// import types from baml files like this:\nimport { Resume } from \"@/baml_client\";\n\nexport default function Home() {\n  // you can also rename these fields by using \":\", like how we renamed partialData to \"partialResume\"\n  // `mutate` is a function that will start the stream. It takes in the same arguments as the BAML function.\n  const { data: completedData, partialData: partialResume, isLoading, isError, error, mutate } = useStream(extractResume);\n\n  return (\n    <div>\n      <h1>BoundaryML Next.js Example</h1>\n      \n      <button onClick={() => mutate(\"Some resume text\")}>Stream BAML</button>\n      {isLoading && <p>Loading...</p>}\n      {isError && <p>Error: {error?.message}</p>}\n      {partialData && <pre>{JSON.stringify(partialData, null, 2)}</pre>}\n      {data && <pre>{JSON.stringify(data, null, 2)}</pre>}\n    </div>\n  );\n}"
-      },
       {
         "lang": "JS",
         "code": "/** @type {import('next').NextConfig} */\nconst nextConfig = {\n  experimental: {\n    serverComponentsExternalPackages: [\"@boundaryml/baml\"],\n  },\n  webpack: (config, { dev, isServer, webpack, nextRuntime }) => {\n    config.module.rules.push({\n      test: /\\.node$/,\n      use: [\n        {\n          loader: \"nextjs-node-loader\",\n          options: {\n            outputPath: config.output.path,\n          },\n        },\n      ],\n    });\n\n    return config;\n  },\n};\n\nexport default nextConfig;"
@@ -1530,25 +1206,6 @@
       {
         "lang": "bash",
         "code": "export MY_SUPER_SECRET_API_KEY=\"...\"\npython my_program_using_baml.py"
-      },
-      {
-        "lang": "bash",
-        "code": "export MY_SUPER_SECRET_API_KEY=\"...\"\npython my_program_using_baml.py"
-      },
-      {
-        "lang": "python",
-        "meta": "Python",
-        "code": "\nfrom baml_client import b\nfrom baml_client import reset_baml_env_vars\nimport os\nimport dotenv\n\ndotenv.load_dotenv()\nreset_baml_env_vars(dict(os.environ))"
-      },
-      {
-        "lang": "typescript",
-        "meta": "TypeScript",
-        "code": "import dotenv from 'dotenv'\n// Wait to import the BAML client until after loading environment variables\nimport { b, resetBamlEnvVars } from 'baml-client'\n\ndotenv.config()\nresetBamlEnvVars(process.env)"
-      },
-      {
-        "lang": "ruby",
-        "meta": "Ruby (beta)",
-        "code": "require 'dotenv/load'\n\n# Wait to import the BAML client until after loading environment variables\n# reset_baml_env_vars is not yet implemented in the Ruby client\nrequire 'baml_client'"
       },
       {
         "lang": "python",
@@ -1679,21 +1336,6 @@
         "lang": "baml",
         "meta": "generators.baml",
         "code": "generator TypescriptGenerator {\n    output_type \"typescript\"\n    ....\n    // Version of runtime to generate code for (should match the package @boundaryml/baml version)\n    version \"0.62.0\"\n}"
-      },
-      {
-        "lang": "sh",
-        "meta": "pip",
-        "code": "pip install --upgrade baml-py"
-      },
-      {
-        "lang": "sh",
-        "meta": "npm",
-        "code": "npm install @boundaryml/baml@latest"
-      },
-      {
-        "lang": "sh",
-        "meta": "ruby",
-        "code": "gem install baml"
       },
       {
         "lang": "sh",
@@ -1904,21 +1546,6 @@
         "lang": "dockerfile",
         "meta": "Ruby Dockerfile",
         "code": "RUN bundle add baml\nRUN bundle exec baml-cli generate --from path/to/baml_src"
-      },
-      {
-        "lang": "dockerfile",
-        "meta": "python Dockerfile",
-        "code": "RUN baml-cli generate --from path-to-baml_src"
-      },
-      {
-        "lang": "dockerfile",
-        "meta": "TypeScript Dockerfile",
-        "code": "# Do this early on in the dockerfile script before transpiling to JS\nRUN npx baml-cli generate --from path-to-baml_src"
-      },
-      {
-        "lang": "dockerfile",
-        "meta": "Ruby Dockerfile",
-        "code": "RUN bundle add baml\nRUN bundle exec baml-cli generate --from path/to/baml_src"
       }
     ],
     "content": "When you develop with BAML, the BAML VScode extension generates a baml_client directory (on every save) with all the generated code you need to use your AI functions in your application.\nWe recommend you add baml_client to your .gitignore file to avoid committing generated code to your repository, and re-generate the client code when you build and deploy your application.\nYou could commit the generated code if you're starting out to not deal with this, just make sure the VSCode extension version matches your baml package dependency version (e.g. baml-py for python and @boundaryml/baml for TS) so there are no compatibility issues.\nTo build your client you can use the following command. See also baml-cli generate:"
@@ -2000,19 +1627,6 @@
       },
       {
         "lang": "bash",
-        "code": "docker compose up --build --force-recreate"
-      },
-      {
-        "lang": "yaml",
-        "meta": "title=\"docker-compose.yaml\"",
-        "code": "services:\n  baml-over-http:\n    build:\n      # This will build baml.Dockerfile when you run docker-compose up\n      context: .\n      dockerfile: baml.Dockerfile\n    healthcheck:\n      test: [ \"CMD\", \"curl\", \"-f\", \"http://localhost:2024/_debug/ping\" ]\n      interval: 1s\n      timeout: 100ms\n      retries: 3\n    # This allows you to 'curl localhost:2024/_debug/ping' from your machine,\n    # i.e. the Docker host\n    ports:\n      - \"2024:2024\"\n\n  debug-container:\n    image: amazonlinux:latest\n    depends_on:\n      # Wait until the baml-over-http healthcheck passes to start this container\n      baml-over-http:\n        condition: service_healthy\n    command: \"curl -v http://baml-over-http:2024/_debug/ping\""
-      },
-      {
-        "lang": "bash",
-        "code": "docker build -t baml-over-http -f baml.Dockerfile .\ndocker run -p 2024:2024 baml-over-http"
-      },
-      {
-        "lang": "bash",
         "code": "docker build -t baml-over-http -f baml.Dockerfile .\ndocker run -p 2024:2024 baml-over-http"
       },
       {
@@ -2067,14 +1681,6 @@
         "code": "import (\n    \"os\"\n    baml \"my-golang-app/baml_client\"\n)\n\nfunc main() {\n    cfg := baml.NewConfiguration()\n    if boundaryEndpoint := os.Getenv(\"BOUNDARY_ENDPOINT\"); boundaryEndpoint != \"\" {\n        cfg.BasePath = boundaryEndpoint\n    }\n    if boundaryApiKey := os.Getenv(\"BOUNDARY_API_KEY\"); boundaryApiKey != \"\" {\n        cfg.DefaultHeader[\"Authorization\"] = \"Bearer \" + boundaryApiKey\n    }\n    b := baml.NewAPIClient(cfg).DefaultAPI\n    // Use `b` to make API calls\n}"
       },
       {
-        "lang": "go",
-        "code": "import (\n    \"os\"\n    baml \"my-golang-app/baml_client\"\n)\n\nfunc main() {\n    cfg := baml.NewConfiguration()\n    if boundaryEndpoint := os.Getenv(\"BOUNDARY_ENDPOINT\"); boundaryEndpoint != \"\" {\n        cfg.BasePath = boundaryEndpoint\n    }\n    if boundaryApiKey := os.Getenv(\"BOUNDARY_API_KEY\"); boundaryApiKey != \"\" {\n        cfg.DefaultHeader[\"Authorization\"] = \"Bearer \" + boundaryApiKey\n    }\n    b := baml.NewAPIClient(cfg).DefaultAPI\n    // Use `b` to make API calls\n}"
-      },
-      {
-        "lang": "java",
-        "code": "import com.boundaryml.baml_client.ApiClient;\nimport com.boundaryml.baml_client.ApiException;\nimport com.boundaryml.baml_client.Configuration;\nimport com.boundaryml.baml_client.api.DefaultApi;\nimport com.boundaryml.baml_client.auth.*;\n\npublic class ApiExample {\n    public static void main(String[] args) {\n        ApiClient apiClient = Configuration.getDefaultApiClient();\n\n        String boundaryEndpoint = System.getenv(\"BOUNDARY_ENDPOINT\");\n        if (boundaryEndpoint != null && !boundaryEndpoint.isEmpty()) {\n            apiClient.setBasePath(boundaryEndpoint);\n        }\n\n        String boundaryApiKey = System.getenv(\"BOUNDARY_API_KEY\");\n        if (boundaryApiKey != null && !boundaryApiKey.isEmpty()) {\n            apiClient.addDefaultHeader(\"Authorization\", \"Bearer \" + boundaryApiKey);\n        }\n\n        DefaultApi apiInstance = new DefaultApi(apiClient);\n        // Use `apiInstance` to make API calls\n    }\n}"
-      },
-      {
         "lang": "java",
         "code": "import com.boundaryml.baml_client.ApiClient;\nimport com.boundaryml.baml_client.ApiException;\nimport com.boundaryml.baml_client.Configuration;\nimport com.boundaryml.baml_client.api.DefaultApi;\nimport com.boundaryml.baml_client.auth.*;\n\npublic class ApiExample {\n    public static void main(String[] args) {\n        ApiClient apiClient = Configuration.getDefaultApiClient();\n\n        String boundaryEndpoint = System.getenv(\"BOUNDARY_ENDPOINT\");\n        if (boundaryEndpoint != null && !boundaryEndpoint.isEmpty()) {\n            apiClient.setBasePath(boundaryEndpoint);\n        }\n\n        String boundaryApiKey = System.getenv(\"BOUNDARY_API_KEY\");\n        if (boundaryApiKey != null && !boundaryApiKey.isEmpty()) {\n            apiClient.addDefaultHeader(\"Authorization\", \"Bearer \" + boundaryApiKey);\n        }\n\n        DefaultApi apiInstance = new DefaultApi(apiClient);\n        // Use `apiInstance` to make API calls\n    }\n}"
       },
@@ -2083,20 +1689,8 @@
         "code": "require_once(__DIR__ . '/vendor/autoload.php');\n\n$config = BamlClient\\Configuration::getDefaultConfiguration();\n\n$boundaryEndpoint = getenv('BOUNDARY_ENDPOINT');\n$boundaryApiKey = getenv('BOUNDARY_API_KEY');\n\nif ($boundaryEndpoint) {\n    $config->setHost($boundaryEndpoint);\n}\n\nif ($boundaryApiKey) {\n    $config->setAccessToken($boundaryApiKey);\n}\n\n$apiInstance = new OpenAPI\\Client\\Api\\DefaultApi(\n    new GuzzleHttp\\Client(),\n    $config\n);\n\n// Use `$apiInstance` to make API calls"
       },
       {
-        "lang": "php",
-        "code": "require_once(__DIR__ . '/vendor/autoload.php');\n\n$config = BamlClient\\Configuration::getDefaultConfiguration();\n\n$boundaryEndpoint = getenv('BOUNDARY_ENDPOINT');\n$boundaryApiKey = getenv('BOUNDARY_API_KEY');\n\nif ($boundaryEndpoint) {\n    $config->setHost($boundaryEndpoint);\n}\n\nif ($boundaryApiKey) {\n    $config->setAccessToken($boundaryApiKey);\n}\n\n$apiInstance = new OpenAPI\\Client\\Api\\DefaultApi(\n    new GuzzleHttp\\Client(),\n    $config\n);\n\n// Use `$apiInstance` to make API calls"
-      },
-      {
         "lang": "ruby",
         "code": "require 'baml_client'\n\napi_client = BamlClient::ApiClient.new\n\nboundary_endpoint = ENV['BOUNDARY_ENDPOINT']\nif boundary_endpoint\n  api_client.host = boundary_endpoint\nend\n\nboundary_api_key = ENV['BOUNDARY_API_KEY']\nif boundary_api_key\n  api_client.default_headers['Authorization'] = \"Bearer #{boundary_api_key}\"\nend\nb = BamlClient::DefaultApi.new(api_client)\n# Use `b` to make API calls"
-      },
-      {
-        "lang": "ruby",
-        "code": "require 'baml_client'\n\napi_client = BamlClient::ApiClient.new\n\nboundary_endpoint = ENV['BOUNDARY_ENDPOINT']\nif boundary_endpoint\n  api_client.host = boundary_endpoint\nend\n\nboundary_api_key = ENV['BOUNDARY_API_KEY']\nif boundary_api_key\n  api_client.default_headers['Authorization'] = \"Bearer #{boundary_api_key}\"\nend\nb = BamlClient::DefaultApi.new(api_client)\n# Use `b` to make API calls"
-      },
-      {
-        "lang": "rust",
-        "code": "let mut config = baml_client::apis::configuration::Configuration::default();\nif let Some(base_path) = std::env::var(\"BOUNDARY_ENDPOINT\").ok() {\n    config.base_path = base_path;\n}\nif let Some(api_key) = std::env::var(\"BOUNDARY_API_KEY\").ok() {\n    config.bearer_access_token = Some(api_key);\n}\n// Use `config` to make API calls"
       },
       {
         "lang": "rust",
@@ -2202,14 +1796,6 @@
         "code": "BAML_PASSWORD=sk-baml-your-secret-password \\\n  baml-cli serve --preview --port 2024"
       },
       {
-        "lang": "bash",
-        "code": "BAML_PASSWORD=sk-baml-your-secret-password \\\n  baml-cli serve --preview --port 2024"
-      },
-      {
-        "lang": "docker",
-        "code": "FROM node:20\n\nWORKDIR /app\nRUN npm install -g @boundaryml/baml\nCOPY baml_src/ .\n\nENV BAML_PASSWORD=sk-baml-your-secret-password\nCMD baml-cli serve --preview --port 2024"
-      },
-      {
         "lang": "docker",
         "code": "FROM node:20\n\nWORKDIR /app\nRUN npm install -g @boundaryml/baml\nCOPY baml_src/ .\n\nENV BAML_PASSWORD=sk-baml-your-secret-password\nCMD baml-cli serve --preview --port 2024"
       },
@@ -2220,14 +1806,6 @@
       {
         "lang": "bash",
         "code": "export BAML_PASSWORD=sk-baml-your-secret-password\ncurl \"http://baml:${BAML_PASSWORD}@localhost:2024/_debug/status\""
-      },
-      {
-        "lang": "bash",
-        "code": "export BAML_PASSWORD=sk-baml-your-secret-password\ncurl \"http://baml:${BAML_PASSWORD}@localhost:2024/_debug/status\""
-      },
-      {
-        "lang": "bash",
-        "code": "export BAML_PASSWORD=sk-baml-your-secret-password\ncurl \"http://localhost:2024/_debug/status\" -H \"X-BAML-API-KEY: ${BAML_PASSWORD}\""
       },
       {
         "lang": "bash",
@@ -2379,21 +1957,6 @@
     "hash": "#calling-the-function",
     "content": "Recall that BAML will generate a baml_client directory in the language of your choice using the parameters in your generator config. This contains the function and types you defined.\nNow we can call the function, which will make a request to the LLM and return the Resume object:\n\n\n\n\nDo not modify any code inside baml_client, as it's autogenerated.",
     "code_snippets": [
-      {
-        "lang": "python",
-        "meta": "python",
-        "code": "# Import the baml client (We call it `b` for short)\nfrom baml_client import b\n# Import the Resume type, which is now a Pydantic model!\nfrom baml_client.types import Resume \n\ndef main():\nresume_text = \"\"\"Jason Doe\\nPython, Rust\\nUniversity of California, Berkeley, B.S.\\nin Computer Science, 2020\\nAlso an expert in Tableau, SQL, and C++\\n\"\"\"\n\n    # this function comes from the autogenerated \"baml_client\".\n    # It calls the LLM you specified and handles the parsing.\n    resume = b.ExtractResume(resume_text)\n\n    # Fully type-checked and validated!\n    assert isinstance(resume, Resume)\n"
-      },
-      {
-        "lang": "typescript",
-        "meta": "typescript",
-        "code": "import b from 'baml_client'\nimport { Resume } from 'baml_client/types'\n\nasync function main() {\n  const resume_text = `Jason Doe\\nPython, Rust\\nUniversity of California, Berkeley, B.S.\\nin Computer Science, 2020\\nAlso an expert in Tableau, SQL, and C++`\n\n  // this function comes from the autogenerated \"baml_client\".\n  // It calls the LLM you specified and handles the parsing.\n  const resume = await b.ExtractResume(resume_text)\n\n  // Fully type-checked and validated!\n  resume.name === 'Jason Doe'\n  if (resume instanceof Resume) {\n    console.log('resume is a Resume')\n  }\n}"
-      },
-      {
-        "lang": "ruby",
-        "meta": "ruby",
-        "code": "\nrequire_relative \"baml_client/client\"\nb = Baml.Client\n\n# Note this is not async\nres = b.TestFnNamedArgsSingleClass(\n    myArg: Baml::Types::Resume.new(\n        key: \"key\",\n        key_two: true,\n        key_three: 52,\n    )\n)"
-      },
       {
         "lang": "python",
         "meta": "python",
@@ -2684,19 +2247,7 @@
       },
       {
         "lang": "baml",
-        "code": "test Test1 {\n  functions [MyFunction]\n  args {\n    myImage {\n      file \"../path/to/image.png\"\n    }\n  }\n}"
-      },
-      {
-        "lang": "baml",
         "code": "test Test1 {\n  functions [MyFunction]\n  args {\n    myImage {\n      url \"https....\"\n    }\n  }\n}"
-      },
-      {
-        "lang": "baml",
-        "code": "test Test1 {\n  functions [MyFunction]\n  args {\n    myImage {\n      url \"https....\"\n    }\n  }\n}"
-      },
-      {
-        "lang": "baml",
-        "code": "test Test1 {\n  args {\n    myImage {\n      base64 \"base64string\"\n      media_type \"image/png\"\n    }\n  }\n}"
       },
       {
         "lang": "baml",
@@ -2751,19 +2302,7 @@
       },
       {
         "lang": "baml",
-        "code": "test Test1 {\n  functions [MyFunction]\n  args {\n    myAudio {\n      file \"../path/to/audio.mp3\"\n    }\n  }\n}"
-      },
-      {
-        "lang": "baml",
         "code": "test Test1 {\n  functions [MyFunction]\n  args {\n    myAudio {\n      url \"https....\"\n    }\n  }\n}"
-      },
-      {
-        "lang": "baml",
-        "code": "test Test1 {\n  functions [MyFunction]\n  args {\n    myAudio {\n      url \"https....\"\n    }\n  }\n}"
-      },
-      {
-        "lang": "baml",
-        "code": "test Test1 {\n  args {\n    myAudio {\n      base64 \"base64string\"\n      media_type \"audio/mp3\"\n    }\n  }\n}"
       },
       {
         "lang": "baml",
@@ -2851,15 +2390,6 @@
         "code": "class ReceiptItem {\n  name string\n  description string?\n  quantity int\n  price float\n}\n\nclass ReceiptInfo {\n    items ReceiptItem[]\n    total_cost float?\n}\n\nfunction ExtractReceiptInfo(email: string) -> ReceiptInfo {\n  client GPT4o\n  prompt #\"\n    Given the receipt below:\n\n    {{ email }}\n\n    {{ ctx.output_format }}\n  \"#\n}"
       },
       {
-        "lang": "rust",
-        "code": "class ReceiptItem {\n  name string\n  description string?\n  quantity int\n  price float\n}\n\nclass ReceiptInfo {\n    items ReceiptItem[]\n    total_cost float?\n}\n\nfunction ExtractReceiptInfo(email: string) -> ReceiptInfo {\n  client GPT4o\n  prompt #\"\n    Given the receipt below:\n\n    {{ email }}\n\n    {{ ctx.output_format }}\n  \"#\n}"
-      },
-      {
-        "lang": "python",
-        "meta": "main.py",
-        "code": "import asyncio\nfrom baml_client import b, partial_types, types\n\n# Using a stream:\ndef example1(receipt: str):\n    stream = b.stream.ExtractReceiptInfo(receipt)\n\n    # partial is a Partial type with all Optional fields\n    for partial in stream:\n        print(f\"partial: parsed {len(partial.items)} items (object: {partial})\")\n\n    # final is the full, original, validated ReceiptInfo type\n    final = stream.get_final_response()\n    print(f\"final: {len(final.items)} items (object: {final})\")\n\n# Using only get_final_response() of a stream\n#\n# In this case, you should just use b.ExtractReceiptInfo(receipt) instead,\n# which is slightly faster and more efficient.\ndef example2(receipt: str):\n    final = b.stream.ExtractReceiptInfo(receipt).get_final_response()\n    print(f\"final: {len(final.items)} items (object: {final})\")\n\n# Using the async client:\nasync def example3(receipt: str):\n    # Note the import of the async client\n    from baml_client.async_client import b\n    stream = b.stream.ExtractReceiptInfo(receipt)\n    async for partial in stream:\n        print(f\"partial: parsed {len(partial.items)} items (object: {partial})\")\n\n    final = await stream.get_final_response()\n    print(f\"final: {len(final.items)} items (object: {final})\")\n\nreceipt = \"\"\"\n04/14/2024 1:05 pm\n\nTicket: 220000082489\nRegister: Shop Counter\nEmployee: Connor\nCustomer: Sam\nItem\t#\tPrice\nGuide leash (1 Pair) uni UNI\n1\t$34.95\nThe Index Town Walls\n1\t$35.00\nBoot Punch\n3\t$60.00\nSubtotal\t$129.95\nTax ($129.95 @ 9%)\t$11.70\nTotal Tax\t$11.70\nTotal\t$141.65\n\"\"\"\n\nif __name__ == '__main__':\n    asyncio.run(example1(receipt))\n    asyncio.run(example2(receipt))\n    asyncio.run(example3(receipt))"
-      },
-      {
         "lang": "python",
         "meta": "main.py",
         "code": "import asyncio\nfrom baml_client import b, partial_types, types\n\n# Using a stream:\ndef example1(receipt: str):\n    stream = b.stream.ExtractReceiptInfo(receipt)\n\n    # partial is a Partial type with all Optional fields\n    for partial in stream:\n        print(f\"partial: parsed {len(partial.items)} items (object: {partial})\")\n\n    # final is the full, original, validated ReceiptInfo type\n    final = stream.get_final_response()\n    print(f\"final: {len(final.items)} items (object: {final})\")\n\n# Using only get_final_response() of a stream\n#\n# In this case, you should just use b.ExtractReceiptInfo(receipt) instead,\n# which is slightly faster and more efficient.\ndef example2(receipt: str):\n    final = b.stream.ExtractReceiptInfo(receipt).get_final_response()\n    print(f\"final: {len(final.items)} items (object: {final})\")\n\n# Using the async client:\nasync def example3(receipt: str):\n    # Note the import of the async client\n    from baml_client.async_client import b\n    stream = b.stream.ExtractReceiptInfo(receipt)\n    async for partial in stream:\n        print(f\"partial: parsed {len(partial.items)} items (object: {partial})\")\n\n    final = await stream.get_final_response()\n    print(f\"final: {len(final.items)} items (object: {final})\")\n\nreceipt = \"\"\"\n04/14/2024 1:05 pm\n\nTicket: 220000082489\nRegister: Shop Counter\nEmployee: Connor\nCustomer: Sam\nItem\t#\tPrice\nGuide leash (1 Pair) uni UNI\n1\t$34.95\nThe Index Town Walls\n1\t$35.00\nBoot Punch\n3\t$60.00\nSubtotal\t$129.95\nTax ($129.95 @ 9%)\t$11.70\nTotal Tax\t$11.70\nTotal\t$141.65\n\"\"\"\n\nif __name__ == '__main__':\n    asyncio.run(example1(receipt))\n    asyncio.run(example2(receipt))\n    asyncio.run(example3(receipt))"
@@ -2868,16 +2398,6 @@
         "lang": "ts",
         "meta": "main.ts",
         "code": "import { b } from './baml_client'\n\n// Using both async iteration and getFinalResponse() from a stream\nconst example1 = async (receipt: string) => {\n  const stream = b.stream.ExtractReceiptInfo(receipt)\n\n  // partial is a Partial type with all Optional fields\n  for await (const partial of stream) {\n    console.log(`partial: ${partial.items?.length} items (object: ${partial})`)\n  }\n\n  // final is the full, original, validated ReceiptInfo type\n  const final = await stream.getFinalResponse()\n  console.log(`final: ${final.items.length} items (object: ${final})`)\n}\n\n// Using only async iteration of a stream\nconst example2 = async (receipt: string) => {\n  for await (const partial of b.stream.ExtractReceiptInfo(receipt)) {\n    console.log(`partial: ${partial.items?.length} items (object: ${partial})`)\n  }\n}\n\n// Using only getFinalResponse() of a stream\n//\n// In this case, you should just use b.ExtractReceiptInfo(receipt) instead,\n// which is faster and more efficient.\nconst example3 = async (receipt: string) => {\n  const final = await b.stream.ExtractReceiptInfo(receipt).getFinalResponse()\n  console.log(`final: ${final.items.length} items (object: ${final})`)\n}\n\nconst receipt = `\n04/14/2024 1:05 pm\n\nTicket: 220000082489\nRegister: Shop Counter\nEmployee: Connor\nCustomer: Sam\nItem\t#\tPrice\nGuide leash (1 Pair) uni UNI\n1\t$34.95\nThe Index Town Walls\n1\t$35.00\nBoot Punch\n3\t$60.00\nSubtotal\t$129.95\nTax ($129.95 @ 9%)\t$11.70\nTotal Tax\t$11.70\nTotal\t$141.65\n`\n\nif (require.main === module) {\n  example1(receipt)\n  example2(receipt)\n  example3(receipt)\n}"
-      },
-      {
-        "lang": "ts",
-        "meta": "main.ts",
-        "code": "import { b } from './baml_client'\n\n// Using both async iteration and getFinalResponse() from a stream\nconst example1 = async (receipt: string) => {\n  const stream = b.stream.ExtractReceiptInfo(receipt)\n\n  // partial is a Partial type with all Optional fields\n  for await (const partial of stream) {\n    console.log(`partial: ${partial.items?.length} items (object: ${partial})`)\n  }\n\n  // final is the full, original, validated ReceiptInfo type\n  const final = await stream.getFinalResponse()\n  console.log(`final: ${final.items.length} items (object: ${final})`)\n}\n\n// Using only async iteration of a stream\nconst example2 = async (receipt: string) => {\n  for await (const partial of b.stream.ExtractReceiptInfo(receipt)) {\n    console.log(`partial: ${partial.items?.length} items (object: ${partial})`)\n  }\n}\n\n// Using only getFinalResponse() of a stream\n//\n// In this case, you should just use b.ExtractReceiptInfo(receipt) instead,\n// which is faster and more efficient.\nconst example3 = async (receipt: string) => {\n  const final = await b.stream.ExtractReceiptInfo(receipt).getFinalResponse()\n  console.log(`final: ${final.items.length} items (object: ${final})`)\n}\n\nconst receipt = `\n04/14/2024 1:05 pm\n\nTicket: 220000082489\nRegister: Shop Counter\nEmployee: Connor\nCustomer: Sam\nItem\t#\tPrice\nGuide leash (1 Pair) uni UNI\n1\t$34.95\nThe Index Town Walls\n1\t$35.00\nBoot Punch\n3\t$60.00\nSubtotal\t$129.95\nTax ($129.95 @ 9%)\t$11.70\nTotal Tax\t$11.70\nTotal\t$141.65\n`\n\nif (require.main === module) {\n  example1(receipt)\n  example2(receipt)\n  example3(receipt)\n}"
-      },
-      {
-        "lang": "ruby",
-        "meta": "main.rb",
-        "code": "require_relative \"baml_client/client\"\n\n$b = Baml.Client\n\n# Using both iteration and get_final_response() from a stream\ndef example1(receipt)\n  stream = $b.stream.ExtractReceiptInfo(receipt)\n\n  stream.each do |partial|\n    puts \"partial: #{partial.items&.length} items\"\n  end\n\n  final = stream.get_final_response\n  puts \"final: #{final.items.length} items\"\nend\n\n# Using only iteration of a stream\ndef example2(receipt)\n  $b.stream.ExtractReceiptInfo(receipt).each do |partial|\n    puts \"partial: #{partial.items&.length} items\"\n  end\nend\n\n# Using only get_final_response() of a stream\n#\n# In this case, you should just use BamlClient.ExtractReceiptInfo(receipt) instead,\n# which is faster and more efficient.\ndef example3(receipt)\n  final = $b.stream.ExtractReceiptInfo(receipt).get_final_response\n  puts \"final: #{final.items.length} items\"\nend\n\nreceipt = <<~RECEIPT\n  04/14/2024 1:05 pm\n\n  Ticket: 220000082489\n  Register: Shop Counter\n  Employee: Connor\n  Customer: Sam\n  Item  #  Price\n  Guide leash (1 Pair) uni UNI\n  1 $34.95\n  The Index Town Walls\n  1 $35.00\n  Boot Punch\n  3 $60.00\n  Subtotal $129.95\n  Tax ($129.95 @ 9%) $11.70\n  Total Tax $11.70\n  Total $141.65\nRECEIPT\n\nif __FILE__ == $0\n  example1(receipt)\n  example2(receipt)\n  example3(receipt)\nend"
       },
       {
         "lang": "ruby",
@@ -2996,21 +2516,6 @@
         "lang": "ruby",
         "meta": "Ruby (beta)",
         "code": "we're working on it!"
-      },
-      {
-        "lang": "python",
-        "meta": "Python",
-        "code": "from baml_py import Image\nfrom baml_client import b\n\nasync def test_image_input():\n  # from URL\n  res = await b.TestImageInput(\n      img=Image.from_url(\n          \"https://upload.wikimedia.org/wikipedia/en/4/4d/Shrek_%28character%29.png\"\n      )\n  )\n\n  # Base64 image\n  image_b64 = \"iVBORw0K....\"\n  res = await b.TestImageInput(\n    img=Image.from_base64(\"image/png\", image_b64)\n  )"
-      },
-      {
-        "lang": "typescript",
-        "meta": "TypeScript",
-        "code": "import { b } from '../baml_client'\nimport { Image } from \"@boundaryml/baml\"\n...\n\n  // URL\n  let res = await b.TestImageInput(\n    Image.fromUrl('https://upload.wikimedia.org/wikipedia/en/4/4d/Shrek_%28character%29.png'),\n  )\n\n  // Base64\n  const image_b64 = \"iVB0R...\"\n  let res = await b.TestImageInput(\n    Image.fromBase64('image/png', image_b64),\n  )\n  "
-      },
-      {
-        "lang": "ruby",
-        "meta": "Ruby (beta)",
-        "code": "we're working on it!"
       }
     ],
     "hierarchy": {
@@ -3055,21 +2560,6 @@
     "hash": "#audio",
     "content": "Calling functions that have audio types. See audio types",
     "code_snippets": [
-      {
-        "lang": "python",
-        "meta": "Python",
-        "code": "from baml_py import Audio\nfrom baml_client import b\n\nasync def run():\n  # from URL\n  res = await b.TestAudioInput(\n      img=Audio.from_url(\n          \"https://actions.google.com/sounds/v1/emergency/beeper_emergency_call.ogg\"\n      )\n  )\n\n  # Base64\n  b64 = \"iVBORw0K....\"\n  res = await b.TestAudioInput(\n    audio=Audio.from_base64(\"audio/ogg\", b64)\n  )"
-      },
-      {
-        "lang": "typescript",
-        "meta": "TypeScript",
-        "code": "import { b } from '../baml_client'\nimport { Audio } from \"@boundaryml/baml\"\n...\n\n  // URL\n  let res = await b.TestAudioInput(\n    Audio.fromUrl('https://actions.google.com/sounds/v1/emergency/beeper_emergency_call.ogg'),\n  )\n\n  // Base64\n  const audio_base64 = \"..\"\n  let res = await b.TestAudioInput(\n    Audio.fromBase64('audio/ogg', audio_base64),\n  )\n  "
-      },
-      {
-        "lang": "ruby",
-        "meta": "Ruby (beta)",
-        "code": "we're working on it!"
-      },
       {
         "lang": "python",
         "meta": "Python",
@@ -3362,23 +2852,9 @@
         "code": "enum Category {\n    Refund\n    CancelOrder\n    TechnicalSupport\n    AccountIssue\n    Question\n}\n\nfunction ClassifyMessage(input: string) -> Category {\n  client GPT4o\n  prompt #\"\n    Classify the following INPUT into ONE\n    of the following categories:\n\n    INPUT: {{ input }}\n\n    {{ ctx.output_format }}\n\n    Response:\n  \"#\n}"
       },
       {
-        "lang": "baml",
-        "code": "enum Category {\n    Refund\n    CancelOrder\n    TechnicalSupport\n    AccountIssue\n    Question\n}\n\nfunction ClassifyMessage(input: string) -> Category {\n  client GPT4o\n  prompt #\"\n    Classify the following INPUT into ONE\n    of the following categories:\n\n    INPUT: {{ input }}\n\n    {{ ctx.output_format }}\n\n    Response:\n  \"#\n}"
-      },
-      {
         "lang": "python",
         "meta": "main.py",
         "code": "import asyncio\n\nfrom baml_client import b\nfrom baml_client.types import Category\n\nasync def main():\n    await asyncio.gather(\n        b.ClassifyMessage(\"I want to cancel my order\"),\n        b.ClassifyMessage(\"I want a refund\")\n    )\n\nif __name__ == '__main__':\n    asyncio.run(main())"
-      },
-      {
-        "lang": "python",
-        "meta": "main.py",
-        "code": "import asyncio\n\nfrom baml_client import b\nfrom baml_client.types import Category\n\nasync def main():\n    await asyncio.gather(\n        b.ClassifyMessage(\"I want to cancel my order\"),\n        b.ClassifyMessage(\"I want a refund\")\n    )\n\nif __name__ == '__main__':\n    asyncio.run(main())"
-      },
-      {
-        "lang": "ts",
-        "meta": "main.ts",
-        "code": "import { b } from './baml_client'\nimport { Category } from './baml_client/types'\nimport assert from 'assert'\n\nconst main = async () => {\n  const category = await Promise.all(\n    b.ClassifyMessage('I want to cancel my order'),\n    b.ClassifyMessage('I want a refund'),\n  )\n}\n\nif (require.main === module) {\n  main()\n}\n"
       },
       {
         "lang": "ts",
@@ -3418,32 +2894,12 @@
         "code": "import os\nfrom baml_py import ClientRegistry\n\nasync def run():\n    cr = ClientRegistry()\n    # Creates a new client\n    cr.add_llm_client(name='MyAmazingClient', provider='openai', options={\n        \"model\": \"gpt-4o\",\n        \"temperature\": 0.7,\n        \"api_key\": os.environ.get('OPENAI_API_KEY')\n    })\n    # Sets MyAmazingClient as the primary client\n    cr.set_primary('MyAmazingClient')\n\n    # ExtractResume will now use MyAmazingClient as the calling client\n    res = await b.ExtractResume(\"...\", { \"client_registry\": cr })"
       },
       {
-        "lang": "python",
-        "code": "import os\nfrom baml_py import ClientRegistry\n\nasync def run():\n    cr = ClientRegistry()\n    # Creates a new client\n    cr.add_llm_client(name='MyAmazingClient', provider='openai', options={\n        \"model\": \"gpt-4o\",\n        \"temperature\": 0.7,\n        \"api_key\": os.environ.get('OPENAI_API_KEY')\n    })\n    # Sets MyAmazingClient as the primary client\n    cr.set_primary('MyAmazingClient')\n\n    # ExtractResume will now use MyAmazingClient as the calling client\n    res = await b.ExtractResume(\"...\", { \"client_registry\": cr })"
-      },
-      {
-        "lang": "typescript",
-        "code": "import { ClientRegistry } from '@boundaryml/baml'\n\nasync function run() {\n    const cr = new ClientRegistry()\n    // Creates a new client\n    cr.addLlmClient({ name: 'MyAmazingClient', provider: 'openai', options: {\n        model: \"gpt-4o\",\n        temperature: 0.7,\n        api_key: process.env.OPENAI_API_KEY\n    }})\n    // Sets MyAmazingClient as the primary client\n    cr.setPrimary('MyAmazingClient')\n\n    // ExtractResume will now use MyAmazingClient as the calling client\n    const res = await b.ExtractResume(\"...\", { clientRegistry: cr })\n}"
-      },
-      {
         "lang": "typescript",
         "code": "import { ClientRegistry } from '@boundaryml/baml'\n\nasync function run() {\n    const cr = new ClientRegistry()\n    // Creates a new client\n    cr.addLlmClient({ name: 'MyAmazingClient', provider: 'openai', options: {\n        model: \"gpt-4o\",\n        temperature: 0.7,\n        api_key: process.env.OPENAI_API_KEY\n    }})\n    // Sets MyAmazingClient as the primary client\n    cr.setPrimary('MyAmazingClient')\n\n    // ExtractResume will now use MyAmazingClient as the calling client\n    const res = await b.ExtractResume(\"...\", { clientRegistry: cr })\n}"
       },
       {
         "lang": "ruby",
         "code": "require_relative \"baml_client/client\"\n\ndef run\n  cr = Baml::ClientRegistry.new\n\n  # Creates a new client\n  cr.add_llm_client(\n    name: 'MyAmazingClient',\n    provider: 'openai',\n    options: {\n      model: 'gpt-4o',\n      temperature: 0.7,\n      api_key: ENV['OPENAI_API_KEY']\n    }\n  )\n\n  # Sets MyAmazingClient as the primary client\n  cr.set_primary('MyAmazingClient')\n\n  # ExtractResume will now use MyAmazingClient as the calling client\n  res = Baml.Client.extract_resume(input: '...', baml_options: { client_registry: cr })\nend\n\n# Call the asynchronous function\nrun"
-      },
-      {
-        "lang": "ruby",
-        "code": "require_relative \"baml_client/client\"\n\ndef run\n  cr = Baml::ClientRegistry.new\n\n  # Creates a new client\n  cr.add_llm_client(\n    name: 'MyAmazingClient',\n    provider: 'openai',\n    options: {\n      model: 'gpt-4o',\n      temperature: 0.7,\n      api_key: ENV['OPENAI_API_KEY']\n    }\n  )\n\n  # Sets MyAmazingClient as the primary client\n  cr.set_primary('MyAmazingClient')\n\n  # ExtractResume will now use MyAmazingClient as the calling client\n  res = Baml.Client.extract_resume(input: '...', baml_options: { client_registry: cr })\nend\n\n# Call the asynchronous function\nrun"
-      },
-      {
-        "lang": "json",
-        "code": "{\n    \"resume\": \"Vaibhav Gupta\",\n    \"__baml_options__\": {\n        \"client_registry\": {\n            \"clients\": [\n                {\n                    \"name\": \"OpenAI\",\n                    \"provider\": \"openai\",\n                    \"retry_policy\": null,\n                    \"options\": {\n                        \"model\": \"gpt-4o-mini\",\n                        \"api_key\": \"sk-...\"\n                    }\n                }\n            ],\n            \"primary\": \"OpenAI\"\n        }\n    }\n}"
-      },
-      {
-        "lang": "sh",
-        "code": "curl -X POST http://localhost:2024/call/ExtractResume \\\n    -H 'Content-Type: application/json' -d @body.json"
       },
       {
         "lang": "json",
@@ -3638,20 +3094,8 @@
         "code": "from baml_client.type_builder import TypeBuilder\nfrom baml_client import b\n\nasync def run():\n  tb = TypeBuilder()\n  tb.Category.add_value('VALUE3')\n  tb.Category.add_value('VALUE4')\n  # Pass the typebuilder in the baml_options argument -- the last argument of the function.\n  res = await b.DynamicCategorizer(\"some input\", { \"tb\": tb })\n  # Now res can be VALUE1, VALUE2, VALUE3, or VALUE4\n  print(res)\n"
       },
       {
-        "lang": "python",
-        "code": "from baml_client.type_builder import TypeBuilder\nfrom baml_client import b\n\nasync def run():\n  tb = TypeBuilder()\n  tb.Category.add_value('VALUE3')\n  tb.Category.add_value('VALUE4')\n  # Pass the typebuilder in the baml_options argument -- the last argument of the function.\n  res = await b.DynamicCategorizer(\"some input\", { \"tb\": tb })\n  # Now res can be VALUE1, VALUE2, VALUE3, or VALUE4\n  print(res)\n"
-      },
-      {
         "lang": "typescript",
         "code": "import TypeBuilder from '../baml_client/type_builder'\nimport {\n  b\n} from '../baml_client'\n\nasync function run() {\n  const tb = new TypeBuilder()\n  tb.Category.addValue('VALUE3')\n  tb.Category.addValue('VALUE4')\n  const res = await b.DynamicCategorizer(\"some input\", { tb: tb })\n  // Now res can be VALUE1, VALUE2, VALUE3, or VALUE4\n  console.log(res)\n}"
-      },
-      {
-        "lang": "typescript",
-        "code": "import TypeBuilder from '../baml_client/type_builder'\nimport {\n  b\n} from '../baml_client'\n\nasync function run() {\n  const tb = new TypeBuilder()\n  tb.Category.addValue('VALUE3')\n  tb.Category.addValue('VALUE4')\n  const res = await b.DynamicCategorizer(\"some input\", { tb: tb })\n  // Now res can be VALUE1, VALUE2, VALUE3, or VALUE4\n  console.log(res)\n}"
-      },
-      {
-        "lang": "ruby",
-        "code": "require_relative '../baml_client'\n\ndef run\n  tb = Baml::TypeBuilder.new\n  tb.Category.add_value('VALUE3')\n  tb.Category.add_value('VALUE4')\n  res = Baml.Client.dynamic_categorizer(input: \"some input\", baml_options: {tb: tb})\n  # Now res can be VALUE1, VALUE2, VALUE3, or VALUE4\n  puts res\nend"
       },
       {
         "lang": "ruby",
@@ -3700,21 +3144,6 @@
         "lang": "rust",
         "meta": "BAML",
         "code": "class User {\n  name string\n  age int\n  @@dynamic\n}\n\nfunction DynamicUserCreator(user_info: string) -> User {\n  client GPT4\n  prompt #\"\n    Extract the information from this chunk of text:\n    \"{{ user_info }}\"\n     \n    {{ ctx.output_format }}\n  \"#\n}"
-      },
-      {
-        "lang": "python",
-        "meta": "Python",
-        "code": "from baml_client.type_builder import TypeBuilder\nfrom baml_client import b\n\nasync def run():\n  tb = TypeBuilder()\n  tb.User.add_property('email', tb.string())\n  tb.User.add_property('address', tb.string()).description(\"The user's address\")\n  res = await b.DynamicUserCreator(\"some user info\", { \"tb\": tb })\n  # Now res can have email and address fields\n  print(res)\n"
-      },
-      {
-        "lang": "typescript",
-        "meta": "TypeScript",
-        "code": "import TypeBuilder from '../baml_client/type_builder'\nimport {\n  b\n} from '../baml_client'\n\nasync function run() {\n  const tb = new TypeBuilder()\n  tb.User.add_property('email', tb.string())\n  tb.User.add_property('address', tb.string()).description(\"The user's address\")\n  const res = await b.DynamicUserCreator(\"some user info\", { tb: tb })\n  // Now res can have email and address fields\n  console.log(res)\n}"
-      },
-      {
-        "lang": "ruby",
-        "meta": "Ruby",
-        "code": "require_relative 'baml_client/client'\n\ndef run\n  tb = Baml::TypeBuilder.new\n  tb.User.add_property('email', tb.string)\n  tb.User.add_property('address', tb.string).description(\"The user's address\")\n  \n  res = Baml.Client.dynamic_user_creator(input: \"some user info\", baml_options: {tb: tb})\n  # Now res can have email and address fields\n  puts res\nend"
       },
       {
         "lang": "python",
@@ -3784,21 +3213,6 @@
         "lang": "ruby",
         "meta": "Ruby",
         "code": "require_relative 'baml_client/client'\n\ndef run\n  tb = Baml::TypeBuilder.new\n  hobbies_enum = tb.add_enum('Hobbies')\n  hobbies_enum.add_value('Soccer')\n  hobbies_enum.add_value('Reading')\n\n  address_class = tb.add_class('Address')\n  address_class.add_property('street', tb.string)\n\n  tb.User.add_property('hobby', hobbies_enum.type.optional)\n  tb.User.add_property('address', address_class.type.optional)\n  \n  res = Baml::Client.dynamic_user_creator(input: \"some user info\", baml_options: { tb: tb })\n  # Now res might have the hobby property, which can be Soccer or Reading\n  puts res\nend"
-      },
-      {
-        "lang": "python",
-        "meta": "Python",
-        "code": "from baml_client.type_builder import TypeBuilder\nfrom baml_client.async_client import b\n\nasync def run():\n  tb = TypeBuilder()\n  hobbies_enum = tb.add_enum(\"Hobbies\")\n  hobbies_enum.add_value(\"Soccer\")\n  hobbies_enum.add_value(\"Reading\")\n\n  address_class = tb.add_class(\"Address\")\n  address_class.add_property(\"street\", tb.string()).description(\"The user's street address\")\n\n  tb.User.add_property(\"hobby\", hobbies_enum.type().optional())\n  tb.User.add_property(\"address\", address_class.type().optional())\n  res = await b.DynamicUserCreator(\"some user info\", {\"tb\": tb})\n  # Now res might have the hobby property, which can be Soccer or Reading\n  print(res)\n"
-      },
-      {
-        "lang": "typescript",
-        "meta": "TypeScript",
-        "code": "import TypeBuilder from '../baml_client/type_builder'\nimport { b } from '../baml_client'\n\nasync function run() {\n  const tb = new TypeBuilder()\n  const hobbiesEnum = tb.addEnum('Hobbies')\n  hobbiesEnum.addValue('Soccer')\n  hobbiesEnum.addValue('Reading')\n\n  const addressClass = tb.addClass('Address')\n  addressClass.addProperty('street', tb.string()).description(\"The user's street address\")\n\n\n  tb.User.addProperty('hobby', hobbiesEnum.type().optional())\n  tb.User.addProperty('address', addressClass.type())\n  const res = await b.DynamicUserCreator(\"some user info\", { tb: tb })\n  // Now res might have the hobby property, which can be Soccer or Reading\n  console.log(res)\n}"
-      },
-      {
-        "lang": "ruby",
-        "meta": "Ruby",
-        "code": "require_relative 'baml_client/client'\n\ndef run\n  tb = Baml::TypeBuilder.new\n  hobbies_enum = tb.add_enum('Hobbies')\n  hobbies_enum.add_value('Soccer')\n  hobbies_enum.add_value('Reading')\n\n  address_class = tb.add_class('Address')\n  address_class.add_property('street', tb.string)\n\n  tb.User.add_property('hobby', hobbies_enum.type.optional)\n  tb.User.add_property('address', address_class.type.optional)\n  \n  res = Baml::Client.dynamic_user_creator(input: \"some user info\", baml_options: { tb: tb })\n  # Now res might have the hobby property, which can be Soccer or Reading\n  puts res\nend"
       }
     ],
     "hierarchy": {
@@ -3839,21 +3253,6 @@
     "hash": "#building-dynamic-types-from-json-schema",
     "content": "We have a working implementation of this, but are waiting for a concrete use case to merge it.\nPlease chime in on the GitHub issue if this is\nsomething you'd like to use.",
     "code_snippets": [
-      {
-        "lang": "python",
-        "meta": "Python",
-        "code": "import pydantic\nfrom baml_client import b\n\nclass Person(pydantic.BaseModel):\n    last_name: list[str]\n    height: Optional[float] = pydantic.Field(description=\"Height in meters\")\n\ntb = TypeBuilder()\ntb.unstable_features.add_json_schema(Person.model_json_schema())\n\nres = await b.ExtractPeople(\n    \"My name is Harrison. My hair is black and I'm 6 feet tall. I'm pretty good around the hoop. I like giraffes.\",\n    {\"tb\": tb},\n)"
-      },
-      {
-        "lang": "typescript",
-        "meta": "TypeScript",
-        "code": "import 'z' from zod\nimport 'zodToJsonSchema' from zod-to-json-schema\nimport { b } from '../baml_client'\n\nconst personSchema = z.object({\n  animalLiked: z.object({\n    animal: z.string().describe('The animal mentioned, in singular form.'),\n  }),\n  hobbies: z.enum(['chess', 'sports', 'music', 'reading']).array(),\n  height: z.union([z.string(), z.number().int()]).describe('Height in meters'),\n})\n\nlet tb = new TypeBuilder()\ntb.unstableFeatures.addJsonSchema(zodToJsonSchema(personSchema, 'Person'))\n\nconst res = await b.ExtractPeople(\n  \"My name is Harrison. My hair is black and I'm 6 feet tall. I'm pretty good around the hoop. I like giraffes.\",\n  { tb },\n)"
-      },
-      {
-        "lang": "ruby",
-        "meta": "Ruby",
-        "code": "tb = Baml::TypeBuilder.new\ntb.unstable_features.add_json_schema(...)\n\nres = Baml::Client.extract_people(\n  input: \"My name is Harrison. My hair is black and I'm 6 feet tall. I'm pretty good around the hoop. I like giraffes.\",\n  baml_options: { tb: tb }\n)\n\nputs res"
-      },
       {
         "lang": "python",
         "meta": "Python",
@@ -3980,16 +3379,6 @@
         "lang": "curl",
         "meta": "{3,11} Anthropic Request",
         "code": "curl https://api.anthropic.com/v1/messages \\\n  -H \"content-type: application/json\" \\\n  -H \"anthropic-beta: prompt-caching-2024-07-31\" \\\n  -d '{\n    \"model\": \"claude-3-5-sonnet-20241022\",\n    \"max_tokens\": 1024,\n    \"messages\": [\n       {\n        \"type\": \"text\", \n        \"text\": \"<the entire contents of Pride and Prejudice>\",\n        \"cache_control\": {\"type\": \"ephemeral\"}\n      },\n      {\n        \"role\": \"user\",\n        \"content\": \"Analyze the major themes in Pride and Prejudice.\"\n      }\n    ]\n  }'"
-      },
-      {
-        "lang": "baml",
-        "meta": "{5-8} main.baml",
-        "code": "client<llm> AnthropicClient {\n  provider \"anthropic\"\n  options {\n    model \"claude-3-5-sonnet-20241022\"\n    allowed_role_metadata [\"cache_control\"]\n    headers {\n      \"anthropic-beta\" \"prompt-caching-2024-07-31\"\n    }\n  }\n}"
-      },
-      {
-        "lang": "baml",
-        "meta": "{2,6} main.baml",
-        "code": "function AnalyzeBook(book: string) -> string {\n  client<llm> AnthropicClient\n  prompt #\"\n    {{ _.role(\"user\") }}\n    {{ book }}\n    {{ _.role(\"user\", cache_control={\"type\": \"ephemeral\"}) }}\n    Analyze the major themes in Pride and Prejudice.\n  \"#\n}"
       },
       {
         "lang": "baml",
@@ -4338,16 +3727,6 @@
         "lang": "typescript",
         "meta": "Typescript",
         "code": "import { b, BamlValidationError } from './baml_client';\nimport { Citation } from './baml_client/types';\n\nconst main = () => {\n    try {\n        const citation = b.GetCitation(\"SpaceX, is an American spacecraft manufacturer, launch service provider...\");\n        \n        const quote = citation.quote.value;\n        console.log(`Quote: ${quote}`);\n\n        const checks = citation.quote.checks;\n        console.log(`Check exact_citation_found: ${checks.exact_citation_found.status}`);\n        for (const check of get_checks(checks)) {\n            console.log(`Check ${check.name}: ${check.status}`);\n        }\n\n        const author = citation.author;\n        console.log(`Author: ${author}`);\n    } catch (e) {\n        if (e instanceof BamlValidationError) {\n            console.log(`Validation error: ${e}`);\n        } else {\n            console.error(e);\n        }\n    }\n};"
-      },
-      {
-        "lang": "python",
-        "meta": "Python",
-        "code": "from baml_client import b\nfrom baml_client.types import Citation\n\ndef main():\n    try:\n        citation: Citation = b.GetCitation(\"SpaceX, is an American spacecraft manufacturer, launch service provider...\")\n\n        # Access the value of the quote field\n        quote = citation.quote\n        website_link = citation.website_link\n        print(f\"Quote: {quote} from {website_link}\")\n        \n    except BamlValidationError as e:\n        print(f\"Validation error: {str(e)}\")\n    except Exception as e:\n        print(f\"An unexpected error occurred: {e}\")\n"
-      },
-      {
-        "lang": "typescript",
-        "meta": "Typescript",
-        "code": "import { b, BamlValidationError } from './baml_client';\nimport { Citation } from './baml_client/types';\n\nconst main = () => {\n    try {\n        const citation = b.GetCitation(\"SpaceX, is an American spacecraft manufacturer, launch service provider...\");\n        \n        const quote = citation.quote.value;\n        console.log(`Quote: ${quote}`);\n\n        const checks = citation.quote.checks;\n        console.log(`Check exact_citation_found: ${checks.exact_citation_found.status}`);\n        for (const check of get_checks(checks)) {\n            console.log(`Check ${check.name}: ${check.status}`);\n        }\n\n        const author = citation.author;\n        console.log(`Author: ${author}`);\n    } catch (e) {\n        if (e instanceof BamlValidationError) {\n            console.log(`Validation error: ${e}`);\n        } else {\n            console.error(e);\n        }\n    }\n};"
       }
     ],
     "hierarchy": {
@@ -4404,29 +3783,9 @@
         "code": "Checked<int,\"less_than_zero\">[]"
       },
       {
-        "lang": "python",
-        "meta": "Python",
-        "code": "List[Checked[int, Dict[Literal[\"less_than_zero\"]]]]"
-      },
-      {
-        "lang": "typescript",
-        "meta": "Typescript",
-        "code": "Checked<int,\"less_than_zero\">[]"
-      },
-      {
         "lang": "baml",
         "meta": "BAML",
         "code": "class Citation {\n  quote string @check(\n      exact_citation_match,\n\t  {{ this|length > 0 }}\n  )\n  line_number string @assert(\n    has_line_number\n    {{ this|length >= 0 }}\n  )\n}\n\nfunction GetCitation(full_text: string) -> Citation {\n  client GPT4 \n  prompt #\"\n    Generate a citation of the text below in MLA format:\n    {{full_text}}\n\n    {{ctx.output_format}}\n  \"#\n}\n"
-      },
-      {
-        "lang": "python",
-        "meta": "Python",
-        "code": "from baml_client import b\nfrom baml_client.types import Citation, get_checks\n\ndef main():\n    citation = b.GetCitation(\"SpaceX, is an American spacecraft manufacturer, launch service provider...\")\n\n    # Access the value of the quote field\n    quote = citation.quote.value \n    print(f\"Quote: {quote}\")\n\n    # Access a particular check.\n    quote_match_check = citation.quote.checks['exact_citation_match'].status\n    print(f\"Citation match status: {quote_match_check})\")\n\n    # Access each check and its status.\n    for check in get_checks(citation.quote.checks):\n        print(f\"Check {check.name}: {check.status}\")"
-      },
-      {
-        "lang": "typescript",
-        "meta": "Typescript",
-        "code": "import { b, get_checks } from './baml_client'\nimport { Citation } from './baml_client/types'\n\nconst main = () => {\n    const citation = b.GetCitation(\"SpaceX, is an American spacecraft manufacturer, launch service provider...\")\n\n    // Access the value of the quote field\n    const quote = citation.quote.value\n    console.log(`Quote: ${quote}`)\n\n    // Access a particular check.\n    const quote_match_check = citation.quote.checks.exact_citation_match.status;\n    console.log(`Exact citation status: ${quote_match_check}`);\n\n    // Access each check and its status.\n    for (const check of get_checks(citation.quote.checks)) {\n        console.log(`Check: ${check.name}, Status: ${check.status}`)\n    }\n}"
       },
       {
         "lang": "python",
@@ -4741,14 +4100,6 @@
         "code": "import (\n    \"os\"\n    baml \"my-golang-app/baml_client\"\n)\n\nfunc main() {\n    cfg := baml.NewConfiguration()\n    if boundaryEndpoint := os.Getenv(\"BOUNDARY_ENDPOINT\"); boundaryEndpoint != \"\" {\n        cfg.BasePath = boundaryEndpoint\n    }\n    if boundaryApiKey := os.Getenv(\"BOUNDARY_API_KEY\"); boundaryApiKey != \"\" {\n        cfg.DefaultHeader[\"Authorization\"] = \"Bearer \" + boundaryApiKey\n    }\n    b := baml.NewAPIClient(cfg).DefaultAPI\n    // Use `b` to make API calls\n}"
       },
       {
-        "lang": "go",
-        "code": "import (\n    \"os\"\n    baml \"my-golang-app/baml_client\"\n)\n\nfunc main() {\n    cfg := baml.NewConfiguration()\n    if boundaryEndpoint := os.Getenv(\"BOUNDARY_ENDPOINT\"); boundaryEndpoint != \"\" {\n        cfg.BasePath = boundaryEndpoint\n    }\n    if boundaryApiKey := os.Getenv(\"BOUNDARY_API_KEY\"); boundaryApiKey != \"\" {\n        cfg.DefaultHeader[\"Authorization\"] = \"Bearer \" + boundaryApiKey\n    }\n    b := baml.NewAPIClient(cfg).DefaultAPI\n    // Use `b` to make API calls\n}"
-      },
-      {
-        "lang": "java",
-        "code": "import com.boundaryml.baml_client.ApiClient;\nimport com.boundaryml.baml_client.ApiException;\nimport com.boundaryml.baml_client.Configuration;\nimport com.boundaryml.baml_client.api.DefaultApi;\nimport com.boundaryml.baml_client.auth.*;\n\npublic class ApiExample {\n    public static void main(String[] args) {\n        ApiClient apiClient = Configuration.getDefaultApiClient();\n\n        String boundaryEndpoint = System.getenv(\"BOUNDARY_ENDPOINT\");\n        if (boundaryEndpoint != null && !boundaryEndpoint.isEmpty()) {\n            apiClient.setBasePath(boundaryEndpoint);\n        }\n\n        String boundaryApiKey = System.getenv(\"BOUNDARY_API_KEY\");\n        if (boundaryApiKey != null && !boundaryApiKey.isEmpty()) {\n            apiClient.addDefaultHeader(\"Authorization\", \"Bearer \" + boundaryApiKey);\n        }\n\n        DefaultApi apiInstance = new DefaultApi(apiClient);\n        // Use `apiInstance` to make API calls\n    }\n}"
-      },
-      {
         "lang": "java",
         "code": "import com.boundaryml.baml_client.ApiClient;\nimport com.boundaryml.baml_client.ApiException;\nimport com.boundaryml.baml_client.Configuration;\nimport com.boundaryml.baml_client.api.DefaultApi;\nimport com.boundaryml.baml_client.auth.*;\n\npublic class ApiExample {\n    public static void main(String[] args) {\n        ApiClient apiClient = Configuration.getDefaultApiClient();\n\n        String boundaryEndpoint = System.getenv(\"BOUNDARY_ENDPOINT\");\n        if (boundaryEndpoint != null && !boundaryEndpoint.isEmpty()) {\n            apiClient.setBasePath(boundaryEndpoint);\n        }\n\n        String boundaryApiKey = System.getenv(\"BOUNDARY_API_KEY\");\n        if (boundaryApiKey != null && !boundaryApiKey.isEmpty()) {\n            apiClient.addDefaultHeader(\"Authorization\", \"Bearer \" + boundaryApiKey);\n        }\n\n        DefaultApi apiInstance = new DefaultApi(apiClient);\n        // Use `apiInstance` to make API calls\n    }\n}"
       },
@@ -4757,20 +4108,8 @@
         "code": "require_once(__DIR__ . '/vendor/autoload.php');\n\n$config = BamlClient\\Configuration::getDefaultConfiguration();\n\n$boundaryEndpoint = getenv('BOUNDARY_ENDPOINT');\n$boundaryApiKey = getenv('BOUNDARY_API_KEY');\n\nif ($boundaryEndpoint) {\n    $config->setHost($boundaryEndpoint);\n}\n\nif ($boundaryApiKey) {\n    $config->setAccessToken($boundaryApiKey);\n}\n\n$apiInstance = new OpenAPI\\Client\\Api\\DefaultApi(\n    new GuzzleHttp\\Client(),\n    $config\n);\n\n// Use `$apiInstance` to make API calls"
       },
       {
-        "lang": "php",
-        "code": "require_once(__DIR__ . '/vendor/autoload.php');\n\n$config = BamlClient\\Configuration::getDefaultConfiguration();\n\n$boundaryEndpoint = getenv('BOUNDARY_ENDPOINT');\n$boundaryApiKey = getenv('BOUNDARY_API_KEY');\n\nif ($boundaryEndpoint) {\n    $config->setHost($boundaryEndpoint);\n}\n\nif ($boundaryApiKey) {\n    $config->setAccessToken($boundaryApiKey);\n}\n\n$apiInstance = new OpenAPI\\Client\\Api\\DefaultApi(\n    new GuzzleHttp\\Client(),\n    $config\n);\n\n// Use `$apiInstance` to make API calls"
-      },
-      {
         "lang": "ruby",
         "code": "require 'baml_client'\n\napi_client = BamlClient::ApiClient.new\n\nboundary_endpoint = ENV['BOUNDARY_ENDPOINT']\nif boundary_endpoint\n  api_client.host = boundary_endpoint\nend\n\nboundary_api_key = ENV['BOUNDARY_API_KEY']\nif boundary_api_key\n  api_client.default_headers['Authorization'] = \"Bearer #{boundary_api_key}\"\nend\nb = BamlClient::DefaultApi.new(api_client)\n# Use `b` to make API calls"
-      },
-      {
-        "lang": "ruby",
-        "code": "require 'baml_client'\n\napi_client = BamlClient::ApiClient.new\n\nboundary_endpoint = ENV['BOUNDARY_ENDPOINT']\nif boundary_endpoint\n  api_client.host = boundary_endpoint\nend\n\nboundary_api_key = ENV['BOUNDARY_API_KEY']\nif boundary_api_key\n  api_client.default_headers['Authorization'] = \"Bearer #{boundary_api_key}\"\nend\nb = BamlClient::DefaultApi.new(api_client)\n# Use `b` to make API calls"
-      },
-      {
-        "lang": "rust",
-        "code": "let mut config = baml_client::apis::configuration::Configuration::default();\nif let Some(base_path) = std::env::var(\"BOUNDARY_ENDPOINT\").ok() {\n    config.base_path = base_path;\n}\nif let Some(api_key) = std::env::var(\"BOUNDARY_API_KEY\").ok() {\n    config.bearer_access_token = Some(api_key);\n}\n// Use `config` to make API calls"
       },
       {
         "lang": "rust",
@@ -5051,26 +4390,6 @@
     "hash": "#example",
     "content": "In the example below, we trace each of the two functions pre_process_text and full_analysis:\n\n\nThis allows us to see each function invocation, as well as all its children in the dashboard:\n\n\nSee running tests for more information on how to run this test.",
     "code_snippets": [
-      {
-        "lang": "python",
-        "meta": "Python",
-        "code": "from baml_client import baml\nfrom baml_client.types import Book, AuthorInfo\nfrom baml_client.tracing import trace\n\n# You can also add a custom name with trace(name=\"my_custom_name\")\n# By default, we use the function's name.\n@trace\ndef pre_process_text(text):\n    return text.replace(\"\\n\", \" \")\n\n\n@trace\nasync def full_analysis(book: Book):\n    sentiment = await baml.ClassifySentiment(\n        pre_process_text(book.content)\n    )\n    book_analysis = await baml.AnalyzeBook(book)\n    return book_analysis\n\n\n@trace\nasync def test_book1():\n    content = \"\"\"Before I could reply that he [Gatsby] was my neighbor...\n    \"\"\"\n    processed_content = pre_process_text(content)\n    return await full_analysis(\n        Book(\n            title=\"The Great Gatsby\",\n            author=AuthorInfo(firstName=\"F. Scott\", lastName=\"Fitzgerald\"),\n            content=processed_content,\n        ),\n    )"
-      },
-      {
-        "lang": "typescript",
-        "meta": "TypeScript",
-        "code": "import { baml } from 'baml_client';\nimport { Book, AuthorInfo } from 'baml_client/types';\nimport { traceSync, traceAsync } from 'baml_client/tracing';\n\nconst preProcessText = traceSync(function(text: string): Promise<string> {\n    return text.replace(/\\n/g, \" \");\n});\n\nconst fullAnalysis = traceAsync(async function(book: Book): Promise<any> {\n    const sentiment = await baml.ClassifySentiment(\n        preProcessText(book.content)\n    );\n    const bookAnalysis = await baml.AnalyzeBook(book);\n    return bookAnalysis;\n});\n\nconst testBook1 = traceAsync(async function(): Promise<any> {\n    const content = `Before I could reply that he [Gatsby] was my neighbor...`;\n    const processedContent = preProcessText(content);\n    return await fullAnalysis(\n        new Book(\n            \"The Great Gatsby\",\n            new AuthorInfo(\"F. Scott\", \"Fitzgerald\"),\n            processedContent\n        )\n    );\n});"
-      },
-      {
-        "lang": "text",
-        "meta": "Ruby",
-        "code": "Tracing non-baml functions is not yet supported in Ruby."
-      },
-      {
-        "lang": "text",
-        "meta": "REST (OpenAPI)",
-        "code": "Tracing non-baml functions is not yet supported in REST (OpenAPI)."
-      },
       {
         "lang": "python",
         "meta": "Python",
@@ -5922,21 +5241,6 @@
         "lang": "ruby",
         "meta": "Ruby",
         "code": "require_relative \"baml_client/client\"\n\n$b = Baml.Client\n\ndef main\n  weather_info = $b.UseTool(user_message: \"What's the weather like in San Francisco?\")\n  puts weather_info\n  raise unless weather_info.is_a?(Baml::Types::WeatherAPI)\n  puts \"City: #{weather_info.city}\"\n  puts \"Time of Day: #{weather_info.timeOfDay}\"\nend"
-      },
-      {
-        "lang": "python",
-        "meta": "Python",
-        "code": "import asyncio\nfrom baml_client import b\nfrom baml_client.types import WeatherAPI\n\ndef main():\n    weather_info = b.UseTool(\"What's the weather like in San Francisco?\")\n    print(weather_info)\n    assert isinstance(weather_info, WeatherAPI)\n    print(f\"City: {weather_info.city}\")\n    print(f\"Time of Day: {weather_info.timeOfDay}\")\n\nif __name__ == '__main__':\n    main()"
-      },
-      {
-        "lang": "typescript",
-        "meta": "TypeScript",
-        "code": "import { b } from './baml_client'\nimport { WeatherAPI } from './baml_client/types'\nimport assert from 'assert'\n\nconst main = async () => {\n  const weatherInfo = await b.UseTool(\"What's the weather like in San Francisco?\")\n  console.log(weatherInfo)\n  assert(weatherInfo instanceof WeatherAPI)\n  console.log(`City: ${weatherInfo.city}`)\n  console.log(`Time of Day: ${weatherInfo.timeOfDay}`)\n}"
-      },
-      {
-        "lang": "ruby",
-        "meta": "Ruby",
-        "code": "require_relative \"baml_client/client\"\n\n$b = Baml.Client\n\ndef main\n  weather_info = $b.UseTool(user_message: \"What's the weather like in San Francisco?\")\n  puts weather_info\n  raise unless weather_info.is_a?(Baml::Types::WeatherAPI)\n  puts \"City: #{weather_info.city}\"\n  puts \"Time of Day: #{weather_info.timeOfDay}\"\nend"
       }
     ],
     "content": "\"Function calling\" is a technique for getting an LLM to choose a function to call for you.\nThe way it works is:\nYou define a task with certain function(s)\n\nAsk the LLM to choose which function to call\n\nGet the function parameters from the LLM for the appropriate function it choose\n\nCall the functions in your code with those parameters\n\n\nIn BAML, you can get represent a tool or a function you want to call as a BAML class, and make the function output be that class definition.\nCall the function like this:"
@@ -5972,21 +5276,6 @@
         "lang": "baml",
         "meta": "BAML",
         "code": "function UseTool(user_message: string) -> WeatherAPI | MyOtherAPI {\n  .... // same thing\n}"
-      },
-      {
-        "lang": "python",
-        "meta": "Python",
-        "code": "import asyncio\nfrom baml_client import b\nfrom baml_client.types import WeatherAPI, MyOtherAPI\n\nasync def main():\n    tool = b.UseTool(\"What's the weather like in San Francisco?\")\n    print(tool)\n    \n    if isinstance(tool, WeatherAPI):\n        print(f\"Weather API called:\")\n        print(f\"City: {tool.city}\")\n        print(f\"Time of Day: {tool.timeOfDay}\")\n    elif isinstance(tool, MyOtherAPI):\n        print(f\"MyOtherAPI called:\")\n        # Handle MyOtherAPI specific attributes here\n\nif __name__ == '__main__':\n    main()"
-      },
-      {
-        "lang": "typescript",
-        "meta": "TypeScript",
-        "code": "import { b } from './baml_client'\nimport { WeatherAPI, MyOtherAPI } from './baml_client/types'\n\nconst main = async () => {\n  const tool = await b.UseTool(\"What's the weather like in San Francisco?\")\n  console.log(tool)\n  \n  if (tool instanceof WeatherAPI) {\n    console.log(\"Weather API called:\")\n    console.log(`City: ${tool.city}`)\n    console.log(`Time of Day: ${tool.timeOfDay}`)\n  } else if (tool instanceof MyOtherAPI) {\n    console.log(\"MyOtherAPI called:\")\n    // Handle MyOtherAPI specific attributes here\n  }\n}\n\nmain()"
-      },
-      {
-        "lang": "ruby",
-        "meta": "Ruby",
-        "code": "require_relative \"baml_client/client\"\n\n$b = Baml.Client\n\ndef main\n  tool = $b.UseTool(user_message: \"What's the weather like in San Francisco?\")\n  puts tool\n  \n  case tool\n  when Baml::Types::WeatherAPI\n    puts \"Weather API called:\"\n    puts \"City: #{tool.city}\"\n    puts \"Time of Day: #{tool.timeOfDay}\"\n  when Baml::Types::MyOtherAPI\n    puts \"MyOtherAPI called:\"\n    # Handle MyOtherAPI specific attributes here\n  end\nend\n\nmain"
       },
       {
         "lang": "python",
@@ -6046,21 +5335,6 @@
         "lang": "baml",
         "meta": "BAML",
         "code": "function UseTool(user_message: string) -> (WeatherAPI | MyOtherAPI)[] {\n  .... // same thing\n}"
-      },
-      {
-        "lang": "python",
-        "meta": "Python",
-        "code": "import asyncio\nfrom baml_client import b\nfrom baml_client.types import WeatherAPI, MyOtherAPI\n\nasync def main():\n    tools = b.UseTool(\"What's the weather like in San Francisco and New York?\")\n    print(tools)  \n    \n    for tool in tools:\n        if isinstance(tool, WeatherAPI):\n            print(f\"Weather API called:\")\n            print(f\"City: {tool.city}\")\n            print(f\"Time of Day: {tool.timeOfDay}\")\n        elif isinstance(tool, MyOtherAPI):\n            print(f\"MyOtherAPI called:\")\n            # Handle MyOtherAPI specific attributes here\n\nif __name__ == '__main__':\n    main()"
-      },
-      {
-        "lang": "typescript",
-        "meta": "TypeScript",
-        "code": "import { b } from './baml_client'\nimport { WeatherAPI, MyOtherAPI } from './baml_client/types'\n\nconst main = async () => {\n  const tools = await b.UseTool(\"What's the weather like in San Francisco and New York?\")\n  console.log(tools)\n  \n  tools.forEach(tool => {\n    if (tool instanceof WeatherAPI) {\n      console.log(\"Weather API called:\")\n      console.log(`City: ${tool.city}`)\n      console.log(`Time of Day: ${tool.timeOfDay}`)\n    } else if (tool instanceof MyOtherAPI) {\n      console.log(\"MyOtherAPI called:\")\n      // Handle MyOtherAPI specific attributes here\n    }\n  })\n}\n\nmain()"
-      },
-      {
-        "lang": "ruby",
-        "meta": "Ruby",
-        "code": "require_relative \"baml_client/client\"\n\n$b = Baml.Client\n\ndef main\n  tools = $b.UseTool(user_message: \"What's the weather like in San Francisco and New York?\")\n  puts tools\n  \n  tools.each do |tool|\n    case tool\n    when Baml::Types::WeatherAPI\n      puts \"Weather API called:\"\n      puts \"City: #{tool.city}\"\n      puts \"Time of Day: #{tool.timeOfDay}\"\n    when Baml::Types::MyOtherAPI\n      puts \"MyOtherAPI called:\"\n      # Handle MyOtherAPI specific attributes here\n    end\n  end\nend\n\nmain"
       },
       {
         "lang": "python",
@@ -6762,9 +6036,6 @@
       },
       {
         "code": "baml-cli dev [OPTIONS] --preview"
-      },
-      {
-        "code": "baml-cli dev [OPTIONS] --preview"
       }
     ],
     "hierarchy": {
@@ -7352,25 +6623,6 @@
       {
         "lang": "bash",
         "code": "export MY_SUPER_SECRET_API_KEY=\"...\"\npython my_program_using_baml.py"
-      },
-      {
-        "lang": "bash",
-        "code": "export MY_SUPER_SECRET_API_KEY=\"...\"\npython my_program_using_baml.py"
-      },
-      {
-        "lang": "python",
-        "meta": "Python",
-        "code": "\nfrom baml_client import b\nfrom baml_client import reset_baml_env_vars\nimport os\nimport dotenv\n\ndotenv.load_dotenv()\nreset_baml_env_vars(dict(os.environ))"
-      },
-      {
-        "lang": "typescript",
-        "meta": "TypeScript",
-        "code": "import dotenv from 'dotenv'\n// Wait to import the BAML client until after loading environment variables\nimport { b, resetBamlEnvVars } from 'baml-client'\n\ndotenv.config()\nresetBamlEnvVars(process.env)"
-      },
-      {
-        "lang": "ruby",
-        "meta": "Ruby (beta)",
-        "code": "require 'dotenv/load'\n\n# Wait to import the BAML client until after loading environment variables\n# reset_baml_env_vars is not yet implemented in the Ruby client\nrequire 'baml_client'"
       },
       {
         "lang": "python",
@@ -8195,37 +7447,6 @@
         "code": "require_relative \"baml_client/client\"\n\nb = Baml.Client\nImage = Baml::Image\n\ndef test_image_input\n  # from URL\n  res = b.TestImageInput(\n    img: Image.from_url(\"https://upload.wikimedia.org/wikipedia/en/4/4d/Shrek_%28character%29.png\")\n  )\n\n  # Base64 image\n  image_b64 = \"iVBORw0K....\"\n  res = b.TestImageInput(\n    img: Image.from_base64(\"image/png\", image_b64)\n  )\nend"
       },
       {
-        "lang": "python",
-        "meta": "Python",
-        "code": "from baml_py import Image\nfrom baml_client import b\n\nasync def test_image_input():\n  # from URL\n  res = await b.TestImageInput(\n    img=Image.from_url(\"https://upload.wikimedia.org/wikipedia/en/4/4d/Shrek_%28character%29.png\")\n  )\n\n  # Base64 image\n  image_b64 = \"iVBORw0K....\"\n  res = await b.TestImageInput(\n    img=Image.from_base64(\"image/png\", image_b64)\n  )"
-      },
-      {
-        "lang": "typescript",
-        "meta": "TypeScript",
-        "code": "import { b } from '../baml_client'\nimport { Image } from \"@boundaryml/baml\"\n...\n\n  // URL\n  let res = await b.TestImageInput(\n    Image.fromUrl('https://upload.wikimedia.org/wikipedia/en/4/4d/Shrek_%28character%29.png'),\n  )\n\n  // Base64\n  let res = await b.TestImageInput(\n    Image.fromBase64('image/png', image_b64),\n  )"
-      },
-      {
-        "lang": "ruby",
-        "meta": "Ruby",
-        "code": "require_relative \"baml_client/client\"\n\nb = Baml.Client\nImage = Baml::Image\n\ndef test_image_input\n  # from URL\n  res = b.TestImageInput(\n    img: Image.from_url(\"https://upload.wikimedia.org/wikipedia/en/4/4d/Shrek_%28character%29.png\")\n  )\n\n  # Base64 image\n  image_b64 = \"iVBORw0K....\"\n  res = b.TestImageInput(\n    img: Image.from_base64(\"image/png\", image_b64)\n  )\nend"
-      },
-      {
-        "lang": "json",
-        "code": "{\n  \"url\": \"https://upload.wikimedia.org/wikipedia/en/4/4d/Shrek_%28character%29.png\"\n}"
-      },
-      {
-        "lang": "json",
-        "code": "{\n  \"url\": \"https://upload.wikimedia.org/wikipedia/en/4/4d/Shrek_%28character%29.png\",\n  \"media_type\": \"image/png\"\n}"
-      },
-      {
-        "lang": "json",
-        "code": "{\n  \"base64\": \"iVBORw0K....\",\n}"
-      },
-      {
-        "lang": "json",
-        "code": "{\n  \"base64\": \"iVBORw0K....\",\n  \"media_type\": \"image/png\"\n}"
-      },
-      {
         "lang": "json",
         "code": "{\n  \"url\": \"https://upload.wikimedia.org/wikipedia/en/4/4d/Shrek_%28character%29.png\"\n}"
       },
@@ -8286,21 +7507,6 @@
       {
         "lang": "rust",
         "code": "function DescribeSound(myAudio: audio) -> string {\n  client GPT4Turbo\n  prompt #\"\n    {{ _.role(\"user\")}}\n    Describe the audio in four words:\n    {{ myAudio }}\n  \"#\n}"
-      },
-      {
-        "lang": "python",
-        "meta": "Python",
-        "code": "from baml_py import Audio\nfrom baml_client import b\n\nasync def run():\n  # from URL\n  res = await b.TestAudioInput(\n      audio=Audio.from_url(\n          \"https://actions.google.com/sounds/v1/emergency/beeper_emergency_call.ogg\"\n      )\n  )\n\n  # Base64\n  b64 = \"iVBORw0K....\"\n  res = await b.TestAudioInput(\n    audio=Audio.from_base64(\"audio/ogg\", b64)\n  )"
-      },
-      {
-        "lang": "typescript",
-        "meta": "TypeScript",
-        "code": "import { b } from '../baml_client'\nimport { Audio } from \"@boundaryml/baml\"\n...\n\n  // URL\n  let res = await b.TestAudioInput(\n    Audio.fromUrl('https://actions.google.com/sounds/v1/emergency/beeper_emergency_call.ogg'),\n  )\n\n  // Base64\n  const audio_base64 = \"..\"\n  let res = await b.TestAudioInput(\n    Audio.fromBase64('audio/ogg', audio_base64),\n  )\n  "
-      },
-      {
-        "lang": "ruby",
-        "meta": "Ruby",
-        "code": "require_relative \"baml_client/client\"\n\nb = Baml.Client\nAudio = Baml::Audio\n\ndef test_audio_input\n  # from URL\n  res = b.TestAudioInput(\n      audio: Audio.from_url(\n          \"https://actions.google.com/sounds/v1/emergency/beeper_emergency_call.ogg\"\n      )\n  )\n\n  # Base64 image\n  audio_b64 = \"iVBORw0K....\"\n  res = b.TestAudioInput(\n    audio: Audio.from_base64(\"audio/mp3\", audio_b64)\n  )\nend"
       },
       {
         "lang": "python",
@@ -9711,21 +8917,6 @@
         "lang": "typescript",
         "meta": "Typescript Equivalent",
         "code": "import z from \"zod\";\nimport { BarZod } from \"./path/to/bar\";\nimport { MyEnumZod } from \"./path/to/my_enum\";\n\nconst FooZod = z.object({\n  property1: z.string(),\n  property2: z.number().int().nullable().optional(),\n  property3: z.array(BarZod),\n  property4: MyEnumZod,\n});\n\ntype Foo = z.infer<typeof FooZod>;"
-      },
-      {
-        "lang": "baml",
-        "meta": "Baml",
-        "code": "class Foo {\n  property1 string\n  property2 int?\n  property3 Bar[]\n  property4 MyEnum\n}"
-      },
-      {
-        "lang": "python",
-        "meta": "Python Equivalent",
-        "code": "from pydantic import BaseModel\nfrom path.to.bar import Bar\nfrom path.to.my_enum import MyEnum\n\nclass Foo(BaseModel):\n  property1: str\n  property2: Optional[int]= None\n  property3: List[Bar]\n  property4: MyEnum"
-      },
-      {
-        "lang": "typescript",
-        "meta": "Typescript Equivalent",
-        "code": "import z from \"zod\";\nimport { BarZod } from \"./path/to/bar\";\nimport { MyEnumZod } from \"./path/to/my_enum\";\n\nconst FooZod = z.object({\n  property1: z.string(),\n  property2: z.number().int().nullable().optional(),\n  property3: z.array(BarZod),\n  property4: MyEnumZod,\n});\n\ntype Foo = z.infer<typeof FooZod>;"
       }
     ],
     "content": "Classes consist of a name, a list of properties, and their types.\nIn the context of LLMs, classes describe the type of the variables you can inject into prompts and extract out from the response.\n\n\nNote properties have no :"
@@ -10006,21 +9197,6 @@
         "lang": "typescript",
         "meta": "Typescript Equivalent",
         "code": "enum MyEnum {\n  Value1 = \"Value1\",\n  Value2 = \"Value2\",\n  Value3 = \"Value3\",\n}"
-      },
-      {
-        "lang": "baml",
-        "meta": "BAML",
-        "code": "enum MyEnum {\n  Value1\n  Value2\n  Value3\n}"
-      },
-      {
-        "lang": "python",
-        "meta": "Python Equivalent",
-        "code": "from enum import StrEnum\n\nclass MyEnum(StrEnum):\n  Value1 = \"Value1\"\n  Value2 = \"Value2\"\n  Value3 = \"Value3\""
-      },
-      {
-        "lang": "typescript",
-        "meta": "Typescript Equivalent",
-        "code": "enum MyEnum {\n  Value1 = \"Value1\",\n  Value2 = \"Value2\",\n  Value3 = \"Value3\",\n}"
       }
     ],
     "content": "Enums are useful for classification tasks. BAML has helper functions that can help you serialize an enum into your prompt in a neatly formatted list (more on that later).\nTo define your own custom enum in BAML:\n\n\nYou may have as many values as you'd like.\n\nValues may not be duplicated or empty.\n\nValues may not contain spaces or special characters and must not start with a number."
@@ -10135,26 +9311,6 @@
     "page_position": 0,
     "type": "markdown",
     "code_snippets": [
-      {
-        "lang": "baml",
-        "meta": "Python",
-        "code": "generator target {\n    // Valid values: \"python/pydantic\", \"typescript\", \"ruby/sorbet\"\n    output_type \"python/pydantic\"\n    \n    // Where the generated code will be saved (relative to baml_src/)\n    output_dir \"../\"\n    \n    // What interface you prefer to use for the generated code (sync/async)\n    // Both are generated regardless of the choice, just modifies what is exported\n    // at the top level\n    default_client_mode \"sync\"\n    \n    // Version of runtime to generate code for (should match installed baml-py version)\n    version \"0.63.0\"\n}"
-      },
-      {
-        "lang": "baml",
-        "meta": "TypeScript",
-        "code": "generator target {\n    // Valid values: \"python/pydantic\", \"typescript\", \"ruby/sorbet\"\n    output_type \"typescript\"\n    \n    // Where the generated code will be saved (relative to baml_src/)\n    output_dir \"../\"\n    \n    // What interface you prefer to use for the generated code (sync/async)\n    // Both are generated regardless of the choice, just modifies what is exported\n    // at the top level\n    default_client_mode \"async\"\n    \n    // Version of runtime to generate code for (should match the package @boundaryml/baml version)\n    version \"0.63.0\"\n}"
-      },
-      {
-        "lang": "baml",
-        "meta": "Ruby (beta)",
-        "code": "generator target {\n    // Valid values: \"python/pydantic\", \"typescript\", \"ruby/sorbet\"\n    output_type \"ruby/sorbet\"\n\n    // Where the generated code will be saved (relative to baml_src/)\n    output_dir \"../\"\n    \n    // Version of runtime to generate code for (should match installed `baml` package version)\n    version \"0.63.0\"\n}"
-      },
-      {
-        "lang": "baml",
-        "meta": "OpenAPI",
-        "code": "generator target {\n    // Valid values: \"python/pydantic\", \"typescript\", \"ruby/sorbet\", \"rest/openapi\"\n    output_type \"rest/openapi\"\n\n    // Where the generated code will be saved (relative to baml_src/)\n    output_dir \"../\"\n    \n    // Version of runtime to generate code for (should match installed `baml` package version)\n    version \"0.54.0\"\n\n    // 'baml-cli generate' will run this after generating openapi.yaml, to generate your OpenAPI client\n    // This command will be run from within $output_dir\n    on_generate \"npx @openapitools/openapi-generator-cli generate -i openapi.yaml -g OPENAPI_CLIENT_TYPE -o .\"\n}"
-      },
       {
         "lang": "baml",
         "meta": "Python",
@@ -11523,10 +10679,6 @@
       {
         "lang": "baml",
         "code": "client<llm> Foo {\n  provider openai\n  options {\n    allowed_role_metadata: [\"foo\", \"bar\"]\n  }\n}\n\nclient<llm> FooWithout {\n  provider openai\n  options {\n  }\n}\ntemplate_string Foo() #\"\n  {{ _.role('user', foo={\"type\": \"ephemeral\"}, bar=\"1\", cat=True) }}\n  This will be have foo and bar, but not cat metadata. But only for Foo, not FooWithout.\n  {{ _.role('user') }}\n  This will have none of the role metadata for Foo or FooWithout.\n\"#"
-      },
-      {
-        "lang": "baml",
-        "code": "client<llm> Foo {\n  provider openai\n  options {\n    allowed_role_metadata: [\"foo\", \"bar\"]\n  }\n}\n\nclient<llm> FooWithout {\n  provider openai\n  options {\n  }\n}\ntemplate_string Foo() #\"\n  {{ _.role('user', foo={\"type\": \"ephemeral\"}, bar=\"1\", cat=True) }}\n  This will be have foo and bar, but not cat metadata. But only for Foo, not FooWithout.\n  {{ _.role('user') }}\n  This will have none of the role metadata for Foo or FooWithout.\n\"#"
       }
     ],
     "hierarchy": {
@@ -11566,11 +10718,6 @@
     "hash": "#forwarded-options",
     "content": "BAML will auto construct this field for you from the prompt\n\n\nThe model to use.\nModel Description \nanthropic.claude-3-haiku-20240307-v1:0 Fastest + Cheapest \nanthropic.claude-3-sonnet-20240307-v1:0 Smartest \nmeta.llama3-8b-instruct-v1:0  \nmeta.llama3-70b-instruct-v1:0  \nmistral.mistral-7b-instruct-v0:2  \nmistral.mixtral-8x7b-instruct-v0:1  \n\nRun aws bedrock list-foundation-models | jq '.modelSummaries.[].modelId to get\na list of available foundation models; you can also use any custom models you've\ndeployed.\nNote that to use any of these models you'll need to request model access.\n\n\nAdditional inference configuration to send with the request; see AWS Bedrock\ndocumentation.\nExample:",
     "code_snippets": [
-      {
-        "lang": "baml",
-        "meta": "BAML",
-        "code": "client<llm> MyClient {\n  provider aws-bedrock\n  options {\n    inference_configuration {\n      max_tokens 1000\n      temperature 1.0\n      top_p 0.8\n      stop_sequence [\"_EOF\"]\n    }\n  }\n}"
-      },
       {
         "lang": "baml",
         "meta": "BAML",
@@ -11652,17 +10799,6 @@
       {
         "lang": "baml",
         "code": "client<llm> MyClient {\n  provider anthropic\n  options {\n    api_key env.MY_ANTHROPIC_KEY\n    model \"claude-3-5-sonnet-20240620\"\n    headers {\n      \"X-My-Header\" \"my-value\"\n    }\n  }\n}"
-      },
-      {
-        "code": "\"anthropic-version\" \"2023-06-01\""
-      },
-      {
-        "lang": "baml",
-        "code": "client<llm> MyClient {\n  provider anthropic\n  options {\n    api_key env.MY_ANTHROPIC_KEY\n    model \"claude-3-5-sonnet-20240620\"\n    headers {\n      \"X-My-Header\" \"my-value\"\n    }\n  }\n}"
-      },
-      {
-        "lang": "baml",
-        "code": "client<llm> ClaudeWithCaching {\n  provider anthropic\n  options {\n    model claude-3-haiku-20240307\n    api_key env.ANTHROPIC_API_KEY\n    max_tokens 1000\n    allowed_role_metadata [\"cache_control\"]\n    headers {\n      \"anthropic-beta\" \"prompt-caching-2024-07-31\"\n    }\n  }\n}\n\nclient<llm> FooWithout {\n  provider anthropic\n  options {\n  }\n}\n\ntemplate_string Foo() #\"\n  {{ _.role('user', cache_control={\"type\": \"ephemeral\"}) }}\n  This will be cached for ClaudeWithCaching, but not for FooWithout!\n  {{ _.role('user') }}\n  This will not be cached for Foo or FooWithout!\n\"#"
       },
       {
         "lang": "baml",
@@ -11778,15 +10914,6 @@
         "lang": "baml",
         "meta": "BAML",
         "code": "client<llm> MyClient {\n  provider google-ai\n  options {\n    model \"gemini-1.5-flash\"\n    headers {\n      \"X-My-Header\" \"my-value\"\n    }\n  }\n}"
-      },
-      {
-        "lang": "baml",
-        "meta": "BAML",
-        "code": "client<llm> MyClient {\n  provider google-ai\n  options {\n    model \"gemini-1.5-flash\"\n    headers {\n      \"X-My-Header\" \"my-value\"\n    }\n  }\n}"
-      },
-      {
-        "lang": "baml",
-        "code": "client<llm> Foo {\n  provider openai\n  options {\n    allowed_role_metadata: [\"foo\", \"bar\"]\n  }\n}\n\nclient<llm> FooWithout {\n  provider openai\n  options {\n  }\n}\ntemplate_string Foo() #\"\n  {{ _.role('user', foo={\"type\": \"ephemeral\"}, bar=\"1\", cat=True) }}\n  This will be have foo and bar, but not cat metadata. But only for Foo, not FooWithout.\n  {{ _.role('user') }}\n  This will have none of the role metadata for Foo or FooWithout.\n\"#"
       },
       {
         "lang": "baml",
@@ -11985,22 +11112,7 @@
       {
         "lang": "baml",
         "meta": "BAML",
-        "code": "client<llm> Vertex {\n  provider vertex-ai\n  options {\n    model gemini-1.5-pro\n    project_id jane-doe-test-1\n    location us-central1\n    credentials 'path/to/credentials.json'\n  }\n}"
-      },
-      {
-        "lang": "baml",
-        "meta": "BAML",
         "code": "client<llm> Vertex {\n  provider vertex-ai\n  options {\n    model gemini-1.5-pro\n    project_id jane-doe-mycompany-1\n    location us-central1\n    credentials {\n      ...\n      private_key \"-----BEGIN PRIVATE KEY-----super-duper-secret-string\\n-----END PRIVATE KEY-----\\n\"\n      client_email \"jane_doe@mycompany.com\"\n      ...\n    }\n  }\n}"
-      },
-      {
-        "lang": "baml",
-        "meta": "BAML",
-        "code": "client<llm> Vertex {\n  provider vertex-ai\n  options {\n    model gemini-1.5-pro\n    project_id jane-doe-mycompany-1\n    location us-central1\n    credentials {\n      ...\n      private_key \"-----BEGIN PRIVATE KEY-----super-duper-secret-string\\n-----END PRIVATE KEY-----\\n\"\n      client_email \"jane_doe@mycompany.com\"\n      ...\n    }\n  }\n}"
-      },
-      {
-        "lang": "json",
-        "meta": "Credentials",
-        "code": "    {\n      \"type\": \"service_account\",\n      \"project_id\": \"my-project-id\",\n      \"private_key_id\": \"string\",\n      \"private_key\": \"-----BEGIN PRIVATE KEY-----string\\n-----END PRIVATE KEY-----\\n\",\n      \"client_email\": \"john_doe@gmail.com\",\n      \"client_id\": \"123456\",\n      \"auth_uri\": \"https://accounts.google.com/o/oauth2/auth\",\n      \"token_uri\": \"https://oauth2.googleapis.com/token\",\n      \"auth_provider_x509_cert_url\": \"https://www.googleapis.com/oauth2/v1/certs\",\n      \"client_x509_cert_url\": \"https://www.googleapis.com/robot/v1/metadata/...\",\n      \"universe_domain\": \"googleapis.com\"\n    }"
       },
       {
         "lang": "json",
@@ -12011,15 +11123,6 @@
         "lang": "baml",
         "meta": "BAML",
         "code": "client<llm> MyClient {\n  provider vertex-ai\n  options {\n    model gemini-1.5-pro\n    project_id my-project-id\n    location us-central1\n    // Additional headers\n    headers {\n      \"X-My-Header\" \"my-value\"\n    }\n  }\n}"
-      },
-      {
-        "lang": "baml",
-        "meta": "BAML",
-        "code": "client<llm> MyClient {\n  provider vertex-ai\n  options {\n    model gemini-1.5-pro\n    project_id my-project-id\n    location us-central1\n    // Additional headers\n    headers {\n      \"X-My-Header\" \"my-value\"\n    }\n  }\n}"
-      },
-      {
-        "lang": "baml",
-        "code": "client<llm> Foo {\n  provider openai\n  options {\n    allowed_role_metadata: [\"foo\", \"bar\"]\n  }\n}\n\nclient<llm> FooWithout {\n  provider openai\n  options {\n  }\n}\ntemplate_string Foo() #\"\n  {{ _.role('user', foo={\"type\": \"ephemeral\"}, bar=\"1\", cat=True) }}\n  This will be have foo and bar, but not cat metadata. But only for Foo, not FooWithout.\n  {{ _.role('user') }}\n  This will have none of the role metadata for Foo or FooWithout.\n\"#"
       },
       {
         "lang": "baml",
@@ -12067,16 +11170,6 @@
         "lang": "baml",
         "meta": "BAML",
         "code": "client<llm> MyClient {\n  provider vertex-ai\n  options {\n    model gemini-1.5-pro\n    project_id my-project-id\n    location us-central1\n\n    safetySettings {\n      category HARM_CATEGORY_HATE_SPEECH\n      threshold BLOCK_LOW_AND_ABOVE\n      method SEVERITY\n    }\n  }\n}"
-      },
-      {
-        "lang": "baml",
-        "meta": "BAML",
-        "code": "client<llm> MyClient {\n  provider vertex-ai\n  options {\n    model gemini-1.5-pro\n    project_id my-project-id\n    location us-central1\n\n    safetySettings {\n      category HARM_CATEGORY_HATE_SPEECH\n      threshold BLOCK_LOW_AND_ABOVE\n      method SEVERITY\n    }\n  }\n}"
-      },
-      {
-        "lang": "baml",
-        "meta": "BAML",
-        "code": "client<llm> MyClient {\n  provider vertex-ai\n  options {\n    model gemini-1.5-pro\n    project_id my-project-id\n    location us-central1\n    \n    generationConfig {\n      maxOutputTokens 100\n      temperature 1\n    }\n  }\n}"
       },
       {
         "lang": "baml",
@@ -12157,15 +11250,6 @@
         "lang": "baml",
         "meta": "BAML",
         "code": "client<llm> MyClient {\n  provider openai\n  options {\n    api_key env.MY_OPENAI_KEY\n    model \"gpt-3.5-turbo\"\n    headers {\n      \"X-My-Header\" \"my-value\"\n    }\n  }\n}"
-      },
-      {
-        "lang": "baml",
-        "meta": "BAML",
-        "code": "client<llm> MyClient {\n  provider openai\n  options {\n    api_key env.MY_OPENAI_KEY\n    model \"gpt-3.5-turbo\"\n    headers {\n      \"X-My-Header\" \"my-value\"\n    }\n  }\n}"
-      },
-      {
-        "lang": "baml",
-        "code": "client<llm> Foo {\n  provider openai\n  options {\n    allowed_role_metadata: [\"foo\", \"bar\"]\n  }\n}\n\nclient<llm> FooWithout {\n  provider openai\n  options {\n  }\n}\ntemplate_string Foo() #\"\n  {{ _.role('user', foo={\"type\": \"ephemeral\"}, bar=\"1\", cat=True) }}\n  This will be have foo and bar, but not cat metadata. But only for Foo, not FooWithout.\n  {{ _.role('user') }}\n  This will have none of the role metadata for Foo or FooWithout.\n\"#"
       },
       {
         "lang": "baml",
@@ -12284,15 +11368,6 @@
       },
       {
         "lang": "baml",
-        "meta": "BAML",
-        "code": "client<llm> MyClient {\n  provider azure-openai\n  options {\n    resource_name \"my-resource-name\"\n    deployment_id \"my-deployment-id\"\n    api_version \"2024-02-01\"\n    api_key env.AZURE_OPENAI_API_KEY\n    headers {\n      \"X-My-Header\" \"my-value\"\n    }\n  }\n}"
-      },
-      {
-        "lang": "baml",
-        "code": "client<llm> Foo {\n  provider openai\n  options {\n    allowed_role_metadata: [\"foo\", \"bar\"]\n  }\n}\n\nclient<llm> FooWithout {\n  provider openai\n  options {\n  }\n}\ntemplate_string Foo() #\"\n  {{ _.role('user', foo={\"type\": \"ephemeral\"}, bar=\"1\", cat=True) }}\n  This will be have foo and bar, but not cat metadata. But only for Foo, not FooWithout.\n  {{ _.role('user') }}\n  This will have none of the role metadata for Foo or FooWithout.\n\"#"
-      },
-      {
-        "lang": "baml",
         "code": "client<llm> Foo {\n  provider openai\n  options {\n    allowed_role_metadata: [\"foo\", \"bar\"]\n  }\n}\n\nclient<llm> FooWithout {\n  provider openai\n  options {\n  }\n}\ntemplate_string Foo() #\"\n  {{ _.role('user', foo={\"type\": \"ephemeral\"}, bar=\"1\", cat=True) }}\n  This will be have foo and bar, but not cat metadata. But only for Foo, not FooWithout.\n  {{ _.role('user') }}\n  This will have none of the role metadata for Foo or FooWithout.\n\"#"
       }
     ],
@@ -12401,11 +11476,6 @@
     "hash": "#non-forwarded-options",
     "content": "The base URL for the API.\nDefault: https://api.openai.com/v1\n\n\nThe default role for any prompts that don't specify a role.\nWe don't do any validation of this field, so you can pass any string you wish.\nDefault: system\n\n\nWill be used to build the Authorization header, like so: Authorization: Bearer $api_key\nIf api_key is not set, or is set to an empty string, the Authorization header will not be sent.\nDefault: <none>\n\n\nAdditional headers to send with the request.\nExample:",
     "code_snippets": [
-      {
-        "lang": "baml",
-        "meta": "BAML",
-        "code": "client<llm> MyClient {\n  provider \"openai-generic\"\n  options {\n    base_url \"https://api.provider.com\"\n    model \"<provider-specified-format>\"\n    headers {\n      \"X-My-Header\" \"my-value\"\n    }\n  }\n}"
-      },
       {
         "lang": "baml",
         "meta": "BAML",
@@ -12642,15 +11712,6 @@
         "lang": "baml",
         "meta": "BAML",
         "code": "client<llm> MyClient {\n  provider ollama\n  options {\n    model \"llama3\"\n    headers {\n      \"X-My-Header\" \"my-value\"\n    }\n  }\n}"
-      },
-      {
-        "lang": "baml",
-        "meta": "BAML",
-        "code": "client<llm> MyClient {\n  provider ollama\n  options {\n    model \"llama3\"\n    headers {\n      \"X-My-Header\" \"my-value\"\n    }\n  }\n}"
-      },
-      {
-        "lang": "baml",
-        "code": "client<llm> Foo {\n  provider openai\n  options {\n    allowed_role_metadata: [\"foo\", \"bar\"]\n  }\n}\n\nclient<llm> FooWithout {\n  provider openai\n  options {\n  }\n}\ntemplate_string Foo() #\"\n  {{ _.role('user', foo={\"type\": \"ephemeral\"}, bar=\"1\", cat=True) }}\n  This will be have foo and bar, but not cat metadata. But only for Foo, not FooWithout.\n  {{ _.role('user') }}\n  This will have none of the role metadata for Foo or FooWithout.\n\"#"
       },
       {
         "lang": "baml",
@@ -12895,11 +11956,6 @@
     "hash": "#fields",
     "content": "Number of additional retries to attempt after the initial request fails.\n\n\nThe strategy to use for retrying requests. Default is constant_delay(delay_ms=200).\nStrategy Docs Notes \nconstant_delay Docs  \nexponential_backoff Docs  \n\nExample:",
     "code_snippets": [
-      {
-        "lang": "baml",
-        "meta": "BAML",
-        "code": "retry_policy MyPolicyName {\n  max_retries 3\n  strategy {\n    type constant_delay\n    delay_ms 200\n  }\n}"
-      },
       {
         "lang": "baml",
         "meta": "BAML",
@@ -13348,21 +12404,6 @@
         "lang": "ruby",
         "meta": "Ruby",
         "code": "require_relative 'baml_client/client'\n\n# Create a TypeBuilder instance\ntb = Baml::TypeBuilder.new\n\n# Add new values to the Category enum\ntb.Category.add_value('GREEN')\ntb.Category.add_value('YELLOW')\n\n# Pass the typebuilder when calling the function\nresult = Baml::Client.categorize(text: \"The sun is bright\", baml_options: { tb: tb })\n# result can now be RED, BLUE, GREEN, or YELLOW"
-      },
-      {
-        "lang": "python",
-        "meta": "Python",
-        "code": "from baml_client.type_builder import TypeBuilder\nfrom baml_client import b\n\n# Create a TypeBuilder instance\ntb = TypeBuilder()\n\n# Add new values to the Category enum\ntb.Category.add_value('GREEN') \ntb.Category.add_value('YELLOW')\n\n# Pass the typebuilder when calling the function\nresult = await b.Categorize(\"The sun is bright\", {\"tb\": tb})\n# result can now be RED, BLUE, GREEN, or YELLOW"
-      },
-      {
-        "lang": "typescript",
-        "meta": "TypeScript",
-        "code": "import { TypeBuilder } from '../baml_client/type_builder'\nimport { b } from '../baml_client'\n\n// Create a TypeBuilder instance\nconst tb = new TypeBuilder()\n\n// Add new values to the Category enum\ntb.Category.addValue('GREEN')\ntb.Category.addValue('YELLOW')\n\n// Pass the typebuilder when calling the function\nconst result = await b.Categorize(\"The sun is bright\", { tb })\n// result can now be RED, BLUE, GREEN, or YELLOW"
-      },
-      {
-        "lang": "ruby",
-        "meta": "Ruby",
-        "code": "require_relative 'baml_client/client'\n\n# Create a TypeBuilder instance\ntb = Baml::TypeBuilder.new\n\n# Add new values to the Category enum\ntb.Category.add_value('GREEN')\ntb.Category.add_value('YELLOW')\n\n# Pass the typebuilder when calling the function\nresult = Baml::Client.categorize(text: \"The sun is bright\", baml_options: { tb: tb })\n# result can now be RED, BLUE, GREEN, or YELLOW"
       }
     ],
     "content": "TypeBuilder is used to create or modify output schemas at runtime. It's particularly useful when you have dynamic output structures that can't be determined at compile time - like categories from a database or user-provided schemas.\nHere's a simple example of using TypeBuilder to add new enum values before calling a BAML function:\nBAML Code\nRuntime Usage"
@@ -13449,25 +12490,6 @@
         "code": "tb = Baml::TypeBuilder.new\ntb.User.add_property('email', tb.string)\ntb.User.add_property('address', tb.string)"
       },
       {
-        "lang": "python",
-        "meta": "Python",
-        "code": "tb = TypeBuilder()\ntb.User.add_property('email', tb.string())\ntb.User.add_property('address', tb.string())"
-      },
-      {
-        "lang": "typescript",
-        "meta": "TypeScript",
-        "code": "const tb = new TypeBuilder()\ntb.User.addProperty('email', tb.string())\ntb.User.addProperty('address', tb.string())"
-      },
-      {
-        "lang": "ruby",
-        "meta": "Ruby",
-        "code": "tb = Baml::TypeBuilder.new\ntb.User.add_property('email', tb.string)\ntb.User.add_property('address', tb.string)"
-      },
-      {
-        "lang": "baml",
-        "code": "class User {\n  name string\n  age int\n  @@dynamic  // Allow adding more properties\n}"
-      },
-      {
         "lang": "baml",
         "code": "enum Category {\n  VALUE1\n  VALUE2\n  @@dynamic  // Allow adding more values\n}"
       },
@@ -13485,25 +12507,6 @@
         "lang": "ruby",
         "meta": "Ruby",
         "code": "tb = Baml::TypeBuilder.new\ntb.Category.add_value('VALUE3')\ntb.Category.add_value('VALUE4')"
-      },
-      {
-        "lang": "python",
-        "meta": "Python",
-        "code": "tb = TypeBuilder()\ntb.Category.add_value('VALUE3')\ntb.Category.add_value('VALUE4')"
-      },
-      {
-        "lang": "typescript",
-        "meta": "TypeScript",
-        "code": "const tb = new TypeBuilder()\ntb.Category.addValue('VALUE3')\ntb.Category.addValue('VALUE4')"
-      },
-      {
-        "lang": "ruby",
-        "meta": "Ruby",
-        "code": "tb = Baml::TypeBuilder.new\ntb.Category.add_value('VALUE3')\ntb.Category.add_value('VALUE4')"
-      },
-      {
-        "lang": "baml",
-        "code": "enum Category {\n  VALUE1\n  VALUE2\n  @@dynamic  // Allow adding more values\n}"
       }
     ],
     "hierarchy": {
@@ -13547,21 +12550,6 @@
     "hash": "#creating-new-types",
     "content": "You can also create entirely new types at runtime:",
     "code_snippets": [
-      {
-        "lang": "python",
-        "meta": "Python",
-        "code": "tb = TypeBuilder()\n\n# Create a new enum\nhobbies = tb.add_enum(\"Hobbies\")\nhobbies.add_value(\"Soccer\")\nhobbies.add_value(\"Reading\")\n\n# Create a new class\naddress = tb.add_class(\"Address\") \naddress.add_property(\"street\", tb.string())\naddress.add_property(\"city\", tb.string())\n\n# Attach new types to existing BAML type\ntb.User.add_property(\"hobbies\", hobbies.type().list())\ntb.User.add_property(\"address\", address.type())"
-      },
-      {
-        "lang": "typescript",
-        "meta": "TypeScript",
-        "code": "const tb = new TypeBuilder()\n\n// Create a new enum\nconst hobbies = tb.addEnum(\"Hobbies\")\nhobbies.addValue(\"Soccer\")\nhobbies.addValue(\"Reading\")\n\n// Create a new class\nconst address = tb.addClass(\"Address\")\naddress.addProperty(\"street\", tb.string())\naddress.addProperty(\"city\", tb.string())\n\n// Attach new types to existing BAML type\ntb.User.addProperty(\"hobbies\", hobbies.type().list())\ntb.User.addProperty(\"address\", address.type())"
-      },
-      {
-        "lang": "ruby",
-        "meta": "Ruby",
-        "code": "tb = Baml::TypeBuilder.new\n\n# Create a new enum\nhobbies = tb.add_enum(\"Hobbies\")\nhobbies.add_value(\"Soccer\")\nhobbies.add_value(\"Reading\")\n\n# Create a new class\naddress = tb.add_class(\"Address\")\naddress.add_property(\"street\", tb.string)\naddress.add_property(\"city\", tb.string)\n\n# Attach new types to existing BAML type\ntb.User.add_property(\"hobbies\", hobbies.type.list)\ntb.User.add_property(\"address\", address.type)"
-      },
       {
         "lang": "python",
         "meta": "Python",
@@ -13669,21 +12657,6 @@
         "lang": "ruby",
         "meta": "Ruby",
         "code": "tb = Baml::TypeBuilder.new\n\n# Add description to a property\ntb.User.add_property(\"email\", tb.string)\n   .description(\"User's primary email address\")\n\n# Add description to an enum value\ntb.Category.add_value(\"URGENT\")\n   .description(\"Needs immediate attention\")"
-      },
-      {
-        "lang": "python",
-        "meta": "Python",
-        "code": "tb = TypeBuilder()\n\n# Add description to a property\ntb.User.add_property(\"email\", tb.string()) \\\n   .description(\"User's primary email address\")\n\n# Add description to an enum value \ntb.Category.add_value(\"URGENT\") \\\n   .description(\"Needs immediate attention\")"
-      },
-      {
-        "lang": "typescript",
-        "meta": "TypeScript",
-        "code": "const tb = new TypeBuilder()\n\n// Add description to a property\ntb.User.addProperty(\"email\", tb.string())\n   .description(\"User's primary email address\")\n\n// Add description to an enum value\ntb.Category.addValue(\"URGENT\")\n   .description(\"Needs immediate attention\")"
-      },
-      {
-        "lang": "ruby",
-        "meta": "Ruby",
-        "code": "tb = Baml::TypeBuilder.new\n\n# Add description to a property\ntb.User.add_property(\"email\", tb.string)\n   .description(\"User's primary email address\")\n\n# Add description to an enum value\ntb.Category.add_value(\"URGENT\")\n   .description(\"Needs immediate attention\")"
       }
     ],
     "hierarchy": {
@@ -13741,21 +12714,6 @@
       {
         "lang": "python",
         "meta": "Python",
-        "code": "categories = fetch_categories_from_db()\ntb = TypeBuilder()\nfor category in categories:\n    tb.Category.add_value(category)"
-      },
-      {
-        "lang": "typescript",
-        "meta": "TypeScript",
-        "code": "const categories = await fetchCategoriesFromDb()\nconst tb = new TypeBuilder()\ncategories.forEach(category => {\n    tb.Category.addValue(category)\n})"
-      },
-      {
-        "lang": "ruby",
-        "meta": "Ruby",
-        "code": "categories = fetch_categories_from_db\ntb = Baml::TypeBuilder.new\ncategories.each do |category|\n    tb.Category.add_value(category)\nend"
-      },
-      {
-        "lang": "python",
-        "meta": "Python",
         "code": "fields = get_form_fields()\ntb = TypeBuilder()\nform = tb.add_class(\"Form\")\nfor field in fields:\n    form.add_property(field.name, tb.string())"
       },
       {
@@ -13767,36 +12725,6 @@
         "lang": "ruby",
         "meta": "Ruby",
         "code": "fields = get_form_fields\ntb = Baml::TypeBuilder.new\nform = tb.add_class(\"Form\")\nfields.each do |field|\n    form.add_property(field.name, tb.string)\nend"
-      },
-      {
-        "lang": "python",
-        "meta": "Python",
-        "code": "fields = get_form_fields()\ntb = TypeBuilder()\nform = tb.add_class(\"Form\")\nfor field in fields:\n    form.add_property(field.name, tb.string())"
-      },
-      {
-        "lang": "typescript",
-        "meta": "TypeScript",
-        "code": "const fields = getFormFields()\nconst tb = new TypeBuilder()\nconst form = tb.addClass(\"Form\")\nfields.forEach(field => {\n    form.addProperty(field.name, tb.string())\n})"
-      },
-      {
-        "lang": "ruby",
-        "meta": "Ruby",
-        "code": "fields = get_form_fields\ntb = Baml::TypeBuilder.new\nform = tb.add_class(\"Form\")\nfields.each do |field|\n    form.add_property(field.name, tb.string)\nend"
-      },
-      {
-        "lang": "python",
-        "meta": "Python",
-        "code": "tb = TypeBuilder()\ntb.User.add_property(\"middle_name\", tb.string().optional())"
-      },
-      {
-        "lang": "typescript",
-        "meta": "TypeScript",
-        "code": "const tb = new TypeBuilder()\ntb.User.addProperty(\"middle_name\", tb.string().optional())"
-      },
-      {
-        "lang": "ruby",
-        "meta": "Ruby",
-        "code": "tb = Baml::TypeBuilder.new\ntb.User.add_property(\"middle_name\", tb.string.optional)"
       },
       {
         "lang": "python",
@@ -13890,32 +12818,12 @@
         "code": "import os\nfrom baml_py import ClientRegistry\n\nasync def run():\n    cr = ClientRegistry()\n    # Creates a new client\n    cr.add_llm_client(name='MyAmazingClient', provider='openai', options={\n        \"model\": \"gpt-4o\",\n        \"temperature\": 0.7,\n        \"api_key\": os.environ.get('OPENAI_API_KEY')\n    })\n    # Sets MyAmazingClient as the primary client\n    cr.set_primary('MyAmazingClient')\n\n    # ExtractResume will now use MyAmazingClient as the calling client\n    res = await b.ExtractResume(\"...\", { \"client_registry\": cr })"
       },
       {
-        "lang": "python",
-        "code": "import os\nfrom baml_py import ClientRegistry\n\nasync def run():\n    cr = ClientRegistry()\n    # Creates a new client\n    cr.add_llm_client(name='MyAmazingClient', provider='openai', options={\n        \"model\": \"gpt-4o\",\n        \"temperature\": 0.7,\n        \"api_key\": os.environ.get('OPENAI_API_KEY')\n    })\n    # Sets MyAmazingClient as the primary client\n    cr.set_primary('MyAmazingClient')\n\n    # ExtractResume will now use MyAmazingClient as the calling client\n    res = await b.ExtractResume(\"...\", { \"client_registry\": cr })"
-      },
-      {
-        "lang": "typescript",
-        "code": "import { ClientRegistry } from '@boundaryml/baml'\n\nasync function run() {\n    const cr = new ClientRegistry()\n    // Creates a new client\n    cr.addLlmClient({ name: 'MyAmazingClient', provider: 'openai', options: {\n        model: \"gpt-4o\",\n        temperature: 0.7,\n        api_key: process.env.OPENAI_API_KEY\n    }})\n    // Sets MyAmazingClient as the primary client\n    cr.setPrimary('MyAmazingClient')\n\n    // ExtractResume will now use MyAmazingClient as the calling client\n    const res = await b.ExtractResume(\"...\", { clientRegistry: cr })\n}"
-      },
-      {
         "lang": "typescript",
         "code": "import { ClientRegistry } from '@boundaryml/baml'\n\nasync function run() {\n    const cr = new ClientRegistry()\n    // Creates a new client\n    cr.addLlmClient({ name: 'MyAmazingClient', provider: 'openai', options: {\n        model: \"gpt-4o\",\n        temperature: 0.7,\n        api_key: process.env.OPENAI_API_KEY\n    }})\n    // Sets MyAmazingClient as the primary client\n    cr.setPrimary('MyAmazingClient')\n\n    // ExtractResume will now use MyAmazingClient as the calling client\n    const res = await b.ExtractResume(\"...\", { clientRegistry: cr })\n}"
       },
       {
         "lang": "ruby",
         "code": "require_relative \"baml_client/client\"\n\ndef run\n  cr = Baml::ClientRegistry.new\n\n  # Creates a new client\n  cr.add_llm_client(\n    name: 'MyAmazingClient',\n    provider: 'openai',\n    options: {\n      model: 'gpt-4o',\n      temperature: 0.7,\n      api_key: ENV['OPENAI_API_KEY']\n    }\n  )\n\n  # Sets MyAmazingClient as the primary client\n  cr.set_primary('MyAmazingClient')\n\n  # ExtractResume will now use MyAmazingClient as the calling client\n  res = Baml.Client.extract_resume(input: '...', baml_options: { client_registry: cr })\nend\n\n# Call the asynchronous function\nrun"
-      },
-      {
-        "lang": "ruby",
-        "code": "require_relative \"baml_client/client\"\n\ndef run\n  cr = Baml::ClientRegistry.new\n\n  # Creates a new client\n  cr.add_llm_client(\n    name: 'MyAmazingClient',\n    provider: 'openai',\n    options: {\n      model: 'gpt-4o',\n      temperature: 0.7,\n      api_key: ENV['OPENAI_API_KEY']\n    }\n  )\n\n  # Sets MyAmazingClient as the primary client\n  cr.set_primary('MyAmazingClient')\n\n  # ExtractResume will now use MyAmazingClient as the calling client\n  res = Baml.Client.extract_resume(input: '...', baml_options: { client_registry: cr })\nend\n\n# Call the asynchronous function\nrun"
-      },
-      {
-        "lang": "json",
-        "code": "{\n    \"resume\": \"Vaibhav Gupta\",\n    \"__baml_options__\": {\n        \"client_registry\": {\n            \"clients\": [\n                {\n                    \"name\": \"OpenAI\",\n                    \"provider\": \"openai\",\n                    \"retry_policy\": null,\n                    \"options\": {\n                        \"model\": \"gpt-4o-mini\",\n                        \"api_key\": \"sk-...\"\n                    }\n                }\n            ],\n            \"primary\": \"OpenAI\"\n        }\n    }\n}"
-      },
-      {
-        "lang": "sh",
-        "code": "curl -X POST http://localhost:2024/call/ExtractResume \\\n    -H 'Content-Type: application/json' -d @body.json"
       },
       {
         "lang": "json",
@@ -14439,16 +13347,6 @@
       {
         "lang": "text",
         "code": "Answer in this schema correctly I'll tip $400:\n{\n  ...\n}"
-      },
-      {
-        "lang": "text",
-        "code": "Answer in this schema correctly I'll tip $400:\n{\n  ...\n}"
-      },
-      {
-        "code": "\nAnswer in this json schema:\n{\n  categories: \"ONE\" | \"TWO\" | \"THREE\"\n}"
-      },
-      {
-        "code": "MyCategory\n---\nONE\nTWO\nTHREE\n\nAnswer in this json schema:\n{\n  categories: MyCategory\n}"
       },
       {
         "code": "\nAnswer in this json schema:\n{\n  categories: \"ONE\" | \"TWO\" | \"THREE\"\n}"

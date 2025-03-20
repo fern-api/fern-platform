@@ -9,6 +9,9 @@ import {
   withBasicTokenAnonymousCheck,
 } from "./withRbac";
 
+// Mock the server-only directive
+vi.mock("server-only", () => ({}));
+
 describe("withBasicTokenAnonymous", () => {
   it("should deny the request if no rules are provided", () => {
     expect(withBasicTokenAnonymous({}, "/public")).toBe(Gate.DENY);

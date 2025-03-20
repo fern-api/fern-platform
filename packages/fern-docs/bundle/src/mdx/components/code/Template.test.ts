@@ -1,4 +1,4 @@
-import { applyTemplates } from "./template";
+import { applyTemplates } from "./Template";
 
 describe("applyTemplates", () => {
   it("should apply templates", () => {

@@ -1,6 +1,8 @@
 /**
  * @vitest-environment jsdom
  */
+import React from "react";
+
 import { render } from "@testing-library/react";
 import { Atom, atom } from "jotai";
 import { freezeAtom } from "jotai/utils";

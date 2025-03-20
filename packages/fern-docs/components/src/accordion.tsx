@@ -26,8 +26,10 @@ Accordion.displayName = "Accordion";
 
 const AccordionItem = React.forwardRef<
   React.ComponentRef<typeof AccordionPrimitive.Item>,
-  React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Item>
->(({ className, children, ...props }, forwardedRef) => (
+  React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Item> & {
+    nestedHeaders?: string[];
+  }
+>(({ className, children, nestedHeaders, ...props }, forwardedRef) => (
   <AccordionPrimitive.Item
     ref={forwardedRef}
     className={cn("fern-accordion-item", className)}

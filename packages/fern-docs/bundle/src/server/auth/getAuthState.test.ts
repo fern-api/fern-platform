@@ -4,6 +4,9 @@ import { signFernJWT } from "./FernJWT";
 import { getAuthStateInternal } from "./getAuthState";
 import * as session from "./workos-session";
 
+// Mock the server-only directive
+vi.mock("server-only", () => ({}));
+
 describe("getAuthState", () => {
   const host = "docs.test.com";
   const domain = "docs.test.com";

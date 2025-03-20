@@ -70,8 +70,8 @@ var Component = (() => {
   View Fern's Python SDK generator.
 </Card>
 `,
-              language: "jsx",
-              className: "language-jsx"
+              className: "language-jsx",
+              language: "jsx"
             })
           }), (0, import_jsx_runtime.jsx)(ErrorBoundary, {
             children: (0, import_jsx_runtime.jsx)(CodeBlock, {
@@ -89,15 +89,15 @@ var Component = (() => {
   View Fern's Python SDK generator.
 </Card>
 `,
-              language: "jsx",
-              className: "language-jsx"
+              className: "language-jsx",
+              language: "jsx"
             })
           }), (0, import_jsx_runtime.jsx)(ErrorBoundary, {
             children: (0, import_jsx_runtime.jsx)(CodeBlock, {
               title: "Icon Position",
               code: '<Card title="Location" icon="regular globe" iconPosition="left">\n  You can set the icon position as `left` or `top`. Default is `top`.\n</Card>\n',
-              language: "jsx",
-              className: "language-jsx"
+              className: "language-jsx",
+              language: "jsx"
             })
           })]
         })

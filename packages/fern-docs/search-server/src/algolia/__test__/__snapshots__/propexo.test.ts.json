@@ -1202,10 +1202,6 @@
       {
         "lang": "bash",
         "code": "'Authorization': 'Bearer <token>'"
-      },
-      {
-        "lang": "bash",
-        "code": "'Authorization': 'Bearer <token>'"
       }
     ],
     "hierarchy": {
@@ -1526,10 +1522,6 @@
     "hash": "#reading-non-standardized-data",
     "content": "Let's take a hypothetical scenario where you have an agreement with a property manager to store a resident's favorite color in a custom field in their property management system. Propexo can set up a customized transform to account for this non-standard field coming from your PMS integration and then serve it to you in our custom_data object on the residents model.",
     "code_snippets": [
-      {
-        "lang": "json",
-        "code": "{\n  \"results\": {\n    \"id\": \"12345\",\n    \"first_name\": \"John\",\n    \"last_name\": \"Doe\",\n    \"custom_data\": {\n      \"favorite_color\": \"blue\"\n    }\n  }\n}"
-      },
       {
         "lang": "json",
         "code": "{\n  \"results\": {\n    \"id\": \"12345\",\n    \"first_name\": \"John\",\n    \"last_name\": \"Doe\",\n    \"custom_data\": {\n      \"favorite_color\": \"blue\"\n    }\n  }\n}"
@@ -2289,10 +2281,6 @@
         "code": "[\n  {\n    \"id\": \"ce88631d4ccaaf39966fc5907b00b4782\",\n    \"created_at\": \"2023-12-17T16:04:02.000Z\",\n    \"integration_id\": \"c4d912598f9c01516794f5a25c285fa41\",\n    \"property_id\": \"c4d912598f9c01516794f5a25c285fa41123\",\n    \"enabled\": true\n  },\n  {\n    \"id\": \"c9ad28d1f8a9e78522bd89567ce8a13a6\",\n    \"created_at\": \"2023-12-17T16:04:02.000Z\",\n    \"integration_id\": \"c4d912598f9c01516794f5a25c285fa41\",\n    \"property_id\": \"c4d912598f9c01516794f5a25c285fa41456\",\n    \"enabled\": true\n  }\n]"
       },
       {
-        "lang": "json",
-        "code": "[\n  {\n    \"id\": \"ce88631d4ccaaf39966fc5907b00b4782\",\n    \"created_at\": \"2023-12-17T16:04:02.000Z\",\n    \"integration_id\": \"c4d912598f9c01516794f5a25c285fa41\",\n    \"property_id\": \"c4d912598f9c01516794f5a25c285fa41123\",\n    \"enabled\": true\n  },\n  {\n    \"id\": \"c9ad28d1f8a9e78522bd89567ce8a13a6\",\n    \"created_at\": \"2023-12-17T16:04:02.000Z\",\n    \"integration_id\": \"c4d912598f9c01516794f5a25c285fa41\",\n    \"property_id\": \"c4d912598f9c01516794f5a25c285fa41456\",\n    \"enabled\": true\n  }\n]"
-      },
-      {
         "code": "PUT `/v1/admin/integrations/c4d912598f9c01516794f5a25c285fa41/properties/c9ad28d1f8a9e78522bd89567ce8a13a6\n\n{\n  \"enabled\": false\n}"
       }
     ],
@@ -2437,10 +2425,6 @@
     "hash": "#example",
     "content": "One example of filtering is finding all residents associated with a lease (by the Propexo lease ID). This can be done by filtering on the lease_id property.\n\n\n\n\nNote: When filtering using external IDs (e.g. x_*), you will be required to supply the Propexo integration ID (integration_id) and the external property ID (x_property_id) as part of your query string. This is to ensure that you are only getting records associated with your intended result set — in an effort to account for property management systems using auto-incrementing integers as their IDs.",
     "code_snippets": [
-      {
-        "lang": "json",
-        "code": "// GET /v1/residents?lease_id=123456"
-      },
       {
         "lang": "json",
         "code": "// GET /v1/residents?lease_id=123456"
@@ -2750,10 +2734,6 @@
       {
         "lang": "json",
         "code": "{\n  \"meta\": {\n    \"offset\": 0, // default is 0\n    \"limit\": 100, // default is 100\n    \"orderBy\": [], // default is no sorting\n    \"hasMore\": Boolean // (no default)\n  },\n  results: [] // the data you requested\n}"
-      },
-      {
-        "lang": "json",
-        "code": "{\n  \"meta\": {\n    \"offset\": 0, // default is 0\n    \"limit\": 100, // default is 100\n    \"orderBy\": [], // default is no sorting\n    \"hasMore\": Boolean // (no default)\n  },\n  results: [] // the data you requested\n}"
       }
     ],
     "hierarchy": {
@@ -2796,10 +2776,6 @@
       {
         "lang": "json",
         "code": "// GET https://api.propexo.com/v1/<model_name>?limit=10\n\n{\n  \"meta\": {\n    \"offset\": 0,\n    \"limit\": 10,\n    \"orderBy\": [],\n    \"hasMore\": true // or false\n  },\n  \"results\": [] // 10 results\n}"
-      },
-      {
-        "lang": "json",
-        "code": "// GET https://api.propexo.com/v1/<model_name>?limit=10\n\n{\n  \"meta\": {\n    \"offset\": 0,\n    \"limit\": 10,\n    \"orderBy\": [],\n    \"hasMore\": true // or false\n  },\n  \"results\": [] // 10 results\n}"
       }
     ],
     "hierarchy": {
@@ -2839,10 +2815,6 @@
     "hash": "#offset",
     "content": "The offset parameter is used to skip results. For example, if you wanted to skip the first 10 results, you would use offset=10 as a query string parameter in the URL. If you do not define an offset, the default is 0.\nThe below example would skip the first 10 results, and return the next 100 results.",
     "code_snippets": [
-      {
-        "lang": "json",
-        "code": "// GET https://api.propexo.com/v1/<model_name>?offset=10\n\n{\n  \"meta\": {\n    \"offset\": 10,\n    \"limit\": 100,\n    \"orderBy\": [],\n    \"hasMore\": true // or false\n  },\n  \"results\": [] // 100 results\n}"
-      },
       {
         "lang": "json",
         "code": "// GET https://api.propexo.com/v1/<model_name>?offset=10\n\n{\n  \"meta\": {\n    \"offset\": 10,\n    \"limit\": 100,\n    \"orderBy\": [],\n    \"hasMore\": true // or false\n  },\n  \"results\": [] // 100 results\n}"
@@ -3302,10 +3274,6 @@
     "hash": "#order-by-query-parameter",
     "content": "The order-by parameter is used to define the sort order. It is a combination of field_name and direction separated by a colon. For example, if you wanted to sort by the id field in ascending order, you would use order-by=id:asc as a query parameter in the URL. If you wanted to sort by the id field in descending order, you would use order-by=id:desc as a query parameter in the URL.\nIf you wanted to sort by multiple fields, you would provide a comma-separated list of fields and directions. For example, if you wanted to sort by the id field in ascending order, and then by the name field in descending order, you would use order-by=id:asc,name:desc as a query parameter in the URL.",
     "code_snippets": [
-      {
-        "lang": "json",
-        "code": "// GET https://api.propexo.com/v1/<model_name>?order-by=id:asc,name:desc\n\n{\n  \"meta\": {\n    \"offset\": 0,\n    \"limit\": 100,\n    \"orderBy\": [\n      {\n        \"field\": \"id\",\n        \"direction\": \"asc\"\n      },\n      {\n        \"field\": \"name\",\n        \"direction\": \"desc\"\n      }\n    ],\n    \"hasMore\": true // or false\n  },\n  \"results\": []\n}"
-      },
       {
         "lang": "json",
         "code": "// GET https://api.propexo.com/v1/<model_name>?order-by=id:asc,name:desc\n\n{\n  \"meta\": {\n    \"offset\": 0,\n    \"limit\": 100,\n    \"orderBy\": [\n      {\n        \"field\": \"id\",\n        \"direction\": \"asc\"\n      },\n      {\n        \"field\": \"name\",\n        \"direction\": \"desc\"\n      }\n    ],\n    \"hasMore\": true // or false\n  },\n  \"results\": []\n}"
@@ -3920,14 +3888,6 @@
         "code": "const express = require('express');\nconst app = express();\n\napp.post('/webhook/leases', async (req, res) => {\n    const lease = req.body;\n\n    // Perform business logic\n    const { status: prevStatus } = lease?.diff?.previous;\n    const { status } = lease?.diff?.new;\n    if (prevStatus === 'pending' && status === 'approved') {\n        const { email } = lease?.tenant;\n        // Send an email to the tenant\n        await app.sendEmail(email, 'Your lease has been approved');\n    }\n\n    res.send(200);\n});"
       },
       {
-        "lang": "javascript",
-        "code": "const express = require('express');\nconst app = express();\n\napp.post('/webhook/leases', async (req, res) => {\n    const lease = req.body;\n\n    // Perform business logic\n    const { status: prevStatus } = lease?.diff?.previous;\n    const { status } = lease?.diff?.new;\n    if (prevStatus === 'pending' && status === 'approved') {\n        const { email } = lease?.tenant;\n        // Send an email to the tenant\n        await app.sendEmail(email, 'Your lease has been approved');\n    }\n\n    res.send(200);\n});"
-      },
-      {
-        "lang": "bash",
-        "code": "POST <your_path>\nHost: <your_domain>\nContent-Type: application/json\npropexo-signature: <payload_signature>\n\n{\n    \"meta\": {\n        \"object\": \"leases\",\n        \"integration_id\": \"cuid_1234567890\",\n    },\n    \"record_id\": \"cuid_1234567890\",\n    \"diff\": {\n        \"previous\": { \"status\": \"pending\" },\n        \"new\": { \"status\": \"approved\" }\n    }\n}"
-      },
-      {
         "lang": "bash",
         "code": "POST <your_path>\nHost: <your_domain>\nContent-Type: application/json\npropexo-signature: <payload_signature>\n\n{\n    \"meta\": {\n        \"object\": \"leases\",\n        \"integration_id\": \"cuid_1234567890\",\n    },\n    \"record_id\": \"cuid_1234567890\",\n    \"diff\": {\n        \"previous\": { \"status\": \"pending\" },\n        \"new\": { \"status\": \"approved\" }\n    }\n}"
       }
@@ -4041,10 +4001,6 @@
     "hash": "#signed-payloads",
     "content": "Propexo signs every webhook payload. This signature is sent in the propexo-signature header. You can use this signature to verify that the webhook was sent by Propexo and not a malicious third party.\nThe secret that is used to sign the payload is available in your integration settings. You can find it by going to the \"Webhooks\" page in the Propexo dashboard and clicking on the \"Settings\" button.\nHere is an example of how you might verify the signature in Node.js:",
     "code_snippets": [
-      {
-        "lang": "javascript",
-        "code": "import { timingSafeEqual, createHmac } from 'crypto'\n\nconst createHmacSignature = ({ data, secret }): string => {\n  return createHmac('sha256', secret).update(data).digest('hex')\n}\n\nconst compareSignatures = ({ suppliedSignature, data }): Boolean => {\n  const generatedSignature = createHmacSignature({ data, secret })\n  const source = Buffer.from(suppliedSignature)\n  const comparison = Buffer.from(generatedSignature)\n  return timingSafeEqual(source, comparison)\n}\n\nreturn compareSignatures({ suppliedSignature: req.headers['propexo-signature'], data: req.body })"
-      },
       {
         "lang": "javascript",
         "code": "import { timingSafeEqual, createHmac } from 'crypto'\n\nconst createHmacSignature = ({ data, secret }): string => {\n  return createHmac('sha256', secret).update(data).digest('hex')\n}\n\nconst compareSignatures = ({ suppliedSignature, data }): Boolean => {\n  const generatedSignature = createHmacSignature({ data, secret })\n  const source = Buffer.from(suppliedSignature)\n  const comparison = Buffer.from(generatedSignature)\n  return timingSafeEqual(source, comparison)\n}\n\nreturn compareSignatures({ suppliedSignature: req.headers['propexo-signature'], data: req.body })"
@@ -4444,10 +4400,6 @@
     "hash": "#webhook-payload",
     "content": "The payload for the SYNC_COMPLETE webhook looks like the following:\n\n\nIn this payload, you're provided with the ID of the integration associated with this completed sync, the number of successful jobs ran, the number of failed jobs ran, and whether the sync has been completed or not.\nThe reason we include is_sync_finished here is in the case of a prolonged PMS outage or any situation where a sync would run for a significant amount of time (upwards of 12 hours) and not complete.\nThis is an unexpected case and should not occur except for exceptional cases.\nDue to the complexities of PMS retries, we include the number of successful jobs and failed jobs in case you want to be alerted of increased failures for a given sync.\nSome number of failed jobs is normal for a sync, as network blips or load on the PMS is encountered. This will automatically be retried by our system. If you notice a significant increase in failed jobs, there may be cause to check for expired credential access or other related issues.",
     "code_snippets": [
-      {
-        "lang": "json",
-        "code": "{\n    \"integration_id\": string,\n    \"successful_job_count\": integer,\n    \"failed_job_count\": integer,\n    \"is_sync_finished\": boolean,\n    \"vendor\": IntegrationVendorEnum\n}"
-      },
       {
         "lang": "json",
         "code": "{\n    \"integration_id\": string,\n    \"successful_job_count\": integer,\n    \"failed_job_count\": integer,\n    \"is_sync_finished\": boolean,\n    \"vendor\": IntegrationVendorEnum\n}"

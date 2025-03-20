@@ -290,20 +290,8 @@
         "code": "  import { useKeetLink } from \"@keet-tech/react-keet-link\"\n  import { useEffect, useState } from \"react\"\n\n  export default function App() {\n    const onSuccess = (publicToken: string) => {\n      /* send a request to your backend\n      to exchange this for an account token */\n    }\n\n    const onValidationError = (errors: any) => {\n      console.error(\"An error from Keet Link occured: \", errors)\n    }\n\n    const { open, isReady } = useKeetLink({\n      linkToken: \"ADD YOUR LINK TOKEN -- SEE STEP 1\",\n      onSuccess,\n      onValidationError\n    })\n\n\n\n    return (\n      <button disabled={!isReady} onClick={open}>Open Link</button>\n    )\n  }\n\n  export default App;"
       },
       {
-        "lang": "tsx",
-        "code": "  import { useKeetLink } from \"@keet-tech/react-keet-link\"\n  import { useEffect, useState } from \"react\"\n\n  export default function App() {\n    const onSuccess = (publicToken: string) => {\n      /* send a request to your backend\n      to exchange this for an account token */\n    }\n\n    const onValidationError = (errors: any) => {\n      console.error(\"An error from Keet Link occured: \", errors)\n    }\n\n    const { open, isReady } = useKeetLink({\n      linkToken: \"ADD YOUR LINK TOKEN -- SEE STEP 1\",\n      onSuccess,\n      onValidationError\n    })\n\n\n\n    return (\n      <button disabled={!isReady} onClick={open}>Open Link</button>\n    )\n  }\n\n  export default App;"
-      },
-      {
         "lang": "html",
         "code": "<button id=\"open-link-button\">Start linking</button>\n<script src=\"https://cdn.trykeet.com/initialize.js\"></script>\n<script type=\"text/javascript\">\n  const button = document.getElementById(\"open-link-button\");\n  button.disabled = true;\n\nfunction onSuccess(public_token) {\n// Send public_token to server (Step 3)\n}\n\nKeetLink.initialize({\n  // Replace ADD_GENERATED_LINK_TOKEN with the token retrieved from your backend (Step 1)\n  linkToken: \"ADD_GENERATED_LINK_TOKEN\",\n  onSuccess: (public_token) => onSuccess(public_token),\n  onReady: () => (button.disabled = false),\n  });\n\n  button.addEventListener(\"click\", function () {\n  KeetLink.openLink();\n});\n</script>"
-      },
-      {
-        "lang": "html",
-        "code": "<button id=\"open-link-button\">Start linking</button>\n<script src=\"https://cdn.trykeet.com/initialize.js\"></script>\n<script type=\"text/javascript\">\n  const button = document.getElementById(\"open-link-button\");\n  button.disabled = true;\n\nfunction onSuccess(public_token) {\n// Send public_token to server (Step 3)\n}\n\nKeetLink.initialize({\n  // Replace ADD_GENERATED_LINK_TOKEN with the token retrieved from your backend (Step 1)\n  linkToken: \"ADD_GENERATED_LINK_TOKEN\",\n  onSuccess: (public_token) => onSuccess(public_token),\n  onReady: () => (button.disabled = false),\n  });\n\n  button.addEventListener(\"click\", function () {\n  KeetLink.openLink();\n});\n</script>"
-      },
-      {
-        "lang": "tsx",
-        "code": "import KeetLink, { LinkError } from \"@keet-tech/react-native-keet-link\"\n\nexport default function App() {\n  const onSuccess = (publicToken: string) => {\n    /* send a request to your backend\n    to exchange this for an account token */\n  }\n\n  const onError = (errors: LinkError[]) => {\n    console.error(\"An error from Keet Link occured: \", errors)\n  }\n\n  return (\n    <View style={{ flex: 1, justifyContent: \"center\", alignItems: \"center\" }}>\n      <KeetLink linkToken={linkToken} onSuccess={onSuccess} onError={onError}>\n        <Text style={{ color: \"blue\" }}>Open Link</Text>\n      </KeetLink>\n    </View>\n  )\n}"
       },
       {
         "lang": "tsx",
