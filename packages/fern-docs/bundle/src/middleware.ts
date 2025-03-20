@@ -42,7 +42,12 @@ function splitPathname(
 export const middleware: NextMiddleware = async (request) => {
   const host = request.nextUrl.host;
   const domain = getDocsDomainEdge(request);
-  const pathname = removeTrailingSlash(request.nextUrl.pathname);
+
+  // note: decoding the uri component here will avoid double-encoding the pathname futher
+  // down the middleware chain
+  const pathname = decodeURIComponent(
+    removeTrailingSlash(request.nextUrl.pathname)
+  );
 
   const headers = new Headers(request.headers);
   headers.set(HEADER_X_FERN_HOST, domain);
