@@ -4,6 +4,7 @@ import { Session } from "@auth0/nextjs-auth0";
 import { UserIcon } from "@heroicons/react/24/outline";
 import { PopoverArrow } from "@radix-ui/react-popover";
 
+import { getMyOrganizations } from "@/app/actions/getMyOrganizations";
 import {
   Popover,
   PopoverContent,
@@ -11,6 +12,7 @@ import {
 } from "@/components/ui/popover";
 
 import { LogoutButton } from "./auth/LogoutButton";
+import { OrgSwitcher } from "./auth/OrgSwitcher";
 import { ThemedFernLogo } from "./theme/ThemedFernLogo";
 import { Button } from "./ui/button";
 
@@ -24,11 +26,15 @@ export async function Header({ session }: Header.Props) {
   const name = session.user.name;
   const email = session.user.email;
   const picture = session.user.picture;
+  const orgId = session.user.org_id;
+
+  const { data: organizations } = await getMyOrganizations();
 
   return (
     <div className="flex justify-between p-4">
-      <div className="flex items-center">
+      <div className="flex items-center gap-4">
         <ThemedFernLogo className="w-16" />
+        <OrgSwitcher organizations={organizations} currentOrgId={orgId} />
       </div>
       <div className="flex gap-4">
         <div className="flex items-center gap-2">

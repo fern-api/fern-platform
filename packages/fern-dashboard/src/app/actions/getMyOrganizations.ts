@@ -12,7 +12,6 @@ export async function getMyOrganizations() {
   }
 
   const jwtPayload = jwt.decode(session.idToken);
-  console.log({ jwtPayload });
   if (jwtPayload == null) {
     throw new Error("JWT payload is not defined");
   }
