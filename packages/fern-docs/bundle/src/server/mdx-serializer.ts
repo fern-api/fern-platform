@@ -8,6 +8,7 @@ import { Semaphore } from "es-toolkit/compat";
 import { Frontmatter } from "@fern-api/fdr-sdk/docs";
 
 import { serializeMdx as internalSerializeMdx } from "@/mdx/bundler/serialize";
+import { RehypeLinksOptions } from "@/mdx/plugins/rehype-links";
 import { createCachedDocsLoader } from "@/server/docs-loader";
 
 import { cacheSeed } from "./cache-seed";
@@ -30,6 +31,10 @@ export type MdxSerializerOptions = {
    * The slug of the page being serialized.
    */
   slug?: string;
+  /**
+   * The function to replace links with the current version or basepath
+   */
+  replaceHref?: RehypeLinksOptions["replaceHref"];
 };
 
 export type MdxSerializer = (
@@ -69,6 +74,22 @@ export function createCachedMdxSerializer(
     const cachedSerializer = unstable_cache(
       async ({ filename, toc, scope, slug }: MdxSerializerOptions) => {
         const authState = await loader.getAuthState();
+        const { basePath, url } = await loader.getMetadata();
+
+        console.log("basePath: ", basePath);
+        console.log("url: ", url);
+
+        function replaceHref(href: string): string | undefined {
+          if (href.startsWith("/")) {
+            if (basePath) {
+              if (!href.startsWith(basePath)) {
+                console.log(`replaceing href ${href} with ${basePath}${href}`);
+                return `${basePath}${href}`;
+              }
+            }
+          }
+          return;
+        }
 
         try {
           return await internalSerializeMdx(content, {
@@ -80,6 +101,7 @@ export function createCachedMdxSerializer(
               user: authState.authed ? authState.user : undefined,
               ...scope,
             },
+            replaceHref,
           });
         } catch (error) {
           console.error("Error serializing mdx", error);

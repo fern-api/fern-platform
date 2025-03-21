@@ -46,6 +46,7 @@ import { rehypeCollectJsx } from "../plugins/rehype-collect-jsx";
 import { rehypeEndpointSnippets } from "../plugins/rehype-endpoint-snippets";
 import { rehypeExtractAsides } from "../plugins/rehype-extract-asides";
 import { rehypeFiles } from "../plugins/rehype-files";
+import { RehypeLinksOptions, rehypeLinks } from "../plugins/rehype-links";
 import { rehypeMigrateJsx } from "../plugins/rehype-migrate-jsx";
 import { rehypeSteps } from "../plugins/rehype-steps";
 import { rehypeTabs } from "../plugins/rehype-tabs";
@@ -67,11 +68,13 @@ async function serializeMdxImpl(
     filename,
     scope,
     toc = false,
+    replaceHref,
   }: {
     loader?: Partial<Pick<DocsLoader, "getFiles" | "getMdxBundlerFiles">>;
     scope?: Record<string, unknown>;
     filename?: string;
     toc?: boolean;
+    replaceHref?: RehypeLinksOptions["replaceHref"];
   } = {}
 ): Promise<SerializeMdxResponse> {
   content = sanitizeBreaks(content);
@@ -158,6 +161,7 @@ async function serializeMdxImpl(
         rehypeTabs,
         rehypeCards,
         [rehypeSlug, { additionalJsxElements: ["Step", "Accordion", "Tab"] }],
+        [rehypeLinks, { replaceHref }],
         rehypeAccordionNestedHeaders,
         [
           rehypeExpressionToMd,
