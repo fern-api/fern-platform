@@ -1,12 +1,12 @@
 "use server";
 
-import { AUTH0_MANAGEMENT_CLIENT, getCurrentSession } from "./auth0";
+import { getAuth0ManagementClient, getCurrentSession } from "./auth0";
 
 export async function getMyOrganizations() {
   const { userId } = await getCurrentSession();
 
   const { data: organizations } =
-    await AUTH0_MANAGEMENT_CLIENT.users.getUserOrganizations({
+    await getAuth0ManagementClient().users.getUserOrganizations({
       id: userId,
     });
 
