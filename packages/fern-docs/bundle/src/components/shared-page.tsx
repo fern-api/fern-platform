@@ -25,7 +25,6 @@ import {
   MdxSerializer,
   createCachedMdxSerializer,
 } from "@/server/mdx-serializer";
-import { withPrunedNavigationLoader } from "@/server/withPrunedNavigation";
 import { SetIsLandingPage } from "@/state/layout";
 import { SetCurrentNavigationNode } from "@/state/navigation";
 
@@ -62,27 +61,11 @@ export default async function SharedPage({
   }
 
   // get the root node
-  let root: FernNavigation.RootNode | undefined = await rootPromise;
+  const root = await rootPromise;
 
   // always match the basepath of the root node
   if (!slug.startsWith(root.slug)) {
     redirect(prepareRedirect(root.slug));
-  }
-
-  // naively find the current node id to prune the navigation tree
-  const currentNodeId = FernNavigation.NodeCollector.collect(root)
-    .getSlugMapWithParents()
-    .get(slug)?.node.id;
-
-  // prune the tree so that neighbors don't include authed nodes or hidden nodes
-  root = await withPrunedNavigationLoader(
-    root,
-    loader,
-    currentNodeId ? [currentNodeId] : undefined
-  );
-
-  if (root == null) {
-    notFound();
   }
 
   // find the node that is currently being viewed
