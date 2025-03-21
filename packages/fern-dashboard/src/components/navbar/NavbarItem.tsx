@@ -6,7 +6,7 @@ import React from "react";
 
 import { cn } from "@/lib/utils";
 
-export declare namespace SidebarItem {
+export declare namespace NavbarItem {
   export interface Props {
     title: string;
     icon: React.JSX.Element;
@@ -14,7 +14,7 @@ export declare namespace SidebarItem {
   }
 }
 
-export const SidebarItem = ({ title, icon, href }: SidebarItem.Props) => {
+export const NavbarItem = ({ title, icon, href }: NavbarItem.Props) => {
   const pathname = usePathname();
   const isSelected = pathname.startsWith(href);
 
@@ -23,7 +23,7 @@ export const SidebarItem = ({ title, icon, href }: SidebarItem.Props) => {
   return (
     <Component
       className={cn(
-        "flex items-center gap-2 py-2 text-sm transition",
+        "flex flex-1 flex-col items-center gap-2 py-2 text-sm transition md:flex-row",
         isSelected
           ? "text-green-1100"
           : "hover:text-gray-1200 text-gray-900 dark:hover:text-gray-700"

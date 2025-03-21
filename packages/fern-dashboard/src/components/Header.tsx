@@ -37,7 +37,7 @@ export async function Header({ session }: Header.Props) {
         <OrgSwitcher organizations={organizations} currentOrgId={orgId} />
       </div>
       <div className="flex gap-4">
-        <div className="flex items-center gap-2">
+        <div className="hidden items-center gap-2 md:flex">
           <Button size="sm" variant="outline">
             Feedback
           </Button>

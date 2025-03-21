@@ -25,7 +25,7 @@ export default async function Docs() {
       <div className="mt-2 text-sm text-gray-900">
         Delight your developers with gorgeous Docs.
       </div>
-      <div className="dark:border-gray-1100 border-gray-1100 my-12 flex h-[300px] justify-center overflow-hidden border-b">
+      <div className="dark:border-gray-1100 my-12 flex h-[300px] justify-center overflow-hidden border-b border-gray-700">
         <div className="relative mx-[5%] flex max-w-[700px] flex-1 justify-center">
           <Image
             className="absolute top-0"
