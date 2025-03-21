@@ -4,6 +4,20 @@ imports:
   rootCommons: ../../../commons.yml
 
 types:
+  AIChatConfig: 
+    properties: 
+      model:
+        type: optional<AIModel> 
+      systemPrompt: 
+        type: optional<string>
+  
+  AIModel: 
+    enum: 
+      - value: claude-3.5
+        name: claude_3_5
+      - value: claude-3.7
+        name: claude_3_7
+
   FileIdOrUrl:
     union:
       fileId: rootCommons.FileId

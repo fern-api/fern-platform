@@ -39,6 +39,7 @@ export class DefinitionObjectFactory {
         integrations: undefined,
         css: undefined,
         js: undefined,
+        aiChatConfig: undefined,
       },
       search: {
         type: "singleAlgoliaIndex",

@@ -26,6 +26,7 @@ export interface DocsDbConfig {
     integrations: FernRegistry.docs.v1.commons.IntegrationsConfig | undefined;
     css: FernRegistry.docs.v1.commons.CssConfig | undefined;
     js: FernRegistry.docs.v1.commons.JsConfig | undefined;
+    aiChatConfig: FernRegistry.docs.v1.commons.AiChatConfig | undefined;
     logo: FernRegistry.FileId | undefined;
     logoV2: FernRegistry.docs.v1.commons.ThemedFileId | undefined;
     colors: FernRegistry.docs.v1.commons.ColorsConfig | undefined;
