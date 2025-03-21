@@ -19,11 +19,13 @@ export default async function Docs() {
 
   return (
     <div className="flex flex-col">
-      <div className="text-gray-1200 text-xl font-bold">{welcomeString}</div>
+      <div className="text-gray-1200 text-xl font-bold dark:text-gray-200">
+        {welcomeString}
+      </div>
       <div className="mt-2 text-sm text-gray-900">
         Delight your developers with gorgeous Docs.
       </div>
-      <div className="my-12 flex h-[300px] justify-center overflow-hidden border-b border-gray-500">
+      <div className="dark:border-gray-1100 border-gray-1100 my-12 flex h-[300px] justify-center overflow-hidden border-b">
         <div className="relative mx-[5%] flex max-w-[700px] flex-1 justify-center">
           <Image
             className="absolute top-0"
