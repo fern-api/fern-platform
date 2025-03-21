@@ -189,7 +189,11 @@ export function migrateMeta(metastring: string): string {
     !metastring.includes("{...") &&
     !/\{[^}]*[a-zA-Z][^}]*\}/.test(metastring)
   ) {
-    return `title="${metastring.replace(/"/g, '\\"')}"`;
+    const lintMeta = metastring.replaceAll(/(wordWrap)/g, "").trim();
+    return metastring.replace(
+      lintMeta,
+      `title="${lintMeta.replace(/"/g, '\\"')}"${metastring.includes("wordWrap") ? " " : ""}`
+    );
   }
 
   metastring = metastring.replaceAll(
@@ -198,7 +202,12 @@ export function migrateMeta(metastring: string): string {
       if (text.trim() === "") {
         return "";
       }
-      return `title="${text.trim()}" `;
+
+      const lintText = text.replaceAll(/(wordWrap)/g, "").trim();
+      return text.replace(
+        lintText,
+        `title="${lintText.replace(/"/g, '\\"')}"${text.includes("wordWrap") ? " " : ""}`
+      );
     }
   );
 
@@ -206,7 +215,7 @@ export function migrateMeta(metastring: string): string {
   if (!metastring.includes("title=")) {
     // ignore special words, anything in curly braces
     const parseForTitle = metastring
-      .replaceAll("wordWrap", "")
+      .replaceAll(/(wordWrap)/g, "")
       .replaceAll(/([^=]+)={(.*?)}/g, "")
       .replaceAll(/{(.*?)}/g, "");
     if (parseForTitle !== "") {
