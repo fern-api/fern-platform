@@ -16,7 +16,7 @@ export async function AppLayout({ session, children }: AppLayout.Props) {
       <Header session={session} />
       <div className="flex min-h-0 flex-1">
         <Sidebar />
-        <div className="dark:border-gray-1100 mr-4 flex flex-1 flex-col overflow-y-auto rounded-t-2xl border border-gray-500 bg-white dark:bg-black">
+        <div className="dark:border-gray-1100 mr-4 flex flex-1 flex-col overflow-y-auto rounded-t-2xl border border-gray-500 bg-white p-8 dark:bg-black">
           {children}
         </div>
       </div>

@@ -1,15 +1,10 @@
 import { ProtectedRoute } from "@/components/ProtectedRoute";
-
-import { getMyOrganizations } from "../actions/getMyOrganizations";
+import Docs from "@/components/docs-page/Docs";
 
 export default async function DocsPage() {
-  const organizations = await getMyOrganizations();
-
   return (
     <ProtectedRoute>
-      <div>
-        <pre>{JSON.stringify(organizations, undefined, 4)}</pre>
-      </div>
+      <Docs />
     </ProtectedRoute>
   );
 }
