@@ -6,16 +6,16 @@ import { getFernToken } from "@/app/fern-token";
 import { PlaygroundCloseButton } from "@/components/playground/PlaygroundCloseButton";
 import { PlaygroundKeyboardTrigger } from "@/components/playground/PlaygroundKeyboardTrigger";
 import { HorizontalSplitPane } from "@/components/playground/VerticalSplitPane";
-import { PlaygroundEndpointSelectorContent } from "@/components/playground/endpoint/PlaygroundEndpointSelectorContent";
-import { flattenApiSection } from "@/components/playground/utils/flatten-apis";
 import { createCachedDocsLoader } from "@/server/docs-loader";
 import { ApiExplorerFlags } from "@/state/api-explorer-flags";
 
 export default async function Layout({
   params,
   children,
+  endpointSelector,
 }: {
   children: React.ReactNode;
+  endpointSelector: React.ReactNode;
   params: Promise<{ host: string; domain: string }>;
 }) {
   const { host, domain } = await params;
@@ -26,11 +26,7 @@ export default async function Layout({
     domain,
     await getFernToken()
   );
-  const [root, edgeFlags] = await Promise.all([
-    loader.getRoot(),
-    loader.getEdgeFlags(),
-  ]);
-  const apiGroups = flattenApiSection(root);
+  const edgeFlags = await loader.getEdgeFlags();
 
   return (
     <main className="fixed inset-0">
@@ -52,10 +48,7 @@ export default async function Layout({
         className="size-full"
         leftClassName="border-border-default border-r hidden lg:block"
       >
-        <PlaygroundEndpointSelectorContent
-          apiGroups={apiGroups}
-          className="h-full"
-        />
+        {endpointSelector}
         {children}
       </HorizontalSplitPane>
     </main>
