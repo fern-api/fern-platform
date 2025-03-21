@@ -10,7 +10,7 @@ type Predicate<
 > = (
   node: T,
   parents: readonly FernNavigation.NavigationNodeParent[]
-) => boolean | "force";
+) => boolean;
 
 export class Pruner<ROOT extends FernNavigation.NavigationNode> {
   public static from<ROOT extends FernNavigation.NavigationNode>(
@@ -21,20 +21,19 @@ export class Pruner<ROOT extends FernNavigation.NavigationNode> {
 
   private tree: ROOT | undefined;
   private constructor(tree: ROOT) {
-    this.tree = structuredClone(tree);
+    this.tree = structuredClone(tree) as ROOT;
   }
 
   public keep(predicate: Predicate): this {
     if (this.tree == null) {
       return this;
     }
-    const [result, deleted] = prunetree(this.tree, {
+    const [result] = prunetree(this.tree, {
       predicate,
       getChildren: FernNavigation.getChildren,
       getPointer: (node) => node.id,
       deleter: mutableDeleteChild,
     });
-    console.log(deleted);
     this.tree = result;
     return this;
   }
@@ -51,7 +50,7 @@ export class Pruner<ROOT extends FernNavigation.NavigationNode> {
     }
     FernNavigation.traverseBF(this.tree, (node, parents) => {
       if (FernNavigation.hasMetadata(node)) {
-        node.hidden = !!predicate(node, parents);
+        node.hidden = predicate(node, parents);
       }
     });
     return this;

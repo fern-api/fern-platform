@@ -148,7 +148,7 @@ export function Announcement({
               id={FERN_ANNOUNCEMENT_ID}
               suppressHydrationWarning
               className={cn("[&_.fern-mdx-link]:text-inherit", className)}
-              exit={{ y: "-100%" }}
+              exit={{ height: 0 }}
               dismiss={() => {
                 useAnnouncementStore.setState({ announcement });
               }}
