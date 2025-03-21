@@ -43,6 +43,8 @@ import {
   useIsMobile,
 } from "@fern-ui/react-commons";
 
+import { FacetFilter } from "@/types";
+
 import { FootnoteSup, FootnotesSection } from "../chatbot/footnote";
 import {
   ChatbotTurnContextProvider,
@@ -191,6 +193,7 @@ export const DesktopCommandWithAskAI = forwardRef<
             suggestionsApi={suggestionsApi}
             body={body}
             headers={headers}
+            filters={filters}
             onReturnToSearch={() => {
               setAskAI(false);
               bounce();
@@ -232,6 +235,7 @@ const DesktopAskAIContent = (props: {
   api?: string;
   suggestionsApi?: string;
   body?: object;
+  filters?: readonly FacetFilter[];
   headers?: Record<string, string>;
   onSelectHit?: (path: string) => void;
   prefetch?: (path: string) => Promise<void>;
@@ -274,6 +278,7 @@ const DesktopAskAIChat = ({
   api,
   suggestionsApi,
   body,
+  filters,
   headers,
   onSelectHit,
   prefetch,
@@ -288,6 +293,7 @@ const DesktopAskAIChat = ({
   api?: string;
   suggestionsApi?: string;
   body?: object;
+  filters?: readonly FacetFilter[];
   headers?: Record<string, string>;
   onSelectHit?: (path: string) => void;
   prefetch?: (path: string) => Promise<void>;
@@ -336,6 +342,7 @@ const DesktopAskAIChat = ({
         {
           body: {
             url: document.location.href,
+            filters,
           },
         }
       );
@@ -744,8 +751,8 @@ const AskAICommandItems = memo<{
                             message.toolInvocations.some(
                               (invocation) => invocation.state !== "result"
                             )) && (
-                            <p className="text-(color:--grayscale-a10)">
-                              Thinking...
+                            <p className="text-(color:--grayscale-a10) thinking-dots">
+                              Thinking
                             </p>
                           )}
                         {(!isLastMessage || !isLoading) &&
@@ -791,7 +798,9 @@ function FootnoteCommands({
           prefetch={prefetch}
           domain={domain}
         >
-          <Badge rounded>{String(idx + 1)}</Badge>
+          <Badge color="grayWithAccent" variant="subtleSolidHover">
+            {String(idx + 1)}
+          </Badge>
           <div>
             <div className="text-sm font-semibold">{footnote.title}</div>
             <div className="text-(color:--grayscale-a9) text-xs">
@@ -803,3 +812,27 @@ function FootnoteCommands({
     </>
   );
 }
+
+const AnimatedSparkles = ({ className }: { className?: string }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={className}
+  >
+    <path
+      className="sparkle-center"
+      d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"
+    />
+    <g className="sparkle-outer">
+      <path d="M20 3v4" />
+      <path d="M22 5h-4" />
+      <path d="M4 17v2" />
+      <path d="M5 18H3" />
+    </g>
+  </svg>
+);

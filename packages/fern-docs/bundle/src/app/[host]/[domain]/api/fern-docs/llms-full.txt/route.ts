@@ -1,4 +1,6 @@
+import { unstable_cacheTag } from "next/cache";
 import { cookies } from "next/headers";
+import { notFound } from "next/navigation";
 import { NextRequest, NextResponse } from "next/server";
 
 import { uniqBy } from "es-toolkit/array";
@@ -16,16 +18,38 @@ export async function GET(
   req: NextRequest,
   props: { params: Promise<{ host: string; domain: string }> }
 ): Promise<NextResponse> {
+  "use cache";
+
   const { host, domain } = await props.params;
 
   const path = slugToHref(req.nextUrl.searchParams.get("slug") ?? "");
+
+  return new NextResponse(await getLlmsFullTxt(host, domain, path), {
+    status: 200,
+    headers: {
+      "Content-Type": "text/plain; charset=utf-8",
+      "X-Robots-Tag": "noindex",
+      "Cache-Control": "s-maxage=60",
+    },
+  });
+}
+
+async function getLlmsFullTxt(
+  host: string,
+  domain: string,
+  path: string
+): Promise<string> {
+  "use cache";
+
+  unstable_cacheTag(domain, "llms-full-txt");
+
   const fern_token = (await cookies()).get(COOKIE_FERN_TOKEN)?.value;
   const loader = await createCachedDocsLoader(host, domain, fern_token);
 
   const root = getSectionRoot(await loader.getRoot(), path);
 
   if (root == null) {
-    return NextResponse.json(null, { status: 404 });
+    notFound();
   }
 
   const nodes: FernNavigation.NavigationNodePage[] = [];
@@ -60,15 +84,8 @@ export async function GET(
   ).filter(isNonNullish);
 
   if (markdowns.length === 0) {
-    return NextResponse.json(null, { status: 404 });
+    notFound();
   }
 
-  return new NextResponse(markdowns.join("\n\n"), {
-    status: 200,
-    headers: {
-      "Content-Type": "text/plain; charset=utf-8",
-      "X-Robots-Tag": "noindex",
-      "Cache-Control": "s-maxage=60",
-    },
-  });
+  return markdowns.join("\n\n");
 }

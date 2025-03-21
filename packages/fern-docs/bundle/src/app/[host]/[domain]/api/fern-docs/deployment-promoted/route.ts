@@ -1,15 +1,28 @@
+import { notFound } from "next/navigation";
 import { NextRequest } from "next/server";
 
 import { getEnv } from "@vercel/functions";
 import { kv } from "@vercel/kv";
 import { uniq } from "es-toolkit/array";
 
-import { withoutStaging } from "@fern-docs/utils";
+import {
+  FERN_DOCS_BUILDWITHFERN_COM,
+  FERN_DOCS_DEV_BUILDWITHFERN_COM,
+  FERN_DOCS_FERNDOCS_APP,
+  FERN_DOCS_STAGING_BUILDWITHFERN_COM,
+  withoutStaging,
+} from "@fern-docs/utils";
 
 import { getMetadata } from "@/server/docs-loader";
 import { batchQueue } from "@/server/queue";
 
 export async function POST(request: NextRequest) {
+  const cdnUri = process.env.NEXT_PUBLIC_CDN_URI;
+
+  if (!cdnUri) {
+    notFound();
+  }
+
   const { VERCEL_ENV, VERCEL_DEPLOYMENT_ID } = getEnv();
 
   if (VERCEL_ENV !== "production") {
@@ -31,7 +44,18 @@ export async function POST(request: NextRequest) {
   );
   console.debug(await request.json());
 
-  const domains = uniq((await kv.smembers("domains")).map(withoutStaging));
+  const domains = uniq(
+    (await kv.smembers(`${cdnUri}:domains`))
+      // filter out domains that are not production domains
+      .filter(
+        (domain) =>
+          !domain.endsWith(`.${FERN_DOCS_BUILDWITHFERN_COM}`) &&
+          !domain.endsWith(`.${FERN_DOCS_STAGING_BUILDWITHFERN_COM}`) &&
+          !domain.endsWith(`.${FERN_DOCS_DEV_BUILDWITHFERN_COM}`) &&
+          !domain.endsWith(`.${FERN_DOCS_FERNDOCS_APP}`)
+      )
+      .map(withoutStaging)
+  );
 
   const settledMetadata = await Promise.allSettled(domains.map(getMetadata));
 
@@ -60,7 +84,8 @@ export async function POST(request: NextRequest) {
       host: metadata.domain,
       domain: metadata.domain,
       basepath: metadata.basePath,
-      deduplicationId: `revalidate.${VERCEL_DEPLOYMENT_ID}.${metadata.domain}`,
+      // the deduplication ID avoids duplicate revalidations within the a 15 minute window
+      deduplicationId: `revalidate.${Math.floor(Date.now() / (1000 * 60 * 15))}.${metadata.domain}`,
     })),
     method: "GET",
     retries: 1,

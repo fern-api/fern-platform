@@ -27,7 +27,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@auth0/nextjs-auth0": "3",
+    "@auth0/nextjs-auth0": "^4.1.0",
     "@fern-api/fdr-sdk": "workspace:*",
     "@fern-platform/fdr": "workspace:*",
     "@radix-ui/react-dropdown-menu": "^2.1.6",

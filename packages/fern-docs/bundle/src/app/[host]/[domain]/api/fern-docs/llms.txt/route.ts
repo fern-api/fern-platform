@@ -1,3 +1,5 @@
+import { unstable_cacheTag } from "next/cache";
+import { notFound } from "next/navigation";
 import { NextRequest, NextResponse } from "next/server";
 
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
@@ -38,12 +40,32 @@ export async function GET(
   const { host, domain } = await props.params;
 
   const path = slugToHref(req.nextUrl.searchParams.get("slug") ?? "");
+
+  return new NextResponse(await getLlmsTxt(host, domain, path), {
+    status: 200,
+    headers: {
+      "Content-Type": "text/plain; charset=utf-8",
+      "X-Robots-Tag": "noindex",
+      "Cache-Control": "s-maxage=60",
+    },
+  });
+}
+
+async function getLlmsTxt(
+  host: string,
+  domain: string,
+  path: string
+): Promise<string> {
+  "use cache";
+
+  unstable_cacheTag(domain, "getLlmsTxt");
+
   const loader = await createCachedDocsLoader(host, domain);
 
   const root = getSectionRoot(await loader.getRoot(), path);
 
   if (root == null) {
-    return NextResponse.json(null, { status: 404 });
+    notFound();
   }
 
   const pageInfos: {
@@ -182,35 +204,23 @@ export async function GET(
         `- ${endpoint.breadcrumb.join(" > ")} [${endpoint.title}](${endpoint.href})`
     );
 
-  return new NextResponse(
-    [
-      // if there's a landing page, use the llm-friendly markdown version instead of the ${root.title}
-      markdown?.content ?? `# ${root.title}`,
-      docs.length > 0
-        ? `## Docs\n\n${docs
-            .filter((doc) => doc.status === "fulfilled")
-            .map((doc) => doc.value)
-            .map(
-              (doc) =>
-                `- [${doc.title}](${doc.href})${doc.description != null ? `: ${doc.description}` : ""}`
-            )
-            .join("\n")}`
-        : undefined,
-      endpoints.length > 0
-        ? `## API Docs\n\n${endpoints.join("\n")}`
-        : undefined,
-    ]
-      .filter(isNonNullish)
-      .join("\n\n"),
-    {
-      status: 200,
-      headers: {
-        "Content-Type": "text/plain; charset=utf-8",
-        "X-Robots-Tag": "noindex",
-        "Cache-Control": "s-maxage=60",
-      },
-    }
-  );
+  return [
+    // if there's a landing page, use the llm-friendly markdown version instead of the ${root.title}
+    markdown?.content ?? `# ${root.title}`,
+    docs.length > 0
+      ? `## Docs\n\n${docs
+          .filter((doc) => doc.status === "fulfilled")
+          .map((doc) => doc.value)
+          .map(
+            (doc) =>
+              `- [${doc.title}](${doc.href})${doc.description != null ? `: ${doc.description}` : ""}`
+          )
+          .join("\n")}`
+      : undefined,
+    endpoints.length > 0 ? `## API Docs\n\n${endpoints.join("\n")}` : undefined,
+  ]
+    .filter(isNonNullish)
+    .join("\n\n");
 }
 
 function getLandingPage(

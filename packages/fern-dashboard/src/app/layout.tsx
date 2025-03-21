@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import { ThemeProvider } from "next-themes";
 
-import { UserProvider } from "@auth0/nextjs-auth0/client";
-
 import { gtPlanar } from "./fonts";
 import "./globals.css";
 
@@ -17,18 +15,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning className={gtPlanar.className}>
-      <UserProvider>
-        <body className="flex h-[calc(100dvh)] antialiased">
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            {children}
-          </ThemeProvider>
-        </body>
-      </UserProvider>
+      <body className="flex h-[calc(100dvh)] antialiased">
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          {children}
+        </ThemeProvider>
+      </body>
     </html>
   );
 }
