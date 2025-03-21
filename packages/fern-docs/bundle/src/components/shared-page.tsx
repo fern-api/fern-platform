@@ -9,6 +9,8 @@ import {
 import { Metadata } from "next/types";
 import React from "react";
 
+import { compact } from "es-toolkit/array";
+
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { Slug } from "@fern-api/fdr-sdk/navigation";
 import { withDefaultProtocol } from "@fern-api/ui-core-utils";
@@ -70,16 +72,17 @@ export default async function SharedPage({
   }
 
   // naively find the current node id to prune the navigation tree
-  const currentNodeId = FernNavigation.NodeCollector.collect(root)
+  const currentNode = FernNavigation.NodeCollector.collect(root)
     .getSlugMapWithParents()
-    .get(slug)?.node.id;
+    .get(slug);
+
+  const visibleNodeIds = compact([
+    ...(currentNode?.parents.map((node) => node.id) ?? []),
+    currentNode?.node.id ?? undefined,
+  ]);
 
   // prune the tree so that neighbors don't include authed nodes or hidden nodes
-  root = await withPrunedNavigationLoader(
-    root,
-    loader,
-    currentNodeId ? [currentNodeId] : undefined
-  );
+  root = await withPrunedNavigationLoader(root, loader, visibleNodeIds);
 
   if (root == null) {
     notFound();

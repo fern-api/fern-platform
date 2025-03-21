@@ -229,7 +229,7 @@
   --color-border-default: var(--border, var(--grayscale-a5));
   --color-border-default-soft: var(--border, var(--grayscale-a4));
   --color-border-concealed: var(--border, var(--grayscale-a3));
-  --color-card-border: var(--card-border, var(--color-border-default));
+  --color-card-border: var(--color-border-default);
 
   --spacing-page-width: var(--page-width, 88rem);
   --spacing-content-width: var(--content-width, 40rem);
