@@ -31,6 +31,12 @@ export default async function SidebarPage({
     return null;
   }
 
+  // these are all the "visible" nodes to prevent pruning if any of these nodes are hidden
+  const visibleNodeIds = [
+    ...foundNode.parents.map((node) => node.id),
+    foundNode.node.id,
+  ];
+
   return (
     <>
       {foundNode.tabs && foundNode.tabs.length > 0 && (
@@ -40,7 +46,7 @@ export default async function SidebarPage({
       )}
       <SidebarRootNode
         root={foundNode.sidebar}
-        currentNodeId={foundNode.node.id}
+        visibleNodeIds={visibleNodeIds}
         loader={loader}
       />
     </>

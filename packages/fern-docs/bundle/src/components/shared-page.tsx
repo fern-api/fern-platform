@@ -9,6 +9,8 @@ import {
 import { Metadata } from "next/types";
 import React from "react";
 
+import { compact } from "es-toolkit/array";
+
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { Slug } from "@fern-api/fdr-sdk/navigation";
 import { withDefaultProtocol } from "@fern-api/ui-core-utils";
@@ -25,6 +27,7 @@ import {
   MdxSerializer,
   createCachedMdxSerializer,
 } from "@/server/mdx-serializer";
+import { withPrunedNavigationLoader } from "@/server/withPrunedNavigation";
 import { SetIsLandingPage } from "@/state/layout";
 import { SetCurrentNavigationNode } from "@/state/navigation";
 
@@ -61,11 +64,28 @@ export default async function SharedPage({
   }
 
   // get the root node
-  const root = await rootPromise;
+  let root: FernNavigation.RootNode | undefined = await rootPromise;
 
   // always match the basepath of the root node
   if (!slug.startsWith(root.slug)) {
     redirect(prepareRedirect(root.slug));
+  }
+
+  // naively find the current node id to prune the navigation tree
+  const currentNode = FernNavigation.NodeCollector.collect(root)
+    .getSlugMapWithParents()
+    .get(slug);
+
+  const visibleNodeIds = compact([
+    ...(currentNode?.parents.map((node) => node.id) ?? []),
+    currentNode?.node.id ?? undefined,
+  ]);
+
+  // prune the tree so that neighbors don't include authed nodes or hidden nodes
+  root = await withPrunedNavigationLoader(root, loader, visibleNodeIds);
+
+  if (root == null) {
+    notFound();
   }
 
   // find the node that is currently being viewed
