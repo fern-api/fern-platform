@@ -1,4 +1,7 @@
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
+import { SKIP } from "@fern-docs/mdx";
+
+import { DocsLoader } from "./docs-loader";
 
 interface WithPrunedSidebarOpts {
   /**
@@ -18,6 +21,39 @@ interface WithPrunedSidebarOpts {
 }
 
 /**
+ * This function checks if a node is visible by traversing the node and all its children.
+ * If current node or any of its children are in the set of visible node ids, the node is visible.
+ *
+ * @param node the node to check
+ * @param visibleNodeIds the set of node ids that are visible
+ * @returns true if the node is visible, false otherwise
+ */
+function isVisible(
+  node: FernNavigation.NavigationNode,
+  visibleNodeIds: Set<FernNavigation.NodeId>
+): boolean {
+  let visible = false;
+
+  if (visibleNodeIds.size === 0) {
+    return visible;
+  }
+
+  if (visibleNodeIds.has(node.id)) {
+    visible = true;
+  }
+
+  FernNavigation.traverseBF(node, (node) => {
+    if (visibleNodeIds.has(node.id)) {
+      visible = true;
+      return false;
+    }
+    return true;
+  });
+
+  return visible;
+}
+
+/**
  * Note: at the stage of calling this function, the RBAC should already been evaluated (and nodes are completely filtered out that are not visible to the current user).
  * @returns true if the node should be included, false otherwise
  */
@@ -32,7 +68,10 @@ export function pruneNavigationPredicate(
 
   // then, prune hidden nodes, unless it is the current node
   if (FernNavigation.hasMetadata(node) && node.hidden) {
-    return visibleNodeIds?.includes(node.id) ?? false;
+    if (isVisible(node, new Set(visibleNodeIds))) {
+      return true;
+    }
+    return false;
   }
 
   // finally, prune nodes that are not pages and have no children (avoid pruning links)
@@ -50,7 +89,50 @@ export function withPrunedNavigation<
     return node;
   }
 
+  FernNavigation.traverseBF(node, (node, parents) => {
+    if (
+      opts.visibleNodeIds?.includes(node.id) &&
+      FernNavigation.hasMetadata(node) &&
+      node.hidden
+    ) {
+      return SKIP;
+    }
+
+    const parent = parents[parents.length - 1];
+
+    if (
+      parent &&
+      FernNavigation.hasMetadata(parent) &&
+      parent.hidden &&
+      FernNavigation.hasMetadata(node)
+    ) {
+      node.hidden = true;
+    }
+    return true;
+  });
+
   return FernNavigation.Pruner.from(node)
     .keep((n) => pruneNavigationPredicate(n, opts))
     .get();
+}
+
+export async function withPrunedNavigationLoader<
+  NODE extends FernNavigation.NavigationNode,
+>(
+  node: NODE | undefined,
+  loader: DocsLoader,
+  visibleNodeIds: FernNavigation.NodeId[] | undefined
+): Promise<NODE | undefined> {
+  const returned = withPrunedNavigation(node, {
+    visibleNodeIds,
+    authed: (await loader.getAuthState()).authed,
+    // when true, all unauthed pages are visible, but rendered with a LOCK button
+    // so they're not actually "pruned" from the sidebar
+    // TODO: move this out of a feature flag and into the navigation node metadata
+    discoverable: (await loader.getEdgeFlags()).isAuthenticatedPagesDiscoverable
+      ? (true as const)
+      : undefined,
+  });
+
+  return returned;
 }
