@@ -58,6 +58,14 @@ export interface CheckDomainOwnershipResponse {
   unownedDomains: string[];
 }
 
+export interface ListDocsSitesForOrgResponse {
+  docsSites: DocsSite[];
+}
+
+export interface DocsSite {
+  domain: string;
+}
+
 export interface DocsV2Dao {
   checkDomainsDontBelongToAnotherOrg(
     domains: string[],
@@ -120,6 +128,8 @@ export interface DocsV2Dao {
     domain: string;
     toOrgId: string;
   }): Promise<void>;
+
+  listDocsSitesForOrg(orgID: string): Promise<ListDocsSitesForOrgResponse>;
 }
 
 export class DocsV2DaoImpl implements DocsV2Dao {
@@ -505,6 +515,31 @@ export class DocsV2DaoImpl implements DocsV2Dao {
         domains: previousDocs.map((doc) =>
           ParsedBaseUrl.parse(urljoin(doc.domain, doc.path))
         ),
+      };
+    });
+  }
+
+  async listDocsSitesForOrg(
+    orgID: string
+  ): Promise<ListDocsSitesForOrgResponse> {
+    return this.prisma.$transaction(async (tx) => {
+      const docsSites = await tx.docsV2.findMany({
+        select: {
+          domain: true,
+        },
+        where: {
+          orgID,
+          isPreview: false,
+        },
+        orderBy: {
+          updatedTime: "desc",
+        },
+      });
+
+      return {
+        docsSites: docsSites.map((docsSite) => ({
+          domain: docsSite.domain,
+        })),
       };
     });
   }

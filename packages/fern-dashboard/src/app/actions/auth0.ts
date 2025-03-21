@@ -67,3 +67,12 @@ export async function getCurrentOrgId() {
 
   return session.user.org_id;
 }
+
+export async function getCurrentOrg() {
+  const orgId = await getCurrentOrgId();
+  const { data: organization } =
+    await getAuth0ManagementClient().organizations.get({
+      id: orgId,
+    });
+  return organization;
+}

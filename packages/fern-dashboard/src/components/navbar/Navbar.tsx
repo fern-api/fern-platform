@@ -7,6 +7,7 @@ import {
 } from "@heroicons/react/24/outline";
 
 import { ThemeToggle } from "../theme/ThemeToggle";
+import { DocsNavbarSubItems } from "./DocsNavbarSubItems";
 import { NavbarItem } from "./NavbarItem";
 import { NavbarSectionTitle } from "./NavbarSectionTitle";
 
@@ -21,6 +22,7 @@ export const Navbar = () => {
           icon={<BookOpenIcon className={ICON_SIZE} />}
           href="/docs"
         />
+        <DocsNavbarSubItems />
         <NavbarItem
           title="SDKs"
           icon={<CodeBracketIcon className={ICON_SIZE} />}

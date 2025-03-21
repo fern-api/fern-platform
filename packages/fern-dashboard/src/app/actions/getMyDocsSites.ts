@@ -1,7 +1,9 @@
 "use server";
 
-import { getCurrentOrgId } from "./auth0";
+import { getCurrentOrg } from "./auth0";
+import { getFdrDao } from "./prisma";
 
 export async function getMyDocsSites() {
-  const orgId = await getCurrentOrgId();
+  const currentOrg = await getCurrentOrg();
+  return getFdrDao().docsV2().listDocsSitesForOrg(currentOrg.name);
 }

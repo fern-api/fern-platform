@@ -16,9 +16,11 @@ export declare namespace NavbarItem {
 
 export const NavbarItem = ({ title, icon, href }: NavbarItem.Props) => {
   const pathname = usePathname();
+
+  const isClickable = pathname === href;
   const isSelected = pathname.startsWith(href);
 
-  const Component = isSelected ? "div" : Link;
+  const Component = isClickable ? "div" : Link;
 
   return (
     <Component
