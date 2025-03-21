@@ -40,10 +40,7 @@ export async function LoginButton({
     includeTrailingSlash: isTrailingSlashEnabled(),
   });
 
-  const logoutUrl =
-    (authConfig.type === "basic_token_verification"
-      ? authConfig.logout
-      : undefined) ?? getApiRoute("/api/fern-docs/auth/logout");
+  const logoutUrl = getApiRoute("/api/fern-docs/auth/logout");
 
   const loginUrl =
     (!authState.authed ? authState.authorizationUrl : undefined) ??
@@ -65,6 +62,7 @@ export async function LoginButton({
       size={size}
       className={className}
       showIcon={showIcon}
+      id="fern-auth-button"
     />
   );
 }
