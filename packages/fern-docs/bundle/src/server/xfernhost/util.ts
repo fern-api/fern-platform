@@ -8,6 +8,10 @@ export function cleanHost(host: string | null | undefined): string | undefined {
     host = host.split(",")[0];
   }
 
+  if (typeof host !== "string") {
+    return undefined;
+  }
+
   host = host.trim();
 
   // host should not be localhost
