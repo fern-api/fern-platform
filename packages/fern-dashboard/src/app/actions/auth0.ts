@@ -36,11 +36,11 @@ export async function getCurrentSession() {
     throw new Error("Not authenticated");
   }
   if (session.idToken == null) {
-    throw new Error("isToken is not present on session");
+    throw new Error("idToken is not present on session");
   }
   if (typeof session.idToken !== "string") {
     throw new Error(
-      `isToken is of type ${typeof session.idToken} (expected string)`
+      `idToken is of type ${typeof session.idToken} (expected string)`
     );
   }
 
