@@ -1,5 +1,9 @@
-import { withPageAuthRequired } from "@auth0/nextjs-auth0";
+import { ProtectedRoute } from "@/components/ProtectedRoute";
 
-export default withPageAuthRequired(async () => {
-  return <div>billing</div>;
-});
+export default async function BillingPage() {
+  return (
+    <ProtectedRoute>
+      <div>billing</div>
+    </ProtectedRoute>
+  );
+}

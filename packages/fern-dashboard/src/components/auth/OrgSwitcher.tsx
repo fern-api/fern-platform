@@ -1,6 +1,7 @@
 "use client";
 
-import { getAccessToken } from "@auth0/nextjs-auth0";
+import { useEffect, useState } from "react";
+
 import { GetOrganizations200ResponseOneOfInner } from "auth0";
 
 import {
@@ -22,29 +23,28 @@ export const OrgSwitcher = ({
   currentOrgId,
   organizations,
 }: OrgSwitcher.Props) => {
-  console.log({ currentOrgId });
+  const [localValue, setLocalValue] = useState(currentOrgId);
+  useEffect(() => {
+    setLocalValue(currentOrgId);
+  }, [currentOrgId]);
 
   const onClickOrg = async (newOrgId: string) => {
     if (newOrgId === currentOrgId) {
       return;
     }
-
-    await getAccessToken({
-      authorizationParams: {
-        org_id: newOrgId,
-      },
-    });
+    setLocalValue(newOrgId);
+    window.location.href = `/auth/login?organization=${newOrgId}`;
   };
 
   return (
-    <Select value={currentOrgId} onValueChange={onClickOrg}>
-      <SelectTrigger className="w-[180px]">
+    <Select value={localValue} onValueChange={onClickOrg}>
+      <SelectTrigger className="min-w-[180px]">
         <SelectValue placeholder="Organization" />
       </SelectTrigger>
       <SelectContent>
         {organizations.map((organization) => (
           <SelectItem key={organization.id} value={organization.id}>
-            {organization.display_name} ({organization.id})
+            {organization.display_name}
           </SelectItem>
         ))}
       </SelectContent>

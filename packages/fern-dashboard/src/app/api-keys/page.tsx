@@ -1,5 +1,9 @@
-import { withPageAuthRequired } from "@auth0/nextjs-auth0";
+import { ProtectedRoute } from "@/components/ProtectedRoute";
 
-export default withPageAuthRequired(async () => {
-  return <div>api keys</div>;
-});
+export default async function ApiKeysPage() {
+  return (
+    <ProtectedRoute>
+      <div>api keys</div>
+    </ProtectedRoute>
+  );
+}

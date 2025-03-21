@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-import { Session } from "@auth0/nextjs-auth0";
+import { SessionData } from "@auth0/nextjs-auth0/types";
 import { UserIcon } from "@heroicons/react/24/outline";
 import { PopoverArrow } from "@radix-ui/react-popover";
 
@@ -18,7 +18,7 @@ import { Button } from "./ui/button";
 
 export declare namespace Header {
   export interface Props {
-    session: Session;
+    session: SessionData;
   }
 }
 
@@ -28,7 +28,7 @@ export async function Header({ session }: Header.Props) {
   const picture = session.user.picture;
   const orgId = session.user.org_id;
 
-  const { data: organizations } = await getMyOrganizations();
+  const organizations = await getMyOrganizations();
 
   return (
     <div className="flex justify-between p-4">

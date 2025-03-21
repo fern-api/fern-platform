@@ -1,11 +1,11 @@
-import { Session } from "@auth0/nextjs-auth0";
+import { SessionData } from "@auth0/nextjs-auth0/types";
 
 import { Header } from "./Header";
 import { Sidebar } from "./sidebar/Sidebar";
 
 export declare namespace AppLayout {
   export interface Props {
-    session: Session;
+    session: SessionData;
     children: React.JSX.Element;
   }
 }
