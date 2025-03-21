@@ -57,3 +57,13 @@ export async function getCurrentSession() {
 
   return { session, userId: jwtPayload.sub };
 }
+
+export async function getCurrentOrgId() {
+  const session = await auth0.getSession();
+
+  if (session?.user.org_id == null) {
+    throw new Error("org_id is not defined");
+  }
+
+  return session.user.org_id;
+}
