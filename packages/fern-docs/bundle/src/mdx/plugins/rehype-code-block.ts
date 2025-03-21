@@ -181,6 +181,14 @@ export function migrateMeta(metastring: string): string {
     return `title="${metastring.slice(1, -1).replace(/"/g, '\\"')}"`;
   }
 
+  function createMetaWithTitleAttribute(text: string): string {
+    const textWithoutWordWrap = text.replaceAll(/(wordWrap)/g, "").trim();
+    return text.replace(
+      textWithoutWordWrap,
+      `title="${textWithoutWordWrap.replace(/"/g, '\\"')}"${text.includes("wordWrap") ? " " : ""}`
+    );
+  }
+
   // migrate abcd to title="abcd"
   // exclude any characters wrapped in {}
   if (
@@ -189,11 +197,7 @@ export function migrateMeta(metastring: string): string {
     !metastring.includes("{...") &&
     !/\{[^}]*[a-zA-Z][^}]*\}/.test(metastring)
   ) {
-    const lintMeta = metastring.replaceAll(/(wordWrap)/g, "").trim();
-    return metastring.replace(
-      lintMeta,
-      `title="${lintMeta.replace(/"/g, '\\"')}"${metastring.includes("wordWrap") ? " " : ""}`
-    );
+    return createMetaWithTitleAttribute(metastring);
   }
 
   metastring = metastring.replaceAll(
@@ -203,11 +207,7 @@ export function migrateMeta(metastring: string): string {
         return "";
       }
 
-      const lintText = text.replaceAll(/(wordWrap)/g, "").trim();
-      return text.replace(
-        lintText,
-        `title="${lintText.replace(/"/g, '\\"')}"${text.includes("wordWrap") ? " " : ""}`
-      );
+      return createMetaWithTitleAttribute(text);
     }
   );
 
