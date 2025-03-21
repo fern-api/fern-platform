@@ -19,9 +19,9 @@ export const ProtectedRoute = async ({ children }: ProtectedRoute.Props) => {
   }
 
   const orgId = session.user.org_id;
-  const organizations = await getMyOrganizations();
 
-  if (!organizations.some((o) => o.id === orgId)) {
+  if (orgId == null) {
+    const organizations = await getMyOrganizations();
     let orgIdToRedirectTo = organizations[0]?.id;
     if (orgIdToRedirectTo == null) {
       orgIdToRedirectTo = await createPersonalProject();
