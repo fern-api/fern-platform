@@ -8,9 +8,10 @@ const nextConfig: NextConfig = {
      *
      * pnpm list --filter=@fern-dashboard/ui --only-projects --prod --recursive --depth=Infinity --json | jq -r '[.. | objects | select(.version | .!=null) | select(.version | startswith("link:")) | .from] | unique'
      */
+    "@fern-platform/fdr",
   ],
   experimental: {
-    optimizePackageImports: [],
+    optimizePackageImports: ["@fern-platform/fdr"],
   },
   images: {
     remotePatterns: [

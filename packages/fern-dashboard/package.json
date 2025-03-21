@@ -9,7 +9,7 @@
   },
   "sideEffects": false,
   "scripts": {
-    "check-types": "tsc --noEmit",
+    "check-types": "tsc --build",
     "dashboard:build": "next build",
     "dashboard:dev": "next dev",
     "dashboard:dev:inspect": "NODE_OPTIONS='--inspect' next dev",
@@ -28,6 +28,8 @@
   },
   "dependencies": {
     "@auth0/nextjs-auth0": "^4.1.0",
+    "@fern-api/fdr-sdk": "workspace:*",
+    "@fern-platform/fdr": "workspace:*",
     "@heroicons/react": "^2.2.0",
     "@radix-ui/react-dropdown-menu": "^2.1.6",
     "@radix-ui/react-popover": "^1.1.6",
