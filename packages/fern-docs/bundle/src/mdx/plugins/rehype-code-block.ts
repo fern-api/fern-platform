@@ -181,6 +181,14 @@ export function migrateMeta(metastring: string): string {
     return `title="${metastring.slice(1, -1).replace(/"/g, '\\"')}"`;
   }
 
+  function createMetaWithTitleAttribute(text: string): string {
+    const textWithoutWordWrap = text.replaceAll(/(wordWrap)/g, "").trim();
+    return text.replace(
+      textWithoutWordWrap,
+      `title="${textWithoutWordWrap.replace(/"/g, '\\"')}"${text.includes("wordWrap") ? " " : ""}`
+    );
+  }
+
   // migrate abcd to title="abcd"
   // exclude any characters wrapped in {}
   if (
@@ -189,7 +197,7 @@ export function migrateMeta(metastring: string): string {
     !metastring.includes("{...") &&
     !/\{[^}]*[a-zA-Z][^}]*\}/.test(metastring)
   ) {
-    return `title="${metastring.replace(/"/g, '\\"')}"`;
+    return createMetaWithTitleAttribute(metastring);
   }
 
   metastring = metastring.replaceAll(
@@ -198,7 +206,8 @@ export function migrateMeta(metastring: string): string {
       if (text.trim() === "") {
         return "";
       }
-      return `title="${text.trim()}" `;
+
+      return createMetaWithTitleAttribute(text);
     }
   );
 
@@ -206,7 +215,7 @@ export function migrateMeta(metastring: string): string {
   if (!metastring.includes("title=")) {
     // ignore special words, anything in curly braces
     const parseForTitle = metastring
-      .replaceAll("wordWrap", "")
+      .replaceAll(/(wordWrap)/g, "")
       .replaceAll(/([^=]+)={(.*?)}/g, "")
       .replaceAll(/{(.*?)}/g, "");
     if (parseForTitle !== "") {

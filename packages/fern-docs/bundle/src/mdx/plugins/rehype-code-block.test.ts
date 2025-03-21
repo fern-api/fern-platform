@@ -65,4 +65,22 @@ describe("migrateMeta", () => {
       `" title="python.py" {metadata_that_means_nothing=true}"`
     );
   });
+
+  it("should remove wordWrap if it is next to the title", () => {
+    expect(migrateMeta("Python wordWrap maxLines=100")).toMatchInlineSnapshot(
+      `"title="Python"  wordWrap maxLines={100}"`
+    );
+  });
+
+  it("should remove wordWrap if that is the only word", () => {
+    expect(migrateMeta("wordWrap")).toMatchInlineSnapshot(
+      `"title="" wordWrap"`
+    );
+  });
+
+  it("should remove wordWrap if it is next to just a title", () => {
+    expect(migrateMeta("wordWrap myFile.txt")).toMatchInlineSnapshot(
+      `"wordWrap title="myFile.txt" "`
+    );
+  });
 });
