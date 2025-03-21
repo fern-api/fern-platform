@@ -1,12 +1,16 @@
 import Image from "next/image";
 
-import { getSession } from "@auth0/nextjs-auth0";
+import { auth0 } from "@/lib/auth0";
 
 import { LoginPage } from "./auth/LoginPage";
 import { LogoutButton } from "./auth/LogoutButton";
 
 export async function App() {
-  const session = await getSession();
+  console.log({
+    // eslint-disable-next-line turbo/no-undeclared-env-vars
+    APP_BASE_URL: process.env.APP_BASE_URL,
+  });
+  const session = await auth0.getSession();
 
   if (session == null) {
     return <LoginPage />;
