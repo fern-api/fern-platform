@@ -10,15 +10,15 @@ import { SidebarRootChild } from "./SidebarRootChild";
 
 export async function SidebarRootNode({
   root,
-  currentNodeId,
+  visibleNodeIds,
   loader,
 }: {
   root: FernNavigation.SidebarRootNode | undefined;
-  currentNodeId: FernNavigation.NodeId | undefined;
+  visibleNodeIds: FernNavigation.NodeId[] | undefined;
   loader: DocsLoader;
 }) {
   const node = withPrunedNavigation(root, {
-    visibleNodeIds: currentNodeId != null ? [currentNodeId] : undefined,
+    visibleNodeIds: visibleNodeIds,
     authed: (await loader.getAuthState()).authed,
     // when true, all unauthed pages are visible, but rendered with a LOCK button
     // so they're not actually "pruned" from the sidebar

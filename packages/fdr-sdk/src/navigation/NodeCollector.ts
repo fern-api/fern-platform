@@ -65,7 +65,7 @@ export class NodeCollector {
     };
     this.slugToNode.set(slug, toSet);
 
-    if (FernNavigation.isNeighbor(node) && !node.hidden) {
+    if (FernNavigation.isNeighbor(node)) {
       this.#lastNeighboringNode = node;
       if (this.#last != null) {
         this.#last.next = node;
