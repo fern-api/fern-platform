@@ -1,3 +1,5 @@
+"use server";
+
 import { ManagementClient } from "auth0";
 import jwt from "jsonwebtoken";
 
