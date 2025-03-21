@@ -14,7 +14,6 @@ import { createFileResolver } from "@/server/file-resolver";
 import { createCachedMdxSerializer } from "@/server/mdx-serializer";
 import { withLogo } from "@/server/withLogo";
 
-import { VersionDropdown } from "./header/VersionDropdown";
 import { LoginButton } from "./login-button";
 
 export default async function SharedLayout({
@@ -111,9 +110,7 @@ export default async function SharedLayout({
           showSearchBar={layout.searchbarPlacement === "SIDEBAR"}
           showHeaderInSidebar={layout.isHeaderDisabled}
           versionSelect={
-            <React.Suspense fallback={null}>
-              <VersionDropdown loader={loader} />
-            </React.Suspense>
+            <React.Suspense fallback={null}>{versionSelect}</React.Suspense>
           }
           navbarLinks={
             <React.Suspense fallback={null}>

@@ -64,7 +64,7 @@ export function withVersionSwitcherInfo({
           title: version.title,
           id: version.versionId,
           slug: version.slug,
-
+          landingPage: version.landingPage?.slug,
           // the current version should always point to the current node
           pointsTo: node.slug,
           index,
@@ -109,6 +109,7 @@ export function withVersionSwitcherInfo({
         title: version.title,
         id: version.versionId,
         slug: version.slug,
+        landingPage: version.landingPage?.slug,
         pointsTo,
         index,
         availability: version.availability,

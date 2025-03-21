@@ -27,13 +27,10 @@ export function VersionDropdownClient({
   versions: VersionDropdownItem[];
 }) {
   const currentVersionId = useCurrentVersionId();
-  console.log("currentVersionId", currentVersionId);
   const currentVersionSlug = useCurrentVersionSlug();
-  console.log("currentVersionSlug", currentVersionSlug);
   const currentVersion =
     versions.find((version) => version.versionId === currentVersionId) ??
     versions.find((version) => version.default);
-  console.log("currentVersion", currentVersion);
   return (
     <FernLinkDropdown
       value={currentVersionId}
@@ -103,7 +100,6 @@ function pickVersionSlug({
   defaultSlug?: string;
   slug: string;
 }): string {
-  console.log("currentVersionSlug", currentVersionSlug);
   if (!defaultSlug) {
     return slug;
   }

@@ -36,7 +36,12 @@ export default async function VersionSelectPage({
 
   return (
     <>
-      <VersionDropdown loader={loader} />
+      <VersionDropdown
+        loader={loader}
+        currentNode={foundNode.node}
+        slugMap={foundNode.collector.slugMap}
+        parents={Array.from(foundNode.parents)}
+      />
     </>
   );
 }
