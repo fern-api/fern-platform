@@ -55,8 +55,10 @@ export function createCachedMdxSerializer(
   loader: Awaited<ReturnType<typeof createCachedDocsLoader>>,
   {
     scope,
+    replaceHref,
   }: {
     scope?: Record<string, unknown>;
+    replaceHref?: RehypeLinksOptions["replaceHref"];
   } = {}
 ) {
   const domain = loader.domain;
@@ -74,22 +76,6 @@ export function createCachedMdxSerializer(
     const cachedSerializer = unstable_cache(
       async ({ filename, toc, scope, slug }: MdxSerializerOptions) => {
         const authState = await loader.getAuthState();
-        const { basePath, url } = await loader.getMetadata();
-
-        console.log("basePath: ", basePath);
-        console.log("url: ", url);
-
-        function replaceHref(href: string): string | undefined {
-          if (href.startsWith("/")) {
-            if (basePath) {
-              if (!href.startsWith(basePath)) {
-                console.log(`replaceing href ${href} with ${basePath}${href}`);
-                return `${basePath}${href}`;
-              }
-            }
-          }
-          return;
-        }
 
         try {
           return await internalSerializeMdx(content, {
