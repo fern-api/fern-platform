@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-misused-spread */
 import { OpenAPIV3_1 } from "openapi-types";
 
 import { createMockContext } from "../../../__test__/createMockContext.util";

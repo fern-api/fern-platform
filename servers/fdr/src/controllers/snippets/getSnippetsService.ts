@@ -91,7 +91,7 @@ export function getSnippetsService(app: FdrApplication): SnippetsService {
           }
 
           return await res.send(snippets);
-        } catch (e) {
+        } catch (_e) {
           return await res.send([]);
         }
       }

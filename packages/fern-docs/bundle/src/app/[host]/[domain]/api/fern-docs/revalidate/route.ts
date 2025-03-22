@@ -210,8 +210,7 @@ export async function GET(
               )}/${collector.slugs.length}\n`
             );
             await Promise.all(
-              // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion, @typescript-eslint/no-non-null-assertion
-              batches[i]!.map(async (slug) => {
+              (batches[i] ?? []).map(async (slug: string) => {
                 const url = withDefaultProtocol(`${domain}${slugToHref(slug)}`);
                 // force revalidate the static page
                 revalidatePath(

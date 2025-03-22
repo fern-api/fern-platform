@@ -1122,7 +1122,7 @@ export function getFrontmatter(content: string): {
   try {
     const gm = grayMatter(content);
     return { frontmatter: gm.data, content: gm.content };
-  } catch (e) {
+  } catch (_e) {
     return { frontmatter: {}, content };
   }
 }

@@ -14,7 +14,7 @@ import {
   getLatestVersionFromPypi,
 } from "./getLatestVersion";
 
-export function getVersionsService(app: FdrApplication): VersionsService {
+export function getVersionsService(_app: FdrApplication): VersionsService {
   return new VersionsService({
     computeSemanticVersion: async (req, res) => {
       const existingVersion = await getExistingVersion({

@@ -1,3 +1,4 @@
+/* eslint-disable unused-imports/no-unused-vars */
 import { APIV1Db, DocsV1Db } from "@fern-api/fdr-sdk";
 
 import { FdrApplication, type FdrConfig } from "../app";

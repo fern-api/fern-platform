@@ -117,34 +117,34 @@ describe("rehype-steps", () => {
     `);
   });
 
-  // it("should gracefully handle untitled steps", () => {
-  //   const tree = toTree(`
-  //     <Steps>
-  //       Some content without a step title
+  it.skip("should gracefully handle untitled steps", () => {
+    const tree = toTree(`
+      <Steps>
+        Some content without a step title
 
-  //       ### Step 2
+        ### Step 2
 
-  //       Some content within step 2
-  //     </Steps>
-  //   `).hast;
+        Some content within step 2
+      </Steps>
+    `).hast;
 
-  //   handleSteps(tree);
-  //   handleSlug(tree);
+    handleSteps(tree);
+    handleSlug(tree);
 
-  //   console.log(hastToMarkdown(tree));
-  //   expect(hastToMarkdown(tree)).toMatchInlineSnapshot(`
-  //     "<StepGroup>
-  //       <Step title={<></>}>
-  //         Some content without a step title
-  //       </Step>
+    console.log(hastToMarkdown(tree));
+    expect(hastToMarkdown(tree)).toMatchInlineSnapshot(`
+      "<StepGroup>
+        <Step title={<></>}>
+          Some content without a step title
+        </Step>
 
-  //       <Step id="step-2" title="Step 2">
-  //         Some content within step 2
-  //       </Step>
-  //     </StepGroup>
-  //     "
-  //   `);
-  // });
+        <Step id="step-2" title="Step 2">
+          Some content within step 2
+        </Step>
+      </StepGroup>
+      "
+    `);
+  });
 
   it("should handle steps with mixed content types", () => {
     const tree = toTree(`

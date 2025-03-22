@@ -1,3 +1,4 @@
+/* eslint-disable unused-imports/no-unused-vars */
 import { AuthType } from "@prisma/client";
 import { mapValues } from "es-toolkit/object";
 import urlJoin from "url-join";
@@ -247,7 +248,7 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
         const warmEndpointCachePromises = apiDefinitions.flatMap(
           (apiDefinition) => {
             return Object.entries(apiDefinition.subpackages).flatMap(
-              ([id, subpackage]) => {
+              ([_, subpackage]) => {
                 return subpackage.endpoints.map(async (endpoint) => {
                   try {
                     return await fetch(
