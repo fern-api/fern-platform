@@ -1,9 +1,14 @@
-import { App } from "../components/App";
+import { redirect } from "next/navigation";
 
-export default function Home() {
-  return (
-    <div className="flex flex-1">
-      <App />
-    </div>
-  );
+import { LoginPage } from "@/components/LoginPage";
+import { auth0 } from "@/lib/auth0";
+
+export default async function Home() {
+  const session = await auth0.getSession();
+
+  if (session == null) {
+    return <LoginPage />;
+  } else {
+    redirect("/docs");
+  }
 }

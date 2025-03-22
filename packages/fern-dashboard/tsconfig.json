@@ -13,5 +13,5 @@
     "next.config.ts",
     "vitest.config.ts"
   ],
-  "references": []
+  "references": [{ "path": "../../servers/fdr/tsconfig.json" }]
 }

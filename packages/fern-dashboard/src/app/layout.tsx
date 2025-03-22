@@ -8,10 +8,10 @@ export const metadata: Metadata = {
   title: "Fern Dashboard",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: React.JSX.Element;
 }>) {
   return (
     <html lang="en" suppressHydrationWarning className={gtPlanar.className}>
