@@ -17,23 +17,31 @@ export declare namespace NavbarItem {
 export const NavbarItem = ({ title, icon, href }: NavbarItem.Props) => {
   const pathname = usePathname();
 
-  const isClickable = pathname === href;
   const isSelected = pathname.startsWith(href);
+  const isClickable = pathname !== href;
 
-  const Component = isClickable ? "div" : Link;
+  const className = cn(
+    "flex flex-1 flex-col items-center gap-2 py-2 text-sm transition md:flex-row",
+    isSelected ? "text-green-1100" : "text-gray-900",
+    !isSelected &&
+      isClickable &&
+      "hover:text-gray-1200 dark:hover:text-gray-700"
+  );
 
-  return (
-    <Component
-      className={cn(
-        "flex flex-1 flex-col items-center gap-2 py-2 text-sm transition md:flex-row",
-        isSelected
-          ? "text-green-1100"
-          : "hover:text-gray-1200 text-gray-900 dark:hover:text-gray-700"
-      )}
-      href={href}
-    >
+  const children = (
+    <>
       {icon}
       <div>{title}</div>
-    </Component>
+    </>
   );
+
+  if (isClickable) {
+    return (
+      <Link className={className} href={href}>
+        {children}
+      </Link>
+    );
+  } else {
+    return <div className={className}>{children}</div>;
+  }
 };

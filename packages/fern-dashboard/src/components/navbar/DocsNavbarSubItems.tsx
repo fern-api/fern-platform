@@ -1,12 +1,18 @@
 import { Suspense } from "react";
 
-import { getMyDocsSites } from "@/app/actions/getMyDocsSites";
+import { DocsSite } from "@fern-platform/fdr";
 
 import { NavbarSubItem } from "./NavbarSubItem";
 
-export async function DocsNavbarSubItems() {
-  const { docsSites } = await getMyDocsSites();
+export declare namespace DocsNavbarSubItems {
+  export interface Props {
+    docsSites: DocsSite[];
+  }
+}
 
+export async function DocsNavbarSubItems({
+  docsSites,
+}: DocsNavbarSubItems.Props) {
   return (
     <Suspense fallback={null}>
       {docsSites.map((docsSite) => (

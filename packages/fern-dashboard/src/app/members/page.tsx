@@ -1,9 +1,15 @@
+import { AppLayout } from "@/components/AppLayout";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
+import { getSessionOrRedirect } from "@/lib/auth0";
 
 export default async function MembersPage() {
+  const session = await getSessionOrRedirect();
+
   return (
     <ProtectedRoute>
-      <div>members</div>
+      <AppLayout session={session}>
+        <div>members</div>
+      </AppLayout>
     </ProtectedRoute>
   );
 }
