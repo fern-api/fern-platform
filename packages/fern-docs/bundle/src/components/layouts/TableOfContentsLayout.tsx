@@ -23,7 +23,7 @@ export function TableOfContentsLayout({
     <aside id={FERN_TOC_ID}>
       <SetEmptyTableOfContents value={!showTableOfContents} />
       {showTableOfContents && (
-        <FernScrollArea className="px-4 pb-12 pt-8 lg:pr-5">
+        <FernScrollArea className="not-prose">
           <TableOfContents tableOfContents={tableOfContents} />
         </FernScrollArea>
       )}
