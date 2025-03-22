@@ -12,10 +12,10 @@ import { ApiExplorerFlags } from "@/state/api-explorer-flags";
 export default async function Layout({
   params,
   children,
-  endpointSelector,
+  sidebar,
 }: {
   children: React.ReactNode;
-  endpointSelector: React.ReactNode;
+  sidebar: React.ReactNode;
   params: Promise<{ host: string; domain: string }>;
 }) {
   const { host, domain } = await params;
@@ -48,7 +48,7 @@ export default async function Layout({
         className="size-full"
         leftClassName="border-border-default border-r hidden lg:block"
       >
-        {endpointSelector}
+        {sidebar}
         {children}
       </HorizontalSplitPane>
     </main>
