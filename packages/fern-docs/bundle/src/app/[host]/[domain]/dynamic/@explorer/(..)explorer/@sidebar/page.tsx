@@ -18,7 +18,7 @@ export default async function EndpointSelectorPage({
     domain,
     await getFernToken()
   );
-  const [root] = await Promise.all([loader.getRoot()]);
+  const root = await loader.getRoot();
 
   const apiGroups = flattenApiSection(root);
 
