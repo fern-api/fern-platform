@@ -23,7 +23,7 @@ const CohereDocsStyle = () => {
       {`
         :root {
           --header-offset: 0px;
-          --border-color-card: #d8cfc1;
+          --card-border: #d8cfc1;
           --bg-color-search-dialog: #fafafa;
           --bg-color-header-tab-inactive-hover: #f5f5f5;
           --border-color-header-tab-active: #d8cfc1;
@@ -31,8 +31,8 @@ const CohereDocsStyle = () => {
         }
 
         .dark {
-          --bg-color-card: #0f0f0f;
-          --border-color-card: #4d4d4d;
+          --card-background: #0f0f0f;
+          --card-border: #4d4d4d;
           --bg-color-search-dialog: #1e1e1e;
           --bg-color-header-tab-inactive-hover: #292929;
           --border-color-header-tab-active: #4d4d4d;
