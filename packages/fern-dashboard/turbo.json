@@ -6,6 +6,9 @@
     "build": {
       "env": []
     },
+    "compile": {
+      "outputs": ["tsconfig.tsbuildinfo"]
+    },
     "dashboard:build": {
       "dependsOn": ["compile"],
       "outputs": [".next/**", "!.next/cache/**"],
