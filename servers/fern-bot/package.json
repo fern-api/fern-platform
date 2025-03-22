@@ -7,6 +7,7 @@
     "format": "prettier --write --ignore-unknown \"**\"",
     "invoke": "sls invoke",
     "lint": "eslint --max-warnings 0 src --ext .ts",
+    "lint:eslint": "eslint --max-warnings 0 .",
     "lint:eslint:fix": "pnpm lint:eslint --fix",
     "lint:fix": "pnpm lint --fix",
     "package": "sls package",

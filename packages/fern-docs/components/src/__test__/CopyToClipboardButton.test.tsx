@@ -19,14 +19,15 @@ Object.defineProperty(navigator, "clipboard", {
 afterEach(cleanup);
 
 describe("CopyToClipboardButton", () => {
-  // it("renders correctly", async () => {
-  //   // eslint-disable-next-line @typescript-eslint/no-deprecated
-  //   const component = renderer.create(
-  //     <CopyToClipboardButton testId="copy-btn" content={"test"} />
-  //   );
-  //   const tree = component.toJSON() as renderer.ReactTestRendererJSON;
-  //   expect(tree).toMatchSnapshot();
-  // });
+  it.skip("renders correctly", async () => {
+    // eslint-disable-next-line @typescript-eslint/no-deprecated
+    const component = renderer.create(
+      <CopyToClipboardButton testId="copy-btn" content={"test"} />
+    );
+    // eslint-disable-next-line @typescript-eslint/no-deprecated
+    const tree = component.toJSON() as renderer.ReactTestRendererJSON;
+    expect(tree).toMatchSnapshot();
+  });
 
   it("changes content after click", () => {
     const { getByTestId } = render(

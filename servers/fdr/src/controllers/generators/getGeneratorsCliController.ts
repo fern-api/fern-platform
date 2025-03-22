@@ -36,7 +36,7 @@ export function getGeneratorsCliController(app: FdrApplication): CliService {
       }
       return res.send(maybeRelease);
     },
-    upsertCliRelease: async (req, res) => {
+    upsertCliRelease: async (req) => {
       await app.services.auth.checkUserBelongsToOrg({
         authHeader: req.headers.authorization,
         orgId: "fern",
