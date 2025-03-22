@@ -14,6 +14,7 @@ import { MobileMenuButton } from "./MobileButtons";
 export function HeaderContent({
   logo,
   versionSelect,
+  productSelect,
   className,
   style,
   showSearchBar,
@@ -22,6 +23,7 @@ export function HeaderContent({
 }: {
   logo: React.ReactNode;
   versionSelect: React.ReactNode;
+  productSelect: React.ReactNode;
   className?: string;
   style?: CSSProperties;
   showSearchBar?: boolean;
@@ -39,7 +41,10 @@ export function HeaderContent({
     >
       <div className="fern-header-logo-container">
         <div className="flex items-center gap-2">
-          {logo}
+          <div className="flex items-start gap-2">
+            {logo}
+            {productSelect}
+          </div>
           {versionSelect}
         </div>
       </div>

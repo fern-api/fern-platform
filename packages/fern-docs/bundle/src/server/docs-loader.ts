@@ -62,6 +62,7 @@ import { postToEngineeringNotifs } from "./slack";
 import { FernColorTheme, FernLayoutConfig, FileData } from "./types";
 import { cleanBasePath } from "./utils/clean-base-path";
 import { pruneWithAuthState } from "./withRbac";
+import { MOCK_2 } from "./mock-data";
 
 const loadWithUrl = uncachedLoadWithUrl;
 
@@ -579,6 +580,10 @@ const getRoot = async (
   if (authConfig) {
     root = pruneWithAuthState(authState, authConfig, root);
   }
+  console.log("root", root);
+
+  root = MOCK_2;
+  console.log("root", root);
 
   FernNavigation.utils.mutableUpdatePointsTo(root);
 

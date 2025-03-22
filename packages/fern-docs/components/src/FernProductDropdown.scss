@@ -1,0 +1,36 @@
+@layer components {
+  .fern-product-dropdown {
+    @apply relative z-50;
+    @apply animate-popover;
+    @apply min-w-(--radix-dropdown-menu-content-width) max-w-[50vw];
+    @apply bg-(color:--color-background) border-(color:--grayscale-a6) rounded-2 border will-change-[opacity,transform];
+    @apply shadow-xl;
+    @apply flex cursor-pointer flex-col gap-1 p-2;
+
+    .fern-product-dropdown-item {
+      @apply rounded-3/2 flex cursor-pointer items-center gap-2 px-3 py-1;
+      @apply max-w-[min(300px,100%)];
+      @apply transition-all duration-200 ease-in-out;
+
+      .fern-product-dropdown-item-icon {
+        @apply rounded-3/2 border-(color:--grayscale-a9) border;
+        @apply m-1 flex h-[42px] w-[42px] shrink-0 items-center justify-center p-1;
+        svg {
+          @apply block h-[60%] w-[60%];
+        }
+      }
+
+      @apply data-[highlighted]:text-(color:--accent-contrast) data-[highlighted]:bg-(color:--accent) will-change-[background-color,color];
+
+      &[data-highlighted] .fern-api-property-meta {
+        border-color: var(--accent-contrast) !important;
+      }
+    }
+    .fern-product-dropdown-item:hover {
+      .fern-product-dropdown-item-icon {
+        @apply border-(color:--accent) text-(color:--accent);
+      }
+      @apply text-(color:--accent) bg-(color:--accent-2);
+    }
+  }
+}

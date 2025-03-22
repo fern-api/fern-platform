@@ -16,6 +16,7 @@ import { withLogo } from "@/server/withLogo";
 
 import { VersionDropdown } from "./header/VersionDropdown";
 import { LoginButton } from "./login-button";
+import { ProductDropdown } from "./header/ProductDropdown";
 
 export default async function SharedLayout({
   children,
@@ -83,6 +84,11 @@ export default async function SharedLayout({
               logo={withLogo(config, resolveFileSrc, basePath)}
               className="w-fit shrink-0"
             />
+          }
+          productSelect={
+            <React.Suspense fallback={null}>
+              <ProductDropdown loader={loader} />
+            </React.Suspense>
           }
           versionSelect={
             <React.Suspense fallback={null}>
