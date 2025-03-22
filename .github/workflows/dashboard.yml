@@ -19,7 +19,7 @@ jobs:
         run: pnpm --filter=@fern-platform/fdr codegen
 
       - name: Check types
-        run: pnpm --filter=@fern-dashboard/ui check-types
+        run: pnpm --filter=@fern-dashboard/ui compile
 
       - name: Check dependencies
         run: pnpm --filter=@fern-dashboard/ui depcheck
