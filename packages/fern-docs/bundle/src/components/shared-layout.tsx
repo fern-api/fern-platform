@@ -29,7 +29,7 @@ export default async function SharedLayout({
   loader: DocsLoader;
 }) {
   const serialize = createCachedMdxSerializer(loader);
-  const [{ basePath }, config, edgeFlags, files, colors, layout] =
+  const [{ basePath, domain }, config, edgeFlags, files, colors, layout] =
     await Promise.all([
       loader.getMetadata(),
       loader.getConfig(),
@@ -40,7 +40,7 @@ export default async function SharedLayout({
     ]);
   const theme = edgeFlags.isCohereTheme ? "cohere" : "default";
   const announcementText = config.announcement?.text;
-  const resolveFileSrc = createFileResolver(files);
+  const resolveFileSrc = createFileResolver(files, domain);
 
   return (
     <ThemedDocs
