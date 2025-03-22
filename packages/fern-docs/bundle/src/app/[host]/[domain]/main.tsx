@@ -119,6 +119,8 @@ export async function DocsMainContent({
     );
   }
 
-  console.error(`[${loader.domain}] Unknown node type: ${node.type}`);
+  console.error(
+    `[DocsMainContent:${loader.domain}] Unknown node type: ${node.type}`
+  );
   notFound();
 }

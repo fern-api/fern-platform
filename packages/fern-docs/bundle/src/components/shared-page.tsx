@@ -85,6 +85,7 @@ export default async function SharedPage({
   root = await withPrunedNavigationLoader(root, loader, visibleNodeIds);
 
   if (root == null) {
+    console.error(`[SharedPage:${loader.domain}] Could not find root`);
     notFound();
   }
 
@@ -116,6 +117,7 @@ export default async function SharedPage({
       redirect(prepareRedirect(found.redirect));
     }
 
+    console.error(`[SharedPage:${loader.domain}] Not found: ${slug}`);
     notFound();
   }
 

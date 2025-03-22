@@ -49,6 +49,7 @@ async function getLlmsFullTxt(
   const root = getSectionRoot(await loader.getRoot(), path);
 
   if (root == null) {
+    console.error(`[llmsFull:${domain}] Could not find root`);
     notFound();
   }
 
@@ -84,6 +85,7 @@ async function getLlmsFullTxt(
   ).filter(isNonNullish);
 
   if (markdowns.length === 0) {
+    console.error(`[llmsFull:${domain}] Markdown is empty`);
     notFound();
   }
 
