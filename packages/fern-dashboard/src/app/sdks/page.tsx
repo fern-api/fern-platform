@@ -8,7 +8,7 @@ export default async function SDKsPage() {
   return (
     <ProtectedRoute>
       <AppLayout session={session}>
-        <div>sdks!</div>
+        <div>sdks</div>
       </AppLayout>
     </ProtectedRoute>
   );
