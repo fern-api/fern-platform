@@ -1,3 +1,5 @@
+"use client";
+
 import { ReactElement } from "react";
 
 import { useAtom, useAtomValue } from "jotai/react";
