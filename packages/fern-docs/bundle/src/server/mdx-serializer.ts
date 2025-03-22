@@ -8,6 +8,7 @@ import { Semaphore } from "es-toolkit/compat";
 import { Frontmatter } from "@fern-api/fdr-sdk/docs";
 
 import { serializeMdx as internalSerializeMdx } from "@/mdx/bundler/serialize";
+import { RehypeLinksOptions } from "@/mdx/plugins/rehype-links";
 import { createCachedDocsLoader } from "@/server/docs-loader";
 
 import { cacheSeed } from "./cache-seed";
@@ -30,6 +31,10 @@ export type MdxSerializerOptions = {
    * The slug of the page being serialized.
    */
   slug?: string;
+  /**
+   * The function to replace links with the current version or basepath
+   */
+  replaceHref?: RehypeLinksOptions["replaceHref"];
 };
 
 export type MdxSerializer = (
@@ -50,8 +55,10 @@ export function createCachedMdxSerializer(
   loader: Awaited<ReturnType<typeof createCachedDocsLoader>>,
   {
     scope,
+    replaceHref,
   }: {
     scope?: Record<string, unknown>;
+    replaceHref?: RehypeLinksOptions["replaceHref"];
   } = {}
 ) {
   const domain = loader.domain;
@@ -80,6 +87,7 @@ export function createCachedMdxSerializer(
               user: authState.authed ? authState.user : undefined,
               ...scope,
             },
+            replaceHref,
           });
         } catch (error) {
           console.error("Error serializing mdx", error);
