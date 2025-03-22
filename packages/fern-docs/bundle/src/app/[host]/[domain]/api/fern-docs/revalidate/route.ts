@@ -210,11 +210,7 @@ export async function GET(
               )}/${collector.slugs.length}\n`
             );
             await Promise.all(
-<<<<<<< HEAD
               (batches[i] ?? []).map(async (slug: string) => {
-=======
-              (batches[i] ?? []).map(async (slug) => {
->>>>>>> 8e436cd26 (fix lint)
                 const url = withDefaultProtocol(`${domain}${slugToHref(slug)}`);
                 // force revalidate the static page
                 revalidatePath(
