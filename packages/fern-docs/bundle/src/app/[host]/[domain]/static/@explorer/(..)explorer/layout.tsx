@@ -7,10 +7,10 @@ import { ApiExplorerFlags } from "@/state/api-explorer-flags";
 export default async function ExplorerLayout({
   children,
   params,
-  endpointSelector,
+  sidebar,
 }: {
   children: React.ReactNode;
-  endpointSelector: React.ReactNode;
+  sidebar: React.ReactNode;
   params: Promise<{ host: string; domain: string }>;
 }) {
   const { host, domain } = await params;
@@ -38,7 +38,7 @@ export default async function ExplorerLayout({
         className="w-full flex-1 overflow-y-auto overscroll-contain"
         leftClassName="border-border-default border-r hidden lg:block"
       >
-        {endpointSelector}
+        {sidebar}
         {children}
       </HorizontalSplitPane>
     </PlaygroundDrawer>
