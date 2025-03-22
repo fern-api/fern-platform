@@ -2,6 +2,5 @@ packages/**/dist
 packages/**/build
 packages/**/lib
 !packages/fern-dashboard/src/lib
-servers/**
 clis/**
 docker/**
