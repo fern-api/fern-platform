@@ -646,6 +646,9 @@ importers:
       '@fern-platform/configs':
         specifier: workspace:*
         version: link:../configs
+      '@prisma/nextjs-monorepo-workaround-plugin':
+        specifier: ^6.5.0
+        version: 6.5.0
       '@tailwindcss/postcss':
         specifier: ^4.0.9
         version: 4.0.9
@@ -661,6 +664,9 @@ importers:
       '@types/react-dom':
         specifier: 19.0.4
         version: 19.0.4(@types/react@19.0.10)
+      nextjs-monorepo-workaround-plugin:
+        specifier: link:@types/@prisma/nextjs-monorepo-workaround-plugin
+        version: link:@types/@prisma/nextjs-monorepo-workaround-plugin
       tailwindcss:
         specifier: ^4.0.9
         version: 4.0.9
@@ -4992,6 +4998,9 @@ packages:
 
   '@prisma/get-platform@5.13.0':
     resolution: {integrity: sha512-B/WrQwYTzwr7qCLifQzYOmQhZcFmIFhR81xC45gweInSUn2hTEbfKUPd2keAog+y5WI5xLAFNJ3wkXplvSVkSw==}
+
+  '@prisma/nextjs-monorepo-workaround-plugin@6.5.0':
+    resolution: {integrity: sha512-W//PmOanuqx7+xUvj3529wpC+6ZQLwtv+JEcMR5PVubUmKyaduhOdDvVEvjACo9sN7nAqVBTFDHMBarIeOw6Ig==}
 
   '@radix-ui/colors@3.0.0':
     resolution: {integrity: sha512-FUOsGBkHrYJwCSEtWRCIfQbZG7q1e6DgxCIOe1SUQzDe/7rXXeA47s8yCn6fuTNQAj1Zq4oTFi9Yjp3wzElcxg==}
@@ -19146,6 +19155,8 @@ snapshots:
   '@prisma/get-platform@5.13.0':
     dependencies:
       '@prisma/debug': 5.13.0
+
+  '@prisma/nextjs-monorepo-workaround-plugin@6.5.0': {}
 
   '@radix-ui/colors@3.0.0': {}
 

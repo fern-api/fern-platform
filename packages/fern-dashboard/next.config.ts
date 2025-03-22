@@ -1,6 +1,9 @@
 /* eslint-disable turbo/no-undeclared-env-vars */
 import type { NextConfig } from "next";
 
+// @ts-expect-error there are no types for this library
+import { PrismaPlugin } from "@prisma/nextjs-monorepo-workaround-plugin";
+
 const nextConfig: NextConfig = {
   transpilePackages: [
     /**
@@ -29,6 +32,13 @@ const nextConfig: NextConfig = {
       process.env.VERCEL_ENV === "preview"
         ? `https://${process.env.VERCEL_BRANCH_URL}`
         : process.env.APP_BASE_URL,
+  },
+  webpack: (config, { isServer }) => {
+    if (isServer) {
+      config.plugins = [...config.plugins, new PrismaPlugin()];
+    }
+
+    return config;
   },
 };
 
