@@ -1,6 +1,6 @@
 @layer components {
   .fern-table-root {
-    @apply border-(color:--grayscale-a5) rounded-3/2 bg-card-background border;
+    @apply border-card-border rounded-3/2 bg-card-background border;
     @apply overflow-hidden text-sm backdrop-blur-2xl;
 
     /* hack to make the table scrollable */
@@ -18,7 +18,7 @@
     td,
     th {
       @apply h-9 p-2 text-left;
-      @apply border-(color:--grayscale-a5) border-b;
+      @apply border-card-border border-b;
     }
 
     tbody > tr:last-child > td {
