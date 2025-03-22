@@ -90,7 +90,7 @@ export class AlgoliaIndexSegmentDeleterServiceImpl
       await this.db.prisma.indexSegment.delete({
         where: { id: indexSegmentId },
       });
-    } catch (err) {
+    } catch (_err) {
       // await this.app.services.slack.notifyFailedToDeleteIndexSegment({ indexSegmentId, err });
     }
   }

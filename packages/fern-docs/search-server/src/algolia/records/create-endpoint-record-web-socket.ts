@@ -29,7 +29,11 @@ export function createEndpointBaseRecordWebSocket({
     compact([base.code_snippets, prepared.code_snippets])
   ).filter((codeSnippet) => measureBytes(codeSnippet.code) < 2000);
 
-  const keywords: string[] = [...(base.keywords ?? [])];
+  const keywords: string[] = base.keywords
+    ? Array.isArray(base.keywords)
+      ? base.keywords
+      : [base.keywords]
+    : [];
 
   keywords.push("endpoint", "api", "websocket", "web socket", "stream");
 

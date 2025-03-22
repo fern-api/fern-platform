@@ -19,9 +19,9 @@ export default async function SidebarPage({
   const rootPromise = loader.getRoot();
 
   // preload:
-  loader.getLayout();
-  loader.getAuthState();
-  loader.getEdgeFlags();
+  await loader.getLayout();
+  await loader.getAuthState();
+  await loader.getEdgeFlags();
 
   const foundNode = FernNavigation.utils.findNode(
     await rootPromise,

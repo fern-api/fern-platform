@@ -4,12 +4,10 @@ import { FernNavigation } from "@fern-api/fdr-sdk";
 import { slugjoin } from "@fern-api/fdr-sdk/navigation";
 
 import { getFernToken } from "@/app/fern-token";
-import { SidebarTabsList } from "@/components/sidebar/SidebarTabsList";
-import { SidebarTabsRootServer } from "@/components/sidebar/SidebarTabsRootServer";
-import { SidebarRootNode } from "@/components/sidebar/nodes/SidebarRootNode";
+import { VersionDropdown } from "@/components/header/VersionDropdown";
 import { createCachedDocsLoader } from "@/server/docs-loader";
 
-export default async function SidebarPage({
+export default async function VersionSelectPage({
   params,
 }: {
   params: Promise<{ host: string; domain: string; slug: string }>;
@@ -36,23 +34,13 @@ export default async function SidebarPage({
     return null;
   }
 
-  // these are all the "visible" nodes to prevent pruning if any of these nodes are hidden
-  const visibleNodeIds = [
-    ...foundNode.parents.map((node) => node.id),
-    foundNode.node.id,
-  ];
-
   return (
     <>
-      {foundNode.tabs && foundNode.tabs.length > 0 && (
-        <SidebarTabsRootServer loader={loader}>
-          <SidebarTabsList tabs={foundNode.tabs} />
-        </SidebarTabsRootServer>
-      )}
-      <SidebarRootNode
-        root={foundNode.sidebar}
-        visibleNodeIds={visibleNodeIds}
+      <VersionDropdown
         loader={loader}
+        currentNode={foundNode.node}
+        slugMap={foundNode.collector.slugMap}
+        parents={Array.from(foundNode.parents)}
       />
     </>
   );

@@ -19,7 +19,15 @@ export interface FernDatetimeInputProps extends ComponentProps<"input"> {
  * @returns The formatted date string in local time for the input element.
  */
 function formatInputDate(date: string) {
-  return format(date, "yyyy-MM-dd'T'HH:mm");
+  try {
+    if (date === "currentDate") {
+      return format(new Date(), "yyyy-MM-dd'T'HH:mm");
+    }
+    return format(new Date(date), "yyyy-MM-dd'T'HH:mm");
+  } catch (_error) {
+    console.warn(`Invalid date format: ${date}. Defaulting to current date.`);
+    return format(new Date(), "yyyy-MM-dd'T'HH:mm");
+  }
 }
 
 /**

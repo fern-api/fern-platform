@@ -1,4 +1,0 @@
-src/client/generated/Client.ts
-src/client/generated/api/resources/**/client/
-src/client/generated/api/resources/docsCache/
-src/client/generated/core/
