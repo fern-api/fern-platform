@@ -13,6 +13,7 @@ export interface VersionSwitcherInfo {
   index: number;
   availability: FernNavigation.Availability | undefined;
   pointsTo: FernNavigation.Slug | undefined;
+  landingPage: FernNavigation.Slug | undefined;
   hidden: boolean | undefined;
   authed: boolean | undefined;
 }
