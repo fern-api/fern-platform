@@ -21,7 +21,6 @@ export function createFileResolver(
     if (file == null) {
       // the file is not found, so we return the src as the image data
 
-      // if the file source is just an id, alert
       postToEngineeringNotifs(
         `:rotating_light: [createFileResolver] Could not find file ${fileId} for domain ${domain}.`
       );
