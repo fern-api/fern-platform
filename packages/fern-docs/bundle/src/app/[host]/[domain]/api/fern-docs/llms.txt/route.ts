@@ -65,6 +65,7 @@ async function getLlmsTxt(
   const root = getSectionRoot(await loader.getRoot(), path);
 
   if (root == null) {
+    console.error(`[llmsTxt:${domain}] Could not find root`);
     notFound();
   }
 
