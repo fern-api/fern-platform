@@ -18,8 +18,6 @@ export async function GET(
   req: NextRequest,
   props: { params: Promise<{ host: string; domain: string }> }
 ): Promise<NextResponse> {
-  "use cache";
-
   const { host, domain } = await props.params;
 
   const path = slugToHref(req.nextUrl.searchParams.get("slug") ?? "");
@@ -41,10 +39,10 @@ async function getLlmsFullTxt(
 ): Promise<string> {
   "use cache";
 
-  unstable_cacheTag(domain, "llms-full-txt");
+  unstable_cacheTag(domain, "getLlmsFullTxt");
 
-  const fern_token = (await cookies()).get(COOKIE_FERN_TOKEN)?.value;
-  const loader = await createCachedDocsLoader(host, domain, fern_token);
+  // const fern_token = (await cookies()).get(COOKIE_FERN_TOKEN)?.value;
+  const loader = await createCachedDocsLoader(host, domain);
 
   const root = getSectionRoot(await loader.getRoot(), path);
 
