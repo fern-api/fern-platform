@@ -36,6 +36,15 @@ export declare namespace FernProductDropdown {
   }
 }
 
+/**
+ * This component is used to render a dropdown of products. This component is intended
+ * to be a more specific version of the `FernDropdown` component, and therefore only
+ * defines its own props and utilizes the `FernProductDropdownItem` component to render
+ * its options.
+ *
+ * @param props: FernProductDropdown.Props
+ * @returns the rendered dropdown
+ */
 export const FernProductDropdown = forwardRef<
   HTMLButtonElement,
   PropsWithChildren<FernProductDropdown.Props>
@@ -45,7 +54,7 @@ export const FernProductDropdown = forwardRef<
       className,
       options,
       onValueChange,
-      // value,
+      value,
       children,
       onOpen,
       usePortal = true,
@@ -83,8 +92,13 @@ export const FernProductDropdown = forwardRef<
             onClick={onClick}
             onSelect={onValueChange && (() => onValueChange(option.value))}
             className="hover:border-none"
+            data-highlighted={value === option.value}
           >
-            <FernProductDropdownItem key={option.id} option={option} />
+            <FernProductDropdownItem
+              key={option.id}
+              option={option}
+              highlighted={value === option.value}
+            />
           </DropdownMenu.Item>
         ))}
       </DropdownMenu.Content>

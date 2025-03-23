@@ -11,8 +11,6 @@ import { slugToHref } from "@fern-docs/utils";
 
 import { useCurrentProductId, useCurrentProductSlug } from "@/state/navigation";
 
-// import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
-
 export interface ProductDropdownItem {
   productId: string;
   title: string;
@@ -37,14 +35,6 @@ export function ProductDropdownClient({
     products.find((product) => product.productId === currentProductId) ??
     products.find((product) => product.default);
 
-  console.log(
-    "currentProductSlug",
-    "pick",
-    pickProductSlug({
-      currentProductSlug,
-      slug: "learn/sdks",
-    })
-  );
   return (
     <FernProductDropdown
       value={currentProductId}

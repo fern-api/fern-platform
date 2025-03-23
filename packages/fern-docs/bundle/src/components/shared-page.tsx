@@ -92,7 +92,6 @@ export default async function SharedPage({
   // find the node that is currently being viewed
   const found = FernNavigation.utils.findNode(root, slug);
 
-  console.log('found', found);
   const authState = await authStatePromise;
 
   // this is a special case for when the user is not authenticated, but the not-found status originates from an authed node

@@ -58,11 +58,11 @@ import { generateFernColorPalette } from "./generateFernColors";
 import { FernFonts, generateFonts } from "./generateFonts";
 import { getDocsUrlMetadata } from "./getDocsUrlMetadata";
 import { loadWithUrl as uncachedLoadWithUrl } from "./loadWithUrl";
+import { MOCK_2 } from "./mock-data";
 import { postToEngineeringNotifs } from "./slack";
 import { FernColorTheme, FernLayoutConfig, FileData } from "./types";
 import { cleanBasePath } from "./utils/clean-base-path";
 import { pruneWithAuthState } from "./withRbac";
-import { MOCK_2 } from "./mock-data";
 
 const loadWithUrl = uncachedLoadWithUrl;
 
@@ -580,10 +580,9 @@ const getRoot = async (
   if (authConfig) {
     root = pruneWithAuthState(authState, authConfig, root);
   }
-  console.log("root", root);
 
+  // TODO: remove this to restore the real root. this overrides to show the mock root for testing
   root = MOCK_2;
-  console.log("root", root);
 
   FernNavigation.utils.mutableUpdatePointsTo(root);
 

@@ -142,7 +142,11 @@ export const FernDropdown = forwardRef<
                     container={container}
                   />
                 ) : option.type === "product" ? (
-                  <FernProductDropdownItem key={option.id} option={option} />
+                  <FernProductDropdownItem
+                    key={option.id}
+                    option={option}
+                    highlighted={value === option.value}
+                  />
                 ) : (
                   <DropdownMenu.Separator
                     key={idx}

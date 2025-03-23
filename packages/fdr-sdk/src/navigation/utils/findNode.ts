@@ -3,13 +3,13 @@ import { escapeRegExp } from "es-toolkit/string";
 import { FernNavigation } from "../..";
 import { NodeCollector } from "../NodeCollector";
 import { isApiReferenceNode } from "../versions/latest/isApiReferenceNode";
+import { isProductGroupNode } from "../versions/latest/isProductGroupNode";
+import { isProductNode } from "../versions/latest/isProductNode";
 import { isSidebarRootNode } from "../versions/latest/isSidebarRootNode";
 import { isTabbedNode } from "../versions/latest/isTabbedNode";
 import { isUnversionedNode } from "../versions/latest/isUnversionedNode";
 import { isVersionNode } from "../versions/latest/isVersionNode";
 import { createBreadcrumb } from "./createBreadcrumb";
-import { isProductGroupNode } from "../versions/latest/isProductGroupNode";
-import { isProductNode } from "../versions/latest/isProductNode";
 
 export type Node = Node.Found | Node.Redirect | Node.NotFound;
 
@@ -89,15 +89,18 @@ export function findNode(
 
   const sidebar = found.parents.find(isSidebarRootNode);
   const currentProductGroup = found.parents.find(isProductGroupNode);
-  console.log('currentProduct', currentProductGroup);
+  // TODO: remove console.log
+  console.log("currentProduct", currentProductGroup);
   const productChildren = currentProductGroup?.children;
   const currentVersion = found.parents.find(isVersionNode);
   const unversionedNode = found.parents.find(isUnversionedNode);
   const versionChild = (currentVersion ?? unversionedNode)?.child;
-  const landingPage = (currentProductGroup ?? currentVersion ?? unversionedNode)?.landingPage;
+  const landingPage = (currentProductGroup ?? currentVersion ?? unversionedNode)
+    ?.landingPage;
 
   const currentProduct = productChildren?.find(isProductNode);
-  console.log('currentProduct', currentProduct);
+  // TODO: remove console.log
+  console.log("currentProduct", currentProduct);
 
   const tabbedNode =
     found.parents.find(isTabbedNode) ??
@@ -118,17 +121,17 @@ export function findNode(
     );
     const currentTabNode =
       tabbedNodeIndex !== -1 ? parentsAndNode[tabbedNodeIndex + 1] : undefined;
-      const products = collector.getProductNodes().map((node) => {
-        if (node.default) {
-          // if we're currently viewing the default version, we may be viewing the non-pruned version
-          if (node.id === currentProduct?.id) {
-            return currentProduct;
-          }
-          // otherwise, we should always use the pruned version node
-          return collector.defaultProductNode ?? node;
+    const products = collector.getProductNodes().map((node) => {
+      if (node.default) {
+        // if we're currently viewing the default version, we may be viewing the non-pruned version
+        if (node.id === currentProduct?.id) {
+          return currentProduct;
         }
-        return node;
-      });
+        // otherwise, we should always use the pruned version node
+        return collector.defaultProductNode ?? node;
+      }
+      return node;
+    });
 
     const versions = collector.getVersionNodes().map((node) => {
       if (node.default) {
@@ -145,7 +148,8 @@ export function findNode(
       currentTabNode?.type === "tab" || currentTabNode?.type === "changelog"
         ? currentTabNode
         : undefined;
-    const slugPrefix = currentProduct?.slug ?? currentVersion?.slug ?? root.slug;
+    const slugPrefix =
+      currentProduct?.slug ?? currentVersion?.slug ?? root.slug;
     const unversionedSlug = FernNavigation.Slug(
       found.node.slug.replace(new RegExp(`^${escapeRegExp(slugPrefix)}/`), "")
     );

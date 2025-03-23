@@ -7,8 +7,6 @@ import { FernLink } from "./FernLink";
 export function FernProductDropdown(
   props: PropsWithChildren<ProductDropdown.Props>
 ): ReactElement<any> {
-  // dropdownMenuElement is cloned in FernDropdown and href is passed to the cloned element
-  // TODO: make this more composeable
   return (
     <ProductDropdown
       {...props}
