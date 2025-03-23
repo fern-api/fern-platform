@@ -1,5 +1,8 @@
 import "server-only";
 
+import { FernNavigation } from "@fern-api/fdr-sdk";
+import { slugjoin } from "@fern-api/fdr-sdk/navigation";
+
 import { getFernToken } from "@/app/fern-token";
 import { PlaygroundEndpointSelectorContent } from "@/components/playground/endpoint/PlaygroundEndpointSelectorContent";
 import { flattenApiSection } from "@/components/playground/utils/flatten-apis";
@@ -10,9 +13,8 @@ export default async function EndpointSelectorPage({
 }: {
   params: Promise<{ host: string; domain: string; slug: string }>;
 }) {
-  const { host, domain } = await params;
+  const { host, domain, slug } = await params;
 
-  console.debug(`[${domain}] Loading API Explorer endpoint selector`);
   const loader = await createCachedDocsLoader(
     host,
     domain,
@@ -20,7 +22,13 @@ export default async function EndpointSelectorPage({
   );
   const root = await loader.getRoot();
 
-  const apiGroups = flattenApiSection(root);
+  const foundNode = FernNavigation.utils.findNode(root, slugjoin(slug));
+  if (foundNode.type !== "found") {
+    return null;
+  }
+
+  const currentVersion = foundNode.currentVersion?.versionId;
+  const apiGroups = flattenApiSection(root, currentVersion);
 
   return (
     <PlaygroundEndpointSelectorContent
