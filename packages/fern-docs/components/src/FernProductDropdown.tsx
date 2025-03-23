@@ -13,7 +13,7 @@ import {
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 
 import { FernDropdown } from "./FernDropdown";
-import { FernProductDropdownItem } from "./FernProductDropdownItem";
+import { FernProductItem } from "./FernProductItem";
 import { cn } from "./cn";
 
 export declare namespace FernProductDropdown {
@@ -94,7 +94,7 @@ export const FernProductDropdown = forwardRef<
             className="hover:border-none"
             data-highlighted={value === option.value}
           >
-            <FernProductDropdownItem
+            <FernProductItem
               key={option.id}
               option={option}
               highlighted={value === option.value}

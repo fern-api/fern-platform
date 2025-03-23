@@ -19,7 +19,7 @@ import { Check, Info } from "lucide-react";
 
 import { useResizeObserver } from "@fern-ui/react-commons";
 
-import { FernProductDropdownItem } from "./FernProductDropdownItem";
+import { FernProductItem } from "./FernProductItem";
 import { FernScrollArea } from "./FernScrollArea";
 import { FernTooltip, FernTooltipProvider } from "./FernTooltip";
 import { cn } from "./cn";
@@ -142,7 +142,7 @@ export const FernDropdown = forwardRef<
                     container={container}
                   />
                 ) : option.type === "product" ? (
-                  <FernProductDropdownItem
+                  <FernProductItem
                     key={option.id}
                     option={option}
                     highlighted={value === option.value}

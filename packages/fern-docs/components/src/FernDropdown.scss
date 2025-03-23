@@ -22,12 +22,12 @@
 
   /* We define the styles for the product dropdown item outside of the .fern-dropdown class since it is reused within
   multiple dropdowns. */
-  .fern-product-dropdown-item {
+  .fern-product-item {
     @apply rounded-3/2 flex cursor-pointer items-center gap-2 border-none px-2 py-1;
     @apply max-w-[min(300px,100%)];
     @apply transition-all duration-200 ease-in-out;
 
-    .fern-product-dropdown-item-icon {
+    .fern-product-item-icon {
       @apply rounded-3/2 border-(color:--grayscale-a9) border;
       @apply m-1 flex h-[42px] w-[42px] shrink-0 items-center justify-center p-1;
       svg {
@@ -37,15 +37,15 @@
 
     /* Defines the styles for the product dropdown item when it is highlighted. */
     &[data-highlighted="true"] {
-      .fern-product-dropdown-item-icon {
+      .fern-product-item-icon {
         @apply border-(color:--accent) text-(color:--accent);
       }
       @apply text-(color:--accent) bg-(color:--grayscale-a2);
     }
   }
   /* Defines the hover styles for the product dropdown item. */
-  .fern-product-dropdown-item:hover {
-    .fern-product-dropdown-item-icon {
+  .fern-product-item:hover {
+    .fern-product-item-icon {
       @apply border-(color:--accent) text-(color:--accent);
     }
     @apply text-(color:--accent) bg-(color:--accent-2);
