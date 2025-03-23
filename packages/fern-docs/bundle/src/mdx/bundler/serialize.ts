@@ -230,6 +230,17 @@ async function serializeMdxImpl(
 
       // Add write to memory instead of disk when possible
       o.write = false;
+
+      // Create a restricted define object that excludes process.env
+      const restrictedDefine = {
+        "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV),
+      };
+
+      o.define = restrictedDefine;
+
+      // Prevent direct process access
+      o.inject = o.inject?.filter((path) => !path.includes("process"));
+
       return o;
     },
   });
