@@ -42,7 +42,7 @@ export function getDocsReadV2Service(app: FdrApplication): DocsV2ReadService {
         }
 
         return await res.send();
-      } catch (e) {}
+      } catch (_e) {}
     },
     getDocsForUrl: async (req, res) => {
       try {

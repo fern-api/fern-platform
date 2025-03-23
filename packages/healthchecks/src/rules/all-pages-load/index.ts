@@ -1,1 +1,0 @@
-export { AllPagesLoadRule } from "./rule";

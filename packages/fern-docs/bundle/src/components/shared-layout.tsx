@@ -14,18 +14,19 @@ import { createFileResolver } from "@/server/file-resolver";
 import { createCachedMdxSerializer } from "@/server/mdx-serializer";
 import { withLogo } from "@/server/withLogo";
 
-import { VersionDropdown } from "./header/VersionDropdown";
 import { LoginButton } from "./login-button";
 
 export default async function SharedLayout({
   children,
   headertabs,
   sidebar,
+  versionSelect,
   loader,
 }: {
   children: React.ReactNode;
   headertabs: React.ReactNode;
   sidebar: React.ReactNode;
+  versionSelect: React.ReactNode;
   loader: DocsLoader;
 }) {
   const serialize = createCachedMdxSerializer(loader);
@@ -85,9 +86,7 @@ export default async function SharedLayout({
             />
           }
           versionSelect={
-            <React.Suspense fallback={null}>
-              <VersionDropdown loader={loader} />
-            </React.Suspense>
+            <React.Suspense fallback={null}>{versionSelect}</React.Suspense>
           }
           showSearchBar={layout.searchbarPlacement === "HEADER"}
           navbarLinks={<NavbarLinks loader={loader} />}
@@ -111,9 +110,7 @@ export default async function SharedLayout({
           showSearchBar={layout.searchbarPlacement === "SIDEBAR"}
           showHeaderInSidebar={layout.isHeaderDisabled}
           versionSelect={
-            <React.Suspense fallback={null}>
-              <VersionDropdown loader={loader} />
-            </React.Suspense>
+            <React.Suspense fallback={null}>{versionSelect}</React.Suspense>
           }
           navbarLinks={
             <React.Suspense fallback={null}>

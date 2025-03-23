@@ -32,22 +32,22 @@ it("should serialize mdx with frontmatter", async () => {
   );
 });
 
-// it("should serialize mdx with toc", async () => {
-//   const result = await serializeMdx(
-//     `
-// # Hello world!
+it.skip("should serialize mdx with toc", async () => {
+  const result = await serializeMdx(
+    `
+# Hello world!
 
-// ## Subheading
+## Subheading
 
-// ### Subsubheading
+### Subsubheading
 
-// `,
-//     { toc: true }
-//   );
-//   await expect(deterministic(result?.code)).toMatchFileSnapshot(
-//     join(__dirname, "__snapshots__", "hello-world-toc.js")
-//   );
-// });
+`,
+    { toc: true }
+  );
+  await expect(deterministic(result?.code)).toMatchFileSnapshot(
+    join(__dirname, "__snapshots__", "hello-world-toc.js")
+  );
+});
 
 it("should serialize jsx", async () => {
   const result = await serializeMdx(
