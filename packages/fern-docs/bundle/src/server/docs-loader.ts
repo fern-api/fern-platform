@@ -58,7 +58,7 @@ import { generateFernColorPalette } from "./generateFernColors";
 import { FernFonts, generateFonts } from "./generateFonts";
 import { getDocsUrlMetadata } from "./getDocsUrlMetadata";
 import { loadWithUrl as uncachedLoadWithUrl } from "./loadWithUrl";
-import { MOCK_2 } from "./mock-data";
+import { MOCK_DATA_WITH_PRODUCTS } from "./mock-data";
 import { postToEngineeringNotifs } from "./slack";
 import { FernColorTheme, FernLayoutConfig, FileData } from "./types";
 import { cleanBasePath } from "./utils/clean-base-path";
@@ -582,7 +582,7 @@ const getRoot = async (
   }
 
   // TODO: remove this to restore the real root. this overrides to show the mock root for testing
-  root = MOCK_2;
+  root = MOCK_DATA_WITH_PRODUCTS;
 
   FernNavigation.utils.mutableUpdatePointsTo(root);
 

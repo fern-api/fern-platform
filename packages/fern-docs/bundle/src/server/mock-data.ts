@@ -1,4 +1,4 @@
-export const MOCK_2 = {
+export const MOCK_DATA_WITH_PRODUCTS = {
   type: "root",
   child: {
     type: "productgroup",
