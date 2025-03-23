@@ -2,8 +2,11 @@
 
 import { ChevronDown, Lock } from "lucide-react";
 
-import { Availability, AvailabilityBadge } from "@fern-docs/components";
-import { FernProductDropdown } from "@fern-docs/components";
+import {
+  Availability,
+  AvailabilityBadge,
+  FernProductDropdown,
+} from "@fern-docs/components";
 import { slugToHref } from "@fern-docs/utils";
 
 import { useCurrentProductId, useCurrentProductSlug } from "@/state/navigation";

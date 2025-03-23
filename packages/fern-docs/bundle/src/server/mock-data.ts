@@ -50,7 +50,7 @@ export const MOCK_2 = {
         default: "true",
         productId: "docs",
         title: "Docs",
-        icon: "fa-regular fa-file",
+        icon: "fa-regular fa-book",
         slug: "learn/docs",
         subtitle: "A beautiful, interactive documentation website",
         child: {
@@ -89,10 +89,10 @@ export const MOCK_2 = {
       {
         type: "product",
         default: "true",
-        productId: "docs",
+        productId: "management",
         title: "Management",
         icon: "fa-regular fa-cog",
-        slug: "learn/docs",
+        slug: "learn/management",
         subtitle: "A beautiful, interactive documentation website",
         child: {
           type: "tabbed",
@@ -130,7 +130,7 @@ export const MOCK_2 = {
       {
         type: "product",
         default: "true",
-        productId: "docs",
+        productId: "platform",
         title: "Platform",
         icon: "fa-regular fa-server",
         slug: "learn/docs",
@@ -171,7 +171,7 @@ export const MOCK_2 = {
       {
         type: "product",
         default: "true",
-        productId: "docs",
+        productId: "user-management",
         title: "User Management",
         icon: "fa-regular fa-user",
         slug: "learn/users",

@@ -1,7 +1,12 @@
 import { FernNavigation } from "@fern-api/fdr-sdk";
+
 import { DocsLoader } from "@/server/docs-loader";
+
 import { FaIconServer } from "../fa-icon-server";
-import { ProductDropdownClient, ProductDropdownItem } from "./ProductDropdownClient";
+import {
+  ProductDropdownClient,
+  ProductDropdownItem,
+} from "./ProductDropdownClient";
 
 export declare namespace ProductDropdown {
   export interface Props {}
@@ -27,6 +32,7 @@ export async function ProductDropdown({ loader }: { loader: DocsLoader }) {
       authed: product.authed,
       default: product.default,
       hidden: product.hidden,
+      subtitle: product.subtitle,
     };
   });
   return <ProductDropdownClient products={productOptions} />;
