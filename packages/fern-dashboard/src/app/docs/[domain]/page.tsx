@@ -1,6 +1,6 @@
-import { AppLayout } from "@/components/AppLayout";
-import { ProtectedRoute } from "@/components/ProtectedRoute";
+import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
 import { DocsSiteLayout } from "@/components/docs-page/DocsSiteLayout";
+import { AppLayout } from "@/components/layout/AppLayout";
 import { getSessionOrRedirect } from "@/lib/auth0";
 
 export default async function Page(props: {
@@ -13,7 +13,16 @@ export default async function Page(props: {
     <ProtectedRoute>
       <AppLayout session={session} currentDocsDomain={domain}>
         <DocsSiteLayout domain={domain}>
-          <div>overview</div>
+          <div className="flex flex-col">
+            <div>overview</div>
+            <div>overview</div>
+            <div>overview</div>
+            <div>overview</div>
+            <div>overview</div>
+            <div>overview</div>
+            <div>overview</div>
+            <div>overview</div>
+          </div>
         </DocsSiteLayout>
       </AppLayout>
     </ProtectedRoute>

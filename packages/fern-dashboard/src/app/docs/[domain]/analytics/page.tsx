@@ -1,6 +1,6 @@
-import { AppLayout } from "@/components/AppLayout";
-import { ProtectedRoute } from "@/components/ProtectedRoute";
+import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
 import { DocsSiteLayout } from "@/components/docs-page/DocsSiteLayout";
+import { AppLayout } from "@/components/layout/AppLayout";
 import { getSessionOrRedirect } from "@/lib/auth0";
 
 export default async function Page(props: {

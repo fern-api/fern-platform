@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 
-import { LoginPage } from "@/components/LoginPage";
+import { LoginPage } from "@/components/login-page/LoginPage";
 import { auth0 } from "@/lib/auth0";
 
 export default async function Home() {
