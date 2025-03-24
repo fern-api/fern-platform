@@ -6,13 +6,11 @@ import { DeleterAction } from "../../utils/traversers/types";
 /**
  * @param parent delete node from this parent (mutable)
  * @param node node to delete
- * @param force if true, delete the node even if it is not a leaf node
  * @returns the id of the deleted node or null if the node was not deletable from the parent
  */
 export function mutableDeleteChild(
   parent: FernNavigation.NavigationNodeParent | undefined,
-  node: FernNavigation.NavigationNode,
-  force = false
+  node: FernNavigation.NavigationNode
 ): DeleterAction {
   /**
    * The idea here is we should only delete leaf nodes (we're treating changelogs here like a leaf node)
@@ -21,7 +19,6 @@ export function mutableDeleteChild(
    * Instead, we'll just remove the overviewPageId, which will make the section a non-visitable node, yet still retain its children.
    */
   if (
-    !force &&
     !FernNavigation.isLeaf(node) &&
     FernNavigation.isPage(node) &&
     FernNavigation.getChildren(node).length > 0 &&
@@ -44,7 +41,6 @@ export function mutableDeleteChild(
 
   // if the node is not a leaf node, don't delete it from the parent unless it has no children
   if (
-    !force &&
     !FernNavigation.isLeaf(node) &&
     FernNavigation.getChildren(node).length > 0
   ) {

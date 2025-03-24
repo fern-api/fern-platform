@@ -9,12 +9,19 @@ import {
 import { Metadata } from "next/types";
 import React from "react";
 
+import { compact } from "es-toolkit/array";
+
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { Slug } from "@fern-api/fdr-sdk/navigation";
 import { withDefaultProtocol } from "@fern-api/ui-core-utils";
 import { getSeoDisabled } from "@fern-docs/edge-config";
 import { getFrontmatter, markdownToString } from "@fern-docs/mdx";
-import { getRedirectForPath, slugToHref } from "@fern-docs/utils";
+import {
+  addLeadingSlash,
+  conformTrailingSlash,
+  getRedirectForPath,
+  slugToHref,
+} from "@fern-docs/utils";
 
 import { toImageDescriptor } from "@/app/seo";
 import FeedbackPopover from "@/components/feedback/FeedbackPopover";
@@ -70,18 +77,20 @@ export default async function SharedPage({
   }
 
   // naively find the current node id to prune the navigation tree
-  const currentNodeId = FernNavigation.NodeCollector.collect(root)
+  const currentNode = FernNavigation.NodeCollector.collect(root)
     .getSlugMapWithParents()
-    .get(slug)?.node.id;
+    .get(slug);
+
+  const visibleNodeIds = compact([
+    ...(currentNode?.parents.map((node) => node.id) ?? []),
+    currentNode?.node.id ?? undefined,
+  ]);
 
   // prune the tree so that neighbors don't include authed nodes or hidden nodes
-  root = await withPrunedNavigationLoader(
-    root,
-    loader,
-    currentNodeId ? [currentNodeId] : undefined
-  );
+  root = await withPrunedNavigationLoader(root, loader, visibleNodeIds);
 
   if (root == null) {
+    console.error(`[SharedPage:${loader.domain}] Could not find root`);
     notFound();
   }
 
@@ -113,6 +122,7 @@ export default async function SharedPage({
       redirect(prepareRedirect(found.redirect));
     }
 
+    console.error(`[SharedPage:${loader.domain}] Not found: ${slug}`);
     notFound();
   }
 
@@ -120,11 +130,40 @@ export default async function SharedPage({
     redirect(prepareRedirect(found.redirect));
   }
 
+  const rootSlug = root.slug;
+  const versionSlug = found.currentVersion?.slug;
+  const slugMap = found.collector.slugMap;
+  function replaceHref(href: string): string | undefined {
+    if (href.startsWith("/")) {
+      const url = new URL(href, withDefaultProtocol(loader.domain));
+      if (versionSlug != null) {
+        const slugWithVersion = FernNavigation.slugjoin(
+          versionSlug,
+          url.pathname
+        );
+        const found = slugMap.get(slugWithVersion);
+        if (found) {
+          return `${conformTrailingSlash(addLeadingSlash(found.slug))}${url.search}${url.hash}`;
+        }
+      }
+
+      if (rootSlug.length > 0) {
+        const slugWithRoot = FernNavigation.slugjoin(rootSlug, url.pathname);
+        const found = slugMap.get(slugWithRoot);
+        if (found) {
+          return `${conformTrailingSlash(addLeadingSlash(found.slug))}${url.search}${url.hash}`;
+        }
+      }
+    }
+    return;
+  }
+
   const serialize = createCachedMdxSerializer(loader, {
     scope: {
       version: found?.currentVersion?.versionId,
       tab: found?.currentTab?.title,
     },
+    replaceHref,
   });
 
   const neighborsPromise = getNeighbors(loader, serialize, found);

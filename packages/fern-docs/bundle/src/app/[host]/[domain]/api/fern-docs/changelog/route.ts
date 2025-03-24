@@ -94,6 +94,7 @@ async function createFeed(
   const root = await loader.getRoot();
 
   if (!root) {
+    console.error(`[createFeed:${domain}] Could not find root`);
     notFound();
   }
 
@@ -102,6 +103,9 @@ async function createFeed(
   const node = collector.slugMap.get(FernNavigation.slugjoin(path));
 
   if (node?.type !== "changelog") {
+    console.error(
+      `[createFeed:${domain}] Node type is unexpected: ${node?.type}`
+    );
     notFound();
   }
 

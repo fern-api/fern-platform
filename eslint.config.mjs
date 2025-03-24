@@ -15,6 +15,24 @@ const compat = new FlatCompat({
 });
 
 export default [
+  {
+    ignores: [
+      "**/.storybook",
+      "**/generated",
+      "**/dist",
+      "**/build",
+      "**/.next",
+      "**/storybook-static",
+      "**/out",
+      "**/lib",
+      "**/node_modules",
+      "fern/**",
+      "**/__snapshots__",
+      "**/*.config.ts",
+      "**/*.config.mjs",
+      "**/scripts/performance.ts",
+    ],
+  },
   ...turboConfig,
   ...tseslint.config(
     {

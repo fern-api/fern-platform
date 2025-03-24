@@ -1,5 +1,4 @@
 import { unstable_cacheTag } from "next/cache";
-import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -8,7 +7,7 @@ import { uniqBy } from "es-toolkit/array";
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { CONTINUE, SKIP } from "@fern-api/fdr-sdk/traversers";
 import { isNonNullish } from "@fern-api/ui-core-utils";
-import { COOKIE_FERN_TOKEN, slugToHref } from "@fern-docs/utils";
+import { slugToHref } from "@fern-docs/utils";
 
 import { createCachedDocsLoader } from "@/server/docs-loader";
 import { getMarkdownForPath } from "@/server/getMarkdownForPath";
@@ -18,8 +17,6 @@ export async function GET(
   req: NextRequest,
   props: { params: Promise<{ host: string; domain: string }> }
 ): Promise<NextResponse> {
-  "use cache";
-
   const { host, domain } = await props.params;
 
   const path = slugToHref(req.nextUrl.searchParams.get("slug") ?? "");
@@ -41,14 +38,14 @@ async function getLlmsFullTxt(
 ): Promise<string> {
   "use cache";
 
-  unstable_cacheTag(domain, "llms-full-txt");
+  unstable_cacheTag(domain, "getLlmsFullTxt");
 
-  const fern_token = (await cookies()).get(COOKIE_FERN_TOKEN)?.value;
-  const loader = await createCachedDocsLoader(host, domain, fern_token);
+  const loader = await createCachedDocsLoader(host, domain);
 
   const root = getSectionRoot(await loader.getRoot(), path);
 
   if (root == null) {
+    console.error(`[llmsFull:${domain}] Could not find root`);
     notFound();
   }
 
@@ -84,6 +81,7 @@ async function getLlmsFullTxt(
   ).filter(isNonNullish);
 
   if (markdowns.length === 0) {
+    console.error(`[llmsFull:${domain}] Markdown is empty`);
     notFound();
   }
 

@@ -20,6 +20,7 @@ export async function POST(request: NextRequest) {
   const cdnUri = process.env.NEXT_PUBLIC_CDN_URI;
 
   if (!cdnUri) {
+    console.error(`[deployment-promoted:${request.url}] Undefined CND URI`);
     notFound();
   }
 

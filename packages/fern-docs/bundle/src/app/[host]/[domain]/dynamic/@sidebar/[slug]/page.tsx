@@ -24,9 +24,9 @@ export default async function SidebarPage({
   const rootPromise = loader.getRoot();
 
   // preload:
-  loader.getLayout();
-  loader.getAuthState();
-  loader.getEdgeFlags();
+  await loader.getLayout();
+  await loader.getAuthState();
+  await loader.getEdgeFlags();
 
   const foundNode = FernNavigation.utils.findNode(
     await rootPromise,
@@ -35,6 +35,12 @@ export default async function SidebarPage({
   if (foundNode.type !== "found") {
     return null;
   }
+
+  // these are all the "visible" nodes to prevent pruning if any of these nodes are hidden
+  const visibleNodeIds = [
+    ...foundNode.parents.map((node) => node.id),
+    foundNode.node.id,
+  ];
 
   return (
     <>
@@ -45,7 +51,7 @@ export default async function SidebarPage({
       )}
       <SidebarRootNode
         root={foundNode.sidebar}
-        currentNodeId={foundNode.node.id}
+        visibleNodeIds={visibleNodeIds}
         loader={loader}
       />
     </>

@@ -3,6 +3,15 @@ export function cleanHost(host: string | null | undefined): string | undefined {
     return undefined;
   }
 
+  // handle case where host might contain multiple domains separated by commas
+  if (host.includes(",")) {
+    host = host.split(",")[0];
+  }
+
+  if (typeof host !== "string") {
+    return undefined;
+  }
+
   host = host.trim();
 
   // host should not be localhost

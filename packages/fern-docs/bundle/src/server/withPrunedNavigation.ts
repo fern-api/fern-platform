@@ -1,4 +1,5 @@
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
+import { SKIP } from "@fern-docs/mdx";
 
 import { DocsLoader } from "./docs-loader";
 
@@ -59,7 +60,7 @@ function isVisible(
 export function pruneNavigationPredicate(
   node: FernNavigation.NavigationNode,
   { visibleNodeIds, authed, discoverable }: WithPrunedSidebarOpts
-): boolean | "force" {
+): boolean {
   // prune authenticated pages (unless the discoverable flag is turned on)
   if (FernNavigation.isPage(node) && node.authed && !authed && !discoverable) {
     return false;
@@ -68,9 +69,9 @@ export function pruneNavigationPredicate(
   // then, prune hidden nodes, unless it is the current node
   if (FernNavigation.hasMetadata(node) && node.hidden) {
     if (isVisible(node, new Set(visibleNodeIds))) {
-      return false;
+      return true;
     }
-    return "force";
+    return false;
   }
 
   // finally, prune nodes that are not pages and have no children (avoid pruning links)
@@ -88,6 +89,28 @@ export function withPrunedNavigation<
     return node;
   }
 
+  FernNavigation.traverseBF(node, (node, parents) => {
+    if (
+      opts.visibleNodeIds?.includes(node.id) &&
+      FernNavigation.hasMetadata(node) &&
+      node.hidden
+    ) {
+      return SKIP;
+    }
+
+    const parent = parents[parents.length - 1];
+
+    if (
+      parent &&
+      FernNavigation.hasMetadata(parent) &&
+      parent.hidden &&
+      FernNavigation.hasMetadata(node)
+    ) {
+      node.hidden = true;
+    }
+    return true;
+  });
+
   return FernNavigation.Pruner.from(node)
     .keep((n) => pruneNavigationPredicate(n, opts))
     .get();
@@ -100,7 +123,7 @@ export async function withPrunedNavigationLoader<
   loader: DocsLoader,
   visibleNodeIds: FernNavigation.NodeId[] | undefined
 ): Promise<NODE | undefined> {
-  return withPrunedNavigation(node, {
+  const returned = withPrunedNavigation(node, {
     visibleNodeIds,
     authed: (await loader.getAuthState()).authed,
     // when true, all unauthed pages are visible, but rendered with a LOCK button
@@ -110,4 +133,6 @@ export async function withPrunedNavigationLoader<
       ? (true as const)
       : undefined,
   });
+
+  return returned;
 }
