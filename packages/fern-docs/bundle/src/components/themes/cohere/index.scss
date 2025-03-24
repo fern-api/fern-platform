@@ -57,11 +57,13 @@
       @apply top-0 max-h-[calc(100dvh-var(--spacing-header-height)-2.25rem-2px)];
     }
 
-    .fern-layout-reference-aside[data-kind="api"] {
+    .fern-layout-reference-content[data-kind="api"]
+      .fern-layout-reference-aside {
       @apply max-h-[calc(100svh-var(--header-height)-8.25rem-2px)] md:top-6 md:max-h-[calc(100vh-var(--header-height)-5.25rem-2px)];
     }
 
-    .fern-layout-reference-aside[data-kind="guide"] {
+    .fern-layout-reference-content[data-kind="guide"]
+      .fern-layout-reference-aside {
       @apply top-6 pb-12;
     }
 
