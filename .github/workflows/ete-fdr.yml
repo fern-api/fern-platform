@@ -3,7 +3,7 @@ name: Test FDR ETE
 on:
   push:
     branches:
-      - main
+      - app
     paths:
       - "fern/apis/fdr/**"
       - "fern/fern.config.json"
