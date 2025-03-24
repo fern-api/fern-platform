@@ -41,6 +41,7 @@ import { A, HeadingRenderer, Image, Li, Ol, Strong, Ul } from "./html";
 import { Table } from "./html-table";
 import { Icon } from "./icon/Icon";
 import { If } from "./if";
+import { Json } from "./json";
 import { Mermaid } from "./mermaid";
 import { ParamField } from "./mintlify";
 import { EndpointRequestSnippet, EndpointResponseSnippet } from "./snippets";
@@ -76,6 +77,7 @@ const FERN_COMPONENTS = {
   Frame,
   Icon,
   If,
+  Json,
   Mermaid,
   ParamField,
   SearchBar: SearchV2Trigger,
