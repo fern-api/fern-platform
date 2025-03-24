@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
 
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/cn";
 
 export declare namespace NavbarSubItem {
   export interface Props {
@@ -23,7 +23,8 @@ export const NavbarSubItem = ({ title, icon, href }: NavbarSubItem.Props) => {
   return (
     <Component
       className={cn(
-        "flex flex-1 flex-col gap-2 text-sm transition md:flex-row",
+        "hidden md:flex",
+        "flex-1 flex-row gap-2 text-sm transition",
         isSelected
           ? "text-green-1100"
           : "hover:text-gray-1200 text-gray-900 dark:hover:text-gray-700"

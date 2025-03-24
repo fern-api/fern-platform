@@ -1,53 +1,49 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 import { GetOrganizations200ResponseOneOfInner } from "auth0";
+import { create } from "zustand";
 
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { getMyOrganizations } from "@/app/actions/getMyOrganizations";
+
+import { OrgSwitcherSelect } from "./OrgSwitcherSelect";
+
+type OrganizationsStore = {
+  organizations: GetOrganizations200ResponseOneOfInner[];
+  setOrganizations: (orgs: GetOrganizations200ResponseOneOfInner[]) => void;
+};
+
+export const useOrganizationsStore = create<OrganizationsStore>((set) => ({
+  organizations: [],
+  setOrganizations: (orgs: GetOrganizations200ResponseOneOfInner[]) =>
+    set({ organizations: orgs }),
+}));
 
 export declare namespace OrgSwitcher {
   export interface Props {
     currentOrgId: string | undefined;
-    organizations: GetOrganizations200ResponseOneOfInner[];
   }
 }
 
-export const OrgSwitcher = ({
-  currentOrgId,
-  organizations,
-}: OrgSwitcher.Props) => {
-  const [localValue, setLocalValue] = useState(currentOrgId);
-  useEffect(() => {
-    setLocalValue(currentOrgId);
-  }, [currentOrgId]);
+export function OrgSwitcher({ currentOrgId }: OrgSwitcher.Props) {
+  const organizations = useOrganizationsStore((state) => state.organizations);
+  const setOrganizations = useOrganizationsStore(
+    (state) => state.setOrganizations
+  );
 
-  const onClickOrg = async (newOrgId: string) => {
-    if (newOrgId === currentOrgId) {
-      return;
+  useEffect(() => {
+    async function run() {
+      setOrganizations(await getMyOrganizations());
     }
-    setLocalValue(newOrgId);
-    window.location.href = `/auth/login?organization=${newOrgId}`;
-  };
+
+    void run();
+  }, [setOrganizations]);
 
   return (
-    <Select value={localValue} onValueChange={onClickOrg}>
-      <SelectTrigger className="min-w-[180px]">
-        <SelectValue placeholder="Organization" />
-      </SelectTrigger>
-      <SelectContent>
-        {organizations.map((organization) => (
-          <SelectItem key={organization.id} value={organization.id}>
-            {organization.display_name}
-          </SelectItem>
-        ))}
-      </SelectContent>
-    </Select>
+    <OrgSwitcherSelect
+      organizations={organizations}
+      currentOrgId={currentOrgId}
+    />
   );
-};
+}

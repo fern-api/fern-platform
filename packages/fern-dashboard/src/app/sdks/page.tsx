@@ -2,7 +2,7 @@ import { AppLayout } from "@/components/AppLayout";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
 import { getSessionOrRedirect } from "@/lib/auth0";
 
-export default async function SDKsPage() {
+export default async function Page() {
   const session = await getSessionOrRedirect();
 
   return (

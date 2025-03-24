@@ -1,20 +1,18 @@
-import { Suspense } from "react";
+"use client";
 
-import { DocsSite } from "@fern-platform/fdr";
+import { useMyDocsSites } from "@/lib/useMyDocsSites";
 
 import { NavbarSubItem } from "./NavbarSubItem";
 
-export declare namespace DocsNavbarSubItems {
-  export interface Props {
-    docsSites: DocsSite[];
-  }
-}
+export function DocsNavbarSubItems() {
+  const { docsSites } = useMyDocsSites();
 
-export async function DocsNavbarSubItems({
-  docsSites,
-}: DocsNavbarSubItems.Props) {
+  if (docsSites == null) {
+    return null;
+  }
+
   return (
-    <Suspense fallback={null}>
+    <>
       {docsSites.map((docsSite) => (
         <NavbarSubItem
           key={docsSite.domain}
@@ -22,6 +20,6 @@ export async function DocsNavbarSubItems({
           href={`/docs/${docsSite.domain}`}
         />
       ))}
-    </Suspense>
+    </>
   );
 }

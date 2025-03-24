@@ -13,7 +13,7 @@ export default async function Page(props: {
     <ProtectedRoute>
       <AppLayout session={session} currentDocsDomain={domain}>
         <DocsSiteLayout domain={domain}>
-          <div>overview</div>
+          <div>ai search</div>
         </DocsSiteLayout>
       </AppLayout>
     </ProtectedRoute>

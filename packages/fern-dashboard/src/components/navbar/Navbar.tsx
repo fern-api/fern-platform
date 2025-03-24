@@ -1,3 +1,5 @@
+import { Suspense } from "react";
+
 import {
   BookOpenIcon,
   CodeBracketIcon,
@@ -6,8 +8,6 @@ import {
   UsersIcon,
 } from "@heroicons/react/24/outline";
 
-import { getMyDocsSites } from "@/app/actions/getMyDocsSites";
-
 import { ThemeToggle } from "../theme/ThemeToggle";
 import { DocsNavbarSubItems } from "./DocsNavbarSubItems";
 import { NavbarItem } from "./NavbarItem";
@@ -15,9 +15,7 @@ import { NavbarSectionTitle } from "./NavbarSectionTitle";
 
 const ICON_SIZE = "size-5";
 
-export async function Navbar() {
-  const { docsSites } = await getMyDocsSites();
-
+export function Navbar() {
   return (
     <div className="flex flex-col justify-between md:w-64 md:py-6 md:pl-4">
       <div className="flex overflow-y-auto md:flex-col">
@@ -26,7 +24,9 @@ export async function Navbar() {
           icon={<BookOpenIcon className={ICON_SIZE} />}
           href="/docs"
         />
-        <DocsNavbarSubItems docsSites={docsSites} />
+        <Suspense fallback={null}>
+          <DocsNavbarSubItems />
+        </Suspense>
         <NavbarItem
           title="SDKs"
           icon={<CodeBracketIcon className={ICON_SIZE} />}

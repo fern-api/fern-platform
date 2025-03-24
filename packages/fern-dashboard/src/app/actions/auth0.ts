@@ -1,7 +1,10 @@
-import { ManagementClient } from "auth0";
+import { GetOrganizations200ResponseOneOfInner, ManagementClient } from "auth0";
 import jwt from "jsonwebtoken";
 
 import { auth0 } from "@/lib/auth0";
+
+import { AsyncCache } from "./AsyncCache";
+import { Auth0OrgName } from "./types";
 
 let AUTH0_MANAGEMENT_CLIENT: ManagementClient | undefined;
 
@@ -68,11 +71,21 @@ export async function getCurrentOrgId() {
   return session.user.org_id;
 }
 
+const ORGANIZATIONS_CACHE = new AsyncCache<
+  Auth0OrgName,
+  GetOrganizations200ResponseOneOfInner
+>({
+  ttlInSeconds: 10,
+});
+
 export async function getCurrentOrg() {
   const orgId = await getCurrentOrgId();
-  const { data: organization } =
-    await getAuth0ManagementClient().organizations.get({
-      id: orgId,
-    });
-  return organization;
+
+  return ORGANIZATIONS_CACHE.get(orgId, async () => {
+    const { data: organization } =
+      await getAuth0ManagementClient().organizations.get({
+        id: orgId,
+      });
+    return organization;
+  });
 }
