@@ -11,8 +11,6 @@ import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 import { WebflowClient } from "webflow-api";
 
-export const runtime = "edge";
-
 export async function GET(req: NextRequest): Promise<NextResponse> {
   const domain = getDocsDomainEdge(req);
   const host = getHostEdge(req);
@@ -54,7 +52,7 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
     return redirectWithLoginError(
       req,
       redirectLocation,
-      "unknown_error",
+      "config_error",
       "Couldn't login, please try again"
     );
   }
@@ -73,7 +71,8 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
           allowedDestinations: getAllowedRedirectUrls(config),
         })
       : NextResponse.next();
-    cookies().set(
+    const cookieStore = cookies();
+    cookieStore.set(
       "access_token",
       accessToken,
       withSecureCookie(withDefaultProtocol(host))
