@@ -1,0 +1,49 @@
+.react-json-view {
+  .icon-container {
+    transform: translateY(2px); // Positions the +/- icon vertically middle
+  }
+
+  .object-size {
+    font-style: unset !important;
+  }
+}
+
+.show-strings-on-one-line {
+  .variable-row {
+    display: flex;
+
+    > span {
+      display: flex;
+
+      > .object-key {
+        display: flex !important;
+      }
+    }
+
+    > .variable-value {
+      flex: 1;
+      min-width: 0; // Allows flex item to shrink below content size
+
+      > div {
+        width: 100%;
+
+        .string-value {
+          display: flex !important;
+          min-width: 0; // Allows flex item to shrink below content size
+
+          > span {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            min-width: 0; // Allows flex item to shrink below content size
+            flex: 1;
+
+            > span {
+              display: none !important;
+            }
+          }
+        }
+      }
+    }
+  }
+}
