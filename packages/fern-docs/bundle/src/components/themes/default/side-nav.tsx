@@ -7,9 +7,9 @@ import {
   FERN_SIDEBAR_ID,
   FERN_SIDEBAR_SPACER_ID,
 } from "@/components/constants";
-import { HideAsides, useIsSidebarFixed } from "@/state/layout";
+import { HideAsides, useIsSidebarFixed, useLayout } from "@/state/layout";
 
-import { MobileMenu } from "./mobile-menu";
+import { DismissableMenu } from "./dismissable-menu";
 
 export function SidebarNav({
   children,
@@ -25,12 +25,17 @@ export function SidebarNav({
   "data-theme"?: string;
 }) {
   const isDesktop = useIsDesktop();
+  const layout = useLayout();
 
-  if (!isDesktop) {
+  if (!isDesktop || layout === "page" || layout === "custom") {
     return (
-      <MobileMenu className={cn(className, mobileClassName)} {...props}>
+      <DismissableMenu
+        className={cn(className, mobileClassName)}
+        {...props}
+        side={isDesktop ? "left" : "right"}
+      >
         {children}
-      </MobileMenu>
+      </DismissableMenu>
     );
   }
 

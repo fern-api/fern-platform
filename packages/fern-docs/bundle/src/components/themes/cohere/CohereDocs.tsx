@@ -13,8 +13,8 @@ import { HeaderTabsRoot } from "@/components/header/HeaderTabsRoot";
 import { useCurrentPathname } from "@/hooks/use-current-pathname";
 import { SCROLL_BODY_ATOM } from "@/state/viewport";
 
+import { MainCtx } from "../default/dismissable-menu";
 import { FernHeader } from "../default/fern-header";
-import { MainCtx } from "../default/mobile-menu";
 import { SidebarNav } from "../default/side-nav";
 
 const CohereDocsStyle = () => {

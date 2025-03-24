@@ -9,8 +9,8 @@ import { FERN_FOOTER_ID } from "@/components/constants";
 import { HeaderTabsRoot } from "@/components/header/HeaderTabsRoot";
 import { SetIsSidebarFixed } from "@/state/layout";
 
+import { MainCtx } from "./dismissable-menu";
 import { FernHeader } from "./fern-header";
-import { MainCtx } from "./mobile-menu";
 import { SidebarNav } from "./side-nav";
 
 export default function DefaultDocs({

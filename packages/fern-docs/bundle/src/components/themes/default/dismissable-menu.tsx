@@ -5,6 +5,7 @@ import { RemoveScroll } from "react-remove-scroll";
 
 import { Portal } from "@radix-ui/react-portal";
 import { compact } from "es-toolkit/array";
+import { PanelLeftOpen } from "lucide-react";
 import {
   AnimatePresence,
   motion,
@@ -14,7 +15,7 @@ import {
   useTransform,
 } from "motion/react";
 
-import { cn } from "@fern-docs/components";
+import { Button, FernTooltip, cn } from "@fern-docs/components";
 import { useIsomorphicLayoutEffect } from "@fern-ui/react-commons";
 
 import {
@@ -37,14 +38,16 @@ const transition = {
   duration: 0.3,
 };
 
-export function MobileMenu({
+export function DismissableMenu({
   children,
   className,
+  side = "right",
   ...props
 }: {
   children: React.ReactNode;
   className?: string;
   "data-theme"?: string;
+  side?: "left" | "right";
 }) {
   const [open, setOpen] = useIsDismissableSidebarOpen();
 
@@ -65,7 +68,7 @@ export function MobileMenu({
     if (!mainRef.current) return;
     mainRef.current.style.willChange = "transform";
     const translateX = Math.min(0, calculateWidth(value, getSidebarWidth()));
-    mainRef.current.style.transform = `translateX(${translateX}px)`;
+    mainRef.current.style.transform = `translateX(${side === "right" ? translateX : -translateX}px)`;
   });
 
   const opacity = useTransform(x, (value) => {
@@ -94,7 +97,7 @@ export function MobileMenu({
     };
 
     setTransform(getSidebarWidth());
-  }, [open]);
+  }, [open, side]);
 
   // reset the transform when the component unmounts
   React.useEffect(
@@ -163,7 +166,7 @@ export function MobileMenu({
       }
 
       // register a swipe gesture where the pointer is moving left and not up or down (with some margin of error)
-      if (event.movementX < -5) {
+      if (side === "right" && event.movementX < -5) {
         // Only trigger if pointer is in the right 33% of the screen
         const screenWidth = window.innerWidth;
         const rightEdgeThreshold = screenWidth * 0.66;
@@ -191,7 +194,7 @@ export function MobileMenu({
       document.removeEventListener("pointermove", handlePointerMove);
       document.removeEventListener("selectionchange", handleCancelDrag);
     };
-  }, [dragControls, open, setOpen]);
+  }, [dragControls, open, setOpen, side]);
 
   return (
     <RemoveScroll
@@ -243,7 +246,8 @@ export function MobileMenu({
               // Note: if this component must not be rendered at the same time as the side-nav.tsx component,
               // because they share the same ID.
               id={FERN_SIDEBAR_ID}
-              data-viewport="mobile"
+              data-viewport="dismissable"
+              data-side={side}
               className={cn("fern-background-image", className)}
               key="sidebar"
               onPointerDown={(event) => dragControls.start(event)}
@@ -257,22 +261,25 @@ export function MobileMenu({
               dragDirectionLock
               dragSnapToOrigin
               dragListener={false}
-              dragElastic={{ left: 0 }}
-              dragConstraints={{ left: 0 }}
+              dragElastic={{ [opposite(side)]: 0 }}
+              dragConstraints={{ [opposite(side)]: 0 }}
               dragControls={dragControls}
               onDragEnd={(event, info) => {
                 if (event.target instanceof HTMLElement) {
                   if (
-                    info.offset.x > event.target.clientWidth / 2 ||
-                    info.velocity.x > 100
+                    side === "left"
+                      ? info.offset.x < event.target.clientWidth / 2 ||
+                        info.velocity.x < -100
+                      : info.offset.x > event.target.clientWidth / 2 ||
+                        info.velocity.x > 100
                   ) {
                     setOpen(false);
                   }
                 }
               }}
-              initial={{ x: "100%" }}
+              initial={{ x: side === "left" ? "-100%" : "100%" }}
               animate={{ x: 0 }}
-              exit={{ x: "100%" }}
+              exit={{ x: side === "left" ? "-100%" : "100%" }}
               transition={transition}
             >
               {children}
@@ -284,12 +291,26 @@ export function MobileMenu({
   );
 }
 
+export function MobileMenuTrigger(props: React.ComponentProps<typeof Button>) {
+  const [open, setOpen] = useIsDismissableSidebarOpen();
+  if (open) {
+    return null;
+  }
+  return (
+    <FernTooltip content="Open menu" side="right">
+      <Button size="icon" onClick={() => setOpen(!open)} {...props}>
+        <PanelLeftOpen />
+      </Button>
+    </FernTooltip>
+  );
+}
+
 function calculateWidth(value: number | string, sidebarWidth: number) {
   if (typeof value === "string" && value.endsWith("%")) {
     value = (parseFloat(value.slice(0, -1)) / 100) * sidebarWidth;
   }
   if (typeof value === "number") {
-    return value - sidebarWidth;
+    return Math.abs(value) - sidebarWidth;
   }
   return 0;
 }
@@ -298,4 +319,8 @@ function getSidebarWidth() {
   const sidebar = document.getElementById(FERN_SIDEBAR_ID);
   if (!sidebar) return 0;
   return sidebar.clientWidth;
+}
+
+function opposite(side: "left" | "right"): "left" | "right" {
+  return side === "left" ? "right" : "left";
 }
