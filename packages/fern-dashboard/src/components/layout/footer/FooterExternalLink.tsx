@@ -1,19 +1,21 @@
+import React from "react";
+
 import { FooterText } from "./FooterText";
 
 export declare namespace FooterExternalLink {
   export interface Props {
-    text: string;
     href: string;
+    children: React.JSX.Element | string;
   }
 }
 
 export const FooterExternalLink = ({
   href,
-  text,
+  children,
 }: FooterExternalLink.Props) => {
   return (
     <a href={href} target="_blank">
-      <FooterText className="hover:text-gray-1100" text={text} />
+      <FooterText hoverable>{children}</FooterText>
     </a>
   );
 };
