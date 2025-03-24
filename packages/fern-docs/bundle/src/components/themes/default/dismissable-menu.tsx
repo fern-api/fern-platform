@@ -24,6 +24,7 @@ import {
   FERN_SIDEBAR_OVERLAY_ID,
 } from "@/components/constants";
 import { useCurrentPathname } from "@/hooks/use-current-pathname";
+import { useIsHeaderDisabled } from "@/state/layout";
 import { useIsDismissableSidebarOpen } from "@/state/mobile";
 
 export const MainCtx = React.createContext<
@@ -292,8 +293,11 @@ export function DismissableMenu({
 }
 
 export function MobileMenuTrigger(props: React.ComponentProps<typeof Button>) {
+  const isHeaderDisabled = useIsHeaderDisabled();
   const [open, setOpen] = useIsDismissableSidebarOpen();
-  if (open) {
+
+  // if the header is disabled, the sidebar will always be fixed and visible (never dismissable) in desktop mode
+  if (open || isHeaderDisabled) {
     return null;
   }
   return (

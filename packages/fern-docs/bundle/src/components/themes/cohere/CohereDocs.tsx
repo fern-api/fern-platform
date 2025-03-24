@@ -11,6 +11,7 @@ import { FernScrollArea } from "@fern-docs/components";
 import { FERN_COHERE_CONTENT_ID, FERN_FOOTER_ID } from "@/components/constants";
 import { HeaderTabsRoot } from "@/components/header/HeaderTabsRoot";
 import { useCurrentPathname } from "@/hooks/use-current-pathname";
+import { SetIsHeaderDisabled, SetIsSidebarFixed } from "@/state/layout";
 import { SCROLL_BODY_ATOM } from "@/state/viewport";
 
 import { MainCtx } from "../default/dismissable-menu";
@@ -90,6 +91,8 @@ export default function CohereDocs({
 
   return (
     <div className="fixed inset-0 flex flex-col">
+      <SetIsSidebarFixed value={false} />
+      <SetIsHeaderDisabled value={false} />
       <CohereDocsStyle />
       {announcement}
       {/* <HeaderContainer header={header} tabs={tabs} /> */}

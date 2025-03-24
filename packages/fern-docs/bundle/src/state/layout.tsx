@@ -7,6 +7,7 @@ import { FernDocs } from "@fern-api/fdr-sdk";
 import { useIsomorphicLayoutEffect } from "@fern-ui/react-commons";
 
 const isSidebarFixedAtom = atom<boolean>(false);
+const isHeaderDisabledAtom = atom<boolean>(false);
 
 export function SetIsSidebarFixed({ value }: { value: boolean }) {
   useHydrateAtoms([[isSidebarFixedAtom, value]], {
@@ -15,8 +16,19 @@ export function SetIsSidebarFixed({ value }: { value: boolean }) {
   return null;
 }
 
+export function SetIsHeaderDisabled({ value }: { value: boolean }) {
+  useHydrateAtoms([[isHeaderDisabledAtom, value]], {
+    dangerouslyForceHydrate: true,
+  });
+  return null;
+}
+
 export function useIsSidebarFixed() {
   return useAtomValue(isSidebarFixedAtom);
+}
+
+export function useIsHeaderDisabled() {
+  return useAtomValue(isHeaderDisabledAtom);
 }
 
 const isLandingPageAtom = atom<boolean>(false);
