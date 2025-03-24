@@ -55,9 +55,13 @@ export const ReferenceLayout = React.forwardRef<
         ref={ref}
       >
         {header}
-        <div className="fern-layout-reference-content">
+        <div
+          className="fern-layout-reference-content"
+          data-kind={kind}
+          data-cols={aside ? "2" : "1"}
+        >
           {!isMobile && (
-            <aside className="fern-layout-reference-aside" data-kind={kind}>
+            <aside className="fern-layout-reference-aside">
               {kind === "api" ? (
                 aside
               ) : (
@@ -68,9 +72,7 @@ export const ReferenceLayout = React.forwardRef<
           <Prose className="mb-12 space-y-12">
             {children}
             {isMobile && (
-              <section className="fern-layout-reference-aside" data-kind={kind}>
-                {aside}
-              </section>
+              <section className="fern-layout-reference-aside">{aside}</section>
             )}
             {reference}
             {footer}

@@ -53,12 +53,17 @@
       @apply sticky order-last h-fit;
     }
 
-    .fern-layout-reference-aside[data-kind="api"] {
+    .fern-layout-reference-content[data-kind="api"]
+      .fern-layout-reference-aside {
       @apply flex shrink-0;
     }
 
     .fern-layout-reference-content {
       @apply my-6 md:grid md:grid-cols-2 md:gap-8 lg:gap-12;
+    }
+
+    .fern-layout-reference-content[data-kind="guide"][data-cols="1"] {
+      @apply md:grid-cols-1;
     }
   }
 
