@@ -56,7 +56,7 @@
     "hast-util-to-string": "^3.0.1",
     "hastscript": "^9.0.0",
     "mdast-util-from-markdown": "^2.0.2",
-    "mdast-util-gfm": "^3.0.0",
+    "mdast-util-gfm": "^3.1.0",
     "mdast-util-math": "^3.0.0",
     "mdast-util-mdx": "^3.0.0",
     "mdast-util-mdx-jsx": "^3.2.0",
