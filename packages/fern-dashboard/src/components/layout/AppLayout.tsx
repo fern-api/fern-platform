@@ -12,7 +12,7 @@ export declare namespace AppLayout {
   }
 }
 
-export async function AppLayout({
+export function AppLayout({
   session,
   currentDocsDomain,
   children,
