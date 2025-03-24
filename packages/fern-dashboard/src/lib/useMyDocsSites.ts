@@ -41,11 +41,3 @@ export function useMyDocsSites() {
     return { docsSites: undefined };
   }
 }
-
-export async function getOrLoadMyDocsSites() {
-  const { docsSites } = useDocsSitesStore.getState();
-  if (docsSites.type === "loaded") {
-    return docsSites.value;
-  }
-  return await getMyDocsSites();
-}

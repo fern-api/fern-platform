@@ -10,11 +10,26 @@ export declare namespace NavbarItem {
   export interface Props {
     title: string;
     icon: React.JSX.Element;
+
+    /**
+     * href is used to determine:
+     *   (1) if this item is selected: pathname.startsWith(href)
+     *   (2) the href for the <a />
+     *       (to override, use hrefForActualLinking)
+     */
     href: `/${string}`;
+    hrefForActualLinking?: string;
   }
 }
 
-export const NavbarItem = ({ title, icon, href }: NavbarItem.Props) => {
+export const ICON_SIZE = "size-5";
+
+export const NavbarItem = ({
+  title,
+  icon,
+  href,
+  hrefForActualLinking = href,
+}: NavbarItem.Props) => {
   const pathname = usePathname();
 
   const isSelected = pathname.startsWith(href);
@@ -35,7 +50,7 @@ export const NavbarItem = ({ title, icon, href }: NavbarItem.Props) => {
 
   if (isClickable) {
     return (
-      <Link className={className} href={href}>
+      <Link className={className} href={hrefForActualLinking}>
         {children}
       </Link>
     );
