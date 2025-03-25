@@ -274,6 +274,8 @@ export async function GET(
         const end = performance.now();
         console.log(`Reindex took ${end - start}ms`);
         controller.enqueue(`revalidate-finished:${end - start}ms\n`);
+
+        // TODO update homepage images
       } catch (e) {
         console.error(e);
         controller.enqueue(
