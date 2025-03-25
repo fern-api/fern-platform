@@ -33,6 +33,7 @@ import {
   Effect,
   PolicyStatement,
   ServicePrincipal,
+  User,
 } from "aws-cdk-lib/aws-iam";
 import { LogGroup } from "aws-cdk-lib/aws-logs";
 import * as route53 from "aws-cdk-lib/aws-route53";
@@ -480,9 +481,7 @@ export class FdrDeployStack extends Stack {
       versioned: true,
     });
 
-    const vercelUser = new ArnPrincipal(
-      "arn:aws:iam::985111089818:user/vercel"
-    );
+    const vercelUser = User.fromUserName(this, "VercelUser", "vercel");
 
     docsHomepageImagesBucket.grantReadWrite(vercelUser);
   }
