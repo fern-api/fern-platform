@@ -117,7 +117,8 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
     });
 
     postToEngineeringNotifs(
-      `:rotating_light: [TURBOPUFFER] Failed to reindex ${domain} with the following error: ${String(error)}`
+      `:rotating_light: [TURBOPUFFER] Failed to reindex ${domain} with the following error: ${String(error)}`,
+      "turbopuffer-reindex"
     );
 
     return NextResponse.json("Internal server error", { status: 500 });

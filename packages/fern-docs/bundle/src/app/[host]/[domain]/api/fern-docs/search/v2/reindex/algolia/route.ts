@@ -109,7 +109,8 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
     });
 
     postToEngineeringNotifs(
-      `:rotating_light: [ALGOLIA] Failed to reindex ${domain} with the following error: ${String(error)}`
+      `:rotating_light: [ALGOLIA] Failed to reindex ${domain} with the following error: ${String(error)}`,
+      "algolia-reindex"
     );
 
     return NextResponse.json("Internal server error", { status: 500 });
