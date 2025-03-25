@@ -103,7 +103,7 @@ jobs:
           cd smoke-test
           npm config set //registry.npmjs.org/:_authToken $NPM_TOKEN
           npm install -g @fern-api/fern-api-dev
-          fern-dev generate --docs --instance https://fern-platform-test.docs.dev.buildwithfern.com
+          fern-dev generate --docs --instance https://fern-platform-test.docs.dev.buildwithfern.com --log-level debug
           VALUE=$(curl https://fern-platform-test.docs.dev.buildwithfern.com/api-reference/imdb/create-movie)
           length=${#VALUE}
           # Assert that length is over 1000
