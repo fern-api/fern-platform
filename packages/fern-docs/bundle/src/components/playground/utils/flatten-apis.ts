@@ -15,18 +15,13 @@ const trimBreadcrumbs = createBreadcrumbSlicer<ApiGroup>({
 });
 
 export function flattenApiSection(
-  root: FernNavigation.NavigationNode | undefined,
-  version: string | undefined
+  root: FernNavigation.NavigationNode | undefined
 ): ApiGroup[] {
   if (root == null) {
     return [];
   }
   const result: ApiGroup[] = [];
   FernNavigation.traverseDF(root, (node, parents) => {
-    if (version && node.type === "version" && node.versionId !== version) {
-      return "skip";
-    }
-
     if (node.type === "changelog") {
       return "skip";
     }

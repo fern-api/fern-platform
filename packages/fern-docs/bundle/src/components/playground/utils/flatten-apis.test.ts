@@ -131,13 +131,13 @@ function createRootNode(children: any, versioned: boolean): RootNode {
 
 describe("flattenApi", () => {
   it("empty root returns empty array", () => {
-    expect(flattenApiSection(undefined, undefined)).toEqual([]);
+    expect(flattenApiSection(undefined)).toEqual([]);
   });
 
   it("unversioned api reference with single endpoint flattens", () => {
     const endpoints = [createEndpointNode("1", "Endpoint One")];
     const root = createRootNode(endpoints, false);
-    const result = flattenApiSection(root, undefined);
+    const result = flattenApiSection(root);
 
     expect(result).toHaveLength(1);
     expect(result[0]).toEqual({
@@ -155,7 +155,7 @@ describe("flattenApi", () => {
       createEndpointNode("3", "Endpoint Three"),
     ];
     const root = createRootNode(endpoints, false);
-    const result = flattenApiSection(root, undefined);
+    const result = flattenApiSection(root);
 
     expect(result).toHaveLength(1);
     expect(result[0]).toEqual({
@@ -169,7 +169,7 @@ describe("flattenApi", () => {
   it("versioned api reference with single endpoint flattens", () => {
     const endpoints = [createEndpointNode("1", "Endpoint One")];
     const root = createRootNode(endpoints, true);
-    const result = flattenApiSection(root, "v1");
+    const result = flattenApiSection(root);
 
     expect(result).toHaveLength(1);
     expect(result[0]).toEqual({
@@ -187,7 +187,7 @@ describe("flattenApi", () => {
       createEndpointNode("3", "Endpoint Three"),
     ];
     const root = createRootNode(endpoints, true);
-    const result = flattenApiSection(root, "v1");
+    const result = flattenApiSection(root);
 
     expect(result).toHaveLength(1);
     expect(result[0]).toEqual({
@@ -214,7 +214,7 @@ describe("flattenApi", () => {
     ];
 
     const root = createRootNode(sections, true);
-    const result = flattenApiSection(root, "v1");
+    const result = flattenApiSection(root);
 
     expect(result).toHaveLength(1);
     expect(result[0]).toEqual({
@@ -252,7 +252,7 @@ describe("flattenApi", () => {
     ];
 
     const root = createRootNode(sections, true);
-    const result = flattenApiSection(root, "v1");
+    const result = flattenApiSection(root);
 
     expect(result).toHaveLength(2);
     expect(result[0]).toEqual({
@@ -267,21 +267,5 @@ describe("flattenApi", () => {
       breadcrumb: ["Section Two"],
       items: sections[1]?.children,
     });
-  });
-
-  it("ignores non-matching version", () => {
-    const endpoints = [createEndpointNode("1", "Endpoint One")];
-    const root = createRootNode(endpoints, true);
-    const result = flattenApiSection(root, "v2");
-
-    expect(result).toHaveLength(0);
-  });
-
-  it("handles undefined version parameter", () => {
-    const endpoints = [createEndpointNode("1", "Endpoint One")];
-    const root = createRootNode(endpoints, true);
-    const result = flattenApiSection(root, undefined);
-
-    expect(result).toHaveLength(1);
   });
 });
