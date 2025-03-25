@@ -1,19 +1,19 @@
 import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
 import { DocsSiteLayout } from "@/components/docs-page/DocsSiteLayout";
 import { AppLayout } from "@/components/layout/AppLayout";
-import { getSessionOrRedirect } from "@/lib/auth0";
+
+import { parseDocsUrlParam } from "../parseDocsUrlParam";
 
 export default async function Page(props: {
-  params: Promise<{ domain: string }>;
+  params: Promise<{ docsUrl: string }>;
 }) {
-  const { domain } = await props.params;
-  const session = await getSessionOrRedirect();
+  const docsUrl = parseDocsUrlParam(await props.params);
 
   return (
     <ProtectedRoute>
-      <AppLayout session={session} currentDocsDomain={domain}>
-        <DocsSiteLayout domain={domain}>
-          <div>analytics</div>
+      <AppLayout currentDocsUrl={docsUrl}>
+        <DocsSiteLayout docsUrl={docsUrl}>
+          <div>ai search</div>
         </DocsSiteLayout>
       </AppLayout>
     </ProtectedRoute>

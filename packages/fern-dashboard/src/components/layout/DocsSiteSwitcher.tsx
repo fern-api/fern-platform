@@ -14,6 +14,9 @@ export function DocsSiteSwitcher({ currentDomain }: DocsSiteSwitcher.Props) {
   const docsSites = useMyDocsSites();
 
   return (
-    <DocsSiteSelect docsSites={docsSites ?? []} currentDomain={currentDomain} />
+    <DocsSiteSelect
+      docsSites={docsSites.type === "loaded" ? docsSites.value : []}
+      currentDomain={currentDomain}
+    />
   );
 }

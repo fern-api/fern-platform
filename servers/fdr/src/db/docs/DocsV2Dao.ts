@@ -64,8 +64,13 @@ export interface ListDocsSitesForOrgResponse {
 }
 
 export interface DocsSite {
-  titleDomain: string;
-  domains: string[];
+  titleDomain: DocsSiteDomain;
+  domains: DocsSiteDomain[];
+}
+
+export interface DocsSiteDomain {
+  domain: string;
+  path: string | undefined;
 }
 
 export interface DocsV2Dao {
@@ -525,9 +530,13 @@ export class DocsV2DaoImpl implements DocsV2Dao {
     orgID: string
   ): Promise<ListDocsSitesForOrgResponse> {
     return this.prisma.$transaction(async (tx) => {
-      const dbDocsSites: { docsConfigInstanceId: string; domains: string[] }[] =
-        await tx.$queryRaw`
-        SELECT ARRAY_AGG("domain") AS "domains"
+      const dbDocsSites = await tx.$queryRaw<
+        { sites: { domain: string; path: string }[] }[]
+      >`
+        SELECT
+              JSONB_AGG(
+                JSONB_BUILD_OBJECT('domain', "domain", 'path', "path")
+              ) AS "sites"
         FROM "DocsV2"
         WHERE "orgID" = ${orgID} AND "isPreview" = false
         GROUP BY "docsConfigInstanceId";
@@ -535,9 +544,9 @@ export class DocsV2DaoImpl implements DocsV2Dao {
 
       const docsSites = dbDocsSites.map((docsSite): DocsSite => {
         // sort buildwithfern domains at the end, otherwise alphabetically
-        const sortedDomains = sort(docsSite.domains, (a, b) => {
-          const aIsFernUrl = a.endsWith(".buildwithfern.com");
-          const bIsFernUrl = b.endsWith(".buildwithfern.com");
+        const sortedDomains = sort(docsSite.sites, (a, b) => {
+          const aIsFernUrl = a.domain.endsWith(".buildwithfern.com");
+          const bIsFernUrl = b.domain.endsWith(".buildwithfern.com");
           if (aIsFernUrl && !bIsFernUrl) {
             return 1;
           }

@@ -36,7 +36,7 @@ export const NavbarSubItem = ({ title, icon, href }: NavbarSubItem.Props) => {
           className={cn("w-px", isSelected ? "bg-green-1100" : "bg-gray-700")}
         />
       </div>
-      <div className="flex min-w-0 items-center py-2">
+      <div className="flex min-w-0 items-center py-2 pr-4">
         {icon}
         <div className="overflow-x-hidden text-ellipsis whitespace-nowrap">
           {title}

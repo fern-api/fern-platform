@@ -11,6 +11,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { getDocsSiteUrl } from "@/lib/getDocsSiteUrl";
 
 export declare namespace DocsSiteSelect {
   export interface Props {
@@ -33,7 +34,7 @@ export const DocsSiteSelect = ({
       return;
     }
     setLocalValue(currentDomain);
-    window.location.href = `/docs/${newDomain}`;
+    window.location.href = `/docs/${encodeURIComponent(newDomain)}`;
   };
 
   return (
@@ -46,11 +47,14 @@ export const DocsSiteSelect = ({
         <SelectValue placeholder="Organization" />
       </SelectTrigger>
       <SelectContent>
-        {docsSites.map((docsSite) => (
-          <SelectItem key={docsSite.titleDomain} value={docsSite.titleDomain}>
-            {docsSite.titleDomain}
-          </SelectItem>
-        ))}
+        {docsSites.map((docsSite) => {
+          const url = getDocsSiteUrl(docsSite);
+          return (
+            <SelectItem key={url} value={url}>
+              {url}
+            </SelectItem>
+          );
+        })}
       </SelectContent>
     </Select>
   );

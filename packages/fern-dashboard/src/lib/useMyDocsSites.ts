@@ -4,20 +4,21 @@ import { useEffect } from "react";
 
 import { create } from "zustand";
 
-import { ListDocsSitesForOrgResponse } from "@fern-platform/fdr";
+import { DocsSite, ListDocsSitesForOrgResponse } from "@fern-platform/fdr";
 
 import { getMyDocsSites } from "@/app/actions/getMyDocsSites";
 
-import { Loadable } from "./Loadable";
+import { Loadable, mapLoadable } from "./Loadable";
+import { getDocsSiteUrl } from "./getDocsSiteUrl";
 
 type DocsSitesStore = {
-  docsSites: Loadable<ListDocsSitesForOrgResponse>;
-  setDocsSites: (docSites: ListDocsSitesForOrgResponse) => void;
+  docsSites: Loadable<DocsSite[]>;
+  setDocsSites: (docSites: DocsSite[]) => void;
 };
 
 export const useDocsSitesStore = create<DocsSitesStore>((set) => ({
   docsSites: { type: "notStartedLoading" },
-  setDocsSites: (docSites: ListDocsSitesForOrgResponse) =>
+  setDocsSites: (docSites: DocsSite[]) =>
     set({ docsSites: { type: "loaded", value: docSites } }),
 }));
 
@@ -28,16 +29,21 @@ export function useMyDocsSites() {
   useEffect(() => {
     async function run() {
       if (docsSites.type === "notStartedLoading") {
-        setDocsSites(await getMyDocsSites());
+        const response = await getMyDocsSites();
+        setDocsSites(response.docsSites);
       }
     }
 
     void run();
   }, []);
 
-  if (docsSites.type === "loaded") {
-    return docsSites.value.docsSites;
-  } else {
-    return undefined;
-  }
+  return docsSites;
+}
+
+export function useDocsSite(docsUrl: string): Loadable<DocsSite | undefined> {
+  const maybeLoadedDocsSites = useMyDocsSites();
+
+  return mapLoadable(maybeLoadedDocsSites, (docsSites) =>
+    docsSites.find((docsSite) => getDocsSiteUrl(docsSite) === docsUrl)
+  );
 }

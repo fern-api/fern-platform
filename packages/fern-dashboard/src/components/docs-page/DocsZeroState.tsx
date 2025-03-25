@@ -1,18 +1,16 @@
 import Image from "next/image";
 
-import { SessionData, User } from "@auth0/nextjs-auth0/types";
+import { User } from "@auth0/nextjs-auth0/types";
 import { PlusIcon } from "@heroicons/react/24/outline";
+
+import { getSessionOrRedirect } from "@/lib/auth0";
 
 import exampleDocsSite from "../../../public/example-docs-site.avif";
 import { Button } from "../ui/button";
 
-export declare namespace DocsZeroState {
-  export interface Props {
-    session: SessionData;
-  }
-}
+export async function DocsZeroState() {
+  const session = await getSessionOrRedirect();
 
-export default function DocsZeroState({ session }: DocsZeroState.Props) {
   let welcomeString = "Welcome";
   const firstName = getFirstName(session.user);
   if (firstName != null) {

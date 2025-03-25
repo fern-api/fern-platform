@@ -1,26 +1,20 @@
 "use client";
 
-import { useMyDocsSites } from "@/lib/useMyDocsSites";
+import { unwrapLoadable } from "@/lib/Loadable";
+import { useDocsSite } from "@/lib/useMyDocsSites";
 
 export declare namespace DocsSiteOverviewCard {
   export interface Props {
-    domain: string;
+    docsUrl: string;
   }
 }
 
-export function DocsSiteOverviewCard({ domain }: DocsSiteOverviewCard.Props) {
-  const docsSites = useMyDocsSites();
-  const docsSite = docsSites?.find(
-    (docsSite) => docsSite.titleDomain === domain
-  );
-
-  if (docsSites != null && docsSite == null) {
-    return <div>404</div>;
-  }
+export function DocsSiteOverviewCard({ docsUrl }: DocsSiteOverviewCard.Props) {
+  const docsSite = unwrapLoadable(useDocsSite(docsUrl));
 
   return (
     <div className="flex flex-1 rounded-xl border border-gray-500 bg-gray-100 p-6">
-      {docsSite?.titleDomain}
+      {docsSite?.titleDomain.domain}
     </div>
   );
 }

@@ -1,5 +1,6 @@
 "use client";
 
+import { getDocsSiteUrl } from "@/lib/getDocsSiteUrl";
 import { useMyDocsSites } from "@/lib/useMyDocsSites";
 
 import { NavbarSubItem } from "./NavbarSubItem";
@@ -7,19 +8,22 @@ import { NavbarSubItem } from "./NavbarSubItem";
 export function DocsNavbarSubItems() {
   const docsSites = useMyDocsSites();
 
-  if (docsSites == null) {
+  if (docsSites.type !== "loaded") {
     return null;
   }
 
   return (
     <>
-      {docsSites.map((docsSite) => (
-        <NavbarSubItem
-          key={docsSite.titleDomain}
-          title={docsSite.titleDomain}
-          href={`/docs/${docsSite.titleDomain}`}
-        />
-      ))}
+      {docsSites.value.map((docsSite) => {
+        const url = getDocsSiteUrl(docsSite);
+        return (
+          <NavbarSubItem
+            key={url}
+            title={url}
+            href={`/docs/${encodeURIComponent(url)}`}
+          />
+        );
+      })}
     </>
   );
 }
