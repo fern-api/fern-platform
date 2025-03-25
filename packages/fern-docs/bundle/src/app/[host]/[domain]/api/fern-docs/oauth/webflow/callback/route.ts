@@ -15,8 +15,6 @@ import { redirectWithLoginError } from "@/server/redirectWithLoginError";
 import { safeUrl } from "@/server/safeUrl";
 import { getDocsDomainEdge } from "@/server/xfernhost/edge";
 
-export const runtime = "edge";
-
 export async function GET(req: NextRequest): Promise<NextResponse> {
   const domain = getDocsDomainEdge(req);
   const host = req.nextUrl.host;
@@ -59,7 +57,7 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
     return redirectWithLoginError(
       req,
       redirectLocation,
-      "unknown_error",
+      "config_error",
       "Couldn't login, please try again"
     );
   }
