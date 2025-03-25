@@ -5,7 +5,7 @@ import { useMyDocsSites } from "@/lib/useMyDocsSites";
 import { NavbarSubItem } from "./NavbarSubItem";
 
 export function DocsNavbarSubItems() {
-  const { docsSites } = useMyDocsSites();
+  const docsSites = useMyDocsSites();
 
   if (docsSites == null) {
     return null;
@@ -15,9 +15,9 @@ export function DocsNavbarSubItems() {
     <>
       {docsSites.map((docsSite) => (
         <NavbarSubItem
-          key={docsSite.domain}
-          title={docsSite.domain}
-          href={`/docs/${docsSite.domain}`}
+          key={docsSite.titleDomain}
+          title={docsSite.titleDomain}
+          href={`/docs/${docsSite.titleDomain}`}
         />
       ))}
     </>

@@ -9,7 +9,7 @@ export declare namespace DocsSiteLayout {
 
 export function DocsSiteLayout({ domain, children }: DocsSiteLayout.Props) {
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-1 flex-col">
       <div className="flex items-center gap-3">
         <div className="text-gray-1200 mb-1 text-xl font-bold dark:text-gray-200">
           {domain}

@@ -8,8 +8,8 @@ import { DocsNavbarSubItems } from "./DocsNavbarSubItems";
 import { ICON_SIZE, NavbarItem } from "./NavbarItem";
 
 export function DocsNavbarItems() {
-  const { docsSites } = useMyDocsSites();
-  const firstDocsDomain = docsSites?.[0]?.domain;
+  const docsSites = useMyDocsSites();
+  const firstDocsDomain = docsSites?.[0]?.titleDomain;
 
   return (
     <>

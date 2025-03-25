@@ -15,6 +15,7 @@ import { DocsRegistrationInfo } from "../../controllers/docs/v2/getDocsWriteV2Se
 import type { IndexSegment } from "../../services/algolia";
 import { WithoutQuestionMarks, readBuffer, writeBuffer } from "../../util";
 import { ParsedBaseUrl } from "../../util/ParsedBaseUrl";
+import { sort } from "../../util/sort";
 import {
   IndexSegmentIds,
   PrismaTransaction,
@@ -63,7 +64,8 @@ export interface ListDocsSitesForOrgResponse {
 }
 
 export interface DocsSite {
-  domain: string;
+  titleDomain: string;
+  domains: string[];
 }
 
 export interface DocsV2Dao {
@@ -523,23 +525,41 @@ export class DocsV2DaoImpl implements DocsV2Dao {
     orgID: string
   ): Promise<ListDocsSitesForOrgResponse> {
     return this.prisma.$transaction(async (tx) => {
-      const docsSites = await tx.docsV2.findMany({
-        select: {
-          domain: true,
-        },
-        where: {
-          orgID,
-          isPreview: false,
-        },
-        orderBy: {
-          updatedTime: "desc",
-        },
+      const dbDocsSites: { docsConfigInstanceId: string; domains: string[] }[] =
+        await tx.$queryRaw`
+        SELECT ARRAY_AGG("domain") AS "domains"
+        FROM "DocsV2"
+        WHERE "orgID" = ${orgID} AND "isPreview" = false
+        GROUP BY "docsConfigInstanceId";
+      `;
+
+      const docsSites = dbDocsSites.map((docsSite): DocsSite => {
+        // sort buildwithfern domains at the end, otherwise alphabetically
+        const sortedDomains = sort(docsSite.domains, (a, b) => {
+          const aIsFernUrl = a.endsWith(".buildwithfern.com");
+          const bIsFernUrl = b.endsWith(".buildwithfern.com");
+          if (aIsFernUrl && !bIsFernUrl) {
+            return 1;
+          }
+          if (bIsFernUrl && !aIsFernUrl) {
+            return -1;
+          }
+          return a < b ? -1 : 1;
+        });
+
+        return {
+          // sortedDomains is guaranteed to be non-empty since `domains` is a
+          // groupBy aggegation (and each group in a sql groupBy has at least one row)
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion, @typescript-eslint/no-unnecessary-type-assertion
+          titleDomain: sortedDomains[0]!,
+          domains: sortedDomains,
+        };
       });
 
       return {
-        docsSites: docsSites.map((docsSite) => ({
-          domain: docsSite.domain,
-        })),
+        docsSites: sort(docsSites, (a, b) =>
+          a.titleDomain < b.titleDomain ? -1 : 1
+        ),
       };
     });
   }

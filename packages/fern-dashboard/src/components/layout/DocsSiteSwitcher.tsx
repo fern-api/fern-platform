@@ -11,7 +11,7 @@ export declare namespace DocsSiteSwitcher {
 }
 
 export function DocsSiteSwitcher({ currentDomain }: DocsSiteSwitcher.Props) {
-  const { docsSites } = useMyDocsSites();
+  const docsSites = useMyDocsSites();
 
   return (
     <DocsSiteSelect docsSites={docsSites ?? []} currentDomain={currentDomain} />

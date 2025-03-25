@@ -16,7 +16,7 @@ const MY_DOCS_SITE_CACHE = new AsyncCache<
 
 export async function getMyDocsSites() {
   const currentOrg = await getCurrentOrg();
-  return MY_DOCS_SITE_CACHE.get(currentOrg.name, () =>
+  return await MY_DOCS_SITE_CACHE.get(currentOrg.name, () =>
     getFdrDao().docsV2().listDocsSitesForOrg(currentOrg.name)
   );
 }

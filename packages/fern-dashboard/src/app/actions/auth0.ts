@@ -81,7 +81,7 @@ const ORGANIZATIONS_CACHE = new AsyncCache<
 export async function getCurrentOrg() {
   const orgId = await getCurrentOrgId();
 
-  return ORGANIZATIONS_CACHE.get(orgId, async () => {
+  return await ORGANIZATIONS_CACHE.get(orgId, async () => {
     const { data: organization } =
       await getAuth0ManagementClient().organizations.get({
         id: orgId,

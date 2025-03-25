@@ -27,13 +27,13 @@ export const NavbarSubItem = ({ title, icon, href }: NavbarSubItem.Props) => {
         "flex-1 flex-row gap-2 text-sm transition",
         isSelected
           ? "text-green-1100"
-          : "hover:text-gray-1200 text-gray-900 dark:hover:text-gray-700"
+          : "hover:text-gray-1100 text-gray-900 dark:hover:text-gray-700"
       )}
       href={href}
     >
       <div className="flex w-5 shrink-0 justify-center">
         <div
-          className={cn("w-px", isSelected ? "bg-green-1100" : "bg-gray-900")}
+          className={cn("w-px", isSelected ? "bg-green-1100" : "bg-gray-700")}
         />
       </div>
       <div className="flex min-w-0 items-center py-2">

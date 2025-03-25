@@ -36,8 +36,8 @@ export function useMyDocsSites() {
   }, []);
 
   if (docsSites.type === "loaded") {
-    return { docsSites: docsSites.value.docsSites };
+    return docsSites.value.docsSites;
   } else {
-    return { docsSites: undefined };
+    return undefined;
   }
 }

@@ -47,8 +47,8 @@ export const DocsSiteSelect = ({
       </SelectTrigger>
       <SelectContent>
         {docsSites.map((docsSite) => (
-          <SelectItem key={docsSite.domain} value={docsSite.domain}>
-            {docsSite.domain}
+          <SelectItem key={docsSite.titleDomain} value={docsSite.titleDomain}>
+            {docsSite.titleDomain}
           </SelectItem>
         ))}
       </SelectContent>

@@ -16,7 +16,7 @@ export default async function Page() {
 
   const firstDocsSite = docsSites[0];
   if (firstDocsSite != null) {
-    redirect(`/docs/${firstDocsSite.domain}`);
+    redirect(`/docs/${firstDocsSite.titleDomain}`);
   }
 
   return (
