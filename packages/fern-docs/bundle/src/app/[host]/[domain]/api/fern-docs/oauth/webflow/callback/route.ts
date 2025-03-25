@@ -5,6 +5,7 @@ import { WebflowClient } from "webflow-api";
 
 import { withDefaultProtocol } from "@fern-api/ui-core-utils";
 import { getAuthEdgeConfig } from "@fern-docs/edge-config";
+import { withoutStaging } from "@fern-docs/utils";
 
 import { FernNextResponse } from "@/server/FernNextResponse";
 import { getAllowedRedirectUrls } from "@/server/auth/allowed-redirects";
@@ -26,7 +27,7 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
   const error_description = req.nextUrl.searchParams.get("error_description");
   const redirectLocation =
     safeUrl(return_to) ??
-    safeUrl(withDefaultProtocol(preferPreview(host, domain)));
+    safeUrl(withDefaultProtocol(preferPreview(host, withoutStaging(domain))));
 
   if (error != null) {
     console.error(`OAuth2 error: ${error} - ${error_description}`);
