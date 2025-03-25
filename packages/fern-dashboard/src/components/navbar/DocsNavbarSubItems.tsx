@@ -1,5 +1,6 @@
 "use client";
 
+import { constructDocsUrlParam } from "@/lib/constructDocsUrlParam";
 import { getDocsSiteUrl } from "@/lib/getDocsSiteUrl";
 import { useMyDocsSites } from "@/lib/useMyDocsSites";
 
@@ -20,7 +21,7 @@ export function DocsNavbarSubItems() {
           <NavbarSubItem
             key={url}
             title={url}
-            href={`/docs/${encodeURIComponent(url)}`}
+            href={`/docs/${constructDocsUrlParam(url)}`}
           />
         );
       })}

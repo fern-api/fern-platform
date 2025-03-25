@@ -64,11 +64,11 @@ export interface ListDocsSitesForOrgResponse {
 }
 
 export interface DocsSite {
-  titleDomain: DocsSiteDomain;
-  domains: DocsSiteDomain[];
+  mainUrl: DocsSiteUrl;
+  urls: DocsSiteUrl[];
 }
 
-export interface DocsSiteDomain {
+export interface DocsSiteUrl {
   domain: string;
   path: string | undefined;
 }
@@ -531,43 +531,39 @@ export class DocsV2DaoImpl implements DocsV2Dao {
   ): Promise<ListDocsSitesForOrgResponse> {
     return this.prisma.$transaction(async (tx) => {
       const dbDocsSites = await tx.$queryRaw<
-        { sites: { domain: string; path: string }[] }[]
+        { urls: { domain: string; path: string | null | undefined }[] }[]
       >`
         SELECT
               JSONB_AGG(
                 JSONB_BUILD_OBJECT('domain', "domain", 'path', "path")
-              ) AS "sites"
+              ) AS "urls"
         FROM "DocsV2"
         WHERE "orgID" = ${orgID} AND "isPreview" = false
         GROUP BY "docsConfigInstanceId";
       `;
 
       const docsSites = dbDocsSites.map((docsSite): DocsSite => {
-        // sort buildwithfern domains at the end, otherwise alphabetically
-        const sortedDomains = sort(docsSite.sites, (a, b) => {
-          const aIsFernUrl = a.domain.endsWith(".buildwithfern.com");
-          const bIsFernUrl = b.domain.endsWith(".buildwithfern.com");
-          if (aIsFernUrl && !bIsFernUrl) {
-            return 1;
-          }
-          if (bIsFernUrl && !aIsFernUrl) {
-            return -1;
-          }
-          return a < b ? -1 : 1;
-        });
+        const urls = docsSite.urls.map(
+          (url): DocsSiteUrl => ({
+            domain: url.domain,
+            path: url.path ?? undefined,
+          })
+        );
+
+        const sortedUrls = sort(urls, compareDocsSiteUrls);
 
         return {
-          // sortedDomains is guaranteed to be non-empty since `domains` is a
+          // sortedUrls is guaranteed to be non-empty since `domains` is a
           // groupBy aggegation (and each group in a sql groupBy has at least one row)
           // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-          titleDomain: sortedDomains[0]!,
-          domains: sortedDomains,
+          mainUrl: sortedUrls[0]!,
+          urls: sortedUrls,
         };
       });
 
       return {
         docsSites: sort(docsSites, (a, b) =>
-          a.titleDomain < b.titleDomain ? -1 : 1
+          compareDocsSiteUrls(a.mainUrl, b.mainUrl)
         ),
       };
     });
@@ -627,4 +623,30 @@ async function createOrUpdateDocsDefinition({
       hasPublicS3Assets: authType === "PUBLIC",
     },
   });
+}
+
+function compareDocsSiteUrls(a: DocsSiteUrl, b: DocsSiteUrl) {
+  const aIsFernUrl = a.domain.endsWith(".buildwithfern.com");
+  const bIsFernUrl = b.domain.endsWith(".buildwithfern.com");
+  if (aIsFernUrl && !bIsFernUrl) {
+    return 1;
+  }
+  if (bIsFernUrl && !aIsFernUrl) {
+    return -1;
+  }
+
+  if (a.domain === b.domain) {
+    if (a.path === b.path) {
+      return 0;
+    }
+    if (a.path == null) {
+      return -1;
+    }
+    if (b.path == null) {
+      return 1;
+    }
+    return a.path < b.path ? -1 : 1;
+  }
+
+  return a.domain < b.domain ? -1 : 1;
 }

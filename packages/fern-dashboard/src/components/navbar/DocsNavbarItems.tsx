@@ -9,8 +9,8 @@ import { ICON_SIZE, NavbarItem } from "./NavbarItem";
 
 export function DocsNavbarItems() {
   const docsSites = useMyDocsSites();
-  const firstDocsDomain =
-    docsSites.type === "loaded" ? docsSites.value[0]?.titleDomain : undefined;
+  const firstDocsUrl =
+    docsSites.type === "loaded" ? docsSites.value[0]?.mainUrl : undefined;
 
   return (
     <>
@@ -19,7 +19,7 @@ export function DocsNavbarItems() {
         icon={<BookOpenIcon className={ICON_SIZE} />}
         href="/docs"
         hrefForActualLinking={
-          firstDocsDomain != null ? `/docs/${firstDocsDomain}` : undefined
+          firstDocsUrl != null ? `/docs/${firstDocsUrl}` : undefined
         }
       />
       <DocsNavbarSubItems />

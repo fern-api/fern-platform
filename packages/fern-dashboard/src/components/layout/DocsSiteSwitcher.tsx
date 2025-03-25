@@ -1,22 +1,28 @@
 "use client";
 
+import { useParams } from "next/navigation";
+
+import { parseDocsUrlParam } from "@/lib/parseDocsUrlParam";
 import { useMyDocsSites } from "@/lib/useMyDocsSites";
 
 import { DocsSiteSelect } from "./DocsSiteSelect";
 
-export declare namespace DocsSiteSwitcher {
-  export interface Props {
-    currentDomain: string;
-  }
-}
-
-export function DocsSiteSwitcher({ currentDomain }: DocsSiteSwitcher.Props) {
+export function DocsSiteSwitcher() {
   const docsSites = useMyDocsSites();
+
+  const params = useParams<{ docsUrl?: string }>();
+  if (params.docsUrl == null) {
+    return null;
+  }
 
   return (
     <DocsSiteSelect
       docsSites={docsSites.type === "loaded" ? docsSites.value : []}
-      currentDomain={currentDomain}
+      currentDocsUrl={
+        params.docsUrl != null
+          ? parseDocsUrlParam({ docsUrl: params.docsUrl })
+          : undefined
+      }
     />
   );
 }

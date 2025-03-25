@@ -1,5 +1,6 @@
 "use client";
 
+import { DocsUrl } from "@/lib/types";
 import { useDocsSite } from "@/lib/useMyDocsSites";
 
 import { Page404 } from "../Page404";
@@ -7,7 +8,7 @@ import { DocsSiteNavBar } from "./DocsSiteNavBar";
 
 export declare namespace DocsSiteLayout {
   export interface Props {
-    docsUrl: string;
+    docsUrl: DocsUrl;
     children: React.JSX.Element;
   }
 }

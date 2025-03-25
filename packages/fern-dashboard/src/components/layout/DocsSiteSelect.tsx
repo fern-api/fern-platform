@@ -11,36 +11,38 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { constructDocsUrlParam } from "@/lib/constructDocsUrlParam";
 import { getDocsSiteUrl } from "@/lib/getDocsSiteUrl";
+import { DocsUrl } from "@/lib/types";
 
 export declare namespace DocsSiteSelect {
   export interface Props {
-    currentDomain: string;
+    currentDocsUrl: string | undefined;
     docsSites: DocsSite[];
   }
 }
 
 export const DocsSiteSelect = ({
-  currentDomain,
+  currentDocsUrl,
   docsSites,
 }: DocsSiteSelect.Props) => {
-  const [localValue, setLocalValue] = useState(currentDomain);
+  const [localValue, setLocalValue] = useState(currentDocsUrl);
   useEffect(() => {
-    setLocalValue(currentDomain);
-  }, [currentDomain]);
+    setLocalValue(currentDocsUrl);
+  }, [currentDocsUrl]);
 
-  const onClickDomain = async (newDomain: string) => {
-    if (newDomain === currentDomain) {
+  const onClickUrl = async (newUrl: DocsUrl) => {
+    if (newUrl === currentDocsUrl) {
       return;
     }
-    setLocalValue(currentDomain);
-    window.location.href = `/docs/${encodeURIComponent(newDomain)}`;
+    setLocalValue(newUrl);
+    window.location.href = `/docs/${constructDocsUrlParam(newUrl)}`;
   };
 
   return (
     <Select
       value={localValue}
-      onValueChange={onClickDomain}
+      onValueChange={onClickUrl}
       disabled={docsSites.length === 0}
     >
       <SelectTrigger className="min-w-[180px]">

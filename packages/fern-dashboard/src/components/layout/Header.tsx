@@ -1,5 +1,4 @@
 import Image from "next/image";
-import { Suspense } from "react";
 
 import { SessionData } from "@auth0/nextjs-auth0/types";
 import { UserIcon } from "@heroicons/react/24/outline";
@@ -15,17 +14,15 @@ import { LogoutButton } from "../auth/LogoutButton";
 import { OrgSwitcher } from "../auth/OrgSwitcher";
 import { ThemedFernLogo } from "../theme/ThemedFernLogo";
 import { Button } from "../ui/button";
-import { DocsSiteSelect } from "./DocsSiteSelect";
 import { DocsSiteSwitcher } from "./DocsSiteSwitcher";
 
 export declare namespace Header {
   export interface Props {
     session: SessionData;
-    currentDocsDomain: string | undefined;
   }
 }
 
-export async function Header({ session, currentDocsDomain }: Header.Props) {
+export async function Header({ session }: Header.Props) {
   const name = session.user.name;
   const email = session.user.email;
   const picture = session.user.picture;
@@ -36,21 +33,9 @@ export async function Header({ session, currentDocsDomain }: Header.Props) {
       <div className="flex items-center gap-4">
         <ThemedFernLogo className="w-16" />
         <OrgSwitcher currentOrgId={orgId} />
-        <input className="w-40" />
-        {currentDocsDomain != null && (
-          <div className="flex md:hidden">
-            <Suspense
-              fallback={
-                <DocsSiteSelect
-                  currentDomain={currentDocsDomain}
-                  docsSites={[]}
-                />
-              }
-            >
-              <DocsSiteSwitcher currentDomain={currentDocsDomain} />
-            </Suspense>
-          </div>
-        )}
+        <div className="flex md:hidden">
+          <DocsSiteSwitcher />
+        </div>
       </div>
       <div className="flex gap-4">
         <div className="hidden items-center gap-2 md:flex">

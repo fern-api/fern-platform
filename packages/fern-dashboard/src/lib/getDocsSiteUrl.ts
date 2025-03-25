@@ -1,8 +1,10 @@
 import { DocsSite } from "@fern-platform/fdr";
 
-export function getDocsSiteUrl({ titleDomain }: DocsSite) {
-  if (titleDomain.path == null) {
-    return titleDomain.domain;
+import { DocsUrl } from "./types";
+
+export function getDocsSiteUrl({ mainUrl }: DocsSite): DocsUrl {
+  if (mainUrl.path == null) {
+    return mainUrl.domain as DocsUrl;
   }
-  return `${titleDomain.domain}${titleDomain.path}`;
+  return `${mainUrl.domain}${mainUrl.path}` as DocsUrl;
 }

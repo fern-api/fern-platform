@@ -3,6 +3,8 @@ import { redirect } from "next/navigation";
 import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
 import { DocsZeroState } from "@/components/docs-page/DocsZeroState";
 import { AppLayout } from "@/components/layout/AppLayout";
+import { constructDocsUrlParam } from "@/lib/constructDocsUrlParam";
+import { getDocsSiteUrl } from "@/lib/getDocsSiteUrl";
 
 import { getMyDocsSites } from "../actions/getMyDocsSites";
 
@@ -13,7 +15,7 @@ export default async function Page() {
 
   const firstDocsSite = docsSites[0];
   if (firstDocsSite != null) {
-    redirect(`/docs/${firstDocsSite.titleDomain}`);
+    redirect(`/docs/${constructDocsUrlParam(getDocsSiteUrl(firstDocsSite))}`);
   }
 
   return (

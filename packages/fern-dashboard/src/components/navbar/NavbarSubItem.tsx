@@ -18,19 +18,16 @@ export const NavbarSubItem = ({ title, icon, href }: NavbarSubItem.Props) => {
   const pathname = usePathname();
   const isSelected = pathname.startsWith(href);
 
-  const Component = isSelected ? "div" : Link;
+  const className = cn(
+    "hidden md:flex",
+    "flex-1 flex-row gap-2 text-sm transition",
+    isSelected
+      ? "text-green-1100"
+      : "hover:text-gray-1100 text-gray-900 dark:hover:text-gray-700"
+  );
 
-  return (
-    <Component
-      className={cn(
-        "hidden md:flex",
-        "flex-1 flex-row gap-2 text-sm transition",
-        isSelected
-          ? "text-green-1100"
-          : "hover:text-gray-1100 text-gray-900 dark:hover:text-gray-700"
-      )}
-      href={href}
-    >
+  const children = (
+    <>
       <div className="flex w-5 shrink-0 justify-center">
         <div
           className={cn("w-px", isSelected ? "bg-green-1100" : "bg-gray-700")}
@@ -42,6 +39,16 @@ export const NavbarSubItem = ({ title, icon, href }: NavbarSubItem.Props) => {
           {title}
         </div>
       </div>
-    </Component>
+    </>
   );
+
+  if (isSelected) {
+    return <div className={className}>{children}</div>;
+  } else {
+    return (
+      <Link href={href} className={className}>
+        {children}
+      </Link>
+    );
+  }
 };
