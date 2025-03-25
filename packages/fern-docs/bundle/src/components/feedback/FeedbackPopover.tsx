@@ -188,7 +188,7 @@ const FeedbackPopover = forwardRef<
             transition={{ type: "spring", duration: 0.4, bounce: 0 }}
             sideOffset={8}
             className={cn(
-              "border-border-default dark:bg-background/50 rounded-2 z-50 border bg-white/50 p-1 shadow-xl backdrop-blur-xl",
+              "border-border-default bg-card-solid rounded-2 z-50 border p-1 shadow-xl backdrop-blur-xl",
               {
                 "min-w-80 space-y-2 p-2": isHelpful !== undefined,
               }
