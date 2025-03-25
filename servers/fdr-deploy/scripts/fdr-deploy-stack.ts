@@ -466,6 +466,25 @@ export class FdrDeployStack extends Stack {
       evaluationPeriods: 5,
     });
     lb500CountAlarm.addAlarmAction(new actions.SnsAction(snsTopic));
+
+    const docsHomepageImagesBucket = new Bucket(this, "docs-homepage-images", {
+      bucketName: `${environmentType.toLowerCase()}-docs-homepage-images`,
+      cors: [
+        {
+          allowedMethods: [HttpMethods.GET, HttpMethods.POST, HttpMethods.PUT],
+          allowedOrigins: ["*"],
+          allowedHeaders: ["*"],
+        },
+      ],
+      blockPublicAccess: BlockPublicAccess.BLOCK_ALL,
+      versioned: true,
+    });
+
+    const vercelUser = new ArnPrincipal(
+      "arn:aws:iam::985111089818:user/vercel"
+    );
+
+    docsHomepageImagesBucket.grantReadWrite(vercelUser);
   }
 
   private constructElastiCacheInstance(
