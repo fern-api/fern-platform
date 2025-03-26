@@ -219,6 +219,7 @@ const api1: Latest.ApiDefinition = {
       availability: undefined,
     },
   ],
+  snippetsConfiguration: undefined,
 };
 
 const api2: Latest.ApiDefinition = {
@@ -251,6 +252,7 @@ const api2: Latest.ApiDefinition = {
       availability: undefined,
     },
   ],
+  snippetsConfiguration: undefined,
 };
 
 const api3: Latest.ApiDefinition = {
@@ -281,6 +283,7 @@ const api3: Latest.ApiDefinition = {
       availability: undefined,
     },
   ],
+  snippetsConfiguration: undefined,
 };
 
 describe("join", () => {

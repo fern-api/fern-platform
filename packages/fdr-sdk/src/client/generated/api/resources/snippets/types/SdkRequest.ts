@@ -9,7 +9,8 @@ export type SdkRequest =
     | FernRegistry.SdkRequest.Python
     | FernRegistry.SdkRequest.Go
     | FernRegistry.SdkRequest.Ruby
-    | FernRegistry.SdkRequest.Java;
+    | FernRegistry.SdkRequest.Java
+    | FernRegistry.SdkRequest.Csharp;
 
 export declare namespace SdkRequest {
     interface Typescript extends FernRegistry.TypeScriptSdkRequest {
@@ -30,5 +31,9 @@ export declare namespace SdkRequest {
 
     interface Java extends FernRegistry.JavaSdkRequest {
         type: "java";
+    }
+
+    interface Csharp extends FernRegistry.CsharpSdkRequest {
+        type: "csharp";
     }
 }

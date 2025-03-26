@@ -13,4 +13,5 @@ export interface ApiDefinition {
     subpackages: Record<FernRegistry.api.latest.SubpackageId, FernRegistry.api.latest.SubpackageMetadata>;
     auths: Record<FernRegistry.api.latest.AuthSchemeId, FernRegistry.api.latest.AuthScheme>;
     globalHeaders: FernRegistry.api.latest.ObjectProperty[] | undefined;
+    snippetsConfiguration: FernRegistry.api.v1.register.SnippetsConfig | undefined;
 }

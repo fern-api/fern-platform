@@ -144,6 +144,7 @@ export class ApiDefinitionV1ToLatest {
       subpackages: this.subpackages,
       auths: this.v1.auth ? { [AUTH_SCHEME_ID]: this.v1.auth } : {},
       globalHeaders: this.migrateParameters(this.v1.globalHeaders),
+      snippetsConfiguration: undefined,
     };
   };
 
@@ -802,6 +803,20 @@ export class ApiDefinitionV1ToLatest {
         language: SupportedLanguage.Ruby,
         install: codeExamples.rubySdk.install,
         code: codeExamples.rubySdk.client,
+        generated: true,
+        description: undefined,
+      });
+    }
+
+    if (
+      !userProvidedLanguages.has(SupportedLanguage.Csharp) &&
+      codeExamples.csharpSdk != null
+    ) {
+      push(SupportedLanguage.Csharp, {
+        name: undefined,
+        language: SupportedLanguage.Csharp,
+        install: codeExamples.csharpSdk.install,
+        code: codeExamples.csharpSdk.client,
         generated: true,
         description: undefined,
       });
