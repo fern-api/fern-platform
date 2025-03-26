@@ -10,6 +10,8 @@ import { getS3Client } from "./s3";
 
 export const maxDuration = 60;
 
+const IMAGE_FILETYPE = "avif";
+
 export async function POST(req: NextRequest) {
   const { domain, path } = await req.json();
 
@@ -88,18 +90,19 @@ async function takeScreenshotAndWriteToAws({
   // wait for icons and images to load
   await setTimeout(3_000);
 
-  const screenshotPngBuffer = await page.screenshot();
+  const screenshotBuffer = await page.screenshot();
 
-  const screenshotAvifBuffer = await sharp(screenshotPngBuffer)
-    .avif({ quality: 50 })
+  // this must stay in sync with the IMAGE_FILETYPE constant
+  const compressedScreenshotBuffer = await sharp(screenshotBuffer)
+    [IMAGE_FILETYPE]({ quality: 50 })
     .toBuffer();
 
   await getS3Client().send(
     new PutObjectCommand({
       Bucket: "dev2-docs-homepage-images",
       Key: getS3KeyForHomepageScreenshot({ url, theme }),
-      Body: screenshotAvifBuffer,
-      ContentType: "image/avif",
+      Body: compressedScreenshotBuffer,
+      ContentType: `image/${IMAGE_FILETYPE}`,
       ACL: "private",
     })
   );
@@ -114,5 +117,5 @@ function getS3KeyForHomepageScreenshot({
   url: string;
   theme: Theme;
 }) {
-  return `${encodeURIComponent(url)}-${theme}.avif`;
+  return `${encodeURIComponent(url)}-${theme}.${IMAGE_FILETYPE}`;
 }
