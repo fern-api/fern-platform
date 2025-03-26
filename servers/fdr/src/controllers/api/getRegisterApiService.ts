@@ -18,6 +18,7 @@ import {
   SnippetTemplatesByEndpointIdentifier,
 } from "../../db/snippets/SnippetTemplate";
 import { writeBuffer } from "../../util";
+import urlJoin from "url-join";
 
 const REGISTER_API_DEFINITION_META = {
   service: "APIV1WriteService",
@@ -56,7 +57,6 @@ export function getRegisterApiService(app: FdrApplication): APIV1WriteService {
           csharpSdk: undefined,
         };
 
-<<<<<<< HEAD
         const snippetsConfigurationWithSdkIds = await app.dao
           .sdks()
           .getSdkIdsForPackages(snippetsConfiguration);
@@ -76,30 +76,9 @@ export function getRegisterApiService(app: FdrApplication): APIV1WriteService {
         if (snippetsConfigurationWithSdkIds.rubySdk != null) {
           sdkIds.push(snippetsConfigurationWithSdkIds.rubySdk.sdkId);
         }
-=======
-      const snippetsConfigurationWithSdkIds = await app.dao
-        .sdks()
-        .getSdkIdsForPackages(snippetsConfiguration);
-      const sdkIds: string[] = [];
-      if (snippetsConfigurationWithSdkIds.typescriptSdk != null) {
-        sdkIds.push(snippetsConfigurationWithSdkIds.typescriptSdk.sdkId);
-      }
-      if (snippetsConfigurationWithSdkIds.pythonSdk != null) {
-        sdkIds.push(snippetsConfigurationWithSdkIds.pythonSdk.sdkId);
-      }
-      if (snippetsConfigurationWithSdkIds.javaSdk != null) {
-        sdkIds.push(snippetsConfigurationWithSdkIds.javaSdk.sdkId);
-      }
-      if (snippetsConfigurationWithSdkIds.goSdk != null) {
-        sdkIds.push(snippetsConfigurationWithSdkIds.goSdk.sdkId);
-      }
-      if (snippetsConfigurationWithSdkIds.rubySdk != null) {
-        sdkIds.push(snippetsConfigurationWithSdkIds.rubySdk.sdkId);
-      }
-      if (snippetsConfigurationWithSdkIds.csharpSdk != null) {
-        sdkIds.push(snippetsConfigurationWithSdkIds.csharpSdk.sdkId);
-      }
->>>>>>> 26ae3d805 (feat(api): Add C# to SnippetsConfig (#2212))
+        if (snippetsConfigurationWithSdkIds.csharpSdk != null) {
+          sdkIds.push(snippetsConfigurationWithSdkIds.csharpSdk.sdkId);
+        }
 
         const snippetsBySdkId = await app.dao
           .snippets()
@@ -198,8 +177,6 @@ export function getRegisterApiService(app: FdrApplication): APIV1WriteService {
   });
 }
 
-<<<<<<< HEAD
-=======
 function stringifyEndpointPathParts(
   path: FdrAPI.api.latest.PathPart[]
 ): string {
@@ -350,7 +327,6 @@ function enrichApiLatestDefinitionWithSnippets(
   return definition;
 }
 
->>>>>>> 26ae3d805 (feat(api): Add C# to SnippetsConfig (#2212))
 function getSnippetSdkRequests({
   snippetsConfigurationWithSdkIds,
 }: {

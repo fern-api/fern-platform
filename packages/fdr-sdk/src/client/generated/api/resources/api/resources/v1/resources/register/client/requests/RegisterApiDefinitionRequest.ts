@@ -685,49 +685,7 @@ import * as FernRegistry from "../../../../../../../../index";
  *                     },
  *                     description: "string",
  *                     availability: "Stable"
-<<<<<<< HEAD
  *                 }]
-=======
- *                 }],
- *             snippetsConfiguration: {
- *                 typescriptSdk: {
- *                     package: "string",
- *                     version: {
- *                         "key": "value"
- *                     }
- *                 },
- *                 pythonSdk: {
- *                     package: "string",
- *                     version: {
- *                         "key": "value"
- *                     }
- *                 },
- *                 goSdk: {
- *                     githubRepo: "string",
- *                     version: {
- *                         "key": "value"
- *                     }
- *                 },
- *                 javaSdk: {
- *                     coordinate: "string",
- *                     version: {
- *                         "key": "value"
- *                     }
- *                 },
- *                 rubySdk: {
- *                     gem: "string",
- *                     version: {
- *                         "key": "value"
- *                     }
- *                 },
- *                 csharpSdk: {
- *                     package: "string",
- *                     version: {
- *                         "key": "value"
- *                     }
- *                 }
- *             }
->>>>>>> 26ae3d805 (feat(api): Add C# to SnippetsConfig (#2212))
  *         },
  *         sources: {
  *             "string": {
