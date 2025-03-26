@@ -83,4 +83,8 @@ describe("migrateMeta", () => {
       `"wordWrap title="myFile.txt" "`
     );
   });
+
+  it("should respect the for meta", () => {
+    expect(migrateMeta(`for="npm"`)).toMatchInlineSnapshot(`"for="npm""`);
+  });
 });
