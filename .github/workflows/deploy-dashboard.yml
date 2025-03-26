@@ -1,0 +1,25 @@
+name: Deploy Dashboard
+env:
+  VERCEL_ORG_ID: team_6FKOM5nw037hv8g2mTk3gaH7
+  VERCEL_PROJECT_ID: prj_ka9122njnAZrpIWEzatPYzEFL4Ni
+on:
+  push:
+    tags:
+      - "dashboard@*" 
+jobs:
+  Deploy-Production:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2 # This helps turbo resolve changes faster
+      - name: Install
+        uses: ./.github/actions/install
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
+      - name: Pull Vercel Environment Information
+        run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+      - name: Build Project Artifacts
+        run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
+      - name: Deploy Project Artifacts to Vercel
+        run: vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}
