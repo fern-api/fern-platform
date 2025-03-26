@@ -292,19 +292,6 @@ html.dark .shiki span {
   color: var(--twoslash-tag-annotate-color);
 }
 
-/*  Start of Shiki Twoslash CSS:
-
-Code blocks structurally look like: 
-
-<pre class='shiki lsp twoslash [theme-name]'>
-  <div class='language-id'>[lang-id]</div>
-    <div class='code-container'>
-      <code>[the code as a series of spans]</code>
-      <a href='playground...'>Try</a> (optional)
-    </div>
-  </pre> 
-*/
-
 pre.twoslash {
   overflow: visible;
   display: flex;
@@ -371,13 +358,7 @@ pre.twoslash data-lsp:hover::before {
   text-align: left;
   padding: 5px 8px;
   border-radius: 2px;
-  font-family:
-    "JetBrains Mono",
-    Menlo,
-    Monaco,
-    Consolas,
-    Courier New,
-    monospace;
+  font-family: var(--twoslash-code-font);
   font-size: 14px;
   white-space: pre-wrap;
   z-index: 100;
@@ -416,13 +397,7 @@ pre .code-container:hover a {
 
 pre code {
   font-size: 15px;
-  font-family:
-    "JetBrains Mono",
-    Menlo,
-    Monaco,
-    Consolas,
-    Courier New,
-    monospace;
+  font-family: var(--twoslash-code-font);
   white-space: pre;
   -webkit-overflow-scrolling: touch;
 }
@@ -506,7 +481,7 @@ pre .inline-completions ul.dropdown {
   background-color: gainsboro;
   color: grey;
   padding-top: 4px;
-  font-family: var(--code-font);
+  font-family: var(--twoslash-code-font);
   font-size: 0.8rem;
   margin: 0;
   padding: 0;
@@ -561,13 +536,7 @@ data-lsp {
 }
 .tag-container .twoslash-annotation {
   position: absolute;
-  font-family:
-    "JetBrains Mono",
-    Menlo,
-    Monaco,
-    Consolas,
-    Courier New,
-    monospace;
+  font-family: var(--twoslash-code-font);
   right: -10px;
   /** Default annotation text to 200px */
   width: 200px;
