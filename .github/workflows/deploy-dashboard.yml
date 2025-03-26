@@ -6,9 +6,6 @@ on:
   push:
     tags:
       - "dashboard@*" 
-    # TODO remove
-    branches:
-      - "**"
 jobs:
   Deploy-Production:
     runs-on: ubuntu-latest
