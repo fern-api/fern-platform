@@ -2,84 +2,60 @@ import { inject } from "vitest";
 
 import { FdrAPI } from "@fern-api/fdr-sdk";
 
-import { FernRegistry } from "../../../api/generated";
 import { getAPIResponse, getClient } from "../util";
-
-const EMPTY_DOCS_DEFINITION: FernRegistry.docs.v1.write.DocsDefinition = {
-  pages: {},
-  config: {
-    title: undefined,
-    defaultLanguage: undefined,
-    announcement: undefined,
-    navigation: undefined,
-    root: undefined,
-    navbarLinks: undefined,
-    footerLinks: undefined,
-    hideNavLinks: undefined,
-    logoHeight: undefined,
-    logoHref: undefined,
-    favicon: undefined,
-    metadata: undefined,
-    redirects: undefined,
-    colorsV3: undefined,
-    layout: undefined,
-    typographyV2: undefined,
-    analyticsConfig: undefined,
-    integrations: undefined,
-    css: undefined,
-    js: undefined,
-    aiChatConfig: undefined,
-    backgroundImage: undefined,
-    logoV2: undefined,
-    logo: undefined,
-    colors: undefined,
-    colorsV2: undefined,
-    typography: undefined,
-  },
-  jsFiles: undefined,
-};
+import { WRITE_DOCS_REGISTER_DEFINITION } from "./docs.test";
 
 it("get my docs sties", async () => {
   const fdr = getClient({ authed: true, url: inject("url") });
 
   const startDocsRegisterResponse = getAPIResponse(
     await fdr.docs.v2.write.startDocsRegister({
-      orgId: FdrAPI.OrgId("fern"),
-      domain: "www.domain.com",
-      customDomains: ["www.custom-domain.com"],
-      apiId: FdrAPI.ApiId("my-api"),
+      orgId: FdrAPI.OrgId("acme"),
+      apiId: FdrAPI.ApiId("api"),
+      domain: "https://acme1.docs.buildwithfern.com",
+      customDomains: ["https://docs.useacme1.com/docs"],
       filepaths: [],
     })
   );
   await fdr.docs.v1.write.finishDocsRegister(
     startDocsRegisterResponse.docsRegistrationId,
-    { docsDefinition: EMPTY_DOCS_DEFINITION }
+    { docsDefinition: WRITE_DOCS_REGISTER_DEFINITION }
   );
 
   const startDocsRegisterResponse2 = getAPIResponse(
     await fdr.docs.v2.write.startDocsRegister({
-      orgId: FdrAPI.OrgId("fern"),
-      domain: "www.other-domain.com",
-      customDomains: [
-        "www.other-custom-domain-1.com",
-        "www.other-custom-domain-2.com",
-      ],
-      apiId: FdrAPI.ApiId("my-api"),
+      orgId: FdrAPI.OrgId("acme"),
+      apiId: FdrAPI.ApiId("api2"),
+      domain: "https://acme2.docs.buildwithfern.com",
+      customDomains: [],
       filepaths: [],
     })
   );
-  await fdr.docs.v2.write.finishDocsRegister(
+  await fdr.docs.v1.write.finishDocsRegister(
     startDocsRegisterResponse2.docsRegistrationId,
-    { docsDefinition: EMPTY_DOCS_DEFINITION }
+    { docsDefinition: WRITE_DOCS_REGISTER_DEFINITION }
   );
 
   const docsSites = getAPIResponse(
     await fdr.dashboard.getDocsSitesForOrg({
-      orgId: FdrAPI.OrgId("fern"),
+      orgId: FdrAPI.OrgId("acme"),
     })
   );
 
   expect(docsSites).toEqual({
-    docsSites: [],
+    docsSites: [
+      {
+        mainUrl: {
+          domain: "acme2.docs.buildwithfern.com",
+          path: "",
+        },
+        urls: [
+          {
+            domain: "acme2.docs.buildwithfern.com",
+            path: "",
+          },
+        ],
+      },
+    ],
   });
 });
