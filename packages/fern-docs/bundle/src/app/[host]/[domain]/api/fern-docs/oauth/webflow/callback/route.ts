@@ -5,6 +5,7 @@ import { WebflowClient } from "webflow-api";
 
 import { withDefaultProtocol } from "@fern-api/ui-core-utils";
 import { getAuthEdgeConfig } from "@fern-docs/edge-config";
+import { withoutStaging } from "@fern-docs/utils";
 
 import { FernNextResponse } from "@/server/FernNextResponse";
 import { getAllowedRedirectUrls } from "@/server/auth/allowed-redirects";
@@ -15,12 +16,11 @@ import { redirectWithLoginError } from "@/server/redirectWithLoginError";
 import { safeUrl } from "@/server/safeUrl";
 import { getDocsDomainEdge } from "@/server/xfernhost/edge";
 
-export const runtime = "edge";
-
 export async function GET(req: NextRequest): Promise<NextResponse> {
   const domain = getDocsDomainEdge(req);
+  const domainWithoutStaging = withoutStaging(domain);
   const host = req.nextUrl.host;
-  const config = await getAuthEdgeConfig(domain);
+  const config = await getAuthEdgeConfig(domainWithoutStaging);
 
   const code = req.nextUrl.searchParams.get("code");
   const return_to = req.nextUrl.searchParams.get(getReturnToQueryParam(config));
@@ -28,7 +28,7 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
   const error_description = req.nextUrl.searchParams.get("error_description");
   const redirectLocation =
     safeUrl(return_to) ??
-    safeUrl(withDefaultProtocol(preferPreview(host, domain)));
+    safeUrl(withDefaultProtocol(preferPreview(host, domainWithoutStaging)));
 
   if (error != null) {
     console.error(`OAuth2 error: ${error} - ${error_description}`);
@@ -55,11 +55,11 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
     config.type !== "oauth2" ||
     config.partner !== "webflow"
   ) {
-    console.log(`Invalid config for domain ${domain}`);
+    console.log(`Invalid config for domain ${domainWithoutStaging}`);
     return redirectWithLoginError(
       req,
       redirectLocation,
-      "unknown_error",
+      "config_error",
       "Couldn't login, please try again"
     );
   }
@@ -81,7 +81,9 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
     (await cookies()).set(
       "access_token",
       accessToken,
-      withSecureCookie(withDefaultProtocol(preferPreview(host, domain)))
+      withSecureCookie(
+        withDefaultProtocol(preferPreview(host, domainWithoutStaging))
+      )
     );
     return res;
   } catch (error) {

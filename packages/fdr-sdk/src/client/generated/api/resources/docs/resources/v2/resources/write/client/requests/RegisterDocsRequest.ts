@@ -300,6 +300,10 @@ import * as FernRegistry from "../../../../../../../../index";
  *                             "key": "value"
  *                         }]
  *                 },
+ *                 aiChatConfig: {
+ *                     model: "claude-3.5",
+ *                     systemPrompt: "string"
+ *                 },
  *                 backgroundImage: FernRegistry.FileId("string"),
  *                 logoV2: {
  *                     dark: FernRegistry.FileId("string"),

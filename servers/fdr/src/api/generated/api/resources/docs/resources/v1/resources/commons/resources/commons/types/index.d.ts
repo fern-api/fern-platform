@@ -1,3 +1,5 @@
+export * from "./AiChatConfig";
+export * from "./AiModel";
 export * from "./FileIdOrUrl";
 export * from "./RgbaColor";
 export * from "./ProgrammingLanguage";

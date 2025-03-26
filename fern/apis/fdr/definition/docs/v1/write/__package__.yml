@@ -118,6 +118,9 @@ types:
       css: optional<commons.CssConfig>
       js: optional<commons.JsConfig>
 
+      # ai chat
+      aiChatConfig: optional<commons.AIChatConfig>
+
       # deprecated
       backgroundImage: optional<rootCommons.FileId>
       logoV2: optional<commons.ThemedFileId>

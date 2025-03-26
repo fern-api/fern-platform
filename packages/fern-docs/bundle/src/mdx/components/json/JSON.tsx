@@ -22,7 +22,7 @@ export interface JSONProps {
 export const Json: React.FC<JSONProps> = ({
   json,
   enableFernClipboard = true,
-  showStringsOnOneLine = true,
+  showStringsOnOneLine = false,
   jsonViewProps,
 }) => {
   const theme = useResolvedTheme();
@@ -31,7 +31,7 @@ export const Json: React.FC<JSONProps> = ({
   return (
     <div
       className={cn(
-        "not-prose bg-card-background rounded-3 border-card-border shadow-card-grayscale relative mb-6 mt-4 flex w-full border p-3",
+        "not-prose bg-card-background rounded-3 border-card-border shadow-card-grayscale relative mb-6 mt-4 flex w-full overflow-hidden border p-3",
         showStringsOnOneLine && !isMobile && "show-strings-on-one-line"
       )}
     >
