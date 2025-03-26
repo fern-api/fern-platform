@@ -10,6 +10,7 @@ import { FdrApplication, FdrConfig } from "../../app";
 import { getApiLatestService } from "../../controllers/api/getApiLatestService";
 import { getReadApiService } from "../../controllers/api/getApiReadService";
 import { getRegisterApiService } from "../../controllers/api/getRegisterApiService";
+import { getDashboardController } from "../../controllers/dashboard/getDashboardController";
 import { getApiDiffService } from "../../controllers/diff/getApiDiffService";
 import { getDocsCacheService } from "../../controllers/docs-cache/getDocsCacheService";
 import { getDocsReadService } from "../../controllers/docs/v1/getDocsReadService";
@@ -96,7 +97,7 @@ async function runMockFdr(port: number): Promise<MockFdr.Instance> {
   });
   const overrides: Partial<FdrConfig> = { redisEnabled: true };
   const fdrApplication = createMockFdrApplication({
-    orgIds: ["acme", "octoai"],
+    orgIds: ["acme", "octoai", "dashboard-org"],
     configOverrides: overrides,
   });
   const app = express();
@@ -134,6 +135,9 @@ async function runMockFdr(port: number): Promise<MockFdr.Instance> {
     },
     tokens: getTokensService(fdrApplication),
     git: getGitController(fdrApplication),
+    dashboard: {
+      _root: getDashboardController(fdrApplication),
+    },
   });
   const server = app.listen(port);
   console.log(`Mock FDR server running on http://localhost:${port}/`);

@@ -1,6 +1,7 @@
 import winston from "winston";
 
 import { FernVenusApi, FernVenusApiClient } from "@fern-api/venus-api-sdk";
+import { OrganizationId } from "@fern-api/venus-api-sdk/api";
 
 import { FernRegistryError } from "../../api/generated";
 import {
@@ -54,6 +55,20 @@ export interface AuthService {
     orgId: string;
     failHard?: boolean;
   }): Promise<boolean>;
+  getOrganization({
+    authHeader,
+    orgId,
+    shouldIncludeFernUsers,
+  }: {
+    authHeader: string | undefined;
+    orgId: string;
+    shouldIncludeFernUsers: boolean;
+  }): Promise<FernVenusApi.Organization>;
+  getMyself({
+    authHeader,
+  }: {
+    authHeader: string | undefined;
+  }): Promise<FernVenusApi.User>;
 }
 
 export class AuthServiceImpl implements AuthService {
@@ -192,6 +207,76 @@ export class AuthServiceImpl implements AuthService {
     }
     return org.snippetTemplatesAccessEnabled;
   }
+
+  async getUserOrganizations({
+    authHeader,
+  }: {
+    authHeader: string | undefined;
+  }) {
+    if (authHeader == null) {
+      throw new UnauthorizedError("Authorization header was not specified");
+    }
+    const token = getTokenFromAuthHeader(authHeader);
+    const venus = getVenusClient({
+      config: this.app.config,
+      token,
+    });
+
+    return {
+      orgIds: await getAllUserOrganizations(venus),
+    };
+  }
+
+  async getOrganization({
+    authHeader,
+    orgId,
+    shouldIncludeFernUsers,
+  }: {
+    authHeader: string | undefined;
+    orgId: string;
+    shouldIncludeFernUsers: boolean;
+  }) {
+    if (authHeader == null) {
+      throw new UnauthorizedError("Authorization header was not specified");
+    }
+    await this.checkUserBelongsToOrg({ authHeader, orgId });
+    const token = getTokenFromAuthHeader(authHeader);
+    const venus = getVenusClient({
+      config: this.app.config,
+      token,
+    });
+
+    const org = await venus.organization.get(OrganizationId(orgId), {
+      shouldIncludeFernUsers,
+    });
+
+    if (!org.ok) {
+      console.error("Failed to load organization", org.error);
+      throw new Error("Failed to load organization");
+    }
+
+    return org.body;
+  }
+
+  async getMyself({ authHeader }: { authHeader: string | undefined }) {
+    if (authHeader == null) {
+      throw new UnauthorizedError("Authorization header was not specified");
+    }
+    const token = getTokenFromAuthHeader(authHeader);
+    const venus = getVenusClient({
+      config: this.app.config,
+      token,
+    });
+
+    const user = await venus.user.getMyself();
+
+    if (!user.ok) {
+      console.error("Failed to load user", user.error);
+      throw new Error("Failed to load user");
+    }
+
+    return user.body;
+  }
 }
 
 function getVenusClient({
@@ -210,4 +295,23 @@ function getVenusClient({
 const BEARER_REGEX = /^bearer\s+/i;
 export function getTokenFromAuthHeader(authHeader: string) {
   return authHeader.replace(BEARER_REGEX, "");
+}
+
+async function getAllUserOrganizations(venus: FernVenusApiClient) {
+  const orgIds: FernVenusApi.OrganizationId[] = [];
+
+  let nextPageId: number | undefined;
+
+  do {
+    const page = await venus.user.getMyOrganizations({ pageId: 0 });
+    if (!page.ok) {
+      console.error("Failed to load user organizations", page.error);
+      throw new Error(page.error.content.reason);
+    }
+    orgIds.push(...page.body.organizations);
+
+    nextPageId = page.body.nextPage;
+  } while (nextPageId != null);
+
+  return orgIds;
 }
