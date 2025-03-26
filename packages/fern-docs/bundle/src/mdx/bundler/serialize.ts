@@ -1,7 +1,7 @@
 import "server-only";
 
 import rehypeShiki, { RehypeShikiOptions } from "@shikijs/rehype";
-import { transformerTwoslash } from "@shikijs/twoslash";
+import { rendererRich, transformerTwoslash } from "@shikijs/twoslash";
 import { mapKeys } from "es-toolkit/object";
 import fs from "fs";
 import { gracefulify } from "graceful-fs";
@@ -52,7 +52,6 @@ import { RehypeLinksOptions, rehypeLinks } from "../plugins/rehype-links";
 import { rehypeMigrateJsx } from "../plugins/rehype-migrate-jsx";
 import { rehypeSteps } from "../plugins/rehype-steps";
 import { rehypeTabs } from "../plugins/rehype-tabs";
-import { rehypeTwoSlash } from "../plugins/rehype-twoslash";
 import { remarkExtractTitle } from "../plugins/remark-extract-title";
 
 // gracefulify fs to avoid EMFILE errors on Vercel
@@ -122,18 +121,6 @@ async function serializeMdxImpl(
     return filename;
   });
 
-  // console.log("I FOUND ONIGURUMA", fs.existsSync(""))
-
-  // setWasm(
-  //   path.join(
-  //     process.cwd(),
-  //     "node_modules",
-  //     "vscode-oniguruma",
-  //     "release",
-  //     "onig.wasm"
-  //   )
-  // );
-
   const bundled = await bundleMDX({
     source: content,
     files,
@@ -164,25 +151,28 @@ async function serializeMdxImpl(
         remarkSmartypants,
         remarkMath,
         remarkGemoji,
-        // [remarkShikiTwoslash, {}],
       ];
 
       const rehypePlugins: PluggableList = [
         rehypeKatex,
         [rehypeFiles, { files: remoteFiles }],
         rehypeMdxClassStyle,
+        rehypeCodeBlock,
         [
           rehypeShiki,
           {
             themes: {
-              light: "vitesse-light",
-              dark: "vitesse-dark",
+              light: "min-light",
+              dark: "material-theme-darker",
             },
-            transformers: [transformerTwoslash({})],
+            transformers: [
+              transformerTwoslash({
+                explicitTrigger: true,
+                renderer: rendererRich(),
+              }),
+            ],
           } satisfies RehypeShikiOptions,
         ],
-        rehypeTwoSlash,
-        rehypeCodeBlock,
         rehypeSteps,
         rehypeAccordions,
         rehypeTabs,
