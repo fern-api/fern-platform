@@ -6,6 +6,7 @@ export function DocsSiteNavBar() {
       <DocsSiteNavBarItem title="Overview" href="/" />
       <DocsSiteNavBarItem title="Analytics" href="/analytics" />
       <DocsSiteNavBarItem title="AI Search" href="/ai-search" />
+      <DocsSiteNavBarItem title="Settings" href="/settings" />
     </div>
   );
 }
