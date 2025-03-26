@@ -182,14 +182,10 @@ export function migrateMeta(metastring: string): string {
   }
 
   function createMetaWithTitleAttribute(text: string): string {
-    console.log("meta: ", text);
     const strippedMeta = text
       .replaceAll(/(wordWrap)/g, "")
       .replaceAll(/(for="(.*?)")/g, "")
       .trim();
-    console.log("stripMeta: ", strippedMeta);
-    console.log(strippedMeta.length);
-    console.log(text.length);
     if (strippedMeta.length === 0) {
       return text;
     }
