@@ -85,8 +85,8 @@ export const SearchV2 = React.memo(function SearchV2({
   // Rerouting to ferndocs.com for production environments to ensure streaming works
   // Also see: next.config.mjs, where we set CORS headers
   if (process.env.NEXT_PUBLIC_VERCEL_ENV === "production") {
-    chatEndpoint = `https://prod.ferndocs.com/api/fern-docs/search/v2/chat`;
-    suggestEndpoint = `https://prod.ferndocs.com/api/fern-docs/search/v2/suggest`;
+    chatEndpoint = `${process.env.NEXT_PUBLIC_CDN_URI}/api/fern-docs/search/v2/chat`;
+    suggestEndpoint = `${process.env.NEXT_PUBLIC_CDN_URI}/api/fern-docs/search/v2/suggest`;
   }
 
   const router = useRouter();
