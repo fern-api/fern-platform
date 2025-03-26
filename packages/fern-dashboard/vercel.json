@@ -5,10 +5,5 @@
   "devCommand": "pnpm turbo dashboard:dev",
   "git": {
     "deploymentEnabled": true
-  },
-  "functions": {
-    "app/api/generate-homepage-image/route.ts": {
-      "maxDuration": 60
-    }
   }
 }

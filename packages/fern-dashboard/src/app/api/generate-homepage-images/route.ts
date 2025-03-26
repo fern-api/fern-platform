@@ -8,6 +8,8 @@ import { setTimeout } from "timers/promises";
 
 import { getS3Client } from "./s3";
 
+export const maxDuration = 60;
+
 export async function POST(req: NextRequest) {
   const { domain, path } = await req.json();
 
