@@ -220,6 +220,7 @@ types:
       filenames: list<string>
       filenameWithData: FilenameWithData
       filenamesWithData: list<FilenameWithData>
+      exploded: list<unknown>
 
   BytesValue:
     union:

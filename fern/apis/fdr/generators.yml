@@ -26,18 +26,6 @@ groups:
           outputSourceFiles: true
           neverThrowErrors: true
           timeoutInSeconds: infinity
-      - name: fernapi/fern-typescript-node-sdk
-        version: 0.42.7
-        output:
-          location: local-file-system
-          path: ../../../packages/parsers/src/client/generated
-        config:
-          noSerdeLayer: true
-          noOptionalProperties: true
-          useBrandedStringAliases: true
-          outputSourceFiles: true
-          neverThrowErrors: true
-          timeoutInSeconds: infinity
 
   postman:
     generators:
