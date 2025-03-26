@@ -29,6 +29,10 @@ const nextConfig: NextConfig = {
         ? `https://${process.env.VERCEL_BRANCH_URL}`
         : process.env.APP_BASE_URL,
   },
+  webpack: (webpackConfig) => {
+    webpackConfig.externals.push("sharp");
+    return webpackConfig;
+  },
 };
 
 export default nextConfig;
