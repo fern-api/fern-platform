@@ -693,9 +693,6 @@ importers:
       '@ai-sdk/amazon-bedrock':
         specifier: ^1.0.6
         version: 1.0.7(zod@3.24.1)
-      '@ai-sdk/anthropic':
-        specifier: ^1.0.5
-        version: 1.0.5(zod@3.24.1)
       '@ai-sdk/openai':
         specifier: ^1.0.8
         version: 1.0.8(zod@3.24.1)
