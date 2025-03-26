@@ -48,6 +48,12 @@ export function convertPlaygroundFormDataEntryValueToResolvedExampleEndpointRequ
         value: value.value,
       };
     }
+    case "exploded": {
+      return {
+        type: "exploded",
+        value: value.value,
+      };
+    }
     default:
       assertNever(value);
   }
