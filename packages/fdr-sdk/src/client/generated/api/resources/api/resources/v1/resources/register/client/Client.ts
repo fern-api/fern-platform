@@ -743,6 +743,12 @@ export class Register {
      *                     version: {
      *                         "key": "value"
      *                     }
+     *                 },
+     *                 csharpSdk: {
+     *                     package: "string",
+     *                     version: {
+     *                         "key": "value"
+     *                     }
      *                 }
      *             }
      *         },

@@ -716,6 +716,12 @@ import * as FernRegistry from "../../../../../../../../index";
  *                     version: {
  *                         "key": "value"
  *                     }
+ *                 },
+ *                 csharpSdk: {
+ *                     package: "string",
+ *                     version: {
+ *                         "key": "value"
+ *                     }
  *                 }
  *             }
  *         },
