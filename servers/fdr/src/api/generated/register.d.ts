@@ -12,6 +12,7 @@ import { TokensService } from "./api/resources/tokens/service/TokensService";
 import { LatestService as api_latest_RootService } from "./api/resources/api/resources/latest/service/LatestService";
 import { ReadService as api_v1_read_RootService } from "./api/resources/api/resources/v1/resources/read/service/ReadService";
 import { RegisterService as api_v1_register_RootService } from "./api/resources/api/resources/v1/resources/register/service/RegisterService";
+import { DashboardService as dashboard_RootService } from "./api/resources/dashboard/service/DashboardService";
 import { ReadService as docs_v1_read_RootService } from "./api/resources/docs/resources/v1/resources/read/service/ReadService";
 import { WriteService as docs_v1_write_RootService } from "./api/resources/docs/resources/v1/resources/write/service/WriteService";
 import { ReadService as docs_v2_read_RootService } from "./api/resources/docs/resources/v2/resources/read/service/ReadService";
@@ -40,6 +41,9 @@ export declare function register(expressApp: express.Express | express.Router, s
                 _root: api_v1_register_RootService;
             };
         };
+    };
+    dashboard: {
+        _root: dashboard_RootService;
     };
     docs: {
         v1: {

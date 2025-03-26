@@ -1,4 +1,5 @@
 export * as api from "./api";
+export * as dashboard from "./dashboard";
 export * as docs from "./docs";
 export * as generators from "./generators";
 export * as navigation from "./navigation";

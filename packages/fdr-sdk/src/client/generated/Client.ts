@@ -5,6 +5,7 @@
 import * as environments from "./environments";
 import * as core from "./core";
 import { Api } from "./api/resources/api/client/Client";
+import { Dashboard } from "./api/resources/dashboard/client/Client";
 import { Docs } from "./api/resources/docs/client/Client";
 import { Generators } from "./api/resources/generators/client/Client";
 import { Diff } from "./api/resources/diff/client/Client";
@@ -41,6 +42,12 @@ export class FernRegistryClient {
 
     public get api(): Api {
         return (this._api ??= new Api(this._options));
+    }
+
+    protected _dashboard: Dashboard | undefined;
+
+    public get dashboard(): Dashboard {
+        return (this._dashboard ??= new Dashboard(this._options));
     }
 
     protected _docs: Docs | undefined;

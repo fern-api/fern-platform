@@ -11,6 +11,7 @@ import { registerBackgroundTasks } from "./background";
 import { getApiLatestService } from "./controllers/api/getApiLatestService";
 import { getReadApiService } from "./controllers/api/getApiReadService";
 import { getRegisterApiService } from "./controllers/api/getRegisterApiService";
+import { getDashboardController } from "./controllers/dashboard/getDashboardController";
 import { getApiDiffService } from "./controllers/diff/getApiDiffService";
 import { getDocsCacheService } from "./controllers/docs-cache/getDocsCacheService";
 import { getDocsReadService } from "./controllers/docs/v1/getDocsReadService";
@@ -143,6 +144,9 @@ async function startServer(): Promise<void> {
       },
       tokens: getTokensService(app),
       git: getGitController(app),
+      dashboard: {
+        _root: getDashboardController(app),
+      },
     });
     registerBackgroundTasks(app);
     app.logger.info(`Listening for requests on port ${PORT}`);

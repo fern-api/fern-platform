@@ -5,6 +5,7 @@ export function register(expressApp, services) {
     expressApp.use("/registry/api/latest", services.api.latest._root.toRouter());
     expressApp.use("/registry/api", services.api.v1.read._root.toRouter());
     expressApp.use("/registry/api", services.api.v1.register._root.toRouter());
+    expressApp.use("/dashboard", services.dashboard._root.toRouter());
     expressApp.use("/registry/docs", services.docs.v1.read._root.toRouter());
     expressApp.use("/registry/docs", services.docs.v1.write._root.toRouter());
     expressApp.use("/v2/registry/docs", services.docs.v2.read._root.toRouter());
