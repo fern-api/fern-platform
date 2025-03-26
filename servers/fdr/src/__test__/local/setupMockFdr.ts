@@ -97,7 +97,7 @@ async function runMockFdr(port: number): Promise<MockFdr.Instance> {
   });
   const overrides: Partial<FdrConfig> = { redisEnabled: true };
   const fdrApplication = createMockFdrApplication({
-    orgIds: ["acme", "octoai"],
+    orgIds: ["acme", "octoai", "dashboard-org"],
     configOverrides: overrides,
   });
   const app = express();
