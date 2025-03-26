@@ -37,9 +37,6 @@ export function EndpointRequestSnippet({
     return null;
   }
 
-  console.log("endpoint example: ", example);
-  console.log("endpoint examples: ", endpointDefinition.examples);
-
   return (
     <EndpointRequestSnippetInternal
       endpoint={endpointDefinition}

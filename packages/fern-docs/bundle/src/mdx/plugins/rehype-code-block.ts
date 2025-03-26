@@ -204,14 +204,12 @@ export function migrateMeta(metastring: string): string {
     !metastring.includes("{...") &&
     !/\{[^}]*[a-zA-Z][^}]*\}/.test(metastring)
   ) {
-    console.log("migrate abc");
     return createMetaWithTitleAttribute(metastring);
   }
 
   metastring = metastring.replaceAll(
     /^([^{]*?)(?=[a-zA-Z]+=)/g,
     (_original, text) => {
-      console.log("migrate =");
       if (text.trim() === "") {
         return "";
       }
