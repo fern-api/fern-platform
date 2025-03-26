@@ -1,4 +1,3 @@
-openapi: ./openapi.json
 default-group: sdk
 groups:
   sdk:
@@ -12,3 +11,6 @@ groups:
         config:
           skipResponseValidation: true
           namespaceExport: Vercel
+api:
+  specs:
+    - openapi: ./openapi.json
