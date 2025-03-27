@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-import { DocsSite } from "@fern-platform/fdr";
+import { FdrAPI } from "@fern-api/fdr-sdk";
 
 import {
   Select,
@@ -18,7 +18,7 @@ import { DocsUrl } from "@/lib/types";
 export declare namespace DocsSiteSelect {
   export interface Props {
     currentDocsUrl: string | undefined;
-    docsSites: DocsSite[];
+    docsSites: FdrAPI.dashboard.DocsSite[];
   }
 }
 
