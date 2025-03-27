@@ -11,7 +11,7 @@ const nextConfig: NextConfig = {
     "@fern-api/fdr-sdk",
   ],
   experimental: {
-    optimizePackageImports: [],
+    optimizePackageImports: ["@fern-api/fdr-sdk"],
   },
   images: {
     remotePatterns: [
