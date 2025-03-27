@@ -35,6 +35,8 @@ const nextConfig: NextConfig = {
 
     // Auth0 expects APP_BASE_URL to exist
     APP_BASE_URL,
+
+    ZACH_TEST_APP_BASE_URL: APP_BASE_URL,
   },
   webpack: (webpackConfig) => {
     webpackConfig.externals.push("sharp");
