@@ -33,7 +33,7 @@ const nextConfig: NextConfig = {
     // need this to be NEXT_PUBLIC_ so it's accessible in auth0.ts
     NEXT_PUBLIC_APP_BASE_URL: APP_BASE_URL,
 
-    // Auth0 expects APP_BASE_URL to exist
+    // Auth0 expects APP_BASE_URL to exist.
     APP_BASE_URL,
   },
   webpack: (webpackConfig) => {
