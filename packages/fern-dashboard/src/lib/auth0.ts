@@ -22,9 +22,9 @@ export const auth0 = new Auth0Client({
     };
   },
   authorizationParameters: {
-    redirect_uri: `${NEXT_PUBLIC_APP_BASE_URL}/auth/callback`,
     audience: NEXT_PUBLIC_VENUS_AUDIENCE,
   },
+  appBaseUrl: NEXT_PUBLIC_APP_BASE_URL,
 });
 
 export async function getSessionOrRedirect() {
