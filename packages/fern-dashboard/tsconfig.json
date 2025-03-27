@@ -11,7 +11,8 @@
     "**/*",
     ".next/types/**/*.ts",
     "next.config.ts",
-    "vitest.config.ts"
+    "vitest.config.ts",
+    "src/components/members/.tsx"
   ],
   "references": [
     {

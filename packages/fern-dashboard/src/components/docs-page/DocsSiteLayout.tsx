@@ -4,6 +4,7 @@ import { DocsUrl } from "@/lib/types";
 import { useDocsSite } from "@/lib/useMyDocsSites";
 
 import { Page404 } from "../Page404";
+import { PageHeader } from "../layout/PageHeader";
 import { DocsSiteNavBar } from "./DocsSiteNavBar";
 
 export declare namespace DocsSiteLayout {
@@ -22,18 +23,18 @@ export function DocsSiteLayout({ docsUrl, children }: DocsSiteLayout.Props) {
 
   return (
     <div className="flex flex-1 flex-col">
-      <div className="flex items-center gap-3">
-        <div className="text-gray-1200 mb-1 text-xl font-bold dark:text-gray-200">
-          {docsUrl}
-        </div>
-        <div className="flex items-center gap-2 rounded-full bg-green-300 px-3 py-2">
-          <div className="bg-green-1100 size-2 rounded-full" />
-          <div className="text-green-1100 mb-0.5 text-sm leading-none">
-            Live
+      <PageHeader
+        title={docsUrl}
+        titleRightContent={
+          <div className="flex items-center gap-2 rounded-full bg-green-300 px-3 py-2">
+            <div className="bg-green-1100 size-2 rounded-full" />
+            <div className="text-green-1100 mb-0.5 text-sm leading-none">
+              Live
+            </div>
           </div>
-        </div>
-      </div>
-      <div className="mt-8 flex flex-col gap-4">
+        }
+      />
+      <div className="flex flex-col gap-4">
         <DocsSiteNavBar />
         <div className="flex">{children}</div>
       </div>

@@ -16,7 +16,9 @@ const MY_DOCS_SITE_CACHE = new AsyncCache<
 
 export async function getMyDocsSites(): Promise<FdrAPI.dashboard.GetDocsSitesForOrgResponse> {
   const currentOrg = await getCurrentOrg();
-  const orgId = currentOrg.name;
+
+  // fdr uses org name (not id) as the org identifier
+  const orgId = currentOrg.name as Auth0OrgName;
 
   return MY_DOCS_SITE_CACHE.get(orgId, async () => {
     const { session } = await getCurrentSession();

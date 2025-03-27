@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken";
 import { auth0 } from "@/lib/auth0";
 
 import { AsyncCache } from "./AsyncCache";
-import { Auth0OrgName } from "./types";
+import { Auth0OrgID, Auth0UserID } from "./types";
 
 let AUTH0_MANAGEMENT_CLIENT: ManagementClient | undefined;
 
@@ -58,7 +58,7 @@ export async function getCurrentSession() {
     throw new Error("JWT payload does not include 'sub'");
   }
 
-  return { session, userId: jwtPayload.sub };
+  return { session, userId: jwtPayload.sub as Auth0UserID };
 }
 
 export async function getCurrentOrgId() {
@@ -68,11 +68,11 @@ export async function getCurrentOrgId() {
     throw new Error("org_id is not defined");
   }
 
-  return session.user.org_id;
+  return session.user.org_id as Auth0OrgID;
 }
 
 const ORGANIZATIONS_CACHE = new AsyncCache<
-  Auth0OrgName,
+  Auth0OrgID,
   GetOrganizations200ResponseOneOfInner
 >({
   ttlInSeconds: 10,
