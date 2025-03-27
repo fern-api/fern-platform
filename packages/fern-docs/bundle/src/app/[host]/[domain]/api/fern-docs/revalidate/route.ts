@@ -271,17 +271,20 @@ export async function GET(
         // update homepage images for dashboard
         const authHeader = req.headers.get("authorization");
         if (authHeader == null) {
-          console.error(
+          console.warn(
             "Did not generate homepage images because no auth header present on request"
           );
-        } else if (process.env.NEXT_PUBLIC_DASHBOARD_URL) {
-          console.error(
+        } else if (process.env.NEXT_PUBLIC_DASHBOARD_URL == null) {
+          console.warn(
             "Did not generate homepage images because NEXT_PUBLIC_DASHBOARD_URL is not defined in the environment"
           );
         } else {
           try {
             await fetch(
-              `${process.env.NEXT_PUBLIC_DASHBOARD_URL}/api/generate-homepage-images`,
+              new URL(
+                "/api/generate-homepage-images",
+                process.env.NEXT_PUBLIC_DASHBOARD_URL
+              ),
               {
                 method: "POST",
                 headers: {
