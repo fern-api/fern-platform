@@ -6,13 +6,22 @@ import puppeteer, { Browser, Page } from "puppeteer-core";
 import sharp from "sharp";
 import { setTimeout } from "timers/promises";
 
+import { FdrAPI } from "@fern-api/fdr-sdk";
+import { FernVenusApi } from "@fern-api/venus-api-sdk";
+
+import { getFdrClient } from "./fdr";
+import { parseAuthHeader } from "./parseAuthHeader";
 import { getS3Client } from "./s3";
+import { getVenusClient } from "./venus";
 
 export const maxDuration = 60;
 
 const IMAGE_FILETYPE = "avif";
 
 export async function POST(req: NextRequest) {
+  const authHeader = req.headers.get("authorization");
+  const { token } = parseAuthHeader(authHeader);
+
   const { domain, path } = await req.json();
 
   if (domain == null) {
@@ -29,6 +38,27 @@ export async function POST(req: NextRequest) {
       { error: "path must be a null | string" },
       { status: 400 }
     );
+  }
+
+  const fdr = getFdrClient({ token });
+  const tokenInfo = await fdr.docs.v2.read.getDocsUrlMetadata({
+    url: FdrAPI.Url(new URL(path ?? "", domain).toString()),
+  });
+  if (!tokenInfo.ok) {
+    console.error("Failed to load docs URL metadata", tokenInfo.error);
+    throw new Error("Failed to load docs URL metadata");
+  }
+  const orgId = tokenInfo.body.org;
+
+  const venus = getVenusClient({ token });
+  const isMember = await venus.organization.isMember(
+    FernVenusApi.OrganizationId(orgId)
+  );
+  if (!isMember.ok) {
+    throw new Error("Failed to load org membership for user");
+  }
+  if (!isMember.body) {
+    throw new Error("User does not have access to url");
   }
 
   try {
