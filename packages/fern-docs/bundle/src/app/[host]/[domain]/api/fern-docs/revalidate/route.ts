@@ -268,6 +268,24 @@ export async function GET(
           }
         }
 
+        // update homepage images for dashboard
+        const authHeader = req.headers.get("authorization");
+        if (authHeader != null) {
+          await fetch(`<NEXT_URL>/api/generate-homepage-images`, {
+            method: "POST",
+            headers: {
+              authorization: authHeader,
+            },
+            body: JSON.stringify({
+              url: "",
+            }),
+          });
+        } else {
+          console.warn(
+            "Did not update homepage images because no auth header present on request"
+          );
+        }
+
         // finish reindexing before returning
         await reindexPromise;
 
