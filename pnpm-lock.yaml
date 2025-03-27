@@ -594,9 +594,6 @@ importers:
       '@aws-sdk/client-s3':
         specifier: ^3.744.0
         version: 3.744.0
-      '@fern-platform/fdr':
-        specifier: workspace:*
-        version: link:../../servers/fdr
       '@heroicons/react':
         specifier: ^2.2.0
         version: 2.2.0(react@19.0.0)
