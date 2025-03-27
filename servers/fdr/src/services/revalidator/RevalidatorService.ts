@@ -47,6 +47,11 @@ export class RevalidatorServiceImpl implements RevalidatorService {
     // let revalidationFailed = false;
     try {
       app?.logger.log("Revalidating paths at", baseUrl.toURL().toString());
+      // await client.revalidateAllV3({
+      //   host: baseUrl.hostname,
+      //   basePath: baseUrl.path != null ? baseUrl.path : "",
+      //   xFernHost: baseUrl.hostname,
+      // });
       await fetch(
         `https://${baseUrl.hostname}${baseUrl.path || ""}/api/fern-docs/revalidate-all/v3`,
         {

@@ -270,24 +270,34 @@ export async function GET(
 
         // update homepage images for dashboard
         const authHeader = req.headers.get("authorization");
-        if (authHeader != null) {
+        if (authHeader == null) {
+          console.error(
+            "Did not generate homepage images because no auth header present on request"
+          );
+        } else if (process.env.NEXT_PUBLIC_DASHBOARD_URL) {
+          console.error(
+            "Did not generate homepage images because NEXT_PUBLIC_DASHBOARD_URL is not defined in the environment"
+          );
+        } else {
           try {
-            await fetch(`<NEXT_URL>/api/generate-homepage-images`, {
-              method: "POST",
-              headers: {
-                authorization: authHeader,
-              },
-              body: JSON.stringify({
-                url: "",
-              }),
-            });
+            await fetch(
+              `${process.env.NEXT_PUBLIC_DASHBOARD_URL}/api/generate-homepage-images`,
+              {
+                method: "POST",
+                headers: {
+                  authorization: authHeader,
+                },
+                body: JSON.stringify({
+                  url: new URL(
+                    docs.baseUrl.basePath ?? "",
+                    docs.baseUrl.domain
+                  ).toString(),
+                }),
+              }
+            );
           } catch (error) {
             console.error("Failed to regenerate homepage images", error);
           }
-        } else {
-          console.error(
-            "Did not update homepage images because no auth header present on request"
-          );
         }
 
         // finish reindexing before returning
