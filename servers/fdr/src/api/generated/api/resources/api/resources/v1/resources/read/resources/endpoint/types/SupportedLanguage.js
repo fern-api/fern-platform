@@ -11,4 +11,5 @@ export const SupportedLanguage = {
     Ts: "ts",
     Go: "go",
     Ruby: "ruby",
+    Csharp: "csharp",
 };

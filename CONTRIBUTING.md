@@ -83,7 +83,7 @@ To run the docs dev environment, first make sure vercel is installed:
 
 From the fern-platform repository, link vercel to the Fern project:
 
-- `vercel link --project legacy.ferndocs.com`
+- `vercel link --project prod.ferndocs.com`
 - When prompted to setup the project, say `yes`
 - When prompted what scope should contain the project, say `fern`
 - When prompted to link to the project, say `yes`

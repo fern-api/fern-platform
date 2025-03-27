@@ -3,8 +3,13 @@ import { after } from "next/server";
 import { WebClient } from "@slack/web-api";
 import { getEnv } from "@vercel/functions";
 
+import { RateLimiterManager } from "./rate-limiter";
+
+const RATE_LIMITER_MANAGER = RateLimiterManager.getInstance();
+
 export function postToEngineeringNotifs(
   message: string,
+  context: string = "default",
   thread?: {
     message: string;
     mrkdwn: boolean;
@@ -23,6 +28,17 @@ export function postToEngineeringNotifs(
       // don't log on dev
       return;
     }
+
+    // limit the amount of notifications we get at one time for each possible failure
+    const rateLimiter = RATE_LIMITER_MANAGER.getLimiter(context, 10, 60 * 1000);
+
+    if (!rateLimiter.canMakeRequest()) {
+      console.warn(
+        `Rate limit exceeded for Slack notifications in context: ${context}`
+      );
+      return;
+    }
+    rateLimiter.increment();
 
     const webClient = new WebClient(process.env.SLACK_TOKEN);
     const result = await webClient.chat.postMessage({

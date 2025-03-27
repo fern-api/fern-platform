@@ -10,4 +10,5 @@ export interface CodeExamples {
     typescriptSdk: FernRegistry.api.v1.read.TypescriptSnippet | undefined;
     goSdk: FernRegistry.api.v1.read.GoSnippet | undefined;
     rubySdk: FernRegistry.api.v1.read.RubySnippet | undefined;
+    csharpSdk: FernRegistry.api.v1.read.CsharpSnippet | undefined;
 }

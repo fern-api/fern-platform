@@ -572,12 +572,19 @@ function transformCodeExamples({
     endpointId: endpointDefinition.originalEndpointId,
     exampleId,
   });
+  const maybeCsharpSnippet = snippets.getCsharpCodeSnippetForEndpoint({
+    endpointMethod: endpointDefinition.method,
+    endpointPath: getEndpointPathAsString(endpointDefinition),
+    endpointId: endpointDefinition.originalEndpointId,
+    exampleId,
+  });
   return {
     nodeAxios: "",
     pythonSdk: maybePythonSnippet,
     typescriptSdk: maybeTypescriptSnippet,
     goSdk: maybeGoSnippet,
     rubySdk: maybeRubySnippet,
+    csharpSdk: maybeCsharpSnippet,
   };
 }
 
