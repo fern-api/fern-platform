@@ -8,7 +8,7 @@ imports:
   commons: commons.yml
   rootCommons: ../../commons.yml
   auth: auth.yml
-
+  v1Register: ../v1/register/__package__.yml
 service:
   base-path: /registry/api/latest
   auth: true
@@ -35,6 +35,7 @@ types:
       subpackages: map<commons.SubpackageId, commons.SubpackageMetadata>
       auths: map<auth.AuthSchemeId, auth.AuthScheme>
       globalHeaders: optional<list<type.ObjectProperty>>
+      snippetsConfiguration: optional<v1Register.SnippetsConfig>
 
 errors:
   ApiDoesNotExistError:

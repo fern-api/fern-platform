@@ -9,7 +9,8 @@ export type Snippet =
     | FernRegistry.Snippet.Python
     | FernRegistry.Snippet.Java
     | FernRegistry.Snippet.Go
-    | FernRegistry.Snippet.Ruby;
+    | FernRegistry.Snippet.Ruby
+    | FernRegistry.Snippet.Csharp;
 
 export declare namespace Snippet {
     interface Typescript extends FernRegistry.TypeScriptSnippet, _Base {
@@ -30,6 +31,10 @@ export declare namespace Snippet {
 
     interface Ruby extends FernRegistry.RubySnippet, _Base {
         type: "ruby";
+    }
+
+    interface Csharp extends FernRegistry.CsharpSnippet, _Base {
+        type: "csharp";
     }
 
     interface _Base {

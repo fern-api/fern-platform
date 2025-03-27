@@ -39,9 +39,8 @@ export function CodeGroup({
   useEffect(() => {
     if (selectedLanguage) {
       const matchingTab = itemsRef.current.find((item) => {
-        const normalizedLanguage = cleanLanguage(
-          item.props.language ?? "plaintext"
-        );
+        const matchLanguage = item.props.for || item.props.language;
+        const normalizedLanguage = cleanLanguage(matchLanguage ?? "plaintext");
         return normalizedLanguage === selectedLanguage;
       });
 
@@ -49,10 +48,12 @@ export function CodeGroup({
         const newIndex = itemsRef.current.indexOf(matchingTab);
         setSelectedTabIndex((prevIndex) => {
           const prevTab = itemsRef.current[prevIndex];
-          if (
-            prevTab?.props.language &&
-            cleanLanguage(prevTab.props.language) === selectedLanguage
-          ) {
+          const prevMatchLanguage =
+            prevTab?.props.for || prevTab?.props.language;
+          const normalizedPrevLanguage = cleanLanguage(
+            prevMatchLanguage ?? "plaintext"
+          );
+          if (normalizedPrevLanguage === selectedLanguage) {
             return prevIndex;
           }
           return newIndex;
@@ -70,8 +71,9 @@ export function CodeGroup({
     setSelectedTabIndex(newIndex);
 
     const tab = itemsRef.current[newIndex];
-    const normalizedLanguage = tab?.props.language
-      ? cleanLanguage(tab.props.language)
+    const matchLanguage = tab?.props.for || tab?.props.language;
+    const normalizedLanguage = matchLanguage
+      ? cleanLanguage(matchLanguage)
       : undefined;
 
     if (normalizedLanguage && normalizedLanguage !== selectedLanguage) {

@@ -130,6 +130,21 @@ export function PlaygroundEndpointMultipartForm({
     [setFormDataEntry]
   );
 
+  const handleFormDataExplodedChange = useCallback(
+    (key: string, value: unknown) => {
+      setFormDataEntry(key, (oldValue) => {
+        const newValue =
+          typeof value === "function" ? value(oldValue?.value) : value;
+        if (newValue === undefined) {
+          return undefined;
+        } else {
+          return { type: "exploded", value: newValue };
+        }
+      });
+    },
+    [setFormDataEntry]
+  );
+
   const shownFields = formData.fields.filter((field) => {
     return (
       formDataFieldIsRequired(field, types) || !!formDataFormValue[field.key]
@@ -208,17 +223,32 @@ export function PlaygroundEndpointMultipartForm({
               </li>
             );
           },
-          property: (bodyProperty) => (
-            <li key={field.key}>
-              <PlaygroundObjectPropertyForm
-                id="body"
-                property={bodyProperty}
-                onChange={handleFormDataJsonChange}
-                value={formDataFormValue[field.key]?.value}
-                types={types}
-              />
-            </li>
-          ),
+          property: (bodyProperty) => {
+            if (bodyProperty.exploded) {
+              return (
+                <li key={field.key}>
+                  <PlaygroundObjectPropertyForm
+                    id="body"
+                    property={bodyProperty}
+                    onChange={handleFormDataExplodedChange}
+                    value={formDataFormValue[field.key]?.value}
+                    types={types}
+                  />
+                </li>
+              );
+            }
+            return (
+              <li key={field.key}>
+                <PlaygroundObjectPropertyForm
+                  id="body"
+                  property={bodyProperty}
+                  onChange={handleFormDataJsonChange}
+                  value={formDataFormValue[field.key]?.value}
+                  types={types}
+                />
+              </li>
+            );
+          },
         })
       )}
       {hiddenFields.length > 0 && (

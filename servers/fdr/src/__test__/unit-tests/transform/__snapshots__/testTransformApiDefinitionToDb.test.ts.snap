@@ -107,6 +107,7 @@ the current organization_id of the authenticated user
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -281,6 +282,7 @@ authenticated user, then response code of 403 will be returned
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -384,6 +386,7 @@ the current organization_id of the auathenticated user. Otherwise, response code
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -486,6 +489,7 @@ current organization_id, then a response code of \`403\` will be returned.
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -602,6 +606,7 @@ current organization_id, then a response code of \`403\` will be returned.
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -764,6 +769,7 @@ current organization_id, then a response code of \`403\` will be returned.
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -798,6 +804,7 @@ current organization_id, then a response code of \`403\` will be returned.
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -914,6 +921,7 @@ current organization_id, then a response code of \`403\` will be returned.
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -1023,6 +1031,7 @@ current organization_id, then a response code of \`403\` will be returned.
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -1141,6 +1150,7 @@ current organization_id, then a response code of \`403\` will be returned.
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -1266,6 +1276,7 @@ current organization_id, then a response code of \`403\` will be returned.
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -1454,6 +1465,7 @@ current organization_id, then a response code of \`403\` will be returned.
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -1534,6 +1546,7 @@ current organization_id, then a response code of \`403\` will be returned.
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -1732,6 +1745,7 @@ current organization_id, then a response code of \`403\` will be returned.
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -2124,6 +2138,7 @@ current organization_id, then a response code of \`403\` will be returned.
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -2155,6 +2170,7 @@ current organization_id, then a response code of \`403\` will be returned.
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -2353,6 +2369,7 @@ current organization_id, then a response code of \`403\` will be returned.
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -2392,6 +2409,7 @@ current organization_id, then a response code of \`403\` will be returned.
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -2423,6 +2441,7 @@ current organization_id, then a response code of \`403\` will be returned.
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -2602,6 +2621,7 @@ current organization_id, then a response code of \`403\` will be returned.
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -2635,6 +2655,7 @@ current organization_id, then a response code of \`403\` will be returned.
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -2666,6 +2687,7 @@ current organization_id, then a response code of \`403\` will be returned.
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -3080,6 +3102,7 @@ current organization_id, then a response code of \`403\` will be returned.
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -3144,6 +3167,7 @@ current organization_id, then a response code of \`403\` will be returned.
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -3198,6 +3222,7 @@ current organization_id, then a response code of \`403\` will be returned.
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -3252,6 +3277,7 @@ current organization_id, then a response code of \`403\` will be returned.
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -3306,6 +3332,7 @@ current organization_id, then a response code of \`403\` will be returned.
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -3482,6 +3509,7 @@ current organization_id, then a response code of \`403\` will be returned.
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -3622,6 +3650,7 @@ current organization_id, then a response code of \`403\` will be returned.
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -3668,6 +3697,7 @@ current organization_id, then a response code of \`403\` will be returned.
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -3964,6 +3994,7 @@ current organization_id, then a response code of \`403\` will be returned.
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -4013,6 +4044,7 @@ current organization_id, then a response code of \`403\` will be returned.
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -4047,6 +4079,7 @@ current organization_id, then a response code of \`403\` will be returned.
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -4086,6 +4119,7 @@ current organization_id, then a response code of \`403\` will be returned.
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -4125,6 +4159,7 @@ current organization_id, then a response code of \`403\` will be returned.
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -4164,6 +4199,7 @@ current organization_id, then a response code of \`403\` will be returned.
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -4381,6 +4417,7 @@ current organization_id, then a response code of \`403\` will be returned.
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -4404,6 +4441,7 @@ current organization_id, then a response code of \`403\` will be returned.
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -4614,6 +4652,7 @@ current organization_id, then a response code of \`403\` will be returned.
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -4670,6 +4709,7 @@ current organization_id, then a response code of \`403\` will be returned.
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -4714,6 +4754,7 @@ current organization_id, then a response code of \`403\` will be returned.
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -4758,6 +4799,7 @@ current organization_id, then a response code of \`403\` will be returned.
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -4911,6 +4953,7 @@ current organization_id, then a response code of \`403\` will be returned.
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -4959,6 +5002,7 @@ current organization_id, then a response code of \`403\` will be returned.
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -5302,6 +5346,7 @@ current organization_id, then a response code of \`403\` will be returned.
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -5366,6 +5411,7 @@ current organization_id, then a response code of \`403\` will be returned.
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -5427,6 +5473,7 @@ current organization_id, then a response code of \`403\` will be returned.
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -5571,6 +5618,7 @@ current organization_id, then a response code of \`403\` will be returned.
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -5707,6 +5755,7 @@ current organization_id, then a response code of \`403\` will be returned.
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -5754,6 +5803,7 @@ current organization_id, then a response code of \`403\` will be returned.
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -6011,6 +6061,7 @@ current organization_id, then a response code of \`403\` will be returned.
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -6061,6 +6112,7 @@ current organization_id, then a response code of \`403\` will be returned.
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -6108,6 +6160,7 @@ current organization_id, then a response code of \`403\` will be returned.
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -6142,6 +6195,7 @@ current organization_id, then a response code of \`403\` will be returned.
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -6192,6 +6246,7 @@ current organization_id, then a response code of \`403\` will be returned.
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -6427,6 +6482,7 @@ current organization_id, then a response code of \`403\` will be returned.
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -6450,6 +6506,7 @@ current organization_id, then a response code of \`403\` will be returned.
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -6484,6 +6541,7 @@ current organization_id, then a response code of \`403\` will be returned.
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -6575,6 +6633,7 @@ current organization_id, then a response code of \`403\` will be returned.
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -6729,6 +6788,7 @@ current organization_id, then a response code of \`403\` will be returned.
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -6911,6 +6971,7 @@ current organization_id, then a response code of \`403\` will be returned.
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -7169,6 +7230,7 @@ current organization_id, then a response code of \`403\` will be returned.
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -7392,6 +7454,7 @@ Max items is 100.
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -7475,6 +7538,7 @@ Max items is 100.
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -7788,6 +7852,7 @@ value, overriding what was set before.
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -7903,6 +7968,7 @@ value, overriding what was set before.
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -8004,6 +8070,7 @@ value, overriding what was set before.
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -8164,6 +8231,7 @@ Must obey the ICD-10 format if an ICD-10 code_type is provided, specifically:
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -8325,6 +8393,7 @@ Must obey the ICD-10 format if an ICD-10 code_type is provided, specifically:
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -8368,6 +8437,7 @@ Must obey the ICD-10 format if an ICD-10 code_type is provided, specifically:
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -8519,6 +8589,7 @@ Must obey the ICD-10 format if an ICD-10 code_type is provided, specifically:
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -9160,6 +9231,7 @@ or encounter external id.
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -9254,6 +9326,7 @@ or encounter external id.
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -9453,6 +9526,7 @@ or encounter external id.
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -9488,6 +9562,7 @@ or encounter external id.
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -9519,6 +9594,7 @@ or encounter external id.
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -9752,6 +9828,7 @@ or encounter external id.
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -9781,6 +9858,7 @@ or encounter external id.
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -9813,6 +9891,7 @@ or encounter external id.
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -9969,6 +10048,7 @@ or encounter external id.
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -10015,6 +10095,7 @@ or encounter external id.
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -10136,6 +10217,7 @@ or encounter external id.
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -10819,6 +10901,7 @@ or encounter external id.
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -11532,6 +11615,7 @@ or encounter external id.
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -12015,6 +12099,7 @@ or encounter external id.
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -12089,6 +12174,7 @@ or encounter external id.
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -12163,6 +12249,7 @@ or encounter external id.
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -12239,6 +12326,7 @@ or encounter external id.
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -12316,6 +12404,7 @@ or encounter external id.
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -12785,6 +12874,7 @@ in bounds of the diagnoses list field
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -13228,6 +13318,7 @@ in bounds of the diagnoses list field
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -13262,6 +13353,7 @@ in bounds of the diagnoses list field
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -13296,6 +13388,7 @@ in bounds of the diagnoses list field
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -13330,6 +13423,7 @@ in bounds of the diagnoses list field
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -13635,6 +13729,7 @@ submitted to the payor.
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -13743,6 +13838,7 @@ submitted to the payor.
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -13841,6 +13937,7 @@ submitted to the payor.
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -14032,6 +14129,7 @@ submitted to the payor.
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -14192,6 +14290,7 @@ submitted to the payor.
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -14323,6 +14422,7 @@ submitted to the payor.
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -14560,6 +14660,7 @@ submitted to the payor.
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -14643,6 +14744,7 @@ submitted to the payor.
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -14869,6 +14971,7 @@ submitted to the payor.
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -14938,6 +15041,7 @@ submitted to the payor.
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -15064,6 +15168,7 @@ submitted to the payor.
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -15142,6 +15247,7 @@ submitted to the payor.
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -15254,6 +15360,7 @@ submitted to the payor.
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -15358,6 +15465,7 @@ submitted to the payor.
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -15452,6 +15560,7 @@ submitted to the payor.
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -15720,6 +15829,7 @@ submitted to the payor.
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -15765,6 +15875,7 @@ submitted to the payor.
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -15807,6 +15918,7 @@ submitted to the payor.
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -16035,6 +16147,7 @@ submitted to the payor.
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -16467,6 +16580,7 @@ submitted to the payor.
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -16499,6 +16613,7 @@ submitted to the payor.
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -16534,6 +16649,7 @@ submitted to the payor.
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -16564,6 +16680,7 @@ submitted to the payor.
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -16594,6 +16711,7 @@ submitted to the payor.
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -16624,6 +16742,7 @@ submitted to the payor.
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -16806,6 +16925,7 @@ Must be within 30 days of start_date.
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -16861,6 +16981,7 @@ Must be within 30 days of start_date.
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -17078,6 +17199,7 @@ Must be within 30 days of start_date.
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -17200,6 +17322,7 @@ doesn't data wrangle the modeling into the presentation shape.
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -17267,6 +17390,7 @@ doesn't data wrangle the modeling into the presentation shape.
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -17419,6 +17543,7 @@ doesn't data wrangle the modeling into the presentation shape.
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -17654,6 +17779,7 @@ doesn't data wrangle the modeling into the presentation shape.
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -17710,6 +17836,7 @@ doesn't data wrangle the modeling into the presentation shape.
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -17826,6 +17953,7 @@ doesn't data wrangle the modeling into the presentation shape.
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -17943,6 +18071,7 @@ doesn't data wrangle the modeling into the presentation shape.
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -18223,6 +18352,7 @@ doesn't data wrangle the modeling into the presentation shape.
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -18552,6 +18682,7 @@ doesn't data wrangle the modeling into the presentation shape.
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -18605,6 +18736,7 @@ doesn't data wrangle the modeling into the presentation shape.
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -18789,6 +18921,7 @@ doesn't data wrangle the modeling into the presentation shape.
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -18840,6 +18973,7 @@ doesn't data wrangle the modeling into the presentation shape.
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -19023,6 +19157,7 @@ doesn't data wrangle the modeling into the presentation shape.
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -19050,6 +19185,7 @@ doesn't data wrangle the modeling into the presentation shape.
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -19212,6 +19348,7 @@ doesn't data wrangle the modeling into the presentation shape.
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -19369,6 +19506,7 @@ doesn't data wrangle the modeling into the presentation shape.
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -19544,6 +19682,7 @@ doesn't data wrangle the modeling into the presentation shape.
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -19583,6 +19722,7 @@ doesn't data wrangle the modeling into the presentation shape.
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -19724,6 +19864,7 @@ doesn't data wrangle the modeling into the presentation shape.
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -19756,6 +19897,7 @@ doesn't data wrangle the modeling into the presentation shape.
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -19960,6 +20102,7 @@ identified by the id, then 403 response will be returned
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -20005,6 +20148,7 @@ identified by the id, then 403 response will be returned
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -20036,6 +20180,7 @@ identified by the id, then 403 response will be returned
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -20139,6 +20284,7 @@ will be limited to only those invoices that belong to the patient_external_id
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -20399,6 +20545,7 @@ upon creation of the invoice.
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -20460,6 +20607,7 @@ upon creation of the invoice.
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -20713,6 +20861,7 @@ upon creation of the invoice.
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -20753,6 +20902,7 @@ upon creation of the invoice.
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -20893,6 +21043,7 @@ upon creation of the invoice.
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -20941,6 +21092,7 @@ upon creation of the invoice.
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -21102,6 +21254,7 @@ upon creation of the invoice.
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -21154,6 +21307,7 @@ upon creation of the invoice.
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -21300,6 +21454,7 @@ upon creation of the invoice.
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -21343,6 +21498,7 @@ upon creation of the invoice.
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -21496,6 +21652,7 @@ upon creation of the invoice.
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -21519,6 +21676,7 @@ upon creation of the invoice.
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -21644,6 +21802,7 @@ upon creation of the invoice.
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -21742,6 +21901,7 @@ upon creation of the invoice.
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -21874,6 +22034,7 @@ upon creation of the invoice.
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -22015,6 +22176,7 @@ upon creation of the invoice.
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -22139,6 +22301,7 @@ upon creation of the invoice.
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -22347,6 +22510,7 @@ upon creation of the invoice.
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -22484,6 +22648,7 @@ upon creation of the invoice.
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -22788,6 +22953,7 @@ upon creation of the invoice.
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -22897,6 +23063,7 @@ upon creation of the invoice.
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -23033,6 +23200,7 @@ upon creation of the invoice.
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -23294,6 +23462,7 @@ upon creation of the invoice.
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -23379,6 +23548,7 @@ upon creation of the invoice.
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -23531,6 +23701,7 @@ upon creation of the invoice.
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -23602,6 +23773,7 @@ upon creation of the invoice.
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -23776,6 +23948,7 @@ upon creation of the invoice.
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -23814,6 +23987,7 @@ upon creation of the invoice.
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -24001,6 +24175,7 @@ upon creation of the invoice.
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -24037,6 +24212,7 @@ upon creation of the invoice.
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -24073,6 +24249,7 @@ upon creation of the invoice.
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -24251,6 +24428,7 @@ upon creation of the invoice.
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -24274,6 +24452,7 @@ upon creation of the invoice.
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -24305,6 +24484,7 @@ upon creation of the invoice.
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -24417,6 +24597,7 @@ upon creation of the invoice.
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -24606,6 +24787,7 @@ identified by the id, then 403 response will be returned
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -24640,6 +24822,7 @@ identified by the id, then 403 response will be returned
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -24671,6 +24854,7 @@ identified by the id, then 403 response will be returned
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -24771,6 +24955,7 @@ identified by the id, then 403 response will be returned
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -24963,6 +25148,7 @@ identified by the id, then 403 response will be returned
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -25004,6 +25190,7 @@ identified by the id, then 403 response will be returned
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -25187,6 +25374,7 @@ If the authenticated user does not have the permission to update the PatientPaym
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -25224,6 +25412,7 @@ If the authenticated user does not have the permission to update the PatientPaym
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -25258,6 +25447,7 @@ If the authenticated user does not have the permission to update the PatientPaym
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -25455,6 +25645,7 @@ by the id, then 403 will be returned
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -25478,6 +25669,7 @@ by the id, then 403 will be returned
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -25509,6 +25701,7 @@ by the id, then 403 will be returned
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -25683,6 +25876,7 @@ by the id, then 403 will be returned
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -25734,6 +25928,7 @@ by the id, then 403 will be returned
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -25980,6 +26175,7 @@ by the id, then 403 will be returned
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -26019,6 +26215,7 @@ by the id, then 403 will be returned
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -26050,6 +26247,7 @@ by the id, then 403 will be returned
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -26150,6 +26348,7 @@ by the id, then 403 will be returned
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -26458,6 +26657,7 @@ by the id, then 403 will be returned
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -26500,6 +26700,7 @@ by the id, then 403 will be returned
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -26534,6 +26735,7 @@ by the id, then 403 will be returned
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -26568,6 +26770,7 @@ by the id, then 403 will be returned
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -26857,6 +27060,7 @@ by the id, then 403 will be returned
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -26880,6 +27084,7 @@ by the id, then 403 will be returned
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -26911,6 +27116,7 @@ by the id, then 403 will be returned
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -26942,6 +27148,7 @@ by the id, then 403 will be returned
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -27098,6 +27305,7 @@ the current organization_id of the authenticated user.
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -27151,6 +27359,7 @@ the current organization_id of the authenticated user.
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -27421,6 +27630,7 @@ authenticated user, then response code of 403 will be returned.
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -27460,6 +27670,7 @@ authenticated user, then response code of 403 will be returned.
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -27491,6 +27702,7 @@ authenticated user, then response code of 403 will be returned.
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -27678,6 +27890,7 @@ The order of specificity from the most specific to least specific is \`service_l
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -27720,6 +27933,7 @@ The order of specificity from the most specific to least specific is \`service_l
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -27754,6 +27968,7 @@ The order of specificity from the most specific to least specific is \`service_l
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -28060,6 +28275,7 @@ The order of specificity from the most specific to least specific is \`service_l
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -28102,6 +28318,7 @@ The order of specificity from the most specific to least specific is \`service_l
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -28136,6 +28353,7 @@ The order of specificity from the most specific to least specific is \`service_l
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -28170,6 +28388,7 @@ The order of specificity from the most specific to least specific is \`service_l
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -28491,6 +28710,7 @@ current organization_id, then a response code of \`403\` will be returned.
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -28514,6 +28734,7 @@ current organization_id, then a response code of \`403\` will be returned.
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -28545,6 +28766,7 @@ current organization_id, then a response code of \`403\` will be returned.
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -28576,6 +28798,7 @@ current organization_id, then a response code of \`403\` will be returned.
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -28689,6 +28912,7 @@ current organization_id, then a response code of \`403\` will be returned.
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -28943,6 +29167,7 @@ current organization_id, then a response code of \`403\` will be returned.
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -29071,6 +29296,7 @@ current organization_id, then a response code of \`403\` will be returned.
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -29104,6 +29330,7 @@ current organization_id, then a response code of \`403\` will be returned.
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -29245,6 +29472,7 @@ slashes.
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -29345,6 +29573,7 @@ slashes.
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -29587,6 +29816,7 @@ identified by the id, then 403 response will be returned
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -29624,6 +29854,7 @@ identified by the id, then 403 response will be returned
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -29655,6 +29886,7 @@ identified by the id, then 403 response will be returned
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -29755,6 +29987,7 @@ identified by the id, then 403 response will be returned
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -29969,6 +30202,7 @@ If there already exists a PaymentAccountConfig for the organization with the sam
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -30015,6 +30249,7 @@ If there already exists a PaymentAccountConfig for the organization with the sam
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -30055,6 +30290,7 @@ If there already exists a PaymentAccountConfig for the organization with the sam
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -30095,6 +30331,7 @@ If there already exists a PaymentAccountConfig for the organization with the sam
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -30360,6 +30597,7 @@ If there already exists a PaymentAccountConfig for the organization with the sam
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -30402,6 +30640,7 @@ If there already exists a PaymentAccountConfig for the organization with the sam
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -30438,6 +30677,7 @@ If there already exists a PaymentAccountConfig for the organization with the sam
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -30474,6 +30714,7 @@ If there already exists a PaymentAccountConfig for the organization with the sam
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -30510,6 +30751,7 @@ If there already exists a PaymentAccountConfig for the organization with the sam
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -30709,6 +30951,7 @@ by the id, then 403 will be returned
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -30732,6 +30975,7 @@ by the id, then 403 will be returned
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -30763,6 +31007,7 @@ by the id, then 403 will be returned
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -30899,6 +31144,7 @@ and the third party payment processor's customer can be identified by the patien
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -30940,6 +31186,7 @@ and the third party payment processor's customer can be identified by the patien
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -31041,6 +31288,7 @@ Verification includes that the provided token has all of the appropriate permiss
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -31135,6 +31383,7 @@ customer page will be returned (this generally is a page listing the existing cu
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -31326,6 +31575,7 @@ customer page will be returned (this generally is a page listing the existing cu
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -31553,6 +31803,7 @@ customer page will be returned (this generally is a page listing the existing cu
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -31617,6 +31868,7 @@ customer page will be returned (this generally is a page listing the existing cu
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -31650,6 +31902,7 @@ customer page will be returned (this generally is a page listing the existing cu
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -31769,6 +32022,7 @@ customer page will be returned (this generally is a page listing the existing cu
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -32108,6 +32362,7 @@ customer page will be returned (this generally is a page listing the existing cu
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -32170,6 +32425,7 @@ customer page will be returned (this generally is a page listing the existing cu
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -32201,6 +32457,7 @@ customer page will be returned (this generally is a page listing the existing cu
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -32232,6 +32489,7 @@ customer page will be returned (this generally is a page listing the existing cu
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -32441,6 +32699,7 @@ customer page will be returned (this generally is a page listing the existing cu
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -32487,6 +32746,7 @@ customer page will be returned (this generally is a page listing the existing cu
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -32652,6 +32912,7 @@ customer page will be returned (this generally is a page listing the existing cu
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -32682,6 +32943,7 @@ customer page will be returned (this generally is a page listing the existing cu
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -32822,6 +33084,7 @@ customer page will be returned (this generally is a page listing the existing cu
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -32859,6 +33122,7 @@ customer page will be returned (this generally is a page listing the existing cu
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -32982,6 +33246,7 @@ customer page will be returned (this generally is a page listing the existing cu
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -33236,6 +33501,7 @@ customer page will be returned (this generally is a page listing the existing cu
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -33280,6 +33546,7 @@ customer page will be returned (this generally is a page listing the existing cu
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -33311,6 +33578,7 @@ customer page will be returned (this generally is a page listing the existing cu
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -33499,6 +33767,7 @@ customer page will be returned (this generally is a page listing the existing cu
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -33548,6 +33817,7 @@ customer page will be returned (this generally is a page listing the existing cu
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -33677,6 +33947,7 @@ customer page will be returned (this generally is a page listing the existing cu
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -33763,6 +34034,7 @@ customer page will be returned (this generally is a page listing the existing cu
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -33915,6 +34187,7 @@ customer page will be returned (this generally is a page listing the existing cu
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -34091,6 +34364,7 @@ customer page will be returned (this generally is a page listing the existing cu
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -34221,6 +34495,7 @@ customer page will be returned (this generally is a page listing the existing cu
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -34270,6 +34545,7 @@ customer page will be returned (this generally is a page listing the existing cu
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -34418,6 +34694,7 @@ customer page will be returned (this generally is a page listing the existing cu
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -34467,6 +34744,7 @@ customer page will be returned (this generally is a page listing the existing cu
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -34574,6 +34852,7 @@ customer page will be returned (this generally is a page listing the existing cu
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -34712,6 +34991,7 @@ customer page will be returned (this generally is a page listing the existing cu
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -34754,6 +35034,7 @@ customer page will be returned (this generally is a page listing the existing cu
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -34939,6 +35220,7 @@ customer page will be returned (this generally is a page listing the existing cu
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -34981,6 +35263,7 @@ customer page will be returned (this generally is a page listing the existing cu
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -35080,6 +35363,7 @@ customer page will be returned (this generally is a page listing the existing cu
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -76378,6 +76662,7 @@ exports[`transformApiDefinitionToDb > {"name":"cyclical-1"} 1`] = `
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -76765,6 +77050,7 @@ exports[`transformApiDefinitionToDb > {"name":"string"} 1`] = `
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -77601,6 +77887,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
         "examples": [
           {
             "codeExamples": {
+              "csharpSdk": undefined,
               "goSdk": undefined,
               "nodeAxios": "",
               "pythonSdk": undefined,
@@ -77633,6 +77920,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
           },
           {
             "codeExamples": {
+              "csharpSdk": undefined,
               "goSdk": undefined,
               "nodeAxios": "",
               "pythonSdk": undefined,
@@ -77668,6 +77956,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
           },
           {
             "codeExamples": {
+              "csharpSdk": undefined,
               "goSdk": undefined,
               "nodeAxios": "",
               "pythonSdk": undefined,
@@ -77703,6 +77992,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
           },
           {
             "codeExamples": {
+              "csharpSdk": undefined,
               "goSdk": undefined,
               "nodeAxios": "",
               "pythonSdk": undefined,
@@ -77933,6 +78223,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
         "examples": [
           {
             "codeExamples": {
+              "csharpSdk": undefined,
               "goSdk": undefined,
               "nodeAxios": "",
               "pythonSdk": undefined,
@@ -78001,6 +78292,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
           },
           {
             "codeExamples": {
+              "csharpSdk": undefined,
               "goSdk": undefined,
               "nodeAxios": "",
               "pythonSdk": undefined,
@@ -78036,6 +78328,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
           },
           {
             "codeExamples": {
+              "csharpSdk": undefined,
               "goSdk": undefined,
               "nodeAxios": "",
               "pythonSdk": undefined,
@@ -78073,6 +78366,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
           },
           {
             "codeExamples": {
+              "csharpSdk": undefined,
               "goSdk": undefined,
               "nodeAxios": "",
               "pythonSdk": undefined,
@@ -78108,6 +78402,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
           },
           {
             "codeExamples": {
+              "csharpSdk": undefined,
               "goSdk": undefined,
               "nodeAxios": "",
               "pythonSdk": undefined,
@@ -78318,6 +78613,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
         "examples": [
           {
             "codeExamples": {
+              "csharpSdk": undefined,
               "goSdk": undefined,
               "nodeAxios": "",
               "pythonSdk": undefined,
@@ -78350,6 +78646,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
           },
           {
             "codeExamples": {
+              "csharpSdk": undefined,
               "goSdk": undefined,
               "nodeAxios": "",
               "pythonSdk": undefined,
@@ -78385,6 +78682,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
           },
           {
             "codeExamples": {
+              "csharpSdk": undefined,
               "goSdk": undefined,
               "nodeAxios": "",
               "pythonSdk": undefined,
@@ -78422,6 +78720,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
           },
           {
             "codeExamples": {
+              "csharpSdk": undefined,
               "goSdk": undefined,
               "nodeAxios": "",
               "pythonSdk": undefined,
@@ -78457,6 +78756,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
           },
           {
             "codeExamples": {
+              "csharpSdk": undefined,
               "goSdk": undefined,
               "nodeAxios": "",
               "pythonSdk": undefined,
@@ -78641,6 +78941,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
         "examples": [
           {
             "codeExamples": {
+              "csharpSdk": undefined,
               "goSdk": undefined,
               "nodeAxios": "",
               "pythonSdk": undefined,
@@ -78688,6 +78989,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
           },
           {
             "codeExamples": {
+              "csharpSdk": undefined,
               "goSdk": undefined,
               "nodeAxios": "",
               "pythonSdk": undefined,
@@ -78717,6 +79019,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
           },
           {
             "codeExamples": {
+              "csharpSdk": undefined,
               "goSdk": undefined,
               "nodeAxios": "",
               "pythonSdk": undefined,
@@ -78746,6 +79049,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
           },
           {
             "codeExamples": {
+              "csharpSdk": undefined,
               "goSdk": undefined,
               "nodeAxios": "",
               "pythonSdk": undefined,
@@ -78931,6 +79235,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
         "examples": [
           {
             "codeExamples": {
+              "csharpSdk": undefined,
               "goSdk": undefined,
               "nodeAxios": "",
               "pythonSdk": undefined,
@@ -78959,6 +79264,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
           },
           {
             "codeExamples": {
+              "csharpSdk": undefined,
               "goSdk": undefined,
               "nodeAxios": "",
               "pythonSdk": undefined,
@@ -78990,6 +79296,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
           },
           {
             "codeExamples": {
+              "csharpSdk": undefined,
               "goSdk": undefined,
               "nodeAxios": "",
               "pythonSdk": undefined,
@@ -79021,6 +79328,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
           },
           {
             "codeExamples": {
+              "csharpSdk": undefined,
               "goSdk": undefined,
               "nodeAxios": "",
               "pythonSdk": undefined,
@@ -79140,6 +79448,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
         "examples": [
           {
             "codeExamples": {
+              "csharpSdk": undefined,
               "goSdk": undefined,
               "nodeAxios": "",
               "pythonSdk": undefined,
@@ -79412,6 +79721,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -79539,6 +79849,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -79732,6 +80043,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -79890,6 +80202,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -80059,6 +80372,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -80193,6 +80507,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -80222,6 +80537,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -80249,6 +80565,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -80276,6 +80593,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -80372,6 +80690,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -80529,6 +80848,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -80697,6 +81017,7 @@ Under the hood, this endpoint creates a new sandbox, a new model version, and a 
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -80774,6 +81095,7 @@ Under the hood, this endpoint creates a new sandbox, a new model version, and a 
             },
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -80992,6 +81314,7 @@ or overwritten with default values.",
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -81170,6 +81493,7 @@ or overwritten with default values.",
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -81292,6 +81616,7 @@ or overwritten with default values.",
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
@@ -81462,6 +81787,7 @@ or overwritten with default values.",
           "examples": [
             {
               "codeExamples": {
+                "csharpSdk": undefined,
                 "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
