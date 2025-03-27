@@ -16,7 +16,7 @@ export const auth0 = new Auth0Client({
     };
   },
   authorizationParameters: {
-    redirect_uri: `${process.env.APP_BASE_URL}/auth/callback`,
+    redirect_uri: `${process.env.NEXT_PUBLIC_APP_BASE_URL}/auth/callback`,
     audience: process.env.NEXT_PUBLIC_VENUS_AUDIENCE,
   },
 });
