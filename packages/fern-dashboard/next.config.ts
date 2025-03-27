@@ -11,7 +11,7 @@ const nextConfig: NextConfig = {
     "@fern-api/fdr-sdk",
   ],
   experimental: {
-    optimizePackageImports: ["@fern-api/fdr-sdk"],
+    optimizePackageImports: [],
   },
   images: {
     remotePatterns: [
@@ -34,6 +34,9 @@ const nextConfig: NextConfig = {
     webpackConfig.externals.push("sharp");
     return webpackConfig;
   },
+
+  // vercel chokes on monorepo compilation and we run compile before building
+  typescript: { ignoreBuildErrors: true },
 };
 
 export default nextConfig;
