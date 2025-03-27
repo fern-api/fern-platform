@@ -15,7 +15,7 @@
   ],
   "references": [
     {
-      "path": "../fdr-sdk/tsconfig.json"
+      "path": "../fdr-sdk"
     }
   ]
 }
