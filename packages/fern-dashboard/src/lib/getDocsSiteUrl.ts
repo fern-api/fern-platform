@@ -1,8 +1,10 @@
-import { DocsSite } from "@fern-platform/fdr";
+import { FdrAPI } from "@fern-api/fdr-sdk";
 
 import { DocsUrl } from "./types";
 
-export function getDocsSiteUrl({ mainUrl }: DocsSite): DocsUrl {
+export function getDocsSiteUrl({
+  mainUrl,
+}: FdrAPI.dashboard.DocsSite): DocsUrl {
   if (mainUrl.path == null) {
     return mainUrl.domain as DocsUrl;
   }

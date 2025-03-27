@@ -4,7 +4,7 @@ import { useEffect } from "react";
 
 import { create } from "zustand";
 
-import { DocsSite, ListDocsSitesForOrgResponse } from "@fern-platform/fdr";
+import { FdrAPI } from "@fern-api/fdr-sdk";
 
 import { getMyDocsSites } from "@/app/actions/getMyDocsSites";
 
@@ -12,13 +12,13 @@ import { Loadable, mapLoadable } from "./Loadable";
 import { getDocsSiteUrl } from "./getDocsSiteUrl";
 
 type DocsSitesStore = {
-  docsSites: Loadable<DocsSite[]>;
-  setDocsSites: (docSites: DocsSite[]) => void;
+  docsSites: Loadable<FdrAPI.dashboard.DocsSite[]>;
+  setDocsSites: (docSites: FdrAPI.dashboard.DocsSite[]) => void;
 };
 
 export const useDocsSitesStore = create<DocsSitesStore>((set) => ({
   docsSites: { type: "notStartedLoading" },
-  setDocsSites: (docSites: DocsSite[]) =>
+  setDocsSites: (docSites: FdrAPI.dashboard.DocsSite[]) =>
     set({ docsSites: { type: "loaded", value: docSites } }),
 }));
 
@@ -40,7 +40,9 @@ export function useMyDocsSites() {
   return docsSites;
 }
 
-export function useDocsSite(docsUrl: string): Loadable<DocsSite | undefined> {
+export function useDocsSite(
+  docsUrl: string
+): Loadable<FdrAPI.dashboard.DocsSite | undefined> {
   const maybeLoadedDocsSites = useMyDocsSites();
 
   return mapLoadable(maybeLoadedDocsSites, (docsSites) =>
