@@ -14,7 +14,7 @@ export const auth0 = new Auth0Client({
     };
   },
   authorizationParameters: {
-    audience: process.env.VENUS_AUDIENCE,
+    audience: process.env.NEXT_PUBLIC_VENUS_AUDIENCE,
   },
 });
 
