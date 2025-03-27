@@ -18,7 +18,7 @@ export async function DocsZeroState() {
   }
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-1 flex-col">
       <div className="text-gray-1200 text-xl font-bold dark:text-gray-200">
         {welcomeString}
       </div>
