@@ -1,3 +1,4 @@
+/* eslint-disable turbo/no-undeclared-env-vars */
 import { NextRequest, NextResponse } from "next/server";
 
 import { PutObjectCommand } from "@aws-sdk/client-s3";
@@ -139,9 +140,15 @@ async function takeScreenshotAndWriteToAws({
     [IMAGE_FILETYPE]({ quality: 50 })
     .toBuffer();
 
+  if (process.env.HOMEPAGE_IMAGES_S3_BUCKET_NAME == null) {
+    throw new Error(
+      "HOMEPAGE_IMAGES_S3_BUCKET_NAME is not defined in the environment"
+    );
+  }
+
   await getS3Client().send(
     new PutObjectCommand({
-      Bucket: "dev2-docs-homepage-images",
+      Bucket: process.env.HOMEPAGE_IMAGES_S3_BUCKET_NAME,
       Key: getS3KeyForHomepageScreenshot({ url, theme }),
       Body: compressedScreenshotBuffer,
       ContentType: `image/${IMAGE_FILETYPE}`,
