@@ -1,5 +1,4 @@
 import { FernDocs } from "@fern-fern/fern-docs-sdk";
-import { FernRevalidationClient } from "@fern-fern/revalidation-sdk";
 
 import { FdrApplication } from "../../app";
 import { ParsedBaseUrl } from "../../util/ParsedBaseUrl";
@@ -14,6 +13,7 @@ export interface RevalidatorService {
   revalidate(params: {
     baseUrl: ParsedBaseUrl;
     app: FdrApplication;
+    authHeader: string;
   }): Promise<RevalidatedPathsResponse>;
 }
 
@@ -38,21 +38,23 @@ export class RevalidatorServiceImpl implements RevalidatorService {
   public async revalidate({
     baseUrl,
     app,
+    authHeader,
   }: {
     baseUrl: ParsedBaseUrl;
     app?: FdrApplication;
+    authHeader: string;
   }): Promise<RevalidatedPathsResponse> {
     // let revalidationFailed = false;
     try {
-      const client = new FernRevalidationClient({
-        environment: baseUrl.toURL().toString(),
-      });
       app?.logger.log("Revalidating paths at", baseUrl.toURL().toString());
-      await client.revalidateAllV3({
-        host: baseUrl.hostname,
-        basePath: baseUrl.path != null ? baseUrl.path : "",
-        xFernHost: baseUrl.hostname,
-      });
+      await fetch(
+        `https://${baseUrl.hostname}${baseUrl.path || ""}/api/fern-docs/revalidate-all/v3`,
+        {
+          headers: {
+            authorization: authHeader,
+          },
+        }
+      );
       return {
         successful: [],
         failed: [],

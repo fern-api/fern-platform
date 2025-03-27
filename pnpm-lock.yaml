@@ -2039,8 +2039,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/fern-docs/search-server
       '@fern-fern/fern-docs-sdk':
-        specifier: 0.0.5
-        version: 0.0.5
+        specifier: 0.0.9
+        version: 0.0.9
       '@fern-fern/revalidation-sdk':
         specifier: 0.0.9
         version: 0.0.9
@@ -4045,6 +4045,9 @@ packages:
 
   '@fern-fern/fern-docs-sdk@0.0.5':
     resolution: {integrity: sha512-x6kfRboXiG1J3fpON2lXtD9qCub2UXvNuscvCsIY3ACYvSvLHHlHvc84rIDv+ZlP/anlEvtTyfNh72Hmi0nffw==}
+
+  '@fern-fern/fern-docs-sdk@0.0.9':
+    resolution: {integrity: sha512-kjnnPfE/5hgGocdgWh5lOmxt1/auQyhYL9nq+mKXV0jdv2BpHU/kUCyBh0WRmXrSy8UCO4iz7aos/fsVr9TsoA==}
 
   '@fern-fern/generators-sdk@0.110.0-8f5b3cd3c':
     resolution: {integrity: sha512-xKMpQjghJK5HQJ+hjMoo2sxJj2zGvBc3BZSim0VmndhrM1Lw7G2Mn3elEOV6rgVpghVDA2BQVoLG2m4kBlcLBg==}
@@ -18213,6 +18216,18 @@ snapshots:
       formdata-node: 6.0.3
       node-fetch: 2.7.0
       qs: 6.11.2
+      readable-stream: 4.5.2
+      url-join: 4.0.1
+    transitivePeerDependencies:
+      - encoding
+
+  '@fern-fern/fern-docs-sdk@0.0.9':
+    dependencies:
+      form-data: 4.0.0
+      formdata-node: 6.0.3
+      js-base64: 3.7.7
+      node-fetch: 2.7.0
+      qs: 6.14.0
       readable-stream: 4.5.2
       url-join: 4.0.1
     transitivePeerDependencies:

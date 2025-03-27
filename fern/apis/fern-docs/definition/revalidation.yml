@@ -15,6 +15,7 @@ service:
       response: RevalidationResult
 
     revalidateAllV3:
+      auth: true
       path: /revalidate-all/v3
       docs: Revalidates all pages in a docs website
       display-name: Revalidate a docs instance
@@ -22,6 +23,7 @@ service:
       response: RevalidateAllV3Response
 
     revalidateAllV4:
+      auth: true
       path: /revalidate-all/v4
       docs: Revalidates all pages a docs website with pagination
       display-name: Revalidate a docs instance with pagination

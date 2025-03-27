@@ -23,6 +23,7 @@ import { OrgId } from "../../../api/generated/api";
 import {
   DomainBelongsToAnotherOrgError,
   InvalidUrlError,
+  UnauthorizedError,
 } from "../../../api/generated/api/resources/commons/errors";
 import { DocsRegistrationIdNotFound } from "../../../api/generated/api/resources/docs/resources/v1/resources/write/errors";
 import { LoadDocsForUrlResponse } from "../../../api/generated/api/resources/docs/resources/v2/resources/read";
@@ -206,6 +207,12 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
       if (docsRegistrationInfo == null) {
         throw new DocsRegistrationIdNotFound();
       }
+
+      if (req.headers.authorization == null) {
+        throw new UnauthorizedError("Authorization header was not specified");
+      }
+      const authHeader = req.headers.authorization;
+
       try {
         app.logger.debug(
           `[${docsRegistrationInfo.fernUrl.getFullUrl()}] Called finishDocsRegister`
@@ -313,6 +320,7 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
               const results = await app.services.revalidator.revalidate({
                 baseUrl,
                 app,
+                authHeader,
               });
               if (results.failed.length === 0 && !results.revalidationFailed) {
                 app.logger.info(
