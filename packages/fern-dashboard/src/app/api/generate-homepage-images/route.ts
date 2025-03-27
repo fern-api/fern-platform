@@ -9,10 +9,10 @@ import { setTimeout } from "timers/promises";
 import { FdrAPI } from "@fern-api/fdr-sdk";
 import { FernVenusApi } from "@fern-api/venus-api-sdk";
 
-import { getFdrClient } from "./fdr";
+import { getFdrClient } from "../../services/fdr";
+import { getS3Client } from "../../services/s3";
+import { getVenusClient } from "../../services/venus";
 import { parseAuthHeader } from "./parseAuthHeader";
-import { getS3Client } from "./s3";
-import { getVenusClient } from "./venus";
 
 export const maxDuration = 60;
 
