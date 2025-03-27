@@ -8,9 +8,10 @@ const nextConfig: NextConfig = {
      *
      * pnpm list --filter=@fern-dashboard/ui --only-projects --prod --recursive --depth=Infinity --json | jq -r '[.. | objects | select(.version | .!=null) | select(.version | startswith("link:")) | .from] | unique'
      */
+    "@fern-api/fdr-sdk",
   ],
   experimental: {
-    optimizePackageImports: [],
+    optimizePackageImports: ["@fern-api/fdr-sdk"],
   },
   images: {
     remotePatterns: [
@@ -28,6 +29,10 @@ const nextConfig: NextConfig = {
       process.env.VERCEL_ENV === "preview"
         ? `https://${process.env.VERCEL_BRANCH_URL}`
         : process.env.APP_BASE_URL,
+  },
+  webpack: (webpackConfig) => {
+    webpackConfig.externals.push("sharp");
+    return webpackConfig;
   },
 };
 
