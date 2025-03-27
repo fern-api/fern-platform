@@ -1,8 +1,6 @@
 import { redirect } from "next/navigation";
 
-import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
 import { DocsZeroState } from "@/components/docs-page/DocsZeroState";
-import { AppLayout } from "@/components/layout/AppLayout";
 import { constructDocsUrlParam } from "@/lib/constructDocsUrlParam";
 import { getDocsSiteUrl } from "@/lib/getDocsSiteUrl";
 
@@ -18,11 +16,5 @@ export default async function Page() {
     redirect(`/docs/${constructDocsUrlParam(getDocsSiteUrl(firstDocsSite))}`);
   }
 
-  return (
-    <ProtectedRoute>
-      <AppLayout>
-        <DocsZeroState />
-      </AppLayout>
-    </ProtectedRoute>
-  );
+  return <DocsZeroState />;
 }
