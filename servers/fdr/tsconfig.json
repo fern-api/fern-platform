@@ -29,9 +29,6 @@
     },
     {
       "path": "../../packages/commons/core-utils"
-    },
-    {
-      "path": "../../packages/fern-docs/search-server"
     }
   ]
 }
