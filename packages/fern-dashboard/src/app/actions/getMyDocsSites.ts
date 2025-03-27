@@ -18,8 +18,6 @@ export async function getMyDocsSites(): Promise<FdrAPI.dashboard.GetDocsSitesFor
   const currentOrg = await getCurrentOrg();
   const orgId = currentOrg.name;
 
-  console.log({ orgId });
-
   return MY_DOCS_SITE_CACHE.get(orgId, async () => {
     const { session } = await getCurrentSession();
     const fdr = getFdrClient({ token: session.tokenSet.accessToken });
