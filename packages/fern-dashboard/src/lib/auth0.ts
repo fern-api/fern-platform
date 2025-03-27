@@ -2,12 +2,19 @@ import { redirect } from "next/navigation";
 
 import { Auth0Client } from "@auth0/nextjs-auth0/server";
 
+if (process.env.VENUS_AUDIENCE == null) {
+  throw new Error("VENUS_AUDIENCE is not defined in the environment");
+}
+
 export const auth0 = new Auth0Client({
   async beforeSessionSaved(session, idToken) {
     return {
       ...session,
       idToken,
     };
+  },
+  authorizationParameters: {
+    audience: process.env.VENUS_AUDIENCE,
   },
 });
 

@@ -14,9 +14,11 @@ const MY_DOCS_SITE_CACHE = new AsyncCache<
   ttlInSeconds: 10,
 });
 
-export async function getMyDocsSites() {
+export async function getMyDocsSites(): Promise<FdrAPI.dashboard.GetDocsSitesForOrgResponse> {
   const currentOrg = await getCurrentOrg();
   const orgId = currentOrg.name;
+
+  console.log({ orgId });
 
   return MY_DOCS_SITE_CACHE.get(orgId, async () => {
     const { session } = await getCurrentSession();
