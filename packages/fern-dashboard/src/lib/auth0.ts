@@ -2,7 +2,8 @@ import { redirect } from "next/navigation";
 
 import { Auth0Client } from "@auth0/nextjs-auth0/server";
 
-const { NEXT_PUBLIC_VENUS_AUDIENCE, ZACH_TEST_APP_BASE_URL } = process.env;
+const ZACH_TEST_APP_BASE_URL = process.env.ZACH_TEST_APP_BASE_URL;
+const NEXT_PUBLIC_VENUS_AUDIENCE = process.env.NEXT_PUBLIC_VENUS_AUDIENCE;
 
 if (NEXT_PUBLIC_VENUS_AUDIENCE == null) {
   throw new Error(
