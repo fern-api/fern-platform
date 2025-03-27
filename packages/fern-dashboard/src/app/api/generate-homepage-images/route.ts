@@ -20,7 +20,15 @@ const IMAGE_FILETYPE = "avif";
 
 export async function POST(req: NextRequest) {
   const authHeader = req.headers.get("authorization");
-  const { token } = parseAuthHeader(authHeader);
+
+  let token: string;
+  try {
+    const parsedAuthHeader = parseAuthHeader(authHeader);
+    token = parsedAuthHeader.token;
+  } catch (e) {
+    console.error("Failed to parse auth header", e);
+    return NextResponse.json({}, { status: 401 });
+  }
 
   const { domain, path } = await req.json();
 
@@ -42,7 +50,7 @@ export async function POST(req: NextRequest) {
 
   const fdr = getFdrClient({ token });
   const tokenInfo = await fdr.docs.v2.read.getDocsUrlMetadata({
-    url: FdrAPI.Url(new URL(path ?? "", domain).toString()),
+    url: FdrAPI.Url(new URL(path ?? "", `https://${domain}`).toString()),
   });
   if (!tokenInfo.ok) {
     console.error("Failed to load docs URL metadata", tokenInfo.error);
@@ -55,10 +63,14 @@ export async function POST(req: NextRequest) {
     FernVenusApi.OrganizationId(orgId)
   );
   if (!isMember.ok) {
+    console.error("Failed to load org membership for user", isMember.error);
     throw new Error("Failed to load org membership for user");
   }
   if (!isMember.body) {
-    throw new Error("User does not have access to url");
+    return NextResponse.json(
+      { error: "User does not have access to url" },
+      { status: 403 }
+    );
   }
 
   try {
