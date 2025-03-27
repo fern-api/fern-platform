@@ -1,0 +1,38 @@
+docs: APIs for the Fern Dashboard
+
+imports:
+  commons: ../commons.yml
+
+service:
+  auth: true
+  base-path: /dashboard
+  endpoints:
+
+    getDocsSitesForOrg:
+      docs: Get all docs sites that belong to a given organization
+      path: /get-docs-sites-for-org
+      method: POST
+      request:
+        name: GetDocsSitesForOrgRequest
+        body:
+          properties:
+            orgId: commons.OrgId
+      response: GetDocsSitesForOrgResponse
+      errors:
+        - commons.UnauthorizedError
+        - commons.UserNotInOrgError
+
+types:
+  GetDocsSitesForOrgResponse:
+    properties:
+      docsSites: list<DocsSite>
+  
+  DocsSite:
+    properties:
+      mainUrl: DocsSiteUrl
+      urls: list<DocsSiteUrl>
+  
+  DocsSiteUrl:
+    properties:
+      domain: string
+      path: optional<string>
