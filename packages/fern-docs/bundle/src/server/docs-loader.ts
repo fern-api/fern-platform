@@ -273,7 +273,8 @@ export const getMetadata = cache(
       return metadata;
     } catch (error) {
       postToEngineeringNotifs(
-        `:rotating_light: Failed to get metadata for ${domain} with the following error: ${String(error)}`
+        `:rotating_light: Failed to get metadata for ${domain} with the following error: ${String(error)}`,
+        "get-metadata"
       );
       throw error;
     }
