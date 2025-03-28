@@ -1,7 +1,7 @@
 import { GetOrganizations200ResponseOneOfInner, ManagementClient } from "auth0";
 import jwt from "jsonwebtoken";
 
-import { auth0 } from "@/lib/auth0";
+import { getAuth0Client } from "@/utils/auth0";
 
 import { AsyncCache } from "./AsyncCache";
 import { Auth0OrgID, Auth0UserID } from "./types";
@@ -34,6 +34,7 @@ export function getAuth0ManagementClient() {
 }
 
 export async function getCurrentSession() {
+  const auth0 = await getAuth0Client();
   const session = await auth0.getSession();
   if (session == null) {
     throw new Error("Not authenticated");
@@ -62,6 +63,7 @@ export async function getCurrentSession() {
 }
 
 export async function getCurrentOrgId() {
+  const auth0 = await getAuth0Client();
   const session = await auth0.getSession();
 
   if (session?.user.org_id == null) {

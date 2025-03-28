@@ -33,7 +33,7 @@ export function useOrgMembers() {
     }
 
     void run();
-  }, []);
+  }, [orgMembers.type, setOrgMembers]);
 
   return orgMembers;
 }

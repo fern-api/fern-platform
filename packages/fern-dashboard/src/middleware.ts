@@ -1,12 +1,12 @@
-import { type NextRequest, NextResponse } from "next/server";
+import { type NextRequest } from "next/server";
 
-import { auth0 } from "./lib/auth0";
+import { getAuth0Client } from "./utils/auth0";
 
-// copied from https://github.com/auth0/nextjs-auth0/issues/1983
 export async function middleware(req: NextRequest) {
+  const auth0 = await getAuth0Client();
   const authResponse = await auth0.middleware(req);
 
-  // Process Auth0 middleware
+  // copied from https://github.com/auth0/nextjs-auth0/issues/1983
   if (req.nextUrl.pathname.startsWith("/auth")) {
     if (req.nextUrl.pathname === "/auth/login") {
       // This is a workaround for this issue: https://github.com/auth0/nextjs-auth0/issues/1917
@@ -19,16 +19,8 @@ export async function middleware(req: NextRequest) {
         }
       });
     }
-    return authResponse;
   }
 
-  const session = await auth0.getSession(req);
-  // Redirect must only be applied if not logout, otherwise logout doesn't work.
-  if (!session && !req.nextUrl.pathname.startsWith("/auth/logout")) {
-    return NextResponse.redirect(new URL("/auth/login", req.nextUrl.origin));
-  }
-
-  // Auth0 middleware response *must* be returned, because of the headers.
   return authResponse;
 }
 
