@@ -14,7 +14,7 @@ const buttonVariants = cva(
         default:
           "bg-(color:--grayscale-a3) text-(color:--grayscale-a10) hover:bg-(color:--grayscale-a4)",
         loading:
-          "bg-(color:--grayscale-a3) text-(color:--grayscale-a10) cursor-default",
+          "bg-(color:--grayscale-a3) text-(color:--grayscale-a10) cursor-not-allowed",
       },
     },
     defaultVariants: {
