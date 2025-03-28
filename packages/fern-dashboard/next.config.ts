@@ -1,6 +1,11 @@
 /* eslint-disable turbo/no-undeclared-env-vars */
 import type { NextConfig } from "next";
 
+const APP_BASE_URL =
+  process.env.VERCEL_ENV === "preview"
+    ? `https://${process.env.VERCEL_BRANCH_URL}`
+    : process.env.NEXT_PUBLIC_APP_BASE_URL;
+
 const nextConfig: NextConfig = {
   transpilePackages: [
     /**
@@ -11,7 +16,7 @@ const nextConfig: NextConfig = {
     "@fern-api/fdr-sdk",
   ],
   experimental: {
-    optimizePackageImports: ["@fern-api/fdr-sdk"],
+    optimizePackageImports: [],
   },
   images: {
     remotePatterns: [
@@ -25,15 +30,19 @@ const nextConfig: NextConfig = {
     ],
   },
   env: {
-    APP_BASE_URL:
-      process.env.VERCEL_ENV === "preview"
-        ? `https://${process.env.VERCEL_BRANCH_URL}`
-        : process.env.APP_BASE_URL,
+    // need this to be NEXT_PUBLIC_ so it's accessible in auth0.ts
+    NEXT_PUBLIC_APP_BASE_URL: APP_BASE_URL,
+
+    // Auth0 expects APP_BASE_URL to exist
+    APP_BASE_URL,
   },
   webpack: (webpackConfig) => {
     webpackConfig.externals.push("sharp");
     return webpackConfig;
   },
+
+  // vercel chokes on monorepo compilation and we run compile before building
+  typescript: { ignoreBuildErrors: true },
 };
 
 export default nextConfig;

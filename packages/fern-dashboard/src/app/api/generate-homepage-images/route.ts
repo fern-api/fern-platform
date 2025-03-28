@@ -1,3 +1,4 @@
+/* eslint-disable turbo/no-undeclared-env-vars */
 import { NextRequest, NextResponse } from "next/server";
 
 import { PutObjectCommand } from "@aws-sdk/client-s3";
@@ -9,10 +10,10 @@ import { setTimeout } from "timers/promises";
 import { FdrAPI } from "@fern-api/fdr-sdk";
 import { FernVenusApi } from "@fern-api/venus-api-sdk";
 
-import { getFdrClient } from "./fdr";
+import { getFdrClient } from "../../services/fdr";
+import { getS3Client } from "../../services/s3";
+import { getVenusClient } from "../../services/venus";
 import { parseAuthHeader } from "./parseAuthHeader";
-import { getS3Client } from "./s3";
-import { getVenusClient } from "./venus";
 
 export const maxDuration = 60;
 
@@ -131,9 +132,15 @@ async function takeScreenshotAndWriteToAws({
     [IMAGE_FILETYPE]({ quality: 50 })
     .toBuffer();
 
+  if (process.env.HOMEPAGE_IMAGES_S3_BUCKET_NAME == null) {
+    throw new Error(
+      "HOMEPAGE_IMAGES_S3_BUCKET_NAME is not defined in the environment"
+    );
+  }
+
   await getS3Client().send(
     new PutObjectCommand({
-      Bucket: "dev2-docs-homepage-images",
+      Bucket: process.env.HOMEPAGE_IMAGES_S3_BUCKET_NAME,
       Key: getS3KeyForHomepageScreenshot({ url, theme }),
       Body: compressedScreenshotBuffer,
       ContentType: `image/${IMAGE_FILETYPE}`,

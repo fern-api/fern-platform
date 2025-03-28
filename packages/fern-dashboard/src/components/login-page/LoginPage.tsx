@@ -3,9 +3,9 @@ import Image from "next/image";
 import { BookOpen } from "lucide-react";
 
 import loginPreview from "../../../public/login-preview.avif";
+import { LoginButton } from "../auth/LoginButton";
 import { ThemedFernLogo } from "../theme/ThemedFernLogo";
 import { Button } from "../ui/button";
-import { LoginButton } from "./LoginButton";
 
 export const LoginPage = () => {
   return (
