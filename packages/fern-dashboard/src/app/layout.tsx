@@ -3,7 +3,7 @@ import { ThemeProvider } from "next-themes";
 
 import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
 import { AppLayout } from "@/components/layout/AppLayout";
-import { getAuth0Client } from "@/lib/auth0";
+import { getAuth0Client } from "@/utils/auth0";
 
 import { gtPlanar } from "./fonts";
 import "./globals.css";

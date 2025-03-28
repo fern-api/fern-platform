@@ -1,7 +1,7 @@
 import { GetOrganizations200ResponseOneOfInner, ManagementClient } from "auth0";
 import jwt from "jsonwebtoken";
 
-import { getAuth0Client } from "@/lib/auth0";
+import { getAuth0Client } from "@/utils/auth0";
 
 import { AsyncCache } from "./AsyncCache";
 import { Auth0OrgName } from "./types";

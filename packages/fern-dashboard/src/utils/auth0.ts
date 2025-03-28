@@ -3,19 +3,6 @@ import { redirect } from "next/navigation";
 
 import { Auth0Client } from "@auth0/nextjs-auth0/server";
 
-const ZACH_TEST_APP_BASE_URL = process.env.ZACH_TEST_APP_BASE_URL;
-const NEXT_PUBLIC_VENUS_AUDIENCE = process.env.NEXT_PUBLIC_VENUS_AUDIENCE;
-
-if (NEXT_PUBLIC_VENUS_AUDIENCE == null) {
-  throw new Error(
-    "NEXT_PUBLIC_VENUS_AUDIENCE is not defined in the environment"
-  );
-}
-
-if (ZACH_TEST_APP_BASE_URL == null) {
-  throw new Error("ZACH_TEST_APP_BASE_URL is not defined in the environment");
-}
-
 export async function getAuth0Client() {
   return new Auth0Client({
     async beforeSessionSaved(session, idToken) {
@@ -25,12 +12,13 @@ export async function getAuth0Client() {
       };
     },
     authorizationParameters: {
-      audience: NEXT_PUBLIC_VENUS_AUDIENCE,
+      audience: process.env.NEXT_PUBLIC_VENUS_AUDIENCE,
     },
     appBaseUrl: await getBaseUrl(),
   });
 }
 
+// copied from https://github.com/auth0/nextjs-auth0/issues/1882#issuecomment-2732867513
 async function getBaseUrl(): Promise<string> {
   const headersList = await headers();
 

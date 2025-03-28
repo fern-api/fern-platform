@@ -2,9 +2,9 @@
 
 import { BookOpenIcon } from "@heroicons/react/24/outline";
 
-import { constructDocsUrlParam } from "@/lib/constructDocsUrlParam";
-import { getDocsSiteUrl } from "@/lib/getDocsSiteUrl";
-import { useMyDocsSites } from "@/lib/useMyDocsSites";
+import { constructDocsUrlParam } from "@/utils/constructDocsUrlParam";
+import { getDocsSiteUrl } from "@/utils/getDocsSiteUrl";
+import { useMyDocsSites } from "@/utils/useMyDocsSites";
 
 import { DocsNavbarSubItems } from "./DocsNavbarSubItems";
 import { ICON_SIZE, NavbarItem } from "./NavbarItem";

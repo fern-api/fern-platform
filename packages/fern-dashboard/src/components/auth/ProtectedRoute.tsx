@@ -3,7 +3,7 @@ import React from "react";
 
 import { createPersonalProject } from "@/app/actions/createPersonalProject";
 import { getMyOrganizations } from "@/app/actions/getMyOrganizations";
-import { getAuth0Client } from "@/lib/auth0";
+import { getAuth0Client } from "@/utils/auth0";
 
 export declare namespace ProtectedRoute {
   export interface Props {
