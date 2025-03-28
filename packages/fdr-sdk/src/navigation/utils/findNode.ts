@@ -3,6 +3,8 @@ import { escapeRegExp } from "es-toolkit/string";
 import { FernNavigation } from "../..";
 import { NodeCollector } from "../NodeCollector";
 import { isApiReferenceNode } from "../versions/latest/isApiReferenceNode";
+import { isProductGroupNode } from "../versions/latest/isProductGroupNode";
+import { isProductNode } from "../versions/latest/isProductNode";
 import { isSidebarRootNode } from "../versions/latest/isSidebarRootNode";
 import { isTabbedNode } from "../versions/latest/isTabbedNode";
 import { isUnversionedNode } from "../versions/latest/isUnversionedNode";
@@ -18,6 +20,8 @@ export declare namespace Node {
     parents: readonly FernNavigation.NavigationNodeParent[];
     breadcrumb: readonly FernNavigation.BreadcrumbItem[];
     root: FernNavigation.RootNode;
+    products: readonly FernNavigation.ProductNode[];
+    currentProduct: FernNavigation.ProductNode | undefined;
     versions: readonly FernNavigation.VersionNode[];
     currentVersion: FernNavigation.VersionNode | undefined;
     /**
@@ -84,10 +88,19 @@ export function findNode(
   }
 
   const sidebar = found.parents.find(isSidebarRootNode);
+  const currentProductGroup = found.parents.find(isProductGroupNode);
+  // TODO: remove console.log
+  console.log("currentProduct", currentProductGroup);
+  const productChildren = currentProductGroup?.children;
   const currentVersion = found.parents.find(isVersionNode);
   const unversionedNode = found.parents.find(isUnversionedNode);
   const versionChild = (currentVersion ?? unversionedNode)?.child;
-  const landingPage = (currentVersion ?? unversionedNode)?.landingPage;
+  const landingPage = (currentProductGroup ?? currentVersion ?? unversionedNode)
+    ?.landingPage;
+
+  const currentProduct = productChildren?.find(isProductNode);
+  // TODO: remove console.log
+  console.log("currentProduct", currentProduct);
 
   const tabbedNode =
     found.parents.find(isTabbedNode) ??
@@ -100,7 +113,7 @@ export function findNode(
     found.parents.find(isApiReferenceNode) ??
     (found.node.type === "apiReference" ? found.node : undefined);
 
-  // if the node is visible (becaues it's a page), return it as "found"
+  // if the node is visible (because it's a page), return it as "found"
   if (FernNavigation.isPage(found.node)) {
     const parentsAndNode = [...found.parents, found.node];
     const tabbedNodeIndex = parentsAndNode.findIndex(
@@ -108,6 +121,18 @@ export function findNode(
     );
     const currentTabNode =
       tabbedNodeIndex !== -1 ? parentsAndNode[tabbedNodeIndex + 1] : undefined;
+    const products = collector.getProductNodes().map((node) => {
+      if (node.default) {
+        // if we're currently viewing the default version, we may be viewing the non-pruned version
+        if (node.id === currentProduct?.id) {
+          return currentProduct;
+        }
+        // otherwise, we should always use the pruned version node
+        return collector.defaultProductNode ?? node;
+      }
+      return node;
+    });
+
     const versions = collector.getVersionNodes().map((node) => {
       if (node.default) {
         // if we're currently viewing the default version, we may be viewing the non-pruned version
@@ -123,7 +148,8 @@ export function findNode(
       currentTabNode?.type === "tab" || currentTabNode?.type === "changelog"
         ? currentTabNode
         : undefined;
-    const slugPrefix = currentVersion?.slug ?? root.slug;
+    const slugPrefix =
+      currentProduct?.slug ?? currentVersion?.slug ?? root.slug;
     const unversionedSlug = FernNavigation.Slug(
       found.node.slug.replace(new RegExp(`^${escapeRegExp(slugPrefix)}/`), "")
     );
@@ -133,8 +159,10 @@ export function findNode(
       breadcrumb: createBreadcrumb(found.parents),
       parents: found.parents,
       root,
-      versions, // this is used to render the version switcher
       tabs: tabbedNode?.children ?? [],
+      products,
+      currentProduct,
+      versions, // this is used to render the version switcher
       currentVersion,
       isCurrentVersionDefault: currentVersion?.default
         ? currentVersion === collector.defaultVersionNode

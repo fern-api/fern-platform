@@ -3,6 +3,7 @@
 @import "./FernCard.scss";
 @import "./FernCheckbox.scss";
 @import "./FernDropdown.scss";
+@import "./FernProductDropdown.scss";
 @import "./FernInput.scss";
 @import "./FernRadioGroup.scss";
 @import "./FernScrollArea.scss";

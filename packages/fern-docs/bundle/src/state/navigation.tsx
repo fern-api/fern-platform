@@ -78,9 +78,13 @@ const currentSidebarRootNodeIdAtom = atom<FernNavigation.NodeId | undefined>(
 );
 const currentNodeIdAtom = atom<FernNavigation.NodeId | undefined>(undefined);
 const currentTabIdAtom = atom<FernNavigation.NodeId | undefined>(undefined);
+const currentProductIdAtom = atom<FernNavigation.ProductId | undefined>(
+  undefined
+);
 const currentVersionIdAtom = atom<FernNavigation.VersionId | undefined>(
   undefined
 );
+const currentProductSlugAtom = atom<FernNavigation.Slug | undefined>(undefined);
 const currentVersionSlugAtom = atom<FernNavigation.Slug | undefined>(undefined);
 
 // if true, the current version is the default version
@@ -96,6 +100,14 @@ export function useCurrentNodeId() {
 
 export function useCurrentTabId() {
   return useAtomValue(currentTabIdAtom);
+}
+
+export function useCurrentProductId() {
+  return useAtomValue(currentProductIdAtom);
+}
+
+export function useCurrentProductSlug() {
+  return useAtomValue(currentProductSlugAtom);
 }
 
 export function useCurrentVersionId() {
@@ -114,6 +126,8 @@ export function SetCurrentNavigationNode({
   sidebarRootNodeId,
   nodeId,
   tabId,
+  productId,
+  productSlug,
   versionId,
   versionSlug,
   versionIsDefault,
@@ -121,6 +135,8 @@ export function SetCurrentNavigationNode({
   sidebarRootNodeId?: FernNavigation.NodeId;
   nodeId?: FernNavigation.NodeId;
   tabId?: FernNavigation.NodeId;
+  productId?: FernNavigation.ProductId;
+  productSlug?: FernNavigation.Slug;
   versionId?: FernNavigation.VersionId;
   versionSlug?: FernNavigation.Slug;
   versionIsDefault?: boolean;
@@ -130,12 +146,16 @@ export function SetCurrentNavigationNode({
   const setCurrentSidebarRootNodeId = useSetAtom(currentSidebarRootNodeIdAtom);
   const setCurrentNodeId = useSetAtom(currentNodeIdAtom);
   const setCurrentTabId = useSetAtom(currentTabIdAtom);
+  const setCurrentProductId = useSetAtom(currentProductIdAtom);
+  const setCurrentProductSlug = useSetAtom(currentProductSlugAtom);
   const setCurrentVersionId = useSetAtom(currentVersionIdAtom);
   const setCurrentVersionSlug = useSetAtom(currentVersionSlugAtom);
   const setCurrentVersionIsDefault = useSetAtom(currentVersionIsDefaultAtom);
   useIsomorphicLayoutEffect(() => {
     setCurrentSidebarRootNodeId(sidebarRootNodeId);
     setCurrentNodeId(nodeId);
+    setCurrentProductId(productId);
+    setCurrentProductSlug(productSlug);
     setCurrentTabId(tabId);
     setCurrentVersionId(versionId);
     setCurrentVersionSlug(versionSlug);
@@ -144,6 +164,8 @@ export function SetCurrentNavigationNode({
     nodeId,
     tabId,
     sidebarRootNodeId,
+    productId,
+    productSlug,
     versionId,
     versionSlug,
     versionIsDefault,

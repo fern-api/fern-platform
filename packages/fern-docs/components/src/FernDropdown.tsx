@@ -19,11 +19,25 @@ import { Check, Info } from "lucide-react";
 
 import { useResizeObserver } from "@fern-ui/react-commons";
 
+import { FernProductItem } from "./FernProductItem";
 import { FernScrollArea } from "./FernScrollArea";
 import { FernTooltip, FernTooltipProvider } from "./FernTooltip";
 import { cn } from "./cn";
 
 export declare namespace FernDropdown {
+  export interface ProductOption {
+    type: "product";
+    id: string;
+    title: string;
+    subtitle?: string;
+    children?: ReactNode | ((active: boolean) => ReactNode);
+    value: string;
+    icon?: ReactNode;
+    className?: string;
+    labelClassName?: string;
+    href?: string;
+  }
+
   export interface ValueOption {
     type: "value";
     label?: ReactNode;
@@ -41,7 +55,7 @@ export declare namespace FernDropdown {
     type: "separator";
   }
 
-  export type Option = ValueOption | SeparatorOption;
+  export type Option = ProductOption | ValueOption | SeparatorOption;
 
   export interface Props {
     className?: string;
@@ -126,6 +140,12 @@ export const FernDropdown = forwardRef<
                     value={value}
                     dropdownMenuElement={dropdownMenuElement}
                     container={container}
+                  />
+                ) : option.type === "product" ? (
+                  <FernProductItem
+                    key={option.id}
+                    option={option}
+                    highlighted={value === option.value}
                   />
                 ) : (
                   <DropdownMenu.Separator

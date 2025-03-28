@@ -1,0 +1,10 @@
+@layer components {
+  .fern-product-dropdown {
+    @apply relative z-50;
+    @apply animate-popover;
+    @apply min-w-(--radix-dropdown-menu-content-width) max-w-[min(50vw,300px)];
+    @apply bg-card-background border-(color:--grayscale-a6) rounded-2 border will-change-[opacity,transform];
+    @apply shadow-xl;
+    @apply flex cursor-pointer flex-col gap-1 p-2;
+  }
+}
