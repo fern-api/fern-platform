@@ -14,7 +14,7 @@ const buttonVariants = cva(
         default:
           "bg-(color:--grayscale-a3) text-(color:--grayscale-a10) hover:bg-(color:--grayscale-a4)",
         loading:
-          "bg-(color:--grayscale-a3) text-(color:--grayscale-a10) cursor-default",
+          "bg-(color:--grayscale-a3) text-(color:--grayscale-a10) cursor-not-allowed",
       },
     },
     defaultVariants: {
@@ -25,8 +25,11 @@ const buttonVariants = cva(
 
 export const DesktopSearchButton = forwardRef<
   HTMLButtonElement,
-  ComponentPropsWithoutRef<"button"> & VariantProps<typeof buttonVariants>
->(({ children, variant, className, ...rest }, ref) => {
+  ComponentPropsWithoutRef<"button"> &
+    VariantProps<typeof buttonVariants> & {
+      placeholder?: string;
+    }
+>(({ children, variant, placeholder = "Search", className, ...rest }, ref) => {
   return (
     <button
       {...rest}
@@ -34,7 +37,7 @@ export const DesktopSearchButton = forwardRef<
       ref={ref}
     >
       <SearchIcon />
-      Search
+      {placeholder}
       <CommandKbd className="pointer-coarse:hidden ml-auto" />
     </button>
   );
