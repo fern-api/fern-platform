@@ -25,8 +25,11 @@ const buttonVariants = cva(
 
 export const DesktopSearchButton = forwardRef<
   HTMLButtonElement,
-  ComponentPropsWithoutRef<"button"> & VariantProps<typeof buttonVariants>
->(({ children, variant, className, ...rest }, ref) => {
+  ComponentPropsWithoutRef<"button"> &
+    VariantProps<typeof buttonVariants> & {
+      placeholder?: string;
+    }
+>(({ children, variant, placeholder = "Search", className, ...rest }, ref) => {
   return (
     <button
       {...rest}
@@ -34,7 +37,7 @@ export const DesktopSearchButton = forwardRef<
       ref={ref}
     >
       <SearchIcon />
-      Search
+      {placeholder}
       <CommandKbd className="pointer-coarse:hidden ml-auto" />
     </button>
   );

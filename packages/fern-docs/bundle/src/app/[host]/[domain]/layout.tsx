@@ -34,6 +34,7 @@ import {
   getAllSidebarRootNodes,
   getSidebarRootNodeIdToChildToParentsMap,
 } from "@/state/navigation-server";
+import { SetIsAskAiEnabled } from "@/state/search";
 import { Whitelabeled } from "@/state/whitelabeled";
 
 import { GlobalStyles } from "../../global-styles";
@@ -107,6 +108,7 @@ export default async function Layout({
         <DarkCode value={edgeFlags.isDarkCodeEnabled} />
         <Whitelabeled value={edgeFlags.isWhitelabeled} />
         <SetColors colors={colors} />
+        <SetIsAskAiEnabled isAskAiEnabled={edgeFlags.isAskAiEnabled} />
         <FernUser domain={domain} host={host} />
         <GlobalStyles
           domain={domain}
@@ -120,7 +122,7 @@ export default async function Layout({
           {children}
         </FeatureFlagProvider>
         <React.Suspense fallback={null}>
-          <SearchV2 domain={domain} isAskAiEnabled={edgeFlags.isAskAiEnabled} />
+          <SearchV2 domain={domain} />
         </React.Suspense>
         {jsConfig != null && <JavascriptProvider config={jsConfig} />}
         {VERCEL_ENV === "production" && (
