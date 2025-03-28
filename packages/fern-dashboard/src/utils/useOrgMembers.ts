@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import { GetMembers200ResponseOneOfInner } from "auth0";
 import { create } from "zustand";
 
-import { getCurrentOrgMembers } from "@/app/actions/getCurrentOrgMembers";
+import { getCurrentOrgMembers } from "@/app/actions/getOrgMembers";
 
 import { Loadable } from "./Loadable";
 

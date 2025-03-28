@@ -6,6 +6,7 @@ import { GetOrganizations200ResponseOneOfInner } from "auth0";
 import { create } from "zustand";
 
 import { getMyOrganizations } from "@/app/actions/getMyOrganizations";
+import { Auth0OrgID } from "@/app/actions/types";
 
 import { OrgSwitcherSelect } from "./OrgSwitcherSelect";
 
@@ -22,7 +23,7 @@ export const useOrganizationsStore = create<OrganizationsStore>((set) => ({
 
 export declare namespace OrgSwitcher {
   export interface Props {
-    currentOrgId: string | undefined;
+    currentOrgId: Auth0OrgID | undefined;
   }
 }
 

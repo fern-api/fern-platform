@@ -14,8 +14,10 @@ const ORGANIZATION_MEMBERS_CACHE = new AsyncCache<
 });
 
 export async function getCurrentOrgMembers() {
-  const orgId = await getCurrentOrgId();
+  return await getOrgMembers(await getCurrentOrgId());
+}
 
+export async function getOrgMembers(orgId: Auth0OrgID) {
   return await ORGANIZATION_MEMBERS_CACHE.get(orgId, () =>
     getAllOrganizationMembers(orgId)
   );

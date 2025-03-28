@@ -23,10 +23,7 @@ export declare namespace Header {
 }
 
 export async function Header({ session }: Header.Props) {
-  const name = session.user.name;
-  const email = session.user.email;
-  const picture = session.user.picture;
-  const orgId = session.user.org_id;
+  const { name, email, picture, org_id: orgId } = session.user;
 
   return (
     <div className="flex justify-between p-4">

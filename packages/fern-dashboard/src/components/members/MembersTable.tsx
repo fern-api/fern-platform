@@ -1,6 +1,6 @@
 "use client";
 
-import { useOrgMembers } from "@/lib/useOrgMembers";
+import { useOrgMembers } from "@/utils/useOrgMembers";
 
 import { MemberRow } from "./MemberRow";
 
@@ -12,7 +12,7 @@ export function MembersTable() {
   }
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col rounded-xl border border-gray-500 bg-gray-100">
       {members.value.map((member) => (
         <MemberRow key={member.user_id} member={member} />
       ))}
