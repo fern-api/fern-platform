@@ -4,6 +4,7 @@ import { SessionData } from "@auth0/nextjs-auth0/types";
 import { UserIcon } from "@heroicons/react/24/outline";
 import { PopoverArrow } from "@radix-ui/react-popover";
 
+import { Auth0OrgID } from "@/app/actions/types";
 import {
   Popover,
   PopoverContent,
@@ -23,7 +24,8 @@ export declare namespace Header {
 }
 
 export async function Header({ session }: Header.Props) {
-  const { name, email, picture, org_id: orgId } = session.user;
+  const { name, email, picture, org_id } = session.user;
+  const orgId = org_id as Auth0OrgID | undefined;
 
   return (
     <div className="flex justify-between p-4">

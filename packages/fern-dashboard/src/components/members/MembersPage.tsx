@@ -1,10 +1,24 @@
-import { PlusIcon } from "@heroicons/react/24/outline";
+"use client";
+
+import { SessionData } from "@auth0/nextjs-auth0/types";
+
+import { getOrgIdOrThrow } from "@/utils/getOrgIdOrThrow";
+import { useOrganization } from "@/utils/useOrganizations";
 
 import { PageHeader } from "../layout/PageHeader";
-import { Button } from "../ui/button";
+import { InviteUserDialog } from "./InviteUserDialog";
 import { MembersTable } from "./MembersTable";
 
-export function MembersPage() {
+export declare namespace MembersPage {
+  export interface Props {
+    session: SessionData;
+  }
+}
+
+export function MembersPage({ session }: MembersPage.Props) {
+  const orgId = getOrgIdOrThrow(session);
+  const org = useOrganization(orgId);
+
   return (
     <div className="flex flex-1 flex-col">
       <PageHeader
@@ -12,10 +26,7 @@ export function MembersPage() {
         subtitle="Manage team members and invitations"
         rightContent={
           <div className="flex items-center">
-            <Button variant="outline">
-              <PlusIcon />
-              Add member
-            </Button>
+            <InviteUserDialog orgId={orgId} org={org} />
           </div>
         }
       />

@@ -43,7 +43,7 @@ export function MemberRow({ member }: MemberRow.Props) {
       <div className="flex items-center">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="px-2" size="icon">
+            <Button size="icon" variant="ghost">
               <EllipsisHorizontalIcon className="size-5" />
             </Button>
           </DropdownMenuTrigger>

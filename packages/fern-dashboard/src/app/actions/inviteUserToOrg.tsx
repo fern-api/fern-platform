@@ -1,3 +1,5 @@
+"use server";
+
 /* eslint-disable turbo/no-undeclared-env-vars */
 import { getAuth0ManagementClient, getCurrentSession } from "./auth0";
 import { getOrgMembers } from "./getOrgMembers";
@@ -27,6 +29,7 @@ export async function inviteUserToOrg({
       inviter: { name: session.user.name ?? "" },
       invitee: { email: inviteeEmail },
       client_id: getAuth0ClientId(),
+      send_invitation_email: true,
     }
   );
 }

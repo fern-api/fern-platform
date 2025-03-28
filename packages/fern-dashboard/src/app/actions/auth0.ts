@@ -2,6 +2,7 @@ import { GetOrganizations200ResponseOneOfInner, ManagementClient } from "auth0";
 import jwt from "jsonwebtoken";
 
 import { getAuth0Client } from "@/utils/auth0";
+import { getOrgIdOrThrow } from "@/utils/getOrgIdOrThrow";
 
 import { AsyncCache } from "./AsyncCache";
 import { Auth0OrgID, Auth0UserID } from "./types";
@@ -65,12 +66,10 @@ export async function getCurrentSession() {
 export async function getCurrentOrgId() {
   const auth0 = await getAuth0Client();
   const session = await auth0.getSession();
-
-  if (session?.user.org_id == null) {
-    throw new Error("org_id is not defined");
+  if (session == null) {
+    throw new Error("session is not defined");
   }
-
-  return session.user.org_id as Auth0OrgID;
+  return getOrgIdOrThrow(session);
 }
 
 const ORGANIZATIONS_CACHE = new AsyncCache<
