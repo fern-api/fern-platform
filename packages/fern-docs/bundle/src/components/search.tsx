@@ -30,7 +30,11 @@ import { useCurrentPathname } from "@/hooks/use-current-pathname";
 import { useSetTheme, useThemeSwitchEnabled } from "@/hooks/use-theme";
 import { useIsDarkCode } from "@/state/dark-code";
 import { useFernUser } from "@/state/fern-user";
-import { searchDialogOpenAtom, searchInitializedAtom } from "@/state/search";
+import {
+  searchDialogOpenAtom,
+  searchInitializedAtom,
+  useIsAskAiEnabled,
+} from "@/state/search";
 import { atomWithStorageString } from "@/state/utils/atomWithStorageString";
 
 const ALGOLIA_USER_TOKEN_KEY = "algolia-user-token";
@@ -56,15 +60,14 @@ const askAiAtom = atom(false);
 export const SearchV2 = React.memo(function SearchV2({
   domain,
   version,
-  isAskAiEnabled,
 }: {
   domain: string;
-  isAskAiEnabled: boolean;
   version?: VersionSwitcherInfo;
 }) {
   const isDarkCodeEnabled = useIsDarkCode();
   const userToken = useAlgoliaUserToken();
   const user = useFernUser();
+  const isAskAiEnabled = useIsAskAiEnabled();
 
   const [open, setOpen] = useCommandTrigger();
   const [askAi, setAskAi] = useAtom(askAiAtom);
