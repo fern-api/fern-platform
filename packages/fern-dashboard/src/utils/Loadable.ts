@@ -1,5 +1,3 @@
-import { load } from "../../../fdr-sdk/src/client/generated/api/resources/snippets";
-
 export type Loadable<T> =
   | { type: "notStartedLoading" }
   | { type: "loading" }

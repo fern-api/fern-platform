@@ -3,7 +3,7 @@ import React from "react";
 
 import { createPersonalProject } from "@/app/actions/createPersonalProject";
 import { getMyOrganizations } from "@/app/actions/getMyOrganizations";
-import { auth0 } from "@/lib/auth0";
+import { getAuth0Client } from "@/utils/auth0";
 
 export declare namespace ProtectedRoute {
   export interface Props {
@@ -12,6 +12,7 @@ export declare namespace ProtectedRoute {
 }
 
 export const ProtectedRoute = async ({ children }: ProtectedRoute.Props) => {
+  const auth0 = await getAuth0Client();
   const session = await auth0.getSession();
 
   if (session == null) {

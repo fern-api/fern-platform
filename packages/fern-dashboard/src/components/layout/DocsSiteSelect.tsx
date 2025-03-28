@@ -11,9 +11,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { constructDocsUrlParam } from "@/lib/constructDocsUrlParam";
-import { getDocsSiteUrl } from "@/lib/getDocsSiteUrl";
-import { DocsUrl } from "@/lib/types";
+import { constructDocsUrlParam } from "@/utils/constructDocsUrlParam";
+import { getDocsSiteUrl } from "@/utils/getDocsSiteUrl";
+import { DocsUrl } from "@/utils/types";
 
 export declare namespace DocsSiteSelect {
   export interface Props {

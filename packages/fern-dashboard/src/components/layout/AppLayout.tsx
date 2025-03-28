@@ -1,4 +1,4 @@
-import { getSessionOrRedirect } from "@/lib/auth0";
+import { getSessionOrRedirect } from "@/utils/auth0";
 
 import { Navbar } from "../navbar/Navbar";
 import { Header } from "./Header";

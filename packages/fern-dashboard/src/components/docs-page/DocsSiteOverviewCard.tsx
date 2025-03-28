@@ -1,9 +1,9 @@
 "use client";
 
-import { unwrapLoadable } from "@/lib/Loadable";
-import { getDocsSiteUrl } from "@/lib/getDocsSiteUrl";
-import { DocsUrl } from "@/lib/types";
-import { useDocsSite } from "@/lib/useMyDocsSites";
+import { unwrapLoadable } from "@/utils/Loadable";
+import { getDocsSiteUrl } from "@/utils/getDocsSiteUrl";
+import { DocsUrl } from "@/utils/types";
+import { useDocsSite } from "@/utils/useMyDocsSites";
 
 export declare namespace DocsSiteOverviewCard {
   export interface Props {

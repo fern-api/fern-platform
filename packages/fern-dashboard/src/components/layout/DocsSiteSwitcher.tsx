@@ -2,8 +2,8 @@
 
 import { useParams } from "next/navigation";
 
-import { parseDocsUrlParam } from "@/lib/parseDocsUrlParam";
-import { useMyDocsSites } from "@/lib/useMyDocsSites";
+import { parseDocsUrlParam } from "@/utils/parseDocsUrlParam";
+import { useMyDocsSites } from "@/utils/useMyDocsSites";
 
 import { DocsSiteSelect } from "./DocsSiteSelect";
 
