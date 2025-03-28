@@ -134,7 +134,7 @@ export const EndpointUrl = React.forwardRef<
             }
           >
             {(onClick) => (
-              <button
+              <span
                 className="flex items-center"
                 onClick={onClick}
                 onPointerEnter={() => setIsHovered(true)}
@@ -168,7 +168,7 @@ export const EndpointUrl = React.forwardRef<
                     )}
                   {pathParts}
                 </span>
-              </button>
+              </span>
             )}
           </CopyToClipboardButton>
         </span>
