@@ -1,5 +1,7 @@
 import "server-only";
 
+import rehypeShiki, { RehypeShikiOptions } from "@shikijs/rehype";
+import { rendererRich, transformerTwoslash } from "@shikijs/twoslash";
 import { mapKeys } from "es-toolkit/object";
 import fs from "fs";
 import { gracefulify } from "graceful-fs";
@@ -156,6 +158,21 @@ async function serializeMdxImpl(
         [rehypeFiles, { files: remoteFiles }],
         rehypeMdxClassStyle,
         rehypeCodeBlock,
+        [
+          rehypeShiki,
+          {
+            themes: {
+              light: "min-light",
+              dark: "material-theme-darker",
+            },
+            transformers: [
+              transformerTwoslash({
+                explicitTrigger: true,
+                renderer: rendererRich(),
+              }),
+            ],
+          } satisfies RehypeShikiOptions,
+        ],
         rehypeSteps,
         rehypeAccordions,
         rehypeTabs,

@@ -79,6 +79,8 @@
     "@react-three/drei": "10.0.3",
     "@react-three/fiber": "9.0.4",
     "@segment/snippet": "^5.2.1",
+    "@shikijs/rehype": "^3.2.1",
+    "@shikijs/twoslash": "^3.2.1",
     "@slack/web-api": "^6.9.0",
     "@types/qs": "6.9.14",
     "@upstash/qstash": "^2.7.16",

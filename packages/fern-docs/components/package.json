@@ -86,7 +86,7 @@
     "hastscript": "^9.0.0",
     "lucide-react": "^0.460.0",
     "react-virtuoso": "^4.7.7",
-    "shiki": "^1.24.0",
+    "shiki": "^3.2.1",
     "sonner": "^1.5.0",
     "swr": "^2.2.5",
     "tailwind-merge": "^3.0.1",

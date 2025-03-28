@@ -43,6 +43,11 @@ export const rehypeCodeBlock: Unified.Plugin<[], Hast.Root> = () => {
         return;
       }
 
+      // for now, rehypeShiki will process twoslash + shiki
+      if (codeNode.data?.meta?.includes("twoslash")) {
+        return;
+      }
+
       const language = compact(flatten([codeNode.properties?.className]))
         .find(
           (className): className is string =>
