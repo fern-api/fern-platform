@@ -1,5 +1,5 @@
 import { DocsSiteLayout } from "@/components/docs-page/DocsSiteLayout";
-import { parseDocsUrlParam } from "@/lib/parseDocsUrlParam";
+import { parseDocsUrlParam } from "@/utils/parseDocsUrlParam";
 
 export default async function Layout({
   params,

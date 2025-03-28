@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useMemo } from "react";
 
-import { cn } from "@/lib/cn";
+import { cn } from "@/utils/cn";
 
 export declare namespace DocsSiteNavBarItem {
   export interface Props {

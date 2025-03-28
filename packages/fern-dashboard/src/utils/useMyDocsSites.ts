@@ -35,7 +35,7 @@ export function useMyDocsSites() {
     }
 
     void run();
-  }, []);
+  }, [docsSites.type, setDocsSites]);
 
   return docsSites;
 }
