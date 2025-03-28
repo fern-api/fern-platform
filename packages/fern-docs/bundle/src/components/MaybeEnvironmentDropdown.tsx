@@ -4,7 +4,14 @@ import { useAtom } from "jotai";
 import { parse } from "url";
 
 import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
-import { FernButton, FernDropdown, FernInput, cn } from "@fern-docs/components";
+import {
+  FernButton,
+  FernDropdown,
+  FernInput,
+  FernTooltip,
+  FernTooltipProvider,
+  cn,
+} from "@fern-docs/components";
 import { useBooleanState } from "@fern-ui/react-commons";
 
 import { SELECTED_ENVIRONMENT_ATOM } from "@/state/environment";
@@ -162,64 +169,42 @@ export function MaybeEnvironmentDropdown({
           />
         </span>
       ) : (
-        <>
-          <span className="max-sm:hidden" style={{ pointerEvents: "auto" }}>
-            {options && options.length > 1 ? (
-              <FernDropdown
-                key="selectedEnvironment-selector"
-                options={options.map((env) => ({
-                  value: env.id,
-                  label: env.id,
-                  type: "value",
-                }))}
-                onValueChange={(value) => {
-                  setPlaygroundEnvironment(undefined);
-                  setSelectedEnvironmentId(value);
-                }}
-                value={selectedEnvironment?.id ?? environmentId}
-              >
-                <FernButton
-                  style={{ pointerEvents: "auto" }}
-                  className="h-auto px-1 py-0"
-                  text={
-                    <span
-                      key="protocol"
-                      className="whitespace-nowrap max-sm:hidden"
-                    >
+        <FernTooltipProvider>
+          <FernTooltip content="Double click to edit">
+            <span className="max-sm:hidden" style={{ pointerEvents: "auto" }}>
+              {options && options.length > 1 ? (
+                <FernDropdown
+                  key="selectedEnvironment-selector"
+                  options={options.map((env) => ({
+                    value: env.id,
+                    label: env.id,
+                    type: "value",
+                  }))}
+                  onValueChange={(value) => {
+                    setPlaygroundEnvironment(undefined);
+                    setSelectedEnvironmentId(value);
+                  }}
+                  value={selectedEnvironment?.id ?? environmentId}
+                >
+                  <FernButton
+                    style={{ pointerEvents: "auto" }}
+                    className="h-auto px-1 py-0"
+                    text={
                       <span
-                        className={protocolTextStyle}
-                      >{`${urlProtocol}//`}</span>
-                      <span className={urlTextStyle}>
-                        {fullyQualifiedDomainAndBasePath ?? ""}
+                        key="protocol"
+                        className="whitespace-nowrap max-sm:hidden"
+                      >
+                        <span
+                          className={protocolTextStyle}
+                        >{`${urlProtocol}//`}</span>
+                        <span className={urlTextStyle}>
+                          {fullyQualifiedDomainAndBasePath ?? ""}
+                        </span>
                       </span>
-                    </span>
-                  }
-                  size={small ? "small" : "normal"}
-                  variant="outlined"
-                  mono={true}
-                  onDoubleClick={
-                    editable
-                      ? () => {
-                          setInitialState(inputValue);
-                          isEditingEnvironment.setTrue();
-                        }
-                      : () => undefined
-                  }
-                />
-              </FernDropdown>
-            ) : (
-              <span
-                key="url"
-                className="whitespace-nowrap font-mono max-sm:hidden"
-              >
-                {editable ? (
-                  <span
-                    className={cn(
-                      urlTextStyle,
-                      "p-0",
-                      small ? "text-xs" : "text-sm",
-                      "hover:shadow-lg"
-                    )}
+                    }
+                    size={small ? "small" : "normal"}
+                    variant="outlined"
+                    mono={true}
                     onDoubleClick={
                       editable
                         ? () => {
@@ -228,28 +213,52 @@ export function MaybeEnvironmentDropdown({
                           }
                         : () => undefined
                     }
-                  >
-                    {`${urlProtocol}//${fullyQualifiedDomainAndBasePath}`}
-                  </span>
-                ) : (
-                  <>
+                  />
+                </FernDropdown>
+              ) : (
+                <span
+                  key="url"
+                  className="whitespace-nowrap font-mono max-sm:hidden"
+                >
+                  {editable ? (
                     <span
                       className={cn(
-                        protocolTextStyle,
-                        small ? "text-xs" : "text-sm"
+                        urlTextStyle,
+                        "p-0",
+                        small ? "text-xs" : "text-sm",
+                        "hover:shadow-lg"
                       )}
+                      onDoubleClick={
+                        editable
+                          ? () => {
+                              setInitialState(inputValue);
+                              isEditingEnvironment.setTrue();
+                            }
+                          : () => undefined
+                      }
                     >
-                      {`${urlProtocol}//`}
+                      {`${urlProtocol}//${fullyQualifiedDomainAndBasePath}`}
                     </span>
-                    <span className={urlTextStyle}>
-                      {fullyQualifiedDomainAndBasePath}
-                    </span>
-                  </>
-                )}
-              </span>
-            )}
-          </span>
-        </>
+                  ) : (
+                    <>
+                      <span
+                        className={cn(
+                          protocolTextStyle,
+                          small ? "text-xs" : "text-sm"
+                        )}
+                      >
+                        {`${urlProtocol}//`}
+                      </span>
+                      <span className={urlTextStyle}>
+                        {fullyQualifiedDomainAndBasePath}
+                      </span>
+                    </>
+                  )}
+                </span>
+              )}
+            </span>
+          </FernTooltip>
+        </FernTooltipProvider>
       )}
     </>
   );
