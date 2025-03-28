@@ -10,7 +10,6 @@ import { DesktopSearchButton } from "@fern-docs/search-ui";
 import { useIsMobile } from "@fern-ui/react-commons";
 
 import { FERN_SEARCH_BUTTON_ID } from "@/components/constants";
-import { useIsLocalPreview } from "@/components/contexts/local-preview";
 
 export const searchDialogOpenAtom = atom(false);
 export const searchInitializedAtom = atom(false);
@@ -51,8 +50,6 @@ export const SearchV2Trigger = React.memo(function SearchV2Trigger(
   props: React.ComponentProps<typeof DesktopSearchButton>
 ) {
   const isInitialized = useAtomValue(searchInitializedAtom);
-  const isPreview = useIsLocalPreview();
-  console.log("isPreview", isPreview);
   const toggleSearchDialog = useToggleSearchDialog();
   const isAskAiEnabled = useIsAskAiEnabled();
   const isMobile = useIsMobile();
