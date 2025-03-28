@@ -1,3 +1,7 @@
+import { MembersPage } from "@/components/members/MembersPage";
+import { getSessionOrRedirect } from "@/utils/auth0";
+
 export default async function Page() {
-  return <div>members</div>;
+  const session = await getSessionOrRedirect();
+  return <MembersPage session={session} />;
 }

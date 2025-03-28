@@ -3,6 +3,7 @@ import { ThemeProvider } from "next-themes";
 
 import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
 import { AppLayout } from "@/components/layout/AppLayout";
+import { Toaster } from "@/components/ui/sonner";
 import { getAuth0Client } from "@/utils/auth0";
 
 import { gtPlanar } from "./fonts";
@@ -39,6 +40,7 @@ export default async function RootLayout({
           disableTransitionOnChange
         >
           {content}
+          <Toaster position="top-center" />
         </ThemeProvider>
       </body>
     </html>

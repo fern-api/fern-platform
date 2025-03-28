@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 
 import { GetOrganizations200ResponseOneOfInner } from "auth0";
 
+import { Auth0OrgID } from "@/app/actions/types";
 import {
   Select,
   SelectContent,
@@ -14,7 +15,7 @@ import {
 
 export declare namespace OrgSwitcherSelect {
   export interface Props {
-    currentOrgId: string | undefined;
+    currentOrgId: Auth0OrgID | undefined;
     organizations: GetOrganizations200ResponseOneOfInner[];
   }
 }
@@ -28,7 +29,7 @@ export const OrgSwitcherSelect = ({
     setLocalValue(currentOrgId);
   }, [currentOrgId]);
 
-  const onClickOrg = async (newOrgId: string) => {
+  const onClickOrg = async (newOrgId: Auth0OrgID) => {
     if (newOrgId === currentOrgId) {
       return;
     }

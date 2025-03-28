@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
 
-import { cn } from "@/utils/cn";
+import { cn } from "@/utils/utils";
 
 export declare namespace NavbarItem {
   export interface Props {

@@ -12,7 +12,7 @@ export const LoginPage = () => {
     <div className="relative flex flex-1">
       <div className="relative flex flex-1 items-center bg-white md:mx-2 md:mt-2 md:w-[40%] md:min-w-[350px] md:flex-initial md:rounded-t-2xl md:border-x md:border-t md:border-gray-200 md:shadow-md dark:bg-[#171717] dark:md:border-[rgb(46,46,46)]">
         <div className="mx-[15%] flex flex-1 flex-col">
-          <div className="text-gray-1200 mb-2 text-xl font-bold dark:text-gray-100">
+          <div className="mb-2 text-xl font-bold dark:text-gray-100">
             Welcome to Fern
           </div>
           <div className="mb-8 text-sm text-gray-900">
@@ -44,7 +44,7 @@ export const LoginPage = () => {
         <div className="mt-16 flex min-h-0 flex-1 flex-col overflow-hidden">
           <div className="mx-16 flex flex-col">
             <ThemedFernLogo className="mb-8 mt-4 w-28" />
-            <div className="text-gray-1200 text-3xl font-bold dark:text-gray-100">
+            <div className="text-3xl font-bold dark:text-gray-100">
               <div className="text-gray-1100 dark:text-gray-900">
                 Instantly offer
               </div>
