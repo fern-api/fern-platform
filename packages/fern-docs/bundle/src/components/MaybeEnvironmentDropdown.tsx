@@ -186,7 +186,7 @@ export function MaybeEnvironmentDropdown({
               >
                 <FernButton
                   style={{ pointerEvents: "auto" }}
-                  className="h-auto px-1 py-0"
+                  className={cn("h-auto px-1 py-0", small && "rounded-1")}
                   text={
                     <span
                       key="protocol"
