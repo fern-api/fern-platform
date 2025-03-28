@@ -268,6 +268,41 @@ export async function GET(
           }
         }
 
+        // update homepage images for dashboard
+        const authHeader = req.headers.get("authorization");
+        if (authHeader == null) {
+          console.warn(
+            "Did not generate homepage images because no auth header present on request"
+          );
+        } else if (process.env.NEXT_PUBLIC_DASHBOARD_URL == null) {
+          console.warn(
+            "Did not generate homepage images because NEXT_PUBLIC_DASHBOARD_URL is not defined in the environment"
+          );
+        } else {
+          try {
+            await fetch(
+              new URL(
+                "/api/generate-homepage-images",
+                process.env.NEXT_PUBLIC_DASHBOARD_URL
+              ),
+              {
+                method: "POST",
+                headers: {
+                  authorization: authHeader,
+                },
+                body: JSON.stringify({
+                  url: new URL(
+                    docs.baseUrl.basePath ?? "",
+                    docs.baseUrl.domain
+                  ).toString(),
+                }),
+              }
+            );
+          } catch (error) {
+            console.error("Failed to regenerate homepage images", error);
+          }
+        }
+
         // finish reindexing before returning
         await reindexPromise;
 
