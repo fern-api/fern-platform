@@ -19,7 +19,11 @@ import type { TableOfContentsItem as TableOfContentsItemType } from "@fern-docs/
 import { useCurrentAnchor } from "@/hooks/use-anchor";
 
 import { WithFeatureFlags } from "../feature-flags/WithFeatureFlags";
-import { TableOfContentsItem } from "./TableOfContentsItem";
+import {
+  OnThisPageTitle,
+  TableOfContentsItem,
+  TocExpandedCtx,
+} from "./TableOfContentsItem";
 import { useTableOfContentsObserver } from "./useTableOfContentsObserver";
 
 export declare namespace TableOfContents {
@@ -127,27 +131,32 @@ export const TableOfContents: React.FC<TableOfContents.Props> = ({
     );
   };
 
+  const [hovering, setHovering] = useState(false);
+
   return (
-    <>
-      {tableOfContents.length > 0 && (
-        <div className="text-(color:--grayscale-a11) m-0 mb-3 text-sm font-medium">
-          On this page
-        </div>
-      )}
-      {tableOfContents.length > 0 && (
-        <ul
-          className={cn("toc-root not-prose", className)}
-          style={
-            {
-              ...style,
-              "--height": `${liHeight}px`,
-              "--top": `${offsetTop}px`,
-            } as CSSProperties
-          }
-        >
-          {flattenTableOfContents(tableOfContents)}
-        </ul>
-      )}
-    </>
+    <TocExpandedCtx.Provider value={hovering}>
+      <div
+        className={cn("fern-toc-root", className)}
+        data-state={hovering ? "expanded" : "collapsed"}
+        onMouseEnter={() => setHovering(true)}
+        onMouseLeave={() => setHovering(false)}
+      >
+        {tableOfContents.length > 0 && <OnThisPageTitle />}
+        {tableOfContents.length > 0 && (
+          <ul
+            className={"fern-toc-container"}
+            style={
+              {
+                ...style,
+                "--height": `${liHeight}px`,
+                "--top": `${offsetTop}px`,
+              } as CSSProperties
+            }
+          >
+            {flattenTableOfContents(tableOfContents)}
+          </ul>
+        )}
+      </div>
+    </TocExpandedCtx.Provider>
   );
 };

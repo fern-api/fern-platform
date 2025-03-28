@@ -1,25 +1,96 @@
 @layer components {
-  .toc-root {
-    @apply relative border-l-2 border-transparent pl-3;
-  }
+  .fern-toc-root {
+    @apply px-4 pb-12 pt-8 lg:pr-5;
 
-  .toc-root::before,
-  .toc-root::after {
-    @apply absolute -left-0.5 top-0 w-0.5 rounded-full;
+    .fern-toc-title {
+      @apply text-(color:--grayscale-a11) m-0 mb-3 text-sm font-medium;
+    }
 
-    content: "";
-  }
+    .fern-toc-title,
+    .fern-toc-text {
+      opacity: 1;
+      transition:
+        height 0.25s,
+        opacity 0.25s;
+      height: var(--expanded-link-height, 20px);
+    }
 
-  .toc-root::before {
-    @apply bg-(color:--grayscale-a5) h-full;
-  }
+    .fern-toc-line {
+      opacity: 0;
+      transition: opacity 0.25s;
+    }
 
-  .toc-root::after {
-    @apply bg-(color:--accent-a9);
+    .fern-toc-container {
+      @apply relative border-l-2 border-transparent pl-3;
 
-    height: var(--height, 20px);
-    transform: translateY(calc(var(--top, 0px)));
-    transition: 0.25s;
-    transition-property: transform, height;
+      &::before,
+      &::after {
+        @apply absolute -left-0.5 top-0 w-0.5 rounded-full content-[''];
+        opacity: 1;
+        transition: opacity 0.25s;
+      }
+
+      &::before {
+        @apply bg-(color:--grayscale-a5) h-full;
+      }
+
+      &::after {
+        @apply bg-(color:--accent-a9);
+
+        height: var(--height, 20px);
+        transform: translateY(calc(var(--top, 0px)));
+        transition: 0.25s;
+        transition-property: transform, height, opacity;
+      }
+
+      .fern-toc-item {
+        @apply relative mb-2;
+
+        &:last-child {
+          @apply mb-0;
+        }
+
+        &[data-state="active"] .fern-toc-text {
+          @apply text-(color:--accent-a11) font-semibold tracking-tight;
+        }
+
+        &[data-state="active"] .fern-toc-line {
+          background-color: var(--accent-track);
+        }
+      }
+
+      .fern-toc-text {
+        @apply block hyphens-auto break-words text-sm transition-colors hover:transition-none;
+        @apply text-(color:--grayscale-a11) hover:text-(color:--grayscale-a12);
+      }
+
+      .fern-toc-line {
+        position: absolute;
+        right: 0;
+        top: calc(50% - 1px);
+        opacity: 0;
+        height: 2px;
+        background-color: var(--grayscale-a5);
+        border-radius: 1px;
+      }
+    }
+
+    &[data-state="collapsed"] {
+      .fern-toc-container::before,
+      .fern-toc-container::after {
+        opacity: 0;
+      }
+
+      .fern-toc-line {
+        opacity: 1;
+        transition: opacity 0.25s;
+      }
+
+      .fern-toc-title,
+      .fern-toc-text {
+        height: 0;
+        opacity: 0;
+      }
+    }
   }
 }
