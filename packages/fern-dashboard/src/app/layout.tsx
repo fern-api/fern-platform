@@ -3,7 +3,7 @@ import { ThemeProvider } from "next-themes";
 
 import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
 import { AppLayout } from "@/components/layout/AppLayout";
-import { auth0 } from "@/lib/auth0";
+import { getAuth0Client } from "@/lib/auth0";
 
 import { gtPlanar } from "./fonts";
 import "./globals.css";
@@ -19,6 +19,7 @@ export default async function RootLayout({
 }>) {
   let content = children;
 
+  const auth0 = await getAuth0Client();
   const session = await auth0.getSession();
   if (session != null) {
     content = (
