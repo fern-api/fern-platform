@@ -18,6 +18,12 @@ if (ZACH_TEST_APP_BASE_URL == null) {
 
 export async function getAuth0Client() {
   return new Auth0Client({
+    async beforeSessionSaved(session, idToken) {
+      return {
+        ...session,
+        idToken,
+      };
+    },
     authorizationParameters: {
       audience: NEXT_PUBLIC_VENUS_AUDIENCE,
     },
