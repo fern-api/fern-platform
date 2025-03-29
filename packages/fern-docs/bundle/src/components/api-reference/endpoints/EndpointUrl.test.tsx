@@ -35,8 +35,10 @@ describe("EndpointUrl", () => {
     );
 
     expect(
-      screen.getByText("https://api.buildwithfern.com/testing/:id")
+      screen.getByText("https://api.buildwithfern.com")
     ).toBeInTheDocument();
+    expect(screen.getByText("testing")).toBeInTheDocument();
+    expect(screen.getByText(":id")).toBeInTheDocument();
   });
 
   it("renders full environment with basepath", async () => {
@@ -51,9 +53,9 @@ describe("EndpointUrl", () => {
     );
 
     expect(
-      screen.getByText(
-        "https://api.buildwithfern.com/with/basepath/testing/:id"
-      )
+      screen.getByText("https://api.buildwithfern.com/with/basepath")
     ).toBeInTheDocument();
+    expect(screen.getByText("testing")).toBeInTheDocument();
+    expect(screen.getByText(":id")).toBeInTheDocument();
   });
 });
