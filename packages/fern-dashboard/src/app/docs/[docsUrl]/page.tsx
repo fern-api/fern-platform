@@ -1,6 +1,6 @@
 import { DocsSiteOverviewCard } from "@/components/docs-page/DocsSiteOverviewCard";
 
-import { parseDocsUrlParam } from "../../../lib/parseDocsUrlParam";
+import { parseDocsUrlParam } from "../../../utils/parseDocsUrlParam";
 
 export default async function Page(props: {
   params: Promise<{ docsUrl: string }>;

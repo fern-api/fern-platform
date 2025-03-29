@@ -1,8 +1,8 @@
 import { redirect } from "next/navigation";
 
 import { DocsZeroState } from "@/components/docs-page/DocsZeroState";
-import { constructDocsUrlParam } from "@/lib/constructDocsUrlParam";
-import { getDocsSiteUrl } from "@/lib/getDocsSiteUrl";
+import { constructDocsUrlParam } from "@/utils/constructDocsUrlParam";
+import { getDocsSiteUrl } from "@/utils/getDocsSiteUrl";
 
 import { getMyDocsSites } from "../actions/getMyDocsSites";
 

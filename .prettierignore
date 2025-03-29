@@ -2,7 +2,6 @@
 
 
 lib
-!packages/fern-dashboard/src/lib
 build
 dist
 .yarn

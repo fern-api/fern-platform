@@ -1,7 +1,7 @@
 "use client";
 
-import { DocsUrl } from "@/lib/types";
-import { useDocsSite } from "@/lib/useMyDocsSites";
+import { DocsUrl } from "@/utils/types";
+import { useDocsSite } from "@/utils/useMyDocsSites";
 
 import { Page404 } from "../Page404";
 import { DocsSiteNavBar } from "./DocsSiteNavBar";
