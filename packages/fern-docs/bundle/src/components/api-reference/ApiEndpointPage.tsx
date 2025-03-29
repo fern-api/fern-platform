@@ -20,6 +20,7 @@ export default async function ApiEndpointPage({
   loader,
   serialize,
   node,
+  action,
   breadcrumb,
   bottomNavigation,
 }: {
@@ -42,6 +43,7 @@ export default async function ApiEndpointPage({
       apiDefinition={apiDefinition}
       breadcrumb={breadcrumb}
       bottomNavigation={bottomNavigation}
+      action={action}
     />
   );
 }
