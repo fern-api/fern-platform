@@ -4,8 +4,13 @@ import { useAtom } from "jotai";
 import { parse } from "url";
 
 import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
-import { cn } from "@fern-docs/components";
-import { FernButton, FernDropdown, FernInput } from "@fern-docs/components";
+import {
+  FernButton,
+  FernDropdown,
+  FernInput,
+  FernTooltip,
+  cn,
+} from "@fern-docs/components";
 import { useBooleanState } from "@fern-ui/react-commons";
 
 import { SELECTED_ENVIRONMENT_ATOM } from "@/state/environment";
@@ -163,8 +168,8 @@ export function MaybeEnvironmentDropdown({
           />
         </span>
       ) : (
-        <>
-          <span className="max-sm:hidden">
+        <FernTooltip content={<span>Double click to edit</span>}>
+          <span className="max-sm:hidden" style={{ pointerEvents: "auto" }}>
             {options && options.length > 1 ? (
               <FernDropdown
                 key="selectedEnvironment-selector"
@@ -180,7 +185,8 @@ export function MaybeEnvironmentDropdown({
                 value={selectedEnvironment?.id ?? environmentId}
               >
                 <FernButton
-                  className="h-auto px-1 py-0"
+                  style={{ pointerEvents: "auto" }}
+                  className={cn("h-auto px-1 py-0", small && "rounded-1")}
                   text={
                     <span
                       key="protocol"
@@ -249,7 +255,7 @@ export function MaybeEnvironmentDropdown({
               </span>
             )}
           </span>
-        </>
+        </FernTooltip>
       )}
     </>
   );

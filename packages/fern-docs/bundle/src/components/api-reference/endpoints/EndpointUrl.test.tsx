@@ -3,6 +3,7 @@
  */
 import React from "react";
 
+import "@testing-library/jest-dom";
 import { render, screen } from "@testing-library/react";
 
 import { PathPart } from "@fern-api/fdr-sdk/api-definition";
@@ -33,9 +34,11 @@ describe("EndpointUrl", () => {
       />
     );
 
-    expect(screen.getByRole("button").textContent).toBe(
-      "https://api.buildwithfern.com/testing/:id"
-    );
+    expect(
+      screen.getByText("https://api.buildwithfern.com")
+    ).toBeInTheDocument();
+    expect(screen.getByText("testing")).toBeInTheDocument();
+    expect(screen.getByText(":id")).toBeInTheDocument();
   });
 
   it("renders full environment with basepath", async () => {
@@ -49,8 +52,10 @@ describe("EndpointUrl", () => {
       />
     );
 
-    expect(screen.getByRole("button").textContent).toBe(
-      "https://api.buildwithfern.com/with/basepath/testing/:id"
-    );
+    expect(
+      screen.getByText("https://api.buildwithfern.com/with/basepath")
+    ).toBeInTheDocument();
+    expect(screen.getByText("testing")).toBeInTheDocument();
+    expect(screen.getByText(":id")).toBeInTheDocument();
   });
 });
