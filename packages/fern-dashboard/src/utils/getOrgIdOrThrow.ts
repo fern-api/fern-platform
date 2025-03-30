@@ -1,6 +1,6 @@
 import { SessionData } from "@auth0/nextjs-auth0/types";
 
-import { Auth0OrgID } from "@/app/actions/types";
+import { Auth0OrgID } from "@/app/services/auth0/types";
 
 // this is generally safe because all authed routes are wrapped in
 // <ProtectedRoute /> which ensures there's an orgId on the session

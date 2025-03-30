@@ -6,7 +6,7 @@ import { create } from "zustand";
 
 import { FdrAPI } from "@fern-api/fdr-sdk";
 
-import { getMyDocsSites } from "@/app/actions/getMyDocsSites";
+import { getMyDocsSites } from "@/app/services/fdr/helpers";
 
 import { Loadable, mapLoadable } from "./Loadable";
 import { getDocsSiteUrl } from "./getDocsSiteUrl";

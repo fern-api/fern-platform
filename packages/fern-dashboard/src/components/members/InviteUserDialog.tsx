@@ -3,7 +3,7 @@ import { useState } from "react";
 import { PlusIcon } from "@heroicons/react/24/outline";
 import { GetOrganizations200ResponseOneOfInner } from "auth0";
 
-import { Auth0OrgID } from "@/app/actions/types";
+import { Auth0OrgID } from "@/app/services/auth0/types";
 
 import { Button } from "../ui/button";
 import { Dialog, DialogContent, DialogTrigger } from "../ui/dialog";

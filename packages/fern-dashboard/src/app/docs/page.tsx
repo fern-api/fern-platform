@@ -4,7 +4,7 @@ import { DocsZeroState } from "@/components/docs-page/DocsZeroState";
 import { constructDocsUrlParam } from "@/utils/constructDocsUrlParam";
 import { getDocsSiteUrl } from "@/utils/getDocsSiteUrl";
 
-import { getMyDocsSites } from "../actions/getMyDocsSites";
+import { getMyDocsSites } from "../services/fdr/helpers";
 
 export default async function Page() {
   // don't use the zustand hook because we want to block

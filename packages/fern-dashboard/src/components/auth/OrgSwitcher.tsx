@@ -1,6 +1,6 @@
 "use client";
 
-import { Auth0OrgID } from "@/app/actions/types";
+import { Auth0OrgID } from "@/app/services/auth0/types";
 import { useOrganizations } from "@/utils/useOrganizations";
 
 import { OrgSwitcherSelect } from "./OrgSwitcherSelect";

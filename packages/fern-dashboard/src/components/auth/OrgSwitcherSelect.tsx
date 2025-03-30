@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 import { GetOrganizations200ResponseOneOfInner } from "auth0";
 
-import { Auth0OrgID } from "@/app/actions/types";
+import { Auth0OrgID } from "@/app/services/auth0/types";
 import {
   Select,
   SelectContent,

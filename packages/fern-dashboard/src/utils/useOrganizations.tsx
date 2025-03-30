@@ -5,8 +5,8 @@ import { useEffect } from "react";
 import { GetOrganizations200ResponseOneOfInner } from "auth0";
 import { create } from "zustand";
 
-import { getMyOrganizations } from "@/app/actions/getMyOrganizations";
-import { Auth0OrgID } from "@/app/actions/types";
+import { getMyOrganizations } from "@/app/services/auth0/helpers";
+import { Auth0OrgID } from "@/app/services/auth0/types";
 
 type OrganizationsStore = {
   organizations: GetOrganizations200ResponseOneOfInner[];

@@ -16,4 +16,8 @@ export class AsyncCache<K extends NodeCache.Key, T> {
     this.cache.set(key, newValue);
     return newValue;
   }
+
+  public invalidate(key: K) {
+    this.cache.del(key);
+  }
 }

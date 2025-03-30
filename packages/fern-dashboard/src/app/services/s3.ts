@@ -1,5 +1,8 @@
-/* eslint-disable turbo/no-undeclared-env-vars */
+"use server";
+
 import { S3Client } from "@aws-sdk/client-s3";
+
+/* eslint-disable turbo/no-undeclared-env-vars */
 
 let s3: S3Client | undefined;
 

@@ -5,7 +5,7 @@ import { GetOrganizations200ResponseOneOfInner } from "auth0";
 import { toast } from "sonner";
 
 import { inviteUserToOrg } from "@/app/actions/inviteUserToOrg";
-import { Auth0OrgID } from "@/app/actions/types";
+import { Auth0OrgID } from "@/app/services/auth0/types";
 import { getOrgDisplayName } from "@/utils/getOrgDisplayName";
 
 import { Button } from "../ui/button";

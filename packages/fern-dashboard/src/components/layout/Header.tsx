@@ -4,7 +4,7 @@ import { SessionData } from "@auth0/nextjs-auth0/types";
 import { UserIcon } from "@heroicons/react/24/outline";
 import { PopoverArrow } from "@radix-ui/react-popover";
 
-import { Auth0OrgID } from "@/app/actions/types";
+import { Auth0OrgID } from "@/app/services/auth0/types";
 import {
   Popover,
   PopoverContent,

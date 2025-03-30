@@ -2,10 +2,12 @@
 
 import { FdrAPI } from "@fern-api/fdr-sdk";
 
-import { getFdrClient } from "../services/fdr";
-import { AsyncCache } from "./AsyncCache";
-import { getCurrentOrg, getCurrentSession } from "./auth0";
-import { Auth0OrgName } from "./types";
+import { AsyncCache } from "../AsyncCache";
+import { getCurrentOrg, getCurrentSession } from "../auth0/helpers";
+import { Auth0OrgName } from "../auth0/types";
+import { getFdrClient } from "./getFdrClient";
+
+// caches
 
 const MY_DOCS_SITE_CACHE = new AsyncCache<
   Auth0OrgName,
@@ -13,6 +15,8 @@ const MY_DOCS_SITE_CACHE = new AsyncCache<
 >({
   ttlInSeconds: 10,
 });
+
+// helpers
 
 export async function getMyDocsSites(): Promise<FdrAPI.dashboard.GetDocsSitesForOrgResponse> {
   const currentOrg = await getCurrentOrg();

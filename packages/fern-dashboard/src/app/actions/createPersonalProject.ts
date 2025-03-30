@@ -3,12 +3,14 @@
 import { User } from "@auth0/nextjs-auth0/types";
 
 import { FernVenusApi, FernVenusApiClient } from "@fern-api/venus-api-sdk";
-import { UserId } from "@fern-api/venus-api-sdk/api";
 import { APIResponse } from "@fern-api/venus-api-sdk/core";
 
-import { getVenusClient } from "../services/venus";
-import { getCurrentSession } from "./auth0";
-import { Auth0OrgID, Auth0UserID } from "./types";
+import {
+  clearCachesAfterCreatingOrganization,
+  getCurrentSession,
+} from "../services/auth0/helpers";
+import { Auth0OrgID, Auth0UserID } from "../services/auth0/types";
+import { getVenusClient } from "../services/venus/getVenusClient";
 
 export async function createPersonalProject(): Promise<Auth0OrgID> {
   const { session, userId } = await getCurrentSession();
@@ -20,10 +22,7 @@ export async function createPersonalProject(): Promise<Auth0OrgID> {
     venus,
   });
 
-  await venus.organization.addUser({
-    orgId,
-    userId: UserId(userId),
-  });
+  await clearCachesAfterCreatingOrganization(userId);
 
   return orgId as unknown as Auth0OrgID;
 }
@@ -74,7 +73,9 @@ function getPersonalProjectOrgId({
   userName: string | undefined;
   attempt: number;
 }) {
-  let orgId = `${userName ?? userId}-personal-project`.toLowerCase();
+  let orgId = `${userName ?? userId}-personal-project`
+    .replaceAll(" ", "-")
+    .toLowerCase();
   if (attempt > 0) {
     orgId += `-${attempt}`;
   }

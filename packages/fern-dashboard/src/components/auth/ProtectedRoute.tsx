@@ -2,7 +2,7 @@ import { redirect } from "next/navigation";
 import React from "react";
 
 import { createPersonalProject } from "@/app/actions/createPersonalProject";
-import { getMyOrganizations } from "@/app/actions/getMyOrganizations";
+import { getMyOrganizations } from "@/app/services/auth0/helpers";
 import { getAuth0Client } from "@/utils/auth0";
 
 export declare namespace ProtectedRoute {
