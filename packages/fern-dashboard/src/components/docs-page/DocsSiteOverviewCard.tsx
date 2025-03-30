@@ -1,6 +1,5 @@
 "use client";
 
-import { createPersonalProject } from "@/app/actions/createPersonalProject";
 import { unwrapLoadable } from "@/utils/Loadable";
 import { getDocsSiteUrl } from "@/utils/getDocsSiteUrl";
 import { DocsUrl } from "@/utils/types";
@@ -18,7 +17,6 @@ export function DocsSiteOverviewCard({ docsUrl }: DocsSiteOverviewCard.Props) {
   return (
     <div className="dark:bg-gray-1200 flex flex-1 rounded-xl border border-gray-500 bg-gray-100 p-6">
       {docsSite != null ? getDocsSiteUrl(docsSite) : "..."}
-      <button onClick={createPersonalProject}>create personal project</button>
     </div>
   );
 }
