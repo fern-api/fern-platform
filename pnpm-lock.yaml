@@ -598,8 +598,8 @@ importers:
         specifier: workspace:*
         version: link:../fdr-sdk
       '@fern-api/venus-api-sdk':
-        specifier: ^0.10.1-5-ged06d22
-        version: 0.10.1-5-ged06d22
+        specifier: ^0.13.4-3-g1fe7ae7
+        version: 0.13.4-3-g1fe7ae7
       '@heroicons/react':
         specifier: ^2.2.0
         version: 2.2.0(react@19.0.0)
@@ -4066,6 +4066,9 @@ packages:
 
   '@fern-api/venus-api-sdk@0.10.1-5-ged06d22':
     resolution: {integrity: sha512-36tR/u4IO1C7OU1gmKwO05OrNV1noY+SrPzsC085QkbHI+WLEZQv4l6V9qCQ7Vi7KAYJ1hWkrzg8eRa62PqxeQ==}
+
+  '@fern-api/venus-api-sdk@0.13.4-3-g1fe7ae7':
+    resolution: {integrity: sha512-WKr9VId5Bn5BSlxxeRMlIoOqNeSenu0rHxF74Ev6j6aVEnLIraDdTgF/SZdXgJSfKIR+AXrez/A4h7B1C/yEiA==}
 
   '@fern-fern/fdr-cjs-sdk@0.76.19-1-6e46ece2a09':
     resolution: {integrity: sha512-EJ3dC1grOcUFNVzA+ISkrcMHXfDfjUsKJZ8IthELlZyiMeTToj2ONHrESG1syu60RZ/E+81WDa4inxKRoHpRhA==}
@@ -18232,6 +18235,18 @@ snapshots:
       js-base64: 3.7.2
       node-fetch: 2.7.0
       qs: 6.11.2
+      readable-stream: 4.5.2
+      url-join: 4.0.1
+    transitivePeerDependencies:
+      - encoding
+
+  '@fern-api/venus-api-sdk@0.13.4-3-g1fe7ae7':
+    dependencies:
+      form-data: 4.0.0
+      formdata-node: 6.0.3
+      js-base64: 3.7.7
+      node-fetch: 2.7.0
+      qs: 6.14.0
       readable-stream: 4.5.2
       url-join: 4.0.1
     transitivePeerDependencies:
