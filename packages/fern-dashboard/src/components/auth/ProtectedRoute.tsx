@@ -21,8 +21,10 @@ export const ProtectedRoute = async ({ children }: ProtectedRoute.Props) => {
 
   const orgId = session.user.org_id;
 
-  if (orgId == null) {
-    const organizations = await getMyOrganizations();
+  const organizations = await getMyOrganizations();
+  const currentOrg = organizations.find((org) => org.id === orgId);
+
+  if (currentOrg == null) {
     let orgIdToRedirectTo = organizations[0]?.id;
     if (orgIdToRedirectTo == null) {
       orgIdToRedirectTo = await createPersonalProject();
