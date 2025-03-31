@@ -156,7 +156,7 @@
     "@next/bundle-analyzer": "15.3.0-canary.1",
     "@storybook/addon-essentials": "^8.6.0",
     "@storybook/addon-interactions": "^8.6.0",
-    "@storybook/addon-links": "^8.6.0",
+    "@storybook/addon-links": "^8.6.11",
     "@storybook/addon-onboarding": "^8.6.0",
     "@storybook/addon-themes": "^8.6.0",
     "@storybook/blocks": "^8.6.0",
