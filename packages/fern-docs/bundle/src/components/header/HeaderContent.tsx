@@ -47,7 +47,8 @@ export function HeaderContent({
       {(showSearchBar || isSmallScreen) && (
         <SearchV2Trigger
           aria-label="Search"
-          className="fern-header-search-bar"
+          className="fern-header-search-bar overflow-hidden"
+          isSearchInSidebar={false}
         />
       )}
 
