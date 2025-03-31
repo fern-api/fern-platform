@@ -68,19 +68,27 @@ describe("migrateMeta", () => {
 
   it("should remove wordWrap if it is next to the title", () => {
     expect(migrateMeta("Python wordWrap maxLines=100")).toMatchInlineSnapshot(
-      `"title="Python"  wordWrap maxLines={100}"`
+      `"title="Python" wordWrap maxLines={100}"`
     );
   });
 
   it("should remove wordWrap if that is the only word", () => {
-    expect(migrateMeta("wordWrap")).toMatchInlineSnapshot(
-      `"title="" wordWrap"`
-    );
+    expect(migrateMeta("wordWrap")).toMatchInlineSnapshot(`"wordWrap"`);
   });
 
   it("should remove wordWrap if it is next to just a title", () => {
     expect(migrateMeta("wordWrap myFile.txt")).toMatchInlineSnapshot(
-      `"wordWrap title="myFile.txt" "`
+      `"wordWrap title="myFile.txt""`
     );
+  });
+
+  it("should respect the for meta property", () => {
+    expect(migrateMeta(`"a title" for="npm"`)).toMatchInlineSnapshot(
+      `"title="a title" for="npm""`
+    );
+  });
+
+  it("should respect the for meta property even if no title is present", () => {
+    expect(migrateMeta(`for="npm"`)).toMatchInlineSnapshot(`"for="npm""`);
   });
 });

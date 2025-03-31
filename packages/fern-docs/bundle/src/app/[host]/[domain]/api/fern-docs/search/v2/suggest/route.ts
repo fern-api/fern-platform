@@ -1,7 +1,7 @@
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
-import { createAnthropic } from "@ai-sdk/anthropic";
+import { createAmazonBedrock } from "@ai-sdk/amazon-bedrock";
 import { searchClient } from "@algolia/client-search";
 import { getEnv } from "@vercel/functions";
 import { kv } from "@vercel/kv";
@@ -17,7 +17,7 @@ import {
 import { COOKIE_FERN_TOKEN } from "@fern-docs/utils";
 
 import { track } from "@/server/analytics/posthog";
-import { algoliaAppId, anthropicApiKey } from "@/server/env-variables";
+import { algoliaAppId } from "@/server/env-variables";
 import { getDocsDomainEdge } from "@/server/xfernhost/edge";
 
 const DEPLOYMENT_ID = getEnv().VERCEL_DEPLOYMENT_ID ?? "development";
@@ -31,8 +31,12 @@ const BodySchema = z.object({
 });
 
 export async function POST(req: NextRequest): Promise<Response> {
-  const anthropic = createAnthropic({ apiKey: anthropicApiKey() });
-  const languageModel = anthropic.languageModel("claude-3-5-haiku-latest");
+  const bedrock = createAmazonBedrock({
+    region: "us-east-1",
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+  });
+  const languageModel = bedrock("us.anthropic.claude-3-5-haiku-20241022-v1:0");
 
   const start = Date.now();
   const domain = getDocsDomainEdge(req);

@@ -12,9 +12,6 @@ export const ThemedFernLogo = ({ className }: ThemedFernLogo.Props) => {
       viewBox="0 0 604 164"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      style={{
-        aspectRatio: "604/164",
-      }}
       className={className}
     >
       <path

@@ -30,7 +30,11 @@ import { useCurrentPathname } from "@/hooks/use-current-pathname";
 import { useSetTheme, useThemeSwitchEnabled } from "@/hooks/use-theme";
 import { useIsDarkCode } from "@/state/dark-code";
 import { useFernUser } from "@/state/fern-user";
-import { searchDialogOpenAtom, searchInitializedAtom } from "@/state/search";
+import {
+  searchDialogOpenAtom,
+  searchInitializedAtom,
+  useIsAskAiEnabled,
+} from "@/state/search";
 import { atomWithStorageString } from "@/state/utils/atomWithStorageString";
 
 const ALGOLIA_USER_TOKEN_KEY = "algolia-user-token";
@@ -56,15 +60,14 @@ const askAiAtom = atom(false);
 export const SearchV2 = React.memo(function SearchV2({
   domain,
   version,
-  isAskAiEnabled,
 }: {
   domain: string;
-  isAskAiEnabled: boolean;
   version?: VersionSwitcherInfo;
 }) {
   const isDarkCodeEnabled = useIsDarkCode();
   const userToken = useAlgoliaUserToken();
   const user = useFernUser();
+  const isAskAiEnabled = useIsAskAiEnabled();
 
   const [open, setOpen] = useCommandTrigger();
   const [askAi, setAskAi] = useAtom(askAiAtom);
@@ -85,8 +88,8 @@ export const SearchV2 = React.memo(function SearchV2({
   // Rerouting to ferndocs.com for production environments to ensure streaming works
   // Also see: next.config.mjs, where we set CORS headers
   if (process.env.NEXT_PUBLIC_VERCEL_ENV === "production") {
-    chatEndpoint = `https://app.ferndocs.com/api/fern-docs/search/v2/chat`;
-    suggestEndpoint = `https://app.ferndocs.com/api/fern-docs/search/v2/suggest`;
+    chatEndpoint = `${process.env.NEXT_PUBLIC_CDN_URI}/api/fern-docs/search/v2/chat`;
+    suggestEndpoint = `${process.env.NEXT_PUBLIC_CDN_URI}/api/fern-docs/search/v2/suggest`;
   }
 
   const router = useRouter();

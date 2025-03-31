@@ -88,8 +88,3 @@ jobs:
           else
               exit 1
           fi
-
-  healthchecks:
-    needs: deploy_prod
-    uses: ./.github/workflows/healthcheck.yml
-    secrets: inherit

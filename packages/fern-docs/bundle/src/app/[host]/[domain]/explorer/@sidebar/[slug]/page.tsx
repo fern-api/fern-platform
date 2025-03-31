@@ -31,7 +31,7 @@ export default async function EndpointSelectorPage({
   const versionNode = foundNode.versions.find(
     (version) => version.versionId === currentVersion
   );
-  const apiGroups = flattenApiSection(versionNode);
+  const apiGroups = flattenApiSection(versionNode ?? root);
 
   return (
     <PlaygroundEndpointSelectorContent

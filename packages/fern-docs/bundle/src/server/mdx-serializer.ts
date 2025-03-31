@@ -94,6 +94,7 @@ export function createCachedMdxSerializer(
 
           postToEngineeringNotifs(
             `:rotating_light: [${domain}] \`Serialize MDX\` encountered an error: \`${String(error)}\` (url: \`https://${domain}/${slug ?? "UNKNOWN"}\`)`,
+            "serialize-mdx",
             {
               message: content,
               mrkdwn: true,

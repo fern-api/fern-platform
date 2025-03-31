@@ -8,6 +8,7 @@ const nextConfig: NextConfig = {
      *
      * pnpm list --filter=@fern-dashboard/ui --only-projects --prod --recursive --depth=Infinity --json | jq -r '[.. | objects | select(.version | .!=null) | select(.version | startswith("link:")) | .from] | unique'
      */
+    "@fern-api/fdr-sdk",
   ],
   experimental: {
     optimizePackageImports: [],
@@ -23,12 +24,13 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  env: {
-    APP_BASE_URL:
-      process.env.VERCEL_ENV === "preview"
-        ? `https://${process.env.VERCEL_BRANCH_URL}`
-        : process.env.APP_BASE_URL,
+  webpack: (webpackConfig) => {
+    webpackConfig.externals.push("sharp");
+    return webpackConfig;
   },
+
+  // vercel chokes on monorepo compilation and we run compile before building
+  typescript: { ignoreBuildErrors: true },
 };
 
 export default nextConfig;

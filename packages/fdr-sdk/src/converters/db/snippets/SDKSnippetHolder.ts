@@ -6,6 +6,7 @@ export interface SnippetsConfigWithSdkId {
   goSdk?: APIV1Write.GoModule & { sdkId: string };
   javaSdk?: APIV1Write.JavaCoordinate & { sdkId: string };
   rubySdk?: APIV1Write.RubyGem & { sdkId: string };
+  csharpSdk?: APIV1Write.NugetPackage & { sdkId: string };
 }
 
 export interface SdkSnippetHolderArgs {
@@ -169,6 +170,34 @@ export class SDKSnippetHolder {
       getSdk: (config) => config.rubySdk,
       getSnippet: (snippet) => {
         return snippet.type === "ruby"
+          ? { ...snippet, install: undefined }
+          : undefined;
+      },
+    });
+  }
+
+  public getCsharpCodeSnippetForEndpoint({
+    endpointPath,
+    endpointMethod,
+    endpointId,
+    exampleId,
+  }: {
+    endpointPath: FdrAPI.EndpointPathLiteral;
+    endpointMethod: FdrAPI.HttpMethod;
+    endpointId: string | undefined;
+    exampleId: string | undefined;
+  }): APIV1Read.CsharpSnippet | undefined {
+    if (this.snippetsConfigWithSdkId.csharpSdk == null) {
+      return undefined;
+    }
+    return this.getCodeSnippetForEndpoint<APIV1Read.CsharpSnippet>({
+      endpointPath,
+      endpointMethod,
+      endpointId,
+      exampleId,
+      getSdk: (config) => config.csharpSdk,
+      getSnippet: (snippet) => {
+        return snippet.type === "csharp"
           ? { ...snippet, install: undefined }
           : undefined;
       },

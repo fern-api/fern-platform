@@ -22,7 +22,8 @@ export function createFileResolver(
       // the file is not found, so we return the src as the image data
 
       postToEngineeringNotifs(
-        `:rotating_light: [createFileResolver] Could not find file ${fileId} for domain ${domain}.`
+        `:rotating_light: [createFileResolver] Could not find file ${fileId} for domain ${domain}.`,
+        "file-resolver"
       );
 
       return { src };
