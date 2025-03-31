@@ -14,7 +14,7 @@ import { noop } from "ts-essentials";
 import { APIV1Read } from "@fern-api/fdr-sdk";
 import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import visitDiscriminatedUnion from "@fern-api/ui-core-utils/visitDiscriminatedUnion";
-import { cn } from "@fern-docs/components";
+import { FernTooltipProvider, cn } from "@fern-docs/components";
 import { CopyToClipboardButton } from "@fern-docs/components";
 import { HttpMethodBadge } from "@fern-docs/components/badges";
 import { useBooleanState } from "@fern-ui/react-commons";
@@ -115,64 +115,61 @@ export const EndpointUrl = React.forwardRef<
   }, [options, environmentId, baseUrl]);
 
   return (
-    <div
-      ref={composeRefs(ref, forwardedRef)}
-      className={cn("flex items-center gap-1 pr-2", className)}
-    >
-      <HttpMethodBadge method={method} />
+    <FernTooltipProvider>
+      <div
+        ref={composeRefs(ref, forwardedRef)}
+        className={cn("flex items-center gap-1 pr-2", className)}
+        onPointerEnter={() => setIsHovered(true)}
+        onPointerLeave={() => setIsHovered(false)}
+      >
+        <HttpMethodBadge method={method} />
 
-      <div className={cn("flex items-center")}>
-        <span
-          className={`inline-flex shrink items-baseline ${isHovered ? "hover:bg-(color:--grayscale-a3)" : ""} rounded-3/2 cursor-default p-1`}
-        >
-          <CopyToClipboardButton
-            content={() =>
-              ApiDefinition.buildRequestUrl({
-                baseUrl,
-                path,
-              })
-            }
+        <div className={cn("flex items-center")}>
+          <span
+            className={`rounded-3/2 inline-flex shrink cursor-default items-center p-1`}
           >
-            {(onClick) => (
-              <button
-                className="flex items-center"
-                onClick={onClick}
-                onPointerEnter={() => setIsHovered(true)}
-                onPointerLeave={() => setIsHovered(false)}
+            <span className="flex items-center">
+              <span
+                className={cn("font-mono", {
+                  "text-xs": !large,
+                  "text-sm": large,
+                })}
               >
-                <span
-                  className={cn("font-mono", {
-                    "text-xs": !large,
-                    "text-sm": large,
-                  })}
-                >
-                  {showEnvironment && (
-                    <span className="whitespace-nowrap max-sm:hidden">
-                      <MaybeEnvironmentDropdown
-                        baseUrl={baseUrl}
-                        environmentId={environmentId}
-                        options={options}
-                        urlTextStyle="text-(color:--grayscale-a11)"
-                        protocolTextStyle="text-(color:--grayscale-a9)"
-                        isEditingEnvironment={isEditingEnvironment}
-                        editable
-                      />
+                {showEnvironment && (
+                  <span className="whitespace-nowrap max-sm:hidden">
+                    <MaybeEnvironmentDropdown
+                      baseUrl={baseUrl}
+                      environmentId={environmentId}
+                      options={options}
+                      urlTextStyle="text-(color:--grayscale-a11)"
+                      protocolTextStyle="text-(color:--grayscale-a9)"
+                      isEditingEnvironment={isEditingEnvironment}
+                      editable
+                    />
+                  </span>
+                )}
+                {!showEnvironment &&
+                  environmentBasepath &&
+                  environmentBasepath !== "/" && (
+                    <span className="text-(color:--grayscale-a11)">
+                      {environmentBasepath}
                     </span>
                   )}
-                  {!showEnvironment &&
-                    environmentBasepath &&
-                    environmentBasepath !== "/" && (
-                      <span className="text-(color:--grayscale-a11)">
-                        {environmentBasepath}
-                      </span>
-                    )}
-                  {pathParts}
-                </span>
-              </button>
-            )}
-          </CopyToClipboardButton>
-        </span>
+                {pathParts}
+              </span>
+            </span>
+          </span>
+        </div>
+        <CopyToClipboardButton
+          className={isHovered ? "visible" : "invisible"}
+          content={() =>
+            ApiDefinition.buildRequestUrl({
+              baseUrl,
+              path,
+            })
+          }
+        />
       </div>
-    </div>
+    </FernTooltipProvider>
   );
 });
