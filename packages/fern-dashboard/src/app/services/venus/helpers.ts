@@ -1,5 +1,3 @@
-"use server";
-
 import { FernVenusApi, FernVenusApiClient } from "@fern-api/venus-api-sdk";
 
 export async function isMemberOf(

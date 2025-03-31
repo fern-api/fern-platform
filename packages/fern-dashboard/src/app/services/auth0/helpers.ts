@@ -1,5 +1,3 @@
-"use server";
-
 import {
   ApiResponse,
   GetInvitations200ResponseOneOfInner,
