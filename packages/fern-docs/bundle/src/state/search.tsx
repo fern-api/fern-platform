@@ -47,12 +47,21 @@ searchInitializedAtom.onMount = (setInitialized) => {
 };
 
 export const SearchV2Trigger = React.memo(function SearchV2Trigger(
-  props: React.ComponentProps<typeof DesktopSearchButton>
+  props: React.ComponentProps<typeof DesktopSearchButton> & {
+    isSearchInSidebar?: boolean;
+  }
 ) {
   const isInitialized = useAtomValue(searchInitializedAtom);
   const toggleSearchDialog = useToggleSearchDialog();
   const isAskAiEnabled = useIsAskAiEnabled();
   const isMobile = useIsMobile();
+  let placeholder = "Search";
+
+  if (isAskAiEnabled && !isMobile) {
+    placeholder = props.isSearchInSidebar
+      ? "Search or ask AI"
+      : "Search or ask AI a question";
+  }
 
   return (
     <DesktopSearchButton
@@ -64,13 +73,7 @@ export const SearchV2Trigger = React.memo(function SearchV2Trigger(
       {...props}
       onClick={composeEventHandlers(props.onClick, toggleSearchDialog)}
       variant={isInitialized ? "default" : "loading"}
-      placeholder={
-        isAskAiEnabled
-          ? isMobile
-            ? "Search or ask AI"
-            : "Search docs or ask AI a question"
-          : "Search"
-      }
+      placeholder={placeholder}
     />
   );
 });

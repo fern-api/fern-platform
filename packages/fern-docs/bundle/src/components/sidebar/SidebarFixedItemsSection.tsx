@@ -41,7 +41,11 @@ export function SidebarFixedItemsSection({
 
       <SearchV2Trigger
         aria-label="Search"
-        className={cn("w-full", !showHeaderInSidebar && "mt-3 lg:mt-2")}
+        className={cn(
+          "w-full overflow-hidden",
+          !showHeaderInSidebar && "mt-3 lg:mt-2"
+        )}
+        isSearchInSidebar={true}
       />
     </div>
   );
