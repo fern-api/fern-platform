@@ -25,7 +25,7 @@ export declare namespace Header {
 
 export async function Header({ session }: Header.Props) {
   const { name, email, picture, org_id } = session.user;
-  const orgId = org_id as Auth0OrgID | undefined;
+  const orgId = org_id != null ? Auth0OrgID(org_id) : undefined;
 
   return (
     <div className="flex justify-between p-4">

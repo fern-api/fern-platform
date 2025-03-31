@@ -2,8 +2,9 @@ import { redirect } from "next/navigation";
 import React from "react";
 
 import { createPersonalProject } from "@/app/actions/createPersonalProject";
-import { getMyOrganizations } from "@/app/services/auth0/helpers";
-import { getAuth0Client } from "@/utils/auth0";
+import getMyOrganizations from "@/app/api/get-my-organizations/handler";
+import { getAuth0Client } from "@/app/services/auth0/auth0";
+import { Auth0UserID } from "@/app/services/auth0/types";
 
 export declare namespace ProtectedRoute {
   export interface Props {
@@ -21,7 +22,7 @@ export const ProtectedRoute = async ({ children }: ProtectedRoute.Props) => {
 
   const orgId = session.user.org_id;
 
-  const organizations = await getMyOrganizations();
+  const organizations = await getMyOrganizations(Auth0UserID(session.user.sub));
   const currentOrg = organizations.find((org) => org.id === orgId);
 
   if (currentOrg == null) {

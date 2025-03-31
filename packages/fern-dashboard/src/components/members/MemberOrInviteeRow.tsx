@@ -15,6 +15,7 @@ export declare namespace MemberOrInviteeRow {
     title: string;
     subtitle?: string;
     pictureUrl?: string;
+    rightContent?: React.JSX.Element;
     dropdownMenuItems?: React.JSX.Element;
   }
 }
@@ -23,6 +24,7 @@ export function MemberOrInviteeRow({
   title,
   subtitle,
   pictureUrl,
+  rightContent,
   dropdownMenuItems,
 }: MemberOrInviteeRow.Props) {
   return (
@@ -48,20 +50,23 @@ export function MemberOrInviteeRow({
           <div className="text-gray-900">{subtitle}</div>
         </div>
       </div>
-      {dropdownMenuItems != null && (
-        <div className="flex items-center">
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button size="icon" variant="ghost">
-                <EllipsisHorizontalIcon className="size-5" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              {dropdownMenuItems}
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </div>
-      )}
+      <div className="flex items-center gap-3">
+        {rightContent}
+        {dropdownMenuItems != null && (
+          <div className="flex">
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button size="icon" variant="ghost">
+                  <EllipsisHorizontalIcon className="size-5" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                {dropdownMenuItems}
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

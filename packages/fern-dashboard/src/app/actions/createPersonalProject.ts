@@ -5,10 +5,7 @@ import { User } from "@auth0/nextjs-auth0/types";
 import { FernVenusApi, FernVenusApiClient } from "@fern-api/venus-api-sdk";
 import { APIResponse } from "@fern-api/venus-api-sdk/core";
 
-import {
-  clearCachesAfterCreatingOrganization,
-  getCurrentSession,
-} from "../services/auth0/helpers";
+import { getCurrentSession } from "../services/auth0/getCurrentSession";
 import { Auth0OrgID, Auth0UserID } from "../services/auth0/types";
 import { getVenusClient } from "../services/venus/getVenusClient";
 
@@ -22,9 +19,7 @@ export async function createPersonalProject(): Promise<Auth0OrgID> {
     venus,
   });
 
-  await clearCachesAfterCreatingOrganization(userId);
-
-  return orgId as unknown as Auth0OrgID;
+  return Auth0OrgID(orgId);
 }
 
 async function createPersonalProjectInVenus({

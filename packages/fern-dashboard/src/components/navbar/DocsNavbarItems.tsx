@@ -12,7 +12,7 @@ import { ICON_SIZE, NavbarItem } from "./NavbarItem";
 export function DocsNavbarItems() {
   const docsSites = useMyDocsSites();
   const firstDocsSite =
-    docsSites.type === "loaded" ? docsSites.value[0] : undefined;
+    docsSites.type === "loaded" ? docsSites.value.docsSites[0] : undefined;
 
   return (
     <>

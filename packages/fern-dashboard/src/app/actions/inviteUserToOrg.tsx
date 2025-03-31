@@ -1,7 +1,8 @@
 "use server";
 
 import { getAuth0ManagementClient } from "../services/auth0/getAuth0ManagementClient";
-import { getCurrentSession, getOrgMembers } from "../services/auth0/helpers";
+import { getCurrentSession } from "../services/auth0/getCurrentSession";
+import { getOrgMembers } from "../services/auth0/helpers";
 import { Auth0OrgID } from "../services/auth0/types";
 
 /* eslint-disable turbo/no-undeclared-env-vars */

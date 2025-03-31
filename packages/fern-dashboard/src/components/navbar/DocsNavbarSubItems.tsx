@@ -15,7 +15,7 @@ export function DocsNavbarSubItems() {
 
   return (
     <>
-      {docsSites.value.map((docsSite) => {
+      {docsSites.value.docsSites.map((docsSite) => {
         const url = getDocsSiteUrl(docsSite);
         return (
           <NavbarSubItem

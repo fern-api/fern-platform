@@ -1,41 +1,22 @@
 "use client";
 
-import { useEffect } from "react";
+import { useQuery } from "@tanstack/react-query";
 
-import { GetOrganizations200ResponseOneOfInner } from "auth0";
-import { create } from "zustand";
-
-import { Loadable } from "@fern-ui/loadable";
-
-import { getMyOrganizations } from "@/app/services/auth0/helpers";
 import { Auth0OrgID } from "@/app/services/auth0/types";
+import { DashboardApiClient } from "@/app/services/dashboard-api/client";
 
-type OrganizationsStore = {
-  organizations: Loadable<GetOrganizations200ResponseOneOfInner[]>;
-  setOrganizations: (orgs: GetOrganizations200ResponseOneOfInner[]) => void;
-};
+import { convertQueryResultToLoadable } from "./convertQueryResultToLoadable";
+import { ReactQueryKey, inferQueryData } from "./queryKeys";
 
-export const useOrganizationsStore = create<OrganizationsStore>((set) => ({
-  organizations: { type: "notStartedLoading" },
-  setOrganizations: (orgs: GetOrganizations200ResponseOneOfInner[]) =>
-    set({ organizations: { type: "loaded", value: orgs } }),
-}));
+const QUERY_KEY = ReactQueryKey.organizations();
 
 export function useOrganizations() {
-  const organizations = useOrganizationsStore((state) => state.organizations);
-  const setOrganizations = useOrganizationsStore(
-    (state) => state.setOrganizations
+  return convertQueryResultToLoadable(
+    useQuery<inferQueryData<typeof QUERY_KEY>>({
+      queryKey: QUERY_KEY,
+      queryFn: () => DashboardApiClient.getMyOrganizations(),
+    })
   );
-
-  useEffect(() => {
-    async function run() {
-      setOrganizations(await getMyOrganizations());
-    }
-
-    void run();
-  }, [setOrganizations]);
-
-  return organizations;
 }
 
 export function useOrganization(orgId: Auth0OrgID) {

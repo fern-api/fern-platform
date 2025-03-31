@@ -14,18 +14,16 @@ import { getFdrClient } from "@/app/services/fdr/getFdrClient";
 import { getVenusClient } from "@/app/services/venus/getVenusClient";
 
 import { getS3Client } from "../../services/s3";
-import { parseAuthHeader } from "./parseAuthHeader";
+import { parseAuthHeader } from "../parseAuthHeader";
 
 export const maxDuration = 60;
 
 const IMAGE_FILETYPE = "avif";
 
 export async function POST(req: NextRequest) {
-  const authHeader = req.headers.get("authorization");
-
   let token: string;
   try {
-    const parsedAuthHeader = parseAuthHeader(authHeader);
+    const parsedAuthHeader = parseAuthHeader(req);
     token = parsedAuthHeader.token;
   } catch (e) {
     console.error("Failed to parse auth header", e);

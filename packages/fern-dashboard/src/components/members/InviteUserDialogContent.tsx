@@ -1,11 +1,13 @@
 import { useMemo, useState } from "react";
 
 import { PaperAirplaneIcon } from "@heroicons/react/24/outline";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { GetOrganizations200ResponseOneOfInner } from "auth0";
 import { toast } from "sonner";
 
 import { inviteUserToOrg } from "@/app/actions/inviteUserToOrg";
 import { Auth0OrgID } from "@/app/services/auth0/types";
+import { ReactQueryKey, inferQueryData } from "@/state/queryKeys";
 import { getOrgDisplayName } from "@/utils/getOrgDisplayName";
 
 import { Button } from "../ui/button";
@@ -22,7 +24,6 @@ export declare namespace InviteUserDialogContent {
   export interface Props {
     orgId: Auth0OrgID;
     org: GetOrganizations200ResponseOneOfInner | undefined;
-    onInvite?: () => void;
     close: () => void;
   }
 }
@@ -32,31 +33,51 @@ const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 export function InviteUserDialogContent({
   orgId,
   org,
-  onInvite,
   close,
 }: InviteUserDialogContent.Props) {
   const [email, setEmail] = useState("");
 
   const isValidEmail = useMemo(() => EMAIL_REGEX.test(email), [email]);
 
-  const [isInviting, setIsInviting] = useState(false);
-  const onClickInvite = async () => {
-    if (!isValidEmail) {
-      return;
-    }
+  const queryClient = useQueryClient();
+  const inviteUser = useMutation({
+    mutationFn: () => inviteUserToOrg({ orgId, inviteeEmail: email }),
+    onMutate: async () => {
+      const queryKey = ReactQueryKey.orgInvitations();
+      await queryClient.cancelQueries({ queryKey });
 
-    setIsInviting(true);
-    try {
-      await inviteUserToOrg({ orgId, inviteeEmail: email });
-      toast.success(`Invited ${email}`);
-      onInvite?.();
-      close();
-    } catch (e) {
-      console.error("Failed to invite user to org", e);
+      const previousInvitations =
+        queryClient.getQueryData<inferQueryData<typeof queryKey>>(queryKey);
+
+      queryClient.setQueryData<inferQueryData<typeof queryKey>>(
+        queryKey,
+        (oldInvitations = []) => [
+          { id: undefined, inviteeEmail: email },
+          ...oldInvitations,
+        ]
+      );
+
+      return { previousInvitations };
+    },
+    onError: (error, _variables, context) => {
+      console.error(`Failed to invite ${email}`, error);
       toast.error(`Failed to invite ${email}`);
-      setIsInviting(false);
-    }
-  };
+      if (context?.previousInvitations != null) {
+        const queryKey = ReactQueryKey.orgInvitations();
+        queryClient.setQueryData<inferQueryData<typeof queryKey>>(
+          queryKey,
+          context.previousInvitations
+        );
+      }
+    },
+    onSettled: async () => {
+      await queryClient.invalidateQueries({
+        queryKey: ReactQueryKey.orgInvitations(),
+      });
+    },
+  });
+
+  const isInviting = inviteUser.isPending;
 
   return (
     <>
@@ -75,7 +96,7 @@ export function InviteUserDialogContent({
           disabled={isInviting}
           value={email}
           onChange={(e) => {
-            setEmail(e.currentTarget.value);
+            setEmail(e.currentTarget.value.trim());
           }}
         />
       </DialogBody>
@@ -83,7 +104,13 @@ export function InviteUserDialogContent({
         <Button variant="outline" onClick={close} disabled={isInviting}>
           Cancel
         </Button>
-        <Button disabled={!isValidEmail || isInviting} onClick={onClickInvite}>
+        <Button
+          disabled={!isValidEmail || isInviting}
+          onClick={() => {
+            inviteUser.mutate();
+            close();
+          }}
+        >
           Send invitation
           <PaperAirplaneIcon />
         </Button>

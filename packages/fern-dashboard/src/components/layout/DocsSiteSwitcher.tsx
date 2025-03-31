@@ -17,7 +17,7 @@ export function DocsSiteSwitcher() {
 
   return (
     <DocsSiteSelect
-      docsSites={docsSites.type === "loaded" ? docsSites.value : []}
+      docsSites={docsSites.type === "loaded" ? docsSites.value.docsSites : []}
       currentDocsUrl={
         params.docsUrl != null
           ? parseDocsUrlParam({ docsUrl: params.docsUrl })

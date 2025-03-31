@@ -1,6 +1,6 @@
 import { type NextRequest } from "next/server";
 
-import { getAuth0Client } from "./utils/auth0";
+import { getAuth0Client } from "./app/services/auth0/auth0";
 
 export async function middleware(req: NextRequest) {
   const auth0 = await getAuth0Client();

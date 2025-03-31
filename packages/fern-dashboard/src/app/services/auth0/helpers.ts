@@ -4,132 +4,12 @@ import {
   ApiResponse,
   GetInvitations200ResponseOneOfInner,
   GetMembers200ResponseOneOfInner,
-  GetOrganizations200ResponseOneOfInner,
 } from "auth0";
-import jwt from "jsonwebtoken";
 
-import { getAuth0Client } from "@/utils/auth0";
-import { getOrgIdOrThrow } from "@/utils/getOrgIdOrThrow";
-
-import { AsyncCache } from "../AsyncCache";
 import { getAuth0ManagementClient } from "./getAuth0ManagementClient";
-import { Auth0OrgID, Auth0UserID } from "./types";
-
-export async function getCurrentSession() {
-  const auth0 = await getAuth0Client();
-  const session = await auth0.getSession();
-  if (session == null) {
-    throw new Error("Not authenticated");
-  }
-  if (session.idToken == null) {
-    throw new Error("idToken is not present on session");
-  }
-  if (typeof session.idToken !== "string") {
-    throw new Error(
-      `idToken is of type ${typeof session.idToken} (expected string)`
-    );
-  }
-
-  const jwtPayload = jwt.decode(session.idToken);
-  if (jwtPayload == null) {
-    throw new Error("JWT payload is not defined");
-  }
-  if (typeof jwtPayload !== "object") {
-    throw new Error("JWT payload is not an object");
-  }
-  if (jwtPayload?.sub == null) {
-    throw new Error("JWT payload does not include 'sub'");
-  }
-
-  return { session, userId: jwtPayload.sub as Auth0UserID };
-}
-
-export async function getCurrentOrgId() {
-  const auth0 = await getAuth0Client();
-  const session = await auth0.getSession();
-  if (session == null) {
-    throw new Error("session is not defined");
-  }
-  return getOrgIdOrThrow(session);
-}
-
-// caches
-
-const ORGANIZATIONS_CACHE = new AsyncCache<
-  Auth0OrgID,
-  GetOrganizations200ResponseOneOfInner
->({
-  ttlInSeconds: 10,
-});
-
-const MY_ORGANIZATIONS_CACHE = new AsyncCache<
-  Auth0UserID,
-  GetOrganizations200ResponseOneOfInner[]
->({
-  ttlInSeconds: 10,
-});
-
-const ORGANIZATION_MEMBERS_CACHE = new AsyncCache<
-  Auth0OrgID,
-  GetMembers200ResponseOneOfInner[]
->({
-  ttlInSeconds: 10,
-});
-
-const ORGANIZATION_INVITATIONS_CACHE = new AsyncCache<
-  Auth0OrgID,
-  GetInvitations200ResponseOneOfInner[]
->({
-  ttlInSeconds: 10,
-});
-
-export async function clearCachesAfterCreatingOrganization(
-  userId: Auth0UserID
-) {
-  MY_ORGANIZATIONS_CACHE.invalidate(userId);
-}
-
-export async function clearCachesAfterInvitation(orgId: Auth0OrgID) {
-  ORGANIZATION_INVITATIONS_CACHE.invalidate(orgId);
-}
-
-// helpers
-
-export async function getCurrentOrg() {
-  const orgId = await getCurrentOrgId();
-
-  return await ORGANIZATIONS_CACHE.get(orgId, async () => {
-    const { data: organization } =
-      await getAuth0ManagementClient().organizations.get({
-        id: orgId,
-      });
-    return organization;
-  });
-}
-
-export async function getMyOrganizations() {
-  const { userId } = await getCurrentSession();
-
-  return await MY_ORGANIZATIONS_CACHE.get(userId, async () => {
-    const { data: organizations } =
-      await getAuth0ManagementClient().users.getUserOrganizations({
-        id: userId,
-      });
-    return organizations;
-  });
-}
-
-export async function getCurrentOrgMembers() {
-  return await getOrgMembers(await getCurrentOrgId());
-}
+import { Auth0OrgID } from "./types";
 
 export async function getOrgMembers(orgId: Auth0OrgID) {
-  return await ORGANIZATION_MEMBERS_CACHE.get(orgId, () =>
-    getAllOrganizationMembers(orgId)
-  );
-}
-
-async function getAllOrganizationMembers(orgId: Auth0OrgID) {
   const members: GetMembers200ResponseOneOfInner[] = [];
 
   const auth0 = getAuth0ManagementClient();
@@ -151,20 +31,12 @@ async function getAllOrganizationMembers(orgId: Auth0OrgID) {
     members.length < 1000
   );
 
+  members.sort((a, b) => (a.name < b.name ? -1 : 1));
+
   return members;
 }
 
-export async function getCurrentOrgInvitations() {
-  return await getOrgInvitations(await getCurrentOrgId());
-}
-
-async function getOrgInvitations(orgId: Auth0OrgID) {
-  return await ORGANIZATION_INVITATIONS_CACHE.get(orgId, () =>
-    getAllOrganizationInvitations(orgId)
-  );
-}
-
-async function getAllOrganizationInvitations(orgId: Auth0OrgID) {
+export async function getOrgInvitations(orgId: Auth0OrgID) {
   const invitations: GetInvitations200ResponseOneOfInner[] = [];
 
   const auth0 = getAuth0ManagementClient();
@@ -184,6 +56,8 @@ async function getAllOrganizationInvitations(orgId: Auth0OrgID) {
     // the auth0 API only supports loading 1,000 invitations via basic pagination
     invitations.length < 1000
   );
+
+  invitations.sort((a, b) => (a.created_at < b.created_at ? 1 : -1));
 
   return invitations;
 }

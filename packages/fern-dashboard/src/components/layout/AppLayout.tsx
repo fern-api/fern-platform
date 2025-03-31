@@ -1,4 +1,4 @@
-import { getSessionOrRedirect } from "@/utils/auth0";
+import { getCurrentSession } from "@/app/services/auth0/getCurrentSession";
 
 import { Navbar } from "../navbar/Navbar";
 import { Header } from "./Header";
@@ -11,7 +11,7 @@ export declare namespace AppLayout {
 }
 
 export async function AppLayout({ children }: AppLayout.Props) {
-  const session = await getSessionOrRedirect();
+  const { session } = await getCurrentSession();
 
   return (
     <div className="dark:bg-gray-1200 flex flex-1 flex-col bg-gray-300">
