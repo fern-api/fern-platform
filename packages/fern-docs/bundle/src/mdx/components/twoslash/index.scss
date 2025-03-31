@@ -116,6 +116,10 @@ html.dark .shiki span {
   border-top: 1px solid var(--twoslash-border-color);
 }
 
+.twoslash .twoslash-popup-docs code {
+  font-size: inherit;
+}
+
 .twoslash .twoslash-popup-error {
   color: var(--twoslash-error-color);
   background-color: var(--twoslash-error-bg);

@@ -1091,6 +1091,9 @@ importers:
       '@types/graceful-fs':
         specifier: ^4.1.9
         version: 4.1.9
+      '@types/hast':
+        specifier: ^3.0.4
+        version: 3.0.4
       '@types/node':
         specifier: ^18.11.9
         version: 18.19.33
