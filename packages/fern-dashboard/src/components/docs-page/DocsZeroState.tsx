@@ -3,23 +3,25 @@ import Image from "next/image";
 import { User } from "@auth0/nextjs-auth0/types";
 import { PlusIcon } from "@heroicons/react/24/outline";
 
-import { getSessionOrRedirect } from "@/utils/auth0";
-
 import exampleDocsSite from "../../../public/example-docs-site.avif";
 import { Button } from "../ui/button";
 
-export async function DocsZeroState() {
-  const session = await getSessionOrRedirect();
+export declare namespace DocsZeroState {
+  export interface Props {
+    user: User;
+  }
+}
 
+export async function DocsZeroState({ user }: DocsZeroState.Props) {
   let welcomeString = "Welcome";
-  const firstName = getFirstName(session.user);
+  const firstName = getFirstName(user);
   if (firstName != null) {
     welcomeString += ", " + firstName;
   }
 
   return (
     <div className="flex flex-1 flex-col">
-      <div className="text-gray-1200 text-xl font-bold dark:text-gray-200">
+      <div className="text-xl font-bold dark:text-gray-200">
         {welcomeString}
       </div>
       <div className="mt-2 text-sm text-gray-900">

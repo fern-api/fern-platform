@@ -9,6 +9,7 @@ const nextConfig: NextConfig = {
      * pnpm list --filter=@fern-dashboard/ui --only-projects --prod --recursive --depth=Infinity --json | jq -r '[.. | objects | select(.version | .!=null) | select(.version | startswith("link:")) | .from] | unique'
      */
     "@fern-api/fdr-sdk",
+    "@fern-ui/loadable",
   ],
   experimental: {
     optimizePackageImports: [],
@@ -31,6 +32,9 @@ const nextConfig: NextConfig = {
 
   // vercel chokes on monorepo compilation and we run compile before building
   typescript: { ignoreBuildErrors: true },
+
+  // so it doesn't cover the theme toggle
+  devIndicators: { position: "bottom-right" },
 };
 
 export default nextConfig;

@@ -598,11 +598,17 @@ importers:
         specifier: workspace:*
         version: link:../fdr-sdk
       '@fern-api/venus-api-sdk':
-        specifier: ^0.10.1-5-ged06d22
-        version: 0.10.1-5-ged06d22
+        specifier: ^0.13.4-3-g1fe7ae7
+        version: 0.13.4-3-g1fe7ae7
+      '@fern-ui/loadable':
+        specifier: workspace:*
+        version: link:../commons/loadable
       '@heroicons/react':
         specifier: ^2.2.0
         version: 2.2.0(react@19.0.0)
+      '@radix-ui/react-dialog':
+        specifier: ^1.1.6
+        version: 1.1.6(@types/react-dom@19.0.4(@types/react@19.0.10))(@types/react@19.0.10)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       '@radix-ui/react-dropdown-menu':
         specifier: ^2.1.6
         version: 2.1.6(@types/react-dom@19.0.4(@types/react@19.0.10))(@types/react@19.0.10)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
@@ -618,6 +624,12 @@ importers:
       '@sparticuz/chromium':
         specifier: ^133.0.0
         version: 133.0.0
+      '@tanstack/react-query':
+        specifier: ^5.71.1
+        version: 5.71.1(react@19.0.0)
+      '@tanstack/react-query-devtools':
+        specifier: ^5.71.1
+        version: 5.71.1(@tanstack/react-query@5.71.1(react@19.0.0))(react@19.0.0)
       auth0:
         specifier: ^4.20.0
         version: 4.20.0
@@ -639,9 +651,6 @@ importers:
       next-themes:
         specifier: ^0.4.4
         version: 0.4.4(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
-      node-cache:
-        specifier: ^5.1.2
-        version: 5.1.2
       puppeteer-core:
         specifier: ^24.4.0
         version: 24.4.0
@@ -654,15 +663,15 @@ importers:
       sharp:
         specifier: ^0.33.5
         version: 0.33.5
+      sonner:
+        specifier: ^1.5.0
+        version: 1.5.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       tailwind-merge:
         specifier: ^3.0.1
         version: 3.0.1
       tailwindcss-animate:
         specifier: ^1.0.7
         version: 1.0.7(tailwindcss@4.0.9)
-      zustand:
-        specifier: ^5.0.2
-        version: 5.0.3(@types/react@19.0.10)(immer@9.0.21)(react@19.0.0)(use-sync-external-store@1.4.0(react@19.0.0))
     devDependencies:
       '@fern-platform/configs':
         specifier: workspace:*
@@ -4061,6 +4070,9 @@ packages:
   '@fern-api/venus-api-sdk@0.10.1-5-ged06d22':
     resolution: {integrity: sha512-36tR/u4IO1C7OU1gmKwO05OrNV1noY+SrPzsC085QkbHI+WLEZQv4l6V9qCQ7Vi7KAYJ1hWkrzg8eRa62PqxeQ==}
 
+  '@fern-api/venus-api-sdk@0.13.4-3-g1fe7ae7':
+    resolution: {integrity: sha512-WKr9VId5Bn5BSlxxeRMlIoOqNeSenu0rHxF74Ev6j6aVEnLIraDdTgF/SZdXgJSfKIR+AXrez/A4h7B1C/yEiA==}
+
   '@fern-fern/fdr-cjs-sdk@0.76.19-1-6e46ece2a09':
     resolution: {integrity: sha512-EJ3dC1grOcUFNVzA+ISkrcMHXfDfjUsKJZ8IthELlZyiMeTToj2ONHrESG1syu60RZ/E+81WDa4inxKRoHpRhA==}
 
@@ -6764,6 +6776,23 @@ packages:
     peerDependencies:
       vite: ^5.2.0 || ^6
 
+  '@tanstack/query-core@5.71.1':
+    resolution: {integrity: sha512-4+ZswCHOfJX+ikhXNoocamTUmJcHtB+Ljjz/oJkC7/eKB5IrzEwR4vEwZUENiPi+wISucJHR5TUbuuJ26w3kdQ==}
+
+  '@tanstack/query-devtools@5.67.2':
+    resolution: {integrity: sha512-O4QXFFd7xqp6EX7sdvc9tsVO8nm4lpWBqwpgjpVLW5g7IeOY6VnS/xvs/YzbRhBVkKTMaJMOUGU7NhSX+YGoNg==}
+
+  '@tanstack/react-query-devtools@5.71.1':
+    resolution: {integrity: sha512-nETCStlMy1h3Hcy1rnHJVbW8ERsAErAzpCsBHIVd9AOjQgQjzjFl2FetlEZjRc+vMJjpJde9NDsftYhy7UA83A==}
+    peerDependencies:
+      '@tanstack/react-query': ^5.71.1
+      react: 19.0.0
+
+  '@tanstack/react-query@5.71.1':
+    resolution: {integrity: sha512-6BTkaSIGT58MroI4kIGXNdx/NhirXPU+75AJObLq+WBa39WmoxhzSk0YX+hqWJ/bvqZJFxslbEU4qIHaRZq+8Q==}
+    peerDependencies:
+      react: 19.0.0
+
   '@testing-library/dom@10.4.0':
     resolution: {integrity: sha512-pemlzrSESWbdAloYml3bAJMEfNh1Z7EduzqPKprCH5S341frlpYnUEW0H72dLxa6IsYr+mPno20GiSm+h9dEdQ==}
     engines: {node: '>=18'}
@@ -8614,10 +8643,6 @@ packages:
 
   clone@1.0.4:
     resolution: {integrity: sha512-JQHZ2QMW6l3aH/j6xCqQThY/9OH4D/9ls34cgkUBiEeocRTU04tHfKPBsUK1PqZCUQM7GiA0IIXJSuXHI64Kbg==}
-    engines: {node: '>=0.8'}
-
-  clone@2.1.2:
-    resolution: {integrity: sha512-3Pe/CF1Nn94hyhIYpjtiLhdCoEoz0DqQ+988E9gmeEdQZlojxnOb74wctFyuwWQHzqyf9X7C7MG8juUpqBJT8w==}
     engines: {node: '>=0.8'}
 
   clsx@2.1.1:
@@ -12570,10 +12595,6 @@ packages:
 
   node-addon-api@7.1.1:
     resolution: {integrity: sha512-5m3bsyrjFWE1xf7nz7YXdN4udnVtXK6/Yfgn5qnahL6bCkf2yKt4k3nuTKAtT4r3IG8JNR2ncsIMdZuAzJjHQQ==}
-
-  node-cache@5.1.2:
-    resolution: {integrity: sha512-t1QzWwnk4sjLWaQAS8CHgOJ+RAfmHpxFWmc36IWTiWHQfs0w5JDMBS1b1ZxQteo0vVVuWJvIUKHDkkeK7vIGCg==}
-    engines: {node: '>= 8.0.0'}
 
   node-cron@3.0.3:
     resolution: {integrity: sha512-dOal67//nohNgYWb+nWmg5dkFdIwDm8EpeGYMekPMrngV3637lqnX0lbUcCtgibHTz6SEz7DAIjKvKDFYCnO1A==}
@@ -18461,6 +18482,18 @@ snapshots:
     transitivePeerDependencies:
       - encoding
 
+  '@fern-api/venus-api-sdk@0.13.4-3-g1fe7ae7':
+    dependencies:
+      form-data: 4.0.0
+      formdata-node: 6.0.3
+      js-base64: 3.7.7
+      node-fetch: 2.7.0
+      qs: 6.14.0
+      readable-stream: 4.5.2
+      url-join: 4.0.1
+    transitivePeerDependencies:
+      - encoding
+
   '@fern-fern/fdr-cjs-sdk@0.76.19-1-6e46ece2a09':
     dependencies:
       form-data: 4.0.0
@@ -21987,6 +22020,21 @@ snapshots:
       tailwindcss: 4.0.9
       vite: 6.1.0(@types/node@18.19.33)(jiti@2.4.2)(less@4.2.0)(lightningcss@1.29.1)(sass@1.77.0)(stylus@0.62.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0)
 
+  '@tanstack/query-core@5.71.1': {}
+
+  '@tanstack/query-devtools@5.67.2': {}
+
+  '@tanstack/react-query-devtools@5.71.1(@tanstack/react-query@5.71.1(react@19.0.0))(react@19.0.0)':
+    dependencies:
+      '@tanstack/query-devtools': 5.67.2
+      '@tanstack/react-query': 5.71.1(react@19.0.0)
+      react: 19.0.0
+
+  '@tanstack/react-query@5.71.1(react@19.0.0)':
+    dependencies:
+      '@tanstack/query-core': 5.71.1
+      react: 19.0.0
+
   '@testing-library/dom@10.4.0':
     dependencies:
       '@babel/code-frame': 7.26.2
@@ -24336,8 +24384,6 @@ snapshots:
       mimic-response: 1.0.1
 
   clone@1.0.4: {}
-
-  clone@2.1.2: {}
 
   clsx@2.1.1: {}
 
@@ -29395,10 +29441,6 @@ snapshots:
   node-abort-controller@3.1.1: {}
 
   node-addon-api@7.1.1: {}
-
-  node-cache@5.1.2:
-    dependencies:
-      clone: 2.1.2
 
   node-cron@3.0.3:
     dependencies:
