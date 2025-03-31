@@ -32,7 +32,7 @@
     "@fern-api/ui-core-utils": "workspace:*",
     "es-toolkit": "^1.32.0",
     "fastdom": "^1.0.12",
-    "immer": "^9.0.15",
+    "immer": "^10.1.1",
     "ts-essentials": "^10.0.1"
   },
   "devDependencies": {
