@@ -22,6 +22,7 @@ export declare namespace InviteUserDialogContent {
   export interface Props {
     orgId: Auth0OrgID;
     org: GetOrganizations200ResponseOneOfInner | undefined;
+    onInvite?: () => void;
     close: () => void;
   }
 }
@@ -31,6 +32,7 @@ const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 export function InviteUserDialogContent({
   orgId,
   org,
+  onInvite,
   close,
 }: InviteUserDialogContent.Props) {
   const [email, setEmail] = useState("");
@@ -47,6 +49,7 @@ export function InviteUserDialogContent({
     try {
       await inviteUserToOrg({ orgId, inviteeEmail: email });
       toast.success(`Invited ${email}`);
+      onInvite?.();
       close();
     } catch (e) {
       console.error("Failed to invite user to org", e);

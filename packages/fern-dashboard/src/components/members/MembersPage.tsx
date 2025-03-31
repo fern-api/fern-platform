@@ -2,8 +2,9 @@
 
 import { SessionData } from "@auth0/nextjs-auth0/types";
 
+import { useOrgMembersAndInvitations } from "@/state/useOrgMembersAndInvitations";
+import { useOrganization } from "@/state/useOrganizations";
 import { getOrgIdOrThrow } from "@/utils/getOrgIdOrThrow";
-import { useOrganization } from "@/utils/useOrganizations";
 
 import { PageHeader } from "../layout/PageHeader";
 import { InviteUserDialog } from "./InviteUserDialog";
@@ -19,6 +20,9 @@ export function MembersPage({ session }: MembersPage.Props) {
   const orgId = getOrgIdOrThrow(session);
   const org = useOrganization(orgId);
 
+  const { orgMembersAndInvitations, reload: reloadOrgMembersAndInvitations } =
+    useOrgMembersAndInvitations();
+
   return (
     <div className="flex flex-1 flex-col">
       <PageHeader
@@ -26,11 +30,19 @@ export function MembersPage({ session }: MembersPage.Props) {
         subtitle="Manage team members and invitations"
         rightContent={
           <div className="flex items-center">
-            <InviteUserDialog orgId={orgId} org={org} />
+            <InviteUserDialog
+              orgId={orgId}
+              org={org}
+              onInvite={reloadOrgMembersAndInvitations}
+            />
           </div>
         }
       />
-      <MembersTable />
+      <MembersTable
+        orgId={orgId}
+        orgMembersAndInvitations={orgMembersAndInvitations}
+        onRescindInvitation={reloadOrgMembersAndInvitations}
+      />
     </div>
   );
 }

@@ -17,6 +17,9 @@
   "references": [
     {
       "path": "../fdr-sdk/tsconfig.json"
+    },
+    {
+      "path": "../commons/loadable/tsconfig.json"
     }
   ]
 }

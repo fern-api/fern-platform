@@ -1,8 +1,8 @@
 "use client";
 
+import { useMyDocsSites } from "@/state/useMyDocsSites";
 import { constructDocsUrlParam } from "@/utils/constructDocsUrlParam";
 import { getDocsSiteUrl } from "@/utils/getDocsSiteUrl";
-import { useMyDocsSites } from "@/utils/useMyDocsSites";
 
 import { NavbarSubItem } from "./NavbarSubItem";
 

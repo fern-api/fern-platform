@@ -1,7 +1,7 @@
 "use client";
 
+import { useDocsSite } from "@/state/useMyDocsSites";
 import { DocsUrl } from "@/utils/types";
-import { useDocsSite } from "@/utils/useMyDocsSites";
 
 import { Page404 } from "../Page404";
 import { PageHeader } from "../layout/PageHeader";

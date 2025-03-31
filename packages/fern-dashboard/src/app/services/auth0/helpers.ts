@@ -2,6 +2,7 @@
 
 import {
   ApiResponse,
+  GetInvitations200ResponseOneOfInner,
   GetMembers200ResponseOneOfInner,
   GetOrganizations200ResponseOneOfInner,
 } from "auth0";
@@ -75,10 +76,21 @@ const ORGANIZATION_MEMBERS_CACHE = new AsyncCache<
   ttlInSeconds: 10,
 });
 
+const ORGANIZATION_INVITATIONS_CACHE = new AsyncCache<
+  Auth0OrgID,
+  GetInvitations200ResponseOneOfInner[]
+>({
+  ttlInSeconds: 10,
+});
+
 export async function clearCachesAfterCreatingOrganization(
   userId: Auth0UserID
 ) {
   MY_ORGANIZATIONS_CACHE.invalidate(userId);
+}
+
+export async function clearCachesAfterInvitation(orgId: Auth0OrgID) {
+  ORGANIZATION_INVITATIONS_CACHE.invalidate(orgId);
 }
 
 // helpers
@@ -140,4 +152,38 @@ async function getAllOrganizationMembers(orgId: Auth0OrgID) {
   );
 
   return members;
+}
+
+export async function getCurrentOrgInvitations() {
+  return await getOrgInvitations(await getCurrentOrgId());
+}
+
+async function getOrgInvitations(orgId: Auth0OrgID) {
+  return await ORGANIZATION_INVITATIONS_CACHE.get(orgId, () =>
+    getAllOrganizationInvitations(orgId)
+  );
+}
+
+async function getAllOrganizationInvitations(orgId: Auth0OrgID) {
+  const invitations: GetInvitations200ResponseOneOfInner[] = [];
+
+  const auth0 = getAuth0ManagementClient();
+
+  let pageIndex = 0;
+  let page: ApiResponse<GetInvitations200ResponseOneOfInner[]>;
+  do {
+    page = await auth0.organizations.getInvitations({
+      id: orgId,
+      page: pageIndex,
+      per_page: 100,
+    });
+    invitations.push(...page.data);
+    pageIndex++;
+  } while (
+    page.data.length > 0 &&
+    // the auth0 API only supports loading 1,000 invitations via basic pagination
+    invitations.length < 1000
+  );
+
+  return invitations;
 }

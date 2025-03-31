@@ -13,10 +13,15 @@ export declare namespace InviteUserDialog {
   export interface Props {
     orgId: Auth0OrgID;
     org: GetOrganizations200ResponseOneOfInner | undefined;
+    onInvite?: () => void;
   }
 }
 
-export function InviteUserDialog({ org, orgId }: InviteUserDialog.Props) {
+export function InviteUserDialog({
+  org,
+  orgId,
+  onInvite,
+}: InviteUserDialog.Props) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -41,6 +46,7 @@ export function InviteUserDialog({ org, orgId }: InviteUserDialog.Props) {
           close={() => {
             setIsOpen(false);
           }}
+          onInvite={onInvite}
         />
       </DialogContent>
     </Dialog>

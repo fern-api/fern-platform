@@ -5,11 +5,10 @@ import { useEffect } from "react";
 import { create } from "zustand";
 
 import { FdrAPI } from "@fern-api/fdr-sdk";
+import { Loadable, mapLoadable } from "@fern-ui/loadable";
 
 import { getMyDocsSites } from "@/app/services/fdr/helpers";
-
-import { Loadable, mapLoadable } from "./Loadable";
-import { getDocsSiteUrl } from "./getDocsSiteUrl";
+import { getDocsSiteUrl } from "@/utils/getDocsSiteUrl";
 
 type DocsSitesStore = {
   docsSites: Loadable<FdrAPI.dashboard.DocsSite[]>;

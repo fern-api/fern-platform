@@ -1,19 +1,41 @@
 "use client";
 
-import { useOrgMembers } from "@/utils/useOrgMembers";
+import { Loadable } from "@fern-ui/loadable";
 
+import { OrgMembersAndInvitations } from "@/app/actions/getCurrentOrgMembersAndInvitations";
+import { Auth0OrgID } from "@/app/services/auth0/types";
+
+import { InviteeRow } from "./InviteeRow";
 import { MemberRow } from "./MemberRow";
 
-export function MembersTable() {
-  const members = useOrgMembers();
+export declare namespace MembersTable {
+  export interface Props {
+    orgId: Auth0OrgID;
+    orgMembersAndInvitations: Loadable<OrgMembersAndInvitations>;
+    onRescindInvitation?: () => void;
+  }
+}
 
-  if (members.type !== "loaded") {
+export function MembersTable({
+  orgId,
+  orgMembersAndInvitations,
+  onRescindInvitation,
+}: MembersTable.Props) {
+  if (orgMembersAndInvitations.type !== "loaded") {
     return null;
   }
 
   return (
     <div className="dark:bg-gray-1200 dark:border-gray-1100 flex flex-col rounded-xl border border-gray-500 bg-gray-100">
-      {members.value.map((member) => (
+      {orgMembersAndInvitations.value.invitations.map((invitation) => (
+        <InviteeRow
+          key={invitation.id}
+          orgId={orgId}
+          invitation={invitation}
+          onRescind={onRescindInvitation}
+        />
+      ))}
+      {orgMembersAndInvitations.value.members.map((member) => (
         <MemberRow key={member.user_id} member={member} />
       ))}
     </div>

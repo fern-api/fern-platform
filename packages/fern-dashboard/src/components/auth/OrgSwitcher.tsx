@@ -1,7 +1,9 @@
 "use client";
 
+import { getLoadableValue } from "@fern-ui/loadable";
+
 import { Auth0OrgID } from "@/app/services/auth0/types";
-import { useOrganizations } from "@/utils/useOrganizations";
+import { useOrganizations } from "@/state/useOrganizations";
 
 import { OrgSwitcherSelect } from "./OrgSwitcherSelect";
 
@@ -16,7 +18,7 @@ export function OrgSwitcher({ currentOrgId }: OrgSwitcher.Props) {
 
   return (
     <OrgSwitcherSelect
-      organizations={organizations}
+      organizations={getLoadableValue(organizations) ?? []}
       currentOrgId={currentOrgId}
     />
   );
