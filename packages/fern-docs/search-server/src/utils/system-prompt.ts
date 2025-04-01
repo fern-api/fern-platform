@@ -7,10 +7,10 @@ export const createDefaultSystemPrompt = (data: {
   documents: string;
   promptTemplate?: string;
 }): string =>
-  data.promptTemplate
+  typeof data.promptTemplate === "string" && data.promptTemplate.length > 0
     ? template(
-        `{{promptTemplate}}
----
+        data.promptTemplate +
+          `\n\n---
 
 Use the following documents to answer the user's question:
 

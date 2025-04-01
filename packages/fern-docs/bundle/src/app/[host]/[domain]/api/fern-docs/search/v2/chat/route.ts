@@ -87,10 +87,9 @@ export async function POST(req: NextRequest) {
     : wrapAISDKModel(bedrock(modelId));
 
   const promptTemplate = config.aiChatConfig?.systemPrompt;
-  if (config.aiChatConfig?.systemPrompt)
-    if (metadata == null) {
-      return NextResponse.json("Not found", { status: 404 });
-    }
+  if (metadata == null) {
+    return NextResponse.json("Not found", { status: 404 });
+  }
 
   if (metadata.isPreview) {
     return NextResponse.json("Chat is not enabled for preview environments", {
