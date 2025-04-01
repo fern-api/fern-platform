@@ -4,11 +4,7 @@
 
 /**
  * @example
- *     {
- *         page: 1,
- *         limit: 1,
- *         custom: true
- *     }
+ *     {}
  */
 export interface ListAllDocsUrlsRequest {
     page?: number;

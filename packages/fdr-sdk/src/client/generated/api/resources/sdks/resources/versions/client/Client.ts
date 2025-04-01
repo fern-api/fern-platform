@@ -39,9 +39,9 @@ export class Versions {
      *
      * @example
      *     await client.sdks.versions.computeSemanticVersion({
-     *         package: "string",
+     *         package: "package",
      *         language: "Go",
-     *         githubRepository: "string"
+     *         githubRepository: undefined
      *     })
      */
     public async computeSemanticVersion(

@@ -622,6 +622,7 @@ const getConfig = cache(async (domain: string) => {
       Omit<DocsV1Read.DocsDefinition["config"], "navigation" | "root">
     >(domain, "config");
     if (cached != null) {
+      console.log("hit cached config");
       return cached;
     }
   } catch (error) {

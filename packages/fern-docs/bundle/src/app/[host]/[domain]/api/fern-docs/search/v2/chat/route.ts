@@ -38,38 +38,59 @@ export const maxDuration = 60;
 export const revalidate = 0;
 const engNotifsSlackChannel = "#engineering-notifs";
 
+const modelMap = {
+  "claude-3.5": {
+    modelId: "us.anthropic.claude-3-5-sonnet-20241022-v2:0",
+    region: "us-west-2",
+  },
+  "claude-3.7": {
+    modelId: "us.anthropic.claude-3-7-sonnet-20250219-v1:0",
+    region: "us-east-1",
+  },
+  "command-r-plus": {
+    modelId: "cohere.command-r-plus-v1:0",
+    region: "us-east-1",
+  },
+};
+
 export async function POST(req: NextRequest) {
   initLogger({
     projectName: "Braintrust Evaluation",
     apiKey: process.env.BRAINTRUST_API_KEY,
   });
 
-  const openai = createOpenAI({ apiKey: openaiApiKey() });
-  const embeddingModel = openai.embedding("text-embedding-3-large");
-
   const host = req.nextUrl.host;
   const domain = getDocsDomainEdge(req);
+  const loader = await createCachedDocsLoader(host, domain);
+  const metadata = await loader.getMetadata();
+  const config = await loader.getConfig();
+
+  const model = config.aiChatConfig?.model || "claude-3.5";
+  const { modelId, region } = modelMap[model];
+
+  const openai = createOpenAI({ apiKey: openaiApiKey() });
+  const embeddingModel = openai.embedding("text-embedding-3-large");
   const namespace = `${withoutStaging(domain)}_${embeddingModel.modelId}`;
   const { messages, url, filters } = await req.json();
 
-  // TODO: move system prompt to docs.yml
+  // TODO: remove this once webflow adds model/system-prompt to docs.yml
   const isWebflow = url.includes("webflow-ai");
 
   const bedrock = createAmazonBedrock({
-    region: isWebflow ? "us-east-1" : "us-west-2",
+    region: isWebflow ? "us-east-1" : region,
     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
   });
 
   const languageModel = isWebflow
     ? wrapAISDKModel(bedrock("us.anthropic.claude-3-7-sonnet-20250219-v1:0"))
-    : wrapAISDKModel(bedrock("us.anthropic.claude-3-5-sonnet-20241022-v2:0"));
+    : wrapAISDKModel(bedrock(modelId));
 
-  const loader = await createCachedDocsLoader(host, domain);
-  const metadata = await loader.getMetadata();
-  if (metadata == null) {
-    return NextResponse.json("Not found", { status: 404 });
-  }
+  const promptTemplate = config.aiChatConfig?.systemPrompt;
+  if (config.aiChatConfig?.systemPrompt)
+    if (metadata == null) {
+      return NextResponse.json("Not found", { status: 404 });
+    }
 
   if (metadata.isPreview) {
     return NextResponse.json("Chat is not enabled for preview environments", {
@@ -113,6 +134,7 @@ export async function POST(req: NextRequest) {
         domain,
         date: new Date().toDateString(),
         documents,
+        promptTemplate,
       });
   const result = streamText({
     model: languageModel,
