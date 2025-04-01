@@ -47,9 +47,7 @@ searchInitializedAtom.onMount = (setInitialized) => {
 };
 
 export const SearchV2Trigger = React.memo(function SearchV2Trigger(
-  props: React.ComponentProps<typeof DesktopSearchButton> & {
-    isSearchInSidebar?: boolean;
-  }
+  props: React.ComponentProps<typeof DesktopSearchButton>
 ) {
   const isInitialized = useAtomValue(searchInitializedAtom);
   const toggleSearchDialog = useToggleSearchDialog();

@@ -28,20 +28,33 @@ export const DesktopSearchButton = forwardRef<
   ComponentPropsWithoutRef<"button"> &
     VariantProps<typeof buttonVariants> & {
       placeholder?: string;
+      isSearchInSidebar?: boolean;
     }
->(({ children, variant, placeholder = "Search", className, ...rest }, ref) => {
-  return (
-    <button
-      {...rest}
-      className={buttonVariants({ variant, className })}
-      ref={ref}
-    >
-      <SearchIcon />
-      {placeholder}
-      <CommandKbd className="pointer-coarse:hidden ml-auto" />
-    </button>
-  );
-});
+>(
+  (
+    {
+      children,
+      variant,
+      placeholder = "Search",
+      className,
+      isSearchInSidebar,
+      ...rest
+    },
+    ref
+  ) => {
+    return (
+      <button
+        {...rest}
+        className={buttonVariants({ variant, className })}
+        ref={ref}
+      >
+        <SearchIcon />
+        {placeholder}
+        <CommandKbd className="pointer-coarse:hidden ml-auto" />
+      </button>
+    );
+  }
+);
 
 DesktopSearchButton.displayName = "DesktopSearchButton";
 
