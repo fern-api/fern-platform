@@ -7,9 +7,14 @@ import {
   FERN_SIDEBAR_ID,
   FERN_SIDEBAR_SPACER_ID,
 } from "@/components/constants";
-import { HideAsides, useIsSidebarFixed } from "@/state/layout";
+import {
+  HideAsides,
+  useIsHeaderDisabled,
+  useIsSidebarFixed,
+  useLayout,
+} from "@/state/layout";
 
-import { MobileMenu } from "./mobile-menu";
+import { DismissableMenu } from "./dismissable-menu";
 
 export function SidebarNav({
   children,
@@ -25,12 +30,23 @@ export function SidebarNav({
   "data-theme"?: string;
 }) {
   const isDesktop = useIsDesktop();
+  const layout = useLayout();
+  const isHeaderDisabled = useIsHeaderDisabled();
 
-  if (!isDesktop) {
+  if (
+    !isDesktop ||
+    // side effect: if the header is disabled, the sidebar will always be fixed and visible (never dismissable) in desktop mode
+    // otherwise, the sidebar is unmounted only for the page and custom layouts
+    (!isHeaderDisabled && (layout === "page" || layout === "custom"))
+  ) {
     return (
-      <MobileMenu className={cn(className, mobileClassName)} {...props}>
+      <DismissableMenu
+        className={cn(className, mobileClassName)}
+        {...props}
+        side={isDesktop ? "left" : "right"}
+      >
         {children}
-      </MobileMenu>
+      </DismissableMenu>
     );
   }
 

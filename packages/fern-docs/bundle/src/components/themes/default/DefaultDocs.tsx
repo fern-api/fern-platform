@@ -7,10 +7,10 @@ import { cn } from "@fern-docs/components";
 
 import { FERN_FOOTER_ID } from "@/components/constants";
 import { HeaderTabsRoot } from "@/components/header/HeaderTabsRoot";
-import { SetIsSidebarFixed } from "@/state/layout";
+import { SetIsHeaderDisabled, SetIsSidebarFixed } from "@/state/layout";
 
+import { MainCtx } from "./dismissable-menu";
 import { FernHeader } from "./fern-header";
-import { MainCtx } from "./mobile-menu";
 import { SidebarNav } from "./side-nav";
 
 export default function DefaultDocs({
@@ -49,6 +49,7 @@ export default function DefaultDocs({
   return (
     <>
       <SetIsSidebarFixed value={isSidebarFixed} />
+      <SetIsHeaderDisabled value={isHeaderDisabled} />
       <div className="fern-background-image pointer-events-none fixed inset-0" />
       <FernHeader
         className={cn(

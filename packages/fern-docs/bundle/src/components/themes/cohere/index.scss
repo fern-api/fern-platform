@@ -44,12 +44,20 @@
       }
     }
 
-    #fern-sidebar[data-viewport="mobile"] {
+    #fern-sidebar[data-viewport="dismissable"] {
       @apply bg-sidebar-background rounded-2 border-border-default overflow-clip border;
-      @apply sm:w-sidebar-width border-border-concealed pointer-events-auto fixed bottom-3 right-3 top-[calc(var(--header-height)+1.5rem)] z-40 flex w-full max-w-[calc(100dvw-3rem)] flex-col border-l backdrop-blur-xl;
+      @apply sm:w-sidebar-width border-border-concealed pointer-events-auto fixed bottom-3 top-[calc(var(--header-height)+1.5rem)] z-40 flex w-full max-w-[calc(100dvw-3rem)] flex-col border-l backdrop-blur-xl;
 
       #fern-sidebar-scroll-area {
         @apply px-4 py-6 pb-12;
+      }
+
+      &[data-side="left"] {
+        @apply left-3;
+      }
+
+      &[data-side="right"] {
+        @apply right-3;
       }
     }
 
