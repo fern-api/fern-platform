@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import { createAmazonBedrock } from "@ai-sdk/amazon-bedrock";
+import { createCohere } from "@ai-sdk/cohere";
 import { createOpenAI } from "@ai-sdk/openai";
 import { WebClient } from "@slack/web-api";
 import {
@@ -31,7 +31,11 @@ import { getFernToken } from "@/app/fern-token";
 import { track } from "@/server/analytics/posthog";
 import { safeVerifyFernJWTConfig } from "@/server/auth/FernJWT";
 import { createCachedDocsLoader } from "@/server/docs-loader";
-import { openaiApiKey, turbopufferApiKey } from "@/server/env-variables";
+import {
+  cohereApiKey,
+  openaiApiKey,
+  turbopufferApiKey,
+} from "@/server/env-variables";
 import { getDocsDomainEdge } from "@/server/xfernhost/edge";
 
 export const maxDuration = 60;
@@ -55,15 +59,19 @@ export async function POST(req: NextRequest) {
   // TODO: move system prompt to docs.yml
   const isWebflow = url.includes("webflow-ai");
 
-  const bedrock = createAmazonBedrock({
-    region: isWebflow ? "us-east-1" : "us-west-2",
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-  });
+  const cohere = createCohere({ apiKey: cohereApiKey() });
+  const cohereModel = cohere("command-a-03-2025");
 
-  const languageModel = isWebflow
-    ? wrapAISDKModel(bedrock("us.anthropic.claude-3-7-sonnet-20250219-v1:0"))
-    : wrapAISDKModel(bedrock("us.anthropic.claude-3-5-sonnet-20241022-v2:0"));
+  // const bedrock = createAmazonBedrock({
+  //   region: isWebflow ? "us-east-1" : "us-west-2",
+  //   accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+  //   secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+  // });
+
+  // const languageModel = isWebflow
+  //   ? wrapAISDKModel(bedrock("us.anthropic.claude-3-7-sonnet-20250219-v1:0"))
+  //   : wrapAISDKModel(bedrock("us.anthropic.claude-3-5-sonnet-20241022-v2:0"));
+  const languageModel = wrapAISDKModel(cohereModel);
 
   const loader = await createCachedDocsLoader(host, domain);
   const metadata = await loader.getMetadata();

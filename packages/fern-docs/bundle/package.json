@@ -35,6 +35,7 @@
   },
   "dependencies": {
     "@ai-sdk/amazon-bedrock": "^2.0.5",
+    "@ai-sdk/cohere": "^1.2.4",
     "@ai-sdk/openai": "^1.1.15",
     "@algolia/client-search": "^5.20.3",
     "@aws-sdk/client-s3": "^3.744.0",
@@ -86,7 +87,7 @@
     "@vercel/kv": "^2.0.0",
     "@vercel/otel": "^1.10.1",
     "@workos-inc/node": "^7.31.0",
-    "ai": "^4.1.47",
+    "ai": "^4.2.10",
     "algoliasearch": "^5.20.3",
     "bezier-easing": "^2.1.0",
     "braintrust": "^0.0.184",
