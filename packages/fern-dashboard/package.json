@@ -41,6 +41,7 @@
     "@sparticuz/chromium": "^133.0.0",
     "@tanstack/react-query": "^5.71.1",
     "@tanstack/react-query-devtools": "^5.71.1",
+    "@upstash/redis": "^1.34.6",
     "auth0": "^4.20.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",

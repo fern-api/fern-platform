@@ -1,6 +1,6 @@
 "use server";
 
-import { getAuth0ManagementClient } from "../services/auth0/getAuth0ManagementClient";
+import { getAuth0ManagementClient } from "../services/auth0/management";
 import { Auth0OrgID } from "../services/auth0/types";
 
 export async function rescindInvitation({

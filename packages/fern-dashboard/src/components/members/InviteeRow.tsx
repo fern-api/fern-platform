@@ -81,18 +81,17 @@ export function InviteeRow({ orgId, invitation }: InviteeRow.Props) {
         </div>
       }
       dropdownMenuItems={
-        invitation.id != null ? (
-          <>
-            <DropdownMenuItem
-              variant="destructive"
-              onClick={() => {
-                rescind.mutate();
-              }}
-            >
-              <UserMinusIcon /> Rescind invitation
-            </DropdownMenuItem>
-          </>
-        ) : undefined
+        <>
+          <DropdownMenuItem
+            variant="destructive"
+            onClick={() => {
+              rescind.mutate();
+            }}
+            disabled={invitation.id == null}
+          >
+            <UserMinusIcon /> Rescind invitation
+          </DropdownMenuItem>
+        </>
       }
     />
   );

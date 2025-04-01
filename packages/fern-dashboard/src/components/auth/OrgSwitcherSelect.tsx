@@ -1,5 +1,6 @@
 "use client";
 
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import { GetOrganizations200ResponseOneOfInner } from "auth0";
@@ -12,6 +13,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { getLoginUrl } from "@/utils/getLoginUrl";
 
 export declare namespace OrgSwitcherSelect {
   export interface Props {
@@ -29,12 +31,19 @@ export const OrgSwitcherSelect = ({
     setLocalValue(currentOrgId);
   }, [currentOrgId]);
 
+  const pathname = usePathname();
+
   const onClickOrg = async (newOrgId: Auth0OrgID) => {
     if (newOrgId === currentOrgId) {
       return;
     }
+
     setLocalValue(newOrgId);
-    window.location.href = `/auth/login?organization=${newOrgId}`;
+
+    window.location.href = getLoginUrl({
+      orgId: newOrgId,
+      returnTo: getRedirectPathname(pathname),
+    });
   };
 
   return (
@@ -56,3 +65,11 @@ export const OrgSwitcherSelect = ({
     </Select>
   );
 };
+
+function getRedirectPathname(pathname: string) {
+  // if the current pathame is /docs/<domain>, just redirect to /docs
+  if (pathname.startsWith("/docs/")) {
+    return "/docs";
+  }
+  return pathname;
+}
