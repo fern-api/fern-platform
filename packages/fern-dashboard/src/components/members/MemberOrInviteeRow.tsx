@@ -52,20 +52,20 @@ export function MemberOrInviteeRow({
       </div>
       <div className="flex items-center gap-3">
         {rightContent}
-        {dropdownMenuItems != null && (
-          <div className="flex">
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button size="icon" variant="ghost">
+        <div className="flex">
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild disabled={dropdownMenuItems == null}>
+              <Button size="icon" variant="ghost">
+                {dropdownMenuItems != null && (
                   <EllipsisHorizontalIcon className="size-5" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                {dropdownMenuItems}
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
-        )}
+                )}
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              {dropdownMenuItems}
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
       </div>
     </div>
   );
