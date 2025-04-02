@@ -32,12 +32,12 @@ export async function Header({ session }: Header.Props) {
       <div className="flex items-center gap-4">
         <ThemedFernLogo className="w-16" />
         <OrgSwitcher currentOrgId={orgId} />
-        <div className="flex md:hidden">
+        <div className="flex sm:hidden">
           <DocsSiteSwitcher />
         </div>
       </div>
       <div className="flex gap-4">
-        <div className="hidden items-center gap-2 md:flex">
+        <div className="hidden items-center gap-2 sm:flex">
           <Button size="sm" variant="outline">
             Feedback
           </Button>

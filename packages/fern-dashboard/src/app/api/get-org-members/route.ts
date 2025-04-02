@@ -1,11 +1,8 @@
 import { NextResponse } from "next/server";
 
-import {
-  FullSessionData,
-  getCurrentSession,
-} from "@/app/services/auth0/getCurrentSession";
 import { ResolvedReturnType } from "@/utils/types";
 
+import { maybeGetCurrentSession } from "../utils/maybeGetCurrentSession";
 import handler from "./handler";
 
 export declare namespace getOrgMembers {
@@ -13,14 +10,11 @@ export declare namespace getOrgMembers {
 }
 
 export async function GET() {
-  let sessionData: FullSessionData;
-  try {
-    sessionData = await getCurrentSession();
-  } catch (e) {
-    console.error("Failed to get session data", e);
-    return NextResponse.json({}, { status: 401 });
+  const maybeSessionData = await maybeGetCurrentSession();
+  if (maybeSessionData.errorResponse != null) {
+    return maybeSessionData.errorResponse;
   }
-  const { orgId } = sessionData;
+  const { orgId } = maybeSessionData.data;
 
   return NextResponse.json(await handler(orgId));
 }

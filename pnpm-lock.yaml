@@ -675,6 +675,9 @@ importers:
       tailwindcss-animate:
         specifier: ^1.0.7
         version: 1.0.7(tailwindcss@4.0.9)
+      zod:
+        specifier: ^3.24.1
+        version: 3.24.2
     devDependencies:
       '@fern-platform/configs':
         specifier: workspace:*

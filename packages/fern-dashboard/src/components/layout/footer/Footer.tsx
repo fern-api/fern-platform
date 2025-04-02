@@ -13,7 +13,7 @@ import { FooterText } from "./FooterText";
 
 export function Footer() {
   return (
-    <div className="hidden items-center gap-6 md:flex">
+    <div className="hidden items-center gap-6 sm:flex">
       <FernIcon className="w-4" />
       <FooterText>/</FooterText>
       <FooterExternalLink href="https://buildwithfern.com">

@@ -10,7 +10,7 @@ import { Button } from "../ui/button";
 export const LoginPage = () => {
   return (
     <div className="relative flex flex-1">
-      <div className="relative flex flex-1 items-center bg-white md:mx-2 md:mt-2 md:w-[40%] md:min-w-[350px] md:flex-initial md:rounded-t-2xl md:border-x md:border-t md:border-gray-200 md:shadow-md dark:bg-[#171717] dark:md:border-[rgb(46,46,46)]">
+      <div className="relative flex flex-1 items-center bg-white sm:mx-2 sm:mt-2 sm:w-[40%] sm:min-w-[350px] sm:flex-initial sm:rounded-t-2xl sm:border-x sm:border-t sm:border-gray-200 sm:shadow-md dark:bg-[#171717] dark:sm:border-[rgb(46,46,46)]">
         <div className="mx-[15%] flex flex-1 flex-col">
           <div className="mb-2 text-xl font-bold dark:text-gray-100">
             Welcome to Fern
@@ -40,7 +40,7 @@ export const LoginPage = () => {
           , and to receive periodic emails with updates.
         </div>
       </div>
-      <div className="relative hidden flex-1 flex-col md:flex">
+      <div className="relative hidden flex-1 flex-col sm:flex">
         <div className="mt-16 flex min-h-0 flex-1 flex-col overflow-hidden">
           <div className="mx-16 flex flex-col">
             <ThemedFernLogo className="mb-8 mt-4 w-28" />

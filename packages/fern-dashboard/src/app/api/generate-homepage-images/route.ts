@@ -1,161 +1,41 @@
-/* eslint-disable turbo/no-undeclared-env-vars */
 import { NextRequest, NextResponse } from "next/server";
 
-import { PutObjectCommand } from "@aws-sdk/client-s3";
-import chromium from "@sparticuz/chromium";
-import puppeteer, { Browser, Page } from "puppeteer-core";
-import sharp from "sharp";
-import { setTimeout } from "timers/promises";
+import { z } from "zod";
 
-import { FdrAPI } from "@fern-api/fdr-sdk";
-import { FernVenusApi } from "@fern-api/venus-api-sdk";
+import { getAuth0Client } from "@/app/services/auth0/auth0";
 
-import { getFdrClient } from "@/app/services/fdr/getFdrClient";
-import { getVenusClient } from "@/app/services/venus/getVenusClient";
-
-import { getS3Client } from "../../services/s3";
-import { parseAuthHeader } from "../parseAuthHeader";
+import { ensureUserOwnsUrl } from "../homepage-images/auth";
+import handler from "../homepage-images/generate/handler";
+import { parseNextRequestBody } from "../utils/parseNextRequestBody";
 
 export const maxDuration = 60;
 
-const IMAGE_FILETYPE = "avif";
+const GenerateHomepageImagesRequest = z.object({
+  url: z.string(),
+});
 
 export async function POST(req: NextRequest) {
-  let token: string;
-  try {
-    const parsedAuthHeader = parseAuthHeader(req);
-    token = parsedAuthHeader.token;
-  } catch (e) {
-    console.error("Failed to parse auth header", e);
-    return NextResponse.json({}, { status: 401 });
-  }
+  const auth0 = await getAuth0Client();
+  const { token } = await auth0.getAccessToken();
 
-  const { url } = await req.json();
-
-  if (url == null) {
-    return NextResponse.json({ error: "url is required" }, { status: 400 });
-  }
-  if (typeof url !== "string") {
-    return NextResponse.json(
-      { error: "url must be a string" },
-      { status: 400 }
-    );
-  }
-
-  const fdr = getFdrClient({ token });
-  const tokenInfo = await fdr.docs.v2.read.getDocsUrlMetadata({
-    url: FdrAPI.Url(url),
-  });
-  if (!tokenInfo.ok) {
-    console.error("Failed to load docs URL metadata", tokenInfo.error);
-    throw new Error("Failed to load docs URL metadata");
-  }
-  const orgId = tokenInfo.body.org;
-
-  const venus = getVenusClient({ token });
-  const isMember = await venus.organization.isMember(
-    FernVenusApi.OrganizationId(orgId)
+  const parsedBody = await parseNextRequestBody(
+    req,
+    GenerateHomepageImagesRequest
   );
-  if (!isMember.ok) {
-    console.error("Failed to load org membership for user", isMember.error);
-    throw new Error("Failed to load org membership for user");
+  if (parsedBody.errorResponse != null) {
+    return parsedBody.errorResponse;
   }
-  if (!isMember.body) {
-    return NextResponse.json(
-      { error: "User does not have access to url" },
-      { status: 403 }
-    );
-  }
+  const { url } = parsedBody.data;
 
-  try {
-    let browser: Browser;
-
-    if (process.env.NODE_ENV === "production") {
-      browser = await puppeteer.launch({
-        args: chromium.args,
-        defaultViewport: chromium.defaultViewport,
-        executablePath: await chromium.executablePath(),
-        headless: true,
-      });
-    } else {
-      browser = await puppeteer.launch({
-        headless: true,
-        executablePath:
-          "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
-      });
-    }
-
-    const page = await browser.newPage();
-    await page.setViewport({ width: 1300, height: 700, deviceScaleFactor: 2 });
-
-    await takeScreenshotAndWriteToAws({ page, url, theme: "light" });
-    await takeScreenshotAndWriteToAws({ page, url, theme: "dark" });
-
-    await browser.close();
-    return NextResponse.json({}, { status: 200 });
-  } catch (error) {
-    console.error("Error taking screenshot:", error);
-    return NextResponse.json(
-      { error: "Internal Server Error" },
-      { status: 500 }
-    );
-  }
-}
-
-type Theme = "light" | "dark";
-
-async function takeScreenshotAndWriteToAws({
-  page,
-  url,
-  theme,
-}: {
-  page: Page;
-  url: string;
-  theme: Theme;
-}) {
-  await page.emulateMediaFeatures([
-    { name: "prefers-color-scheme", value: theme },
-  ]);
-
-  await page.goto(url.toString(), {
-    waitUntil: "load",
-  });
-
-  // wait for icons and images to load
-  await setTimeout(3_000);
-
-  const screenshotBuffer = await page.screenshot();
-
-  // this must stay in sync with the IMAGE_FILETYPE constant
-  const compressedScreenshotBuffer = await sharp(screenshotBuffer)
-    [IMAGE_FILETYPE]({ quality: 50 })
-    .toBuffer();
-
-  if (process.env.HOMEPAGE_IMAGES_S3_BUCKET_NAME == null) {
-    throw new Error(
-      "HOMEPAGE_IMAGES_S3_BUCKET_NAME is not defined in the environment"
-    );
+  const ensureUserOwnsUrlResponse = await ensureUserOwnsUrl({ token, url });
+  if (ensureUserOwnsUrlResponse.errorResponse != null) {
+    return ensureUserOwnsUrlResponse.errorResponse;
   }
 
-  await getS3Client().send(
-    new PutObjectCommand({
-      Bucket: process.env.HOMEPAGE_IMAGES_S3_BUCKET_NAME,
-      Key: getS3KeyForHomepageScreenshot({ url, theme }),
-      Body: compressedScreenshotBuffer,
-      ContentType: `image/${IMAGE_FILETYPE}`,
-      ACL: "private",
-    })
-  );
-}
+  const handlerResponse = await handler({ url });
+  if (handlerResponse.errorResponse != null) {
+    return handlerResponse.errorResponse;
+  }
 
-// NOTE: DO NOT CHANGE THIS LOGIC as this is the only source of truth for the
-// homepage screenshot s3 key (i.e. keys are not stored in a db anywhere).
-function getS3KeyForHomepageScreenshot({
-  url,
-  theme,
-}: {
-  url: string;
-  theme: Theme;
-}) {
-  return `${encodeURIComponent(url)}-${theme}.${IMAGE_FILETYPE}`;
+  return NextResponse.json({});
 }
