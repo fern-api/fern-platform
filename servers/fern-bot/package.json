@@ -31,7 +31,7 @@
     "find-up": "^7.0.0",
     "js-yaml": "^4.1.0",
     "json-2-csv": "^5.5.1",
-    "octokit": "^3.2.0",
+    "octokit": "^4.1.2",
     "semver": "^7.6.2",
     "serverless-step-functions": "^3.21.1",
     "simple-git": "^3.24.0",

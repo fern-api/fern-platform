@@ -39,8 +39,8 @@ export class Cli {
      *
      * @example
      *     await client.generators.cli.getLatestCliRelease({
-     *         releaseTypes: ["GA"],
-     *         irVersion: 1
+     *         releaseTypes: undefined,
+     *         irVersion: undefined
      *     })
      */
     public async getLatestCliRelease(
@@ -102,11 +102,11 @@ export class Cli {
      *     await client.generators.cli.getChangelog({
      *         fromVersion: {
      *             type: "inclusive",
-     *             value: "string"
+     *             value: "fromVersion"
      *         },
      *         toVersion: {
      *             type: "inclusive",
-     *             value: "string"
+     *             value: "toVersion"
      *         }
      *     })
      */
@@ -212,38 +212,12 @@ export class Cli {
      *
      * @example
      *     await client.generators.cli.upsertCliRelease({
-     *         version: "string",
-     *         createdAt: "2023-01-15",
-     *         isYanked: {
-     *             remediationVerision: "string"
-     *         },
-     *         changelogEntry: [{
-     *                 type: "fix",
-     *                 summary: "string",
-     *                 links: {
-     *                     "key": "value"
-     *                 },
-     *                 upgradeNotes: {
-     *                     "key": "value"
-     *                 },
-     *                 added: {
-     *                     "key": "value"
-     *                 },
-     *                 changed: {
-     *                     "key": "value"
-     *                 },
-     *                 deprecated: {
-     *                     "key": "value"
-     *                 },
-     *                 removed: {
-     *                     "key": "value"
-     *                 },
-     *                 fixed: {
-     *                     "key": "value"
-     *                 }
-     *             }],
+     *         version: "version",
+     *         createdAt: undefined,
+     *         isYanked: undefined,
+     *         changelogEntry: undefined,
      *         irVersion: 1,
-     *         tags: ["string"]
+     *         tags: undefined
      *     })
      */
     public async upsertCliRelease(
@@ -290,7 +264,7 @@ export class Cli {
      * @param {Cli.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.generators.cli.getCliRelease("string")
+     *     await client.generators.cli.getCliRelease("cliVersion")
      */
     public async getCliRelease(
         cliVersion: string,
@@ -345,10 +319,7 @@ export class Cli {
      * @param {Cli.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.generators.cli.listCliReleases({
-     *         page: 1,
-     *         pageSize: 1
-     *     })
+     *     await client.generators.cli.listCliReleases()
      */
     public async listCliReleases(
         request: FernRegistry.generators.ListCliReleasesRequest = {},

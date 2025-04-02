@@ -5,7 +5,7 @@
 /**
  * @example
  *     {
- *         domain: "string"
+ *         domain: "domain"
  *     }
  */
 export interface LoadDocsForDomainRequest {

@@ -7,11 +7,11 @@ import * as FernRegistry from "../../../../index";
 /**
  * @example
  *     {
- *         page: 1,
- *         pageSize: 1,
- *         organizationId: FernRegistry.OrgId("string"),
- *         repositoryName: "string",
- *         repositoryOwner: "string"
+ *         page: undefined,
+ *         pageSize: undefined,
+ *         organizationId: undefined,
+ *         repositoryName: undefined,
+ *         repositoryOwner: undefined
  *     }
  */
 export interface ListRepositoriesRequest {
@@ -21,14 +21,8 @@ export interface ListRepositoriesRequest {
     pageSize?: number;
     /** The Fern organization ID to filter repositories by. */
     organizationId?: FernRegistry.OrgId;
-    /**
-     * The name of the repository to filter pull requests by (ex: full-platform).
-     *
-     */
+    /** The name of the repository to filter pull requests by (ex: full-platform). */
     repositoryName?: string;
-    /**
-     * The organization name of the repository owner to filter pull requests by (ex: fern-api).
-     *
-     */
+    /** The organization name of the repository owner to filter pull requests by (ex: fern-api). */
     repositoryOwner?: string;
 }

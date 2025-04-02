@@ -7,69 +7,40 @@ import * as FernRegistry from "../../../../index";
 /**
  * @example
  *     {
- *         orgId: FernRegistry.OrgId("string"),
- *         apiId: FernRegistry.ApiId("string"),
+ *         orgId: FernRegistry.OrgId("orgId"),
+ *         apiId: FernRegistry.ApiId("apiId"),
  *         apiDefinitionId: FernRegistry.ApiDefinitionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
  *         snippet: {
  *             sdk: {
  *                 type: "typescript",
- *                 package: "string",
- *                 version: "string"
+ *                 package: "package",
+ *                 version: "version"
  *             },
  *             endpointId: {
- *                 path: FernRegistry.EndpointPathLiteral("string"),
+ *                 path: FernRegistry.EndpointPathLiteral("path"),
  *                 method: "GET",
- *                 identifierOverride: "string"
+ *                 identifierOverride: undefined
  *             },
  *             snippetTemplate: {
  *                 type: "v1",
- *                 clientInstantiation: "string",
+ *                 clientInstantiation: "clientInstantiation",
  *                 functionInvocation: {
  *                     type: "generic",
- *                     imports: ["string"],
+ *                     imports: undefined,
  *                     isOptional: true,
- *                     templateString: "string",
- *                     templateInputs: [{
- *                             type: "template",
- *                             value: {
- *                                 "key": "value"
- *                             }
- *                         }],
- *                     inputDelimiter: "string"
+ *                     templateString: "templateString",
+ *                     templateInputs: undefined,
+ *                     inputDelimiter: undefined
  *                 }
  *             },
- *             additionalTemplates: {
- *                 "string": {
- *                     type: "v1",
- *                     clientInstantiation: "string",
- *                     functionInvocation: {
- *                         type: "generic",
- *                         imports: ["string"],
- *                         isOptional: true,
- *                         templateString: "string",
- *                         templateInputs: [{
- *                                 type: "template",
- *                                 value: {
- *                                     "key": "value"
- *                                 }
- *                             }],
- *                         inputDelimiter: "string"
- *                     }
- *                 }
- *             }
+ *             additionalTemplates: undefined
  *         }
  *     }
  */
 export interface RegisterSnippetTemplateRequest {
-    /**
-     * The organization to create snippets for.
-     *
-     */
+    /** The organization to create snippets for. */
     orgId: FernRegistry.OrgId;
-    /**
-     * The API name.
-     *
-     */
+    /** The API name. */
     apiId: FernRegistry.ApiId;
     apiDefinitionId: FernRegistry.ApiDefinitionId;
     snippet: FernRegistry.SnippetRegistryEntry;

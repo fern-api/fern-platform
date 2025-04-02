@@ -7,15 +7,12 @@ import * as FernRegistry from "../../../../index";
 /**
  * @example
  *     {
- *         orgId: FernRegistry.OrgId("string"),
- *         tokenId: FernRegistry.TokenId("string")
+ *         orgId: FernRegistry.OrgId("orgId"),
+ *         tokenId: FernRegistry.TokenId("tokenId")
  *     }
  */
 export interface RevokeTokenRequest {
-    /**
-     * The organization to create snippets for.
-     *
-     */
+    /** The organization to create snippets for. */
     orgId: FernRegistry.OrgId;
     tokenId: FernRegistry.TokenId;
 }

@@ -41,27 +41,14 @@ export class Generators {
      *
      * @example
      *     await client.generators.upsertGenerator({
-     *         id: FernRegistry.generators.GeneratorId("string"),
-     *         displayName: "string",
+     *         id: FernRegistry.generators.GeneratorId("id"),
+     *         displayName: "displayName",
      *         generatorType: {
      *             type: "sdk"
      *         },
-     *         generatorLanguage: "python",
-     *         dockerImage: "string",
-     *         scripts: {
-     *             preInstallScript: {
-     *                 steps: ["string"]
-     *             },
-     *             installScript: {
-     *                 steps: ["string"]
-     *             },
-     *             compileScript: {
-     *                 steps: ["string"]
-     *             },
-     *             testScript: {
-     *                 steps: ["string"]
-     *             }
-     *         }
+     *         generatorLanguage: undefined,
+     *         dockerImage: "dockerImage",
+     *         scripts: undefined
      *     })
      */
     public async upsertGenerator(
@@ -109,7 +96,7 @@ export class Generators {
      *
      * @example
      *     await client.generators.getGeneratorByImage({
-     *         dockerImage: "string"
+     *         dockerImage: "dockerImage"
      *     })
      */
     public async getGeneratorByImage(
@@ -161,7 +148,7 @@ export class Generators {
      * @param {Generators.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.generators.getGenerator(FernRegistry.generators.GeneratorId("string"))
+     *     await client.generators.getGenerator(FernRegistry.generators.GeneratorId("generatorId"))
      */
     public async getGenerator(
         generatorId: FernRegistry.generators.GeneratorId,

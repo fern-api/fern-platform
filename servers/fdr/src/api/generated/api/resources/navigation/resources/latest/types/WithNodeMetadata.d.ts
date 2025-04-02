@@ -8,7 +8,6 @@ export interface WithNodeMetadata extends FernRegistry.navigation.latest.WithNod
      * Do NOT use this property for the h1 of the page, the SEO headline, or search results, unless they are omitted. (This title should only be used as a fallback)
      *
      * #### Order of precedence:
-     *
      * ```
      * sidebarNode.text = nav.title;
      * <h1> = frontmatter.title ?? mdx.h1[0] ?? sidebarNode.text;

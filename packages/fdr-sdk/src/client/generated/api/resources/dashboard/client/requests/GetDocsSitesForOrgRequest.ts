@@ -7,7 +7,7 @@ import * as FernRegistry from "../../../../index";
 /**
  * @example
  *     {
- *         orgId: FernRegistry.OrgId("string")
+ *         orgId: FernRegistry.OrgId("orgId")
  *     }
  */
 export interface GetDocsSitesForOrgRequest {

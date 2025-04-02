@@ -4,8 +4,7 @@
 import * as FernRegistry from "../../../../../../../../../index";
 export declare type HttpResponseBodyShape = FernRegistry.api.v1.read.HttpResponseBodyShape.Object_ | FernRegistry.api.v1.read.HttpResponseBodyShape.Reference | FernRegistry.api.v1.read.HttpResponseBodyShape.FileDownload | FernRegistry.api.v1.read.HttpResponseBodyShape.StreamingText | FernRegistry.api.v1.read.HttpResponseBodyShape.Stream
 /**
- * A response that can either be streaming or REST
- *  */
+ * A response that can either be streaming or REST */
  | FernRegistry.api.v1.read.HttpResponseBodyShape.StreamCondition;
 export declare namespace HttpResponseBodyShape {
     interface Object_ extends FernRegistry.api.v1.read.ObjectType {

@@ -7,38 +7,42 @@ import * as FernRegistry from "../../../../index";
 /**
  * @example
  *     {
- *         orgId: FernRegistry.OrgId("string"),
- *         apiId: FernRegistry.ApiId("string"),
+ *         orgId: FernRegistry.OrgId("orgId"),
+ *         apiId: FernRegistry.ApiId("apiId"),
  *         snippets: {
  *             type: "typescript",
  *             sdk: {
- *                 package: "string",
- *                 version: "string"
+ *                 package: "package",
+ *                 version: "version"
  *             },
  *             snippets: [{
- *                     snippet: {
- *                         client: "string"
- *                     },
  *                     endpoint: {
- *                         path: FernRegistry.EndpointPathLiteral("string"),
+ *                         path: FernRegistry.EndpointPathLiteral("path"),
  *                         method: "GET",
- *                         identifierOverride: "string"
+ *                         identifierOverride: undefined
  *                     },
- *                     exampleIdentifier: "string"
+ *                     exampleIdentifier: undefined,
+ *                     snippet: {
+ *                         client: "client"
+ *                     }
+ *                 }, {
+ *                     endpoint: {
+ *                         path: FernRegistry.EndpointPathLiteral("path"),
+ *                         method: "GET",
+ *                         identifierOverride: undefined
+ *                     },
+ *                     exampleIdentifier: undefined,
+ *                     snippet: {
+ *                         client: "client"
+ *                     }
  *                 }]
  *         }
  *     }
  */
 export interface CreateSnippetRequest {
-    /**
-     * The organization to create snippets for.
-     *
-     */
+    /** The organization to create snippets for. */
     orgId: FernRegistry.OrgId;
-    /**
-     * The API name.
-     *
-     */
+    /** The API name. */
     apiId: FernRegistry.ApiId;
     snippets: FernRegistry.SdkSnippetsCreate;
 }

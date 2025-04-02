@@ -5,8 +5,8 @@
 /**
  * @example
  *     {
- *         domain: "string",
- *         toOrgId: "string"
+ *         domain: "domain",
+ *         toOrgId: "toOrgId"
  *     }
  */
 export interface TransferDomainOwnershipRequest {
