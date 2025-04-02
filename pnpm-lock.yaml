@@ -26,9 +26,6 @@ importers:
 
   .:
     dependencies:
-      '@typescript/vfs':
-        specifier: ^1.6.1
-        version: 1.6.1(typescript@5.7.3)
       fern-api:
         specifier: 0.41.16
         version: 0.41.16
@@ -81,6 +78,9 @@ importers:
       '@typescript-eslint/parser':
         specifier: 8.25.0
         version: 8.25.0(eslint@9.21.0(jiti@2.4.2))(typescript@5.7.3)
+      '@typescript/vfs':
+        specifier: ^1.6.1
+        version: 1.6.1(typescript@5.7.3)
       '@yarnpkg/sdks':
         specifier: ^3.2.0
         version: 3.2.0(typanion@3.14.0)
@@ -1157,6 +1157,9 @@ importers:
       '@types/xml2js':
         specifier: ^0.4.14
         version: 0.4.14
+      '@typescript/vfs':
+        specifier: ^1.6.1
+        version: 1.6.1(typescript@5.7.3)
       axios:
         specifier: ^1.8.1
         version: 1.8.1
