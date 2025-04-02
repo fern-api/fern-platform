@@ -4,6 +4,8 @@ import { useTheme } from "next-themes";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
+import { useQuery } from "@tanstack/react-query";
+
 import { DashboardApiClient } from "@/app/services/dashboard-api/client";
 import { DocsUrl } from "@/utils/types";
 
@@ -14,6 +16,7 @@ export declare namespace DocsSiteImage {
 }
 
 export function DocsSiteImage({ docsUrl }: DocsSiteImage.Props) {
+  // TODO use react query
   const [imageUrl, setImageUrl] = useState<string>();
   const { theme } = useTheme();
 
