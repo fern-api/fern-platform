@@ -1,7 +1,7 @@
 "use client";
 
 import { ParamValue } from "next/dist/server/request/params";
-import { useParams } from "next/navigation";
+import { useParams, usePathname } from "next/navigation";
 import { useState } from "react";
 
 import {
@@ -25,20 +25,15 @@ const CopyPageOption = (): FernDropdown.ValueOption => {
   } as FernDropdown.ValueOption;
 };
 
-const ViewAsMarkdownOption = ({
-  domain,
-  slug,
-}: {
-  domain: ParamValue;
-  slug: ParamValue;
-}): FernDropdown.ValueOption => {
+const ViewAsMarkdownOption = (): FernDropdown.ValueOption => {
+  const pathname = usePathname();
   return {
     type: "value",
     value: "view-as-markdown",
     label: "View as Markdown",
     helperText: "View this page as plain text",
     icon: <FileText className="size-icon" />,
-    href: `${domain}/api/fern-docs/markdown?slug=${slug}`,
+    href: `${pathname}.md`,
     rightElement: <ExternalLink className="size-icon" />,
   } as FernDropdown.ValueOption;
 };
@@ -80,8 +75,8 @@ export function PageActionsDropdown({ markdown }: { markdown: string }) {
   const [showCopied, setShowCopied] = useState<boolean>(false);
   const { domain, slug } = useParams();
 
-  const copyOption = CopyPageOption(markdown);
-  const viewAsMarkdownOption = ViewAsMarkdownOption({ domain, slug });
+  const copyOption = CopyPageOption();
+  const viewAsMarkdownOption = ViewAsMarkdownOption();
   const openInChatGPTOption = OpenInChatGPTOption({ domain, slug });
 
   const options: FernDropdown.Option[] = [
