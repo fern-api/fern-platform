@@ -432,6 +432,8 @@ function generateExamplePrimitive(
       return 0;
     case "double":
       return 1.0;
+    case "float":
+      return 1.0;
     case "boolean":
       return true;
     case "long":

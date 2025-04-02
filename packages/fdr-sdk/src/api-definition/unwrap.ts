@@ -407,6 +407,7 @@ function primitiveToDefault(shape: Latest.PrimitiveType): unknown | undefined {
     string: (value) => value.default,
     integer: (value) => value.default,
     double: (value) => value.default,
+    float: (value) => value.default,
     uint: () => undefined,
     uint64: () => undefined,
     boolean: (value) => value.default,
