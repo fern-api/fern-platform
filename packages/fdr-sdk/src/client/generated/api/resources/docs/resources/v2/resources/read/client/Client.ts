@@ -34,7 +34,7 @@ export class Read {
      *
      * @example
      *     await client.docs.v2.read.getOrganizationForUrl({
-     *         url: FernRegistry.Url("string")
+     *         url: FernRegistry.Url("url")
      *     })
      */
     public async getOrganizationForUrl(
@@ -90,7 +90,7 @@ export class Read {
      *
      * @example
      *     await client.docs.v2.read.getDocsUrlMetadata({
-     *         url: FernRegistry.Url("string")
+     *         url: FernRegistry.Url("url")
      *     })
      */
     public async getDocsUrlMetadata(
@@ -148,7 +148,7 @@ export class Read {
      *
      * @example
      *     await client.docs.v2.read.getDocsForUrl({
-     *         url: FernRegistry.Url("string")
+     *         url: FernRegistry.Url("url")
      *     })
      */
     public async getDocsForUrl(
@@ -210,7 +210,7 @@ export class Read {
      *
      * @example
      *     await client.docs.v2.read.getPrivateDocsForUrl({
-     *         url: FernRegistry.Url("string")
+     *         url: FernRegistry.Url("url")
      *     })
      */
     public async getPrivateDocsForUrl(
@@ -273,11 +273,7 @@ export class Read {
      * @param {Read.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.docs.v2.read.listAllDocsUrls({
-     *         page: 1,
-     *         limit: 1,
-     *         custom: true
-     *     })
+     *     await client.docs.v2.read.listAllDocsUrls()
      */
     public async listAllDocsUrls(
         request: FernRegistry.docs.v2.read.ListAllDocsUrlsRequest = {},
@@ -352,7 +348,7 @@ export class Read {
      * @param {Read.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.docs.v2.read.getDocsConfigById(FernRegistry.DocsConfigId("string"))
+     *     await client.docs.v2.read.getDocsConfigById(FernRegistry.DocsConfigId("docsConfigId"))
      */
     public async getDocsConfigById(
         docsConfigId: FernRegistry.DocsConfigId,
@@ -411,7 +407,7 @@ export class Read {
      *
      * @example
      *     await client.docs.v2.read.getSearchApiKeyForIndexSegment({
-     *         indexSegmentId: "string"
+     *         indexSegmentId: "indexSegmentId"
      *     })
      */
     public async getSearchApiKeyForIndexSegment(

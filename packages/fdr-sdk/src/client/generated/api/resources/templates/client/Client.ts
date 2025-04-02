@@ -36,56 +36,33 @@ export class Templates {
      *
      * @example
      *     await client.templates.register({
-     *         orgId: FernRegistry.OrgId("string"),
-     *         apiId: FernRegistry.ApiId("string"),
+     *         orgId: FernRegistry.OrgId("orgId"),
+     *         apiId: FernRegistry.ApiId("apiId"),
      *         apiDefinitionId: FernRegistry.ApiDefinitionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
      *         snippet: {
      *             sdk: {
      *                 type: "typescript",
-     *                 package: "string",
-     *                 version: "string"
+     *                 package: "package",
+     *                 version: "version"
      *             },
      *             endpointId: {
-     *                 path: FernRegistry.EndpointPathLiteral("string"),
+     *                 path: FernRegistry.EndpointPathLiteral("path"),
      *                 method: "GET",
-     *                 identifierOverride: "string"
+     *                 identifierOverride: undefined
      *             },
      *             snippetTemplate: {
      *                 type: "v1",
-     *                 clientInstantiation: "string",
+     *                 clientInstantiation: "clientInstantiation",
      *                 functionInvocation: {
      *                     type: "generic",
-     *                     imports: ["string"],
+     *                     imports: undefined,
      *                     isOptional: true,
-     *                     templateString: "string",
-     *                     templateInputs: [{
-     *                             type: "template",
-     *                             value: {
-     *                                 "key": "value"
-     *                             }
-     *                         }],
-     *                     inputDelimiter: "string"
+     *                     templateString: "templateString",
+     *                     templateInputs: undefined,
+     *                     inputDelimiter: undefined
      *                 }
      *             },
-     *             additionalTemplates: {
-     *                 "string": {
-     *                     type: "v1",
-     *                     clientInstantiation: "string",
-     *                     functionInvocation: {
-     *                         type: "generic",
-     *                         imports: ["string"],
-     *                         isOptional: true,
-     *                         templateString: "string",
-     *                         templateInputs: [{
-     *                                 type: "template",
-     *                                 value: {
-     *                                     "key": "value"
-     *                                 }
-     *                             }],
-     *                         inputDelimiter: "string"
-     *                     }
-     *                 }
-     *             }
+     *             additionalTemplates: undefined
      *         }
      *     })
      */
@@ -134,56 +111,57 @@ export class Templates {
      *
      * @example
      *     await client.templates.registerBatch({
-     *         orgId: FernRegistry.OrgId("string"),
-     *         apiId: FernRegistry.ApiId("string"),
+     *         orgId: FernRegistry.OrgId("orgId"),
+     *         apiId: FernRegistry.ApiId("apiId"),
      *         apiDefinitionId: FernRegistry.ApiDefinitionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
      *         snippets: [{
      *                 sdk: {
      *                     type: "typescript",
-     *                     package: "string",
-     *                     version: "string"
+     *                     package: "package",
+     *                     version: "version"
      *                 },
      *                 endpointId: {
-     *                     path: FernRegistry.EndpointPathLiteral("string"),
+     *                     path: FernRegistry.EndpointPathLiteral("path"),
      *                     method: "GET",
-     *                     identifierOverride: "string"
+     *                     identifierOverride: undefined
      *                 },
      *                 snippetTemplate: {
      *                     type: "v1",
-     *                     clientInstantiation: "string",
+     *                     clientInstantiation: "clientInstantiation",
      *                     functionInvocation: {
      *                         type: "generic",
-     *                         imports: ["string"],
+     *                         imports: undefined,
      *                         isOptional: true,
-     *                         templateString: "string",
-     *                         templateInputs: [{
-     *                                 type: "template",
-     *                                 value: {
-     *                                     "key": "value"
-     *                                 }
-     *                             }],
-     *                         inputDelimiter: "string"
+     *                         templateString: "templateString",
+     *                         templateInputs: undefined,
+     *                         inputDelimiter: undefined
      *                     }
      *                 },
-     *                 additionalTemplates: {
-     *                     "string": {
-     *                         type: "v1",
-     *                         clientInstantiation: "string",
-     *                         functionInvocation: {
-     *                             type: "generic",
-     *                             imports: ["string"],
-     *                             isOptional: true,
-     *                             templateString: "string",
-     *                             templateInputs: [{
-     *                                     type: "template",
-     *                                     value: {
-     *                                         "key": "value"
-     *                                     }
-     *                                 }],
-     *                             inputDelimiter: "string"
-     *                         }
+     *                 additionalTemplates: undefined
+     *             }, {
+     *                 sdk: {
+     *                     type: "typescript",
+     *                     package: "package",
+     *                     version: "version"
+     *                 },
+     *                 endpointId: {
+     *                     path: FernRegistry.EndpointPathLiteral("path"),
+     *                     method: "GET",
+     *                     identifierOverride: undefined
+     *                 },
+     *                 snippetTemplate: {
+     *                     type: "v1",
+     *                     clientInstantiation: "clientInstantiation",
+     *                     functionInvocation: {
+     *                         type: "generic",
+     *                         imports: undefined,
+     *                         isOptional: true,
+     *                         templateString: "templateString",
+     *                         templateInputs: undefined,
+     *                         inputDelimiter: undefined
      *                     }
-     *                 }
+     *                 },
+     *                 additionalTemplates: undefined
      *             }]
      *     })
      */
@@ -232,17 +210,17 @@ export class Templates {
      *
      * @example
      *     await client.templates.get({
-     *         orgId: FernRegistry.OrgId("string"),
-     *         apiId: FernRegistry.ApiId("string"),
+     *         orgId: FernRegistry.OrgId("orgId"),
+     *         apiId: FernRegistry.ApiId("apiId"),
      *         sdk: {
      *             type: "typescript",
-     *             package: "string",
-     *             version: "string"
+     *             package: "package",
+     *             version: undefined
      *         },
      *         endpointId: {
-     *             path: FernRegistry.EndpointPathLiteral("string"),
+     *             path: FernRegistry.EndpointPathLiteral("path"),
      *             method: "GET",
-     *             identifierOverride: "string"
+     *             identifierOverride: undefined
      *         }
      *     })
      */

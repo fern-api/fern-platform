@@ -11,8 +11,7 @@ export type HttpResponseBodyShape =
     | FernRegistry.api.v1.read.HttpResponseBodyShape.StreamingText
     | FernRegistry.api.v1.read.HttpResponseBodyShape.Stream
     /**
-     * A response that can either be streaming or REST
-     *  */
+     * A response that can either be streaming or REST */
     | FernRegistry.api.v1.read.HttpResponseBodyShape.StreamCondition;
 
 export declare namespace HttpResponseBodyShape {

@@ -7,9 +7,9 @@ import * as FernRegistry from "../../../../../../index";
 /**
  * @example
  *     {
- *         package: "string",
+ *         package: "package",
  *         language: "Go",
- *         githubRepository: "string"
+ *         githubRepository: undefined
  *     }
  */
 export interface ComputeSemanticVersionRequest {
@@ -20,7 +20,6 @@ export interface ComputeSemanticVersionRequest {
      * The name of the GitHub repository (e.g. `owner/repo`).
      * The repositories latest release will be queried to find the existing
      * package version.
-     *
      */
     githubRepository?: string;
 }

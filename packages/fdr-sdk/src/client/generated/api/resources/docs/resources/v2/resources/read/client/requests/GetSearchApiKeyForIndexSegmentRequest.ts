@@ -5,7 +5,7 @@
 /**
  * @example
  *     {
- *         indexSegmentId: "string"
+ *         indexSegmentId: "indexSegmentId"
  *     }
  */
 export interface GetSearchApiKeyForIndexSegmentRequest {
