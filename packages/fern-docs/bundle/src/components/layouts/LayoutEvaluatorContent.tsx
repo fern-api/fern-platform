@@ -31,6 +31,7 @@ export async function LayoutEvaluatorContent({
   aside,
   bottomNavigation,
   slug,
+  markdown
 }: {
   serialize: MdxSerializer;
   frontmatter?: Partial<FernDocs.Frontmatter>;
@@ -42,6 +43,7 @@ export async function LayoutEvaluatorContent({
   aside?: React.ReactNode;
   bottomNavigation?: React.ReactNode;
   slug: string;
+  markdown: string;
 }) {
   let layout = frontmatter?.layout ?? "guide";
 
@@ -56,6 +58,7 @@ export async function LayoutEvaluatorContent({
       subtitle={subtitle}
       breadcrumb={breadcrumb}
       slug={slug}
+      markdown={markdown}
     />
   );
 
