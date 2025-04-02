@@ -2,8 +2,6 @@ import { NextRequest, NextResponse } from "next/server";
 
 import { z } from "zod";
 
-import { ResolvedReturnType } from "@/utils/types";
-
 import { maybeGetCurrentSession } from "../../utils/maybeGetCurrentSession";
 import { parseNextRequestBody } from "../../utils/parseNextRequestBody";
 import { ensureOrgOwnsUrl } from "../auth";
@@ -11,22 +9,16 @@ import handler from "./handler";
 
 export const maxDuration = 60;
 
-export declare namespace generateHomepageImages {
-  export type Request = z.infer<typeof GenerateHomepageImagesRequest>;
-  export type Response = ResolvedReturnType<typeof handler>;
-}
-
 const GenerateHomepageImagesRequest = z.object({
   url: z.string(),
 });
 
 export async function POST(req: NextRequest) {
-  const maybeSessionData = await maybeGetCurrentSession();
+  const maybeSessionData = await maybeGetCurrentSession(req);
   if (maybeSessionData.errorResponse != null) {
     return maybeSessionData.errorResponse;
   }
-  const { session, orgId } = maybeSessionData.data;
-  const token = session.tokenSet.accessToken;
+  const { orgId, token } = maybeSessionData.data;
 
   const parsedBody = await parseNextRequestBody(
     req,

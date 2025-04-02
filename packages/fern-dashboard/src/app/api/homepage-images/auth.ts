@@ -3,7 +3,8 @@ import { NextResponse } from "next/server";
 import { FdrAPI } from "@fern-api/fdr-sdk";
 import { FernVenusApi } from "@fern-api/venus-api-sdk";
 
-import { Auth0OrgID } from "@/app/services/auth0/types";
+import * as auth0Management from "@/app/services/auth0/management";
+import { Auth0OrgID, Auth0OrgName } from "@/app/services/auth0/types";
 import { getFdrClient } from "@/app/services/fdr/getFdrClient";
 import { getVenusClient } from "@/app/services/venus/getVenusClient";
 
@@ -19,7 +20,7 @@ export async function ensureUserOwnsUrl({
   const owner = await getOwnerForUrl({ url, token });
 
   const isMember = await getVenusClient({ token }).organization.isMember(
-    FernVenusApi.OrganizationId(owner.orgId)
+    FernVenusApi.OrganizationId(owner.orgName)
   );
   if (!isMember.ok) {
     console.error("Failed to load org membership for user", isMember.error);
@@ -46,14 +47,17 @@ export async function ensureOrgOwnsUrl({
   url: string;
   orgId: Auth0OrgID;
 }): Promise<MaybeErrorResponse> {
+  const org = await auth0Management.getOrganization(orgId);
+
   const owner = await getOwnerForUrl({ url, token });
-  if (owner.orgId !== orgId) {
+
+  if (owner.orgName !== org.name) {
     console.error(
-      `Org ${orgId} does not own URL ${url} (it is owned by ${owner.orgId})`
+      `Org ${orgId} does not own URL ${url} (it is owned by ${owner.orgName})`
     );
     return {
       errorResponse: NextResponse.json(
-        { message: `Org ${orgId} does not own URL ${url}` },
+        { message: `Org ${org.name} does not own URL ${url}` },
         { status: 401 }
       ),
     };
@@ -67,7 +71,7 @@ export async function getOwnerForUrl({
 }: {
   url: string;
   token: string;
-}): Promise<{ orgId: Auth0OrgID }> {
+}): Promise<{ orgName: Auth0OrgName }> {
   const tokenInfo = await getFdrClient({
     token,
   }).docs.v2.read.getDocsUrlMetadata({
@@ -77,5 +81,7 @@ export async function getOwnerForUrl({
     console.error("Failed to load docs URL metadata", tokenInfo.error);
     throw new Error("Failed to load docs URL metadata");
   }
-  return { orgId: Auth0OrgID(tokenInfo.body.org) };
+  return {
+    orgName: Auth0OrgName(tokenInfo.body.org),
+  };
 }

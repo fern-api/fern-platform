@@ -8,7 +8,7 @@ import { setTimeout } from "timers/promises";
 import { getS3Client } from "@/app/services/s3";
 
 import { MaybeErrorResponse } from "../../utils/MaybeErrorResponse";
-import { IMAGE_FILETYPE } from "../constants";
+import { IMAGE_FILETYPE, getHomepageImagesS3BucketName } from "../constants";
 import { getS3KeyForHomepageScreenshot } from "../getS3KeyForHomepageScreenshot";
 import { Theme } from "../types";
 
@@ -37,8 +37,17 @@ export default async function generateHomepageImages({
   const page = await browser.newPage();
   await page.setViewport({ width: 1300, height: 700, deviceScaleFactor: 2 });
 
-  await takeScreenshotAndWriteToAws({ page, url, theme: "light" });
-  await takeScreenshotAndWriteToAws({ page, url, theme: "dark" });
+  const urlWithProtocol = url.startsWith("http") ? url : `https://${url}`;
+  await takeScreenshotAndWriteToAws({
+    page,
+    url: urlWithProtocol,
+    theme: "light",
+  });
+  await takeScreenshotAndWriteToAws({
+    page,
+    url: urlWithProtocol,
+    theme: "dark",
+  });
 
   await browser.close();
 
@@ -80,7 +89,7 @@ async function takeScreenshotAndWriteToAws({
 
   await getS3Client().send(
     new PutObjectCommand({
-      Bucket: process.env.HOMEPAGE_IMAGES_S3_BUCKET_NAME,
+      Bucket: getHomepageImagesS3BucketName(),
       Key: getS3KeyForHomepageScreenshot({ url, theme }),
       Body: compressedScreenshotBuffer,
       ContentType: `image/${IMAGE_FILETYPE}`,

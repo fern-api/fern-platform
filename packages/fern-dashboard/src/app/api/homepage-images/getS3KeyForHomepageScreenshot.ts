@@ -10,5 +10,16 @@ export function getS3KeyForHomepageScreenshot({
   url: string;
   theme: Theme;
 }) {
-  return `${encodeURIComponent(url)}-${theme}.${IMAGE_FILETYPE}`;
+  return `${encodeURIComponent(standardizeUrl(url))}-${theme}.${IMAGE_FILETYPE}`;
+}
+
+const URL_REGEX = /^(?:https?:\/\/)?(?:www\.)?(.*[^/])(?:\/)?$/;
+
+function standardizeUrl(url: string) {
+  const match = url.match(URL_REGEX);
+  const standardizedUrl = match?.[1];
+  if (standardizedUrl == null) {
+    throw new Error("Failed to standardize URL: " + url);
+  }
+  return standardizedUrl;
 }

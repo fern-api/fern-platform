@@ -29,6 +29,7 @@
   "dependencies": {
     "@auth0/nextjs-auth0": "^4.1.0",
     "@aws-sdk/client-s3": "^3.744.0",
+    "@aws-sdk/s3-request-presigner": "^3.744.0",
     "@fern-api/fdr-sdk": "workspace:*",
     "@fern-api/venus-api-sdk": "^0.13.4-3-g1fe7ae7",
     "@fern-ui/loadable": "workspace:*",
@@ -60,6 +61,7 @@
   },
   "devDependencies": {
     "@fern-platform/configs": "workspace:*",
+    "@smithy/types": "^4.1.0",
     "@tailwindcss/postcss": "^4.0.9",
     "@types/jsonwebtoken": "^9.0.9",
     "@types/node": "^18.11.9",

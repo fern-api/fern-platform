@@ -4,12 +4,6 @@ import { getAppUrlServerSide } from "../../../utils/getAppUrlServerSide";
 
 export async function getAuth0Client() {
   return new Auth0Client({
-    async beforeSessionSaved(session, idToken) {
-      return {
-        ...session,
-        idToken,
-      };
-    },
     authorizationParameters: {
       audience: process.env.NEXT_PUBLIC_VENUS_AUDIENCE,
     },

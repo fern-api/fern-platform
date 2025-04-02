@@ -1,4 +1,9 @@
-import { S3Client } from "@aws-sdk/client-s3";
+import {
+  GetObjectCommand,
+  HeadObjectCommand,
+  S3Client,
+} from "@aws-sdk/client-s3";
+import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 
 /* eslint-disable turbo/no-undeclared-env-vars */
 
@@ -21,4 +26,43 @@ export function getS3Client() {
     });
   }
   return s3;
+}
+
+export async function doesObjectExist({
+  bucketName,
+  objectKey,
+}: {
+  bucketName: string;
+  objectKey: string;
+}): Promise<boolean> {
+  try {
+    await getS3Client().send(
+      new HeadObjectCommand({ Bucket: bucketName, Key: objectKey })
+    );
+    return true;
+  } catch (error) {
+    if (error instanceof Error) {
+      if (error.name === "NotFound" || error.name === "NoSuchKey") {
+        return false;
+      }
+    }
+    throw error;
+  }
+}
+
+export async function getPresignedUrlForS3Object({
+  bucketName,
+  objectKey,
+}: {
+  bucketName: string;
+  objectKey: string;
+}): Promise<string> {
+  return await getSignedUrl(
+    getS3Client(),
+    new GetObjectCommand({ Bucket: bucketName, Key: objectKey }),
+    {
+      // 7 days (maximum)
+      expiresIn: 60 * 60 * 24 * 7,
+    }
+  );
 }

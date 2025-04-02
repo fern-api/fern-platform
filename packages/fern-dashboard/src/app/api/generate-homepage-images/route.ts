@@ -2,10 +2,9 @@ import { NextRequest, NextResponse } from "next/server";
 
 import { z } from "zod";
 
-import { getAuth0Client } from "@/app/services/auth0/auth0";
-
 import { ensureUserOwnsUrl } from "../homepage-images/auth";
 import handler from "../homepage-images/generate/handler";
+import { parseAuthHeader } from "../utils/parseAuthHeader";
 import { parseNextRequestBody } from "../utils/parseNextRequestBody";
 
 export const maxDuration = 60;
@@ -15,8 +14,14 @@ const GenerateHomepageImagesRequest = z.object({
 });
 
 export async function POST(req: NextRequest) {
-  const auth0 = await getAuth0Client();
-  const { token } = await auth0.getAccessToken();
+  let token: string;
+  try {
+    const parsedAuthHeader = parseAuthHeader(req);
+    token = parsedAuthHeader.token;
+  } catch (e) {
+    console.error("Failed to parse auth header", e);
+    return NextResponse.json({}, { status: 401 });
+  }
 
   const parsedBody = await parseNextRequestBody(
     req,

@@ -21,6 +21,13 @@ export async function parseNextRequestBody<T>(
     };
   }
 
+  return safeParseJson(requestJson, schema);
+}
+
+export function safeParseJson<T>(
+  requestJson: unknown,
+  schema: ZodType<T>
+): MaybeErrorResponse<T> {
   const request = schema.safeParse(requestJson);
   if (!request.success) {
     console.error("Failed to validate request body", request.error);

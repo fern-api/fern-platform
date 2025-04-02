@@ -2,6 +2,7 @@ import { getMyDocsSites } from "@/app/api/get-my-docs-sites/route";
 import { getMyOrganizations } from "@/app/api/get-my-organizations/route";
 import { getOrgInvitations } from "@/app/api/get-org-invitations/route";
 import { getOrgMembers } from "@/app/api/get-org-members/route";
+import { getHomepageImages } from "@/app/api/homepage-images/get/route";
 
 export const DashboardApiClient = {
   getMyDocsSites: (): Promise<getMyDocsSites.Response> =>
@@ -10,13 +11,27 @@ export const DashboardApiClient = {
     typedFetch<getMyOrganizations.Response>("/api/get-my-organizations"),
   getOrgInvitations: () =>
     typedFetch<getOrgInvitations.Response>("/api/get-org-invitations"),
-  getOrgMembers: () =>
+  getOrgMembers: (): Promise<getOrgMembers.Response> =>
     typedFetch<getOrgMembers.Response>("/api/get-org-members"),
+  getHomepageImages: (request: getHomepageImages.Request) =>
+    typedFetch<getHomepageImages.Response>("/api/homepage-images/get", {
+      body: request,
+    }),
 };
 
-async function typedFetch<T>(url: string, body?: string): Promise<T> {
-  const response = await fetch(url, {
+async function typedFetch<T>(
+  url: string,
+  {
     body,
+    method = body != null ? "POST" : "GET",
+  }: {
+    method?: "GET" | "POST";
+    body?: unknown;
+  } = {}
+): Promise<T> {
+  const response = await fetch(url, {
+    method: method,
+    body: body != null ? JSON.stringify(body) : undefined,
   });
 
   const responseText = await response.text().catch(() => "");

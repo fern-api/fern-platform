@@ -23,6 +23,12 @@ const nextConfig: NextConfig = {
         pathname: "/u/**",
         search: "?v=4",
       },
+      {
+        protocol: "https",
+        hostname: `${process.env.HOMEPAGE_IMAGES_S3_BUCKET_NAME}.s3.us-east-1.amazonaws.com`,
+        port: "",
+        pathname: "/**",
+      },
     ],
   },
   webpack: (webpackConfig) => {

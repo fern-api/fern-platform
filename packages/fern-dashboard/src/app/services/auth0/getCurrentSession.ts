@@ -17,16 +17,14 @@ export async function getCurrentSession(): Promise<FullSessionData> {
   if (session == null) {
     throw new Error("Not authenticated");
   }
-  if (session.idToken == null) {
-    throw new Error("idToken is not present on session");
-  }
-  if (typeof session.idToken !== "string") {
-    throw new Error(
-      `idToken is of type ${typeof session.idToken} (expected string)`
-    );
-  }
 
-  const jwtPayload = jwt.decode(session.idToken);
+  const { orgId, userId } = decodeAccessToken(session.tokenSet.accessToken);
+
+  return { session, orgId, userId };
+}
+
+export function decodeAccessToken(token: string) {
+  const jwtPayload = jwt.decode(token);
   if (jwtPayload == null) {
     throw new Error("JWT payload is not defined");
   }
@@ -37,13 +35,15 @@ export async function getCurrentSession(): Promise<FullSessionData> {
     throw new Error("JWT payload does not include 'sub'");
   }
 
-  const orgId = session.user.org_id;
+  const orgId = jwtPayload.org_id;
   if (orgId == null) {
     throw new Error("JWT payload does not have org_id");
   }
+  if (typeof orgId !== "string") {
+    throw new Error("JWT payload's org_id is not a string");
+  }
 
   return {
-    session: session,
     userId: Auth0UserID(jwtPayload.sub),
     orgId: Auth0OrgID(orgId),
   };

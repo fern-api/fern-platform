@@ -18,35 +18,31 @@ export declare namespace getHomepageImages {
 
 const GetHomepageImagesRequest = z.object({
   url: z.string(),
+  theme: z.union([z.literal("dark"), z.literal("light")]),
 });
 
-export async function GET(req: NextRequest) {
-  const maybeSessionData = await maybeGetCurrentSession();
+export async function POST(req: NextRequest) {
+  const maybeSessionData = await maybeGetCurrentSession(req);
   if (maybeSessionData.errorResponse != null) {
     return maybeSessionData.errorResponse;
   }
-  const { session, orgId } = maybeSessionData.data;
-  const token = session.tokenSet.accessToken;
+  const { orgId, token } = maybeSessionData.data;
 
   const parsedBody = await parseNextRequestBody(req, GetHomepageImagesRequest);
   if (parsedBody.errorResponse != null) {
     return parsedBody.errorResponse;
   }
-  const { url } = parsedBody.data;
+  const { url, theme } = parsedBody.data;
 
   const ensureOrgOwnsUrlResponse = await ensureOrgOwnsUrl({
     url,
     orgId,
     token,
   });
+
   if (ensureOrgOwnsUrlResponse.errorResponse != null) {
     return ensureOrgOwnsUrlResponse.errorResponse;
   }
 
-  const handlerResponse = await handler({ url });
-  if (handlerResponse.errorResponse != null) {
-    return handlerResponse.errorResponse;
-  }
-
-  return NextResponse.json({});
+  return NextResponse.json(await handler({ url, theme }));
 }
