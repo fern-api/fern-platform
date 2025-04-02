@@ -36,19 +36,22 @@ export function PageHeader({
 }) {
   return (
     <header className="my-8 space-y-2">
-        {(breadcrumb.length > 0 || tags) && (
-          <div className="flex justify-between">
-            <FernBreadcrumbs breadcrumb={breadcrumb} />
-            {tags}
-          </div>
-        )}
-
+      {(breadcrumb.length > 0 || tags) && (
+        <div className="flex justify-between">
+          <FernBreadcrumbs breadcrumb={breadcrumb} />
+          {tags}
+        </div>
+      )}
 
       <WithAction action={action}>
-        <div className="flex flex-row justify-between items-center">
+        <div className="flex flex-row items-center justify-between">
           {titleHref == null ? (
             <h1 className="fern-page-heading hyphens-auto text-balance break-words">
-              <MdxServerComponent serialize={serialize} mdx={title} slug={slug} />
+              <MdxServerComponent
+                serialize={serialize}
+                mdx={title}
+                slug={slug}
+              />
             </h1>
           ) : (
             <FernLink href={titleHref} scroll={true}>
@@ -62,10 +65,9 @@ export function PageHeader({
             </FernLink>
           )}
           <div className="w-[135px]">
-            <PageActionsDropdown markdown={markdown}/>
+            <PageActionsDropdown markdown={markdown} />
           </div>
         </div>
-
       </WithAction>
 
       {subtitle && (

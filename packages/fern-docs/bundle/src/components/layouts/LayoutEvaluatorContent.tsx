@@ -31,7 +31,7 @@ export async function LayoutEvaluatorContent({
   aside,
   bottomNavigation,
   slug,
-  markdown
+  markdown,
 }: {
   serialize: MdxSerializer;
   frontmatter?: Partial<FernDocs.Frontmatter>;
