@@ -883,6 +883,9 @@ importers:
       '@types/qs':
         specifier: 6.9.14
         version: 6.9.14
+      '@typescript/vfs':
+        specifier: ^1.6.1
+        version: 1.6.1(typescript@5.7.3)
       '@upstash/qstash':
         specifier: ^2.7.16
         version: 2.7.16
@@ -1157,9 +1160,6 @@ importers:
       '@types/xml2js':
         specifier: ^0.4.14
         version: 0.4.14
-      '@typescript/vfs':
-        specifier: ^1.6.1
-        version: 1.6.1(typescript@5.7.3)
       axios:
         specifier: ^1.8.1
         version: 1.8.1
