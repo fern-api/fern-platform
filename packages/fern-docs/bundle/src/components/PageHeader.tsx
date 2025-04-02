@@ -32,7 +32,7 @@ export function PageHeader({
   subtitle?: string;
   tags?: React.ReactNode;
   children?: React.ReactNode;
-  markdown?: string;
+  markdown: string;
 }) {
   return (
     <header className="my-8 space-y-2">
