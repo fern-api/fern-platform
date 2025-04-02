@@ -24,7 +24,11 @@ export function HeaderTabsRoot({
     >
       {children}
       {showSearchBar && (
-        <SearchV2Trigger aria-label="Search" className="max-w-sidebar-width" />
+        <SearchV2Trigger
+          aria-label="Search"
+          className="max-w-sidebar-width overflow-hidden"
+          isSearchInSidebar={false}
+        />
       )}
     </Tabs.Root>
   );

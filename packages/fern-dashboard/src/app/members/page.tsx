@@ -1,3 +1,8 @@
+import { MembersPage } from "@/components/members/MembersPage";
+
+import { getCurrentSession } from "../services/auth0/getCurrentSession";
+
 export default async function Page() {
-  return <div>members</div>;
+  const session = await getCurrentSession();
+  return <MembersPage session={session} />;
 }
