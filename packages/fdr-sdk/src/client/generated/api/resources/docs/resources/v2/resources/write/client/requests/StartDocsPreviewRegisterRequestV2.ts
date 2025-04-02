@@ -7,19 +7,11 @@ import * as FernRegistry from "../../../../../../../../index";
 /**
  * @example
  *     {
- *         basePath: "string",
- *         orgId: FernRegistry.OrgId("string"),
- *         authConfig: {
- *             type: "public"
- *         },
- *         filepaths: [FernRegistry.docs.v1.write.FilePath("string")],
- *         images: [{
- *                 filePath: FernRegistry.docs.v1.write.FilePath("string"),
- *                 width: 1.1,
- *                 height: 1.1,
- *                 blurDataUrl: "string",
- *                 alt: "string"
- *             }]
+ *         basePath: undefined,
+ *         orgId: FernRegistry.OrgId("orgId"),
+ *         authConfig: undefined,
+ *         filepaths: [FernRegistry.docs.v1.write.FilePath("filepaths"), FernRegistry.docs.v1.write.FilePath("filepaths")],
+ *         images: undefined
  *     }
  */
 export interface StartDocsPreviewRegisterRequestV2 {

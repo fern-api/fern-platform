@@ -7,21 +7,13 @@ import * as FernRegistry from "../../../../../../../../index";
 /**
  * @example
  *     {
- *         domain: "string",
- *         customDomains: ["string"],
- *         authConfig: {
- *             type: "public"
- *         },
- *         orgId: FernRegistry.OrgId("string"),
- *         apiId: FernRegistry.ApiId("string"),
- *         filepaths: [FernRegistry.docs.v1.write.FilePath("string")],
- *         images: [{
- *                 filePath: FernRegistry.docs.v1.write.FilePath("string"),
- *                 width: 1.1,
- *                 height: 1.1,
- *                 blurDataUrl: "string",
- *                 alt: "string"
- *             }]
+ *         domain: "domain",
+ *         customDomains: ["customDomains", "customDomains"],
+ *         authConfig: undefined,
+ *         orgId: FernRegistry.OrgId("orgId"),
+ *         apiId: FernRegistry.ApiId("apiId"),
+ *         filepaths: [FernRegistry.docs.v1.write.FilePath("filepaths"), FernRegistry.docs.v1.write.FilePath("filepaths")],
+ *         images: undefined
  *     }
  */
 export interface StartDocsRegisterRequestV2 {

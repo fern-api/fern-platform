@@ -39,7 +39,7 @@ export class Dashboard {
      *
      * @example
      *     await client.dashboard.getDocsSitesForOrg({
-     *         orgId: FernRegistry.OrgId("string")
+     *         orgId: FernRegistry.OrgId("orgId")
      *     })
      */
     public async getDocsSitesForOrg(

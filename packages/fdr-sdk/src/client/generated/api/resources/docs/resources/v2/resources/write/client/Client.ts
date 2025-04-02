@@ -34,21 +34,13 @@ export class Write {
      *
      * @example
      *     await client.docs.v2.write.startDocsRegister({
-     *         domain: "string",
-     *         customDomains: ["string"],
-     *         authConfig: {
-     *             type: "public"
-     *         },
-     *         orgId: FernRegistry.OrgId("string"),
-     *         apiId: FernRegistry.ApiId("string"),
-     *         filepaths: [FernRegistry.docs.v1.write.FilePath("string")],
-     *         images: [{
-     *                 filePath: FernRegistry.docs.v1.write.FilePath("string"),
-     *                 width: 1.1,
-     *                 height: 1.1,
-     *                 blurDataUrl: "string",
-     *                 alt: "string"
-     *             }]
+     *         domain: "domain",
+     *         customDomains: ["customDomains", "customDomains"],
+     *         authConfig: undefined,
+     *         orgId: FernRegistry.OrgId("orgId"),
+     *         apiId: FernRegistry.ApiId("apiId"),
+     *         filepaths: [FernRegistry.docs.v1.write.FilePath("filepaths"), FernRegistry.docs.v1.write.FilePath("filepaths")],
+     *         images: undefined
      *     })
      */
     public async startDocsRegister(
@@ -115,19 +107,11 @@ export class Write {
      *
      * @example
      *     await client.docs.v2.write.startDocsPreviewRegister({
-     *         basePath: "string",
-     *         orgId: FernRegistry.OrgId("string"),
-     *         authConfig: {
-     *             type: "public"
-     *         },
-     *         filepaths: [FernRegistry.docs.v1.write.FilePath("string")],
-     *         images: [{
-     *                 filePath: FernRegistry.docs.v1.write.FilePath("string"),
-     *                 width: 1.1,
-     *                 height: 1.1,
-     *                 blurDataUrl: "string",
-     *                 alt: "string"
-     *             }]
+     *         basePath: undefined,
+     *         orgId: FernRegistry.OrgId("orgId"),
+     *         authConfig: undefined,
+     *         filepaths: [FernRegistry.docs.v1.write.FilePath("filepaths"), FernRegistry.docs.v1.write.FilePath("filepaths")],
+     *         images: undefined
      *     })
      */
     public async startDocsPreviewRegister(
@@ -191,346 +175,44 @@ export class Write {
      * @param {Write.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.docs.v2.write.finishDocsRegister(FernRegistry.docs.v1.write.DocsRegistrationId("string"), {
+     *     await client.docs.v2.write.finishDocsRegister(FernRegistry.docs.v1.write.DocsRegistrationId("docsRegistrationId"), {
      *         docsDefinition: {
      *             pages: {
-     *                 "string": {
-     *                     markdown: "string",
-     *                     editThisPageUrl: FernRegistry.Url("string")
+     *                 "pages": {
+     *                     markdown: "markdown",
+     *                     editThisPageUrl: undefined
      *                 }
      *             },
      *             config: {
-     *                 title: "string",
-     *                 defaultLanguage: "typescript",
-     *                 announcement: {
-     *                     text: "string"
-     *                 },
-     *                 navigation: {
-     *                     tabs: [{
-     *                             "key": "value"
-     *                         }],
-     *                     tabsV2: [{
-     *                             "key": "value"
-     *                         }],
-     *                     landingPage: {
-     *                         id: FernRegistry.PageId("string"),
-     *                         title: "string",
-     *                         icon: {
-     *                             "key": "value"
-     *                         },
-     *                         hidden: {
-     *                             "key": "value"
-     *                         },
-     *                         urlSlugOverride: {
-     *                             "key": "value"
-     *                         },
-     *                         fullSlug: {
-     *                             "key": "value"
-     *                         }
-     *                     }
-     *                 },
-     *                 root: {
-     *                     type: "root",
-     *                     version: "v1",
-     *                     child: {
-     *                         type: "versioned",
-     *                         children: [{
-     *                                 type: "version",
-     *                                 default: true,
-     *                                 versionId: FernRegistry.VersionId("string"),
-     *                                 child: {
-     *                                     type: "tabbed",
-     *                                     children: [{
-     *                                             "key": "value"
-     *                                         }],
-     *                                     id: FernRegistry.navigation.v1.NodeId("string")
-     *                                 },
-     *                                 availability: {
-     *                                     "key": "value"
-     *                                 },
-     *                                 landingPage: {
-     *                                     "key": "value"
-     *                                 },
-     *                                 title: "string",
-     *                                 slug: FernRegistry.navigation.v1.Slug("string"),
-     *                                 icon: {
-     *                                     "key": "value"
-     *                                 },
-     *                                 hidden: {
-     *                                     "key": "value"
-     *                                 },
-     *                                 authed: {
-     *                                     "key": "value"
-     *                                 },
-     *                                 id: FernRegistry.navigation.v1.NodeId("string"),
-     *                                 viewers: {
-     *                                     "key": "value"
-     *                                 },
-     *                                 orphaned: {
-     *                                     "key": "value"
-     *                                 },
-     *                                 featureFlags: {
-     *                                     "key": "value"
-     *                                 },
-     *                                 pointsTo: {
-     *                                     "key": "value"
-     *                                 }
-     *                             }],
-     *                         id: FernRegistry.navigation.v1.NodeId("string")
-     *                     },
-     *                     roles: [{
-     *                             "key": "value"
-     *                         }],
-     *                     title: "string",
-     *                     slug: FernRegistry.navigation.v1.Slug("string"),
-     *                     icon: {
-     *                         "key": "value"
-     *                     },
-     *                     hidden: {
-     *                         "key": "value"
-     *                     },
-     *                     authed: {
-     *                         "key": "value"
-     *                     },
-     *                     id: FernRegistry.navigation.v1.NodeId("string"),
-     *                     viewers: {
-     *                         "key": "value"
-     *                     },
-     *                     orphaned: {
-     *                         "key": "value"
-     *                     },
-     *                     featureFlags: {
-     *                         "key": "value"
-     *                     },
-     *                     pointsTo: {
-     *                         "key": "value"
-     *                     }
-     *                 },
-     *                 navbarLinks: [{
-     *                         type: "filled"
-     *                     }],
-     *                 footerLinks: [{
-     *                         type: "github",
-     *                         value: {
-     *                             "key": "value"
-     *                         }
-     *                     }],
-     *                 hideNavLinks: true,
-     *                 logoHeight: 1.1,
-     *                 logoHref: FernRegistry.Url("string"),
-     *                 favicon: FernRegistry.FileId("string"),
-     *                 metadata: {
-     *                     og:site_name: "string",
-     *                     og:title: "string",
-     *                     og:description: "string",
-     *                     og:url: "string",
-     *                     og:image: {
-     *                         type: "fileId",
-     *                         value: {
-     *                             "key": "value"
-     *                         }
-     *                     },
-     *                     og:image:width: 1.1,
-     *                     og:image:height: 1.1,
-     *                     og:locale: "string",
-     *                     og:logo: {
-     *                         type: "fileId",
-     *                         value: {
-     *                             "key": "value"
-     *                         }
-     *                     },
-     *                     twitter:title: "string",
-     *                     twitter:description: "string",
-     *                     twitter:handle: "string",
-     *                     twitter:image: {
-     *                         type: "fileId",
-     *                         value: {
-     *                             "key": "value"
-     *                         }
-     *                     },
-     *                     twitter:site: "string",
-     *                     twitter:url: "string",
-     *                     twitter:card: "summary",
-     *                     noindex: true,
-     *                     nofollow: true
-     *                 },
-     *                 redirects: [{
-     *                         source: "string",
-     *                         destination: "string",
-     *                         permanent: {
-     *                             "key": "value"
-     *                         }
-     *                     }],
-     *                 colorsV3: {
-     *                     type: "dark"
-     *                 },
-     *                 layout: {
-     *                     pageWidth: {
-     *                         type: "px",
-     *                         value: {
-     *                             "key": "value"
-     *                         }
-     *                     },
-     *                     contentWidth: {
-     *                         type: "px",
-     *                         value: {
-     *                             "key": "value"
-     *                         }
-     *                     },
-     *                     sidebarWidth: {
-     *                         type: "px",
-     *                         value: {
-     *                             "key": "value"
-     *                         }
-     *                     },
-     *                     headerHeight: {
-     *                         type: "px",
-     *                         value: {
-     *                             "key": "value"
-     *                         }
-     *                     },
-     *                     searchbarPlacement: "HEADER",
-     *                     tabsPlacement: "HEADER",
-     *                     contentAlignment: "CENTER",
-     *                     headerPosition: "FIXED",
-     *                     disableHeader: true
-     *                 },
-     *                 typographyV2: {
-     *                     headingsFont: {
-     *                         type: "custom"
-     *                     },
-     *                     bodyFont: {
-     *                         type: "custom"
-     *                     },
-     *                     codeFont: {
-     *                         type: "custom"
-     *                     }
-     *                 },
-     *                 analyticsConfig: {
-     *                     segment: {
-     *                         writeKey: "string"
-     *                     },
-     *                     fullstory: {
-     *                         orgId: "string"
-     *                     },
-     *                     intercom: {
-     *                         appId: "string",
-     *                         apiBase: {
-     *                             "key": "value"
-     *                         }
-     *                     },
-     *                     posthog: {
-     *                         apiKey: "string",
-     *                         endpoint: {
-     *                             "key": "value"
-     *                         }
-     *                     },
-     *                     gtm: {
-     *                         containerId: "string"
-     *                     },
-     *                     ga4: {
-     *                         measurementId: "string"
-     *                     },
-     *                     amplitude: {
-     *                         apiKey: "string"
-     *                     },
-     *                     mixpanel: {
-     *                         apiKey: "string"
-     *                     },
-     *                     hotjar: {
-     *                         hjid: "string",
-     *                         hjsv: "string"
-     *                     },
-     *                     koala: {
-     *                         apiKey: "string"
-     *                     },
-     *                     logrocket: {
-     *                         apiKey: "string"
-     *                     },
-     *                     pirsch: {
-     *                         id: "string"
-     *                     },
-     *                     plausible: {
-     *                         domain: "string"
-     *                     },
-     *                     fathom: {
-     *                         siteId: "string"
-     *                     },
-     *                     clearbit: {
-     *                         apiKey: "string"
-     *                     },
-     *                     heap: {
-     *                         appId: "string"
-     *                     }
-     *                 },
-     *                 integrations: {
-     *                     intercom: "string"
-     *                 },
-     *                 css: {
-     *                     inline: [{
-     *                             "key": "value"
-     *                         }]
-     *                 },
-     *                 js: {
-     *                     remote: [{
-     *                             "key": "value"
-     *                         }],
-     *                     files: [{
-     *                             fileId: FernRegistry.FileId("string"),
-     *                             strategy: {
-     *                                 "key": "value"
-     *                             }
-     *                         }],
-     *                     inline: [{
-     *                             "key": "value"
-     *                         }]
-     *                 },
-     *                 aiChatConfig: {
-     *                     model: "claude-3.5",
-     *                     systemPrompt: "string"
-     *                 },
-     *                 backgroundImage: FernRegistry.FileId("string"),
-     *                 logoV2: {
-     *                     dark: FernRegistry.FileId("string"),
-     *                     light: FernRegistry.FileId("string")
-     *                 },
-     *                 logo: FernRegistry.FileId("string"),
-     *                 colors: {
-     *                     accentPrimary: {
-     *                         r: 1,
-     *                         g: 1,
-     *                         b: 1,
-     *                         a: {
-     *                             "key": "value"
-     *                         }
-     *                     }
-     *                 },
-     *                 colorsV2: {
-     *                     accentPrimary: {
-     *                         type: "unthemed"
-     *                     },
-     *                     background: {
-     *                         type: "unthemed"
-     *                     }
-     *                 },
-     *                 typography: {
-     *                     headingsFont: {
-     *                         name: "string",
-     *                         fontFile: FernRegistry.FileId("string")
-     *                     },
-     *                     bodyFont: {
-     *                         name: "string",
-     *                         fontFile: FernRegistry.FileId("string")
-     *                     },
-     *                     codeFont: {
-     *                         name: "string",
-     *                         fontFile: FernRegistry.FileId("string")
-     *                     }
-     *                 }
+     *                 title: undefined,
+     *                 defaultLanguage: undefined,
+     *                 announcement: undefined,
+     *                 navigation: undefined,
+     *                 root: undefined,
+     *                 navbarLinks: undefined,
+     *                 footerLinks: undefined,
+     *                 hideNavLinks: undefined,
+     *                 logoHeight: undefined,
+     *                 logoHref: undefined,
+     *                 favicon: undefined,
+     *                 metadata: undefined,
+     *                 redirects: undefined,
+     *                 colorsV3: undefined,
+     *                 layout: undefined,
+     *                 typographyV2: undefined,
+     *                 analyticsConfig: undefined,
+     *                 integrations: undefined,
+     *                 css: undefined,
+     *                 js: undefined,
+     *                 aiChatConfig: undefined,
+     *                 backgroundImage: undefined,
+     *                 logoV2: undefined,
+     *                 logo: undefined,
+     *                 colors: undefined,
+     *                 colorsV2: undefined,
+     *                 typography: undefined
      *             },
-     *             jsFiles: {
-     *                 "string": "string"
-     *             }
+     *             jsFiles: undefined
      *         }
      *     })
      */
@@ -590,7 +272,7 @@ export class Write {
      *
      * @example
      *     await client.docs.v2.write.reindexAlgoliaSearchRecords({
-     *         url: FernRegistry.Url("string")
+     *         url: FernRegistry.Url("url")
      *     })
      */
     public async reindexAlgoliaSearchRecords(
@@ -647,8 +329,8 @@ export class Write {
      *
      * @example
      *     await client.docs.v2.write.transferOwnershipOfDomain({
-     *         domain: "string",
-     *         toOrgId: "string"
+     *         domain: "domain",
+     *         toOrgId: "toOrgId"
      *     })
      */
     public async transferOwnershipOfDomain(
