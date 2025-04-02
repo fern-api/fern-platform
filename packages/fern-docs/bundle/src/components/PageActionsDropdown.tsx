@@ -38,12 +38,21 @@ const ViewAsMarkdownOption = (): FernDropdown.ValueOption => {
   } as FernDropdown.ValueOption;
 };
 
-const OpenInChatGPTOption = ({
+type LLM_OPTIONS = "ChatGPT" | "Claude";
+
+const LLM_URLS: Record<LLM_OPTIONS, string> = {
+  ChatGPT: "https://chat.openai.com/?hint=search&q=",
+  Claude: "https://claude.ai/new?q=",
+};
+
+const OpenWithLLM = ({
   domain,
   slug,
+  llm,
 }: {
   domain: ParamValue;
   slug: ParamValue;
+  llm: LLM_OPTIONS;
 }): FernDropdown.ValueOption => {
   const resolveParam = (param: ParamValue): string => {
     if (typeof param === "string") {
@@ -58,15 +67,15 @@ const OpenInChatGPTOption = ({
   const decodedDomain = resolveParam(domain);
   const decodedSlug = resolveParam(slug);
 
-  const prompt = `I'm trying to understand the content on the following page: ${decodedDomain}${decodedSlug}. Read it so you can answer my questions.`;
+  const prompt = `Read ${decodedDomain}${decodedSlug} so I can ask questions about it.`;
 
   return {
     type: "value",
-    value: "open-chatgpt",
-    label: "Open in ChatGPT",
+    value: `open-${llm.toLowerCase()}`,
+    label: `Open in ${llm}`,
     helperText: "Ask questions about this page",
     icon: <MessageCircleQuestion className="size-icon" />,
-    href: `https://chat.openai.com/?hint=search&q=${encodeURIComponent(prompt)}`,
+    href: `${LLM_URLS[llm]}${encodeURIComponent(prompt)}`,
     rightElement: <ExternalLink className="size-icon" />,
   } as FernDropdown.ValueOption;
 };
@@ -77,14 +86,15 @@ export function PageActionsDropdown({ markdown }: { markdown: string }) {
 
   const copyOption = CopyPageOption();
   const viewAsMarkdownOption = ViewAsMarkdownOption();
-  const openInChatGPTOption = OpenInChatGPTOption({ domain, slug });
 
   const options: FernDropdown.Option[] = [
     copyOption,
     { type: "separator" } as FernDropdown.SeparatorOption,
     viewAsMarkdownOption,
     { type: "separator" } as FernDropdown.SeparatorOption,
-    openInChatGPTOption,
+    OpenWithLLM({ domain, slug, llm: "ChatGPT" }),
+    { type: "separator" } as FernDropdown.SeparatorOption,
+    OpenWithLLM({ domain, slug, llm: "Claude" }),
   ];
 
   const handleValueChange = async (value: string) => {
