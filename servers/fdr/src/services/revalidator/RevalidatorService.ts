@@ -13,6 +13,7 @@ export interface RevalidatorService {
   revalidate(params: {
     baseUrl: ParsedBaseUrl;
     app: FdrApplication;
+    authHeader: string;
   }): Promise<RevalidatedPathsResponse>;
 }
 
@@ -37,15 +38,22 @@ export class RevalidatorServiceImpl implements RevalidatorService {
   public async revalidate({
     baseUrl,
     app,
+    authHeader,
   }: {
     baseUrl: ParsedBaseUrl;
     app?: FdrApplication;
+    authHeader: string;
   }): Promise<RevalidatedPathsResponse> {
     // let revalidationFailed = false;
     try {
       app?.logger.log("Revalidating paths at", baseUrl.toURL().toString());
       await fetch(
-        `https://${baseUrl.hostname}${baseUrl.path || ""}/api/fern-docs/revalidate-all/v3`
+        `https://${baseUrl.hostname}${baseUrl.path || ""}/api/fern-docs/revalidate-all/v3`,
+        {
+          headers: {
+            authorization: authHeader,
+          },
+        }
       );
       return {
         successful: [],

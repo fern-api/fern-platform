@@ -30,27 +30,21 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({}, { status: 401 });
   }
 
-  const { domain, path } = await req.json();
+  const { url } = await req.json();
 
-  if (domain == null) {
-    return NextResponse.json({ error: "domain is required" }, { status: 400 });
+  if (url == null) {
+    return NextResponse.json({ error: "url is required" }, { status: 400 });
   }
-  if (typeof domain !== "string") {
+  if (typeof url !== "string") {
     return NextResponse.json(
-      { error: "domain must be a string" },
-      { status: 400 }
-    );
-  }
-  if (path != null && typeof path !== "string") {
-    return NextResponse.json(
-      { error: "path must be a null | string" },
+      { error: "url must be a string" },
       { status: 400 }
     );
   }
 
   const fdr = getFdrClient({ token });
   const tokenInfo = await fdr.docs.v2.read.getDocsUrlMetadata({
-    url: FdrAPI.Url(new URL(path ?? "", `https://${domain}`).toString()),
+    url: FdrAPI.Url(url),
   });
   if (!tokenInfo.ok) {
     console.error("Failed to load docs URL metadata", tokenInfo.error);
@@ -93,8 +87,6 @@ export async function POST(req: NextRequest) {
 
     const page = await browser.newPage();
     await page.setViewport({ width: 1300, height: 700, deviceScaleFactor: 2 });
-
-    const url = new URL(path ?? "", `https://${domain}`).toString();
 
     await takeScreenshotAndWriteToAws({ page, url, theme: "light" });
     await takeScreenshotAndWriteToAws({ page, url, theme: "dark" });
