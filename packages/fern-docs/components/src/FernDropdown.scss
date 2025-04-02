@@ -3,7 +3,7 @@
     @apply relative z-50;
     @apply animate-popover;
     @apply min-w-(--radix-dropdown-menu-trigger-width);
-    @apply bg-background-translucent border-border-default rounded-2 flex max-h-[300px] flex-col border backdrop-blur will-change-[opacity,transform];
+    @apply bg-background border-border-default rounded-2 flex max-h-[300px] flex-col border backdrop-blur will-change-[opacity,transform];
     @apply shadow-xl;
 
     .fern-dropdown-item {

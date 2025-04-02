@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
 import { ThemeProvider } from "next-themes";
 
+import { getAuth0Client } from "@/app/services/auth0/auth0";
 import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
 import { AppLayout } from "@/components/layout/AppLayout";
-import { getAuth0Client } from "@/utils/auth0";
+import { Toaster } from "@/components/ui/sonner";
+import { ReactQueryProvider } from "@/providers/ReactQueryProvider";
 
 import { gtPlanar } from "./fonts";
 import "./globals.css";
@@ -38,7 +40,8 @@ export default async function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          {content}
+          <ReactQueryProvider>{content}</ReactQueryProvider>
+          <Toaster position="top-center" />
         </ThemeProvider>
       </body>
     </html>

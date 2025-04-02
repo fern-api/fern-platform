@@ -2,8 +2,8 @@
 
 import { useParams } from "next/navigation";
 
+import { useMyDocsSites } from "@/state/useMyDocsSites";
 import { parseDocsUrlParam } from "@/utils/parseDocsUrlParam";
-import { useMyDocsSites } from "@/utils/useMyDocsSites";
 
 import { DocsSiteSelect } from "./DocsSiteSelect";
 
@@ -17,7 +17,7 @@ export function DocsSiteSwitcher() {
 
   return (
     <DocsSiteSelect
-      docsSites={docsSites.type === "loaded" ? docsSites.value : []}
+      docsSites={docsSites.type === "loaded" ? docsSites.value.docsSites : []}
       currentDocsUrl={
         params.docsUrl != null
           ? parseDocsUrlParam({ docsUrl: params.docsUrl })
