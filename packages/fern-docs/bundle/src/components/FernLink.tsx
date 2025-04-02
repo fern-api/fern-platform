@@ -98,13 +98,10 @@ const FernExternalLink = React.forwardRef<
               : `${props.rel} noreferrer`
       }
       href={formatUrlString(url)}
-      className={`inline-flex items-center space-x-1 ${props.className ?? ""}`}
     >
-      <span>{props.children}</span>
+      {props.children}
       {!isSameSite && showExternalLinkIcon && (
-        <span>
-          <ExternalLinkIcon className="external-link-icon" />
-        </span>
+        <ExternalLinkIcon className="external-link-icon" />
       )}
     </a>
   );
