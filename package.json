@@ -55,6 +55,7 @@
     "webpack": "5.94.0"
   },
   "dependencies": {
+    "@typescript/vfs": "^1.6.1",
     "fern-api": "0.41.16"
   },
   "devDependencies": {
