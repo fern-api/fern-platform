@@ -1,14 +1,15 @@
 import { notFound } from "next/navigation";
 import { NextRequest, NextResponse } from "next/server";
 
+import { removeLeadingSlash } from "@fern-docs/utils";
 
 import { createCachedDocsLoader } from "@/server/docs-loader";
 import {
   getMarkdownForPath,
   getPageNodeForPath,
 } from "@/server/getMarkdownForPath";
-import { removeLeadingSlash } from "@fern-docs/utils";
 import { MARKDOWN_PATTERN } from "@/server/patterns";
+
 /**
  * This endpoint returns the markdown content of any page in the docs by adding `.md` or `.mdx` to the end of any docs page.
  */
@@ -17,13 +18,12 @@ export async function GET(
   req: NextRequest,
   props: { params: Promise<{ host: string; domain: string }> }
 ): Promise<NextResponse> {
-
   const { host, domain } = await props.params;
-  
+
   const path = req.nextUrl.pathname;
-  const slug = path.replace(MARKDOWN_PATTERN, '');
+  const slug = path.replace(MARKDOWN_PATTERN, "");
   const cleanSlug = removeLeadingSlash(slug);
-  
+
   const loader = await createCachedDocsLoader(host, domain);
   const node = getPageNodeForPath(await loader.getRoot(), cleanSlug);
 
