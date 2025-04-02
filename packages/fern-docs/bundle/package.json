@@ -177,6 +177,7 @@
     "@types/react-dom": "19.0.4",
     "@types/three": "^0.173.0",
     "@types/xml2js": "^0.4.14",
+    "@typescript/vfs": "^1.6.1",
     "axios": "^1.8.1",
     "chromatic": "^11.26.1",
     "depcheck": "^1.4.7",
