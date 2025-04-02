@@ -97,6 +97,25 @@ export async function GET(
             });
         }
 
+        // Revalidate the LLMs full text cache
+        const llmsFullPromise = fetch(
+          `${req.nextUrl.origin}/api/fern-docs/llms-full.txt`,
+          {
+            method: "GET",
+            cache: "no-store",
+            headers: { [HEADER_X_FERN_HOST]: domain },
+          }
+        )
+          .then(() => {
+            controller.enqueue(`llms-full-revalidated\n`);
+          })
+          .catch((e: unknown) => {
+            console.error(e);
+            controller.enqueue(
+              `llms-full-revalidate-failed:error=${escapeRegExp(String(e))}\n`
+            );
+          });
+
         const root = convertResponseToRootNode(docs, edgeFlags);
         let staticRoot = root;
 
@@ -270,6 +289,8 @@ export async function GET(
 
         // finish reindexing before returning
         await reindexPromise;
+        // finish caching llms full txt before returning
+        await llmsFullPromise;
 
         const end = performance.now();
         console.log(`Reindex took ${end - start}ms`);
