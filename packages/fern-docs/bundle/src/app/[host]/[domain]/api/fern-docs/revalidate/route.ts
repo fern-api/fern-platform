@@ -37,6 +37,8 @@ import {
 } from "@/server/queue-reindex";
 import { pruneWithAuthState } from "@/server/withRbac";
 
+export const maxDuration = 300; // 5 minutes timeout
+
 export async function GET(
   req: NextRequest,
   props: { params: Promise<{ host: string; domain: string }> }
