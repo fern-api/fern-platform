@@ -39,7 +39,6 @@ export default async function LogoPage({
   if (!pageId) {
     return null;
   }
-  console.log("found page ", pageId);
 
   const page = await loader.getPage(pageId);
   const frontmatter = getFrontmatter(page.markdown);
