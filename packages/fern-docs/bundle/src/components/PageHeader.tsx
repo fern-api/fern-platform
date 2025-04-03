@@ -64,7 +64,7 @@ export function PageHeader({
               </h1>
             </FernLink>
           )}
-          <div className="w-[135px]">
+          <div className="hidden w-[135px] md:flex">
             <PageActionsDropdown markdown={markdown} />
           </div>
         </div>
