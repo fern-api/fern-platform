@@ -639,8 +639,6 @@ const AskAICommandItems = memo<{
     if (chatError) {
       const lastConvo = squeezedMessages.at(-1);
       if (lastConvo != null && lastConvo.assistant == null) {
-        console.log("chatError");
-        console.log(chatError);
         lastConvo.assistant = {
           id: "error-msg-id",
           content:
