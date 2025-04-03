@@ -7,7 +7,7 @@ import * as FernRegistry from "../../../../../../../../index";
 /**
  * @example
  *     {
- *         url: FernRegistry.Url("string")
+ *         url: FernRegistry.Url("url")
  *     }
  */
 export interface GetOrganizationForUrlRequest {

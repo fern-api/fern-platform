@@ -7,30 +7,24 @@ import * as FernRegistry from "../../../../index";
 /**
  * @example
  *     {
- *         orgId: FernRegistry.OrgId("string"),
- *         apiId: FernRegistry.ApiId("string"),
+ *         orgId: FernRegistry.OrgId("orgId"),
+ *         apiId: FernRegistry.ApiId("apiId"),
  *         sdk: {
  *             type: "typescript",
- *             package: "string",
- *             version: "string"
+ *             package: "package",
+ *             version: undefined
  *         },
  *         endpointId: {
- *             path: FernRegistry.EndpointPathLiteral("string"),
+ *             path: FernRegistry.EndpointPathLiteral("path"),
  *             method: "GET",
- *             identifierOverride: "string"
+ *             identifierOverride: undefined
  *         }
  *     }
  */
 export interface GetSnippetTemplate {
-    /**
-     * The organization to create snippets for.
-     *
-     */
+    /** The organization to create snippets for. */
     orgId: FernRegistry.OrgId;
-    /**
-     * The API name.
-     *
-     */
+    /** The API name. */
     apiId: FernRegistry.ApiId;
     sdk: FernRegistry.SdkRequest;
     endpointId: FernRegistry.EndpointIdentifier;

@@ -13,7 +13,6 @@ export declare type Layout =
  * Reference pages are best used for API docs or other material that is meant to have a right-hand column.
  * This layout is not recommended for long-form content because they are 2x the width of guide pages and can be difficult to read.
  * Using an <Aside> component is recommended. It will generate a sticky right-hand column for the page, which is useful for code snippets.
- *
  * <Aside> component is not available in guides and overview, and will automatically cause the layout to switch to reference.
  * Note: Table of contents are always hidden on reference pages. */
  | "reference"

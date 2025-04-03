@@ -17,18 +17,13 @@ export interface GetSnippetRequest {
     /**
      * If the same API is defined across multiple organization,
      * you must specify an organization ID.
-     *
      */
     orgId?: FernRegistry.OrgId;
-    /**
-     * If you have more than one API, you must specify its ID.
-     *
-     */
+    /** If you have more than one API, you must specify its ID. */
     apiId?: FernRegistry.ApiId;
     /**
      * The SDKs for which to load snippets. If unspecified,
      * snippets for the latest published SDKs will be returned.
-     *
      */
     sdks?: FernRegistry.SdkRequest[];
     endpoint: FernRegistry.EndpointIdentifier;
@@ -37,7 +32,6 @@ export interface GetSnippetRequest {
     /**
      * The JSON payload to be used as the input for the code snippet. This should just be thought of as the
      * request body you'd be sending to the endpoint as a cURL. If not specified then the default payload will be used.
-     *
      */
     payload?: FernRegistry.CustomSnippetPayload;
 }

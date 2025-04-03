@@ -4,5 +4,5 @@
 export const AiModel = {
     Claude35: "claude-3.5",
     Claude37: "claude-3.7",
-    CommandRPlus: "command-r-plus",
+    CommandA: "command-a",
 };

@@ -33,7 +33,7 @@ export class Read {
      * @param {Read.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.docs.v1.read.getDocsForDomainLegacy("string")
+     *     await client.docs.v1.read.getDocsForDomainLegacy("domain")
      */
     public async getDocsForDomainLegacy(
         domain: string,
@@ -92,7 +92,7 @@ export class Read {
      *
      * @example
      *     await client.docs.v1.read.getDocsForDomain({
-     *         domain: "string"
+     *         domain: "domain"
      *     })
      */
     public async getDocsForDomain(
