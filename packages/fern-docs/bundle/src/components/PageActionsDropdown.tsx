@@ -14,7 +14,6 @@ import {
   ViewAsMarkdownOption,
 } from "./PageActionsDropdownOptions";
 
-
 export function PageActionsDropdown({ markdown }: { markdown: string }) {
   const [showCopied, setShowCopied] = useState<boolean>(false);
   const [isAskAiEnabled, setIsAskAiEnabled] = useState<boolean>(false);
