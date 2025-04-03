@@ -10,6 +10,7 @@ export default async function Layout({
   headertabs,
   sidebar,
   versionSelect,
+  logo,
   explorer,
 }: {
   children: React.ReactNode;
@@ -17,6 +18,7 @@ export default async function Layout({
   headertabs: React.ReactNode;
   sidebar: React.ReactNode;
   versionSelect: React.ReactNode;
+  logo: React.ReactNode;
   explorer: React.ReactNode;
 }) {
   const { host, domain } = await params;
@@ -29,6 +31,7 @@ export default async function Layout({
       headertabs={headertabs}
       versionSelect={versionSelect}
       sidebar={sidebar}
+      logo={logo}
     >
       {children}
       {explorer}
