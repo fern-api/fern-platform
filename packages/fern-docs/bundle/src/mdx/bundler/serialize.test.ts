@@ -176,3 +176,12 @@ it("should serialize openrouter-proivder.mdx", async () => {
     join(__dirname, "__snapshots__", "openrouter-provider.js")
   );
 });
+
+it("should serialize twoslash.mdx", async () => {
+  const result = await serializeMdx(
+    readFileSync(join(__dirname, "tests", "twoslash.mdx"), "utf-8")
+  );
+  await expect(deterministic(result?.code)).toMatchFileSnapshot(
+    join(__dirname, "__snapshots__", "twoslash.js")
+  );
+});

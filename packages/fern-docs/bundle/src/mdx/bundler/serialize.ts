@@ -1,6 +1,6 @@
 import "server-only";
 
-import rehypeShiki, { RehypeShikiOptions } from "@shikijs/rehype";
+import { RehypeShikiOptions } from "@shikijs/rehype";
 import { rendererRich, transformerTwoslash } from "@shikijs/twoslash";
 import { mapKeys } from "es-toolkit/object";
 import fs from "fs";
@@ -52,6 +52,7 @@ import { rehypeExtractAsides } from "../plugins/rehype-extract-asides";
 import { rehypeFiles } from "../plugins/rehype-files";
 import { RehypeLinksOptions, rehypeLinks } from "../plugins/rehype-links";
 import { rehypeMigrateJsx } from "../plugins/rehype-migrate-jsx";
+import { conditionalRehypeShiki } from "../plugins/rehype-shiki-twoslash";
 import { rehypeSteps } from "../plugins/rehype-steps";
 import { rehypeTabs } from "../plugins/rehype-tabs";
 import { remarkExtractTitle } from "../plugins/remark-extract-title";
@@ -161,7 +162,7 @@ async function serializeMdxImpl(
         rehypeMdxClassStyle,
         rehypeCodeBlock,
         [
-          rehypeShiki,
+          conditionalRehypeShiki,
           {
             themes: {
               light: "min-light",
