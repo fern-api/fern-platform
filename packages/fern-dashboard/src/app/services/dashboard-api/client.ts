@@ -2,7 +2,7 @@ import { getMyDocsSites } from "@/app/api/get-my-docs-sites/route";
 import { getMyOrganizations } from "@/app/api/get-my-organizations/route";
 import { getOrgInvitations } from "@/app/api/get-org-invitations/route";
 import { getOrgMembers } from "@/app/api/get-org-members/route";
-import { getHomepageImages } from "@/app/api/homepage-images/get/route";
+import { getHomepageImageUrl } from "@/app/api/homepage-images/get/route";
 
 export const DashboardApiClient = {
   getMyDocsSites: (): Promise<getMyDocsSites.Response> =>
@@ -13,8 +13,8 @@ export const DashboardApiClient = {
     typedFetch<getOrgInvitations.Response>("/api/get-org-invitations"),
   getOrgMembers: (): Promise<getOrgMembers.Response> =>
     typedFetch<getOrgMembers.Response>("/api/get-org-members"),
-  getHomepageImages: (request: getHomepageImages.Request) =>
-    typedFetch<getHomepageImages.Response>("/api/homepage-images/get", {
+  getHomepageImages: (request: getHomepageImageUrl.Request) =>
+    typedFetch<getHomepageImageUrl.Response>("/api/homepage-images/get", {
       body: request,
     }),
 };

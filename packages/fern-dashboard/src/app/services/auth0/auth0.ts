@@ -8,5 +8,6 @@ export async function getAuth0Client() {
       audience: process.env.NEXT_PUBLIC_VENUS_AUDIENCE,
     },
     appBaseUrl: await getAppUrlServerSide(),
+    httpTimeout: 60_000,
   });
 }

@@ -8,7 +8,7 @@ import { DashboardApiClient } from "@/app/services/dashboard-api/client";
 import { convertQueryResultToLoadable } from "./convertQueryResultToLoadable";
 import { ReactQueryKey, inferQueryData } from "./queryKeys";
 
-const QUERY_KEY = ReactQueryKey.organizations();
+const QUERY_KEY = ReactQueryKey.myOrganizations();
 
 export function useOrganizations() {
   return convertQueryResultToLoadable(

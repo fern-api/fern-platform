@@ -5,7 +5,7 @@ import generateHomepageImages from "../generate/handler";
 import { getS3KeyForHomepageScreenshot } from "../getS3KeyForHomepageScreenshot";
 import { Theme } from "../types";
 
-export default async function getHomepageImages({
+export default async function getHomepageImageUrl({
   url,
   theme,
 }: {

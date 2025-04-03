@@ -11,7 +11,7 @@ import handler from "./handler";
 
 export const maxDuration = 60;
 
-export declare namespace getHomepageImages {
+export declare namespace getHomepageImageUrl {
   export type Request = z.infer<typeof GetHomepageImagesRequest>;
   export type Response = ResolvedReturnType<typeof handler>;
 }
