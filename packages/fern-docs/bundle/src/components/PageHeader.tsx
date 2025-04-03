@@ -9,6 +9,7 @@ import { MdxSerializer } from "@/server/mdx-serializer";
 
 import { FernBreadcrumbs } from "./FernBreadcrumbs";
 import { FernLink } from "./FernLink";
+import { PageActionsDropdown } from "./PageActionsDropdown";
 
 export function PageHeader({
   slug,
@@ -20,6 +21,7 @@ export function PageHeader({
   tags,
   subtitle,
   children,
+  markdown,
 }: {
   slug: string;
   serialize: MdxSerializer;
@@ -30,6 +32,7 @@ export function PageHeader({
   subtitle?: string;
   tags?: React.ReactNode;
   children?: React.ReactNode;
+  markdown: string;
 }) {
   return (
     <header className="my-8 space-y-2">
@@ -41,12 +44,8 @@ export function PageHeader({
       )}
 
       <WithAction action={action}>
-        {titleHref == null ? (
-          <h1 className="fern-page-heading hyphens-auto text-balance break-words">
-            <MdxServerComponent serialize={serialize} mdx={title} slug={slug} />
-          </h1>
-        ) : (
-          <FernLink href={titleHref} scroll={true}>
+        <div className="flex flex-row items-center justify-between">
+          {titleHref == null ? (
             <h1 className="fern-page-heading hyphens-auto text-balance break-words">
               <MdxServerComponent
                 serialize={serialize}
@@ -54,8 +53,21 @@ export function PageHeader({
                 slug={slug}
               />
             </h1>
-          </FernLink>
-        )}
+          ) : (
+            <FernLink href={titleHref} scroll={true}>
+              <h1 className="fern-page-heading hyphens-auto text-balance break-words">
+                <MdxServerComponent
+                  serialize={serialize}
+                  mdx={title}
+                  slug={slug}
+                />
+              </h1>
+            </FernLink>
+          )}
+          <div className="hidden w-[135px] md:flex">
+            <PageActionsDropdown markdown={markdown} />
+          </div>
+        </div>
       </WithAction>
 
       {subtitle && (
