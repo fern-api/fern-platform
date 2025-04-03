@@ -44,7 +44,7 @@
     "@radix-ui/react-use-controllable-state": "^1.1.0",
     "@radix-ui/react-visually-hidden": "^1.1.1",
     "@vercel/kv": "^2.0.0",
-    "ai": "^4.0.18",
+    "ai": "^4.2.11",
     "algoliasearch": "^5.13.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
