@@ -22,6 +22,7 @@ export function PageHeader({
   subtitle,
   children,
   markdown,
+  includeDropdown,
 }: {
   slug: string;
   serialize: MdxSerializer;
@@ -33,6 +34,7 @@ export function PageHeader({
   tags?: React.ReactNode;
   children?: React.ReactNode;
   markdown: string;
+  includeDropdown: boolean;
 }) {
   return (
     <header className="my-8 space-y-2">
@@ -64,9 +66,11 @@ export function PageHeader({
               </h1>
             </FernLink>
           )}
-          <div className="hidden w-[135px] md:flex">
-            <PageActionsDropdown markdown={markdown} />
-          </div>
+          {includeDropdown && (
+            <div className="hidden w-[135px] md:flex">
+              <PageActionsDropdown markdown={markdown} />
+            </div>
+          )}
         </div>
       </WithAction>
 
