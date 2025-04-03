@@ -22,8 +22,6 @@ export default async function LogoPage({
     await getFernToken()
   );
 
-  console.log("at slug: ", slug);
-
   const [{ basePath }, config, files, root] = await Promise.all([
     loader.getMetadata(),
     loader.getConfig(),
