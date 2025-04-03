@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
 import { createAmazonBedrock } from "@ai-sdk/amazon-bedrock";
+import { createCohere } from "@ai-sdk/cohere";
 import { createOpenAI } from "@ai-sdk/openai";
 import { WebClient } from "@slack/web-api";
 import {
@@ -31,12 +32,28 @@ import { getFernToken } from "@/app/fern-token";
 import { track } from "@/server/analytics/posthog";
 import { safeVerifyFernJWTConfig } from "@/server/auth/FernJWT";
 import { createCachedDocsLoader } from "@/server/docs-loader";
-import { openaiApiKey, turbopufferApiKey } from "@/server/env-variables";
+import {
+  cohereApiKey,
+  openaiApiKey,
+  turbopufferApiKey,
+} from "@/server/env-variables";
 import { getDocsDomainEdge } from "@/server/xfernhost/edge";
 
 export const maxDuration = 60;
 export const revalidate = 0;
 const engNotifsSlackChannel = "#engineering-notifs";
+
+const modelMap = {
+  "claude-3.5": {
+    modelId: "us.anthropic.claude-3-5-sonnet-20241022-v2:0",
+    region: "us-west-2",
+  },
+  "claude-3.7": {
+    modelId: "us.anthropic.claude-3-7-sonnet-20250219-v1:0",
+    region: "us-east-1",
+  },
+  // command-a is not supported by bedrock
+};
 
 export async function POST(req: NextRequest) {
   initLogger({
@@ -44,29 +61,40 @@ export async function POST(req: NextRequest) {
     apiKey: process.env.BRAINTRUST_API_KEY,
   });
 
-  const openai = createOpenAI({ apiKey: openaiApiKey() });
-  const embeddingModel = openai.embedding("text-embedding-3-large");
-
   const host = req.nextUrl.host;
   const domain = getDocsDomainEdge(req);
-  const namespace = `${withoutStaging(domain)}_${embeddingModel.modelId}`;
-  const { messages, url, filters } = await req.json();
-
-  // TODO: move system prompt to docs.yml
-  const isWebflow = url.includes("webflow-ai");
-
-  const bedrock = createAmazonBedrock({
-    region: isWebflow ? "us-east-1" : "us-west-2",
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-  });
-
-  const languageModel = isWebflow
-    ? wrapAISDKModel(bedrock("us.anthropic.claude-3-7-sonnet-20250219-v1:0"))
-    : wrapAISDKModel(bedrock("us.anthropic.claude-3-5-sonnet-20241022-v2:0"));
-
   const loader = await createCachedDocsLoader(host, domain);
   const metadata = await loader.getMetadata();
+  const config = await loader.getConfig();
+
+  const { messages, url, filters } = await req.json();
+
+  // TODO: remove this once webflow adds model/system-prompt to docs.yml
+  const isWebflow = url.includes("webflow-ai");
+
+  const model = config.aiChatConfig?.model || "claude-3.5";
+  let languageModel;
+  if (model === "command-a") {
+    const cohere = createCohere({ apiKey: cohereApiKey() });
+    languageModel = wrapAISDKModel(cohere("command-a-03-2025"));
+  } else {
+    const { modelId, region } = modelMap[model];
+    const bedrock = createAmazonBedrock({
+      region: isWebflow ? "us-east-1" : region,
+      accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+      secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+    });
+
+    languageModel = isWebflow
+      ? wrapAISDKModel(bedrock("us.anthropic.claude-3-7-sonnet-20250219-v1:0"))
+      : wrapAISDKModel(bedrock(modelId));
+  }
+
+  const openai = createOpenAI({ apiKey: openaiApiKey() });
+  const embeddingModel = openai.embedding("text-embedding-3-large");
+  const namespace = `${withoutStaging(domain)}_${embeddingModel.modelId}`;
+
+  const promptTemplate = config.aiChatConfig?.systemPrompt;
   if (metadata == null) {
     return NextResponse.json("Not found", { status: 404 });
   }
@@ -113,6 +141,7 @@ export async function POST(req: NextRequest) {
         domain,
         date: new Date().toDateString(),
         documents,
+        promptTemplate,
       });
   const result = streamText({
     model: languageModel,

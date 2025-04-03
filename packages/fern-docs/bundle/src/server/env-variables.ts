@@ -50,6 +50,10 @@ export function getFdrOrigin(): string {
   );
 }
 
+export function cohereApiKey(): string {
+  return getEnvVariable("COHERE_API_KEY");
+}
+
 function assertNonNullable<T>(
   value: T,
   key: string
