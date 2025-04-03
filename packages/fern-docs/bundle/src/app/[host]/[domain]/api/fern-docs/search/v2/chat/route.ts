@@ -43,7 +43,7 @@ export const maxDuration = 60;
 export const revalidate = 0;
 const engNotifsSlackChannel = "#engineering-notifs";
 
-const modelMap = {
+const modelMap: Record<string, { modelId: string; region: string }> = {
   "claude-3.5": {
     modelId: "us.anthropic.claude-3-5-sonnet-20241022-v2:0",
     region: "us-west-2",
@@ -72,13 +72,19 @@ export async function POST(req: NextRequest) {
   // TODO: remove this once webflow adds model/system-prompt to docs.yml
   const isWebflow = url.includes("webflow-ai");
 
-  const model = config.aiChatConfig?.model || "claude-3.5";
+  const model: string = config.aiChatConfig?.model || "claude-3.5";
   let languageModel;
-  if (model === "command-a") {
+  if (model === "command-a" || model === "command-r-plus") {
+    // TODO: remove command-r-plus once fern generate change is resolved
     const cohere = createCohere({ apiKey: cohereApiKey() });
     languageModel = wrapAISDKModel(cohere("command-a-03-2025"));
   } else {
-    const { modelId, region } = modelMap[model];
+    let modelId = modelMap["claude-3.5"]?.modelId || ""; // defaults for improper docs.yml entries
+    let region = modelMap["claude-3.5"]?.region || "";
+    if (modelMap[model] != null) {
+      // fallback
+      ({ modelId, region } = modelMap[model]);
+    }
     const bedrock = createAmazonBedrock({
       region: isWebflow ? "us-east-1" : region,
       accessKeyId: process.env.AWS_ACCESS_KEY_ID,
