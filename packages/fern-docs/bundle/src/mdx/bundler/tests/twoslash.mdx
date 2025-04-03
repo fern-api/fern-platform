@@ -1,0 +1,85 @@
+---
+title: TWOSLASH PAGE
+---
+
+Some information about the project.
+
+```ts twoslash
+const hi = "Hello";
+const msg = `${hi}, world`;
+//    ^?
+```
+
+```ts twoslash
+// @noErrors
+console.e;
+//       ^|
+```
+
+```ts twoslash
+function add(a: number, b: number) {
+  //     ^^^
+  return a + b;
+}
+```
+
+```ts twoslash
+const level: string = "Danger";
+// ---cut---
+console.log(level);
+```
+
+```ts twoslash
+// @filename: a.ts
+export const helloWorld: string = 'Hi'
+// ---cut---
+// @filename: b.ts
+import { helloWorld } from './a'
+
+console.log(helloWorld)
+```
+
+```ts twoslash
+const level: string = "Danger";
+// ---cut-before---
+console.log(level);
+// ---cut-after---
+console.log("This is not shown");
+```
+
+```ts twoslash
+const level: string = "Danger";
+// ---cut-start---
+console.log(level); // This is not shown.
+// ---cut-end---
+console.log("This is shown");
+```
+
+```ts twoslash
+// @noImplicitAny: false
+// @target: esnext
+// @lib: esnext
+// This suppose to throw an error,
+// but it won't because we disabled noImplicitAny.
+const fn = (a) => a + 1;
+```
+
+```ts twoslash
+// @showEmit
+const level: string = "Danger";
+```
+
+```ts twoslash
+// @declaration
+// @showEmit
+// @showEmittedFile: index.d.ts
+export const hello = "world";
+```
+
+```ts twoslash
+// @declaration
+// @declarationMap
+// @showEmit
+// @showEmittedFile: index.d.ts.map
+export const hello: string = "world";
+```

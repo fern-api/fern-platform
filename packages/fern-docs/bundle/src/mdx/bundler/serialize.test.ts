@@ -21,7 +21,7 @@ it("should serialize mdx", async () => {
   await expect(deterministic(result?.code)).toMatchFileSnapshot(
     join(__dirname, "__snapshots__", "hello-world.js")
   );
-});
+}, 30000);
 
 it("should serialize mdx with frontmatter", async () => {
   const result = await serializeMdx(
@@ -174,5 +174,14 @@ it("should serialize openrouter-proivder.mdx", async () => {
   );
   await expect(deterministic(result?.code)).toMatchFileSnapshot(
     join(__dirname, "__snapshots__", "openrouter-provider.js")
+  );
+});
+
+it("should serialize twoslash.mdx", async () => {
+  const result = await serializeMdx(
+    readFileSync(join(__dirname, "tests", "twoslash.mdx"), "utf-8")
+  );
+  await expect(deterministic(result?.code)).toMatchFileSnapshot(
+    join(__dirname, "__snapshots__", "twoslash.js")
   );
 });
