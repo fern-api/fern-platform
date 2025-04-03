@@ -79,7 +79,6 @@
     "@react-three/drei": "10.0.3",
     "@react-three/fiber": "9.0.4",
     "@segment/snippet": "^5.2.1",
-    "@shikijs/rehype": "^3.2.1",
     "@shikijs/twoslash": "^3.2.1",
     "@slack/web-api": "^6.9.0",
     "@types/qs": "6.9.14",
@@ -139,6 +138,7 @@
     "remark-squeeze-paragraphs": "^6.0.0",
     "selection-popover": "^0.3.0",
     "server-only": "^0.0.1",
+    "shiki": "^3.2.1",
     "styled-jsx": "^5.1.2",
     "swr": "^2.3.2",
     "three": "^0.173.0",
@@ -190,7 +190,6 @@
     "stylelint": "^16.1.0",
     "tailwindcss": "^4.0.9",
     "ts-essentials": "^10.0.1",
-    "typescript": "5.7.2",
     "vitest": "^3.0.5",
     "xml2js": "^0.6.2"
   }

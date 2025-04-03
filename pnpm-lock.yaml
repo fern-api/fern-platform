@@ -871,9 +871,6 @@ importers:
       '@segment/snippet':
         specifier: ^5.2.1
         version: 5.2.1
-      '@shikijs/rehype':
-        specifier: ^3.2.1
-        version: 3.2.1
       '@shikijs/twoslash':
         specifier: ^3.2.1
         version: 3.2.1(typescript@5.7.3)
@@ -1051,6 +1048,9 @@ importers:
       server-only:
         specifier: ^0.0.1
         version: 0.0.1
+      shiki:
+        specifier: 3.2.1
+        version: 3.2.1
       styled-jsx:
         specifier: ^5.1.2
         version: 5.1.6(@babel/core@7.26.9)(react@19.0.0)
@@ -5949,9 +5949,6 @@ packages:
 
   '@shikijs/langs@3.2.1':
     resolution: {integrity: sha512-If0iDHYRSGbihiA8+7uRsgb1er1Yj11pwpX1c6HLYnizDsKAw5iaT3JXj5ZpaimXSWky/IhxTm7C6nkiYVym+A==}
-
-  '@shikijs/rehype@3.2.1':
-    resolution: {integrity: sha512-wj4TXI1PQ3TNPyXudUzKfdFIMneTxFym3HKKfWRzbOSAS8P4mECR+ttdUPhYU1dxrXrsatWxTJezOcEjiA0z8g==}
 
   '@shikijs/themes@3.2.1':
     resolution: {integrity: sha512-k5DKJUT8IldBvAm8WcrDT5+7GA7se6lLksR+2E3SvyqGTyFMzU2F9Gb7rmD+t+Pga1MKrYFxDIeyWjMZWM6uBQ==}
@@ -20677,15 +20674,6 @@ snapshots:
   '@shikijs/langs@3.2.1':
     dependencies:
       '@shikijs/types': 3.2.1
-
-  '@shikijs/rehype@3.2.1':
-    dependencies:
-      '@shikijs/types': 3.2.1
-      '@types/hast': 3.0.4
-      hast-util-to-string: 3.0.1
-      shiki: 3.2.1
-      unified: 11.0.5
-      unist-util-visit: 5.0.0
 
   '@shikijs/themes@3.2.1':
     dependencies:

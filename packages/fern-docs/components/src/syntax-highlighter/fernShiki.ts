@@ -5,7 +5,6 @@ import type { Root } from "hast";
 import { h } from "hastscript";
 import {
   type BundledLanguage,
-  type BundledTheme,
   type Highlighter,
   type SpecialLanguage,
   bundledLanguages,
@@ -14,23 +13,9 @@ import {
 
 import { additionalLanguages } from "./syntaxes";
 import { templateTransformer } from "./transformers/template";
+import { DEFAULT, THEMES } from "./utils";
 
 let highlighter: Highlighter;
-
-const DEFAULT = Symbol("DEFAULT");
-
-const THEMES: Record<
-  "light" | "dark",
-  Record<string | typeof DEFAULT, BundledTheme>
-> = {
-  light: {
-    [DEFAULT]: "min-light",
-    diff: "github-light", // `min-light` does not work well for diff
-  },
-  dark: {
-    [DEFAULT]: "material-theme-darker",
-  },
-};
 
 // only call this once per language
 export const getHighlighterInstance: (
