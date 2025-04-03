@@ -61,7 +61,6 @@
   },
   "devDependencies": {
     "@fern-platform/configs": "workspace:*",
-    "@smithy/types": "^4.1.0",
     "@tailwindcss/postcss": "^4.0.9",
     "@types/jsonwebtoken": "^9.0.9",
     "@types/node": "^18.11.9",

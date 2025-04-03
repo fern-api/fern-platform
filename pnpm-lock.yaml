@@ -685,9 +685,6 @@ importers:
       '@fern-platform/configs':
         specifier: workspace:*
         version: link:../configs
-      '@smithy/types':
-        specifier: ^4.1.0
-        version: 4.1.0
       '@tailwindcss/postcss':
         specifier: ^4.0.9
         version: 4.0.9
