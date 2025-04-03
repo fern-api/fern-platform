@@ -12,7 +12,7 @@ import {
   ClaudeIcon,
   MarkdownIcon,
   OpenAIIcon,
-} from "./PageActionDropdownAssets";
+} from "./PageActionsDropdownAssets";
 
 export const CopyPageOption = (): FernDropdown.ValueOption => {
   return {
