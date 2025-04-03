@@ -31,7 +31,7 @@ export function PageActionsDropdown({ markdown }: { markdown: string }) {
     };
 
     void fetchEdgeFlags();
-  }, []);
+  }, [domain]);
 
   const copyOption = CopyPageOption();
   const viewAsMarkdownOption = ViewAsMarkdownOption();
