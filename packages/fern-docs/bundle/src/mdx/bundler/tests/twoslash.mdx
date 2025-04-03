@@ -63,23 +63,3 @@ console.log("This is shown");
 // but it won't because we disabled noImplicitAny.
 const fn = (a) => a + 1;
 ```
-
-```ts twoslash
-// @showEmit
-const level: string = "Danger";
-```
-
-```ts twoslash
-// @declaration
-// @showEmit
-// @showEmittedFile: index.d.ts
-export const hello = "world";
-```
-
-```ts twoslash
-// @declaration
-// @declarationMap
-// @showEmit
-// @showEmittedFile: index.d.ts.map
-export const hello: string = "world";
-```

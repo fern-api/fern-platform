@@ -1193,9 +1193,6 @@ importers:
       tailwindcss:
         specifier: ^4.0.9
         version: 4.0.9
-      typescript:
-        specifier: 5.7.3
-        version: 5.7.3
       vitest:
         specifier: ^3.0.5
         version: 3.0.5(@edge-runtime/vm@5.0.0)(@types/debug@4.1.12)(@types/node@18.19.33)(jiti@2.4.2)(jsdom@24.0.0)(less@4.2.0)(lightningcss@1.29.1)(sass@1.77.0)(stylus@0.62.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0)
