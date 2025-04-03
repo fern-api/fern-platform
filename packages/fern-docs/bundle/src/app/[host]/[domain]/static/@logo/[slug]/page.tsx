@@ -31,24 +31,20 @@ export default async function LogoPage({
 
   const resolveFileSrc = createFileResolver(files);
   const foundNode = FernNavigation.utils.findNode(root, slugjoin(slug));
-  if (foundNode.type !== "found") {
-    return null;
-  }
 
-  const pageId = getPageId(foundNode.node);
-  if (!pageId) {
-    return null;
+  let frontmatter = null;
+  if (foundNode.type === "found") {
+    const pageId = getPageId(foundNode.node);
+    if (pageId) {
+      const page = await loader.getPage(pageId);
+      frontmatter = page ? getFrontmatter(page.markdown) : null;
+    }
   }
-
-  const page = await loader.getPage(pageId);
-  const frontmatter = getFrontmatter(page.markdown);
 
   return (
-    <>
-      <Logo
-        logo={withLogo(config, resolveFileSrc, basePath, frontmatter.data)}
-        className="w-fit shrink-0"
-      />
-    </>
+    <Logo
+      logo={withLogo(config, resolveFileSrc, basePath, frontmatter?.data)}
+      className="w-fit shrink-0"
+    />
   );
 }
