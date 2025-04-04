@@ -325,7 +325,7 @@ export function usePlaygroundEndpointFormState(
               : update;
           set(formStateAtom, newFormState);
         },
-        [formStateAtom, ctx, user?.playground?.initial_state]
+        [formStateAtom, ctx, user?.playground?.initial_state, domain]
       )
     ),
   ];
