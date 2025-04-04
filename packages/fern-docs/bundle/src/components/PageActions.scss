@@ -4,6 +4,7 @@
 
     > *:not(:last-child) {
       @apply border-border-default border-r ring-inset;
+
       margin-right: -1px;
     }
   }
