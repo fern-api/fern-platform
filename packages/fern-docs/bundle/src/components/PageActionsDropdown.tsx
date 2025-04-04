@@ -7,8 +7,6 @@ import { Check, ChevronDown, Copy } from "lucide-react";
 
 import { FernButton, FernDropdown } from "@fern-docs/components";
 
-import { useIsAskAiEnabled } from "@/state/search";
-
 import {
   CopyPageOption,
   OpenWithLLM,
