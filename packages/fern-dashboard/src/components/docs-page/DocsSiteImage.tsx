@@ -1,7 +1,6 @@
 "use client";
 
 import { useTheme } from "next-themes";
-import Image from "next/image";
 import { useEffect, useState } from "react";
 
 import { ExclamationCircleIcon } from "@heroicons/react/24/outline";
@@ -9,7 +8,7 @@ import { ExclamationCircleIcon } from "@heroicons/react/24/outline";
 import {
   HOMEPAGE_SCREENSHOT_HEIGHT,
   HOMEPAGE_SCREENSHOT_WIDTH,
-} from "@/app/api/homepage-images/types";
+} from "@/app/api/homepage-images/constants";
 import { useHomepageImageUrl } from "@/state/useHomepageImageUrl";
 import { DocsUrl } from "@/utils/types";
 
@@ -20,10 +19,6 @@ export declare namespace DocsSiteImage {
     docsUrl: DocsUrl;
   }
 }
-
-const IMAGE_WIDTH = 400;
-const IMAGE_HEIGHT =
-  (HOMEPAGE_SCREENSHOT_HEIGHT * IMAGE_WIDTH) / HOMEPAGE_SCREENSHOT_WIDTH;
 
 export function DocsSiteImage({ docsUrl }: DocsSiteImage.Props) {
   const { theme } = useTheme();
@@ -56,15 +51,14 @@ export function DocsSiteImage({ docsUrl }: DocsSiteImage.Props) {
 
     return (
       <>
-        <Image
+        {/*eslint-disable-next-line @next/next/no-img-element */}
+        <img
           src={imageUrl.value.imageUrl}
           alt="docs homepage"
-          width={IMAGE_WIDTH}
-          height={IMAGE_HEIGHT}
+          className="flex-1 object-cover object-top"
           onLoad={() => {
             setIsImageLoaded(true);
           }}
-          priority
         />
         {!isImageLoaded && <Skeleton className="absolute inset-0" />}
       </>
@@ -73,10 +67,9 @@ export function DocsSiteImage({ docsUrl }: DocsSiteImage.Props) {
 
   return (
     <div
-      className="relative flex overflow-hidden rounded-lg border border-gray-500 dark:border-gray-900"
+      className="relative flex w-[150px] overflow-hidden rounded-lg border border-gray-500 sm:w-[350px] md:w-[400px] lg:w-[450px] dark:border-gray-900"
       style={{
-        width: IMAGE_WIDTH,
-        height: IMAGE_HEIGHT,
+        aspectRatio: `${HOMEPAGE_SCREENSHOT_WIDTH} / ${HOMEPAGE_SCREENSHOT_HEIGHT}`,
       }}
     >
       {renderImage()}

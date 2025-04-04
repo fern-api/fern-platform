@@ -8,7 +8,12 @@ import { setTimeout } from "timers/promises";
 import { getS3Client } from "@/app/services/s3";
 
 import { MaybeErrorResponse } from "../../utils/MaybeErrorResponse";
-import { IMAGE_FILETYPE, getHomepageImagesS3BucketName } from "../constants";
+import {
+  HOMEPAGE_SCREENSHOT_HEIGHT,
+  HOMEPAGE_SCREENSHOT_WIDTH,
+  IMAGE_FILETYPE,
+  getHomepageImagesS3BucketName,
+} from "../constants";
 import { getS3KeyForHomepageScreenshot } from "../getS3KeyForHomepageScreenshot";
 import { Theme } from "../types";
 
@@ -35,7 +40,11 @@ export default async function generateHomepageImages({
   }
 
   const page = await browser.newPage();
-  await page.setViewport({ width: 1300, height: 700, deviceScaleFactor: 2 });
+  await page.setViewport({
+    width: HOMEPAGE_SCREENSHOT_WIDTH,
+    height: HOMEPAGE_SCREENSHOT_HEIGHT,
+    deviceScaleFactor: 2,
+  });
 
   const urlWithProtocol = url.startsWith("http") ? url : `https://${url}`;
   await takeScreenshotAndWriteToAws({

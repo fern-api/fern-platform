@@ -23,7 +23,10 @@ export async function ensureUserOwnsUrl({
     FernVenusApi.OrganizationId(owner.orgName)
   );
   if (!isMember.ok) {
-    console.error("Failed to load org membership for user", isMember.error);
+    console.error(
+      "Failed to load org membership for user",
+      JSON.stringify(isMember.error)
+    );
     throw new Error("Failed to load org membership for user");
   }
   if (!isMember.body) {
@@ -78,7 +81,10 @@ export async function getOwnerForUrl({
     url: FdrAPI.Url(url),
   });
   if (!tokenInfo.ok) {
-    console.error("Failed to load docs URL metadata", tokenInfo.error);
+    console.error(
+      "Failed to load docs URL metadata",
+      JSON.stringify(tokenInfo.error)
+    );
     throw new Error("Failed to load docs URL metadata");
   }
   return {

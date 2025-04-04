@@ -37,7 +37,11 @@ async function typedFetch<T>(
   const responseText = await response.text().catch(() => "");
 
   if (!response.ok) {
-    console.error("Request failed", { url, body, responseText });
+    console.error("Request failed", {
+      url,
+      body: JSON.stringify(body),
+      responseText,
+    });
     throw new Error("Request failed: " + responseText);
   }
 
@@ -47,7 +51,7 @@ async function typedFetch<T>(
   } catch (e) {
     console.error(
       "Failed to deserialize response",
-      { url, body, responseText },
+      { url, body: JSON.stringify(body), responseText },
       e
     );
     throw new Error("Failed to deserialize response");

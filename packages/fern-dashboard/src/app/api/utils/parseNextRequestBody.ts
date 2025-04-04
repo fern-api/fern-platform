@@ -30,7 +30,10 @@ export function safeParseJson<T>(
 ): MaybeErrorResponse<T> {
   const request = schema.safeParse(requestJson);
   if (!request.success) {
-    console.error("Failed to validate request body", request.error);
+    console.error(
+      "Failed to validate request body",
+      JSON.stringify(request.error)
+    );
     return {
       errorResponse: NextResponse.json(
         { message: "Failed to parse request", error: request.error },

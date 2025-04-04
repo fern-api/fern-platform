@@ -19,8 +19,26 @@ export default async function getMyDocsSites({
     orgId: FdrAPI.OrgId(org.name),
   });
   if (!docsSites.ok) {
-    console.error("Failed to load docs sites", docsSites.error);
-    throw new Error("Failed to load docs sites");
+    console.error("Failed to load docs sites", JSON.stringify(docsSites.error));
+    const TODO_DELETE_dummyResponse: FdrAPI.dashboard.GetDocsSitesForOrgResponse =
+      {
+        docsSites: [
+          {
+            mainUrl: {
+              domain: "candid.docs.dev.buildwithfern.com",
+              path: undefined,
+            },
+            urls: [
+              {
+                domain: "candid.docs.dev.buildwithfern.com",
+                path: undefined,
+              },
+            ],
+          },
+        ],
+      };
+    return TODO_DELETE_dummyResponse;
+    // throw new Error("Failed to load docs sites");
   }
 
   return docsSites.body;

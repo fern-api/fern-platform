@@ -11,7 +11,6 @@ export declare namespace DocsSiteInfo {
 }
 
 export function DocsSiteInfo({ docsSite }: DocsSiteInfo.Props) {
-  console.log({ docsSite });
   return (
     <div className="flex flex-col">
       <div className="mb-2 text-gray-900 dark:text-gray-800">Domains</div>
