@@ -193,7 +193,9 @@ async function getAllOrgMembers(orgId: Auth0OrgID) {
   return members;
 }
 
-export async function createIsFernEmployee() {
+export async function createIsFernEmployee(): Promise<
+  (userId: Auth0UserID) => boolean
+> {
   const fernOrgMembers = await getOrgMembers(getFernAuth0OrgID(), {
     includeFernEmployees: true,
   });
