@@ -45,10 +45,10 @@ export function PageActionsDropdown({ markdown }: { markdown: string }) {
   };
 
   return (
-    <div className="flex">
+    <div className="fern-page-actions">
       <FernButton
-        variant="outlined"
-        className="w-[120px] min-w-[120px] rounded-r-none border-r-0"
+        variant="minimal"
+        className="w-fit rounded-r-none px-2"
         onClick={() => handleValueChange("copy-page")}
       >
         {showCopied ? (
@@ -70,7 +70,7 @@ export function PageActionsDropdown({ markdown }: { markdown: string }) {
         className={isAskAiEnabled === undefined ? "pointer-events-none" : ""}
         aria-disabled={isAskAiEnabled === undefined}
       >
-        <FernButton variant="outlined" className="rounded-l-none px-2">
+        <FernButton variant="minimal" className="rounded-l-none px-2">
           <ChevronDown className="size-icon" />
         </FernButton>
       </FernDropdown>
