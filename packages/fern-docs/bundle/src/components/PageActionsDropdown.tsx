@@ -6,7 +6,6 @@ import { useEffect, useState } from "react";
 import { Check, ChevronDown, Copy } from "lucide-react";
 
 import { FernButton, FernDropdown } from "@fern-docs/components";
-import { getEdgeFlags } from "@fern-docs/edge-config";
 
 import {
   CopyPageOption,
@@ -16,20 +15,30 @@ import {
 
 export function PageActionsDropdown({ markdown }: { markdown: string }) {
   const [showCopied, setShowCopied] = useState<boolean>(false);
-  const [isAskAiEnabled, setIsAskAiEnabled] = useState<boolean>(false);
+  const [isAskAiEnabled, setIsAskAiEnabled] = useState<boolean | undefined>(undefined);
   const { domain, slug } = useParams();
 
   useEffect(() => {
     const fetchEdgeFlags = async () => {
       try {
-        const flags = await getEdgeFlags(domain as string);
+        if (!domain) {
+          return;
+        }
+        
+        const response = await fetch(`/api/fern-docs/edge-flags`);
+        
+        if (!response.ok) {
+          throw new Error(`Failed to fetch edge flags: ${response.status}`);
+        }
+        
+        const flags = await response.json();
         setIsAskAiEnabled(flags.isAskAiEnabled || false);
       } catch (error) {
         console.log("Failed to fetch edge flags:", error);
         setIsAskAiEnabled(false);
       }
     };
-
+  
     void fetchEdgeFlags();
   }, [domain]);
 
@@ -87,6 +96,8 @@ export function PageActionsDropdown({ markdown }: { markdown: string }) {
         options={options}
         onValueChange={handleValueChange}
         dropdownMenuElement={<a target="_blank" rel="noopener noreferrer" />}
+        className={isAskAiEnabled === undefined ? "pointer-events-none" : ""}
+        aria-disabled={isAskAiEnabled === undefined}
       >
         <FernButton variant="outlined" className="rounded-l-none px-2">
           <ChevronDown className="size-icon" />
