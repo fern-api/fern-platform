@@ -4,7 +4,6 @@ import { useTheme } from "next-themes";
 import { useParams } from "next/navigation";
 import { useState } from "react";
 
-
 import { Check, ChevronDown, Copy } from "lucide-react";
 
 import { FernButton, FernDropdown } from "@fern-docs/components";
@@ -21,8 +20,7 @@ export function PageActionsDropdown({ markdown }: { markdown: string }) {
   const { theme, resolvedTheme } = useTheme();
 
   const activeTheme = theme === "system" ? resolvedTheme : theme;
-  
-  
+
   const copyOption = CopyPageOption();
   const viewAsMarkdownOption = ViewAsMarkdownOption(activeTheme ?? "light");
 
@@ -31,7 +29,12 @@ export function PageActionsDropdown({ markdown }: { markdown: string }) {
     { type: "separator" } as FernDropdown.SeparatorOption,
     viewAsMarkdownOption,
     { type: "separator" } as FernDropdown.SeparatorOption,
-    OpenWithLLM({ domain, slug, llm: "ChatGPT", theme: activeTheme ?? "light" }),
+    OpenWithLLM({
+      domain,
+      slug,
+      llm: "ChatGPT",
+      theme: activeTheme ?? "light",
+    }),
     { type: "separator" } as FernDropdown.SeparatorOption,
     OpenWithLLM({ domain, slug, llm: "Claude", theme: activeTheme ?? "light" }),
   ];

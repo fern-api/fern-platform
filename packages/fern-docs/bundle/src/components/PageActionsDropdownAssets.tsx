@@ -16,7 +16,11 @@ export const OpenAIIcon = ({ theme }: { theme: string }): ReactNode => (
     </g>
     <defs>
       <clipPath id="clip0_828_25337">
-        <rect width="23.6262" height="24" fill={theme === "dark" ? "white" : "black"} />
+        <rect
+          width="23.6262"
+          height="24"
+          fill={theme === "dark" ? "white" : "black"}
+        />
       </clipPath>
     </defs>
   </svg>
@@ -38,7 +42,11 @@ export const ClaudeIcon = ({ theme }: { theme: string }): ReactNode => (
     </g>
     <defs>
       <clipPath id="clip0_828_25349">
-        <rect width="24" height="24" fill={theme === "dark" ? "white" : "black"} />
+        <rect
+          width="24"
+          height="24"
+          fill={theme === "dark" ? "white" : "black"}
+        />
       </clipPath>
     </defs>
   </svg>
@@ -65,7 +73,11 @@ export const MarkdownIcon = ({ theme }: { theme: string }): ReactNode => (
     </g>
     <defs>
       <clipPath id="clip0_828_25352">
-        <rect width="24" height="14.7692" fill={theme === "dark" ? "white" : "black"} />
+        <rect
+          width="24"
+          height="14.7692"
+          fill={theme === "dark" ? "white" : "black"}
+        />
       </clipPath>
     </defs>
   </svg>

@@ -24,7 +24,9 @@ export const CopyPageOption = (): FernDropdown.ValueOption => {
   } as FernDropdown.ValueOption;
 };
 
-export const ViewAsMarkdownOption = (theme: string): FernDropdown.ValueOption => {
+export const ViewAsMarkdownOption = (
+  theme: string
+): FernDropdown.ValueOption => {
   const pathname = usePathname();
   return {
     type: "value",
@@ -39,7 +41,9 @@ export const ViewAsMarkdownOption = (theme: string): FernDropdown.ValueOption =>
 
 export type LLM_OPTIONS = "ChatGPT" | "Claude";
 
-export const LLM_URLS = (theme: string): Record<LLM_OPTIONS, (string | ReactNode)[]> => ({
+export const LLM_URLS = (
+  theme: string
+): Record<LLM_OPTIONS, (string | ReactNode)[]> => ({
   ChatGPT: [
     "https://chat.openai.com/?hint=search&q=",
     <OpenAIIcon key="openai-logo" theme={theme} />,
@@ -49,7 +53,6 @@ export const LLM_URLS = (theme: string): Record<LLM_OPTIONS, (string | ReactNode
     <ClaudeIcon key="claude-logo" theme={theme} />,
   ],
 });
-
 
 export const OpenWithLLM = ({
   domain,
