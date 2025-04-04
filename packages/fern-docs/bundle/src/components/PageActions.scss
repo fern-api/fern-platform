@@ -1,0 +1,10 @@
+@layer components {
+  .fern-page-actions {
+    @apply ring-border-default rounded-2 flex ring-1;
+
+    > *:not(:last-child) {
+      @apply border-border-default border-r ring-inset;
+      margin-right: -1px;
+    }
+  }
+}

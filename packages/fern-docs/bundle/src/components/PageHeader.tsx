@@ -67,7 +67,7 @@ export function PageHeader({
             </FernLink>
           )}
           {includeDropdown && (
-            <div className="hidden w-[135px] md:flex">
+            <div className="hidden md:flex">
               <PageActionsDropdown markdown={markdown} />
             </div>
           )}
