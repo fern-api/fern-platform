@@ -44,6 +44,7 @@ export function PageActionsDropdown({ markdown }: { markdown: string }) {
       ? [
           { type: "separator" } as FernDropdown.SeparatorOption,
           OpenWithLLM({ domain, slug, llm: "ChatGPT" }),
+          { type: "separator" } as FernDropdown.SeparatorOption,
           OpenWithLLM({ domain, slug, llm: "Claude" }),
         ]
       : []),
