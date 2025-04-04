@@ -1,12 +1,13 @@
 "use client";
 
 import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import { Check, ChevronDown, Copy } from "lucide-react";
 
 import { FernButton, FernDropdown } from "@fern-docs/components";
-import { getEdgeFlags } from "@fern-docs/edge-config";
+
+import { useIsAskAiEnabled } from "@/state/search";
 
 import {
   CopyPageOption,
@@ -16,22 +17,8 @@ import {
 
 export function PageActionsDropdown({ markdown }: { markdown: string }) {
   const [showCopied, setShowCopied] = useState<boolean>(false);
-  const [isAskAiEnabled, setIsAskAiEnabled] = useState<boolean>(false);
+  const isAskAiEnabled = useIsAskAiEnabled();
   const { domain, slug } = useParams();
-
-  useEffect(() => {
-    const fetchEdgeFlags = async () => {
-      try {
-        const flags = await getEdgeFlags(domain as string);
-        setIsAskAiEnabled(flags.isAskAiEnabled || false);
-      } catch (error) {
-        console.log("Failed to fetch edge flags:", error);
-        setIsAskAiEnabled(false);
-      }
-    };
-
-    void fetchEdgeFlags();
-  }, [domain]);
 
   const copyOption = CopyPageOption();
   const viewAsMarkdownOption = ViewAsMarkdownOption();
@@ -44,6 +31,7 @@ export function PageActionsDropdown({ markdown }: { markdown: string }) {
       ? [
           { type: "separator" } as FernDropdown.SeparatorOption,
           OpenWithLLM({ domain, slug, llm: "ChatGPT" }),
+          { type: "separator" } as FernDropdown.SeparatorOption,
           OpenWithLLM({ domain, slug, llm: "Claude" }),
         ]
       : []),
@@ -86,6 +74,8 @@ export function PageActionsDropdown({ markdown }: { markdown: string }) {
         options={options}
         onValueChange={handleValueChange}
         dropdownMenuElement={<a target="_blank" rel="noopener noreferrer" />}
+        className={isAskAiEnabled === undefined ? "pointer-events-none" : ""}
+        aria-disabled={isAskAiEnabled === undefined}
       >
         <FernButton variant="outlined" className="rounded-l-none px-2">
           <ChevronDown className="size-icon" />
