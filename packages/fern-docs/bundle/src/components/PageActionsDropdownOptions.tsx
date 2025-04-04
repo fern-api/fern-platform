@@ -24,14 +24,14 @@ export const CopyPageOption = (): FernDropdown.ValueOption => {
   } as FernDropdown.ValueOption;
 };
 
-export const ViewAsMarkdownOption = (): FernDropdown.ValueOption => {
+export const ViewAsMarkdownOption = (theme: string): FernDropdown.ValueOption => {
   const pathname = usePathname();
   return {
     type: "value",
     value: "view-as-markdown",
     label: "View as Markdown",
     helperText: "View this page as plain text",
-    icon: <MarkdownIcon key="markdown-logo" />,
+    icon: <MarkdownIcon key="markdown-logo" theme={theme} />,
     href: `${pathname}.md`,
     rightElement: <ExternalLink className="size-icon" />,
   } as FernDropdown.ValueOption;
@@ -39,22 +39,28 @@ export const ViewAsMarkdownOption = (): FernDropdown.ValueOption => {
 
 export type LLM_OPTIONS = "ChatGPT" | "Claude";
 
-export const LLM_URLS: Record<LLM_OPTIONS, (string | ReactNode)[]> = {
+export const LLM_URLS = (theme: string): Record<LLM_OPTIONS, (string | ReactNode)[]> => ({
   ChatGPT: [
     "https://chat.openai.com/?hint=search&q=",
-    <OpenAIIcon key="openai-logo" />,
+    <OpenAIIcon key="openai-logo" theme={theme} />,
   ],
-  Claude: ["https://claude.ai/new?q=", <ClaudeIcon key="claude-logo" />],
-};
+  Claude: [
+    "https://claude.ai/new?q=",
+    <ClaudeIcon key="claude-logo" theme={theme} />,
+  ],
+});
+
 
 export const OpenWithLLM = ({
   domain,
   slug,
   llm,
+  theme,
 }: {
   domain: ParamValue;
   slug: ParamValue;
   llm: LLM_OPTIONS;
+  theme: string;
 }): FernDropdown.ValueOption => {
   const resolveParam = (param: ParamValue): string => {
     if (typeof param === "string") {
@@ -76,8 +82,8 @@ export const OpenWithLLM = ({
     value: `open-${llm.toLowerCase()}`,
     label: `Open in ${llm}`,
     helperText: "Ask questions about this page",
-    icon: LLM_URLS[llm][1],
-    href: `${LLM_URLS[llm][0]}${encodeURIComponent(prompt)}`,
+    icon: LLM_URLS(theme)[llm][1],
+    href: `${LLM_URLS(theme)[llm][0]}${encodeURIComponent(prompt)}`,
     rightElement: <ExternalLink className="size-icon" />,
   } as FernDropdown.ValueOption;
 };
