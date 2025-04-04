@@ -8,9 +8,9 @@ export default async function getOrgMembers({
   userId: Auth0UserID;
   orgId: Auth0OrgID;
 }) {
-  const user = await auth0Management.getUser(userId);
+  const isFernEmployee = await auth0Management.createIsFernEmployee();
   const members = await auth0Management.getOrgMembers(orgId, {
-    includeFernEmployees: user.email.endsWith("@buildwithfern.com"),
+    includeFernEmployees: isFernEmployee(userId),
   });
   return members;
 }

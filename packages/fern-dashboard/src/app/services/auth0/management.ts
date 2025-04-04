@@ -1,3 +1,4 @@
+/* eslint-disable turbo/no-undeclared-env-vars */
 import {
   ApiResponse,
   GetInvitations200ResponseOneOfInner,
@@ -17,7 +18,6 @@ let AUTH0_MANAGEMENT_CLIENT: ManagementClient | undefined;
 
 export function getAuth0ManagementClient() {
   if (AUTH0_MANAGEMENT_CLIENT == null) {
-    // eslint-disable-next-line turbo/no-undeclared-env-vars
     const { AUTH0_DOMAIN, AUTH0_CLIENT_ID, AUTH0_CLIENT_SECRET } = process.env;
 
     if (AUTH0_DOMAIN == null) {
@@ -43,10 +43,6 @@ export function getAuth0ManagementClient() {
 /**********
  * caches *
  **********/
-
-const USERS_CACHE = new AsyncRedisCache(RedisCacheKeyType.USER, {
-  ttlInSeconds: 10,
-});
 
 const ORGANIZATIONS_CACHE = new AsyncRedisCache(
   RedisCacheKeyType.ORGANIZATION,
@@ -125,16 +121,6 @@ export async function invalidateCachesAfterAcceptingInvitation({
  * helpers *
  ***********/
 
-export async function getUser(userId: Auth0UserID) {
-  return await USERS_CACHE.get(RedisCacheKey.user(userId), async () => {
-    const { data: user } = await getAuth0ManagementClient().users.get({
-      id: userId,
-    });
-
-    return user;
-  });
-}
-
 export async function getOrganization(orgId: Auth0OrgID) {
   return await ORGANIZATIONS_CACHE.get(
     RedisCacheKey.organization(orgId),
@@ -172,8 +158,9 @@ export async function getOrgMembers(
     () => getAllOrgMembers(orgId)
   );
   if (!includeFernEmployees) {
+    const isFernEmployee = await createIsFernEmployee();
     members = members.filter(
-      (member) => !member.email.endsWith("@buildwithfern.com")
+      (member) => !isFernEmployee(Auth0UserID(member.user_id))
     );
   }
   return members;
@@ -204,6 +191,23 @@ async function getAllOrgMembers(orgId: Auth0OrgID) {
   members.sort((a, b) => (a.name < b.name ? -1 : 1));
 
   return members;
+}
+
+export async function createIsFernEmployee() {
+  const fernOrgMembers = await getOrgMembers(getFernAuth0OrgID(), {
+    includeFernEmployees: true,
+  });
+  const fernMembers = new Set(
+    fernOrgMembers.map((member) => Auth0UserID(member.user_id))
+  );
+  return (userId: Auth0UserID) => fernMembers.has(Auth0UserID(userId));
+}
+
+function getFernAuth0OrgID(): Auth0OrgID {
+  if (process.env.FERN_AUTH0_ORG_ID == null) {
+    throw new Error("FERN_AUTH0_ORG_ID is not defined in the environment");
+  }
+  return Auth0OrgID(process.env.FERN_AUTH0_ORG_ID);
 }
 
 export async function getOrgInvitations(orgId: Auth0OrgID) {
