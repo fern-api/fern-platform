@@ -1,11 +1,13 @@
 "use client";
 
 import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import { Check, ChevronDown, Copy } from "lucide-react";
 
 import { FernButton, FernDropdown } from "@fern-docs/components";
+
+import { useIsAskAiEnabled } from "@/state/search";
 
 import {
   CopyPageOption,
@@ -15,32 +17,8 @@ import {
 
 export function PageActionsDropdown({ markdown }: { markdown: string }) {
   const [showCopied, setShowCopied] = useState<boolean>(false);
-  const [isAskAiEnabled, setIsAskAiEnabled] = useState<boolean | undefined>(undefined);
+  const isAskAiEnabled = useIsAskAiEnabled();
   const { domain, slug } = useParams();
-
-  useEffect(() => {
-    const fetchEdgeFlags = async () => {
-      try {
-        if (!domain) {
-          return;
-        }
-        
-        const response = await fetch(`/api/fern-docs/edge-flags`);
-        
-        if (!response.ok) {
-          throw new Error(`Failed to fetch edge flags: ${response.status}`);
-        }
-        
-        const flags = await response.json();
-        setIsAskAiEnabled(flags.isAskAiEnabled || false);
-      } catch (error) {
-        console.log("Failed to fetch edge flags:", error);
-        setIsAskAiEnabled(false);
-      }
-    };
-  
-    void fetchEdgeFlags();
-  }, [domain]);
 
   const copyOption = CopyPageOption();
   const viewAsMarkdownOption = ViewAsMarkdownOption();
