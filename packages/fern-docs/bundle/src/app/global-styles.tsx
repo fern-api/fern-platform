@@ -11,6 +11,8 @@ const FONT_MONO =
 const FONT_SANS =
   "ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'";
 
+// todo: remove domain-specific styling
+
 export function GlobalStyles({
   domain,
   layout,
@@ -28,6 +30,80 @@ export function GlobalStyles({
 }) {
   const root = light ?? dark;
   const hasTheme = !!light && !!dark;
+
+  const fallbackDark = {
+    appearance: "dark" as const,
+    accentScale: Array(12).fill("#fff") as ArrayOf12<string>,
+    accentScaleAlpha: Array(12).fill("#fff") as ArrayOf12<string>,
+    accentScaleWideGamut: Array(12).fill(
+      "oklch(100% 0 0)"
+    ) as ArrayOf12<string>,
+    accentScaleAlphaWideGamut: Array(12).fill(
+      "oklch(100% 0 0)"
+    ) as ArrayOf12<string>,
+    accentContrast: "#000",
+    grayScale: [
+      "#000",
+      "#111",
+      "#222",
+      "#333",
+      "#444",
+      "#555",
+      "#666",
+      "#777",
+      "#888",
+      "#999",
+      "#aaa",
+      "#bbb",
+    ] as ArrayOf12<string>,
+    grayScaleAlpha: [
+      "#000",
+      "#111",
+      "#222",
+      "#333",
+      "#444",
+      "#555",
+      "#666",
+      "#777",
+      "#888",
+      "#999",
+      "#aaa",
+      "#bbb",
+    ] as ArrayOf12<string>,
+    grayScaleWideGamut: [
+      "oklch(0% 0 0)",
+      "oklch(10% 0 0)",
+      "oklch(20% 0 0)",
+      "oklch(30% 0 0)",
+      "oklch(40% 0 0)",
+      "oklch(50% 0 0)",
+      "oklch(60% 0 0)",
+      "oklch(70% 0 0)",
+      "oklch(80% 0 0)",
+      "oklch(90% 0 0)",
+      "oklch(95% 0 0)",
+      "oklch(100% 0 0)",
+    ] as ArrayOf12<string>,
+    grayScaleAlphaWideGamut: [
+      "oklch(0% 0 0)",
+      "oklch(10% 0 0)",
+      "oklch(20% 0 0)",
+      "oklch(30% 0 0)",
+      "oklch(40% 0 0)",
+      "oklch(50% 0 0)",
+      "oklch(60% 0 0)",
+      "oklch(70% 0 0)",
+      "oklch(80% 0 0)",
+      "oklch(90% 0 0)",
+      "oklch(95% 0 0)",
+      "oklch(100% 0 0)",
+    ] as ArrayOf12<string>,
+    graySurface: "rgba(0, 0, 0, 0.05)",
+    graySurfaceWideGamut: "color(display-p3 0 0 0 / 5%)",
+    accentSurface: "#ffffff",
+    accentSurfaceWideGamut: "color(display-p3 1 1 1)",
+    background: "#000000",
+  };
   return (
     <style jsx global key="__fern-global-styles">
       {`
@@ -110,7 +186,17 @@ export function GlobalStyles({
               surface: dark.graySurface,
               surfaceWideGamut: dark.graySurfaceWideGamut,
             })
-          : ""}
+          : getColorScaleCss({
+              mode: "dark",
+              name: "grayscale",
+              scale: fallbackDark.grayScale,
+              scaleWideGamut: fallbackDark.grayScaleWideGamut,
+              scaleAlpha: fallbackDark.grayScaleAlpha,
+              scaleAlphaWideGamut: fallbackDark.grayScaleAlphaWideGamut,
+              contrast: "#fff",
+              surface: fallbackDark.graySurface,
+              surfaceWideGamut: fallbackDark.graySurfaceWideGamut,
+            })}
 
         ${hasTheme ? ":root, .light" : ":root"} {
           --accent: ${root?.accent ?? FERN_COLOR_ACCENT};
@@ -137,7 +223,7 @@ export function GlobalStyles({
           --card-background: ${dark.cardBackground ?? "initial"};
           --theme-color: ${dark.themeColor};
         }`
-          : ""}
+          : `.dark { --background: #000;}`}
 
         ${root?.backgroundGradient || root?.backgroundImage
           ? `.fern-background-image {
@@ -179,6 +265,10 @@ const getColorScaleCss = ({
   surface: string;
   surfaceWideGamut: string;
 }) => {
+  console.log(scale, scaleWideGamut, scaleAlpha, scaleAlphaWideGamut);
+
+  console.log(contrast, surface, surfaceWideGamut);
+
   const selector =
     mode === "dark" ? ".dark" : mode === "light" ? ":root, .light" : ":root";
 
