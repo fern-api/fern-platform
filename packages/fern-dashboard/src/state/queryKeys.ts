@@ -14,7 +14,7 @@ export const ReactQueryKey = {
   // do a hard redirect which resets all client-side state
 
   orgInvitations: () => queryKey<OrgInvitation[]>("org-invitations"),
-  orgMembers: () => queryKey<getOrgMembers.Response[]>("org-members"),
+  orgMembers: () => queryKey<getOrgMembers.Response>("org-members"),
   myDocsSites: (): ReactQueryKey<getMyDocsSites.Response> =>
     queryKey<getMyDocsSites.Response>("my-docs-sites"),
   myOrganizations: () => queryKey<getMyOrganizations.Response>("my-orgs"),

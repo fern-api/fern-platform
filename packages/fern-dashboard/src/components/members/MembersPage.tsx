@@ -16,7 +16,7 @@ export declare namespace MembersPage {
 }
 
 export function MembersPage({ session }: MembersPage.Props) {
-  const { orgId } = session;
+  const { orgId, userId } = session;
 
   const org = useOrganization(orgId);
 
@@ -30,11 +30,16 @@ export function MembersPage({ session }: MembersPage.Props) {
         subtitle="Manage team members and invitations"
         rightContent={
           <div className="flex items-center">
-            <InviteUserDialog orgId={orgId} org={org} />
+            <InviteUserDialog org={org} />
           </div>
         }
       />
-      <MembersTable orgId={orgId} members={members} invitations={invitations} />
+      <MembersTable
+        orgId={orgId}
+        members={members}
+        invitations={invitations}
+        userId={userId}
+      />
     </div>
   );
 }

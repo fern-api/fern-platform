@@ -215,3 +215,13 @@ async function getAllOrgInvitations(orgId: Auth0OrgID) {
 
   return invitations;
 }
+
+export async function ensureUserBelongsToOrg(
+  userId: Auth0UserID,
+  orgId: Auth0OrgID
+) {
+  const orgMembers = await getOrgMembers(orgId);
+  if (!orgMembers.some((member) => member.user_id === userId)) {
+    throw new Error(`User ${userId} is not in org ${orgId}`);
+  }
+}

@@ -6,7 +6,7 @@ import { GetMembers200ResponseOneOfInner } from "auth0";
 
 import { Loadable, getLoadableValue } from "@fern-ui/loadable";
 
-import { Auth0OrgID } from "@/app/services/auth0/types";
+import { Auth0OrgID, Auth0UserID } from "@/app/services/auth0/types";
 import { OrgInvitation } from "@/state/types";
 
 import { InviteeRow } from "./InviteeRow";
@@ -15,6 +15,7 @@ import { MemberRow } from "./MemberRow";
 export declare namespace MembersTable {
   export interface Props {
     orgId: Auth0OrgID;
+    userId: Auth0UserID;
     members: Loadable<GetMembers200ResponseOneOfInner[]>;
     invitations: Loadable<OrgInvitation[]>;
   }
@@ -22,6 +23,7 @@ export declare namespace MembersTable {
 
 export function MembersTable({
   orgId,
+  userId,
   members,
   invitations,
 }: MembersTable.Props) {
@@ -41,7 +43,7 @@ export function MembersTable({
       />
     )),
     ...loadedMembers.map((member) => (
-      <MemberRow key={member.user_id} member={member} />
+      <MemberRow key={member.user_id} member={member} currentUserId={userId} />
     )),
   ];
 

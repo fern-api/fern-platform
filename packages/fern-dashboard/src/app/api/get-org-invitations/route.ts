@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
+import { ensureUserBelongsToOrg } from "@/app/services/auth0/management";
 import { ResolvedReturnType } from "@/utils/types";
 
 import { maybeGetCurrentSession } from "../utils/maybeGetCurrentSession";
@@ -14,7 +15,8 @@ export async function GET(req: NextRequest) {
   if (maybeSessionData.errorResponse != null) {
     return maybeSessionData.errorResponse;
   }
-  const { orgId } = maybeSessionData.data;
+  const { userId, orgId } = maybeSessionData.data;
+  await ensureUserBelongsToOrg(userId, orgId);
 
   return NextResponse.json(await handler(orgId));
 }
