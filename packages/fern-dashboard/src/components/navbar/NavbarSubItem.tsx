@@ -19,7 +19,7 @@ export const NavbarSubItem = ({ title, icon, href }: NavbarSubItem.Props) => {
   const isSelected = pathname.startsWith(href);
 
   const className = cn(
-    "hidden md:flex",
+    "hidden sm:flex",
     "flex-1 flex-row gap-2 text-sm transition",
     isSelected
       ? "text-green-1100"

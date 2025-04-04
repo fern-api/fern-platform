@@ -50,7 +50,10 @@ async function createPersonalProjectInVenus({
   );
 
   if (!createOrgResponse.ok) {
-    console.error("Failed to create organization", createOrgResponse.error);
+    console.error(
+      "Failed to create organization",
+      JSON.stringify(createOrgResponse.error)
+    );
     throw new Error("Failed to create organization");
   }
 

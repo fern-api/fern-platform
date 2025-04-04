@@ -16,7 +16,7 @@ export declare namespace MembersPage {
 }
 
 export function MembersPage({ session }: MembersPage.Props) {
-  const { orgId } = session;
+  const { orgId, userId } = session;
 
   const org = useOrganization(orgId);
 
@@ -24,17 +24,21 @@ export function MembersPage({ session }: MembersPage.Props) {
   const members = useOrgMembers();
 
   return (
-    <div className="flex flex-1 flex-col">
+    <div className="flex min-w-0 flex-1 flex-col">
       <PageHeader
         title="Members"
         subtitle="Manage team members and invitations"
         rightContent={
-          <div className="flex items-center">
-            <InviteUserDialog orgId={orgId} org={org} />
+          <div className="flex md:items-center">
+            <InviteUserDialog org={org} />
           </div>
         }
       />
-      <MembersTable orgId={orgId} members={members} invitations={invitations} />
+      <MembersTable
+        members={members}
+        invitations={invitations}
+        userId={userId}
+      />
     </div>
   );
 }

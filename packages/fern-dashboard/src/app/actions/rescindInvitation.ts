@@ -1,16 +1,21 @@
 "use server";
 
-import { getAuth0ManagementClient } from "../services/auth0/management";
-import { Auth0OrgID } from "../services/auth0/types";
+import { getCurrentSession } from "../services/auth0/getCurrentSession";
+import {
+  ensureUserBelongsToOrg,
+  getAuth0ManagementClient,
+} from "../services/auth0/management";
 
 export async function rescindInvitation({
-  orgId,
   invitationId,
 }: {
-  orgId: Auth0OrgID;
   invitationId: string;
 }) {
-  await getAuth0ManagementClient().organizations.deleteInvitation({
+  const { userId, orgId } = await getCurrentSession();
+  await ensureUserBelongsToOrg(userId, orgId);
+
+  const auth0 = getAuth0ManagementClient();
+  await auth0.organizations.deleteInvitation({
     id: orgId,
     invitation_id: invitationId,
   });

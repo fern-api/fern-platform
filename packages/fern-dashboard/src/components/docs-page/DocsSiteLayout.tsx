@@ -22,7 +22,7 @@ export function DocsSiteLayout({ docsUrl, children }: DocsSiteLayout.Props) {
   }
 
   return (
-    <div className="flex flex-1 flex-col">
+    <div className="flex min-w-0 flex-1 flex-col">
       <PageHeader
         title={docsUrl}
         titleRightContent={

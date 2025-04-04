@@ -19,7 +19,7 @@ export default async function getMyDocsSites({
     orgId: FdrAPI.OrgId(org.name),
   });
   if (!docsSites.ok) {
-    console.error("Failed to load docs sites", docsSites.error);
+    console.error("Failed to load docs sites", JSON.stringify(docsSites.error));
     throw new Error("Failed to load docs sites");
   }
 

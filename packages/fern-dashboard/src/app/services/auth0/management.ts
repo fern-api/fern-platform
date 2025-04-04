@@ -1,3 +1,4 @@
+/* eslint-disable turbo/no-undeclared-env-vars */
 import {
   ApiResponse,
   GetInvitations200ResponseOneOfInner,
@@ -17,7 +18,6 @@ let AUTH0_MANAGEMENT_CLIENT: ManagementClient | undefined;
 
 export function getAuth0ManagementClient() {
   if (AUTH0_MANAGEMENT_CLIENT == null) {
-    // eslint-disable-next-line turbo/no-undeclared-env-vars
     const { AUTH0_DOMAIN, AUTH0_CLIENT_ID, AUTH0_CLIENT_SECRET } = process.env;
 
     if (AUTH0_DOMAIN == null) {
@@ -149,11 +149,21 @@ export async function getMyOrganizations(userId: Auth0UserID) {
   );
 }
 
-export async function getOrgMembers(orgId: Auth0OrgID) {
-  return await ORGANIZATION_MEMBERS_CACHE.get(
+export async function getOrgMembers(
+  orgId: Auth0OrgID,
+  { includeFernEmployees }: { includeFernEmployees: boolean }
+) {
+  let members = await ORGANIZATION_MEMBERS_CACHE.get(
     RedisCacheKey.organizationMembers(orgId),
     () => getAllOrgMembers(orgId)
   );
+  if (!includeFernEmployees) {
+    const isFernEmployee = await createIsFernEmployee();
+    members = members.filter(
+      (member) => !isFernEmployee(Auth0UserID(member.user_id))
+    );
+  }
+  return members;
 }
 
 async function getAllOrgMembers(orgId: Auth0OrgID) {
@@ -181,6 +191,25 @@ async function getAllOrgMembers(orgId: Auth0OrgID) {
   members.sort((a, b) => (a.name < b.name ? -1 : 1));
 
   return members;
+}
+
+export async function createIsFernEmployee(): Promise<
+  (userId: Auth0UserID) => boolean
+> {
+  const fernOrgMembers = await getOrgMembers(getFernAuth0OrgID(), {
+    includeFernEmployees: true,
+  });
+  const fernMembers = new Set(
+    fernOrgMembers.map((member) => Auth0UserID(member.user_id))
+  );
+  return (userId: Auth0UserID) => fernMembers.has(Auth0UserID(userId));
+}
+
+function getFernAuth0OrgID(): Auth0OrgID {
+  if (process.env.FERN_AUTH0_ORG_ID == null) {
+    throw new Error("FERN_AUTH0_ORG_ID is not defined in the environment");
+  }
+  return Auth0OrgID(process.env.FERN_AUTH0_ORG_ID);
 }
 
 export async function getOrgInvitations(orgId: Auth0OrgID) {
@@ -214,4 +243,14 @@ async function getAllOrgInvitations(orgId: Auth0OrgID) {
   invitations.sort((a, b) => (a.created_at < b.created_at ? 1 : -1));
 
   return invitations;
+}
+
+export async function ensureUserBelongsToOrg(
+  userId: Auth0UserID,
+  orgId: Auth0OrgID
+) {
+  const orgMembers = await getOrgMembers(orgId, { includeFernEmployees: true });
+  if (!orgMembers.some((member) => member.user_id === userId)) {
+    throw new Error(`User ${userId} is not in org ${orgId}`);
+  }
 }

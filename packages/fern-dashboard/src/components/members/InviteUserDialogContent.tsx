@@ -6,7 +6,6 @@ import { GetOrganizations200ResponseOneOfInner } from "auth0";
 import { toast } from "sonner";
 
 import { inviteUserToOrg } from "@/app/actions/inviteUserToOrg";
-import { Auth0OrgID } from "@/app/services/auth0/types";
 import { ReactQueryKey, inferQueryData } from "@/state/queryKeys";
 import { getOrgDisplayName } from "@/utils/getOrgDisplayName";
 
@@ -22,7 +21,6 @@ import { Input } from "../ui/input";
 
 export declare namespace InviteUserDialogContent {
   export interface Props {
-    orgId: Auth0OrgID;
     org: GetOrganizations200ResponseOneOfInner | undefined;
     close: () => void;
   }
@@ -31,7 +29,6 @@ export declare namespace InviteUserDialogContent {
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export function InviteUserDialogContent({
-  orgId,
   org,
   close,
 }: InviteUserDialogContent.Props) {
@@ -41,7 +38,7 @@ export function InviteUserDialogContent({
 
   const queryClient = useQueryClient();
   const inviteUser = useMutation({
-    mutationFn: () => inviteUserToOrg({ orgId, inviteeEmail: email }),
+    mutationFn: () => inviteUserToOrg({ inviteeEmail: email }),
     onMutate: async () => {
       const queryKey = ReactQueryKey.orgInvitations();
       await queryClient.cancelQueries({ queryKey });
@@ -59,7 +56,7 @@ export function InviteUserDialogContent({
 
       return { previousInvitations };
     },
-    onError: (error, _variables, context) => {
+    onError: async (error, _variables, context) => {
       console.error(`Failed to invite ${email}`, error);
       toast.error(`Failed to invite ${email}`);
       if (context?.previousInvitations != null) {
@@ -69,8 +66,9 @@ export function InviteUserDialogContent({
           context.previousInvitations
         );
       }
-    },
-    onSettled: async () => {
+
+      // only invalidate on error. if we invalidate on success, we can wipe
+      // out other optimsitic writes (if the user is removing multiple members)
       await queryClient.invalidateQueries({
         queryKey: ReactQueryKey.orgInvitations(),
       });

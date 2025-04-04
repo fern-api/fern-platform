@@ -3,20 +3,17 @@ import { useState } from "react";
 import { PlusIcon } from "@heroicons/react/24/outline";
 import { GetOrganizations200ResponseOneOfInner } from "auth0";
 
-import { Auth0OrgID } from "@/app/services/auth0/types";
-
 import { Button } from "../ui/button";
 import { Dialog, DialogContent, DialogTrigger } from "../ui/dialog";
 import { InviteUserDialogContent } from "./InviteUserDialogContent";
 
 export declare namespace InviteUserDialog {
   export interface Props {
-    orgId: Auth0OrgID;
     org: GetOrganizations200ResponseOneOfInner | undefined;
   }
 }
 
-export function InviteUserDialog({ org, orgId }: InviteUserDialog.Props) {
+export function InviteUserDialog({ org }: InviteUserDialog.Props) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -37,7 +34,6 @@ export function InviteUserDialog({ org, orgId }: InviteUserDialog.Props) {
       >
         <InviteUserDialogContent
           org={org}
-          orgId={orgId}
           close={() => {
             setIsOpen(false);
           }}
