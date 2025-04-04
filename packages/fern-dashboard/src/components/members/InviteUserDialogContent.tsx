@@ -56,7 +56,7 @@ export function InviteUserDialogContent({
 
       return { previousInvitations };
     },
-    onError: (error, _variables, context) => {
+    onError: async (error, _variables, context) => {
       console.error(`Failed to invite ${email}`, error);
       toast.error(`Failed to invite ${email}`);
       if (context?.previousInvitations != null) {
@@ -66,8 +66,9 @@ export function InviteUserDialogContent({
           context.previousInvitations
         );
       }
-    },
-    onSettled: async () => {
+
+      // only invalidate on error. if we invalidate on success, we can wipe
+      // out other optimsitic writes (if the user is removing multiple members)
       await queryClient.invalidateQueries({
         queryKey: ReactQueryKey.orgInvitations(),
       });

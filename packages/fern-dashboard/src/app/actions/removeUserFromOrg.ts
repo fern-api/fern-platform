@@ -4,6 +4,7 @@ import { getCurrentSession } from "../services/auth0/getCurrentSession";
 import {
   ensureUserBelongsToOrg,
   getAuth0ManagementClient,
+  invalidateCachesAfterAddingOrRemovingOrgMember,
 } from "../services/auth0/management";
 import { Auth0UserID } from "../services/auth0/types";
 
@@ -24,4 +25,9 @@ export async function removeUserFromOrg({
     { id: orgId },
     { members: [userIdToRemove] }
   );
+
+  await invalidateCachesAfterAddingOrRemovingOrgMember({
+    userId,
+    orgId,
+  });
 }

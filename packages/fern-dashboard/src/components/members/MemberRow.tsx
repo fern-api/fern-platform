@@ -39,7 +39,7 @@ export function MemberRow({ member, currentUserId }: MemberRow.Props) {
 
       return { previousMembers };
     },
-    onError: (error, _variables, context) => {
+    onError: async (error, _variables, context) => {
       console.error(
         `Failed to remove ${member.name} (${member.email}, ${member.email})`,
         error
@@ -52,8 +52,9 @@ export function MemberRow({ member, currentUserId }: MemberRow.Props) {
           context.previousMembers
         );
       }
-    },
-    onSettled: async () => {
+
+      // only invalidate on error. if we invalidate on success, we can wipe
+      // out other optimsitic writes (if the user is removing multiple members)
       await queryClient.invalidateQueries({
         queryKey: ReactQueryKey.orgMembers(),
       });
