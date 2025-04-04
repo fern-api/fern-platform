@@ -1,88 +1,37 @@
 "use client";
 
-import { ParamValue } from "next/dist/server/request/params";
-import { useParams, usePathname } from "next/navigation";
-import { useState } from "react";
+import { useParams } from "next/navigation";
+import { useEffect, useState } from "react";
 
-import {
-  Check,
-  ChevronDown,
-  Copy,
-  ExternalLink,
-  FileText,
-  MessageCircleQuestion,
-} from "lucide-react";
+import { Check, ChevronDown, Copy } from "lucide-react";
 
 import { FernButton, FernDropdown } from "@fern-docs/components";
+import { getEdgeFlags } from "@fern-docs/edge-config";
 
-const CopyPageOption = (): FernDropdown.ValueOption => {
-  return {
-    type: "value",
-    value: "copy-page",
-    label: "Copy Page",
-    helperText: "Copy this page as Markdown for LLMs",
-    icon: <Copy className="size-icon" />,
-  } as FernDropdown.ValueOption;
-};
-
-const ViewAsMarkdownOption = (): FernDropdown.ValueOption => {
-  const pathname = usePathname();
-  return {
-    type: "value",
-    value: "view-as-markdown",
-    label: "View as Markdown",
-    helperText: "View this page as plain text",
-    icon: <FileText className="size-icon" />,
-    href: `${pathname}.md`,
-    rightElement: <ExternalLink className="size-icon" />,
-  } as FernDropdown.ValueOption;
-};
-
-type LLM_OPTIONS = "ChatGPT" | "Claude";
-
-const LLM_URLS: Record<LLM_OPTIONS, string> = {
-  ChatGPT: "https://chat.openai.com/?hint=search&q=",
-  Claude: "https://claude.ai/new?q=",
-};
-
-const OpenWithLLM = ({
-  domain,
-  slug,
-  llm,
-}: {
-  domain: ParamValue;
-  slug: ParamValue;
-  llm: LLM_OPTIONS;
-}): FernDropdown.ValueOption => {
-  const resolveParam = (param: ParamValue): string => {
-    if (typeof param === "string") {
-      return decodeURIComponent(param);
-    } else if (Array.isArray(param)) {
-      return decodeURIComponent(param.join("/"));
-    } else {
-      return "";
-    }
-  };
-
-  const decodedDomain = resolveParam(domain);
-  const decodedSlug = resolveParam(slug);
-
-  const prompt = `Read ${decodedDomain}${decodedSlug} so I can ask questions about it.`;
-
-  return {
-    type: "value",
-    value: `open-${llm.toLowerCase()}`,
-    label: `Open in ${llm}`,
-    helperText: "Ask questions about this page",
-    icon: <MessageCircleQuestion className="size-icon" />,
-    href: `${LLM_URLS[llm]}${encodeURIComponent(prompt)}`,
-    rightElement: <ExternalLink className="size-icon" />,
-  } as FernDropdown.ValueOption;
-};
+import {
+  CopyPageOption,
+  OpenWithLLM,
+  ViewAsMarkdownOption,
+} from "./PageActionsDropdownOptions";
 
 export function PageActionsDropdown({ markdown }: { markdown: string }) {
   const [showCopied, setShowCopied] = useState<boolean>(false);
+  const [isAskAiEnabled, setIsAskAiEnabled] = useState<boolean>(false);
   const { domain, slug } = useParams();
+
+  useEffect(() => {
+    const fetchEdgeFlags = async () => {
+      try {
+        const flags = await getEdgeFlags(domain as string);
+        setIsAskAiEnabled(flags.isAskAiEnabled || false);
+      } catch (error) {
+        console.log("Failed to fetch edge flags:", error);
+        setIsAskAiEnabled(false);
+      }
+    };
+
+    void fetchEdgeFlags();
+  }, [domain]);
 
   const copyOption = CopyPageOption();
   const viewAsMarkdownOption = ViewAsMarkdownOption();
@@ -91,10 +40,13 @@ export function PageActionsDropdown({ markdown }: { markdown: string }) {
     copyOption,
     { type: "separator" } as FernDropdown.SeparatorOption,
     viewAsMarkdownOption,
-    { type: "separator" } as FernDropdown.SeparatorOption,
-    OpenWithLLM({ domain, slug, llm: "ChatGPT" }),
-    { type: "separator" } as FernDropdown.SeparatorOption,
-    OpenWithLLM({ domain, slug, llm: "Claude" }),
+    ...(!isAskAiEnabled
+      ? [
+          { type: "separator" } as FernDropdown.SeparatorOption,
+          OpenWithLLM({ domain, slug, llm: "ChatGPT" }),
+          OpenWithLLM({ domain, slug, llm: "Claude" }),
+        ]
+      : []),
   ];
 
   const handleValueChange = async (value: string) => {
@@ -126,7 +78,7 @@ export function PageActionsDropdown({ markdown }: { markdown: string }) {
         ) : (
           <div className="flex items-center gap-2">
             <Copy className="size-icon" />
-            <span>Copy Page</span>
+            <span>Copy page</span>
           </div>
         )}
       </FernButton>

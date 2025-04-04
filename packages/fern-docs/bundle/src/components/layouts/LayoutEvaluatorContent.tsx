@@ -59,6 +59,7 @@ export async function LayoutEvaluatorContent({
       breadcrumb={breadcrumb}
       slug={slug}
       markdown={markdown}
+      includeDropdown={layout !== "reference"}
     />
   );
 
