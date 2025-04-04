@@ -31,6 +31,7 @@ export function GlobalStyles({
   const root = light ?? dark;
   const hasTheme = !!light && !!dark;
 
+  // if no dark theme is provided, add a fallback dark theme for code blocks
   const fallbackDark = {
     appearance: "dark" as const,
     accentScale: Array(12).fill("#fff") as ArrayOf12<string>,
