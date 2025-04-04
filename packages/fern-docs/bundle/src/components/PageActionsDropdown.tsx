@@ -1,13 +1,12 @@
 "use client";
 
+import { useTheme } from "next-themes";
 import { useParams } from "next/navigation";
 import { useState } from "react";
 
 import { Check, ChevronDown, Copy } from "lucide-react";
 
 import { FernButton, FernDropdown } from "@fern-docs/components";
-
-import { useIsAskAiEnabled } from "@/state/search";
 
 import {
   CopyPageOption,
@@ -17,24 +16,27 @@ import {
 
 export function PageActionsDropdown({ markdown }: { markdown: string }) {
   const [showCopied, setShowCopied] = useState<boolean>(false);
-  const isAskAiEnabled = useIsAskAiEnabled();
   const { domain, slug } = useParams();
+  const { theme, resolvedTheme } = useTheme();
+
+  const activeTheme = theme === "system" ? resolvedTheme : theme;
 
   const copyOption = CopyPageOption();
-  const viewAsMarkdownOption = ViewAsMarkdownOption();
+  const viewAsMarkdownOption = ViewAsMarkdownOption(activeTheme ?? "light");
 
   const options: FernDropdown.Option[] = [
     copyOption,
     { type: "separator" } as FernDropdown.SeparatorOption,
     viewAsMarkdownOption,
-    ...(!isAskAiEnabled
-      ? [
-          { type: "separator" } as FernDropdown.SeparatorOption,
-          OpenWithLLM({ domain, slug, llm: "ChatGPT" }),
-          { type: "separator" } as FernDropdown.SeparatorOption,
-          OpenWithLLM({ domain, slug, llm: "Claude" }),
-        ]
-      : []),
+    { type: "separator" } as FernDropdown.SeparatorOption,
+    OpenWithLLM({
+      domain,
+      slug,
+      llm: "ChatGPT",
+      theme: activeTheme ?? "light",
+    }),
+    { type: "separator" } as FernDropdown.SeparatorOption,
+    OpenWithLLM({ domain, slug, llm: "Claude", theme: activeTheme ?? "light" }),
   ];
 
   const handleValueChange = async (value: string) => {
@@ -74,8 +76,6 @@ export function PageActionsDropdown({ markdown }: { markdown: string }) {
         options={options}
         onValueChange={handleValueChange}
         dropdownMenuElement={<a target="_blank" rel="noopener noreferrer" />}
-        className={isAskAiEnabled === undefined ? "pointer-events-none" : ""}
-        aria-disabled={isAskAiEnabled === undefined}
       >
         <FernButton variant="minimal" className="rounded-l-none px-2">
           <ChevronDown className="size-icon" />
