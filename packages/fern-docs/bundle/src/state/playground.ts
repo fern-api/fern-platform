@@ -39,8 +39,8 @@ import {
   getInitialWebSocketRequestFormState,
 } from "../components/playground/utils";
 import { pascalCaseHeaderKeys } from "../components/playground/utils/header-key-case";
-import { atomWithStorageValidation } from "./utils/atomWithStorageValidation";
 import { useDomain } from "./domain";
+import { atomWithStorageValidation } from "./utils/atomWithStorageValidation";
 
 export const PLAYGROUND_AUTH_STATE_ATOM =
   atomWithStorageValidation<PlaygroundAuthState>(
@@ -315,7 +315,8 @@ export function usePlaygroundEndpointFormState(
                     ? currentFormState
                     : getInitialEndpointRequestFormStateWithExample(
                         ctx,
-                        domain.includes("twelvelabs") || domain.includes("spscommerce")
+                        domain.includes("twelvelabs") ||
+                          domain.includes("spscommerce")
                           ? undefined
                           : ctx.endpoint.examples?.[0],
                         user?.playground?.initial_state
