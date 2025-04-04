@@ -3,7 +3,6 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 
 import { rescindInvitation } from "@/app/actions/rescindInvitation";
-import { Auth0OrgID } from "@/app/services/auth0/types";
 import { ReactQueryKey, inferQueryData } from "@/state/queryKeys";
 import { OrgInvitation } from "@/state/types";
 
@@ -12,18 +11,16 @@ import { MemberOrInviteeRow } from "./MemberOrInviteeRow";
 
 export declare namespace InviteeRow {
   export interface Props {
-    orgId: Auth0OrgID;
     invitation: OrgInvitation;
   }
 }
 
-export function InviteeRow({ orgId, invitation }: InviteeRow.Props) {
+export function InviteeRow({ invitation }: InviteeRow.Props) {
   const queryClient = useQueryClient();
   const rescind = useMutation({
     mutationFn: async () => {
       if (invitation.id != null) {
         await rescindInvitation({
-          orgId,
           invitationId: invitation.id,
         });
       }

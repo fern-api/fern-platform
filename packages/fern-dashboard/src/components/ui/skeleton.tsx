@@ -1,6 +1,10 @@
 import { cn } from "@/utils/utils";
 
-function Skeleton({ className, ...props }: React.ComponentProps<"div">) {
+function Skeleton({
+  className,
+  children,
+  ...props
+}: React.ComponentProps<"div">) {
   return (
     <div
       data-slot="skeleton"
@@ -9,7 +13,9 @@ function Skeleton({ className, ...props }: React.ComponentProps<"div">) {
         className
       )}
       {...props}
-    />
+    >
+      <div className="invisible">{children}</div>
+    </div>
   );
 }
 

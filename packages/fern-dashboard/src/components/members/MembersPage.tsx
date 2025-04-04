@@ -35,7 +35,6 @@ export function MembersPage({ session }: MembersPage.Props) {
         }
       />
       <MembersTable
-        orgId={orgId}
         members={members}
         invitations={invitations}
         userId={userId}
