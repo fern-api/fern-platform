@@ -12,6 +12,6 @@ export function Domain({ value }: { value: string }) {
   return null;
 }
 
-export function useDomain() {
+export function useDomain(): string {
   return useAtomValue(domainAtom);
 }

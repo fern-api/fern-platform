@@ -39,6 +39,7 @@ import {
   getInitialWebSocketRequestFormState,
 } from "../components/playground/utils";
 import { pascalCaseHeaderKeys } from "../components/playground/utils/header-key-case";
+import { useDomain } from "./domain";
 import { atomWithStorageValidation } from "./utils/atomWithStorageValidation";
 
 export const PLAYGROUND_AUTH_STATE_ATOM =
@@ -289,6 +290,7 @@ export function usePlaygroundEndpointFormState(
   const formStateAtom = playgroundFormStateFamily(ctx.node.id);
   const formState = useAtomValue(formStateAtom);
   const user = useAtomValue(fernUserAtom);
+  const domain = useDomain();
 
   return [
     formState?.type === "endpoint"
@@ -313,14 +315,17 @@ export function usePlaygroundEndpointFormState(
                     ? currentFormState
                     : getInitialEndpointRequestFormStateWithExample(
                         ctx,
-                        ctx.endpoint.examples?.[0],
+                        domain.includes("twelvelabs") ||
+                          domain.includes("spscommerce")
+                          ? undefined
+                          : ctx.endpoint.examples?.[0],
                         user?.playground?.initial_state
                       )
                 )
               : update;
           set(formStateAtom, newFormState);
         },
-        [formStateAtom, ctx, user?.playground?.initial_state]
+        [formStateAtom, ctx, user?.playground?.initial_state, domain]
       )
     ),
   ];
