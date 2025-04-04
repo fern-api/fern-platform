@@ -17,7 +17,6 @@ import {
 
 export function PageActionsDropdown({ markdown }: { markdown: string }) {
   const [showCopied, setShowCopied] = useState<boolean>(false);
-  const isAskAiEnabled = useIsAskAiEnabled();
   const { domain, slug } = useParams();
 
   const copyOption = CopyPageOption();
@@ -27,14 +26,10 @@ export function PageActionsDropdown({ markdown }: { markdown: string }) {
     copyOption,
     { type: "separator" } as FernDropdown.SeparatorOption,
     viewAsMarkdownOption,
-    ...(!isAskAiEnabled
-      ? [
-          { type: "separator" } as FernDropdown.SeparatorOption,
-          OpenWithLLM({ domain, slug, llm: "ChatGPT" }),
-          { type: "separator" } as FernDropdown.SeparatorOption,
-          OpenWithLLM({ domain, slug, llm: "Claude" }),
-        ]
-      : []),
+    { type: "separator" } as FernDropdown.SeparatorOption,
+    OpenWithLLM({ domain, slug, llm: "ChatGPT" }),
+    { type: "separator" } as FernDropdown.SeparatorOption,
+    OpenWithLLM({ domain, slug, llm: "Claude" }),
   ];
 
   const handleValueChange = async (value: string) => {
