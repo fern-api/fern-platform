@@ -19,8 +19,8 @@ export function SkeletonMemberRow({
 
   return (
     <MemberOrInviteeRow
-      title={<Skeleton>{name}</Skeleton>}
-      subtitle={<Skeleton>{email}</Skeleton>}
+      title={<Skeleton className="overflow-x-hidden">{name}</Skeleton>}
+      subtitle={<Skeleton className="overflow-x-hidden">{email}</Skeleton>}
       forceShowDropownMenuTrigger
     />
   );

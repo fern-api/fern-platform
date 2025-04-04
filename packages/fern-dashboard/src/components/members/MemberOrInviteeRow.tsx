@@ -34,8 +34,8 @@ export function MemberOrInviteeRow({
 
   return (
     <div className="dark:border-gray-1100 flex justify-between border-b border-gray-500 p-4 last:border-b-0">
-      <div className="flex items-center gap-4">
-        <div className="dark:border-gray-1100 flex size-10 overflow-hidden rounded-full border-2 border-gray-500 bg-gray-300">
+      <div className="flex min-w-0 items-center gap-4">
+        <div className="dark:border-gray-1100 flex size-10 min-w-0 shrink-0 overflow-hidden rounded-full border-2 border-gray-500 bg-gray-300">
           {pictureUrl != null ? (
             <Image
               src={pictureUrl}
@@ -50,9 +50,9 @@ export function MemberOrInviteeRow({
             </div>
           )}
         </div>
-        <div className="flex flex-col items-start gap-1">
-          <div className="font-bold">{title}</div>
-          <div className="text-gray-900">{subtitle}</div>
+        <div className="flex min-w-0 flex-col gap-1">
+          <div className="flex font-bold">{title}</div>
+          <div className="flex text-gray-900">{subtitle}</div>
         </div>
       </div>
       <div className="flex items-center gap-3">
