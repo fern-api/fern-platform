@@ -19,5 +19,5 @@ export async function GET(req: NextRequest) {
   const { userId, orgId } = maybeSessionData.data;
   await ensureUserBelongsToOrg(userId, orgId);
 
-  return NextResponse.json(await handler(orgId));
+  return NextResponse.json(await handler({ userId, orgId }));
 }

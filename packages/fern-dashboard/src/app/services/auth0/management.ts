@@ -44,6 +44,10 @@ export function getAuth0ManagementClient() {
  * caches *
  **********/
 
+const USERS_CACHE = new AsyncRedisCache(RedisCacheKeyType.USER, {
+  ttlInSeconds: 10,
+});
+
 const ORGANIZATIONS_CACHE = new AsyncRedisCache(
   RedisCacheKeyType.ORGANIZATION,
   { ttlInSeconds: 10 }
@@ -121,6 +125,16 @@ export async function invalidateCachesAfterAcceptingInvitation({
  * helpers *
  ***********/
 
+export async function getUser(userId: Auth0UserID) {
+  return await USERS_CACHE.get(RedisCacheKey.user(userId), async () => {
+    const { data: user } = await getAuth0ManagementClient().users.get({
+      id: userId,
+    });
+
+    return user;
+  });
+}
+
 export async function getOrganization(orgId: Auth0OrgID) {
   return await ORGANIZATIONS_CACHE.get(
     RedisCacheKey.organization(orgId),
@@ -149,11 +163,20 @@ export async function getMyOrganizations(userId: Auth0UserID) {
   );
 }
 
-export async function getOrgMembers(orgId: Auth0OrgID) {
-  return await ORGANIZATION_MEMBERS_CACHE.get(
+export async function getOrgMembers(
+  orgId: Auth0OrgID,
+  { includeFernEmployees }: { includeFernEmployees: boolean }
+) {
+  let members = await ORGANIZATION_MEMBERS_CACHE.get(
     RedisCacheKey.organizationMembers(orgId),
     () => getAllOrgMembers(orgId)
   );
+  if (!includeFernEmployees) {
+    members = members.filter(
+      (member) => !member.email.endsWith("@buildwithfern.com")
+    );
+  }
+  return members;
 }
 
 async function getAllOrgMembers(orgId: Auth0OrgID) {
@@ -220,7 +243,7 @@ export async function ensureUserBelongsToOrg(
   userId: Auth0UserID,
   orgId: Auth0OrgID
 ) {
-  const orgMembers = await getOrgMembers(orgId);
+  const orgMembers = await getOrgMembers(orgId, { includeFernEmployees: true });
   if (!orgMembers.some((member) => member.user_id === userId)) {
     throw new Error(`User ${userId} is not in org ${orgId}`);
   }

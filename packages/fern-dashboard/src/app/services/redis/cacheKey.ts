@@ -2,6 +2,7 @@ import {
   GetInvitations200ResponseOneOfInner,
   GetMembers200ResponseOneOfInner,
   GetOrganizations200ResponseOneOfInner,
+  GetUsers200ResponseOneOfInner,
 } from "auth0";
 
 import { Auth0OrgID, Auth0UserID } from "../auth0/types";
@@ -11,6 +12,7 @@ export type RedisCacheKey<T extends RedisCacheKeyType> = string & {
 };
 
 export const RedisCacheKeyType = {
+  USER: "USER",
   ORGANIZATION: "ORGANIZATION",
   MY_ORGANIZATIONS: "MY_ORGANIZATIONS",
   ORGANIZATION_MEMBERS: "ORGANIZATION_MEMBERS",
@@ -21,6 +23,7 @@ export type RedisCacheKeyType =
   (typeof RedisCacheKeyType)[keyof typeof RedisCacheKeyType];
 
 export type RedisCacheDataTypes = {
+  [RedisCacheKeyType.USER]: GetUsers200ResponseOneOfInner;
   [RedisCacheKeyType.ORGANIZATION]: GetOrganizations200ResponseOneOfInner;
   [RedisCacheKeyType.MY_ORGANIZATIONS]: GetOrganizations200ResponseOneOfInner[];
   [RedisCacheKeyType.ORGANIZATION_MEMBERS]: GetMembers200ResponseOneOfInner[];
@@ -28,6 +31,8 @@ export type RedisCacheDataTypes = {
 };
 
 export const RedisCacheKey = {
+  user: (userId: Auth0UserID) =>
+    cacheKey(RedisCacheKeyType.USER)(`user-${userId}`),
   organization: (orgId: Auth0OrgID) =>
     cacheKey(RedisCacheKeyType.ORGANIZATION)(`org-${orgId}`),
   myOrganizations: (userId: Auth0UserID) =>
