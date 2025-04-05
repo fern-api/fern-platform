@@ -28,6 +28,7 @@ export class CurlSnippetBuilder extends PlaygroundCodeSnippetBuilder {
             ? this.authState.basicAuth
             : undefined,
         body: this.#convertFormStateToBody(),
+        redacted: this.redacted,
       },
       { usesApplicationJsonInFormDataValue: this.isFileForgeHackEnabled }
     );

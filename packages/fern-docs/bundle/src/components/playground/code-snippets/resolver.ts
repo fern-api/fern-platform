@@ -87,7 +87,7 @@ export class PlaygroundCodeSnippetResolver {
     public context: EndpointContext,
     private authState: PlaygroundAuthState,
     private formState: PlaygroundEndpointRequestFormState,
-    isAuthHeadersRedacted: boolean,
+    private isAuthHeadersRedacted: boolean,
     public isSnippetTemplatesEnabled: boolean,
     private isFileForgeHackEnabled: boolean,
     private baseUrl: string | undefined,
@@ -190,7 +190,8 @@ export class PlaygroundCodeSnippetResolver {
       this.context,
       formState,
       this.authState,
-      this.baseUrl
+      this.baseUrl,
+      this.isAuthHeadersRedacted
     )
       .setFileForgeHackEnabled(this.isFileForgeHackEnabled)
       .build();

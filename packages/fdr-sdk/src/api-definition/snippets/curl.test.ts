@@ -52,7 +52,9 @@ describe("curl", () => {
         {
           method: "GET",
           url: "https://api.example.com/secure",
-          headers: {},
+          headers: {
+            Authorization: "Basic ey123==",
+          },
           searchParams: {},
           basicAuth: {
             username: "user",

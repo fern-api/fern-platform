@@ -61,11 +61,29 @@ function getHeadersString(headers: Record<string, unknown>): string[] {
   );
 }
 
-function getBasicAuthString(basicAuth: {
-  username: string;
-  password: string;
-}): string[] {
+function getBasicAuthString(
+  basicAuth: {
+    username: string;
+    password: string;
+  },
+  redacted?: boolean
+): string[] {
+  if (redacted) {
+    return [
+      `-u "${basicAuth.username}:${obfuscateSecret(basicAuth.password)}"`,
+    ];
+  }
   return [`-u "${basicAuth.username}:${basicAuth.password}"`];
+}
+
+function obfuscateSecret(secret: string): string {
+  if (secret.trimEnd().length === 0) {
+    return secret;
+  }
+  if (secret.length < 28) {
+    return secret.slice(0, 1) + "*".repeat(25) + secret.slice(-2);
+  }
+  return secret.slice(0, 12) + "...." + secret.slice(-12);
 }
 
 export function getUrlQueriesGetString(
@@ -227,14 +245,25 @@ function unsafeStringifyHttpRequestExampleToCurl(
     basicAuth,
     body,
     protocol,
+    redacted,
   }: SnippetHttpRequest,
   { usesApplicationJsonInFormDataValue }: Flags
 ): string {
   const httpRequest = getHttpRequest(method, url, searchParams);
 
-  const headersStrings = getHeadersString(headers);
+  const headersStrings = getHeadersString(
+    // If basicAuth is provided, we filter out any existing Authorization header
+    // to avoid conflicts, as the basicAuth will be added separately with -u flag
+    basicAuth != null
+      ? Object.fromEntries(
+          Object.entries(headers).filter(
+            ([key]) => key.toLowerCase() !== "authorization"
+          )
+        )
+      : headers
+  );
   const basicAuthStrings =
-    basicAuth != null ? getBasicAuthString(basicAuth) : [];
+    basicAuth != null ? getBasicAuthString(basicAuth, redacted) : [];
 
   // special handling for application/x-www-form-urlencoded
   const isFormUrlEncoded =
