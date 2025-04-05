@@ -61,13 +61,6 @@ function getHeadersString(headers: Record<string, unknown>): string[] {
   );
 }
 
-function getBasicAuthString(basicAuth: {
-  username: string;
-  password: string;
-}): string[] {
-  return [`-u "${basicAuth.username}:${basicAuth.password}"`];
-}
-
 export function getUrlQueriesGetString(
   searchParams: Record<string, unknown>
 ): string[] {
@@ -233,8 +226,6 @@ function unsafeStringifyHttpRequestExampleToCurl(
   const httpRequest = getHttpRequest(method, url, searchParams);
 
   const headersStrings = getHeadersString(headers);
-  const basicAuthStrings =
-    basicAuth != null ? getBasicAuthString(basicAuth) : [];
 
   // special handling for application/x-www-form-urlencoded
   const isFormUrlEncoded =
@@ -263,7 +254,6 @@ function unsafeStringifyHttpRequestExampleToCurl(
 
   const allStrings = compact([
     ...headersStrings,
-    ...basicAuthStrings,
     ...urlQueriesGetStrings,
     ...bodyDataStrings,
   ]);
