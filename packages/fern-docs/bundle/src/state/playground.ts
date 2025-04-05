@@ -331,7 +331,6 @@ export function usePlaygroundEndpointFormState(
           formStateAtom,
           ctx,
           user?.playground?.initial_state,
-          domain,
           firstExample,
         ]
       )
