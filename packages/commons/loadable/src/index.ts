@@ -24,5 +24,6 @@ export {
   mapLoadables,
   mapNotFailedLoadableArray,
   visitLoadableArray,
+  isDoneLoading,
 } from "./utils";
 export { visitLoadable, type LoadableVisitor } from "./visitor";
