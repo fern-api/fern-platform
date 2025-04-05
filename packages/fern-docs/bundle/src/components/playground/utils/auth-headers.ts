@@ -50,7 +50,7 @@ export function buildAuthHeaders(
         if (redacted) {
           password = obfuscateSecret(password);
         }
-        headers.Authorization = `Basic ${btoa(`${username}:${obfuscateSecret(password)}`)}`;
+        headers.Authorization = `Basic ${btoa(`${username}:${password}`)}`;
       },
       oAuth: (oAuth) => {
         visitDiscriminatedUnion(oAuth.value)._visit({
