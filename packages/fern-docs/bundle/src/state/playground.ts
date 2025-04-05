@@ -292,12 +292,17 @@ export function usePlaygroundEndpointFormState(
   const user = useAtomValue(fernUserAtom);
   const domain = useDomain();
 
+  const firstExample =
+    domain.includes("twelvelabs") || domain.includes("spscommerce")
+      ? undefined
+      : ctx.endpoint.examples?.[0];
+
   return [
     formState?.type === "endpoint"
       ? formState
       : getInitialEndpointRequestFormStateWithExample(
           ctx,
-          ctx.endpoint.examples?.[0],
+          firstExample,
           user?.playground?.initial_state
         ),
     useAtomCallback(
@@ -315,17 +320,14 @@ export function usePlaygroundEndpointFormState(
                     ? currentFormState
                     : getInitialEndpointRequestFormStateWithExample(
                         ctx,
-                        domain.includes("twelvelabs") ||
-                          domain.includes("spscommerce")
-                          ? undefined
-                          : ctx.endpoint.examples?.[0],
+                        firstExample,
                         user?.playground?.initial_state
                       )
                 )
               : update;
           set(formStateAtom, newFormState);
         },
-        [formStateAtom, ctx, user?.playground?.initial_state, domain]
+        [formStateAtom, ctx, user?.playground?.initial_state, firstExample]
       )
     ),
   ];
