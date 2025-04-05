@@ -78,7 +78,7 @@ export const OpenWithLLM = ({
   const decodedDomain = resolveParam(domain);
   const decodedSlug = resolveParam(slug);
 
-  const prompt = `Read ${decodedDomain}${decodedSlug} so I can ask questions about it.`;
+  const prompt = `Read ${decodedDomain}${decodedSlug}.md so I can ask questions about it.`;
 
   return {
     type: "value",
