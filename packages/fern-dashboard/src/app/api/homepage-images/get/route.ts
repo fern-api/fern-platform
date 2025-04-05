@@ -17,7 +17,7 @@ export declare namespace getHomepageImageUrl {
 }
 
 const GetHomepageImagesRequest = z.object({
-  url: z.string(),
+  urls: z.array(z.string()),
   theme: z.union([z.literal("dark"), z.literal("light")]),
 });
 
@@ -32,17 +32,18 @@ export async function POST(req: NextRequest) {
   if (parsedBody.errorResponse != null) {
     return parsedBody.errorResponse;
   }
-  const { url, theme } = parsedBody.data;
+  const { urls, theme } = parsedBody.data;
 
-  const ensureOrgOwnsUrlResponse = await ensureOrgOwnsUrl({
-    url,
-    orgId,
-    token,
-  });
-
-  if (ensureOrgOwnsUrlResponse.errorResponse != null) {
-    return ensureOrgOwnsUrlResponse.errorResponse;
+  for (const url of urls) {
+    const ensureOrgOwnsUrlResponse = await ensureOrgOwnsUrl({
+      url,
+      orgId,
+      token,
+    });
+    if (ensureOrgOwnsUrlResponse.errorResponse != null) {
+      return ensureOrgOwnsUrlResponse.errorResponse;
+    }
   }
 
-  return NextResponse.json(await handler({ url, theme }));
+  return NextResponse.json(await handler({ urls, theme }));
 }

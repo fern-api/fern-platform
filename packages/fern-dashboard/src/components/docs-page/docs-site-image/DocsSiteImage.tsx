@@ -5,26 +5,25 @@ import { useEffect, useState } from "react";
 
 import { ExclamationCircleIcon } from "@heroicons/react/24/outline";
 
-import {
-  HOMEPAGE_SCREENSHOT_HEIGHT,
-  HOMEPAGE_SCREENSHOT_WIDTH,
-} from "@/app/api/homepage-images/constants";
-import { useHomepageImageUrl } from "@/state/useHomepageImageUrl";
-import { DocsUrl } from "@/utils/types";
+import { FdrAPI } from "@fern-api/fdr-sdk";
 
-import { Skeleton } from "../ui/skeleton";
+import { useHomepageImageUrl } from "@/state/useHomepageImageUrl";
+
+import { Skeleton } from "../../ui/skeleton";
+import { DocsSiteImageLayout } from "./DocsSiteImageLayout";
+import { SkeletonDocsSiteImage } from "./SkeletonDocsSiteImage";
 
 export declare namespace DocsSiteImage {
   export interface Props {
-    docsUrl: DocsUrl;
+    docsSite: FdrAPI.dashboard.DocsSite;
   }
 }
 
-export function DocsSiteImage({ docsUrl }: DocsSiteImage.Props) {
+export function DocsSiteImage({ docsSite }: DocsSiteImage.Props) {
   const { theme } = useTheme();
 
   const imageUrl = useHomepageImageUrl({
-    docsUrl,
+    docsSite,
     theme: theme === "dark" ? theme : "light",
   });
 
@@ -35,21 +34,23 @@ export function DocsSiteImage({ docsUrl }: DocsSiteImage.Props) {
     }
   }, [imageUrl.type]);
 
-  const renderImage = () => {
-    if (imageUrl.type === "failed") {
-      return (
+  if (imageUrl.type === "failed") {
+    return (
+      <DocsSiteImageLayout>
         <div className="flex flex-1 flex-col items-center justify-center gap-2 bg-white text-gray-900 dark:bg-black dark:text-gray-900">
           <ExclamationCircleIcon className="size-10" />
           <div>Failed to load</div>
         </div>
-      );
-    }
+      </DocsSiteImageLayout>
+    );
+  }
 
-    if (imageUrl.type !== "loaded") {
-      return <Skeleton className="flex-1" />;
-    }
+  if (imageUrl.type !== "loaded") {
+    return <SkeletonDocsSiteImage />;
+  }
 
-    return (
+  return (
+    <DocsSiteImageLayout>
       <>
         {/*eslint-disable-next-line @next/next/no-img-element */}
         <img
@@ -62,17 +63,6 @@ export function DocsSiteImage({ docsUrl }: DocsSiteImage.Props) {
         />
         {!isImageLoaded && <Skeleton className="absolute inset-0" />}
       </>
-    );
-  };
-
-  return (
-    <div
-      className="relative flex w-[150px] overflow-hidden rounded-lg border border-gray-500 sm:w-[350px] md:w-[400px] lg:w-[450px] dark:border-gray-900"
-      style={{
-        aspectRatio: `${HOMEPAGE_SCREENSHOT_WIDTH} / ${HOMEPAGE_SCREENSHOT_HEIGHT}`,
-      }}
-    >
-      {renderImage()}
-    </div>
+    </DocsSiteImageLayout>
   );
 }

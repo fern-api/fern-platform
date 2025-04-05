@@ -1,26 +1,32 @@
 import { useQuery } from "@tanstack/react-query";
 
+import { FdrAPI } from "@fern-api/fdr-sdk";
+
 import { Theme } from "@/app/api/homepage-images/types";
 import { DashboardApiClient } from "@/app/services/dashboard-api/client";
-import { DocsUrl } from "@/utils/types";
+import { convertFdrDocsSiteUrlToDocsUrl } from "@/utils/getDocsSiteUrl";
 
 import { convertQueryResultToLoadable } from "./convertQueryResultToLoadable";
 import { ReactQueryKey, inferQueryData } from "./queryKeys";
 
 export function useHomepageImageUrl({
-  docsUrl,
+  docsSite,
   theme,
 }: {
-  docsUrl: DocsUrl;
+  docsSite: FdrAPI.dashboard.DocsSite;
   theme: Theme;
 }) {
-  const QUERY_KEY = ReactQueryKey.homepageImageUrl({ docsUrl, theme });
+  const docsUrls = docsSite.urls.map(convertFdrDocsSiteUrlToDocsUrl);
+  const QUERY_KEY = ReactQueryKey.homepageImageUrl({
+    docsUrls,
+    theme,
+  });
 
   return convertQueryResultToLoadable(
     useQuery<inferQueryData<typeof QUERY_KEY>>({
       queryKey: QUERY_KEY,
       queryFn: () =>
-        DashboardApiClient.getHomepageImages({ url: docsUrl, theme }),
+        DashboardApiClient.getHomepageImages({ urls: docsUrls, theme }),
       retry: false,
     })
   );

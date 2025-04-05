@@ -1,24 +1,30 @@
 "use client";
 
+import { Auth0OrgID } from "@/app/services/auth0/types";
 import { useDocsSite } from "@/state/useMyDocsSites";
 import { DocsUrl } from "@/utils/types";
 
-import { Page404 } from "../Page404";
 import { PageHeader } from "../layout/PageHeader";
 import { DocsSiteNavBar } from "./DocsSiteNavBar";
+import { MaybeNonExistentDocs } from "./MaybeNonExistentDocs";
 
 export declare namespace DocsSiteLayout {
   export interface Props {
     docsUrl: DocsUrl;
+    orgId: Auth0OrgID;
     children: React.JSX.Element;
   }
 }
 
-export function DocsSiteLayout({ docsUrl, children }: DocsSiteLayout.Props) {
+export function DocsSiteLayout({
+  docsUrl,
+  orgId,
+  children,
+}: DocsSiteLayout.Props) {
   const docsSite = useDocsSite(docsUrl);
 
   if (docsSite.type === "loaded" && docsSite.value == null) {
-    return <Page404 />;
+    return <MaybeNonExistentDocs docsUrl={docsUrl} currentOrgId={orgId} />;
   }
 
   return (

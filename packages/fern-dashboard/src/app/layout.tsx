@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { ThemeProvider } from "next-themes";
 
-import { getAuth0Client } from "@/app/services/auth0/auth0";
 import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
 import { AppLayout } from "@/components/layout/AppLayout";
 import { Toaster } from "@/components/ui/sonner";
@@ -21,9 +20,9 @@ export default async function RootLayout({
 }>) {
   let content = children;
 
-  const auth0 = await getAuth0Client();
-  const session = await auth0.getSession();
-  if (session != null) {
+  // TODO get pathname
+  // TODO change TTL in auth0
+  if (pathname !== "/") {
     content = (
       <ProtectedRoute>
         <AppLayout>{children}</AppLayout>
