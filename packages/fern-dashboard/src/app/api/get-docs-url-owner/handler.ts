@@ -1,9 +1,9 @@
 import { FernVenusApi } from "@fern-api/venus-api-sdk";
 
-import { Auth0OrgID, Auth0OrgName } from "@/app/services/auth0/types";
+import { Auth0OrgID } from "@/app/services/auth0/types";
 import { getVenusClient } from "@/app/services/venus/getVenusClient";
 
-import { getDocsUrlOwner } from "../utils/getDocsUrlMetadata";
+import { getDocsUrlMetadata } from "../utils/getDocsUrlMetadata";
 
 export default async function getDocsUrlOwnerHandler({
   url,
@@ -12,28 +12,32 @@ export default async function getDocsUrlOwnerHandler({
   url: string;
   token: string;
 }): Promise<{ orgId: Auth0OrgID | undefined }> {
-  let owningOrgName: Auth0OrgName;
-  try {
-    const owner = await getDocsUrlOwner({ url, token });
-    owningOrgName = owner.orgName;
-  } catch (e) {
-    // the URL is user-supplied (from the URL) so it's ok if the URL
+  const docsUrlMetadata = await getDocsUrlMetadata({ url, token });
+  if (!docsUrlMetadata.ok) {
+    // the docs url is user-supplied (parsed from the page url) so it's ok if it
     // doesn't exist
-    console.debug("Failed to get owner for docs URL", e);
-    return { orgId: undefined };
+    if (docsUrlMetadata.error.error === "DomainNotRegisteredError") {
+      return { orgId: undefined };
+    }
+
+    console.error(
+      "Failed to load docs URL metadata",
+      JSON.stringify(docsUrlMetadata.error)
+    );
+    throw new Error("Failed to load docs URL metadata");
   }
 
-  const ownerOrgData = await getVenusClient({ token }).organization.get(
-    FernVenusApi.OrganizationId(owningOrgName)
+  const owningOrg = await getVenusClient({ token }).organization.get(
+    FernVenusApi.OrganizationId(docsUrlMetadata.body.org)
   );
 
-  if (!ownerOrgData.ok) {
+  if (!owningOrg.ok) {
     console.error(
       "Failed to load org from venus",
-      JSON.stringify(ownerOrgData.error)
+      JSON.stringify(owningOrg.error)
     );
     throw new Error("Failed to load org from venus");
   }
 
-  return { orgId: Auth0OrgID(ownerOrgData.body.auth0Id) };
+  return { orgId: Auth0OrgID(owningOrg.body.auth0Id) };
 }

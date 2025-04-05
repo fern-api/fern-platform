@@ -10,21 +10,11 @@ export async function getDocsUrlMetadata({
   url: string;
   token: string;
 }) {
-  const metadata = await getFdrClient({
+  return await getFdrClient({
     token,
   }).docs.v2.read.getDocsUrlMetadata({
     url: FdrAPI.Url(url),
   });
-
-  if (!metadata.ok) {
-    console.error(
-      "Failed to load docs URL metadata",
-      JSON.stringify(metadata.error)
-    );
-    throw new Error("Failed to load docs URL metadata");
-  }
-
-  return metadata.body;
 }
 
 export async function getDocsUrlOwner({
@@ -35,7 +25,16 @@ export async function getDocsUrlOwner({
   token: string;
 }): Promise<{ orgName: Auth0OrgName }> {
   const metadata = await getDocsUrlMetadata({ url, token });
+
+  if (!metadata.ok) {
+    console.error(
+      "Failed to load docs URL metadata",
+      JSON.stringify(metadata.error)
+    );
+    throw new Error("Failed to load docs URL metadata");
+  }
+
   return {
-    orgName: Auth0OrgName(metadata.org),
+    orgName: Auth0OrgName(metadata.body.org),
   };
 }
