@@ -69,26 +69,33 @@ setGlobalDispatcher(new Agent({ connect: { timeout: 5_000 } }));
 
 const app = new FdrApplication(config);
 
-expressApp.get("/health", async (_req, res) => {
-  const cacheInitialized = app.docsDefinitionCache.isInitialized();
-  if (!cacheInitialized) {
-    app.logger.error(
-      "The docs definition cache is not initilialized. Erroring the health check."
-    );
-    res.sendStatus(500);
-  }
-  if (app.redisDatastore != null) {
-    const redisHealthCheckSuccessful = await checkRedis({
-      redis: app.redisDatastore,
-    });
-    if (!redisHealthCheckSuccessful) {
+expressApp.get("/health", (_req, res) => {
+  (async () => {
+    const cacheInitialized = app.docsDefinitionCache.isInitialized();
+    if (!cacheInitialized) {
       app.logger.error(
-        "Records cannot be successfully written and read from redis"
+        "The docs definition cache is not initilialized. Erroring the health check."
       );
       res.sendStatus(500);
+      return;
     }
-  }
-  res.sendStatus(200);
+    if (app.redisDatastore != null) {
+      const redisHealthCheckSuccessful = await checkRedis({
+        redis: app.redisDatastore,
+      });
+      if (!redisHealthCheckSuccessful) {
+        app.logger.error(
+          "Records cannot be successfully written and read from redis"
+        );
+        res.sendStatus(500);
+        return;
+      }
+    }
+    res.sendStatus(200);
+  })().catch((e: unknown) => {
+    app.logger.error("Error in health check:", e);
+    res.sendStatus(500);
+  });
 });
 
 void startServer();

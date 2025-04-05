@@ -49,7 +49,7 @@ export const OrgSwitcherSelect = ({
   return (
     <Select
       value={localValue}
-      onValueChange={onClickOrg}
+      onValueChange={(value) => void onClickOrg(value as Auth0OrgID)}
       disabled={organizations.length === 0}
     >
       <SelectTrigger className="min-w-[180px]">

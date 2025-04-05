@@ -58,7 +58,7 @@ export function PageActionsDropdown({ markdown }: { markdown: string }) {
       <FernButton
         variant="minimal"
         className="w-fit rounded-r-none px-2"
-        onClick={() => handleValueChange("copy-page")}
+        onClick={() => void handleValueChange("copy-page")}
       >
         {showCopied ? (
           <div className="flex items-center gap-2">
@@ -74,7 +74,7 @@ export function PageActionsDropdown({ markdown }: { markdown: string }) {
       </FernButton>
       <FernDropdown
         options={options}
-        onValueChange={handleValueChange}
+        onValueChange={(value) => void handleValueChange(value)}
         dropdownMenuElement={<a target="_blank" rel="noopener noreferrer" />}
       >
         <FernButton variant="minimal" className="rounded-l-none px-2">

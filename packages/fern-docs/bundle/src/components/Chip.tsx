@@ -31,7 +31,12 @@ export const Chip = ({ name, description = undefined }: ChipProps) => {
       open={wasJustCopied ? true : !description ? false : undefined}
       content={wasJustCopied ? "Copied!" : description}
     >
-      <Badge onClick={copyToClipboard} size={size}>
+      <Badge
+        onClick={() => {
+          void copyToClipboard?.();
+        }}
+        size={size}
+      >
         {name}
       </Badge>
     </FernTooltip>

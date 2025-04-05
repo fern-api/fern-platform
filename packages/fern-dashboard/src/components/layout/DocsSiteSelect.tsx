@@ -42,7 +42,7 @@ export const DocsSiteSelect = ({
   return (
     <Select
       value={localValue}
-      onValueChange={onClickUrl}
+      onValueChange={(value) => void onClickUrl(value as DocsUrl)}
       disabled={docsSites.length === 0}
     >
       <SelectTrigger className="min-w-[180px]">

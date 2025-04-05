@@ -96,7 +96,7 @@ function TemplateToken({
             !!data && "hover:bg-(color:--accent-a4) cursor-pointer"
           ),
           role: data ? "button" : undefined,
-          onClick: data ? copyToClipboard : undefined,
+          onClick: data ? () => void copyToClipboard?.() : undefined,
         },
         data ?? child.props.children
       )}

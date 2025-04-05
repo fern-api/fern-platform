@@ -175,7 +175,13 @@ export function useInitializePosthog(
 ): void {
   const route = useApiRoute("/api/fern-docs/analytics/posthog");
   useEffect(() => {
-    safeCall(() => initializePosthog(route, customerConfig));
+    void (async () => {
+      try {
+        await initializePosthog(route, customerConfig);
+      } catch (e) {
+        console.error("Failed to initialize PostHog:", e);
+      }
+    })();
   }, [customerConfig, route]);
   const pathname = useCurrentPathname();
   useEffect(() => {

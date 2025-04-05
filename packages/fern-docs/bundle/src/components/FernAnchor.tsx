@@ -77,7 +77,9 @@ export function FernAnchor({
               shallow={true}
               scroll={false}
               replace={true}
-              onClick={copyToClipboard}
+              onClick={() => {
+                void copyToClipboard?.();
+              }}
               tabIndex={-1}
             >
               {!wasJustCopied && !forceMount && (

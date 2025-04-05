@@ -41,14 +41,14 @@ export const CopyToClipboardButton: React.FC<CopyToClipboardButton.Props> = ({
       >
         {children?.((e) => {
           onClick?.(e);
-          copyToClipboard?.();
+          void copyToClipboard?.();
         }) ?? (
           <Button
             className={cn("fern-copy-button group", className)}
             disabled={copyToClipboard == null}
             onClickCapture={(e) => {
               onClick?.(e);
-              copyToClipboard?.();
+              void copyToClipboard?.();
             }}
             data-testid={testId}
             variant={wasJustCopied ? "success" : "ghost"}

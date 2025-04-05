@@ -203,13 +203,15 @@ export const PlaygroundWebSocket: FC<PlaygroundWebSocketProps> = ({
           <PlaygroundEndpointPath
             method={undefined}
             formState={formState}
-            sendRequest={() =>
-              connectedState === "closed"
-                ? startSession()
-                : connectedState === "opened"
-                  ? socket.current?.close()
-                  : null
-            }
+            sendRequest={() => {
+              void (async () => {
+                if (connectedState === "closed") {
+                  await startSession();
+                } else if (connectedState === "opened") {
+                  socket.current?.close();
+                }
+              })();
+            }}
             environmentId={environmentId}
             baseUrl={baseUrl}
             // TODO: this is a temporary fix to show all environments in the playground, unless filtered in the settings
@@ -246,8 +248,12 @@ export const PlaygroundWebSocket: FC<PlaygroundWebSocketProps> = ({
             context={context}
             formState={formState}
             setFormState={setFormState}
-            sendMessage={handleSendMessage}
-            startSesssion={startSession}
+            sendMessage={(message, data) => {
+              void handleSendMessage(message, data);
+            }}
+            startSesssion={() => {
+              void startSession();
+            }}
             clearMessages={clearMessages}
             connected={connectedState === "opened"}
             error={error}

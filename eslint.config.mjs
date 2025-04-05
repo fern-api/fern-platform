@@ -161,7 +161,6 @@ export default [
         "@typescript-eslint/no-empty-object-type": "off",
         "@typescript-eslint/no-extraneous-class": "off",
         "@typescript-eslint/no-inferrable-types": "off",
-        "@typescript-eslint/no-misused-promises": "off",
         "@typescript-eslint/no-redundant-type-constituents": "off",
         "@typescript-eslint/no-require-imports": "off",
         "@typescript-eslint/no-unsafe-argument": "off",

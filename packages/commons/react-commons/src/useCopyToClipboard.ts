@@ -6,7 +6,7 @@ import { useTimeout } from "./useTimeout";
 
 export declare namespace useCopyToClipboard {
   export interface Return {
-    copyToClipboard: (() => void) | undefined;
+    copyToClipboard: (() => Promise<void>) | undefined;
     wasJustCopied: boolean;
   }
 }
