@@ -52,12 +52,32 @@ export function Download({
     return React.cloneElement(children, {
       href: src,
       download: filename || true,
-      onClick: handleClick,
+      onClick: (e) => {
+        void (async () => {
+          try {
+            await handleClick(e);
+          } catch (e) {
+            console.error("Failed to download:", e);
+          }
+        })();
+      },
     });
   }
 
   return (
-    <A href={src} download={filename || true} onClick={handleClick}>
+    <A
+      href={src}
+      download={filename || true}
+      onClick={(e) => {
+        void (async () => {
+          try {
+            await handleClick(e);
+          } catch (e) {
+            console.error("Failed to download:", e);
+          }
+        })();
+      }}
+    >
       {children}
     </A>
   );

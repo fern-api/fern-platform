@@ -68,10 +68,18 @@ export function useKeyboardPress(args: useKeyboardPress.Args): void {
       }
     }
 
-    document.addEventListener("keydown", handleSaveKeyPress, capture);
+    document.addEventListener(
+      "keydown",
+      (e) => void handleSaveKeyPress(e),
+      capture
+    );
 
     return () => {
-      document.removeEventListener("keydown", handleSaveKeyPress, capture);
+      document.removeEventListener(
+        "keydown",
+        (e) => void handleSaveKeyPress(e),
+        capture
+      );
     };
   }, [capture, key, onPress, preventDefault]);
 }

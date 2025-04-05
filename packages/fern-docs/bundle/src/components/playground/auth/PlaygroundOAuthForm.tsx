@@ -173,7 +173,15 @@ export function FoundOAuthReferencedEndpointForm({
           <FernButton
             text={`${value.isLoggedIn ? "Refresh" : "Fetch"} Bearer Token`}
             intent="primary"
-            onClick={oAuthClientCredentialLogin}
+            onClick={() => {
+              void (async () => {
+                try {
+                  await oAuthClientCredentialLogin();
+                } catch (e) {
+                  console.error("Failed to login:", e);
+                }
+              })();
+            }}
             disabled={disabled}
           />
         )}

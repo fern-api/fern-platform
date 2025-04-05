@@ -41,10 +41,18 @@ export function useKeyboardCommand(args: useKeyboardCommand.Args): void {
       }
     }
 
-    document.addEventListener("keydown", handleSaveKeyPress, true);
+    document.addEventListener(
+      "keydown",
+      (e) => void handleSaveKeyPress(e),
+      true
+    );
 
     return () => {
-      document.removeEventListener("keydown", handleSaveKeyPress, true);
+      document.removeEventListener(
+        "keydown",
+        (e) => void handleSaveKeyPress(e),
+        true
+      );
     };
   }, [key, onCommand, platform, preventDefault]);
 }

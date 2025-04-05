@@ -111,7 +111,7 @@ async function createWriteStream(
 async function createWriteStreamFromFile(
   filepath: AbsoluteFilePath
 ): Promise<fs.WriteStream> {
-  if (!doesPathExist(filepath)) {
+  if (!(await doesPathExist(filepath))) {
     await mkdir(path.dirname(filepath), { recursive: true });
   }
   return fs.createWriteStream(filepath);

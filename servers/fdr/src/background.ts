@@ -10,19 +10,23 @@ export function registerAlgoliaSearchRecordDeletionBackgroundTask(
   app: FdrApplication
 ) {
   // Runs every 10 minutes
-  cron.schedule("*/10 * * * *", async () => {
-    try {
-      const deletedIndexSegmentCount =
-        await app.services.algoliaIndexSegmentDeleter.deleteOldInactiveIndexSegments(
-          {
-            olderThanHours: 24,
-          }
+  cron.schedule("*/10 * * * *", () => {
+    (async () => {
+      try {
+        const deletedIndexSegmentCount =
+          await app.services.algoliaIndexSegmentDeleter.deleteOldInactiveIndexSegments(
+            {
+              olderThanHours: 24,
+            }
+          );
+        app.logger.debug(
+          `Successfully deleted ${deletedIndexSegmentCount} old index segments.`
         );
-      app.logger.debug(
-        `Successfully deleted ${deletedIndexSegmentCount} old index segments.`
-      );
-    } catch (e) {
-      app.logger.error("Error while deleting old index segments.", e);
-    }
+      } catch (e) {
+        app.logger.error("Error while deleting old index segments.", e);
+      }
+    })().catch((e: unknown) => {
+      app.logger.error("Unhandled error in background task:", e);
+    });
   });
 }

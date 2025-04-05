@@ -35,9 +35,9 @@ export function CardedSection({
         </FernAnchor>
         {headingElement}
       </div>
-      {React.Children.toArray(children).some((child) => child) && (
-        <div className="space-y-12 p-4">{children}</div>
-      )}
+      {React.Children.toArray(children).some((child) =>
+        React.isValidElement(child)
+      ) && <div className="space-y-12 p-4">{children}</div>}
     </section>
   );
 }

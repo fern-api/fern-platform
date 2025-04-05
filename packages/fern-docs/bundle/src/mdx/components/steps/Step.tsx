@@ -47,7 +47,7 @@ export function Step({
           shallow={true}
           scroll={false}
           replace={true}
-          onClick={copyToClipboard}
+          onClick={() => void copyToClipboard?.()}
           onPointerEnter={() => setHover(true)}
           onPointerLeave={() => setHover(false)}
           tabIndex={-1}

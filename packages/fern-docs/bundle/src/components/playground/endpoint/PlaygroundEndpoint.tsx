@@ -216,7 +216,15 @@ export const PlaygroundEndpoint = ({
           <PlaygroundEndpointPath
             method={endpoint.method}
             formState={formState}
-            sendRequest={sendRequest}
+            sendRequest={() => {
+              void (async () => {
+                try {
+                  await sendRequest();
+                } catch (e) {
+                  console.error("Failed to send request:", e);
+                }
+              })();
+            }}
             environmentId={environmentId}
             baseUrl={baseUrl}
             // TODO: this is a temporary fix to show all environments in the playground, unless filtered in the settings
@@ -245,7 +253,15 @@ export const PlaygroundEndpoint = ({
             resetWithExample={resetWithExample}
             resetWithoutExample={resetWithoutExample}
             response={response}
-            sendRequest={sendRequest}
+            sendRequest={() => {
+              void (async () => {
+                try {
+                  await sendRequest();
+                } catch (e) {
+                  console.error("Failed to send request:", e);
+                }
+              })();
+            }}
           />
         </div>
       </div>

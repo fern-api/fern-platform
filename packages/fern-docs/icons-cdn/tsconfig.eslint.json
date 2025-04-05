@@ -4,5 +4,5 @@
     "rootDir": ".",
     "noEmit": true
   },
-  "include": ["src/**/*", "next.config.ts"]
+  "include": ["src/**/*", "next.config.ts", "next-env.d.ts"]
 }

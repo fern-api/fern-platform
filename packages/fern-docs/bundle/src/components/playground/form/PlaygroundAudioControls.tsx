@@ -84,7 +84,7 @@ export function PlaygroundAudioControls({
       <FernButtonGroup>
         <FernButton
           icon={isPlaying ? <Octagon /> : <Play />}
-          onClick={handlePlayPause}
+          onClick={() => void handlePlayPause()}
           size="small"
           variant="minimal"
           disabled={!audioUrl}

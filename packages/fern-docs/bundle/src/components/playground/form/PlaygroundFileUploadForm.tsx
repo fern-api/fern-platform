@@ -178,7 +178,7 @@ export const PlaygroundFileUploadForm = memo<PlaygroundFileUploadFormProps>(
                 />
                 {canRecordAudio && (
                   <FernButton
-                    onClick={startRecording}
+                    onClick={() => void startRecording()}
                     icon={<Mic />}
                     rounded
                     variant="outlined"
@@ -217,7 +217,7 @@ export const PlaygroundFileUploadForm = memo<PlaygroundFileUploadFormProps>(
                     {canRecordAudio && (
                       <FernButton
                         icon={<Mic />}
-                        onClick={startRecording}
+                        onClick={() => void startRecording()}
                         size="small"
                         variant="minimal"
                       />
