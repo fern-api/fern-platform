@@ -258,6 +258,6 @@ export async function doesUserBelongsToOrg(
   userId: Auth0UserID,
   orgId: Auth0OrgID
 ) {
-  const orgMembers = await getOrgMembers(orgId, { includeFernEmployees: true });
-  return orgMembers.some((member) => member.user_id === userId);
+  const orgs = await getMyOrganizations(userId);
+  return orgs.some((o) => o.id === orgId);
 }

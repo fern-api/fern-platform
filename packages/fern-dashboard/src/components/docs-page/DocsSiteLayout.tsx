@@ -4,9 +4,10 @@ import { Auth0OrgID } from "@/app/services/auth0/types";
 import { useDocsSite } from "@/state/useMyDocsSites";
 import { DocsUrl } from "@/utils/types";
 
+import { Page404 } from "../Page404";
 import { PageHeader } from "../layout/PageHeader";
 import { DocsSiteNavBar } from "./DocsSiteNavBar";
-import { MaybeNonExistentDocs } from "./MaybeNonExistentDocs";
+import { useMaybeRedirectToOrgForCurrentDocsUrl } from "./useMaybeRedirectToOrgForCurrentDocsUrl";
 
 export declare namespace DocsSiteLayout {
   export interface Props {
@@ -21,10 +22,14 @@ export function DocsSiteLayout({
   orgId,
   children,
 }: DocsSiteLayout.Props) {
-  const docsSite = useDocsSite(docsUrl);
+  const { willNotRedirect } = useMaybeRedirectToOrgForCurrentDocsUrl({
+    docsUrl,
+    currentOrgId: orgId,
+  });
 
-  if (docsSite.type === "loaded" && docsSite.value == null) {
-    return <MaybeNonExistentDocs docsUrl={docsUrl} currentOrgId={orgId} />;
+  const docsSite = useDocsSite(docsUrl);
+  if (docsSite.type === "loaded" && docsSite.value == null && willNotRedirect) {
+    return <Page404 />;
   }
 
   return (
