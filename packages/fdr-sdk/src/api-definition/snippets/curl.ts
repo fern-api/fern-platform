@@ -1,7 +1,7 @@
 import { compact } from "es-toolkit/array";
 import { UnreachableCaseError } from "ts-essentials";
-import { obfuscateSecret } from "@fern-api/fdr-sdk"
 
+import { obfuscateSecret } from "@fern-api/fdr-sdk";
 import {
   isNonNullish,
   isPlainObject,
