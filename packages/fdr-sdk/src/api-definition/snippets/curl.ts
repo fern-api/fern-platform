@@ -1,5 +1,6 @@
 import { compact } from "es-toolkit/array";
 import { UnreachableCaseError } from "ts-essentials";
+import { obfuscateSecret } from "@fern-api/fdr-sdk"
 
 import {
   isNonNullish,
@@ -74,16 +75,6 @@ function getBasicAuthString(
     ];
   }
   return [`-u "${basicAuth.username}:${basicAuth.password}"`];
-}
-
-function obfuscateSecret(secret: string): string {
-  if (secret.trimEnd().length === 0) {
-    return secret;
-  }
-  if (secret.length < 28) {
-    return secret.slice(0, 1) + "*".repeat(25) + secret.slice(-2);
-  }
-  return secret.slice(0, 12) + "...." + secret.slice(-12);
 }
 
 export function getUrlQueriesGetString(
