@@ -1,3 +1,4 @@
+import { getDocsUrlOwner } from "@/app/api/get-docs-url-owner/route";
 import { getMyDocsSites } from "@/app/api/get-my-docs-sites/route";
 import { getMyOrganizations } from "@/app/api/get-my-organizations/route";
 import { getOrgInvitations } from "@/app/api/get-org-invitations/route";
@@ -15,6 +16,10 @@ export const DashboardApiClient = {
     typedFetch<getOrgMembers.Response>("/api/get-org-members"),
   getHomepageImages: (request: getHomepageImageUrl.Request) =>
     typedFetch<getHomepageImageUrl.Response>("/api/homepage-images/get", {
+      body: request,
+    }),
+  getDocsUrlOwner: (request: getDocsUrlOwner.Request) =>
+    typedFetch<getDocsUrlOwner.Response>("/api/get-docs-url-owner", {
       body: request,
     }),
 };

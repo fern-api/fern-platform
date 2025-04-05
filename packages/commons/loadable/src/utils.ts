@@ -150,3 +150,14 @@ export function visitLoadableArray<V, W>(
   }
   return visitor.notFailed(Array<Loading<unknown>>(numLoading).fill(loading()));
 }
+
+export function isDoneLoading(loadable: Loadable<unknown>) {
+  switch (loadable.type) {
+    case "notStartedLoading":
+    case "loading":
+      return false;
+    case "loaded":
+    case "failed":
+      return true;
+  }
+}

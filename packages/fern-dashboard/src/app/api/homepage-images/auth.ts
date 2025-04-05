@@ -1,14 +1,13 @@
 import { NextResponse } from "next/server";
 
-import { FdrAPI } from "@fern-api/fdr-sdk";
 import { FernVenusApi } from "@fern-api/venus-api-sdk";
 
 import * as auth0Management from "@/app/services/auth0/management";
-import { Auth0OrgID, Auth0OrgName } from "@/app/services/auth0/types";
-import { getFdrClient } from "@/app/services/fdr/getFdrClient";
+import { Auth0OrgID } from "@/app/services/auth0/types";
 import { getVenusClient } from "@/app/services/venus/getVenusClient";
 
 import { MaybeErrorResponse } from "../utils/MaybeErrorResponse";
+import { getDocsUrlOwner } from "../utils/getDocsUrlMetadata";
 
 export async function ensureUserOwnsUrl({
   token,
@@ -17,7 +16,7 @@ export async function ensureUserOwnsUrl({
   token: string;
   url: string;
 }): Promise<MaybeErrorResponse> {
-  const owner = await getOwnerForUrl({ url, token });
+  const owner = await getDocsUrlOwner({ url, token });
 
   const isMember = await getVenusClient({ token }).organization.isMember(
     FernVenusApi.OrganizationId(owner.orgName)
@@ -52,7 +51,7 @@ export async function ensureOrgOwnsUrl({
 }): Promise<MaybeErrorResponse> {
   const org = await auth0Management.getOrganization(orgId);
 
-  const owner = await getOwnerForUrl({ url, token });
+  const owner = await getDocsUrlOwner({ url, token });
 
   if (owner.orgName !== org.name) {
     console.error(
@@ -66,28 +65,4 @@ export async function ensureOrgOwnsUrl({
     };
   }
   return { data: undefined };
-}
-
-export async function getOwnerForUrl({
-  url,
-  token,
-}: {
-  url: string;
-  token: string;
-}): Promise<{ orgName: Auth0OrgName }> {
-  const tokenInfo = await getFdrClient({
-    token,
-  }).docs.v2.read.getDocsUrlMetadata({
-    url: FdrAPI.Url(url),
-  });
-  if (!tokenInfo.ok) {
-    console.error(
-      "Failed to load docs URL metadata",
-      JSON.stringify(tokenInfo.error)
-    );
-    throw new Error("Failed to load docs URL metadata");
-  }
-  return {
-    orgName: Auth0OrgName(tokenInfo.body.org),
-  };
 }

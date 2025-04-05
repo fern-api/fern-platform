@@ -1,3 +1,4 @@
+import { getDocsUrlOwner } from "@/app/api/get-docs-url-owner/route";
 import { getMyDocsSites } from "@/app/api/get-my-docs-sites/route";
 import { getMyOrganizations } from "@/app/api/get-my-organizations/route";
 import { getOrgMembers } from "@/app/api/get-org-members/route";
@@ -12,18 +13,25 @@ export type ReactQueryKey<T> = string[] & { __queryData: Awaited<T> };
 export const ReactQueryKey = {
   // orgId isn't needed in the queryKeys because when we switch orgs we
   // do a hard redirect which resets all client-side state
-
   orgInvitations: () => queryKey<OrgInvitation[]>("org-invitations"),
   orgMembers: () => queryKey<getOrgMembers.Response>("org-members"),
   myDocsSites: (): ReactQueryKey<getMyDocsSites.Response> =>
     queryKey<getMyDocsSites.Response>("my-docs-sites"),
   myOrganizations: () => queryKey<getMyOrganizations.Response>("my-orgs"),
-  homepageImageUrl: ({ docsUrl, theme }: { docsUrl: DocsUrl; theme: Theme }) =>
+  homepageImageUrl: ({
+    docsUrls,
+    theme,
+  }: {
+    docsUrls: DocsUrl[];
+    theme: Theme;
+  }) =>
     queryKey<getHomepageImageUrl.Response>(
       "homepage-image-url",
-      docsUrl,
+      ...docsUrls,
       theme
     ),
+  docsUrlOwner: (docsUrl: DocsUrl) =>
+    queryKey<getDocsUrlOwner.Response>("docs-url-owner", docsUrl),
 } as const;
 
 function queryKey<T>(...key: string[]) {

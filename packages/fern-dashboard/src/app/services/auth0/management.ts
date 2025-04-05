@@ -249,8 +249,15 @@ export async function ensureUserBelongsToOrg(
   userId: Auth0UserID,
   orgId: Auth0OrgID
 ) {
-  const orgMembers = await getOrgMembers(orgId, { includeFernEmployees: true });
-  if (!orgMembers.some((member) => member.user_id === userId)) {
+  if (!(await doesUserBelongsToOrg(userId, orgId))) {
     throw new Error(`User ${userId} is not in org ${orgId}`);
   }
+}
+
+export async function doesUserBelongsToOrg(
+  userId: Auth0UserID,
+  orgId: Auth0OrgID
+) {
+  const orgs = await getMyOrganizations(userId);
+  return orgs.some((o) => o.id === orgId);
 }

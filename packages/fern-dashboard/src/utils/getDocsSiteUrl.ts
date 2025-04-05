@@ -5,8 +5,14 @@ import { DocsUrl } from "./types";
 export function getDocsSiteUrl({
   mainUrl,
 }: FdrAPI.dashboard.DocsSite): DocsUrl {
-  if (mainUrl.path == null) {
-    return mainUrl.domain as DocsUrl;
+  return convertFdrDocsSiteUrlToDocsUrl(mainUrl);
+}
+
+export function convertFdrDocsSiteUrlToDocsUrl(
+  url: FdrAPI.dashboard.DocsSiteUrl
+): DocsUrl {
+  if (url.path == null) {
+    return url.domain as DocsUrl;
   }
-  return `${mainUrl.domain}${mainUrl.path}` as DocsUrl;
+  return `${url.domain}${url.path}` as DocsUrl;
 }
