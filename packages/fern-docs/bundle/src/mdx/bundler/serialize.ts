@@ -48,6 +48,7 @@ import { rehypeExtractAsides } from "../plugins/rehype-extract-asides";
 import { rehypeFiles } from "../plugins/rehype-files";
 import { RehypeLinksOptions, rehypeLinks } from "../plugins/rehype-links";
 import { rehypeMigrateJsx } from "../plugins/rehype-migrate-jsx";
+import { rehypeShikiTwoslash } from "../plugins/rehype-shiki-twoslash";
 import { rehypeSteps } from "../plugins/rehype-steps";
 import { rehypeTabs } from "../plugins/rehype-tabs";
 import { remarkExtractTitle } from "../plugins/remark-extract-title";
@@ -156,6 +157,7 @@ async function serializeMdxImpl(
         [rehypeFiles, { files: remoteFiles }],
         rehypeMdxClassStyle,
         rehypeCodeBlock,
+        rehypeShikiTwoslash,
         rehypeSteps,
         rehypeAccordions,
         rehypeTabs,

@@ -13,6 +13,7 @@
     "@tailwindcss/postcss",
     "@tailwindcss/typography",
     "@testing-library/jest-dom",
+    "@typescript/vfs",
     "@upstash/qstash",
     "cssnano",
     "esbuild",

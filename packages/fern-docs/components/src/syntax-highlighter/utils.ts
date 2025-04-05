@@ -1,3 +1,5 @@
+import { BundledTheme } from "shiki";
+
 // [number, number] is a range of lines to highlight
 export type HighlightLine = number | [number, number];
 
@@ -29,3 +31,18 @@ export function flattenHighlightLines(
     return [lineNumber - 1];
   });
 }
+
+export const DEFAULT = Symbol("DEFAULT");
+
+export const THEMES: Record<
+  "light" | "dark",
+  Record<string | typeof DEFAULT, BundledTheme>
+> = {
+  light: {
+    [DEFAULT]: "min-light",
+    diff: "github-light", // `min-light` does not work well for diff
+  },
+  dark: {
+    [DEFAULT]: "material-theme-darker",
+  },
+};

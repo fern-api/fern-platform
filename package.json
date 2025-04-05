@@ -49,7 +49,9 @@
     "micromatch": "4.0.8",
     "react": "19.0.0",
     "react-dom": "19.0.0",
+    "shiki": "3.2.1",
     "typescript": "5.7.3",
+    "unified": "11.0.5",
     "webpack": "5.94.0"
   },
   "dependencies": {
@@ -72,6 +74,7 @@
     "@types/node": "^18.11.9",
     "@typescript-eslint/eslint-plugin": "8.25.0",
     "@typescript-eslint/parser": "8.25.0",
+    "@typescript/vfs": "^1.6.1",
     "@yarnpkg/sdks": "^3.2.0",
     "chalk": "^5.4.1",
     "depcheck": "^1.4.7",
