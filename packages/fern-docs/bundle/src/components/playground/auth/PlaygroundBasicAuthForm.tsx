@@ -50,11 +50,6 @@ export function PlaygroundBasicAuthForm({
             onValueChange={setUsername}
             value={username}
             leftIcon={<User className="size-icon" />}
-            rightElement={
-              <span className="text-(color:--grayscale-a11) text-xs">
-                {"string"}
-              </span>
-            }
             disabled={disabled}
             resettable={isUsernameResettable}
             onClickReset={() => setUsername(RESET)}

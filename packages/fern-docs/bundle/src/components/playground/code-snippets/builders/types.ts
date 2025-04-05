@@ -8,11 +8,13 @@ import {
 
 export abstract class PlaygroundCodeSnippetBuilder {
   protected url: string;
+
   constructor(
     protected context: EndpointContext,
     protected formState: PlaygroundEndpointRequestFormState,
     protected authState: PlaygroundAuthState,
-    protected baseUrl: string | undefined
+    protected baseUrl: string | undefined,
+    protected redacted: boolean
   ) {
     // TODO: wire through the environment from hook
     this.url = buildEndpointUrl({

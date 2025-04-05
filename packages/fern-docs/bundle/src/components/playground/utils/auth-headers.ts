@@ -1,6 +1,7 @@
 import { decodeJwt } from "jose";
 import { noop } from "ts-essentials";
 
+import { obfuscateSecret } from "@fern-api/fdr-sdk";
 import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import visitDiscriminatedUnion from "@fern-api/ui-core-utils/visitDiscriminatedUnion";
 
@@ -10,7 +11,6 @@ import {
   OAuthClientCredentialReferencedEndpointLoginFlowProps,
   oAuthClientCredentialReferencedEndpointLoginFlow,
 } from "./oauth";
-import { obfuscateSecret } from "./obfuscate-secret";
 
 export function buildAuthHeaders(
   auth: ApiDefinition.AuthScheme | undefined,

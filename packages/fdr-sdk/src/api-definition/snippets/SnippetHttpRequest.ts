@@ -59,6 +59,7 @@ export interface SnippetHttpRequest {
   };
   body: SnippetHttpRequestBody | undefined;
   protocol?: Latest.Protocol;
+  redacted?: boolean;
 }
 
 // TODO: validate that global headers are also included in the example by CLI or FDR
